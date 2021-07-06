@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class LocationData
+    public partial class Location
     {
-        internal static LocationData DeserializeLocation(JsonElement element)
+        internal static Location DeserializeLocation(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> displayName = default;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new LocationData(name.Value, displayName.Value, regionalDisplayName.Value, canonicalName.Value, metadata.Value);
+            return new Location(name.Value, displayName.Value, regionalDisplayName.Value, canonicalName.Value, metadata.Value);
         }
     }
 }

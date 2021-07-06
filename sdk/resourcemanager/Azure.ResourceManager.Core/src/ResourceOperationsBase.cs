@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceType"> The <see cref="ResourceType"/> instance to use for the list. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        protected IEnumerable<LocationData> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
+        protected IEnumerable<Location> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
             var pageableProvider = ProviderContainer.List(expand: "metadata", cancellationToken: cancellationToken);
             var resourcePageableProvider = pageableProvider.FirstOrDefault(p => string.Equals(p.Data.Namespace, resourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Core
             var theResource = resourcePageableProvider.Data.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
-            return theResource.Locations.Select(l => (LocationData)l);
+            return theResource.Locations.Select(l => (Location)l);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceType"> The <see cref="ResourceType"/> instance to use for the list. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        protected async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
+        protected async Task<IEnumerable<Location>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
             var pageableProvider = ProviderContainer.ListAsync(expand: "metadata", cancellationToken: cancellationToken);
             var resourcePageableProvider = await pageableProvider.FirstOrDefaultAsync(
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Core
             var theResource = resourcePageableProvider.Data.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
-            return theResource.Locations.Select(l => (LocationData)l);
+            return theResource.Locations.Select(l => (Location)l);
         }
     }
 }

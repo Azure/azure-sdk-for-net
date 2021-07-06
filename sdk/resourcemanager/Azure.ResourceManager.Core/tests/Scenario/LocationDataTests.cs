@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core.Tests
     public class LocationDataTests : ResourceManagerTestBase
     {
         public LocationDataTests(bool isAsync)
-            : base(isAsync) //, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -28,37 +28,37 @@ namespace Azure.ResourceManager.Core.Tests
         //[TestCase(false, "West Us", null)]
         public async Task VerifyMetadata(bool expected, string left, string right)
         {
-            var rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"));
-            var listLocs = rg.Value.ListAvailableLocations();
-            foreach (LocationData loc in listLocs)
-            {
-                Assert.IsNotNull(loc.Metadata);
-            }
-            //LocationData loc1 = left;
-            //LocationData loc2 = right;
-            //Assert.IsNotNull(loc1.Metadata);
-            //Assert.IsNotNull(loc2.Metadata);
+            var rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testRg-"));
+            var listLocs = await rg.Value.ListAvailableLocationsAsync();
+            //foreach (LocationData loc in listLocs)
+            //{
+            //    Assert.IsNotNull(loc.Metadata);
+            //}
+            Location loc1 = left;
+            Location loc2 = right;
+            Assert.IsNotNull(loc1.Metadata);
+            Assert.IsNotNull(loc2.Metadata);
 
-            //if (expected)
-            //{
-            //    Assert.AreEqual(0, loc1.Metadata.GeographyGroup.CompareTo(loc2.Metadata.GeographyGroup));
-            //    Assert.AreEqual(0, loc1.Metadata.Latitude.CompareTo(loc2.Metadata.Latitude));
-            //    Assert.AreEqual(0, loc1.Metadata.Longitude.CompareTo(loc2.Metadata.Longitude));
-            //    Assert.AreEqual(0, loc1.Metadata.PhysicalLocation.CompareTo(loc2.Metadata.PhysicalLocation));
-            //    Assert.AreEqual(loc1.Metadata.RegionCategory, loc2.Metadata.RegionCategory);
-            //    Assert.AreEqual(loc1.Metadata.RegionType, loc2.Metadata.RegionType);
-            //    Assert.AreEqual(loc1.Metadata.PairedRegion.Count, loc2.Metadata.PairedRegion.Count);
-            //}
-            //else
-            //{
-            //    Assert.AreNotEqual(0, loc1.Metadata.GeographyGroup.CompareTo(loc2.Metadata.GeographyGroup));
-            //    Assert.AreNotEqual(0, loc1.Metadata.Latitude.CompareTo(loc2.Metadata.Latitude));
-            //    Assert.AreNotEqual(0, loc1.Metadata.Longitude.CompareTo(loc2.Metadata.Longitude));
-            //    Assert.AreNotEqual(0, loc1.Metadata.PhysicalLocation.CompareTo(loc2.Metadata.PhysicalLocation));
-            //    Assert.AreNotEqual(loc1.Metadata.RegionCategory, loc2.Metadata.RegionCategory);
-            //    Assert.AreNotEqual(loc1.Metadata.RegionType, loc2.Metadata.RegionType);
-            //    Assert.AreNotEqual(loc1.Metadata.PairedRegion.Count, loc2.Metadata.PairedRegion.Count);
-            //}
+            if (expected)
+            {
+                Assert.AreEqual(0, loc1.Metadata.GeographyGroup.CompareTo(loc2.Metadata.GeographyGroup));
+                Assert.AreEqual(0, loc1.Metadata.Latitude.CompareTo(loc2.Metadata.Latitude));
+                Assert.AreEqual(0, loc1.Metadata.Longitude.CompareTo(loc2.Metadata.Longitude));
+                Assert.AreEqual(0, loc1.Metadata.PhysicalLocation.CompareTo(loc2.Metadata.PhysicalLocation));
+                Assert.AreEqual(loc1.Metadata.RegionCategory, loc2.Metadata.RegionCategory);
+                Assert.AreEqual(loc1.Metadata.RegionType, loc2.Metadata.RegionType);
+                Assert.AreEqual(loc1.Metadata.PairedRegion.Count, loc2.Metadata.PairedRegion.Count);
+            }
+            else
+            {
+                Assert.AreNotEqual(0, loc1.Metadata.GeographyGroup.CompareTo(loc2.Metadata.GeographyGroup));
+                Assert.AreNotEqual(0, loc1.Metadata.Latitude.CompareTo(loc2.Metadata.Latitude));
+                Assert.AreNotEqual(0, loc1.Metadata.Longitude.CompareTo(loc2.Metadata.Longitude));
+                Assert.AreNotEqual(0, loc1.Metadata.PhysicalLocation.CompareTo(loc2.Metadata.PhysicalLocation));
+                Assert.AreNotEqual(loc1.Metadata.RegionCategory, loc2.Metadata.RegionCategory);
+                Assert.AreNotEqual(loc1.Metadata.RegionType, loc2.Metadata.RegionType);
+                Assert.AreNotEqual(loc1.Metadata.PairedRegion.Count, loc2.Metadata.PairedRegion.Count);
+            }
         }
     }
 }

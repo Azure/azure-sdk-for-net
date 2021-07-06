@@ -12,212 +12,212 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Represents an Azure geography region where supported resource providers live.
     /// </summary>
-    public partial class LocationData : IEquatable<LocationData>, IComparable<LocationData>
+    public partial class Location : IEquatable<Location>, IComparable<Location>
     {
         #region Public Cloud Locations
 
         /// <summary>
         /// Public cloud location for East Asia.
         /// </summary>
-        public static readonly LocationData EastAsia = new LocationData { Name = "eastasia", CanonicalName = "east-asia", DisplayName = "East Asia" };
+        public static readonly Location EastAsia = new Location { Name = "eastasia", CanonicalName = "east-asia", DisplayName = "East Asia" };
 
         /// <summary>
         /// Public cloud location for Southeast Asia.
         /// </summary>
-        public static readonly LocationData SoutheastAsia = new LocationData { Name = "southeastasia", CanonicalName = "southeast-asia", DisplayName = "Southeast Asia" };
+        public static readonly Location SoutheastAsia = new Location { Name = "southeastasia", CanonicalName = "southeast-asia", DisplayName = "Southeast Asia" };
 
         /// <summary>
         /// Public cloud location for Central US.
         /// </summary>
-        public static readonly LocationData CentralUS = new LocationData { Name = "centralus", CanonicalName = "central-us", DisplayName = "Central US" };
+        public static readonly Location CentralUS = new Location { Name = "centralus", CanonicalName = "central-us", DisplayName = "Central US" };
 
         /// <summary>
         /// Public cloud location for East US.
         /// </summary>
-        public static readonly LocationData EastUS = new LocationData { Name = "eastus", CanonicalName = "east-us", DisplayName = "East US" };
+        public static readonly Location EastUS = new Location { Name = "eastus", CanonicalName = "east-us", DisplayName = "East US" };
 
         /// <summary>
         /// Public cloud location for East US 2.
         /// </summary>
-        public static readonly LocationData EastUS2 = new LocationData { Name = "eastus2", CanonicalName = "east-us-2", DisplayName = "East US 2" };
+        public static readonly Location EastUS2 = new Location { Name = "eastus2", CanonicalName = "east-us-2", DisplayName = "East US 2" };
 
         /// <summary>
         /// Public cloud location for West US.
         /// </summary>
-        public static readonly LocationData WestUS = new LocationData { Name = "westus", CanonicalName = "west-us", DisplayName = "West US" };
+        public static readonly Location WestUS = new Location { Name = "westus", CanonicalName = "west-us", DisplayName = "West US" };
 
         /// <summary>
         /// Public cloud location for North Central US.
         /// </summary>
-        public static readonly LocationData NorthCentralUS = new LocationData { Name = "northcentralus", CanonicalName = "north-central-us", DisplayName = "North Central US" };
+        public static readonly Location NorthCentralUS = new Location { Name = "northcentralus", CanonicalName = "north-central-us", DisplayName = "North Central US" };
 
         /// <summary>
         /// Public cloud location for South Central US.
         /// </summary>
-        public static readonly LocationData SouthCentralUS = new LocationData { Name = "southcentralus", CanonicalName = "south-central-us", DisplayName = "South Central US" };
+        public static readonly Location SouthCentralUS = new Location { Name = "southcentralus", CanonicalName = "south-central-us", DisplayName = "South Central US" };
 
         /// <summary>
         /// Public cloud location for North Europe.
         /// </summary>
-        public static readonly LocationData NorthEurope = new LocationData { Name = "northeurope", CanonicalName = "north-europe", DisplayName = "North Europe" };
+        public static readonly Location NorthEurope = new Location { Name = "northeurope", CanonicalName = "north-europe", DisplayName = "North Europe" };
 
         /// <summary>
         /// Public cloud location for West Europe.
         /// </summary>
-        public static readonly LocationData WestEurope = new LocationData { Name = "westeurope", CanonicalName = "west-europe", DisplayName = "West Europe" };
+        public static readonly Location WestEurope = new Location { Name = "westeurope", CanonicalName = "west-europe", DisplayName = "West Europe" };
 
         /// <summary>
         /// Public cloud location for Japan West.
         /// </summary>
-        public static readonly LocationData JapanWest = new LocationData { Name = "japanwest", CanonicalName = "japan-west", DisplayName = "Japan West" };
+        public static readonly Location JapanWest = new Location { Name = "japanwest", CanonicalName = "japan-west", DisplayName = "Japan West" };
 
         /// <summary>
         /// Public cloud location for Japan East.
         /// </summary>
-        public static readonly LocationData JapanEast = new LocationData { Name = "japaneast", CanonicalName = "japan-east", DisplayName = "Japan East" };
+        public static readonly Location JapanEast = new Location { Name = "japaneast", CanonicalName = "japan-east", DisplayName = "Japan East" };
 
         /// <summary>
         /// Public cloud location for Brazil South.
         /// </summary>
-        public static readonly LocationData BrazilSouth = new LocationData { Name = "brazilsouth", CanonicalName = "brazil-south", DisplayName = "Brazil South" };
+        public static readonly Location BrazilSouth = new Location { Name = "brazilsouth", CanonicalName = "brazil-south", DisplayName = "Brazil South" };
 
         /// <summary>
         /// Public cloud location for Australia East.
         /// </summary>
-        public static readonly LocationData AustraliaEast = new LocationData { Name = "australiaeast", CanonicalName = "australia-east", DisplayName = "Australia East" };
+        public static readonly Location AustraliaEast = new Location { Name = "australiaeast", CanonicalName = "australia-east", DisplayName = "Australia East" };
 
         /// <summary>
         /// Public cloud location for Australia Southeast.
         /// </summary>
-        public static readonly LocationData AustraliaSoutheast = new LocationData { Name = "australiasoutheast", CanonicalName = "australia-southeast", DisplayName = "Australia Southeast" };
+        public static readonly Location AustraliaSoutheast = new Location { Name = "australiasoutheast", CanonicalName = "australia-southeast", DisplayName = "Australia Southeast" };
 
         /// <summary>
         /// Public cloud location for South India.
         /// </summary>
-        public static readonly LocationData SouthIndia = new LocationData { Name = "southindia", CanonicalName = "south-india", DisplayName = "South India" };
+        public static readonly Location SouthIndia = new Location { Name = "southindia", CanonicalName = "south-india", DisplayName = "South India" };
 
         /// <summary>
         /// Public cloud location for Central India.
         /// </summary>
-        public static readonly LocationData CentralIndia = new LocationData { Name = "centralindia", CanonicalName = "central-india", DisplayName = "Central India" };
+        public static readonly Location CentralIndia = new Location { Name = "centralindia", CanonicalName = "central-india", DisplayName = "Central India" };
 
         /// <summary>
         /// Public cloud location for West India.
         /// </summary>
-        public static readonly LocationData WestIndia = new LocationData { Name = "westindia", CanonicalName = "west-india", DisplayName = "West India" };
+        public static readonly Location WestIndia = new Location { Name = "westindia", CanonicalName = "west-india", DisplayName = "West India" };
 
         /// <summary>
         /// Public cloud location for Canada Central.
         /// </summary>
-        public static readonly LocationData CanadaCentral = new LocationData { Name = "canadacentral", CanonicalName = "canada-central", DisplayName = "Canada Central" };
+        public static readonly Location CanadaCentral = new Location { Name = "canadacentral", CanonicalName = "canada-central", DisplayName = "Canada Central" };
 
         /// <summary>
         /// Public cloud location for Canada East.
         /// </summary>
-        public static readonly LocationData CanadaEast = new LocationData { Name = "canadaeast", CanonicalName = "canada-east", DisplayName = "Canada East" };
+        public static readonly Location CanadaEast = new Location { Name = "canadaeast", CanonicalName = "canada-east", DisplayName = "Canada East" };
 
         /// <summary>
         /// Public cloud location for UK South.
         /// </summary>
-        public static readonly LocationData UKSouth = new LocationData { Name = "uksouth", CanonicalName = "uk-south", DisplayName = "UK South" };
+        public static readonly Location UKSouth = new Location { Name = "uksouth", CanonicalName = "uk-south", DisplayName = "UK South" };
 
         /// <summary>
         /// Public cloud location for UK West.
         /// </summary>
-        public static readonly LocationData UKWest = new LocationData { Name = "ukwest", CanonicalName = "uk-west", DisplayName = "UK West" };
+        public static readonly Location UKWest = new Location { Name = "ukwest", CanonicalName = "uk-west", DisplayName = "UK West" };
 
         /// <summary>
         /// Public cloud location for West Central US.
         /// </summary>
-        public static readonly LocationData WestCentralUS = new LocationData { Name = "westcentralus", CanonicalName = "west-central-us", DisplayName = "West Central US" };
+        public static readonly Location WestCentralUS = new Location { Name = "westcentralus", CanonicalName = "west-central-us", DisplayName = "West Central US" };
 
         /// <summary>
         /// Public cloud location for West US 2.
         /// </summary>
-        public static readonly LocationData WestUS2 = new LocationData { Name = "westus2", CanonicalName = "west-us-2", DisplayName = "West US 2" };
+        public static readonly Location WestUS2 = new Location { Name = "westus2", CanonicalName = "west-us-2", DisplayName = "West US 2" };
 
         /// <summary>
         /// Public cloud location for Korea Central.
         /// </summary>
-        public static readonly LocationData KoreaCentral = new LocationData { Name = "koreacentral", CanonicalName = "korea-central", DisplayName = "Korea Central" };
+        public static readonly Location KoreaCentral = new Location { Name = "koreacentral", CanonicalName = "korea-central", DisplayName = "Korea Central" };
 
         /// <summary>
         /// Public cloud location for Korea South.
         /// </summary>
-        public static readonly LocationData KoreaSouth = new LocationData { Name = "koreasouth", CanonicalName = "korea-south", DisplayName = "Korea South" };
+        public static readonly Location KoreaSouth = new Location { Name = "koreasouth", CanonicalName = "korea-south", DisplayName = "Korea South" };
 
         /// <summary>
         /// Public cloud location for France Central.
         /// </summary>
-        public static readonly LocationData FranceCentral = new LocationData { Name = "francecentral", CanonicalName = "france-central", DisplayName = "France Central" };
+        public static readonly Location FranceCentral = new Location { Name = "francecentral", CanonicalName = "france-central", DisplayName = "France Central" };
 
         /// <summary>
         /// Public cloud location for France South.
         /// </summary>
-        public static readonly LocationData FranceSouth = new LocationData { Name = "francesouth", CanonicalName = "france-south", DisplayName = "France South" };
+        public static readonly Location FranceSouth = new Location { Name = "francesouth", CanonicalName = "france-south", DisplayName = "France South" };
 
         /// <summary>
         /// Public cloud location for Australia Central.
         /// </summary>
-        public static readonly LocationData AustraliaCentral = new LocationData { Name = "australiacentral", CanonicalName = "australia-central", DisplayName = "Australia Central" };
+        public static readonly Location AustraliaCentral = new Location { Name = "australiacentral", CanonicalName = "australia-central", DisplayName = "Australia Central" };
 
         /// <summary>
         /// Public cloud location for Australia Central 2.
         /// </summary>
-        public static readonly LocationData AustraliaCentral2 = new LocationData { Name = "australiacentral2", CanonicalName = "australia-central-2", DisplayName = "Australia Central 2" };
+        public static readonly Location AustraliaCentral2 = new Location { Name = "australiacentral2", CanonicalName = "australia-central-2", DisplayName = "Australia Central 2" };
 
         /// <summary>
         /// Public cloud location for UAE Central.
         /// </summary>
-        public static readonly LocationData UAECentral = new LocationData { Name = "uaecentral", CanonicalName = "uae-central", DisplayName = "UAE Central" };
+        public static readonly Location UAECentral = new Location { Name = "uaecentral", CanonicalName = "uae-central", DisplayName = "UAE Central" };
 
         /// <summary>
         /// Public cloud location for UAE North.
         /// </summary>
-        public static readonly LocationData UAENorth = new LocationData { Name = "uaenorth", CanonicalName = "uae-north", DisplayName = "UAE North" };
+        public static readonly Location UAENorth = new Location { Name = "uaenorth", CanonicalName = "uae-north", DisplayName = "UAE North" };
 
         /// <summary>
         /// Public cloud location for South Africa North.
         /// </summary>
-        public static readonly LocationData SouthAfricaNorth = new LocationData { Name = "southafricanorth", CanonicalName = "south-africa-north", DisplayName = "South Africa North" };
+        public static readonly Location SouthAfricaNorth = new Location { Name = "southafricanorth", CanonicalName = "south-africa-north", DisplayName = "South Africa North" };
 
         /// <summary>
         /// Public cloud location for South Africa West.
         /// </summary>
-        public static readonly LocationData SouthAfricaWest = new LocationData { Name = "southafricawest", CanonicalName = "south-africa-west", DisplayName = "South Africa West" };
+        public static readonly Location SouthAfricaWest = new Location { Name = "southafricawest", CanonicalName = "south-africa-west", DisplayName = "South Africa West" };
 
         /// <summary>
         /// Public cloud location for Switzerland North.
         /// </summary>
-        public static readonly LocationData SwitzerlandNorth = new LocationData { Name = "switzerlandnorth", CanonicalName = "switzerland-north", DisplayName = "Switzerland North" };
+        public static readonly Location SwitzerlandNorth = new Location { Name = "switzerlandnorth", CanonicalName = "switzerland-north", DisplayName = "Switzerland North" };
 
         /// <summary>
         /// Public cloud location for Switzerland West.
         /// </summary>
-        public static readonly LocationData SwitzerlandWest = new LocationData { Name = "switzerlandwest", CanonicalName = "switzerland-west", DisplayName = "Switzerland West" };
+        public static readonly Location SwitzerlandWest = new Location { Name = "switzerlandwest", CanonicalName = "switzerland-west", DisplayName = "Switzerland West" };
 
         /// <summary>
         /// Public cloud location for Germany North.
         /// </summary>
-        public static readonly LocationData GermanyNorth = new LocationData { Name = "germanynorth", CanonicalName = "germany-north", DisplayName = "Germany North" };
+        public static readonly Location GermanyNorth = new Location { Name = "germanynorth", CanonicalName = "germany-north", DisplayName = "Germany North" };
 
         /// <summary>
         /// Public cloud location for Germany West Central.
         /// </summary>
-        public static readonly LocationData GermanyWestCentral = new LocationData { Name = "germanywestcentral", CanonicalName = "germany-west-central", DisplayName = "Germany West Central" };
+        public static readonly Location GermanyWestCentral = new Location { Name = "germanywestcentral", CanonicalName = "germany-west-central", DisplayName = "Germany West Central" };
 
         /// <summary>
         /// Public cloud location for Norway West.
         /// </summary>
-        public static readonly LocationData NorwayWest = new LocationData { Name = "norwaywest", CanonicalName = "norway-west", DisplayName = "Norway West" };
+        public static readonly Location NorwayWest = new Location { Name = "norwaywest", CanonicalName = "norway-west", DisplayName = "Norway West" };
 
         /// <summary>
         /// Public cloud location for Brazil Southeast.
         /// </summary>
-        public static readonly LocationData BrazilSoutheast = new LocationData { Name = "brazilsoutheast", CanonicalName = "brazil-southeast", DisplayName = "Brazil Southeast" };
+        public static readonly Location BrazilSoutheast = new Location { Name = "brazilsoutheast", CanonicalName = "brazil-southeast", DisplayName = "Brazil Southeast" };
 
         #endregion
-        private static readonly Dictionary<string, LocationData> PublicCloudLocations = new Dictionary<string, LocationData>()
+        private static readonly Dictionary<string, Location> PublicCloudLocations = new Dictionary<string, Location>()
         {
             { "EASTASIA", EastAsia },
             { "SOUTHEASTASIA", SoutheastAsia },
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Core
         private const string RegexDash = @"-";
         private const string RegexWhitespace = @" ";
 
-        private LocationData(string location)
+        private Location(string location)
         {
             switch (DetectNameType(location))
             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets default Location object: West US.
         /// </summary>
-        public static ref readonly LocationData Default => ref WestUS;
+        public static ref readonly Location Default => ref WestUS;
 
         /// <summary>
         /// Gets a location canonical name consisting of only lowercase chararters with a '-' between words, e.g. "west-us".
@@ -308,13 +308,10 @@ namespace Azure.ResourceManager.Core
         /// <summary> The display name of the location and its region. </summary>
         public string RegionalDisplayName { get; }
 
-        /// <summary> Metadata of the location, such as lat/long, paired region, and others. </summary>
-        public LocationMetadata Metadata { get; }
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="LocationData"/> class.
+        /// Initializes a new instance of the <see cref="Location"/> class.
         /// </summary>
-        private LocationData()
+        protected Location()
         {
         }
 
@@ -332,15 +329,14 @@ namespace Azure.ResourceManager.Core
         /// <param name="name"> The location name. </param>
         /// <param name="displayName"> The display name of the location. </param>
         /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
-        /// <param name="canonicalName"> The canonical name of the location . </param>
-        /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
-        internal LocationData(string name, string displayName, string regionalDisplayName, string canonicalName, LocationMetadata metadata)
+        /// <param name="canonicalName"> The canonical name of the location. </param>
+        internal Location(string name, string displayName, string regionalDisplayName, string canonicalName)//, LocationMetadata metadata)
         {
             Name = name;
             DisplayName = displayName;
             RegionalDisplayName = regionalDisplayName;
             CanonicalName = canonicalName;
-            Metadata = metadata;
+            //Metadata = metadata;
         }
 
         /// <summary>
@@ -357,26 +353,26 @@ namespace Azure.ResourceManager.Core
         /// Creates a new location implicitly from a string.
         /// </summary>
         /// <param name="other"> String to be assigned in the Name, CanonicalName or DisplayName form. </param>
-        public static implicit operator LocationData(string other)
+        public static implicit operator Location(string other)
         {
             if (ReferenceEquals(other, null))
                 return null;
 
             var normalizedName = NormalizationUtility(other);
-            LocationData value;
+            Location value;
             if (PublicCloudLocations.TryGetValue(normalizedName, out value))
             {
                 return value;
             }
 
-            return new LocationData(other);
+            return new Location(other);
         }
 
         /// <summary>
         /// Creates a string implicitly from a Location object.
         /// </summary>
         /// <param name="other"> Location object to be assigned. </param>
-        public static implicit operator string(LocationData other)
+        public static implicit operator string(Location other)
         {
             if (ReferenceEquals(other, null))
             {
@@ -391,7 +387,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="other"> Location object or name as a string. </param>
         /// <returns> True or false. </returns>
-        public bool Equals(LocationData other)
+        public bool Equals(Location other)
         {
             if (ReferenceEquals(other, null))
                 return false;
@@ -404,7 +400,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="other"> Location object or name as a string. </param>
         /// <returns> -1 for less than, 0 for equals, 1 for greater than. </returns>
-        public int CompareTo(LocationData other)
+        public int CompareTo(Location other)
         {
             if (ReferenceEquals(other, null))
             {
@@ -495,7 +491,7 @@ namespace Azure.ResourceManager.Core
                 return false;
             }
 
-            if (obj is not LocationData other)
+            if (obj is not Location other)
                 return false;
 
             return Equals(other);
@@ -508,12 +504,12 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Compares this <see cref="LocationData"/> instance with another object and determines if they are equals.
+        /// Compares this <see cref="Location"/> instance with another object and determines if they are equals.
         /// </summary>
         /// <param name="left"> The object on the left side of the operator. </param>
         /// <param name="right"> The object on the right side of the operator. </param>
         /// <returns> True if they are equal, otherwise false. </returns>
-        public static bool operator ==(LocationData left, LocationData right)
+        public static bool operator ==(Location left, Location right)
         {
             if (ReferenceEquals(left, null))
             {
@@ -524,56 +520,56 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Compares this <see cref="LocationData"/> instance with another object and determines if they are equals.
+        /// Compares this <see cref="Location"/> instance with another object and determines if they are equals.
         /// </summary>
         /// <param name="left"> The object on the left side of the operator. </param>
         /// <param name="right"> The object on the right side of the operator. </param>
         /// <returns> True if they are not equal, otherwise false. </returns>
-        public static bool operator !=(LocationData left, LocationData right)
+        public static bool operator !=(Location left, Location right)
         {
             return !(left == right);
         }
 
         /// <summary>
-        /// Compares one <see cref="LocationData"/> with another instance.
+        /// Compares one <see cref="Location"/> with another instance.
         /// </summary>
         /// <param name="left"> The object on the left side of the operator. </param>
         /// <param name="right"> The object on the right side of the operator. </param>
         /// <returns> True if the left object is less than the right. </returns>
-        public static bool operator <(LocationData left, LocationData right)
+        public static bool operator <(Location left, Location right)
         {
             return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
         }
 
         /// <summary>
-        /// Compares one <see cref="LocationData"/> with another instance.
+        /// Compares one <see cref="Location"/> with another instance.
         /// </summary>
         /// <param name="left"> The object on the left side of the operator. </param>
         /// <param name="right"> The object on the right side of the operator. </param>
         /// <returns> True if the left object is less than or equal to the right. </returns>
-        public static bool operator <=(LocationData left, LocationData right)
+        public static bool operator <=(Location left, Location right)
         {
             return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
         }
 
         /// <summary>
-        /// Compares one <see cref="LocationData"/> with another instance.
+        /// Compares one <see cref="Location"/> with another instance.
         /// </summary>
         /// <param name="left"> The object on the left side of the operator. </param>
         /// <param name="right"> The object on the right side of the operator. </param>
         /// <returns> True if the left object is greater than the right. </returns>
-        public static bool operator >(LocationData left, LocationData right)
+        public static bool operator >(Location left, Location right)
         {
             return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
         }
 
         /// <summary>
-        /// Compares one <see cref="LocationData"/> with another instance.
+        /// Compares one <see cref="Location"/> with another instance.
         /// </summary>
         /// <param name="left"> The object on the left side of the operator. </param>
         /// <param name="right"> The object on the right side of the operator. </param>
         /// <returns> True if the left object is greater than or equal to the right. </returns>
-        public static bool operator >=(LocationData left, LocationData right)
+        public static bool operator >=(Location left, Location right)
         {
             return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }

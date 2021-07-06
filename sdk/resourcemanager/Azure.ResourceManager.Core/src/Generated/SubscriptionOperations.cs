@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.Core
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual AsyncPageable<LocationData> ListLocationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Location> ListLocationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
 
-            async Task<Page<LocationData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Location>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListLocations");
                 scope.Start();
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Core
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual Pageable<LocationData> ListLocations(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Pageable<Location> ListLocations(string subscriptionId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
 
-            Page<LocationData> FirstPageFunc(int? pageSizeHint)
+            Page<Location> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListLocations");
                 scope.Start();

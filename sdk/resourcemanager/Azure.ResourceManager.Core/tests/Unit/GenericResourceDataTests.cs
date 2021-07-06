@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Core.Tests
             ResourceGroupResourceIdentifier id = Id;
             Plan plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
             Sku sku = new Sku("NameForSku", "TierForSku", "SizeForSku", "FamilyForSku", "ModelForSku", 15464547);
-            GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, LocationData.EastUS, null, plan, null, "KindForResource", "ManagedByForResource", sku, null);
+            GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, Location.EastUS, null, plan, null, "KindForResource", "ManagedByForResource", sku, null);
 
             var json = JsonHelper.SerializePropertiesToString(data, indented: true) + Environment.NewLine;
             Assert.AreEqual(expected, json);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Core.Tests
             var kind = "KindForResource";
             var managedBy = "ManagedByForResource";
             var sku = new Sku("NameForSku", "TierForSku", "SizeForSku", "FamilyForSku", "ModelForSku", 15464547);
-            GenericResourceData genericResource = new GenericResourceData(id, id.Name, id.ResourceType, LocationData.EastUS, null, plan, null, kind, managedBy, sku, null);
+            GenericResourceData genericResource = new GenericResourceData(id, id.Name, id.ResourceType, Location.EastUS, null, plan, null, kind, managedBy, sku, null);
             genericResource.Tags.Add("key1", "value1");
             genericResource.Tags.Add("key2", "value2");
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             string expected = "{\"properties\":{\"location\":\"East US\",\"tags\":{}}}";
             ResourceGroupResourceIdentifier id = Id;
-            GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, LocationData.EastUS, null, null, null, null, null, null, null);
+            GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, Location.EastUS, null, null, null, null, null, null, null);
 
             var json = JsonHelper.SerializePropertiesToString(data);
             Assert.AreEqual(expected, json);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Core.Tests
             JsonElement element = JsonDocument.Parse(json).RootElement;
             GenericResourceData data = GenericResourceData.DeserializeGenericResource(element);
             Assert.AreEqual("account1", data.Name);
-            Assert.AreEqual(LocationData.EastUS, data.Location);
+            Assert.AreEqual(Location.EastUS, data.Location);
             Assert.AreEqual("PromotionCodeForPlan", data.Plan.PromotionCode);
         }
 
