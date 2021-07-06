@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Net.Mime;
 using Azure.AI.TextAnalytics.Models;
 using Azure.Core;
 
@@ -99,8 +98,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.
         /// </summary>
-        /// <param name="sentiment">Sets the <see cref="TextAnalytics.SentenceSentiment.Sentiment"/> property.</param>
-        /// <param name="text">Sets the <see cref="MediaTypeNames.Text"/> property.</param>
+        /// <param name="sentiment">Sets the <see cref="SentenceSentiment.Sentiment"/> property.</param>
+        /// <param name="text">Sets the <see cref="SentenceSentiment.Text"/> property.</param>
         /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
         /// <param name="neutralScore">Sets the <see cref="SentimentConfidenceScores.Neutral"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
@@ -114,14 +113,14 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.
         /// </summary>
-        /// <param name="sentiment">Sets the <see cref="TextAnalytics.SentenceSentiment.Sentiment"/> property.</param>
-        /// <param name="text">Sets the <see cref="MediaTypeNames.Text"/> property.</param>
+        /// <param name="sentiment">Sets the <see cref="SentenceSentiment.Sentiment"/> property.</param>
+        /// <param name="text">Sets the <see cref="SentenceSentiment.Text"/> property.</param>
         /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
         /// <param name="neutralScore">Sets the <see cref="SentimentConfidenceScores.Neutral"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
-        /// <param name="offset">Sets the <see cref="TextAnalytics.SentenceSentiment.Offset"/> property.</param>
-        /// <param name="length">Sets the <see cref="TextAnalytics.SentenceSentiment.Length"/> property.</param>
-        /// <param name="opinions">Sets the <see cref="TextAnalytics.SentenceSentiment.Opinions"/> property.</param>
+        /// <param name="offset">Sets the <see cref="SentenceSentiment.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="SentenceSentiment.Length"/> property.</param>
+        /// <param name="opinions">Sets the <see cref="SentenceSentiment.Opinions"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.</returns>
         public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IEnumerable<SentenceOpinion> opinions)
         {
@@ -133,7 +132,7 @@ namespace Azure.AI.TextAnalytics
         /// Initializes a new instance of <see cref="TextAnalytics.TargetSentiment"/> for mocking purposes.
         /// </summary>
         /// <param name="sentiment">Sets the <see cref="TargetSentiment.Sentiment"/> property.</param>
-        /// <param name="text">Sets the <see cref="MediaTypeNames.Text"/> property.</param>
+        /// <param name="text">Sets the <see cref="TargetSentiment.Text"/> property.</param>
         /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
         /// <param name="offset">Sets the <see cref="TargetSentiment.Offset"/> property.</param>
@@ -150,7 +149,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="sentiment">Sets the <see cref="AssessmentSentiment.Sentiment"/> property.</param>
         /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
-        /// <param name="text">Sets the <see cref="MediaTypeNames.Text"/> property.</param>
+        /// <param name="text">Sets the <see cref="AssessmentSentiment.Text"/> property.</param>
         /// <param name="isNegated">Sets the <see cref="AssessmentSentiment.IsNegated"/> property.</param>
         /// <param name="offset">Sets the <see cref="AssessmentSentiment.Offset"/> property.</param>
         /// <param name="length">Sets the <see cref="AssessmentSentiment.Length"/> property.</param>
@@ -176,7 +175,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
-        /// <param name="documentSentiment">Sets the <see cref="TextAnalytics.DocumentSentiment"/> property.</param>
+        /// <param name="documentSentiment">Sets the <see cref="AnalyzeSentimentResult.DocumentSentiment"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentResult"/> for mocking purposes.</returns>
         public static AnalyzeSentimentResult AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, DocumentSentiment documentSentiment)
         {
@@ -264,10 +263,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.
         /// </summary>
-        /// <param name="text">Sets the <see cref="MediaTypeNames.Text"/> property.</param>
-        /// <param name="category">Sets the <see cref="TextAnalytics.CategorizedEntity.Category"/> property.</param>
-        /// <param name="subCategory">Sets the <see cref="TextAnalytics.CategorizedEntity.SubCategory"/> property.</param>
-        /// <param name="score">Sets the <see cref="TextAnalytics.CategorizedEntity.ConfidenceScore"/> property.</param>
+        /// <param name="text">Sets the <see cref="CategorizedEntity.Text"/> property.</param>
+        /// <param name="category">Sets the <see cref="CategorizedEntity.Category"/> property.</param>
+        /// <param name="subCategory">Sets the <see cref="CategorizedEntity.SubCategory"/> property.</param>
+        /// <param name="score">Sets the <see cref="CategorizedEntity.ConfidenceScore"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score)
@@ -278,12 +277,12 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.
         /// </summary>
-        /// <param name="text">Sets the <see cref="MediaTypeNames.Text"/> property.</param>
-        /// <param name="category">Sets the <see cref="TextAnalytics.CategorizedEntity.Category"/> property.</param>
-        /// <param name="subCategory">Sets the <see cref="TextAnalytics.CategorizedEntity.SubCategory"/> property.</param>
-        /// <param name="score">Sets the <see cref="TextAnalytics.CategorizedEntity.ConfidenceScore"/> property.</param>
-        /// <param name="offset">Sets the <see cref="TextAnalytics.CategorizedEntity.Offset"/> property.</param>
-        /// <param name="length">Sets the <see cref="TextAnalytics.CategorizedEntity.Length"/> property.</param>
+        /// <param name="text">Sets the <see cref="CategorizedEntity.Text"/> property.</param>
+        /// <param name="category">Sets the <see cref="CategorizedEntity.Category"/> property.</param>
+        /// <param name="subCategory">Sets the <see cref="CategorizedEntity.SubCategory"/> property.</param>
+        /// <param name="score">Sets the <see cref="CategorizedEntity.ConfidenceScore"/> property.</param>
+        /// <param name="offset">Sets the <see cref="CategorizedEntity.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="CategorizedEntity.Length"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
         public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset, int length)
         {
@@ -343,7 +342,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.PiiEntity"/> for mocking purposes.
         /// </summary>
-        /// <param name="text">Sets the <see cref="MediaTypeNames.Text"/> property.</param>
+        /// <param name="text">Sets the <see cref="PiiEntity.Text"/> property.</param>
         /// <param name="category">Sets the <see cref="PiiEntity.Category"/> property.</param>
         /// <param name="subCategory">Sets the <see cref="PiiEntity.SubCategory"/> property.</param>
         /// <param name="score">Sets the <see cref="PiiEntity.ConfidenceScore"/> property.</param>
@@ -411,7 +410,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
-        /// <param name="keyPhrases">Sets the <see cref="TextAnalytics.ExtractKeyPhrasesResult.KeyPhrases"/> property.</param>
+        /// <param name="keyPhrases">Sets the <see cref="ExtractKeyPhrasesResult.KeyPhrases"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesResult"/> for mocking purposes.</returns>
         public static ExtractKeyPhrasesResult ExtractKeyPhrasesResult(string id, TextDocumentStatistics statistics, KeyPhraseCollection keyPhrases)
         {
@@ -459,12 +458,12 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.
         /// </summary>
-        /// <param name="name">Sets the <see cref="TextAnalytics.LinkedEntity.Name"/> property.</param>
-        /// <param name="dataSourceEntityId">Sets the <see cref="TextAnalytics.LinkedEntity.DataSourceEntityId"/> property.</param>
-        /// <param name="language">Sets the <see cref="TextAnalytics.LinkedEntity.Language"/> property.</param>
-        /// <param name="dataSource">Sets the <see cref="TextAnalytics.LinkedEntity.DataSource"/> property.</param>
-        /// <param name="url">Sets the <see cref="TextAnalytics.LinkedEntity.Url"/> property.</param>
-        /// <param name="matches">Sets the <see cref="TextAnalytics.LinkedEntity.Matches"/> property.</param>
+        /// <param name="name">Sets the <see cref="LinkedEntity.Name"/> property.</param>
+        /// <param name="dataSourceEntityId">Sets the <see cref="LinkedEntity.DataSourceEntityId"/> property.</param>
+        /// <param name="language">Sets the <see cref="LinkedEntity.Language"/> property.</param>
+        /// <param name="dataSource">Sets the <see cref="LinkedEntity.DataSource"/> property.</param>
+        /// <param name="url">Sets the <see cref="LinkedEntity.Url"/> property.</param>
+        /// <param name="matches">Sets the <see cref="LinkedEntity.Matches"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static LinkedEntity LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches)
@@ -475,13 +474,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.
         /// </summary>
-        /// <param name="name">Sets the <see cref="TextAnalytics.LinkedEntity.Name"/> property.</param>
-        /// <param name="dataSourceEntityId">Sets the <see cref="TextAnalytics.LinkedEntity.DataSourceEntityId"/> property.</param>
-        /// <param name="language">Sets the <see cref="TextAnalytics.LinkedEntity.Language"/> property.</param>
-        /// <param name="dataSource">Sets the <see cref="TextAnalytics.LinkedEntity.DataSource"/> property.</param>
-        /// <param name="url">Sets the <see cref="TextAnalytics.LinkedEntity.Url"/> property.</param>
-        /// <param name="matches">Sets the <see cref="TextAnalytics.LinkedEntity.Matches"/> property.</param>
-        /// <param name="bingEntitySearchApiId">Sets the <see cref="TextAnalytics.LinkedEntity.BingEntitySearchApiId"/> property.</param>
+        /// <param name="name">Sets the <see cref="LinkedEntity.Name"/> property.</param>
+        /// <param name="dataSourceEntityId">Sets the <see cref="LinkedEntity.DataSourceEntityId"/> property.</param>
+        /// <param name="language">Sets the <see cref="LinkedEntity.Language"/> property.</param>
+        /// <param name="dataSource">Sets the <see cref="LinkedEntity.DataSource"/> property.</param>
+        /// <param name="url">Sets the <see cref="LinkedEntity.Url"/> property.</param>
+        /// <param name="matches">Sets the <see cref="LinkedEntity.Matches"/> property.</param>
+        /// <param name="bingEntitySearchApiId">Sets the <see cref="LinkedEntity.BingEntitySearchApiId"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.</returns>
         public static LinkedEntity LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches, string bingEntitySearchApiId)
         {
@@ -491,8 +490,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntityMatch"/> for mocking purposes.
         /// </summary>
-        /// <param name="text">Sets the <see cref="MediaTypeNames.Text"/> property.</param>
-        /// <param name="score">Sets the <see cref="TextAnalytics.LinkedEntityMatch.ConfidenceScore"/> property.</param>
+        /// <param name="text">Sets the <see cref="LinkedEntityMatch.Text"/> property.</param>
+        /// <param name="score">Sets the <see cref="LinkedEntityMatch.ConfidenceScore"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntityMatch"/> for mocking purposes.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static LinkedEntityMatch LinkedEntityMatch(string text, double score)
@@ -503,10 +502,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntityMatch"/> for mocking purposes.
         /// </summary>
-        /// <param name="text">Sets the <see cref="MediaTypeNames.Text"/> property.</param>
-        /// <param name="score">Sets the <see cref="TextAnalytics.LinkedEntityMatch.ConfidenceScore"/> property.</param>
-        /// <param name="offset">Sets the <see cref="TextAnalytics.LinkedEntityMatch.Offset"/> property.</param>
-        /// <param name="length">Sets the <see cref="TextAnalytics.LinkedEntityMatch.Length"/> property.</param>
+        /// <param name="text">Sets the <see cref="LinkedEntityMatch.Text"/> property.</param>
+        /// <param name="score">Sets the <see cref="LinkedEntityMatch.ConfidenceScore"/> property.</param>
+        /// <param name="offset">Sets the <see cref="LinkedEntityMatch.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="LinkedEntityMatch.Length"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.LinkedEntityMatch"/> for mocking purposes.</returns>
         public static LinkedEntityMatch LinkedEntityMatch(string text, double score, int offset, int length)
         {
@@ -617,7 +616,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="result">Sets the <see cref="TextAnalytics.ExtractKeyPhrasesActionResult.DocumentsResults"/> property.</param>
+        /// <param name="result">Sets the <see cref="ExtractKeyPhrasesActionResult.DocumentsResults"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/> for mocking purposes.</returns>
         public static ExtractKeyPhrasesActionResult ExtractKeyPhrasesActionResult(
@@ -645,7 +644,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="result">Sets the <see cref="TextAnalytics.AnalyzeSentimentActionResult.DocumentsResults"/> property.</param>
+        /// <param name="result">Sets the <see cref="AnalyzeSentimentActionResult.DocumentsResults"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.</returns>
         public static AnalyzeSentimentActionResult AnalyzeSentimentActionResult(
@@ -673,7 +672,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="result">Sets the <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult.DocumentsResults"/> property.</param>
+        /// <param name="result">Sets the <see cref="RecognizeLinkedEntitiesActionResult.DocumentsResults"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/> for mocking purposes.</returns>
         public static RecognizeLinkedEntitiesActionResult RecognizeLinkedEntitiesActionResult(
@@ -701,7 +700,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="result">Sets the <see cref="TextAnalytics.RecognizeEntitiesActionResult.DocumentsResults"/> property.</param>
+        /// <param name="result">Sets the <see cref="RecognizeEntitiesActionResult.DocumentsResults"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/> for mocking purposes.</returns>
         public static RecognizeEntitiesActionResult RecognizeEntitiesActionResult(
@@ -729,7 +728,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="result">Sets the <see cref="TextAnalytics.RecognizePiiEntitiesActionResult.DocumentsResults"/> property.</param>
+        /// <param name="result">Sets the <see cref="RecognizePiiEntitiesActionResult.DocumentsResults"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/> for mocking purposes.</returns>
         public static RecognizePiiEntitiesActionResult RecognizePiiEntitiesActionResult(
@@ -810,7 +809,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.HealthcareEntity"/> for mocking purposes.
         /// </summary>
-        /// <param name="text">Sets the <see cref="MediaTypeNames.Text"/> property.</param>
+        /// <param name="text">Sets the <see cref="HealthcareEntity.Text"/> property.</param>
         /// <param name="category">Sets the <see cref="HealthcareEntity.Category"/> property.</param>
         /// <param name="offset">Sets the <see cref="HealthcareEntity.Offset"/> property.</param>
         /// <param name="length">Sets the <see cref="HealthcareEntity.Length"/> property.</param>
@@ -829,7 +828,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.HealthcareEntityRelationRole"/> for mocking purposes.
         /// </summary>
-        /// <param name="text">Sets the <see cref="MediaTypeNames.Text"/> property.</param>
+        /// <param name="text">Sets the <see cref="HealthcareEntity.Text"/> property.</param>
         /// <param name="category">Sets the <see cref="HealthcareEntity.Category"/> property.</param>
         /// <param name="offset">Sets the <see cref="HealthcareEntity.Offset"/> property.</param>
         /// <param name="length">Sets the <see cref="HealthcareEntity.Length"/> property.</param>
