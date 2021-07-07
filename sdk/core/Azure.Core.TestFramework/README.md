@@ -524,8 +524,8 @@ var isSet = AppContext.TryGetSwitch("Azure.Core.Pipeline.DisableHttpWebRequestTr
 This type contains static helper methods that cover some of the gaps in NUnit when it comes to async assertions. For instance, attempting to assert that a specific exception is thrown using Assert.That, Assert.Throws, or Assert.ThrowsAsync all result in sync over async code, which can lead to test flakiness. 
 
 #### Example usage
-```c#
-var exception = await AsyncAssert.ThrowsAsync<ServiceBusException>(
+```c# 
+ServiceBusException exception = await AsyncAssert.ThrowsAsync<ServiceBusException>(
     async () => await args.CompleteMessageAsync(message, args.CancellationToken));
-Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, ((ServiceBusException) exception).Reason);
+Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, exception.Reason);
 ```

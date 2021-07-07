@@ -294,7 +294,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         // only do the assertion if cancellation wasn't requested as otherwise
                         // the exception we would get is a TaskCanceledException rather than ServiceBusException
                         Assert.AreEqual(lockedUntil, message.LockedUntil);
-                        var exception = await AsyncAssert.ThrowsAsync<ServiceBusException>(
+                        ServiceBusException exception = await AsyncAssert.ThrowsAsync<ServiceBusException>(
                             async () => await args.CompleteMessageAsync(message, args.CancellationToken));
                         Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, exception.Reason);
                         Interlocked.Increment(ref messageCt);
