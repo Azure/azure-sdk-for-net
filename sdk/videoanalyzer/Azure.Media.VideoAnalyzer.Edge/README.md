@@ -24,13 +24,13 @@ ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(connectio
 
 ### Install the package
 
-Install the Video Analyzer Edge client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Media.VideoAnalyzer.Edge):
+Install the Video Analyzer Edge client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```bash
 dotnet add package Azure.Media.VideoAnalyzer.Edge --prerelease
 ```
 
-Install the Azure IoT Hub SDk for .NET with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.Devices/):
+Install the Azure IoT Hub SDk for .NET with [NuGet](https://www.nuget.org/):
 
 ```bash
 dotnet add package Microsoft.Azure.Devices
@@ -218,11 +218,11 @@ additional questions or comments.
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 [package]: https://aka.ms/ava/sdk/client/net
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/videoanalyzer/Azure.Media.VideoAnalyzer.Edge/src
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/videoanalyzer/Azure.Media.VideoAnalyzer.Edge/src
 [samples]: https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp
-[doc_direct_methods]: https://docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/direct-methods
-[doc_pipelines]: https://docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/pipeline
-[doc_product]: https://docs.microsoft.com/en-us/azure/azure-video-analyzer/video-analyzer-docs/
+[doc_direct_methods]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/direct-methods
+[doc_pipelines]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/pipeline
+[doc_product]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/
 [iot-device-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices.Client/
 [iot-hub-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices/
 [github-page-issues]: https://github.com/Azure/azure-sdk-for-net/issues
