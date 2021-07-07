@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "4891",
+        "Content-Length": "4945",
         "Content-Type": "application/json",
-        "traceparent": "00-d56d5f4b18292d4a88e1382b58e09838-5b8716ee8f9d1f46-00",
+        "traceparent": "00-ae0a263fbcd1a04781b3d00801f738bb-ece8c18264e1754e-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.4.0-alpha.20210705.1",
-          "(.NET Framework 4.8.4360.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210707.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "1fae320b6b0ea04b478f8e251dff401a",
         "x-ms-return-client-request-id": "true"
@@ -120,25 +120,6 @@
             ]
           },
           {
-            "@odata.type": "#Microsoft.Skills.Text.V3.EntityRecognitionSkill",
-            "inputs": [
-              {
-                "name": "languageCode",
-                "source": "/document/content"
-              },
-              {
-                "name": "text",
-                "source": "/document/content"
-              }
-            ],
-            "outputs": [
-              {
-                "name": "persons",
-                "targetName": "fuvknxeo"
-              }
-            ]
-          },
-          {
             "@odata.type": "#Microsoft.Skills.Vision.ImageAnalysisSkill",
             "inputs": [
               {
@@ -149,7 +130,7 @@
             "outputs": [
               {
                 "name": "categories",
-                "targetName": "dmqnsedu"
+                "targetName": "fuvknxeo"
               }
             ]
           },
@@ -168,7 +149,7 @@
             "outputs": [
               {
                 "name": "keyPhrases",
-                "targetName": "jtsskqrg"
+                "targetName": "dmqnsedu"
               }
             ]
           },
@@ -183,15 +164,15 @@
             "outputs": [
               {
                 "name": "languageCode",
-                "targetName": "qtbcoodl"
+                "targetName": "jtsskqrg"
               },
               {
                 "name": "languageName",
-                "targetName": "fgxegswp"
+                "targetName": "qtbcoodl"
               },
               {
                 "name": "score",
-                "targetName": "ejefcfds"
+                "targetName": "fgxegswp"
               }
             ]
           },
@@ -214,7 +195,7 @@
             "outputs": [
               {
                 "name": "mergedText",
-                "targetName": "dtcklurn"
+                "targetName": "ejefcfds"
               }
             ]
           },
@@ -232,11 +213,11 @@
             "outputs": [
               {
                 "name": "text",
-                "targetName": "dpsswbyn"
+                "targetName": "dtcklurn"
               },
               {
                 "name": "layoutText",
-                "targetName": "ieilgxop"
+                "targetName": "dpsswbyn"
               }
             ]
           },
@@ -257,15 +238,16 @@
             "outputs": [
               {
                 "name": "piiEntities",
-                "targetName": "wdnammdl"
+                "targetName": "ieilgxop"
               },
               {
                 "name": "maskedText",
-                "targetName": "pixulsyk"
+                "targetName": "wdnammdl"
               }
             ]
           },
           {
+            "defaultLanguageCode": "en",
             "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
             "inputs": [
               {
@@ -280,34 +262,7 @@
             "outputs": [
               {
                 "name": "score",
-                "targetName": "ojbpydrd"
-              }
-            ]
-          },
-          {
-            "@odata.type": "#Microsoft.Skills.Text.V3.SentimentSkill",
-            "inputs": [
-              {
-                "name": "text",
-                "source": "/document/content"
-              },
-              {
-                "name": "languageCode",
-                "source": "/document/content"
-              }
-            ],
-            "outputs": [
-              {
-                "name": "sentiment",
-                "targetName": "jpvwwqmf"
-              },
-              {
-                "name": "confidenceScores",
-                "targetName": "fmmhhqbp"
-              },
-              {
-                "name": "sentences",
-                "targetName": "lhcodeco"
+                "targetName": "pixulsyk"
               }
             ]
           },
@@ -322,7 +277,7 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "ewwwvxpt"
+                "targetName": "ojbpydrd"
               }
             ]
           },
@@ -342,7 +297,7 @@
             "outputs": [
               {
                 "name": "textItems",
-                "targetName": "kkqvpgny"
+                "targetName": "jpvwwqmf"
               }
             ]
           },
@@ -366,15 +321,15 @@
             "outputs": [
               {
                 "name": "translatedText",
-                "targetName": "vspygrdw"
+                "targetName": "fmmhhqbp"
               },
               {
                 "name": "translatedToLanguageCode",
-                "targetName": "hkeradaf"
+                "targetName": "lhcodeco"
               },
               {
                 "name": "translatedFromLanguageCode",
-                "targetName": "ngrysoih"
+                "targetName": "ewwwvxpt"
               }
             ]
           },
@@ -390,6 +345,53 @@
             "outputs": [
               {
                 "name": "output",
+                "targetName": "kkqvpgny"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.V3.EntityRecognitionSkill",
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content"
+              },
+              {
+                "name": "text",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "persons",
+                "targetName": "vspygrdw"
+              }
+            ]
+          },
+          {
+            "defaultLanguageCode": "en",
+            "@odata.type": "#Microsoft.Skills.Text.V3.SentimentSkill",
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content"
+              },
+              {
+                "name": "text",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "sentiment",
+                "targetName": "hkeradaf"
+              },
+              {
+                "name": "confidenceScores",
+                "targetName": "ngrysoih"
+              },
+              {
+                "name": "sentences",
                 "targetName": "vswwaeyf"
               }
             ]
@@ -409,9 +411,9 @@
         "client-request-id": "1fae320b-6b0e-a04b-478f-8e251dff401a",
         "Content-Length": "8111",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 06 Jul 2021 00:27:37 GMT",
-        "elapsed-time": "84",
-        "ETag": "W/\u00220x8D94014DBBE882A\u0022",
+        "Date": "Wed, 07 Jul 2021 22:39:09 GMT",
+        "elapsed-time": "71",
+        "ETag": "W/\u00220x8D94198096078C1\u0022",
         "Expires": "-1",
         "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027lefvvewn\u0027)?api-version=2021-04-30-Preview",
         "OData-Version": "4.0",
@@ -423,7 +425,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D94014DBBE882A\u0022",
+        "@odata.etag": "\u00220x8D94198096078C1\u0022",
         "name": "lefvvewn",
         "description": null,
         "skills": [
@@ -578,36 +580,6 @@
             ]
           },
           {
-            "@odata.type": "#Microsoft.Skills.Text.V3.EntityRecognitionSkill",
-            "name": null,
-            "description": null,
-            "context": null,
-            "categories": [],
-            "defaultLanguageCode": null,
-            "minimumPrecision": null,
-            "modelVersion": null,
-            "inputs": [
-              {
-                "name": "languageCode",
-                "source": "/document/content",
-                "sourceContext": null,
-                "inputs": []
-              },
-              {
-                "name": "text",
-                "source": "/document/content",
-                "sourceContext": null,
-                "inputs": []
-              }
-            ],
-            "outputs": [
-              {
-                "name": "persons",
-                "targetName": "fuvknxeo"
-              }
-            ]
-          },
-          {
             "@odata.type": "#Microsoft.Skills.Vision.ImageAnalysisSkill",
             "name": null,
             "description": null,
@@ -626,7 +598,7 @@
             "outputs": [
               {
                 "name": "categories",
-                "targetName": "dmqnsedu"
+                "targetName": "fuvknxeo"
               }
             ]
           },
@@ -655,7 +627,7 @@
             "outputs": [
               {
                 "name": "keyPhrases",
-                "targetName": "jtsskqrg"
+                "targetName": "dmqnsedu"
               }
             ]
           },
@@ -677,15 +649,15 @@
             "outputs": [
               {
                 "name": "languageCode",
-                "targetName": "qtbcoodl"
+                "targetName": "jtsskqrg"
               },
               {
                 "name": "languageName",
-                "targetName": "fgxegswp"
+                "targetName": "qtbcoodl"
               },
               {
                 "name": "score",
-                "targetName": "ejefcfds"
+                "targetName": "fgxegswp"
               }
             ]
           },
@@ -719,7 +691,7 @@
             "outputs": [
               {
                 "name": "mergedText",
-                "targetName": "dtcklurn"
+                "targetName": "ejefcfds"
               }
             ]
           },
@@ -743,11 +715,11 @@
             "outputs": [
               {
                 "name": "text",
-                "targetName": "dpsswbyn"
+                "targetName": "dtcklurn"
               },
               {
                 "name": "layoutText",
-                "targetName": "ieilgxop"
+                "targetName": "dpsswbyn"
               }
             ]
           },
@@ -778,11 +750,11 @@
             "outputs": [
               {
                 "name": "piiEntities",
-                "targetName": "wdnammdl"
+                "targetName": "ieilgxop"
               },
               {
                 "name": "maskedText",
-                "targetName": "pixulsyk"
+                "targetName": "wdnammdl"
               }
             ]
           },
@@ -791,7 +763,7 @@
             "name": null,
             "description": null,
             "context": null,
-            "defaultLanguageCode": null,
+            "defaultLanguageCode": "en",
             "inputs": [
               {
                 "name": "text",
@@ -809,44 +781,7 @@
             "outputs": [
               {
                 "name": "score",
-                "targetName": "ojbpydrd"
-              }
-            ]
-          },
-          {
-            "@odata.type": "#Microsoft.Skills.Text.V3.SentimentSkill",
-            "name": null,
-            "description": null,
-            "context": null,
-            "defaultLanguageCode": null,
-            "modelVersion": null,
-            "includeOpinionMining": false,
-            "inputs": [
-              {
-                "name": "text",
-                "source": "/document/content",
-                "sourceContext": null,
-                "inputs": []
-              },
-              {
-                "name": "languageCode",
-                "source": "/document/content",
-                "sourceContext": null,
-                "inputs": []
-              }
-            ],
-            "outputs": [
-              {
-                "name": "sentiment",
-                "targetName": "jpvwwqmf"
-              },
-              {
-                "name": "confidenceScores",
-                "targetName": "fmmhhqbp"
-              },
-              {
-                "name": "sentences",
-                "targetName": "lhcodeco"
+                "targetName": "pixulsyk"
               }
             ]
           },
@@ -866,7 +801,7 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "ewwwvxpt"
+                "targetName": "ojbpydrd"
               }
             ]
           },
@@ -895,7 +830,7 @@
             "outputs": [
               {
                 "name": "textItems",
-                "targetName": "kkqvpgny"
+                "targetName": "jpvwwqmf"
               }
             ]
           },
@@ -930,15 +865,15 @@
             "outputs": [
               {
                 "name": "translatedText",
-                "targetName": "vspygrdw"
+                "targetName": "fmmhhqbp"
               },
               {
                 "name": "translatedToLanguageCode",
-                "targetName": "hkeradaf"
+                "targetName": "lhcodeco"
               },
               {
                 "name": "translatedFromLanguageCode",
-                "targetName": "ngrysoih"
+                "targetName": "ewwwvxpt"
               }
             ]
           },
@@ -963,10 +898,77 @@
             "outputs": [
               {
                 "name": "output",
-                "targetName": "vswwaeyf"
+                "targetName": "kkqvpgny"
               }
             ],
             "httpHeaders": null
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.V3.EntityRecognitionSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "categories": [],
+            "defaultLanguageCode": null,
+            "minimumPrecision": null,
+            "modelVersion": null,
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "persons",
+                "targetName": "vspygrdw"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.V3.SentimentSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "defaultLanguageCode": "en",
+            "modelVersion": null,
+            "includeOpinionMining": false,
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "sentiment",
+                "targetName": "hkeradaf"
+              },
+              {
+                "name": "confidenceScores",
+                "targetName": "ngrysoih"
+              },
+              {
+                "name": "sentences",
+                "targetName": "vswwaeyf"
+              }
+            ]
           }
         ],
         "cognitiveServices": {

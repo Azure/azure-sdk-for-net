@@ -142,10 +142,10 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("captions");
                 writer.WriteStringValue(QueryCaptionRaw);
             }
-            if (Optional.IsDefined(SemanticFields))
+            if (Optional.IsDefined(SemanticFieldsRaw))
             {
                 writer.WritePropertyName("semanticFields");
-                writer.WriteStringValue(SemanticFields);
+                writer.WriteStringValue(SemanticFieldsRaw);
             }
             writer.WriteEndObject();
         }

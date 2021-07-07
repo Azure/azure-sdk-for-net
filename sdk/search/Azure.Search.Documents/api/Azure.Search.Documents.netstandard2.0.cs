@@ -141,7 +141,7 @@ namespace Azure.Search.Documents
         public System.Collections.Generic.IList<string> SearchFields { get { throw null; } }
         public Azure.Search.Documents.Models.SearchMode? SearchMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Select { get { throw null; } }
-        public string SemanticFields { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SemanticFields { get { throw null; } }
         public string SessionId { get { throw null; } set { } }
         public int? Size { get { throw null; } set { } }
         public int? Skip { get { throw null; } set { } }
@@ -1748,7 +1748,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
     }
-    public partial class SearchIndexerDataIdentity
+    public abstract partial class SearchIndexerDataIdentity
     {
         public SearchIndexerDataIdentity() { }
     }

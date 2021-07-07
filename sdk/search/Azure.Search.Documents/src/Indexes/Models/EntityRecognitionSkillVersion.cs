@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
             /// <summary> Version 3 of the <see cref="EntityRecognitionSkill"/>. </summary>
             public static EntityRecognitionSkillVersion V3 { get; } = new EntityRecognitionSkillVersion(V3Value);
 
-            /// <summary> Latest version of the <see cref="EntityRecognitionSkill"/> </summary>
+            /// <summary> Latest version of the <see cref="EntityRecognitionSkill"/>. </summary>
             public static EntityRecognitionSkillVersion Latest { get; } = EntityRecognitionSkillVersion.V3;
 
             /// <inheritdoc />
@@ -41,14 +41,14 @@ namespace Azure.Search.Documents.Indexes.Models
             public bool Equals(EntityRecognitionSkillVersion other) =>
                 string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-            /// <summary> Defines the '==' operator on <see cref="EntityRecognitionSkillVersion"/> </summary>
+            /// <summary> Defines the '==' operator on <see cref="EntityRecognitionSkillVersion"/>. </summary>
             public static bool operator ==(EntityRecognitionSkillVersion lhs, EntityRecognitionSkillVersion rhs) => lhs.Equals(rhs);
 
             /// <summary> Defines the '!=' operator on <see cref="EntityRecognitionSkillVersion"/>. </summary>
             public static bool operator !=(EntityRecognitionSkillVersion lhs, EntityRecognitionSkillVersion rhs) => !(lhs == rhs);
 
             /// <summary> Converts a string to a <see cref="EntityRecognitionSkillVersion"/>. </summary>
-            public static implicit operator EntityRecognitionSkillVersion(string value) => new EntityRecognitionSkillVersion(value);
+            public static implicit operator EntityRecognitionSkillVersion(string value) => new(value);
 
             /// <inheritdoc />
             [EditorBrowsable(EditorBrowsableState.Never)]

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -30,16 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     case "#Microsoft.Azure.Search.SearchIndexerDataUserAssignedIdentity": return SearchIndexerDataUserAssignedIdentity.DeserializeSearchIndexerDataUserAssignedIdentity(element);
                 }
             }
-            string odataType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new SearchIndexerDataIdentity(odataType);
+            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity' not supported.");
         }
     }
 }

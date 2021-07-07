@@ -52,7 +52,6 @@ namespace Azure.Search.Documents
         /// </summary>
         public IList<string> HighlightFields { get; internal set; } = new List<string>();
 
-        #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
         /// Join HighlightFields so it can be sent as a comma separated string.
         /// </summary>
@@ -62,7 +61,6 @@ namespace Azure.Search.Documents
             get => HighlightFields.CommaJoin();
             set => HighlightFields = SearchExtensions.CommaSplit(value);
         }
-        #pragma warning restore CA1822
 
         /// <summary>
         /// The list of field names to which to scope the full-text search.
@@ -72,7 +70,6 @@ namespace Azure.Search.Documents
         /// </summary>
         public IList<string> SearchFields { get; internal set; } = new List<string>();
 
-        #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
         /// Join SearchFields so it can be sent as a comma separated string.
         /// </summary>
@@ -82,7 +79,19 @@ namespace Azure.Search.Documents
             get => SearchFields.CommaJoin();
             set => SearchFields = SearchExtensions.CommaSplit(value);
         }
-        #pragma warning restore CA1822
+
+        /// <summary> The list of field names used for semantic search. </summary>
+        public IList<string> SemanticFields { get; internal set; } = new List<string>();
+
+        /// <summary>
+        /// Join SemanticFields so it can be sent as a comma-separated string.
+        /// </summary>
+        [CodeGenMember("semanticFields")]
+        internal string SemanticFieldsRaw
+        {
+            get => SemanticFields.CommaJoin();
+            set => SemanticFields = SearchExtensions.CommaSplit(value);
+        }
 
         /// <summary>
         /// The list of fields to retrieve.  If unspecified, all fields marked
@@ -90,7 +99,6 @@ namespace Azure.Search.Documents
         /// </summary>
         public IList<string> Select { get; internal set; } = new List<string>();
 
-        #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
         /// Join Select so it can be sent as a comma separated string.
         /// </summary>
@@ -100,7 +108,6 @@ namespace Azure.Search.Documents
             get => Select.CommaJoin();
             set => Select = SearchExtensions.CommaSplit(value);
         }
-        #pragma warning restore CA1822
 
         /// <summary>
         /// The number of search results to retrieve. This can be used in
@@ -125,7 +132,6 @@ namespace Azure.Search.Documents
         /// </summary>
         public IList<string> OrderBy { get; internal set; } = new List<string>();
 
-        #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
         /// Join OrderBy so it can be sent as a comma separated string.
         /// </summary>
@@ -135,7 +141,6 @@ namespace Azure.Search.Documents
             get => OrderBy.CommaJoin();
             set => OrderBy = SearchExtensions.CommaSplit(value);
         }
-        #pragma warning restore CA1822
 
         /// <summary>
         /// A value that specifies whether to fetch the total count of results
@@ -176,14 +181,10 @@ namespace Azure.Search.Documents
         /// <summary> A value that specifies whether <see cref="SearchResults{T}.Answers"/> should be returned as part of the search response. </summary>
         public QueryAnswer? QueryAnswer { get; set; }
 
-        /// <summary>
-        /// A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response.
-        /// </summary>
+        /// <summary> A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
         public int? QueryAnswerCount { get; set; }
 
-        /// <summary>
-        /// Constructed from <see cref="QueryAnswer"/> and <see cref="QueryAnswerCount"/>
-        /// </summary>
+        /// <summary> Constructed from <see cref="QueryAnswer"/> and <see cref="QueryAnswerCount"/>.</summary>
         [CodeGenMember("answers")]
         internal string QueryAnswerRaw
         {
@@ -249,9 +250,7 @@ namespace Azure.Search.Documents
         /// </summary>
         public bool? QueryCaptionHighlight { get; set; }
 
-        /// <summary>
-        /// Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlight"/>
-        /// </summary>
+        /// <summary> Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlight"/>.</summary>
         [CodeGenMember("captions")]
         internal string QueryCaptionRaw
         {

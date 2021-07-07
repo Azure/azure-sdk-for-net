@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="SentimentSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="skillVersion"> Service version information of the skill. Default value is <see cref="SentimentSkillVersion.V1"/> </param>
+        /// <param name="skillVersion"> Service version information of the skill. Default value is <see cref="SentimentSkillVersion.V1"/>. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
         public SentimentSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, SentimentSkillVersion skillVersion) : this(inputs, outputs)
         {
@@ -39,12 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// namely targets (nouns or verbs) and their associated assessment (adjective) in the text. Default is <c>false</c>. </summary>
         public bool? IncludeOpinionMining
         {
-            get
-            {
-                return _skillVersion == SentimentSkillVersion.V3 ?
-                    _includeOpinionMining :
-                    throw new InvalidOperationException($"{nameof(IncludeOpinionMining)} can only be used with {SentimentSkillVersion.V3}");
-            }
+            get => _includeOpinionMining;
             set
             {
                 if (_skillVersion != SentimentSkillVersion.V3)
@@ -60,12 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
         ///  We recommend you do not specify this value unless absolutely necessary. </summary>
         public string ModelVersion
         {
-            get
-            {
-                return _skillVersion == SentimentSkillVersion.V3 ?
-                    _modelVersion :
-                    throw new InvalidOperationException($"{nameof(ModelVersion)} can only be used with {SentimentSkillVersion.V3}");
-            }
+            get => _modelVersion;
 
             set
             {

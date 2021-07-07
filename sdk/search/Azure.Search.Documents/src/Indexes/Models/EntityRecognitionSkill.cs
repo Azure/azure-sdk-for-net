@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="skillVersion">Service version information of the skill. Default value is <see cref="EntityRecognitionSkillVersion.V1"/></param>
+        /// <param name="skillVersion">Service version information of the skill. Default value is <see cref="EntityRecognitionSkillVersion.V1"/>. </param>
         public EntityRecognitionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, EntityRecognitionSkillVersion skillVersion) : this(inputs, outputs)
         {
             _skillVersion = skillVersion;
@@ -40,12 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// entities which don't conform to one of the predefined types will not be surfaced. </summary>
         public bool? IncludeTypelessEntities
         {
-            get
-            {
-                return _skillVersion == EntityRecognitionSkillVersion.V1 ?
-                    _includeTypelessEntities :
-                    throw new InvalidOperationException($"{nameof(IncludeTypelessEntities)} can only be used with {EntityRecognitionSkillVersion.V1}");
-            }
+            get => _includeTypelessEntities;
 
             set
             {
@@ -62,12 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// We recommend you do not specify this value unless absolutely necessary. </summary>
         public string ModelVersion
         {
-            get
-            {
-                return _skillVersion == EntityRecognitionSkillVersion.V3 ?
-                    _modelVersion :
-                    throw new InvalidOperationException($"{nameof(ModelVersion)} can only be used with {EntityRecognitionSkillVersion.V3}");
-            }
+            get => _modelVersion;
 
             set
             {

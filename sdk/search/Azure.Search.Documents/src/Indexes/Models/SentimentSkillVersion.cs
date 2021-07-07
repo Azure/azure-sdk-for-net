@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
             /// <summary> Version 3 of the <see cref="SentimentSkillVersion"/>. </summary>
             public static SentimentSkillVersion V3 { get; } = new SentimentSkillVersion(V3Value);
 
-            /// <summary> Latest version of the <see cref="SentimentSkillVersion"/> </summary>
+            /// <summary> Latest version of the <see cref="SentimentSkillVersion"/>. </summary>
             public static SentimentSkillVersion Latest { get; } = SentimentSkillVersion.V3;
 
             /// <inheritdoc />
@@ -41,14 +41,14 @@ namespace Azure.Search.Documents.Indexes.Models
             public bool Equals(SentimentSkillVersion other) =>
                 string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-            /// <summary> Defines the '==' operator on <see cref="SentimentSkillVersion"/> </summary>
+            /// <summary> Defines the '==' operator on <see cref="SentimentSkillVersion"/>. </summary>
             public static bool operator ==(SentimentSkillVersion lhs, SentimentSkillVersion rhs) => lhs.Equals(rhs);
 
             /// <summary> Defines the '!=' operator on <see cref="SentimentSkillVersion"/>. </summary>
             public static bool operator !=(SentimentSkillVersion lhs, SentimentSkillVersion rhs) => !(lhs == rhs);
 
             /// <summary> Converts a string to a <see cref="SentimentSkillVersion"/>. </summary>
-            public static implicit operator SentimentSkillVersion(string value) => new SentimentSkillVersion(value);
+            public static implicit operator SentimentSkillVersion(string value) => new(value);
 
             /// <inheritdoc />
             [EditorBrowsable(EditorBrowsableState.Never)]
