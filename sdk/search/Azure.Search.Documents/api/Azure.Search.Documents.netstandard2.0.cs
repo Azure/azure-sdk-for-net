@@ -646,29 +646,29 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class EntityRecognitionSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {
         public EntityRecognitionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
-        public EntityRecognitionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.EntityRecognitionSkillVersion skillVersion) { }
+        public EntityRecognitionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion skillVersion) { }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.EntityCategory> Categories { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
         public bool? IncludeTypelessEntities { get { throw null; } set { } }
         public double? MinimumPrecision { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-        public readonly partial struct EntityRecognitionSkillVersion : System.IEquatable<Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.EntityRecognitionSkillVersion>
+        public readonly partial struct SkillVersion : System.IEquatable<Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion>
         {
             private readonly object _dummy;
             private readonly int _dummyPrimitive;
-            public EntityRecognitionSkillVersion(string value) { throw null; }
-            public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.EntityRecognitionSkillVersion Latest { get { throw null; } }
-            public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.EntityRecognitionSkillVersion V1 { get { throw null; } }
-            public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.EntityRecognitionSkillVersion V3 { get { throw null; } }
-            public bool Equals(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.EntityRecognitionSkillVersion other) { throw null; }
+            public SkillVersion(string value) { throw null; }
+            public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion Latest { get { throw null; } }
+            public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion V1 { get { throw null; } }
+            public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion V3 { get { throw null; } }
+            public bool Equals(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion other) { throw null; }
             [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override bool Equals(object obj) { throw null; }
             [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override int GetHashCode() { throw null; }
-            public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.EntityRecognitionSkillVersion lhs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.EntityRecognitionSkillVersion rhs) { throw null; }
-            public static implicit operator Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.EntityRecognitionSkillVersion (string value) { throw null; }
-            public static bool operator !=(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.EntityRecognitionSkillVersion lhs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.EntityRecognitionSkillVersion rhs) { throw null; }
+            public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion lhs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion rhs) { throw null; }
+            public static implicit operator Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion (string value) { throw null; }
+            public static bool operator !=(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion lhs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion rhs) { throw null; }
             public override string ToString() { throw null; }
         }
     }
@@ -1908,27 +1908,27 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SentimentSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {
         public SentimentSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
-        public SentimentSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, Azure.Search.Documents.Indexes.Models.SentimentSkill.SentimentSkillVersion skillVersion) { }
+        public SentimentSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion skillVersion) { }
         public Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
         public bool? IncludeOpinionMining { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-        public readonly partial struct SentimentSkillVersion : System.IEquatable<Azure.Search.Documents.Indexes.Models.SentimentSkill.SentimentSkillVersion>
+        public readonly partial struct SkillVersion : System.IEquatable<Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion>
         {
             private readonly object _dummy;
             private readonly int _dummyPrimitive;
-            public SentimentSkillVersion(string value) { throw null; }
-            public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SentimentSkillVersion Latest { get { throw null; } }
-            public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SentimentSkillVersion V1 { get { throw null; } }
-            public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SentimentSkillVersion V3 { get { throw null; } }
-            public bool Equals(Azure.Search.Documents.Indexes.Models.SentimentSkill.SentimentSkillVersion other) { throw null; }
+            public SkillVersion(string value) { throw null; }
+            public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion Latest { get { throw null; } }
+            public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion V1 { get { throw null; } }
+            public static Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion V3 { get { throw null; } }
+            public bool Equals(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion other) { throw null; }
             [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override bool Equals(object obj) { throw null; }
             [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override int GetHashCode() { throw null; }
-            public static bool operator ==(Azure.Search.Documents.Indexes.Models.SentimentSkill.SentimentSkillVersion lhs, Azure.Search.Documents.Indexes.Models.SentimentSkill.SentimentSkillVersion rhs) { throw null; }
-            public static implicit operator Azure.Search.Documents.Indexes.Models.SentimentSkill.SentimentSkillVersion (string value) { throw null; }
-            public static bool operator !=(Azure.Search.Documents.Indexes.Models.SentimentSkill.SentimentSkillVersion lhs, Azure.Search.Documents.Indexes.Models.SentimentSkill.SentimentSkillVersion rhs) { throw null; }
+            public static bool operator ==(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion lhs, Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion rhs) { throw null; }
+            public static implicit operator Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion (string value) { throw null; }
+            public static bool operator !=(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion lhs, Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion rhs) { throw null; }
             public override string ToString() { throw null; }
         }
     }
