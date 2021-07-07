@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 using Mono.Unix.Native;
 #endif
 
-namespace Azure.Storage.Tests
+namespace Azure.Storage.DataMovement.Tests
 {
     public class PathScannerTests
     {
