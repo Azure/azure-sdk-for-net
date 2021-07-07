@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary>
-    /// The <see cref="QuestionAnsweringClient"/> allows you to ask questions of a custom or built-in knowledgebase.
+    /// The <see cref="QuestionAnsweringClient"/> allows you to ask questions of a custom or built-in knowledge base.
     /// </summary>
     public class QuestionAnsweringClient
     {
@@ -24,7 +24,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// Initializes a new instance of the <see cref="QuestionAnsweringClient"/> class.
         /// </summary>
         /// <param name="endpoint">The Question Answering endpoint on which to operate.</param>
-        /// <param name="credential">A <see cref="AzureKeyCredential"/> used to authenticate requests to the <paramref name="endpoint"/>.</param>
+        /// <param name="credential">An <see cref="AzureKeyCredential"/> used to authenticate requests to the <paramref name="endpoint"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         public QuestionAnsweringClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, null)
         {
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// Initializes a new instance of the <see cref="QuestionAnsweringClient"/> class.
         /// </summary>
         /// <param name="endpoint">The Question Answering endpoint on which to operate.</param>
-        /// <param name="credential">A <see cref="AzureKeyCredential"/> used to authenticate requests to the <paramref name="endpoint"/>.</param>
+        /// <param name="credential">An <see cref="AzureKeyCredential"/> used to authenticate requests to the <paramref name="endpoint"/>.</param>
         /// <param name="options">Optional <see cref="QuestionAnsweringClientOptions"/> to customize requests sent to the endpoint.</param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         public QuestionAnsweringClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringClientOptions options)
@@ -76,10 +76,10 @@ namespace Azure.AI.Language.QuestionAnswering
         /// </summary>
         private protected virtual HttpPipeline Pipeline { get; }
 
-        /// <summary>Answers the specified question using your knowledgebase.</summary>
+        /// <summary>Answers the specified question using your knowledge base.</summary>
         /// <param name="projectName">The name of the project to use.</param>
-        /// <param name="options">The question to answer.</param>
-        /// <param name="deploymentName">The optional deployment name of the project to use. If not specified, the production knowledgebase will be queried.</param>
+        /// <param name="options">The question to ask along with other options to query for answers.</param>
+        /// <param name="deploymentName">The optional deployment name of the project to use, such as "test" or "prod". If not specified, the "prod" knowledge base will be queried.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectName"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
@@ -103,10 +103,10 @@ namespace Azure.AI.Language.QuestionAnswering
             }
         }
 
-        /// <summary>Answers the specified question using your knowledgebase.</summary>
+        /// <summary>Answers the specified question using your knowledge base.</summary>
         /// <param name="projectName">The name of the project to use.</param>
-        /// <param name="options">The question to answer.</param>
-        /// <param name="deploymentName">The optional deployment name of the project to use. If not specified, the production knowledgebase will be queried.</param>
+        /// <param name="options">The question to ask along with other options to query for answers.</param>
+        /// <param name="deploymentName">The optional deployment name of the project to use, such as "test" or "prod". If not specified, the "prod" knowledge base will be queried.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectName"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>

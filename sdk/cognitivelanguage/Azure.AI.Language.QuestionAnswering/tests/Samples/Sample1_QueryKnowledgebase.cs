@@ -44,10 +44,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             QuestionAnsweringClient client = Client;
 
             #region Snippet:QuestionAnsweringClient_QueryKnowledgebaseAsync
+#if SNIPPET
+            string projectName = "FAQ";
+#endif
             KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should my Surface battery last?");
 
 #if SNIPPET
-            Response<KnowledgebaseAnswers> response = await client.QueryKnowledgebaseAsync("FAQ", options);
+            Response<KnowledgebaseAnswers> response = await client.QueryKnowledgebaseAsync(projectName, options);
 #else
             Response<KnowledgebaseAnswers> response = await client.QueryKnowledgebaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
 #endif

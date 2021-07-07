@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Language.QuestionAnswering.Models;
 using Azure.Core.TestFramework;
@@ -19,12 +20,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             KnowledgebaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgebaseAnswer(id: 27);
 
             #region Snippet:QuestionAnsweringClient_Chat
+#if SNIPPET
+            // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
+            KnowledgebaseAnswer previousAnswer = answers.Answers.First();
+#endif
             KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should charging take?")
             {
                 Context = new KnowledgebaseAnswerRequestContext(previousAnswer.Id.Value)
-                {
-                    PreviousUserQuery = "How long should my Surface battery last?"
-                }
             };
 
 #if SNIPPET
@@ -39,7 +41,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 Console.WriteLine($"Source: {answer.Source}");
                 Console.WriteLine();
             }
-            #endregion
+#endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }
@@ -51,13 +53,14 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             QuestionAnsweringClient client = Client;
             KnowledgebaseAnswer previousAnswer = QuestionAnsweringModelFactory.KnowledgebaseAnswer(id: 27);
 
-            #region Snippet:QuestionAnsweringClient_ChatAsync
+#region Snippet:QuestionAnsweringClient_ChatAsync
+#if SNIPPET
+            // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
+            KnowledgebaseAnswer previousAnswer = answers.Answers.First();
+#endif
             KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should charging take?")
             {
                 Context = new KnowledgebaseAnswerRequestContext(previousAnswer.Id.Value)
-                {
-                    PreviousUserQuery = "How long should my Surface battery last?"
-                }
             };
 
 #if SNIPPET
@@ -72,7 +75,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 Console.WriteLine($"Source: {answer.Source}");
                 Console.WriteLine();
             }
-            #endregion
+#endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
         }

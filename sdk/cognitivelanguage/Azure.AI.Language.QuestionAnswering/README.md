@@ -1,6 +1,6 @@
 # Azure Cognitive Language Services Question Answering client library for .NET
 
-Question Answering is a cloud-based API service that lets you create a conversational question-and-answer layer over your existing data. Use it to build a knowledge base by extracting questions and answers from your semi-structured content, including FAQ, manuals, and documents. Answer users’ questions with the best answers from the QnAs in your knowledge base—automatically. Your knowledge base gets smarter, too, as it continually learns from user behavior.
+The Question Answering service is a cloud-based API service that lets you create a conversational question-and-answer layer over your existing data. Use it to build a knowledge base by extracting questions and answers from your semi-structured content, including FAQ, manuals, and documents. Answer users’ questions with the best answers from the QnAs in your knowledge base—automatically. Your knowledge base gets smarter, too, as it continually learns from user behavior.
 
 [Source code][questionanswering_client_src] | [Package (NuGet)][questionanswering_nuget_package] | [API reference documentation][questionanswering_refdocs] | [Product documentation][questionanswering_docs] | [Samples][questionanswering_samples]
 
@@ -8,7 +8,7 @@ Question Answering is a cloud-based API service that lets you create a conversat
 
 ### Install the package
 
-Install the Azure Key Vault secrets client library for .NET with [NuGet][nuget]:
+Install the Azure Cognitive Language Services Question Answering client library for .NET with [NuGet][nuget]:
 
 ```powershell
 dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
@@ -23,7 +23,7 @@ dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
 
 ### Authenticate the client
 
-In order to interact with the Question Answering service, you'll need to create an instance of the [`QuestionAnsweringClient`][questionanswering_client_class] class. You will need an **endpoint**, and an **API key** instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Question Answering service, you'll need to create an instance of the [`QuestionAnsweringClient`][questionanswering_client_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get an API key
 
@@ -35,7 +35,7 @@ Alternatively, use the [Azure CLI][azure_cli] command shown below to get the API
 az cognitiveservices account keys list --resource-group <resource-group-name> --name <resource-name>
 ```
 
-#### Create QuestionAnsweringClient
+#### Create a QuestionAnsweringClient
 
 Once you've determined your **endpoint** and **API key** you can instantiate a `QuestionAnsweringClient`:
 
@@ -72,11 +72,11 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 The Azure.AI.Language.QuestionAnswering client library provides both synchronous and asynchronous APIs.
 
-The following examples show common scenarios using the `client` [created above](#create-questionansweringclient).
+The following examples show common scenarios using the `client` [created above](#create-a-questionansweringclient).
 
 ### Ask a question
 
-The only input required to a ask a question using a knowledgebase is just the question itself:
+The only input required to a ask a question using an existing knowledge base is just the question itself:
 
 ```C# Snippet:QuestionAnsweringClient_QueryKnowledgebase
 KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should my Surface battery last?");
@@ -95,15 +95,14 @@ You can set additional properties on `QuestionAnsweringClientOptions` to limit t
 
 ### Ask a follow-up question
 
-If your knowledgebase is configured for [chit-chat][questionanswering_docs_chat], you can ask a follow-up question provided the previous question-answering ID and, optionally, the exact question the user asked:
+If your knowledge base is configured for [chit-chat][questionanswering_docs_chat], you can ask a follow-up question provided the previous question-answering ID and, optionally, the exact question the user asked:
 
 ```C# Snippet:QuestionAnsweringClient_Chat
+// Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
+KnowledgebaseAnswer previousAnswer = answers.Answers.First();
 KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should charging take?")
 {
     Context = new KnowledgebaseAnswerRequestContext(previousAnswer.Id.Value)
-    {
-        PreviousUserQuery = "How long should my Surface battery last?"
-    }
 };
 
 Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("FAQ", options);
@@ -190,7 +189,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [azure_cli]: https://docs.microsoft.com/cli/azure/
 [azure_portal]: https://portal.azure.com/
-[azure_subscription]: https://azure.microsoft.com/free/
+[azure_subscription]: https://azure.microsoft.com/free/dotnet/
 [cla]: https://cla.microsoft.com
 [coc_contact]: mailto:opencode@microsoft.com
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
