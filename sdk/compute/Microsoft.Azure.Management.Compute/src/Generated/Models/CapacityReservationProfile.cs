@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="capacityReservationGroup">Specifies the capacity
         /// reservation group resource id that should be used for allocating
-        /// the virtual machine provided enough capacity has been reserved.
-        /// Please refer to https://aka.ms/CapacityReservation for more
-        /// details.</param>
+        /// the virtual machine or scaleset vm instances provided enough
+        /// capacity has been reserved. Please refer to
+        /// https://aka.ms/CapacityReservation for more details.</param>
         public CapacityReservationProfile(SubResource capacityReservationGroup = default(SubResource))
         {
             CapacityReservationGroup = capacityReservationGroup;
@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the capacity reservation group resource id
-        /// that should be used for allocating the virtual machine provided
-        /// enough capacity has been reserved. Please refer to
-        /// https://aka.ms/CapacityReservation for more details.
+        /// that should be used for allocating the virtual machine or scaleset
+        /// vm instances provided enough capacity has been reserved. Please
+        /// refer to https://aka.ms/CapacityReservation for more details.
         /// </summary>
         [JsonProperty(PropertyName = "capacityReservationGroup")]
         public SubResource CapacityReservationGroup { get; set; }
