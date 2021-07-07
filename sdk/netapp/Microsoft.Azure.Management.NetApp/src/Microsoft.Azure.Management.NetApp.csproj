@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Please do not move/edit code below this line -->
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
   <!-- Please do not move/edit code below this line -->
@@ -20,7 +20,7 @@
           - Added CoolAccess to CapacityPool and Volume
           - Added CoolnessPeriod and UnixPermissions to Volume
           - Added ChownMode to ExportPolicyRule          
-          - CheckFilePathAvailability has a new signature to allow subnetid parameter 
+          - CheckFilePathAvailability has a new signature to allow subnetid parameter that should be used over old version that is still supported
                     
           
         Azure NetApp Files:
