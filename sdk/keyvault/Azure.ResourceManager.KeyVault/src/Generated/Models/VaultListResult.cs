@@ -16,20 +16,20 @@ namespace KeyVaultManagementClient.Models
         /// <summary> Initializes a new instance of VaultListResult. </summary>
         internal VaultListResult()
         {
-            Value = new ChangeTrackingList<RestApiData>();
+            Value = new ChangeTrackingList<VaultData>();
         }
 
         /// <summary> Initializes a new instance of VaultListResult. </summary>
         /// <param name="value"> The list of vaults. </param>
         /// <param name="nextLink"> The URL to get the next set of vaults. </param>
-        internal VaultListResult(IReadOnlyList<RestApiData> value, string nextLink)
+        internal VaultListResult(IReadOnlyList<VaultData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of vaults. </summary>
-        public IReadOnlyList<RestApiData> Value { get; }
+        public IReadOnlyList<VaultData> Value { get; }
         /// <summary> The URL to get the next set of vaults. </summary>
         public string NextLink { get; }
     }

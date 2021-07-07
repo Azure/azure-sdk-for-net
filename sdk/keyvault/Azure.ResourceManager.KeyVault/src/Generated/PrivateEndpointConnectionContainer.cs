@@ -17,7 +17,7 @@ using KeyVaultManagementClient.Models;
 
 namespace KeyVaultManagementClient
 {
-    /// <summary> A class representing collection of PrivateEndpointConnection and their operations over a RestApi. </summary>
+    /// <summary> A class representing collection of PrivateEndpointConnection and their operations over a Vault. </summary>
     public partial class PrivateEndpointConnectionContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, PrivateEndpointConnection, PrivateEndpointConnectionData>
     {
         /// <summary> Initializes a new instance of the <see cref="PrivateEndpointConnectionContainer"/> class for mocking. </summary>
@@ -41,7 +41,7 @@ namespace KeyVaultManagementClient
         public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
-        protected override ResourceType ValidResourceType => RestApiOperations.ResourceType;
+        protected override ResourceType ValidResourceType => VaultOperations.ResourceType;
 
         // Container level operations.
 

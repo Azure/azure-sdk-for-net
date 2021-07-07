@@ -15,7 +15,7 @@ namespace KeyVaultManagementClient.Models
     {
         internal static OperationListResult DeserializeOperationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Operation>> value = default;
+            Optional<IReadOnlyList<RestApi>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace KeyVaultManagementClient.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Operation> array = new List<Operation>();
+                    List<RestApi> array = new List<RestApi>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Operation.DeserializeOperation(item));
+                        array.Add(RestApi.DeserializeRestApi(item));
                     }
                     value = array;
                     continue;

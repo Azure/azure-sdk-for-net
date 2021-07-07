@@ -168,7 +168,7 @@ namespace KeyVaultManagementClient
         /// <param name="parameters"> Parameters to patch the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<RestApiData>> UpdateAsync(string resourceGroupName, string vaultName, VaultPatchParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<VaultData>> UpdateAsync(string resourceGroupName, string vaultName, VaultPatchParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -190,9 +190,9 @@ namespace KeyVaultManagementClient
                 case 200:
                 case 201:
                     {
-                        RestApiData value = default;
+                        VaultData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestApiData.DeserializeRestApiData(document.RootElement);
+                        value = VaultData.DeserializeVaultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -206,7 +206,7 @@ namespace KeyVaultManagementClient
         /// <param name="parameters"> Parameters to patch the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<RestApiData> Update(string resourceGroupName, string vaultName, VaultPatchParameters parameters, CancellationToken cancellationToken = default)
+        public Response<VaultData> Update(string resourceGroupName, string vaultName, VaultPatchParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -228,9 +228,9 @@ namespace KeyVaultManagementClient
                 case 200:
                 case 201:
                     {
-                        RestApiData value = default;
+                        VaultData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestApiData.DeserializeRestApiData(document.RootElement);
+                        value = VaultData.DeserializeVaultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -337,7 +337,7 @@ namespace KeyVaultManagementClient
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
-        public async Task<Response<RestApiData>> GetAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public async Task<Response<VaultData>> GetAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -354,9 +354,9 @@ namespace KeyVaultManagementClient
             {
                 case 200:
                     {
-                        RestApiData value = default;
+                        VaultData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestApiData.DeserializeRestApiData(document.RootElement);
+                        value = VaultData.DeserializeVaultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -369,7 +369,7 @@ namespace KeyVaultManagementClient
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
-        public Response<RestApiData> Get(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public Response<VaultData> Get(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -386,9 +386,9 @@ namespace KeyVaultManagementClient
             {
                 case 200:
                     {
-                        RestApiData value = default;
+                        VaultData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestApiData.DeserializeRestApiData(document.RootElement);
+                        value = VaultData.DeserializeVaultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -16,20 +16,20 @@ namespace KeyVaultManagementClient.Models
         /// <summary> Initializes a new instance of OperationListResult. </summary>
         internal OperationListResult()
         {
-            Value = new ChangeTrackingList<Operation>();
+            Value = new ChangeTrackingList<RestApi>();
         }
 
         /// <summary> Initializes a new instance of OperationListResult. </summary>
         /// <param name="value"> List of Storage operations supported by the Storage resource provider. </param>
         /// <param name="nextLink"> The URL to get the next set of operations. </param>
-        internal OperationListResult(IReadOnlyList<Operation> value, string nextLink)
+        internal OperationListResult(IReadOnlyList<RestApi> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Storage operations supported by the Storage resource provider. </summary>
-        public IReadOnlyList<Operation> Value { get; }
+        public IReadOnlyList<RestApi> Value { get; }
         /// <summary> The URL to get the next set of operations. </summary>
         public string NextLink { get; }
     }

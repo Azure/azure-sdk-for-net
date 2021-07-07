@@ -12,13 +12,13 @@ namespace KeyVaultManagementClient
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region RestApis
-        /// <summary> Gets an object representing a RestApiContainer along with the instance operations that can be performed on it. </summary>
+        #region Vaults
+        /// <summary> Gets an object representing a VaultContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="RestApiContainer" /> object. </returns>
-        public static RestApiContainer GetRestApis(this ResourceGroupOperations resourceGroup)
+        /// <returns> Returns a <see cref="VaultContainer" /> object. </returns>
+        public static VaultContainer GetVaults(this ResourceGroupOperations resourceGroup)
         {
-            return new RestApiContainer(resourceGroup);
+            return new VaultContainer(resourceGroup);
         }
         #endregion
 

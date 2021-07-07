@@ -40,12 +40,12 @@ namespace KeyVaultManagementClient
 
         /// <summary> Lists all of the available Key Vault Rest API operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestApiData" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<RestApiData> List(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestApi" /> that may take multiple service requests to iterate over. </returns>
+        public Pageable<RestApi> List(CancellationToken cancellationToken = default)
         {
-            Page<RestApiData> FirstPageFunc(int? pageSizeHint)
+            Page<RestApi> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RestApiData.List");
+                using var scope = _clientDiagnostics.CreateScope("RestApi.List");
                 scope.Start();
                 try
                 {
@@ -58,9 +58,9 @@ namespace KeyVaultManagementClient
                     throw;
                 }
             }
-            Page<RestApiData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RestApi> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RestApiData.List");
+                using var scope = _clientDiagnostics.CreateScope("RestApi.List");
                 scope.Start();
                 try
                 {
@@ -78,12 +78,12 @@ namespace KeyVaultManagementClient
 
         /// <summary> Lists all of the available Key Vault Rest API operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestApiData" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<RestApiData> ListAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestApi" /> that may take multiple service requests to iterate over. </returns>
+        public AsyncPageable<RestApi> ListAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RestApiData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RestApi>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RestApiData.List");
+                using var scope = _clientDiagnostics.CreateScope("RestApi.List");
                 scope.Start();
                 try
                 {
@@ -96,9 +96,9 @@ namespace KeyVaultManagementClient
                     throw;
                 }
             }
-            async Task<Page<RestApiData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RestApi>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RestApiData.List");
+                using var scope = _clientDiagnostics.CreateScope("RestApi.List");
                 scope.Start();
                 try
                 {
@@ -113,286 +113,5 @@ namespace KeyVaultManagementClient
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
-    }
-}
-e. The default value is <see cref="CancellationToken.None" />. </param>
-        public VaultsCreateOrUpdateOperation StartCreateOrUpdate(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RestApiContainer.StartCreateOrUpdate");
-            scope.Start();
-            try
-            {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-                if (parameters == null)
-                {
-                    throw new ArgumentNullException(nameof(parameters));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.ResourceGroupName, vaultName, parameters, cancellationToken: cancellationToken);
-                return new VaultsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vaultName, parameters).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> The operation to create or update a RestApi. Please note some properties can be set only during creation. </summary>
-        /// <param name="vaultName"> Name of the vault. </param>
-        /// <param name="parameters"> Parameters to create or update the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<VaultsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RestApiContainer.StartCreateOrUpdate");
-            scope.Start();
-            try
-            {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-                if (parameters == null)
-                {
-                    throw new ArgumentNullException(nameof(parameters));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, vaultName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new VaultsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vaultName, parameters).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="vaultName"> The name of the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<RestApi> Get(string vaultName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RestApiContainer.Get");
-            scope.Start();
-            try
-            {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-
-                var response = _restClient.Get(Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken);
-                return Response.FromValue(new RestApi(Parent, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="vaultName"> The name of the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<RestApi>> GetAsync(string vaultName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RestApiContainer.Get");
-            scope.Start();
-            try
-            {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RestApi(Parent, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> The List operation gets information about the vaults associated with the subscription and within the specified resource group. </summary>
-        /// <param name="top"> Maximum number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestApi" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<RestApi> List(int? top = null, CancellationToken cancellationToken = default)
-        {
-            Page<RestApi> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("RestApiContainer.ListByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.ListByResourceGroup(Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestApi(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RestApi> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("RestApiContainer.ListByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestApi(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> The List operation gets information about the vaults associated with the subscription and within the specified resource group. </summary>
-        /// <param name="top"> Maximum number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestApi" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<RestApi> ListAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<RestApi>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("RestApiContainer.ListByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.ListByResourceGroupAsync(Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestApi(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RestApi>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("RestApiContainer.ListByResourceGroup");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestApi(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of RestApi for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RestApiContainer.ListAsGenericResource");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(RestApiOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of RestApi for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("RestApiContainer.ListAsGenericResource");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(RestApiOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update access policies in a key vault in the specified subscription. </summary>
-        /// <param name="parameters"> Access policy to merge into the vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RestApiContainer.UpdateAccessPolicy");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.UpdateAccessPolicyAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update access policies in a key vault in the specified subscription. </summary>
-        /// <param name="parameters"> Access policy to merge into the vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<VaultAccessPolicyParameters> UpdateAccessPolicy(VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("RestApiContainer.UpdateAccessPolicy");
-            scope.Start();
-            try
-            {
-                var response = _restClient.UpdateAccessPolicy(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, RestApi, RestApiData> Construct() { }
     }
 }

@@ -16,25 +16,25 @@ using KeyVaultManagementClient.Models;
 namespace KeyVaultManagementClient
 {
     /// <summary> Update a key vault in the specified subscription. </summary>
-    public partial class VaultsUpdateOperation : Operation<RestApi>
+    public partial class VaultsUpdateOperation : Operation<Vault>
     {
-        private readonly OperationOrResponseInternals<RestApi> _operation;
+        private readonly OperationOrResponseInternals<Vault> _operation;
 
         /// <summary> Initializes a new instance of VaultsUpdateOperation for mocking. </summary>
         protected VaultsUpdateOperation()
         {
         }
 
-        internal VaultsUpdateOperation(ResourceOperationsBase operationsBase, Response<RestApiData> response)
+        internal VaultsUpdateOperation(ResourceOperationsBase operationsBase, Response<VaultData> response)
         {
-            _operation = new OperationOrResponseInternals<RestApi>(Response.FromValue(new RestApi(operationsBase, response.Value), response.GetRawResponse()));
+            _operation = new OperationOrResponseInternals<Vault>(Response.FromValue(new Vault(operationsBase, response.Value), response.GetRawResponse()));
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override RestApi Value => _operation.Value;
+        public override Vault Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,9 +52,9 @@ namespace KeyVaultManagementClient
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<RestApi>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<Vault>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<RestApi>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<Vault>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

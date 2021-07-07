@@ -18,9 +18,9 @@ using KeyVaultManagementClient.Models;
 namespace KeyVaultManagementClient
 {
     /// <summary> Create or update a key vault in the specified subscription. </summary>
-    public partial class VaultsCreateOrUpdateOperation : Operation<RestApi>, IOperationSource<RestApi>
+    public partial class VaultsCreateOrUpdateOperation : Operation<Vault>, IOperationSource<Vault>
     {
-        private readonly OperationInternals<RestApi> _operation;
+        private readonly OperationInternals<Vault> _operation;
 
         private readonly ResourceOperationsBase _operationBase;
 
@@ -31,7 +31,7 @@ namespace KeyVaultManagementClient
 
         internal VaultsCreateOrUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<RestApi>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VaultsCreateOrUpdateOperation");
+            _operation = new OperationInternals<Vault>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VaultsCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 
@@ -39,7 +39,7 @@ namespace KeyVaultManagementClient
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override RestApi Value => _operation.Value;
+        public override Vault Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -57,21 +57,21 @@ namespace KeyVaultManagementClient
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<RestApi>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<Vault>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<RestApi>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<Vault>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        RestApi IOperationSource<RestApi>.CreateResult(Response response, CancellationToken cancellationToken)
+        Vault IOperationSource<Vault>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return new RestApi(_operationBase, RestApiData.DeserializeRestApiData(document.RootElement));
+            return new Vault(_operationBase, VaultData.DeserializeVaultData(document.RootElement));
         }
 
-        async ValueTask<RestApi> IOperationSource<RestApi>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<Vault> IOperationSource<Vault>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return new RestApi(_operationBase, RestApiData.DeserializeRestApiData(document.RootElement));
+            return new Vault(_operationBase, VaultData.DeserializeVaultData(document.RootElement));
         }
     }
 }

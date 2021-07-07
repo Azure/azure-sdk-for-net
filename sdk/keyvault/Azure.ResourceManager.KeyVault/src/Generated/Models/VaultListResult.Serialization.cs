@@ -15,7 +15,7 @@ namespace KeyVaultManagementClient.Models
     {
         internal static VaultListResult DeserializeVaultListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RestApiData>> value = default;
+            Optional<IReadOnlyList<VaultData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace KeyVaultManagementClient.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RestApiData> array = new List<RestApiData>();
+                    List<VaultData> array = new List<VaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestApiData.DeserializeRestApiData(item));
+                        array.Add(VaultData.DeserializeVaultData(item));
                     }
                     value = array;
                     continue;
