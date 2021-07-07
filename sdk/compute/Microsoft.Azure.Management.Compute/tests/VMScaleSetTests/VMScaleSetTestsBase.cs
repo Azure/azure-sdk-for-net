@@ -283,8 +283,8 @@ namespace Compute.Tests
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
             string dedicatedHostName = null,
-            string capacityReservationGroupReferenceId = null,
-            string userData = null)
+            string userData = null,
+            string capacityReservationGroupReferenceId = null)
         {
             try
             {
@@ -315,8 +315,8 @@ namespace Compute.Tests
                                                                                      dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
                                                                                      dedicatedHostGroupName: dedicatedHostGroupName,
                                                                                      dedicatedHostName: dedicatedHostName,
-                                                                                     capacityReservationGroupReferenceId: capacityReservationGroupReferenceId,
-                                                                                     userData: userData);
+                                                                                     userData: userData,
+                                                                                     capacityReservationGroupReferenceId: capacityReservationGroupReferenceId);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
@@ -407,8 +407,8 @@ namespace Compute.Tests
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
             string dedicatedHostName = null,
-            string capacityReservationGroupReferenceId = null,
-            string userData = null)
+            string userData = null,
+            string capacityReservationGroupReferenceId = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
