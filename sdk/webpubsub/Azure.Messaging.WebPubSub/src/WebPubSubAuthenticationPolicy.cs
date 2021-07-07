@@ -65,6 +65,7 @@ namespace Azure.Messaging.WebPubSub
         {
             message.SetProperty(AUDIENCE_SETTING, audience.AbsoluteUri);
         }
+
         private static bool TryGetAudience(HttpMessage message, out string audience)
         {
             if (message.TryGetProperty(AUDIENCE_SETTING, out var jwtAudience) &&
