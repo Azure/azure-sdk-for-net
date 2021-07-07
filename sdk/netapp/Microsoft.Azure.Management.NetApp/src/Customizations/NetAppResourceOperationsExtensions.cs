@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='resourceGroup'>
         /// Resource group name.
         /// </param>
-        //[System.Obsolete("This operation is deprecated. Please use CheckFilePathAvailability(string location, string name, string subnetId) instead.", false)]
+        [System.Obsolete("This operation is deprecated. Please use CheckFilePathAvailability(string location, string name, string subnetId) instead.", false)]
         public static CheckAvailabilityResponse CheckFilePathAvailability(this INetAppResourceOperations operations, string location, string name, string type, string resourceGroup)
         {
             return operations.CheckFilePathAvailabilityAsync(location, name, type, resourceGroup).GetAwaiter().GetResult();
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// Check file path availability
         /// </summary>
         /// <remarks>
-        /// Check if a file path is available.
+        /// Check if a file path is available. Note this operation is deprecated. Please use CheckFilePathAvailabilityAsync(string location, string name, string subnetId) instead
         /// </remarks>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -85,6 +85,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        [System.Obsolete("This operation is deprecated. Please use CheckFilePathAvailabilityWithHttpMessagesAsync(string location, string name, string subnetId) instead.", false)]
         public static async Task<CheckAvailabilityResponse> CheckFilePathAvailabilityAsync(this INetAppResourceOperations operations, string location, string name, string type, string resourceGroup, CancellationToken cancellationToken = default(CancellationToken))
         {
             //using (var _result = await ((NetAppResourceOperations)operations).CheckFilePathAvailabilityWithHttpMessagesAsync(location, name, type, resourceGroup, null, cancellationToken).ConfigureAwait(false))

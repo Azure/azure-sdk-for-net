@@ -6,6 +6,7 @@
     <AssemblyName>NetApp.Tests</AssemblyName>
     <Version>1.1.0</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>612,618</WarningsNotAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <ExcludeFromBuild>false</ExcludeFromBuild>
