@@ -16,6 +16,7 @@
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release is:
         1. SpotRestorePolicy property added to VMSS resource.
+        2. CapacityReservationProfile added to VMSS resource.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
