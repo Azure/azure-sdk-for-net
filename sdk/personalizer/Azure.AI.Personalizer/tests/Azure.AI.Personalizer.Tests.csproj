@@ -22,10 +22,6 @@
     <PackageReference Include="BenchmarkDotNet" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
-  </ItemGroup>
 
 </Project>
 

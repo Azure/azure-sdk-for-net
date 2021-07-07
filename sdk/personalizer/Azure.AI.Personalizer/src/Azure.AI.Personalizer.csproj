@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime" />
   </ItemGroup>
 
 </Project>
