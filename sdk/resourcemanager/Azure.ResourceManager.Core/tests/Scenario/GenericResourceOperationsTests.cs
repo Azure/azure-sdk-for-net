@@ -21,8 +21,7 @@ namespace Azure.ResourceManager.Core.Tests
             var rgName = Recording.GenerateAssetName("testrg");
             _ = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/availabilitySets/testavset";
-            var subOp = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
-            var genericResourceOperations = new GenericResourceOperations(subOp, asetid);
+            var genericResourceOperations = Client.GetGenericResourceOperations(asetid);
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
             Assert.AreEqual(404, exception.Status);
             Assert.True(exception.Message.Contains("ResourceNotFound"));
@@ -35,8 +34,7 @@ namespace Azure.ResourceManager.Core.Tests
             var rgName = Recording.GenerateAssetName("testrg");
             _ = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.NotAValidNameSpace123/availabilitySets/testavset";
-            var subOp = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
-            var genericResourceOperations = new GenericResourceOperations(subOp, asetid);
+            var genericResourceOperations = Client.GetGenericResourceOperations(asetid);
             InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await genericResourceOperations.GetAsync());
             Assert.IsTrue(exception.Message.Equals($"An invalid resouce id was given {asetid}"));
         }
@@ -46,13 +44,11 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task GetGenericsBadApiVersion()
         {
             var rgName = Recording.GenerateAssetName("testrg");
-            _ = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
-            ResourceGroupResourceIdentifier rgid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rgName}";
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
             ArmClientOptions options = new ArmClientOptions();
-            options.ApiVersions.SetApiVersion(rgid.ResourceType, "1500-10-10");
+            options.ApiVersions.SetApiVersion(rg.Id.ResourceType, "1500-10-10");
             var client = GetArmClient(options);
-            var subOp = await client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
-            var genericResourceOperations = new GenericResourceOperations(subOp, rgid);
+            var genericResourceOperations = client.GetGenericResourceOperations(rg.Id);
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
             Assert.IsTrue(exception.Message.Contains("InvalidApiVersionParameter"));
         }
@@ -63,8 +59,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var rgName = Recording.GenerateAssetName("testrg");
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
-            var subOp = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
-            var genericResourceOperations = new GenericResourceOperations(subOp, rg.Id);
+            var genericResourceOperations = Client.GetGenericResourceOperations(rg.Id);
             var genericResource = await genericResourceOperations.GetAsync();
             Assert.IsNotNull(genericResource.Value);
             Assert.IsTrue(genericResource.Value.Data.Name.Equals(rgName));
@@ -123,24 +118,6 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task StartAddTag()
-        {
-            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroup rg = await rgOp.WaitForCompletionAsync();
-            var createOp = await StartCreateGenericAvailabilitySetAsync(rg.Id);
-            GenericResource aset = await createOp.WaitForCompletionAsync();
-
-            Assert.AreEqual(0, aset.Data.Tags.Count);
-
-            var addTagOp = await aset.StartAddTagAsync("key", "value");
-            aset = await addTagOp.WaitForCompletionAsync();
-
-            Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
-            Assert.AreEqual("value", aset.Data.Tags["key"]);
-        }
-
-        [TestCase]
-        [RecordedTest]
         public async Task Get()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
@@ -170,24 +147,6 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task StartSetTags()
-        {
-            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroup rg = await rgOp.WaitForCompletionAsync();
-            var createOp = await StartCreateGenericAvailabilitySetAsync(rg.Id);
-            GenericResource aset = await createOp.WaitForCompletionAsync();
-
-            Dictionary<string, string> tags = new Dictionary<string, string>();
-            tags.Add("key", "value");
-            var setTagsOp = await aset.StartSetTagsAsync(tags);
-            aset = await setTagsOp.WaitForCompletionAsync();
-
-            Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
-            Assert.AreEqual("value", aset.Data.Tags["key"]);
-        }
-
-        [TestCase]
-        [RecordedTest]
         public async Task RemoveTag()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
@@ -198,27 +157,6 @@ namespace Azure.ResourceManager.Core.Tests
             aset = await aset.SetTagsAsync(tags);
 
             aset = await aset.RemoveTagAsync("key");
-
-            Assert.IsFalse(aset.Data.Tags.ContainsKey("key"));
-            Assert.AreEqual(0, aset.Data.Tags.Count);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task StartRemoveTag()
-        {
-            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroup rg = await rgOp.WaitForCompletionAsync();
-            var crateOp = await StartCreateGenericAvailabilitySetAsync(rg.Id);
-            GenericResource aset = await crateOp.WaitForCompletionAsync();
-
-            Dictionary<string, string> tags = new Dictionary<string, string>();
-            tags.Add("key", "value");
-            var setTagsOp = await aset.StartSetTagsAsync(tags);
-            aset = await setTagsOp.WaitForCompletionAsync();
-
-            var removeTagOp = await aset.StartRemoveTagAsync("key");
-            aset = await removeTagOp.WaitForCompletionAsync();
 
             Assert.IsFalse(aset.Data.Tags.ContainsKey("key"));
             Assert.AreEqual(0, aset.Data.Tags.Count);

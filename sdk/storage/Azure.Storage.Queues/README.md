@@ -215,7 +215,7 @@ additional questions or comments.
 [storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
 [storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
 [storage_ad]: https://docs.microsoft.com/azure/storage/common/storage-auth-aad
 [storage_ad_sample]: samples/Sample02c_Auth_ActiveDirectory.cs

@@ -7,6 +7,8 @@ namespace Azure.Identity
 {
     internal class IdentityCompatSwitches
     {
+        internal const string EnableLegacyTenantSelectionEnvVar = "AZURE_IDENTITY_ENABLE_LEGACY_TENANT_SELECTION";
+        internal const string EnableLegacyTenantSelectionSwitchName = "Azure.Identity.EnableLegacyTenantSelection";
         internal const string DisableInteractiveThreadpoolExecutionSwitchName = "Azure.Identity.DisableInteractiveBrowserThreadpoolExecution";
         internal const string DisableInteractiveThreadpoolExecutionEnvVar = "AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION";
         internal const string DisableCP1ExecutionSwitchName = "Azure.Identity.DisableCP1";
@@ -17,5 +19,8 @@ namespace Azure.Identity
 
         public static bool DisableCP1
             => AppContextSwitchHelper.GetConfigValue(DisableCP1ExecutionSwitchName, DisableCP1ExecutionEnvVar);
+
+        public static bool EnableLegacyTenantSelection
+            => AppContextSwitchHelper.GetConfigValue(EnableLegacyTenantSelectionSwitchName, EnableLegacyTenantSelectionEnvVar);
     }
 }

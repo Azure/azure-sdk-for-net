@@ -8,15 +8,14 @@
         "Authorization": "Sanitized",
         "Content-Length": "2",
         "Content-Type": "application/json",
-        "Date": "Tue, 15 Jun 2021 21:17:18 GMT",
-        "traceparent": "00-1becc41ae2667e4880224bd6f6c7bc0a-ab6318b88dd79c4b-00",
+        "traceparent": "00-a766c89e477bdc41ae409d19d8314b1d-104e6b467e22114e-00",
         "User-Agent": [
-          "azsdk-net-Communication.Identity/1.1.0-alpha.20210615.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Communication.Identity/1.1.0-alpha.20210622.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "0037185a72fdbbffcd7a5fb531f1f483",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 15 Jun 2021 21:17:18 GMT",
+        "x-ms-date": "Tue, 22 Jun 2021 22:01:48 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {},
@@ -24,19 +23,19 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-03-31-preview1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Jun 2021 21:17:18 GMT",
-        "MS-CV": "esjezm6K8UKoDTUej3z7eA.0",
+        "Date": "Tue, 22 Jun 2021 22:01:48 GMT",
+        "MS-CV": "/a//mYVUDEaYCZDGs3DjJA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "03hjJYAAAAAAxqzZgT2gDR7Yfd8Ga8izMWVZSMzBFREdFMDMxNgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0zF3SYAAAAABrLV4PsPeMRJVO7iRA6XZSWVZSMzBFREdFMDMxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
         "x-ms-client-request-id": "0037185a72fdbbffcd7a5fb531f1f483",
-        "X-Processing-Time": "85ms"
+        "X-Processing-Time": "76ms"
       },
       "ResponseBody": {
         "identity": {
-          "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000a-b16a-cabc-9806-113a0d00f148"
+          "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_0000000a-d5a0-0cf7-edbe-a43a0d00d59e"
         }
       }
     }

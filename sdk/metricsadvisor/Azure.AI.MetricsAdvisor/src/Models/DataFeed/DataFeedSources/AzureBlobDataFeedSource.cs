@@ -48,7 +48,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="container"/>, or <paramref name="blobTemplate"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="container"/>, or <paramref name="blobTemplate"/> is empty.</exception>
         public AzureBlobDataFeedSource(string connectionString, string container, string blobTemplate)
-            : base(DataFeedSourceType.AzureBlob)
+            : base(DataFeedSourceKind.AzureBlob)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(container, nameof(container));
@@ -60,7 +60,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         internal AzureBlobDataFeedSource(AzureBlobParameter parameter, AuthenticationTypeEnum? authentication)
-            : base(DataFeedSourceType.AzureBlob)
+            : base(DataFeedSourceKind.AzureBlob)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

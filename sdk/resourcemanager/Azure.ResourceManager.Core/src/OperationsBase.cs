@@ -4,7 +4,6 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
 {
@@ -13,6 +12,10 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public abstract class OperationsBase
     {
+        private ProviderContainer _providerContainer;
+        private TagResourceContainer _tagContainer;
+        private TagResourceOperations _tagResourceOperations;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationsBase"/> class for mocking.
         /// </summary>
@@ -45,6 +48,16 @@ namespace Azure.ResourceManager.Core
             Diagnostics = new ClientDiagnostics(ClientOptions);
 
             Validate(id);
+        }
+
+        /// <summary>
+        /// Gets the provider operations.
+        /// </summary>
+        protected ProviderContainer ProviderContainer => _providerContainer ??= GetProviderContainer();
+
+        private ProviderContainer GetProviderContainer()
+        {
+            return new ProviderContainer(this);
         }
 
         internal ClientDiagnostics Diagnostics { get; }
@@ -81,21 +94,15 @@ namespace Azure.ResourceManager.Core
         protected abstract ResourceType ValidResourceType { get; }
 
         /// <summary>
-        /// Gets the resource client.
+        /// Gets the TagResourceOperations.
         /// </summary>
-        protected ResourcesManagementClient ResourcesClient
-        {
-            get
-            {
-                string subscription;
-                if (!Id.TryGetSubscriptionId(out subscription))
-                {
-                    subscription = Guid.Empty.ToString();
-                }
+        /// <returns> A TagResourceOperations. </returns>
+        protected internal TagResourceOperations TagResourceOperations => _tagResourceOperations ??= new TagResourceOperations(this, Id);
 
-                return new ResourcesManagementClient(BaseUri, subscription, Credential, ClientOptions.Convert<ResourcesManagementClientOptions>());
-            }
-        }
+        /// <summary>
+        /// Gets the TagsOperations.
+        /// </summary>
+        protected internal TagResourceContainer TagContainer => _tagContainer ??= new TagResourceContainer(this);
 
         /// <summary>
         /// Validate the resource identifier against current operations.

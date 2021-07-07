@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Core
             Parent = parent;
             Provider = providerNamespace;
             IsChild = true;
+            ResourceType = ProviderOperations.ResourceType;
+            SubscriptionId = parent.SubscriptionId;
         }
 
         internal SubscriptionProviderIdentifier(SubscriptionProviderIdentifier parent, string providerNamespace, string typeName, string resourceName)
@@ -23,10 +25,11 @@ namespace Azure.ResourceManager.Core
             Parent = parent;
             Provider = parent.Provider;
             IsChild = true;
+            SubscriptionId = parent.SubscriptionId;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SubscriptionProviderIdentifier"/> class 
+        /// Initializes a new instance of the <see cref="SubscriptionProviderIdentifier"/> class
         /// for resources in the sanem namespace as their parent resource.
         /// </summary>
         /// <param name="parent"> The resource id of the parent resource. </param>
@@ -39,6 +42,7 @@ namespace Azure.ResourceManager.Core
             Parent = parent;
             Provider = parent.Provider;
             IsChild = true;
+            SubscriptionId = parent.SubscriptionId;
         }
 
         /// <summary>
@@ -54,10 +58,15 @@ namespace Azure.ResourceManager.Core
         {
             if (other is null)
                 return null;
-            SubscriptionProviderIdentifier id = ResourceIdentifier.Create(other) as SubscriptionProviderIdentifier;
-            if (other is null)
-                throw new ArgumentException("Not a valid tenant provider resource", nameof(other));
-            return id;
+
+            return ResourceIdentifier.Create(other) as SubscriptionProviderIdentifier;
+        }
+
+        /// <inheritdoc/>
+        public override bool TryGetProvider(out string providerId)
+        {
+            providerId = Provider;
+            return true;
         }
     }
 }
