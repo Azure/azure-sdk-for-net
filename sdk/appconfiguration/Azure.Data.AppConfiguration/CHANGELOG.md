@@ -6,9 +6,6 @@
 
 - The `GetConfigurationSettingAsync` overload that takes an instance of `MatchConditions` temporary removed.
 
-### Fixed
-
-
 ## 1.1.0-beta.3 (2021-06-08)
 
 ### Changes
