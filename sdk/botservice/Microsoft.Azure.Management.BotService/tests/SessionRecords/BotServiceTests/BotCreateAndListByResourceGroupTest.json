@@ -67,8 +67,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res9045/providers/Microsoft.BotService/botServices?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczkwNDUvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzP2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res9045/providers/Microsoft.BotService/botServices?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczkwNDUvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzP2FwaS12ZXJzaW9uPTIwMjEtMDMtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -133,8 +133,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res9045/providers/Microsoft.BotService/botServices?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczkwNDUvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzP2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res9045/providers/Microsoft.BotService/botServices?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczkwNDUvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzP2FwaS12ZXJzaW9uPTIwMjEtMDMtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -199,8 +199,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res9045/providers/Microsoft.BotService/botServices/botservice144?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczkwNDUvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2UxNDQ/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res9045/providers/Microsoft.BotService/botServices/botservice144?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczkwNDUvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2UxNDQ/YXBpLXZlcnNpb249MjAyMS0wMy0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"msaAppPassword\": \"b516dbfb-616b-4fc2-8b9a-155ce47fcda2\",\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"0b191be0-95c0-4a87-ac4b-8e4cafcfd25d\"\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\"\r\n}",
       "RequestHeaders": {
@@ -274,8 +274,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res9045/providers/Microsoft.BotService/botServices/botservice2309?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczkwNDUvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2UyMzA5P2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res9045/providers/Microsoft.BotService/botServices/botservice2309?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczkwNDUvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2UyMzA5P2FwaS12ZXJzaW9uPTIwMjEtMDMtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"msaAppPassword\": \"58bbbc02-1da9-48a4-bf4e-083322681feb\",\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"a83ee90b-3004-4a9a-a034-449db0ef3c6b\"\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\"\r\n}",
       "RequestHeaders": {

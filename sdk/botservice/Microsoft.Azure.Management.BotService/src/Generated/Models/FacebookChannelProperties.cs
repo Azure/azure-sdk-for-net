@@ -33,16 +33,16 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// Initializes a new instance of the FacebookChannelProperties class.
         /// </summary>
         /// <param name="appId">Facebook application id</param>
-        /// <param name="appSecret">Facebook application secret. Value only
-        /// returned through POST to the action Channel List API, otherwise
-        /// empty.</param>
         /// <param name="isEnabled">Whether this channel is enabled for the
         /// bot</param>
         /// <param name="verifyToken">Verify token. Value only returned through
         /// POST to the action Channel List API, otherwise empty.</param>
         /// <param name="pages">The list of Facebook pages</param>
+        /// <param name="appSecret">Facebook application secret. Value only
+        /// returned through POST to the action Channel List API, otherwise
+        /// empty.</param>
         /// <param name="callbackUrl">Callback Url</param>
-        public FacebookChannelProperties(string appId, string appSecret, bool isEnabled, string verifyToken = default(string), IList<FacebookPage> pages = default(IList<FacebookPage>), string callbackUrl = default(string))
+        public FacebookChannelProperties(string appId, bool isEnabled, string verifyToken = default(string), IList<FacebookPage> pages = default(IList<FacebookPage>), string appSecret = default(string), string callbackUrl = default(string))
         {
             VerifyToken = verifyToken;
             Pages = pages;
@@ -107,10 +107,6 @@ namespace Microsoft.Azure.Management.BotService.Models
             if (AppId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AppId");
-            }
-            if (AppSecret == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AppSecret");
             }
             if (Pages != null)
             {

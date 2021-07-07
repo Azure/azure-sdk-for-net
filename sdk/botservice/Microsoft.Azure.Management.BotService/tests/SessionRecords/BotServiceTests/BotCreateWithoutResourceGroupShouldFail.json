@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/na/providers/Microsoft.BotService/botServices/botservice3565?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL25hL3Byb3ZpZGVycy9NaWNyb3NvZnQuQm90U2VydmljZS9ib3RTZXJ2aWNlcy9ib3RzZXJ2aWNlMzU2NT9hcGktdmVyc2lvbj0yMDE3LTEyLTAx",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/na/providers/Microsoft.BotService/botServices/botservice3565?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL25hL3Byb3ZpZGVycy9NaWNyb3NvZnQuQm90U2VydmljZS9ib3RTZXJ2aWNlcy9ib3RzZXJ2aWNlMzU2NT9hcGktdmVyc2lvbj0yMDIxLTAzLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"msaAppPassword\": \"73c408f4-d64b-4f06-9446-0f78f9e48289\",\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"d1a7c1b9-3eb9-4547-b5f5-beb83d4c09c4\"\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\"\r\n}",
       "RequestHeaders": {

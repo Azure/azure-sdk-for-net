@@ -65,7 +65,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices?api-version=2017-12-01",
+      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices?api-version=2021-03-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3Jlczk4ODMvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzP2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -84,7 +84,7 @@
           "test@microsoft.com"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices?api-version=2017-12-01&%24skipToken=eyJuZXh0TWFya2VyIjoiMCJ9\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices?api-version=2021-03-01&%24skipToken=eyJuZXh0TWFya2VyIjoiMCJ9\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -138,7 +138,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices?api-version=2017-12-01",
+      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices?api-version=2021-03-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3Jlczk4ODMvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzP2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -157,7 +157,7 @@
           "test@microsoft.com"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices/botservice3241\",\r\n      \"name\": \"botservice3241\",\r\n      \"type\": \"Microsoft.BotService/botServices\",\r\n      \"sku\": {\r\n        \"name\": \"F0\"\r\n      },\r\n      \"kind\": \"bot\",\r\n      \"properties\": {\r\n        \"displayName\": \"botservice3241\",\r\n        \"description\": \"\",\r\n        \"iconUrl\": \"//intercom-scratch.azureedge.net/bot-icons-v1/bot-framework-default.png\",\r\n        \"endpoint\": null,\r\n        \"msaAppId\": \"18ec024d-52fd-494b-ba25-67225b90bf39\",\r\n        \"developerAppInsightKey\": null,\r\n        \"developerAppInsightsApplicationId\": null,\r\n        \"luisAppIds\": [],\r\n        \"endpointVersion\": null,\r\n        \"configuredChannels\": [],\r\n        \"enabledChannels\": [\r\n          \"webchat\",\r\n          \"directline\"\r\n        ],\r\n        \"isDeveloperAppInsightsApiKeySet\": null,\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices/botservice7034\",\r\n      \"name\": \"botservice7034\",\r\n      \"type\": \"Microsoft.BotService/botServices\",\r\n      \"sku\": {\r\n        \"name\": \"F0\"\r\n      },\r\n      \"kind\": \"bot\",\r\n      \"properties\": {\r\n        \"displayName\": \"botservice7034\",\r\n        \"description\": \"\",\r\n        \"iconUrl\": \"//intercom-scratch.azureedge.net/bot-icons-v1/bot-framework-default.png\",\r\n        \"endpoint\": null,\r\n        \"msaAppId\": \"5f94c118-0fbc-466b-b379-c6c115cf9b7a\",\r\n        \"developerAppInsightKey\": null,\r\n        \"developerAppInsightsApplicationId\": null,\r\n        \"luisAppIds\": [],\r\n        \"endpointVersion\": null,\r\n        \"configuredChannels\": [],\r\n        \"enabledChannels\": [\r\n          \"webchat\",\r\n          \"directline\"\r\n        ],\r\n        \"isDeveloperAppInsightsApiKeySet\": null,\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices?api-version=2017-12-01&%24skipToken=eyJuZXh0TWFya2VyIjoiMiJ9\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices/botservice3241\",\r\n      \"name\": \"botservice3241\",\r\n      \"type\": \"Microsoft.BotService/botServices\",\r\n      \"sku\": {\r\n        \"name\": \"F0\"\r\n      },\r\n      \"kind\": \"bot\",\r\n      \"properties\": {\r\n        \"displayName\": \"botservice3241\",\r\n        \"description\": \"\",\r\n        \"iconUrl\": \"//intercom-scratch.azureedge.net/bot-icons-v1/bot-framework-default.png\",\r\n        \"endpoint\": null,\r\n        \"msaAppId\": \"18ec024d-52fd-494b-ba25-67225b90bf39\",\r\n        \"developerAppInsightKey\": null,\r\n        \"developerAppInsightsApplicationId\": null,\r\n        \"luisAppIds\": [],\r\n        \"endpointVersion\": null,\r\n        \"configuredChannels\": [],\r\n        \"enabledChannels\": [\r\n          \"webchat\",\r\n          \"directline\"\r\n        ],\r\n        \"isDeveloperAppInsightsApiKeySet\": null,\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices/botservice7034\",\r\n      \"name\": \"botservice7034\",\r\n      \"type\": \"Microsoft.BotService/botServices\",\r\n      \"sku\": {\r\n        \"name\": \"F0\"\r\n      },\r\n      \"kind\": \"bot\",\r\n      \"properties\": {\r\n        \"displayName\": \"botservice7034\",\r\n        \"description\": \"\",\r\n        \"iconUrl\": \"//intercom-scratch.azureedge.net/bot-icons-v1/bot-framework-default.png\",\r\n        \"endpoint\": null,\r\n        \"msaAppId\": \"5f94c118-0fbc-466b-b379-c6c115cf9b7a\",\r\n        \"developerAppInsightKey\": null,\r\n        \"developerAppInsightsApplicationId\": null,\r\n        \"luisAppIds\": [],\r\n        \"endpointVersion\": null,\r\n        \"configuredChannels\": [],\r\n        \"enabledChannels\": [\r\n          \"webchat\",\r\n          \"directline\"\r\n        ],\r\n        \"isDeveloperAppInsightsApiKeySet\": null,\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices?api-version=2021-03-01&%24skipToken=eyJuZXh0TWFya2VyIjoiMiJ9\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -211,7 +211,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices/botservice7034?api-version=2017-12-01",
+      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices/botservice7034?api-version=2021-03-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3Jlczk4ODMvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2U3MDM0P2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -288,7 +288,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices/botservice3241?api-version=2017-12-01",
+      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res9883/providers/Microsoft.BotService/botServices/botservice3241?api-version=2021-03-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3Jlczk4ODMvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2UzMjQxP2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",

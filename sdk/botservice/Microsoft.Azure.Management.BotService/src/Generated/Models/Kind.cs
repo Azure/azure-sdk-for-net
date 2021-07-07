@@ -20,5 +20,6 @@ namespace Microsoft.Azure.Management.BotService.Models
         public const string Designer = "designer";
         public const string Bot = "bot";
         public const string Function = "function";
+        public const string Azurebot = "azurebot";
     }
 }

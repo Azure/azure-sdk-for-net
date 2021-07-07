@@ -34,14 +34,14 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// <param name="accountSID">The Sms account SID. Value only returned
         /// through POST to the action Channel List API, otherwise
         /// empty.</param>
+        /// <param name="isEnabled">Whether this channel is enabled for the
+        /// bot</param>
         /// <param name="authToken">The Sms auth token. Value only returned
         /// through POST to the action Channel List API, otherwise
         /// empty.</param>
-        /// <param name="isEnabled">Whether this channel is enabled for the
-        /// bot</param>
         /// <param name="isValidated">Whether this channel is validated for the
         /// bot</param>
-        public SmsChannelProperties(string phone, string accountSID, string authToken, bool isEnabled, bool? isValidated = default(bool?))
+        public SmsChannelProperties(string phone, string accountSID, bool isEnabled, string authToken = default(string), bool? isValidated = default(bool?))
         {
             Phone = phone;
             AccountSID = accountSID;
@@ -103,10 +103,6 @@ namespace Microsoft.Azure.Management.BotService.Models
             if (AccountSID == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AccountSID");
-            }
-            if (AuthToken == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AuthToken");
             }
         }
     }

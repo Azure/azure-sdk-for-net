@@ -31,13 +31,13 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// Initializes a new instance of the KikChannelProperties class.
         /// </summary>
         /// <param name="userName">The Kik user name</param>
-        /// <param name="apiKey">Kik API key. Value only returned through POST
-        /// to the action Channel List API, otherwise empty.</param>
         /// <param name="isEnabled">Whether this channel is enabled for the
         /// bot</param>
+        /// <param name="apiKey">Kik API key. Value only returned through POST
+        /// to the action Channel List API, otherwise empty.</param>
         /// <param name="isValidated">Whether this channel is validated for the
         /// bot</param>
-        public KikChannelProperties(string userName, string apiKey, bool isEnabled, bool? isValidated = default(bool?))
+        public KikChannelProperties(string userName, bool isEnabled, string apiKey = default(string), bool? isValidated = default(bool?))
         {
             UserName = userName;
             ApiKey = apiKey;
@@ -87,10 +87,6 @@ namespace Microsoft.Azure.Management.BotService.Models
             if (UserName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "UserName");
-            }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ApiKey");
             }
         }
     }

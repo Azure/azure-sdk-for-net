@@ -67,8 +67,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res958/providers/Microsoft.BotService/botServices?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3Jlczk1OC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXM/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res958/providers/Microsoft.BotService/botServices?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3Jlczk1OC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXM/YXBpLXZlcnNpb249MjAyMS0wMy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -133,8 +133,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res958/providers/Microsoft.BotService/botServices/botservice2699?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3Jlczk1OC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTI2OTk/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res958/providers/Microsoft.BotService/botServices/botservice2699?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3Jlczk1OC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTI2OTk/YXBpLXZlcnNpb249MjAyMS0wMy0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"msaAppPassword\": \"7d01b610-8a19-44d0-9db8-baffebcfb05a\",\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"5b269e08-f297-4eba-983c-5af3ff1ddd58\"\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\"\r\n}",
       "RequestHeaders": {
@@ -208,8 +208,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res958/providers/Microsoft.BotService/botServices/botservice2699/channels/EmailChannel?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3Jlczk1OC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTI2OTkvY2hhbm5lbHMvRW1haWxDaGFubmVsP2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res958/providers/Microsoft.BotService/botServices/botservice2699/channels/EmailChannel?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3Jlczk1OC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTI2OTkvY2hhbm5lbHMvRW1haWxDaGFubmVsP2FwaS12ZXJzaW9uPTIwMjEtMDMtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"channelName\": \"EmailChannel\",\r\n    \"properties\": {\r\n      \"emailAddress\": \"carlostestsdk2@outlook.com\",\r\n      \"password\": \"Carlos.Test1\",\r\n      \"isEnabled\": true\r\n    }\r\n  },\r\n  \"location\": \"global\"\r\n}",
       "RequestHeaders": {

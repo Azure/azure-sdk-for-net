@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// <param name="accessToken">Facebook application access token. Value
         /// only returned through POST to the action Channel List API,
         /// otherwise empty.</param>
-        public FacebookPage(string id, string accessToken)
+        public FacebookPage(string id, string accessToken = default(string))
         {
             Id = id;
             AccessToken = accessToken;
@@ -70,10 +70,6 @@ namespace Microsoft.Azure.Management.BotService.Models
             if (Id == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Id");
-            }
-            if (AccessToken == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AccessToken");
             }
         }
     }

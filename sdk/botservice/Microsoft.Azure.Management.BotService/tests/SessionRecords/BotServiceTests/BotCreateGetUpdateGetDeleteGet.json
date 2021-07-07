@@ -67,8 +67,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAyMS0wMy0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"msaAppPassword\": \"55163318-54ee-411f-b94a-3194d3121f72\",\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"5c1852e0-5119-45b6-87f1-bf921f3ae1b4\"\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\"\r\n}",
       "RequestHeaders": {
@@ -142,8 +142,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAyMS0wMy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -211,8 +211,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAyMS0wMy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -280,8 +280,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAyMS0wMy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -343,8 +343,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAyMS0wMy0wMQ==",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"iconUrl\": \"https://docs.scratch.botframework.com/static/devportal/client/images/bot-framework-default.png\",\r\n    \"endpoint\": \"https://new.bot.endpoint\",\r\n    \"msaAppId\": \"5c1852e0-5119-45b6-87f1-bf921f3ae1b4\",\r\n    \"luisAppIds\": []\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\",\r\n  \"etag\": \"\\\"0903ab6c-0000-0800-0000-5ce37c540000\\\"\"\r\n}",
       "RequestHeaders": {
@@ -418,8 +418,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2017-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
+      "RequestUri": "/subscriptions/41e010d8-8a1c-4c4b-9fca-d31fb6e90655/resourceGroups/res610/providers/Microsoft.BotService/botServices/botservice1115?api-version=2021-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDFlMDEwZDgtOGExYy00YzRiLTlmY2EtZDMxZmI2ZTkwNjU1L3Jlc291cmNlR3JvdXBzL3JlczYxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkJvdFNlcnZpY2UvYm90U2VydmljZXMvYm90c2VydmljZTExMTU/YXBpLXZlcnNpb249MjAyMS0wMy0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {

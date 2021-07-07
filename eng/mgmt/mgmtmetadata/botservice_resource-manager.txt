@@ -1,0 +1,15 @@
+﻿Installing AutoRest version: v2
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/botservice/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.output-folder=D:\work\azure-sdk-for-net\sdk\botservice\Microsoft.Azure.Management.BotService\src\Generated
+Autorest CSharp Version: 2.3.82
+2021-05-14 00:09:09 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      master
+Commit:      7d4caa5e1c9996a25300b0b23ef426667e4a7bde
+AutoRest information
+Requested version: v2
+Bootstrapper version:    autorest@2.0.4413
