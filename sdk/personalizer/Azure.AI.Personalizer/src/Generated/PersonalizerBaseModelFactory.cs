@@ -73,10 +73,10 @@ namespace Azure.AI.Personalizer.Models
 
         /// <summary> Initializes a new instance of LogsProperties. </summary>
         /// <param name="dateRange"> Date range. </param>
-        /// <returns> A new <see cref="Models.LogsProperties"/> instance for mocking. </returns>
-        public static LogsProperties LogsProperties(LogsPropertiesDateRange dateRange = null)
+        /// <returns> A new <see cref="Models.LogProperties"/> instance for mocking. </returns>
+        public static LogProperties LogsProperties(LogsPropertiesDateRange dateRange = null)
         {
-            return new LogsProperties(dateRange);
+            return new LogProperties(dateRange);
         }
 
         /// <summary> Initializes a new instance of DateRange. </summary>

@@ -5,19 +5,22 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.AI.Personalizer.Models
 {
     /// <summary> Properties related to data used to train the model. </summary>
-    public partial class LogsProperties
+    [CodeGenModel("LogsProperties")]
+    public partial class LogProperties
     {
         /// <summary> Initializes a new instance of LogsProperties. </summary>
-        internal LogsProperties()
+        internal LogProperties()
         {
         }
 
         /// <summary> Initializes a new instance of LogsProperties. </summary>
         /// <param name="dateRange"> Date range. </param>
-        internal LogsProperties(LogsPropertiesDateRange dateRange)
+        internal LogProperties(LogsPropertiesDateRange dateRange)
         {
             DateRange = dateRange;
         }

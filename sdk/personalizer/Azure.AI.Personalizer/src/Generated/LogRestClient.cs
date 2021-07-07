@@ -98,7 +98,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get properties of the Personalizer logs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<LogsProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<LogProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -106,9 +106,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        LogsProperties value = default;
+                        LogProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogsProperties.DeserializeLogsProperties(document.RootElement);
+                        value = LogProperties.DeserializeLogsProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -118,7 +118,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get properties of the Personalizer logs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<LogsProperties> GetProperties(CancellationToken cancellationToken = default)
+        public Response<LogProperties> GetProperties(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest();
             _pipeline.Send(message, cancellationToken);
@@ -126,9 +126,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        LogsProperties value = default;
+                        LogProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogsProperties.DeserializeLogsProperties(document.RootElement);
+                        value = LogProperties.DeserializeLogsProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

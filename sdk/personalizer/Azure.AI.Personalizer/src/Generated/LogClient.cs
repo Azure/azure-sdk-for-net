@@ -117,7 +117,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get properties of the Personalizer logs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LogsProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LogClient.GetProperties");
             scope.Start();
@@ -134,7 +134,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get properties of the Personalizer logs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LogsProperties> GetProperties(CancellationToken cancellationToken = default)
+        public virtual Response<LogProperties> GetProperties(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LogClient.GetProperties");
             scope.Start();

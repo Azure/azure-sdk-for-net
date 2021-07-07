@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.Personalizer.Models
 {
-    public partial class LogsProperties
+    public partial class LogProperties
     {
-        internal static LogsProperties DeserializeLogsProperties(JsonElement element)
+        internal static LogProperties DeserializeLogsProperties(JsonElement element)
         {
             Optional<LogsPropertiesDateRange> dateRange = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace Azure.AI.Personalizer.Models
                     continue;
                 }
             }
-            return new LogsProperties(dateRange.Value);
+            return new LogProperties(dateRange.Value);
         }
     }
 }
