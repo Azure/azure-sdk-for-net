@@ -2,8 +2,8 @@ namespace Azure.Communication.NetworkTraversal
 {
     public static partial class AzureCommunicationServicesModelFactory
     {
-        public static Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration CommunicationRelayConfiguration(System.DateTimeOffset expiresOn = default(System.DateTimeOffset), System.Collections.Generic.IReadOnlyList<Azure.Communication.NetworkTraversal.CommunicationTurnServer> turnServers = null) { throw null; }
-        public static Azure.Communication.NetworkTraversal.CommunicationTurnServer CommunicationTurnServer(System.Collections.Generic.IReadOnlyList<string> urls = null, string username = null, string credential = null) { throw null; }
+        public static Azure.Communication.NetworkTraversal.CommunicationRelayConfiguration CommunicationRelayConfiguration(System.DateTimeOffset expiresOn = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.Communication.NetworkTraversal.CommunicationTurnServer> turnServers = null) { throw null; }
+        public static Azure.Communication.NetworkTraversal.CommunicationTurnServer CommunicationTurnServer(System.Collections.Generic.IEnumerable<string> urls = null, string username = null, string credential = null) { throw null; }
     }
     public partial class CommunicationRelayClient
     {

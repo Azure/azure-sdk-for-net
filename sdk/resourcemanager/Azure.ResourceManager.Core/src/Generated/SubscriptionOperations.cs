@@ -86,6 +86,15 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
+        /// Gets the predefined tag container under this subscription.
+        /// </summary>
+        /// <returns> The tags container. </returns>
+        public virtual PreDefinedTagContainer GetPredefinedTags()
+        {
+            return new PreDefinedTagContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+        }
+
+        /// <summary>
         /// Gets the provider container under this subscription.
         /// </summary>
         /// <returns> The provider container. </returns>
@@ -193,6 +202,15 @@ namespace Azure.ResourceManager.Core
         public virtual GenericResourceContainer GetGenericResources()
         {
             return new GenericResourceContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+        }
+
+        /// <summary>
+        /// Gets the predefined tag operations under this subscription.
+        /// </summary>
+        /// <returns> The predefined tags operations. </returns>
+        public virtual PreDefinedTagOperations GetPreDefinedTagOperations()
+        {
+            return new PreDefinedTagOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
         }
     }
 }

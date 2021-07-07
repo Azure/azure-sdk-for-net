@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Core
     /// A class representing the base resource used by all azure resources.
     /// </summary>
     [ReferenceType(typeof(TenantResourceIdentifier))]
-    public abstract class Resource<TIdentifier> : IEquatable<Resource<TIdentifier>>, IEquatable<string>,
-        IComparable<Resource<TIdentifier>>, IComparable<string> where TIdentifier : TenantResourceIdentifier
+    public abstract class Resource<TIdentifier>
+        where TIdentifier : TenantResourceIdentifier
     {
         /// <summary>
         /// Initializes an empty instance of <see cref="Resource{TIdentifier}"/>.
@@ -46,47 +46,5 @@ namespace Azure.ResourceManager.Core
         /// Gets the resource type.
         /// </summary>
         public virtual ResourceType Type { get; }
-
-        /// <inheritdoc/>
-        public virtual int CompareTo(Resource<TIdentifier> other)
-        {
-            if (other == null)
-                return 1;
-
-            if (ReferenceEquals(this, other))
-                return 0;
-
-            int compareResult = 0;
-            if ((compareResult = string.Compare(Id, other.Id, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
-                (compareResult = string.Compare(Name, other.Name, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
-                (compareResult = Type.CompareTo(other.Type)) == 0)
-                return 0;
-
-            return compareResult;
-        }
-
-        /// <inheritdoc/>
-        public virtual int CompareTo(string other)
-        {
-            return string.Compare(Id, other, StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        /// <inheritdoc/>
-        public virtual bool Equals(Resource<TIdentifier> other)
-        {
-            if (Id == null)
-                return false;
-
-            return Id.Equals(other?.Id);
-        }
-
-        /// <inheritdoc/>
-        public virtual bool Equals(string other)
-        {
-            if (Id == null)
-                return false;
-
-            return Id.Equals(other);
-        }
     }
 }

@@ -833,6 +833,13 @@ namespace Azure.Storage.Blobs.Specialized
         {
             content = content?.WithNoDispose().WithProgress(progressHandler);
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
+            // All BlobRequestConditions are valid.
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions: BlobRequestConditionProperty.None,
+                operationName: nameof(BlockBlobClient.Upload),
+                parameterName: nameof(conditions));
+
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1134,6 +1141,16 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(StageBlock)}");
+
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince
+                        | BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch,
+                    operationName: nameof(BlockBlobClient.StageBlock),
+                    parameterName: nameof(conditions));
 
                 try
                 {
@@ -1557,6 +1574,22 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(StageBlockFromUri)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince
+                        | BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch,
+                    operationName: nameof(BlockBlobClient.StageBlockFromUri),
+                    parameterName: nameof(conditions));
+
+                // All RequestConditions are valid for sourceConditions.
+                sourceConditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlockBlobClient.StageBlockFromUri),
+                    parameterName: nameof(sourceConditions));
+
                 try
                 {
                     scope.Start();
@@ -1976,6 +2009,12 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(CommitBlockList)}");
 
+                // All BlobRequestConditions are valid.
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlockBlobClient.CommitBlockList),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -2223,6 +2262,15 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(GetBlockList)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.IfModifiedSince
+                        | BlobRequestConditionProperty.IfUnmodifiedSince
+                        | BlobRequestConditionProperty.IfMatch
+                        | BlobRequestConditionProperty.IfNoneMatch,
+                    operationName: nameof(BlockBlobClient.GetBlockList),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -2379,6 +2427,12 @@ namespace Azure.Storage.Blobs.Specialized
                 ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlockBlobClient), message: $"{nameof(Uri)}: {Uri}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(Query)}");
+
+                // All BlobRequestConditions are valid.
+                options?.Conditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlockBlobClient.Query),
+                    parameterName: nameof(BlobQueryOptions.Conditions));
 
                 try
                 {
@@ -2827,6 +2881,17 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(SyncUploadFromUri)}");
 
+                // All BlobRequestConditions are valid for options.DestinationConditions.
+                options?.DestinationConditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.None,
+                    operationName: nameof(BlockBlobClient.SyncUploadFromUri),
+                    parameterName: nameof(BlobSyncUploadFromUriOptions.DestinationConditions));
+
+                options?.SourceConditions.ValidateConditionsNotPresent(
+                    invalidConditions: BlobRequestConditionProperty.LeaseId,
+                    operationName: nameof(BlockBlobClient.SyncUploadFromUri),
+                    parameterName: nameof(BlobSyncUploadFromUriOptions.SourceConditions));
+
                 try
                 {
                     scope.Start();
@@ -2953,14 +3018,26 @@ namespace Azure.Storage.Blobs.Specialized
                         async,
                         cancellationToken).ConfigureAwait(false),
                 UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
-                    => await client.StageBlockInternal(
-                        Shared.StorageExtensions.GenerateBlockId(offset),
-                        stream,
-                        transactionalContentHash: default,
-                        args?.Conditions,
-                        progressHandler,
-                        async,
-                        cancellationToken).ConfigureAwait(false),
+                    =>
+                {
+                    // Stage Block only accepts LeaseId.
+                    BlobRequestConditions conditions = null;
+                    if (args?.Conditions != null)
+                    {
+                        conditions = new BlobRequestConditions
+                        {
+                            LeaseId = args.Conditions.LeaseId
+                        };
+                    }
+                    await client.StageBlockInternal(
+                            Shared.StorageExtensions.GenerateBlockId(offset),
+                            stream,
+                            transactionalContentHash: default,
+                            conditions,
+                            progressHandler,
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                },
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
                         partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),

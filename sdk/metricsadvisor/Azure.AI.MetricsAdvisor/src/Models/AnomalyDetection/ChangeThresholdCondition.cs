@@ -19,17 +19,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         /// <param name="changePercentage">Compared to the previous point, the current point is an anomaly if the percentage of change is more than this value. </param>
         /// <param name="shiftPoint">When set to N, sets as reference the data point that's N positions before the current point. Value must be at least 1.</param>
-        /// <param name="isWithinRange">Sets whether to detect data within the range or outside the range.</param>
+        /// <param name="withinRange">Sets whether to detect data within the range or outside the range.</param>
         /// <param name="anomalyDetectorDirection">A point is considered an anomaly only when the deviation occurs in the specified direction.</param>
         /// <param name="suppressCondition">The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.</param>
         /// <exception cref="ArgumentNullException"><paramref name="suppressCondition"/> is null.</exception>
-        public ChangeThresholdCondition(double changePercentage, int shiftPoint, bool isWithinRange, AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition)
+        public ChangeThresholdCondition(double changePercentage, int shiftPoint, bool withinRange, AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition)
         {
             Argument.AssertNotNull(suppressCondition, nameof(suppressCondition));
 
             ChangePercentage = changePercentage;
             ShiftPoint = shiftPoint;
-            IsWithinRange = isWithinRange;
+            WithinRange = withinRange;
             AnomalyDetectorDirection = anomalyDetectorDirection;
             SuppressCondition = suppressCondition;
         }
@@ -49,8 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Sets whether to detect data within the range or outside the range. If you want to detect fluctuations, select false.
         /// If you want to detect flat lines in your data, select true.
         /// </summary>
-        [CodeGenMember("WithinRange")]
-        public bool IsWithinRange { get; set; }
+        public bool WithinRange { get; set; }
 
         /// <summary>
         /// A point is considered an anomaly only when the deviation occurs in the specified direction.
@@ -66,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             ShiftPoint = ShiftPoint,
             ChangePercentage = ChangePercentage,
-            WithinRange = IsWithinRange,
+            WithinRange = WithinRange,
             AnomalyDetectorDirection = AnomalyDetectorDirection,
             SuppressCondition = SuppressCondition?.GetPatchModel()
         };

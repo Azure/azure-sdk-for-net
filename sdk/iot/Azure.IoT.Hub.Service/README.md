@@ -60,5 +60,5 @@ For more information see the Code of Conduct FAQ or contact opencode@microsoft.c
 
 <!-- LINKS -->
 [microsoft_sdk_download]: https://azure.microsoft.com/downloads/?sdk=net
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/

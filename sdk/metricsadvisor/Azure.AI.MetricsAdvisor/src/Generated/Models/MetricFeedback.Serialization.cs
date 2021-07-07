@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor
         {
             writer.WriteStartObject();
             writer.WritePropertyName("feedbackType");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("metricId");
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter");

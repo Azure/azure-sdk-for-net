@@ -77,7 +77,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task AnalyzeSentimentWithOpinionMining()
         {
             TextAnalyticsClient client = GetClient();
@@ -90,7 +90,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task AnalyzeSentimentWithOpinionMiningEmpty()
         {
             TextAnalyticsClient client = GetClient();
@@ -103,7 +103,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task AnalyzeSentimentWithOpinionMiningNegated()
         {
             TextAnalyticsClient client = GetClient();
@@ -162,7 +162,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task AnalyzeSentimentBatchConvenienceWithOpinionMiningTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -340,7 +340,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public async Task AnalyzeSentimentBatchWithOpinionMiningTest()
         {
             TextAnalyticsClient client = GetClient();

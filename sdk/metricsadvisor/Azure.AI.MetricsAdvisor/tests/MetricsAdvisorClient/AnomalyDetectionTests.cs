@@ -197,8 +197,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
+            var columns = new Dictionary<string, string>() { { "name", "value" } };
+
             var emptyList = new List<DimensionKey>();
-            var seriesKeys = new List<DimensionKey>() { new DimensionKey() };
+            var seriesKeys = new List<DimensionKey>() { new DimensionKey(columns) };
 
             Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(FakeGuid, null, default, default), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetMetricEnrichedSeriesDataAsync(FakeGuid, emptyList, default, default), Throws.InstanceOf<ArgumentException>());
@@ -218,8 +220,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
+            var columns = new Dictionary<string, string>() { { "name", "value" } };
+
             var emptyList = new List<DimensionKey>();
-            var seriesKeys = new List<DimensionKey>() { new DimensionKey() };
+            var seriesKeys = new List<DimensionKey>() { new DimensionKey(columns) };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();

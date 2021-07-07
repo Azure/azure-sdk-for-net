@@ -44,7 +44,7 @@ namespace Azure.Monitor.Query
             uri.Reset(endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/microsoft.insights/metricDefinitions", false);
+            uri.AppendPath("/providers/Microsoft.Insights/metricDefinitions", false);
             uri.AppendQuery("api-version", "2018-01-01", true);
             if (metricnamespace != null)
             {
