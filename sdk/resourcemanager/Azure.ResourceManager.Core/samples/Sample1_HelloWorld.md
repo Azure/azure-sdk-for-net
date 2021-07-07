@@ -4,25 +4,20 @@
 
 The following code shows how to get the default subscription:
 
-```csharp
-var armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
-Console.WriteLine(subscription.Id);
+```C# Snippet:Hello_World_DefaultSubscription
+
 ```
 
 It's possible to get a specific subscription as follows:
 
-```csharp
-string subscriptionId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c";
-var armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.GetSubscriptions().Get(subscriptionId);
-Console.WriteLine("Got subscription: " + subscription.Data.DisplayName);
+```C# Snippet:Hello_World_SpecificSubscription
+
 ```
 
 From here, it is possible to get the resource groups from the retrieved subscription:
 
-```csharp
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+```C# Snippet:Hello_World_ResourceGroupContainer
+
 ```
 
 ## Next stepts
