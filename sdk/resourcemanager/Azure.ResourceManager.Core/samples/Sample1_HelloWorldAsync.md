@@ -5,13 +5,18 @@
 The following code shows how to get the default subscription:
 
 ```C# Snippet:Hello_World_Async_DefaultSubscription
-
+var armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+Console.WriteLine(subscription.Id);
 ```
 
 It's possible to get a specific subscription as follows:
 
 ```C# Snippet:Hello_World_Async_SpecificSubscription
-
+string subscriptionId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c";
+var armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = await armClient.GetSubscriptions().GetAsync(subscriptionId);
+Console.WriteLine(subscription.Id);
 ```
 
 With the `Async` suffix on methods that perform API calls, it's possible to differentiate the asynchronous and synchronous variants of any method.
@@ -19,7 +24,7 @@ With the `Async` suffix on methods that perform API calls, it's possible to diff
 From here, it is possible to get the resource groups from the retrieved subscription:
 
 ```C# Snippet:Hello_World_Async_ResourceGroupContainer
-
+ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 ```
 
 ## Next stepts
