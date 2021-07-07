@@ -18,15 +18,15 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class EntityRecognitionSkill
     {
-        private readonly EntityRecognitionSkillVersion _skillVersion = EntityRecognitionSkillVersion.V1;
+        private readonly SkillVersion _skillVersion = SkillVersion.V1;
         private bool? _includeTypelessEntities;
         private string _modelVersion;
 
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="skillVersion">Service version information of the skill. Default value is <see cref="EntityRecognitionSkillVersion.V1"/>. </param>
-        public EntityRecognitionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, EntityRecognitionSkillVersion skillVersion) : this(inputs, outputs)
+        /// <param name="skillVersion">Service version information of the skill. Default value is <see cref="SkillVersion.V1"/>. </param>
+        public EntityRecognitionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, SkillVersion skillVersion) : this(inputs, outputs)
         {
             _skillVersion = skillVersion;
             ODataType = skillVersion.ToString();
@@ -44,9 +44,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
             set
             {
-                if (_skillVersion != EntityRecognitionSkillVersion.V1)
+                if (_skillVersion != SkillVersion.V1)
                 {
-                    throw new InvalidOperationException($"{nameof(IncludeTypelessEntities)} can only be used with {EntityRecognitionSkillVersion.V1}");
+                    throw new InvalidOperationException($"{nameof(IncludeTypelessEntities)} can only be used with {SkillVersion.V1}");
                 }
                 _includeTypelessEntities = value;
             }
@@ -61,9 +61,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
             set
             {
-                if (_skillVersion != EntityRecognitionSkillVersion.V3)
+                if (_skillVersion != SkillVersion.V3)
                 {
-                    throw new InvalidOperationException($"{nameof(ModelVersion)} can only be used with {EntityRecognitionSkillVersion.V3}");
+                    throw new InvalidOperationException($"{nameof(ModelVersion)} can only be used with {SkillVersion.V3}");
                 }
                 _modelVersion = value;
             }

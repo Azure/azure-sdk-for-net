@@ -17,16 +17,16 @@ namespace Azure.Search.Documents.Indexes.Models
     /// based on the highest confidence score found by the service at a sentence and document-level using the Text Analytics API. </summary>
     public partial class SentimentSkill
     {
-        private readonly SentimentSkillVersion _skillVersion = SentimentSkillVersion.V1;
+        private readonly SkillVersion _skillVersion = SkillVersion.V1;
         private bool? _includeOpinionMining = false;
         private string _modelVersion;
 
         /// <summary> Initializes a new instance of <see cref="SentimentSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <param name="skillVersion"> Service version information of the skill. Default value is <see cref="SentimentSkillVersion.V1"/>. </param>
+        /// <param name="skillVersion"> Service version information of the skill. Default value is <see cref="SkillVersion.V1"/>. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public SentimentSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, SentimentSkillVersion skillVersion) : this(inputs, outputs)
+        public SentimentSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, SkillVersion skillVersion) : this(inputs, outputs)
         {
             _skillVersion = skillVersion;
             ODataType = skillVersion.ToString();
@@ -42,9 +42,9 @@ namespace Azure.Search.Documents.Indexes.Models
             get => _includeOpinionMining;
             set
             {
-                if (_skillVersion != SentimentSkillVersion.V3)
+                if (_skillVersion != SkillVersion.V3)
                 {
-                    throw new InvalidOperationException($"{nameof(IncludeOpinionMining)} can only be used with {SentimentSkillVersion.V3}");
+                    throw new InvalidOperationException($"{nameof(IncludeOpinionMining)} can only be used with {SkillVersion.V3}");
                 }
                 _includeOpinionMining = value;
             }
@@ -59,9 +59,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
             set
             {
-                if (_skillVersion != SentimentSkillVersion.V3)
+                if (_skillVersion != SkillVersion.V3)
                 {
-                    throw new InvalidOperationException($"{nameof(ModelVersion)} can only be used with {SentimentSkillVersion.V3}");
+                    throw new InvalidOperationException($"{nameof(ModelVersion)} can only be used with {SkillVersion.V3}");
                 }
                 _modelVersion = value;
             }

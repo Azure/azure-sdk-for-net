@@ -10,45 +10,45 @@ namespace Azure.Search.Documents.Indexes.Models
     {
 #pragma warning disable CA1034 // Nested types should not be visible
         /// <summary> Represents service version information of an <see cref="EntityRecognitionSkill"/>. </summary>
-        public readonly partial struct EntityRecognitionSkillVersion : IEquatable<EntityRecognitionSkillVersion>
+        public readonly partial struct SkillVersion : IEquatable<SkillVersion>
         {
             private readonly string _value;
 
             private const string V1Value = "#Microsoft.Skills.Text.EntityRecognitionSkill";
             private const string V3Value = "#Microsoft.Skills.Text.V3.EntityRecognitionSkill";
 
-            /// <summary> Creates a new instance of <see cref="EntityRecognitionSkillVersion"/>. </summary>
+            /// <summary> Creates a new instance of <see cref="SkillVersion"/>. </summary>
             /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-            public EntityRecognitionSkillVersion(string value)
+            public SkillVersion(string value)
             {
                 _value = value ?? throw new ArgumentNullException(nameof(value));
             }
 
             /// <summary> Version 1 of the <see cref="EntityRecognitionSkill"/>. </summary>
-            public static EntityRecognitionSkillVersion V1 { get; } = new EntityRecognitionSkillVersion(V1Value);
+            public static SkillVersion V1 { get; } = new SkillVersion(V1Value);
 
             /// <summary> Version 3 of the <see cref="EntityRecognitionSkill"/>. </summary>
-            public static EntityRecognitionSkillVersion V3 { get; } = new EntityRecognitionSkillVersion(V3Value);
+            public static SkillVersion V3 { get; } = new SkillVersion(V3Value);
 
             /// <summary> Latest version of the <see cref="EntityRecognitionSkill"/>. </summary>
-            public static EntityRecognitionSkillVersion Latest { get; } = EntityRecognitionSkillVersion.V3;
+            public static SkillVersion Latest { get; } = SkillVersion.V3;
 
             /// <inheritdoc />
             [EditorBrowsable(EditorBrowsableState.Never)]
-            public override bool Equals(object obj) => obj is EntityRecognitionSkillVersion other && Equals(other);
+            public override bool Equals(object obj) => obj is SkillVersion other && Equals(other);
 
             /// <inheritdoc />
-            public bool Equals(EntityRecognitionSkillVersion other) =>
+            public bool Equals(SkillVersion other) =>
                 string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-            /// <summary> Defines the '==' operator on <see cref="EntityRecognitionSkillVersion"/>. </summary>
-            public static bool operator ==(EntityRecognitionSkillVersion lhs, EntityRecognitionSkillVersion rhs) => lhs.Equals(rhs);
+            /// <summary> Defines the '==' operator on <see cref="SkillVersion"/>. </summary>
+            public static bool operator ==(SkillVersion lhs, SkillVersion rhs) => lhs.Equals(rhs);
 
-            /// <summary> Defines the '!=' operator on <see cref="EntityRecognitionSkillVersion"/>. </summary>
-            public static bool operator !=(EntityRecognitionSkillVersion lhs, EntityRecognitionSkillVersion rhs) => !(lhs == rhs);
+            /// <summary> Defines the '!=' operator on <see cref="SkillVersion"/>. </summary>
+            public static bool operator !=(SkillVersion lhs, SkillVersion rhs) => !(lhs == rhs);
 
-            /// <summary> Converts a string to a <see cref="EntityRecognitionSkillVersion"/>. </summary>
-            public static implicit operator EntityRecognitionSkillVersion(string value) => new(value);
+            /// <summary> Converts a string to a <see cref="SkillVersion"/>. </summary>
+            public static implicit operator SkillVersion(string value) => new(value);
 
             /// <inheritdoc />
             [EditorBrowsable(EditorBrowsableState.Never)]
