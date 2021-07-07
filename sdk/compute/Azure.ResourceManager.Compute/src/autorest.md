@@ -11,13 +11,12 @@ azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
 require: C:/Users/dapzhang/Documents/workspace/azure-rest-api-specs/specification/compute/resource-manager/readme.md
-tag: package-2021-03-01-selected
+tag: package-2021-03-01
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   lenient-model-deduplication: true
 operation-group-to-resource-type:
-  Operations: Microsoft.Compute/operations
   CloudServiceRoles: Microsoft.Compute/cloudServices/roles
   CloudServiceOperatingSystems: Microsoft.Compute/locations/cloudServiceOsFamilies
   VirtualMachineExtensionImages: Microsoft.Compute/locations/publishers/vmextension
@@ -50,7 +49,6 @@ operation-group-to-resource:
   SharedGalleryImages: NonResource
   SharedGalleryImageVersions: NonResource
 operation-group-to-parent:
-  Operations: tenant
   Usage: subscriptions
   LogAnalytics: subscriptions
   CloudServiceRoleInstances: Microsoft.Compute/cloudServices
@@ -92,9 +90,6 @@ directive:
   - rename-model:
       from: SshPublicKeyResource
       to: SshPublicKey
-  - rename-model:
-      from: ComputeOperationValue
-      to: RestApi
   - rename-model:
       from: RollingUpgradeStatusInfo
       to: VirtualMachineScaleSetRollingUpgrade
@@ -145,15 +140,4 @@ directive:
   - from: swagger-document
     where: $.paths
     transform: delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateLinkResources']
-```
-
-```yaml $(tag) == 'package-2021-03-01-selected'
-input-file:
-- C:/Users/dapzhang/Documents/workspace/azure-rest-api-specs/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/compute.json
-- C:/Users/dapzhang/Documents/workspace/azure-rest-api-specs/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/runCommands.json
-- C:/Users/dapzhang/Documents/workspace/azure-rest-api-specs/specification/compute/resource-manager/Microsoft.Compute/stable/2021-03-01/cloudService.json
-- C:/Users/dapzhang/Documents/workspace/azure-rest-api-specs/specification/compute/resource-manager/Microsoft.Compute/stable/2019-04-01/skus.json
-- C:/Users/dapzhang/Documents/workspace/azure-rest-api-specs/specification/compute/resource-manager/Microsoft.Compute/stable/2020-12-01/disk.json
-- C:/Users/dapzhang/Documents/workspace/azure-rest-api-specs/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/gallery.json
-- C:/Users/dapzhang/Documents/workspace/azure-rest-api-specs/specification/compute/resource-manager/Microsoft.Compute/stable/2020-09-30/sharedGallery.json
 ```

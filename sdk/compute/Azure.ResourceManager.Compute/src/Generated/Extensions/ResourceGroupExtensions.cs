@@ -99,16 +99,6 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region CloudServices
-        /// <summary> Gets an object representing a CloudServiceContainer along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="CloudServiceContainer" /> object. </returns>
-        public static CloudServiceContainer GetCloudServices(this ResourceGroupOperations resourceGroup)
-        {
-            return new CloudServiceContainer(resourceGroup);
-        }
-        #endregion
-
         #region Disks
         /// <summary> Gets an object representing a DiskContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
@@ -156,6 +146,16 @@ namespace Azure.ResourceManager.Compute
         public static GalleryContainer GetGalleries(this ResourceGroupOperations resourceGroup)
         {
             return new GalleryContainer(resourceGroup);
+        }
+        #endregion
+
+        #region CloudServices
+        /// <summary> Gets an object representing a CloudServiceContainer along with the instance operations that can be performed on it. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="CloudServiceContainer" /> object. </returns>
+        public static CloudServiceContainer GetCloudServices(this ResourceGroupOperations resourceGroup)
+        {
+            return new CloudServiceContainer(resourceGroup);
         }
         #endregion
 

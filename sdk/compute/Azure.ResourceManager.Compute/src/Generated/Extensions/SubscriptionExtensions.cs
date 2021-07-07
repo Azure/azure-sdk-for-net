@@ -900,131 +900,6 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region CloudService
-        private static CloudServicesRestOperations GetCloudServicesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new CloudServicesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
-        }
-
-        /// <summary> Lists the CloudServices for this SubscriptionOperations. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CloudService> ListCloudServicesAsync(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
-        {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCloudServicesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                async Task<Page<CloudService>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServices");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new CloudService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<CloudService>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("CloudServiceOperations.ListCloudServices");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new CloudService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
-        }
-
-        /// <summary> Lists the CloudServices for this SubscriptionOperations. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CloudService> ListCloudServices(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
-        {
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCloudServicesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                Page<CloudService> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServices");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListAll(cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new CloudService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<CloudService> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("CloudServiceOperations.ListCloudServices");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListAllNextPage(nextLink, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new CloudService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
-        }
-
-        /// <summary> Filters the list of CloudServices for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        /// <param name="filter"> The string to filter the list. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResourceExpanded> ListCloudServiceByNameAsync(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
-        {
-            ResourceFilterCollection filters = new(CloudServiceOperations.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.ListAtContextAsync(subscription, filters, expand, top, cancellationToken);
-        }
-
-        /// <summary> Filters the list of CloudServices for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        /// <param name="filter"> The string to filter the list. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResourceExpanded> ListCloudServiceByName(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
-        {
-            ResourceFilterCollection filters = new(CloudServiceOperations.ResourceType);
-            filters.SubstringFilter = filter;
-            return ResourceListOperations.ListAtContext(subscription, filters, expand, top, cancellationToken);
-        }
-        #endregion
-
         #region Gallery
         private static GalleriesRestOperations GetGalleriesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
@@ -1145,6 +1020,131 @@ namespace Azure.ResourceManager.Compute
         public static Pageable<GenericResourceExpanded> ListGalleryByName(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(GalleryOperations.ResourceType);
+            filters.SubstringFilter = filter;
+            return ResourceListOperations.ListAtContext(subscription, filters, expand, top, cancellationToken);
+        }
+        #endregion
+
+        #region CloudService
+        private static CloudServicesRestOperations GetCloudServicesRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new CloudServicesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+        }
+
+        /// <summary> Lists the CloudServices for this SubscriptionOperations. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CloudService> ListCloudServicesAsync(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
+        {
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetCloudServicesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                async Task<Page<CloudService>> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServices");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value.Select(value => new CloudService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                async Task<Page<CloudService>> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("CloudServiceOperations.ListCloudServices");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value.Select(value => new CloudService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            );
+        }
+
+        /// <summary> Lists the CloudServices for this SubscriptionOperations. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CloudService> ListCloudServices(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
+        {
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetCloudServicesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                Page<CloudService> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServices");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListAll(cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value.Select(value => new CloudService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                Page<CloudService> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("CloudServiceOperations.ListCloudServices");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListAllNextPage(nextLink, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value.Select(value => new CloudService(subscription, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            );
+        }
+
+        /// <summary> Filters the list of CloudServices for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="filter"> The string to filter the list. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
+        /// <param name="top"> The number of results to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<GenericResourceExpanded> ListCloudServiceByNameAsync(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        {
+            ResourceFilterCollection filters = new(CloudServiceOperations.ResourceType);
+            filters.SubstringFilter = filter;
+            return ResourceListOperations.ListAtContextAsync(subscription, filters, expand, top, cancellationToken);
+        }
+
+        /// <summary> Filters the list of CloudServices for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="filter"> The string to filter the list. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
+        /// <param name="top"> The number of results to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static Pageable<GenericResourceExpanded> ListCloudServiceByName(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        {
+            ResourceFilterCollection filters = new(CloudServiceOperations.ResourceType);
             filters.SubstringFilter = filter;
             return ResourceListOperations.ListAtContext(subscription, filters, expand, top, cancellationToken);
         }
@@ -2722,370 +2722,6 @@ namespace Azure.ResourceManager.Compute
 
         #endregion
 
-        #region CloudServiceOperatingSystem
-        private static CloudServiceOperatingSystemsRestOperations GetCloudServiceOperatingSystemsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new CloudServiceOperatingSystemsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
-        }
-
-        /// <summary> Lists the OSVersions for this SubscriptionOperations. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<OSVersion> ListCloudServiceOperatingSystemsOSVersionsAsync(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                async Task<Page<OSVersion>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSVersions");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOSVersionsAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<OSVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSVersions");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOSVersionsNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
-        }
-
-        /// <summary> Lists the OSVersions for this SubscriptionOperations. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<OSVersion> ListCloudServiceOperatingSystemsOSVersions(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                Page<OSVersion> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSVersions");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOSVersions(location, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<OSVersion> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSVersions");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOSVersionsNextPage(nextLink, location, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
-        }
-
-        /// <summary> Lists the OSFamilies for this SubscriptionOperations. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        /// <param name="location"> Name of the location that the OS families pertain to. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<OSFamily> ListCloudServiceOperatingSystemsOSFamiliesAsync(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                async Task<Page<OSFamily>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSFamilies");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOSFamiliesAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<OSFamily>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSFamilies");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListOSFamiliesNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
-        }
-
-        /// <summary> Lists the OSFamilies for this SubscriptionOperations. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        /// <param name="location"> Name of the location that the OS families pertain to. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<OSFamily> ListCloudServiceOperatingSystemsOSFamilies(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                Page<OSFamily> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSFamilies");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOSFamilies(location, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<OSFamily> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSFamilies");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListOSFamiliesNextPage(nextLink, location, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
-        }
-
-        /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        /// <param name="location"> Name of the location that the OS version pertains to. </param>
-        /// <param name="osVersionName"> Name of the OS version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
-        public static async Task<Response<OSVersion>> GetOSVersionCloudServiceOperatingSystemAsync(this SubscriptionOperations subscription, string location, string osVersionName, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
-
-            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOSVersionCloudServiceOperatingSystem");
-                scope.Start();
-                try
-                {
-                    var response = await restOperations.GetOSVersionAsync(location, osVersionName, cancellationToken).ConfigureAwait(false);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            );
-        }
-
-        /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        /// <param name="location"> Name of the location that the OS version pertains to. </param>
-        /// <param name="osVersionName"> Name of the OS version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
-        public static Response<OSVersion> GetOSVersionCloudServiceOperatingSystem(this SubscriptionOperations subscription, string location, string osVersionName, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOSVersionCloudServiceOperatingSystem");
-                scope.Start();
-                try
-                {
-                    var response = restOperations.GetOSVersion(location, osVersionName, cancellationToken);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            );
-        }
-
-        /// <summary> Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        /// <param name="location"> Name of the location that the OS family pertains to. </param>
-        /// <param name="osFamilyName"> Name of the OS family. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
-        public static async Task<Response<OSFamily>> GetOSFamilyCloudServiceOperatingSystemAsync(this SubscriptionOperations subscription, string location, string osFamilyName, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (osFamilyName == null)
-            {
-                throw new ArgumentNullException(nameof(osFamilyName));
-            }
-
-            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOSFamilyCloudServiceOperatingSystem");
-                scope.Start();
-                try
-                {
-                    var response = await restOperations.GetOSFamilyAsync(location, osFamilyName, cancellationToken).ConfigureAwait(false);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            );
-        }
-
-        /// <summary> Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
-        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
-        /// <param name="location"> Name of the location that the OS family pertains to. </param>
-        /// <param name="osFamilyName"> Name of the OS family. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
-        public static Response<OSFamily> GetOSFamilyCloudServiceOperatingSystem(this SubscriptionOperations subscription, string location, string osFamilyName, CancellationToken cancellationToken = default)
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-            if (osFamilyName == null)
-            {
-                throw new ArgumentNullException(nameof(osFamilyName));
-            }
-
-            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOSFamilyCloudServiceOperatingSystem");
-                scope.Start();
-                try
-                {
-                    var response = restOperations.GetOSFamily(location, osFamilyName, cancellationToken);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            );
-        }
-
-        #endregion
-
         #region ResourceSku
         private static ResourceSkusRestOperations GetResourceSkusRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
@@ -3797,6 +3433,370 @@ namespace Azure.ResourceManager.Compute
                 try
                 {
                     var response = restOperations.Get(location, galleryUniqueName, galleryImageName, galleryImageVersionName, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
+        }
+
+        #endregion
+
+        #region CloudServiceOperatingSystem
+        private static CloudServiceOperatingSystemsRestOperations GetCloudServiceOperatingSystemsRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        {
+            return new CloudServiceOperatingSystemsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
+        }
+
+        /// <summary> Lists the OSVersions for this SubscriptionOperations. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static AsyncPageable<OSVersion> ListCloudServiceOperatingSystemsOSVersionsAsync(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                async Task<Page<OSVersion>> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSVersions");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListOSVersionsAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                async Task<Page<OSVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSVersions");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListOSVersionsNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            );
+        }
+
+        /// <summary> Lists the OSVersions for this SubscriptionOperations. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> Name of the location that the OS versions pertain to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static Pageable<OSVersion> ListCloudServiceOperatingSystemsOSVersions(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                Page<OSVersion> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSVersions");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListOSVersions(location, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                Page<OSVersion> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSVersions");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListOSVersionsNextPage(nextLink, location, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            );
+        }
+
+        /// <summary> Lists the OSFamilies for this SubscriptionOperations. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> Name of the location that the OS families pertain to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static AsyncPageable<OSFamily> ListCloudServiceOperatingSystemsOSFamiliesAsync(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                async Task<Page<OSFamily>> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSFamilies");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListOSFamiliesAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                async Task<Page<OSFamily>> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSFamilies");
+                    scope.Start();
+                    try
+                    {
+                        var response = await restOperations.ListOSFamiliesNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            );
+        }
+
+        /// <summary> Lists the OSFamilies for this SubscriptionOperations. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> Name of the location that the OS families pertain to. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static Pageable<OSFamily> ListCloudServiceOperatingSystemsOSFamilies(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                Page<OSFamily> FirstPageFunc(int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSFamilies");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListOSFamilies(location, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                Page<OSFamily> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListCloudServiceOperatingSystemsOSFamilies");
+                    scope.Start();
+                    try
+                    {
+                        var response = restOperations.ListOSFamiliesNextPage(nextLink, location, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    }
+                    catch (Exception e)
+                    {
+                        scope.Failed(e);
+                        throw;
+                    }
+                }
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            );
+        }
+
+        /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> Name of the location that the OS version pertains to. </param>
+        /// <param name="osVersionName"> Name of the OS version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
+        public static async Task<Response<OSVersion>> GetOSVersionCloudServiceOperatingSystemAsync(this SubscriptionOperations subscription, string location, string osVersionName, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (osVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(osVersionName));
+            }
+
+            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOSVersionCloudServiceOperatingSystem");
+                scope.Start();
+                try
+                {
+                    var response = await restOperations.GetOSVersionAsync(location, osVersionName, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
+        }
+
+        /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> Name of the location that the OS version pertains to. </param>
+        /// <param name="osVersionName"> Name of the OS version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
+        public static Response<OSVersion> GetOSVersionCloudServiceOperatingSystem(this SubscriptionOperations subscription, string location, string osVersionName, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (osVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(osVersionName));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOSVersionCloudServiceOperatingSystem");
+                scope.Start();
+                try
+                {
+                    var response = restOperations.GetOSVersion(location, osVersionName, cancellationToken);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
+        }
+
+        /// <summary> Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> Name of the location that the OS family pertains to. </param>
+        /// <param name="osFamilyName"> Name of the OS family. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
+        public static async Task<Response<OSFamily>> GetOSFamilyCloudServiceOperatingSystemAsync(this SubscriptionOperations subscription, string location, string osFamilyName, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (osFamilyName == null)
+            {
+                throw new ArgumentNullException(nameof(osFamilyName));
+            }
+
+            return await subscription.UseClientContext(async (baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOSFamilyCloudServiceOperatingSystem");
+                scope.Start();
+                try
+                {
+                    var response = await restOperations.GetOSFamilyAsync(location, osFamilyName, cancellationToken).ConfigureAwait(false);
+                    return response;
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            );
+        }
+
+        /// <summary> Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <param name="location"> Name of the location that the OS family pertains to. </param>
+        /// <param name="osFamilyName"> Name of the OS family. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
+        public static Response<OSFamily> GetOSFamilyCloudServiceOperatingSystem(this SubscriptionOperations subscription, string location, string osFamilyName, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (osFamilyName == null)
+            {
+                throw new ArgumentNullException(nameof(osFamilyName));
+            }
+
+            return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
+            {
+                var clientDiagnostics = new ClientDiagnostics(options);
+                var restOperations = GetCloudServiceOperatingSystemsRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetOSFamilyCloudServiceOperatingSystem");
+                scope.Start();
+                try
+                {
+                    var response = restOperations.GetOSFamily(location, osFamilyName, cancellationToken);
                     return response;
                 }
                 catch (Exception e)
