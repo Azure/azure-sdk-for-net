@@ -4,9 +4,10 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: textanalytics
+    Clouds: 'Public,Canary'
     CloudConfig:
       Public:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        SubscriptionConfiguration: $(sub-config-storage-test-resources)
       Canary:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        SubscriptionConfiguration: $(sub-config-storage-test-resources)
         Location: 'centraluseuap'
