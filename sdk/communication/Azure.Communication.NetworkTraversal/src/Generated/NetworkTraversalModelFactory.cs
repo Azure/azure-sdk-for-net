@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Communication.NetworkTraversal
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class AzureCommunicationServicesModelFactory
+    public static partial class NetworkTraversalModelFactory
     {
         /// <summary> Initializes a new instance of CommunicationRelayConfiguration. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. </param>
