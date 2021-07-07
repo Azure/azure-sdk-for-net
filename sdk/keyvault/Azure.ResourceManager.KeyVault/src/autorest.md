@@ -16,9 +16,9 @@ operation-group-to-resource:
     PrivateLinkResources: PrivateLinkResource
     MHSMPrivateLinkResources: MHSMPrivateLinkResource
     Operations: NonResource
-    Vaults: RestApi
+    Vaults: Vault
 directive:
     - rename-model:
-        from: Vault
+        from: Operation
         to: RestApi
 ```
