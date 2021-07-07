@@ -567,7 +567,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"MaxAutoLockRenewalDuration\": \"00:05:00\",",
                $"  \"MaxConcurrentCalls\": {16 * Utility.GetProcessorCount()},",
                 "  \"MaxConcurrentSessions\": 8,",
-                "  \"MaxBatchSize\": 1000,",
+                "  \"MaxMessageBatchSize\": 1000,",
                 "  \"SessionIdleTimeout\": \"\"",
                 "  \"ClientRetryOptions\": {",
                 "       \"Mode\": \"Exponential\",",
