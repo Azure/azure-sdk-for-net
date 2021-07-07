@@ -226,7 +226,7 @@ foreach (var resourceGroup in response.Value)
 
 You can query metrics using the `MetricsQueryClient.QueryAsync` method. For every requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
 
-You can find the **Resource Id** required to query metric on the **Properties** blade of Azure Portal resource page.
+You can find the **Resource Id** required to query metrics on the **Properties** blade of Azure portal resource page.
 
 ```C# Snippet:QueryMetrics
 string resourceId =

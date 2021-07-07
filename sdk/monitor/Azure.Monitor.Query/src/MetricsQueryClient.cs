@@ -24,7 +24,7 @@ namespace Azure.Monitor.Query
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsQueryClient"/> using the default endpoint.
+        /// Initializes a new instance of <see cref="MetricsQueryClient"/>. Uses the default 'https://management.azure.com' endpoint.
         /// <code snippet="Snippet:CreateMetricsClient" language="csharp">
         /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
         /// </code>
@@ -35,7 +35,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsQueryClient"/> using the default endpoint.
+        /// Initializes a new instance of <see cref="MetricsQueryClient"/>. Uses the default 'https://management.azure.com' endpoint.
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
