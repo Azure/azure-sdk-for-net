@@ -3,7 +3,7 @@ Example: Creating a Virtual Network
 
 In this example, we'll create a virtual network. Since the SDK follows the resource hierarchy in Azure, we'll need to do this inside of a resource group. Start by creating a new resource group, like we did above:
 
-```C#
+```C# Snippet:Creating_A_Virtual_Network_CreateResourceGroup
 
 ```
 

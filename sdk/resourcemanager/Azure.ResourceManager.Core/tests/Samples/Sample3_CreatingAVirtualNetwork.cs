@@ -23,14 +23,6 @@ namespace Azure.ResourceManager.Core.Tests.Samples
             string rgName = "myResourceGroup";
             ResourceGroup resourceGroup = await rgContainer.Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
             #endregion Snippet:Creating_A_Virtual_Network_CreateResourceGroup
-
-            // Does this need the compute sdk?
-            #region 
-            //VirtualNetworkContainer vnetContainer = resourceGroup.GetVirtualNetworks();
-            //VirtualNetwork virtualNetwork = await vnetContainer
-            //    .Construct("10.0.0.0/16", location)
-            //    .CreateAsync("myVnetName");
-            #endregion
         }
     }
 }
