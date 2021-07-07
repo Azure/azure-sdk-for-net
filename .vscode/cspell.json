@@ -35,8 +35,10 @@
     "azsdk",
     "blazor",
     "contoso",
+    "deserializable",
     "deserializes",
     "diagnoser",
+    "dtmf",
     "epsg",
     "expando",
     "finalizer",
@@ -50,6 +52,7 @@
     "overridden",
     "parallelization",
     "pkcs",
+    "pstn",
     "pwsh",
     "referer",
     "renormalize",
@@ -57,6 +60,7 @@
     "structs",
     "uints",
     "unformattable",
+    "unhold",
     "uninstrumented",
     "westus",
     "xunit"
@@ -69,6 +73,21 @@
     {
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": ["warnaserror"]
+    },
+    {
+      "filename": "**/sdk/storage/**/*.cs",
+      "words": [
+        "Aadds",
+        "Deprovisioning",
+        "Gzrs",
+        "Ntfs",
+        "Posix",
+        "Ragrs",
+        "Ragzrs",
+        "Rehydrated",
+        "Skus",
+        "Undelete"
+      ]
     }
   ],
   "allowCompoundWords": true

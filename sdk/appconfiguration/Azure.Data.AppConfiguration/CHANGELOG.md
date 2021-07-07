@@ -1,12 +1,10 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
-
-### Features Added
+## 1.1.0 (2021-07-06)
 
 ### Breaking Changes
 
-### Key Bugs Fixed
+- The `GetConfigurationSettingAsync` overload that takes an instance of `MatchConditions` temporary removed.
 
 ### Fixed
 

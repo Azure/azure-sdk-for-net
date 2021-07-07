@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Create a new activity log alert or update an existing one.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='activityLogAlertName'>
         /// The name of the activity log alert.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Get an activity log alert.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='activityLogAlertName'>
         /// The name of the activity log alert.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Delete an activity log alert.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='activityLogAlertName'>
         /// The name of the activity log alert.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// other fields use the CreateOrUpdate method.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='activityLogAlertName'>
         /// The name of the activity log alert.
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Get a list of all activity log alerts in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

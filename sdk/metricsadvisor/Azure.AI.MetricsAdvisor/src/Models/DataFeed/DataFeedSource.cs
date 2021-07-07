@@ -3,20 +3,24 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor.Models;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public abstract class DataFeedSource
     {
-        internal DataFeedSourceType Type { get; }
-
-        internal DataFeedSource(DataFeedSourceType dataFeedSourceType)
+        internal DataFeedSource(DataFeedSourceKind dataFeedSourceType)
         {
-            Type = dataFeedSourceType;
+            DataSourceKind = dataFeedSourceType;
         }
+
+        /// <summary>
+        /// The data source kind.
+        /// </summary>
+        public DataFeedSourceKind DataSourceKind { get; }
 
         internal static DataFeedSource GetDataFeedSource(DataFeedDetail dataFeedDetail) =>
             dataFeedDetail switch
@@ -25,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 AzureBlobDataFeed d => new AzureBlobDataFeedSource(d.DataSourceParameter, d.AuthenticationType),
                 AzureCosmosDBDataFeed d => new AzureCosmosDbDataFeedSource(d.DataSourceParameter),
                 AzureDataExplorerDataFeed d => new AzureDataExplorerDataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
-                AzureDataLakeStorageGen2DataFeed d => new AzureDataLakeStorageGen2DataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
+                AzureDataLakeStorageGen2DataFeed d => new AzureDataLakeStorageDataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
                 AzureEventHubsDataFeed d => new AzureEventHubsDataFeedSource(d.DataSourceParameter),
                 AzureLogAnalyticsDataFeed d => new LogAnalyticsDataFeedSource(d.DataSourceParameter),
                 AzureTableDataFeed d => new AzureTableDataFeedSource(d.DataSourceParameter),
@@ -54,7 +58,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     new AzureCosmosDBParameter(d.SqlQuery, d.Database, d.CollectionId) { ConnectionString = d.ConnectionString }),
                 AzureDataExplorerDataFeedSource d => new AzureDataExplorerDataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
-                AzureDataLakeStorageGen2DataFeedSource d => new AzureDataLakeStorageGen2DataFeed(name, granularityType, metricColumns, ingestionStartTime,
+                AzureDataLakeStorageDataFeedSource d => new AzureDataLakeStorageGen2DataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new AzureDataLakeStorageGen2Parameter(d.FileSystemName, d.DirectoryTemplate, d.FileTemplate) { AccountKey = d.AccountKey, AccountName = d.AccountName }),
                 AzureEventHubsDataFeedSource d => new AzureEventHubsDataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new AzureEventHubsParameter(d.ConsumerGroup) { ConnectionString = d.ConnectionString }),
@@ -89,7 +93,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 { DataSourceParameter = new() { SqlQuery = d.SqlQuery, Database = d.Database, CollectionId = d.CollectionId, ConnectionString = d.ConnectionString } },
             AzureDataExplorerDataFeedSource d => new AzureDataExplorerDataFeedPatch()
                 { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
-            AzureDataLakeStorageGen2DataFeedSource d => new AzureDataLakeStorageGen2DataFeedPatch()
+            AzureDataLakeStorageDataFeedSource d => new AzureDataLakeStorageGen2DataFeedPatch()
                 { DataSourceParameter = new() { FileSystemName = d.FileSystemName, DirectoryTemplate = d.DirectoryTemplate, FileTemplate = d.FileTemplate, AccountKey = d.AccountKey, AccountName = d.AccountName } },
             AzureEventHubsDataFeedSource d => new AzureEventHubsDataFeedPatch()
                 { DataSourceParameter = new() { ConnectionString = d.ConnectionString, ConsumerGroup = d.ConsumerGroup } },

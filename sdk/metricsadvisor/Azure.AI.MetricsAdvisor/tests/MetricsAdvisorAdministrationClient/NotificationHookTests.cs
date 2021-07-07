@@ -27,9 +27,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var name = "hookName";
             var endpoint = new Uri("http://fakeendpoint.com");
 
-            var genericHook = new NotificationHook() { Name = name };
-            var emailHook = new EmailNotificationHook() { Name = null, EmailsToAlert = { "fake@email.com" } };
-            var webHook = new WebNotificationHook() { Name = null, Endpoint = endpoint };
+            var emailHook = new EmailNotificationHook(name) { Name = null, EmailsToAlert = { "fake@email.com" } };
+            var webHook = new WebNotificationHook(name, endpoint) { Name = null };
 
             Assert.That(() => adminClient.CreateHookAsync(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.CreateHook(null), Throws.InstanceOf<ArgumentNullException>());
@@ -57,9 +56,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             webHook.Endpoint = null;
             Assert.That(() => adminClient.CreateHookAsync(webHook), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.CreateHook(webHook), Throws.InstanceOf<ArgumentNullException>());
-
-            Assert.That(() => adminClient.CreateHookAsync(genericHook), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.CreateHook(genericHook), Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]
@@ -67,9 +63,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var hook = new EmailNotificationHook()
+            var hook = new EmailNotificationHook("hookName")
             {
-                Name = "hookName",
                 EmailsToAlert = { "fake@email.com" }
             };
 
@@ -85,12 +80,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var hook = new EmailNotificationHook();
-
             Assert.That(() => adminClient.UpdateHookAsync(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.UpdateHook(null), Throws.InstanceOf<ArgumentNullException>());
 
-            var hookWithNullId = new EmailNotificationHook();
+            var hookWithNullId = new EmailNotificationHook("hookName");
 
             Assert.That(() => adminClient.UpdateHookAsync(hookWithNullId), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.UpdateHook(hookWithNullId), Throws.InstanceOf<ArgumentNullException>());

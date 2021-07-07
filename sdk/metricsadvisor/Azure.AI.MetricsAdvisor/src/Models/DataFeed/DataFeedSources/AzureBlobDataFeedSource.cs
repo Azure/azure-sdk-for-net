@@ -3,9 +3,10 @@
 
 using System;
 using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Describes an Azure Blob data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
@@ -47,7 +48,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="container"/>, or <paramref name="blobTemplate"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="container"/>, or <paramref name="blobTemplate"/> is empty.</exception>
         public AzureBlobDataFeedSource(string connectionString, string container, string blobTemplate)
-            : base(DataFeedSourceType.AzureBlob)
+            : base(DataFeedSourceKind.AzureBlob)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(container, nameof(container));
@@ -59,7 +60,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         internal AzureBlobDataFeedSource(AzureBlobParameter parameter, AuthenticationTypeEnum? authentication)
-            : base(DataFeedSourceType.AzureBlob)
+            : base(DataFeedSourceKind.AzureBlob)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

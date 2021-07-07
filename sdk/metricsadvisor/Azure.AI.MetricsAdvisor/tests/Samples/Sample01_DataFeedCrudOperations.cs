@@ -49,10 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("category"));
             dataFeed.Schema.DimensionColumns.Add(new DataFeedDimension("city"));
 
-            dataFeed.IngestionSettings = new DataFeedIngestionSettings()
-            {
-                IngestionStartTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z")
-            };
+            dataFeed.IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.Parse("2020-01-01T00:00:00Z"));
 
             Response<DataFeed> response = await adminClient.CreateDataFeedAsync(dataFeed);
 
@@ -63,7 +60,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
 
             Console.WriteLine($"Data feed administrators:");
-            foreach (string admin in createdDataFeed.AdministratorsEmails)
+            foreach (string admin in createdDataFeed.AdministratorEmails)
             {
                 Console.WriteLine($" - {admin}");
             }
@@ -107,7 +104,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             Console.WriteLine($"Data feed created time: {dataFeed.CreatedTime.Value}");
 
             Console.WriteLine($"Data feed administrators emails:");
-            foreach (string admin in dataFeed.AdministratorsEmails)
+            foreach (string admin in dataFeed.AdministratorEmails)
             {
                 Console.WriteLine($" - {admin}");
             }

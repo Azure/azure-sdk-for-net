@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
@@ -23,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             new object[] { new AzureBlobDataFeedSource("secret", "mock", "mock"), "connectionString" },
             new object[] { new AzureCosmosDbDataFeedSource("secret", "mock", "mock", "mock"), "connectionString" },
             new object[] { new AzureDataExplorerDataFeedSource("secret", "mock"), "connectionString" },
-            new object[] { new AzureDataLakeStorageGen2DataFeedSource("mock", "secret", "mock", "mock", "mock"), "accountKey" },
+            new object[] { new AzureDataLakeStorageDataFeedSource("mock", "secret", "mock", "mock", "mock"), "accountKey" },
             new object[] { new AzureEventHubsDataFeedSource("secret", "mock"), "connectionString" },
             new object[] { new AzureTableDataFeedSource("secret", "mock", "mock"), "connectionString" },
             new object[] { new InfluxDbDataFeedSource("secret", "mock", "mock", "mock", "mock"), "connectionString" },
@@ -41,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             new object[] { new AzureBlobDataFeedSource("mock", "mock", "mock"), "connectionString" },
             new object[] { new AzureCosmosDbDataFeedSource("mock", "mock", "mock", "mock"), "connectionString" },
             new object[] { new AzureDataExplorerDataFeedSource("mock", "mock"), "connectionString" },
-            new object[] { new AzureDataLakeStorageGen2DataFeedSource("mock", "mock", "mock", "mock", "mock"), "accountKey" },
+            new object[] { new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", "mock"), "accountKey" },
             new object[] { new AzureEventHubsDataFeedSource("mock", "mock"), "connectionString" },
             new object[] { new AzureTableDataFeedSource("mock", "mock", "mock"), "connectionString" },
             new object[] { new InfluxDbDataFeedSource("mock", "mock", "mock", "mock", "mock"), "connectionString" },
@@ -61,7 +58,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             ""dataSourceType"": ""SqlServer"",
             ""dataSourceParameter"": {},
-            ""metrics"": []
+            ""metrics"": [],
+            ""fillMissingPointType"": ""NoFilling""
         }
         ";
 
@@ -83,7 +81,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 DataSource = dataSource,
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
                 Schema = new DataFeedSchema(),
-                IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = DateTimeOffset.UtcNow }
+                IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow)
             };
 
             dataFeed.Schema.MetricColumns.Add(new DataFeedMetric("metric"));
@@ -92,9 +90,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MockRequest request = mockTransport.Requests.First();
             string content = ReadContent(request);
-            string expectedSubstring = $"\"{secretPropertyName}\":\"secret\"";
 
-            Assert.That(content, Contains.Substring(expectedSubstring));
+            Assert.That(content, ContainsJsonString(secretPropertyName, "secret"));
         }
 
         [Test]
@@ -116,7 +113,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 DataSource = dataSource,
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
                 Schema = new DataFeedSchema(),
-                IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = DateTimeOffset.UtcNow }
+                IngestionSettings = new DataFeedIngestionSettings(DateTimeOffset.UtcNow)
             };
 
             await adminClient.UpdateDataFeedAsync(dataFeed);
@@ -124,7 +121,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockRequest request = mockTransport.Requests.First();
             string content = ReadContent(request);
 
-            Assert.That(content, Contains.Substring($"\"{secretPropertyName}\":\"new_secret\""));
+            Assert.That(content, ContainsJsonString(secretPropertyName, "new_secret"));
         }
 
         private void UpdateSecret(DataFeedSource dataSource, string secretPropertyName)
@@ -143,7 +140,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 case AzureDataExplorerDataFeedSource d:
                     d.UpdateConnectionString("new_secret");
                     break;
-                case AzureDataLakeStorageGen2DataFeedSource d:
+                case AzureDataLakeStorageDataFeedSource d:
                     d.UpdateAccountKey("new_secret");
                     break;
                 case AzureEventHubsDataFeedSource d:
@@ -174,14 +171,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 default:
                     throw new ArgumentOutOfRangeException($"Unknown data source type: {dataSource.GetType()}");
             };
-        }
-
-        private string ReadContent(Request request)
-        {
-            using MemoryStream stream = new MemoryStream();
-            request.Content.WriteTo(stream, CancellationToken.None);
-
-            return Encoding.UTF8.GetString(stream.ToArray());
         }
     }
 }

@@ -75,11 +75,11 @@ namespace Azure.AI.Translation.Document.Samples
                 }
             }
 
-            foreach (DocumentStatusResult document in operation.GetValues())
+            foreach (DocumentStatus document in operation.GetValues())
             {
-                Console.WriteLine($"Document with Id: {document.DocumentId}");
+                Console.WriteLine($"Document with Id: {document.Id}");
                 Console.WriteLine($"  Status:{document.Status}");
-                if (document.Status == TranslationStatus.Succeeded)
+                if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
                     Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
