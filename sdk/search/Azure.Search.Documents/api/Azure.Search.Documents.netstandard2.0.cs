@@ -646,10 +646,12 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class EntityRecognitionSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {
         public EntityRecognitionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
+        public EntityRecognitionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillVersion skillVersion) { }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.EntityCategory> Categories { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
         public bool? IncludeTypelessEntities { get { throw null; } set { } }
         public double? MinimumPrecision { get { throw null; } set { } }
+        public string ModelVersion { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntityRecognitionSkillLanguage : System.IEquatable<Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage>
@@ -690,13 +692,22 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage left, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EntityRecognitionSkillV3 : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EntityRecognitionSkillVersion : System.IEquatable<Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillVersion>
     {
-        public EntityRecognitionSkillV3(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
-        public System.Collections.Generic.IList<string> Categories { get { throw null; } }
-        public string DefaultLanguageCode { get { throw null; } set { } }
-        public double? MinimumPrecision { get { throw null; } set { } }
-        public string ModelVersion { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EntityRecognitionSkillVersion(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillVersion V1 { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillVersion V3 { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillVersion lhs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillVersion rhs) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillVersion lhs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillVersion rhs) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class FieldMapping
     {

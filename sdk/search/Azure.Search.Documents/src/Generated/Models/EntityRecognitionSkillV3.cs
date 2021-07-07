@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Using the Text Analytics API, extracts entities of different types from text. </summary>
-    public partial class EntityRecognitionSkillV3 : SearchIndexerSkill
+    internal partial class EntityRecognitionSkillV3 : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of EntityRecognitionSkillV3. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
