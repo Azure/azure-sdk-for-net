@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="partitionCount">Number of partitions created for the
         /// Event Hub, allowed values are from 1 to 32 partitions.</param>
         /// <param name="status">Enumerates the possible values for the status
-        /// of the Event Hub. Possible values include: 'Active', 'Disabled',
+        /// of a Event Hub. Possible values include: 'Active', 'Disabled',
         /// 'Restoring', 'SendDisabled', 'ReceiveDisabled', 'Creating',
         /// 'Deleting', 'Renaming', 'Unknown'</param>
         /// <param name="captureDescription">Properties of capture
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public long? PartitionCount { get; set; }
 
         /// <summary>
-        /// Gets or sets enumerates the possible values for the status of the
+        /// Gets or sets enumerates the possible values for the status of a
         /// Event Hub. Possible values include: 'Active', 'Disabled',
         /// 'Restoring', 'SendDisabled', 'ReceiveDisabled', 'Creating',
         /// 'Deleting', 'Renaming', 'Unknown'

@@ -14,25 +14,25 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using System.Linq;
 
     /// <summary>
-    /// The resource management error response.
+    /// PrivateEndpoint information.
     /// </summary>
-    public partial class ErrorResponse
+    public partial class PrivateEndpoint
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        public ErrorResponse()
+        public PrivateEndpoint()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        /// <param name="error">The error object.</param>
-        public ErrorResponse(ErrorResponseError error = default(ErrorResponseError))
+        /// <param name="id">The ARM identifier for Private Endpoint.</param>
+        public PrivateEndpoint(string id = default(string))
         {
-            Error = error;
+            Id = id;
             CustomInit();
         }
 
@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error object.
+        /// Gets or sets the ARM identifier for Private Endpoint.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorResponseError Error { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }
