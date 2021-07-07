@@ -61,7 +61,7 @@ namespace Azure.Messaging.WebPubSub
     public partial class WebPubSubServiceClientOptions : Azure.Core.ClientOptions
     {
         public WebPubSubServiceClientOptions(Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.V2021_05_01_preview) { }
-        public System.Uri ApiManagementEndpoint { get { throw null; } set { } }
+        public System.Uri ReverseProxyEndpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2021_05_01_preview = 1,

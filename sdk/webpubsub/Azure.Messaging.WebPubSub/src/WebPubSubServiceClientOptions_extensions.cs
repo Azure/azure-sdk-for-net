@@ -14,8 +14,8 @@ namespace Azure.Messaging.WebPubSub
     public partial class WebPubSubServiceClientOptions : ClientOptions
     {
         /// <summary>
-        /// API Management Gateway URL
+        /// Reverse proxy.
         /// </summary>
-        public Uri ApiManagementEndpoint { get; set; }
+        public Uri ReverseProxyEndpoint { get; set; }
     }
 }
