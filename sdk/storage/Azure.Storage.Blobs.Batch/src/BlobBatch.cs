@@ -198,7 +198,7 @@ namespace Azure.Storage.Blobs.Specialized
                 blob: blobName,
                 timeout: null,
                 leaseId: conditions?.LeaseId,
-                deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (snapshotsOption == DeleteSnapshotsOption.IncludeSnapshots ? DeleteSnapshotsOptionType.Include : DeleteSnapshotsOptionType.Only),
+                deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOptionType?)snapshotsOption,
                 ifModifiedSince: conditions?.IfModifiedSince,
                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                 ifMatch: conditions?.IfMatch?.ToString(),
