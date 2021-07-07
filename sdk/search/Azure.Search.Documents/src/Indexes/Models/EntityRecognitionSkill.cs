@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Azure.Core;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -30,6 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public EntityRecognitionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, EntityRecognitionSkillVersion skillVersion) : this(inputs, outputs)
         {
             _skillVersion = skillVersion;
+            ODataType = skillVersion.ToString();
         }
 
         /// <summary> A list of entity categories that should be extracted. </summary>

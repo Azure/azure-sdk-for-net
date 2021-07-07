@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A string indicating what maskingMode to use to mask the personal information detected in the input text. </summary>
-    public readonly partial struct PIIDetectionSkillMaskingMode : IEquatable<PIIDetectionSkillMaskingMode>
+    public readonly partial struct PiiDetectionSkillMaskingMode : IEquatable<PiiDetectionSkillMaskingMode>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PIIDetectionSkillMaskingMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PiiDetectionSkillMaskingMode"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PIIDetectionSkillMaskingMode(string value)
+        public PiiDetectionSkillMaskingMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string ReplaceValue = "replace";
 
         /// <summary> No masking occurs and the maskedText output will not be returned. </summary>
-        public static PIIDetectionSkillMaskingMode None { get; } = new PIIDetectionSkillMaskingMode(NoneValue);
+        public static PiiDetectionSkillMaskingMode None { get; } = new PiiDetectionSkillMaskingMode(NoneValue);
         /// <summary> Replaces the detected entities with the character given in the maskingCharacter parameter. The character will be repeated to the length of the detected entity so that the offsets will correctly correspond to both the input text as well as the output maskedText. </summary>
-        public static PIIDetectionSkillMaskingMode Replace { get; } = new PIIDetectionSkillMaskingMode(ReplaceValue);
-        /// <summary> Determines if two <see cref="PIIDetectionSkillMaskingMode"/> values are the same. </summary>
-        public static bool operator ==(PIIDetectionSkillMaskingMode left, PIIDetectionSkillMaskingMode right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="PIIDetectionSkillMaskingMode"/> values are not the same. </summary>
-        public static bool operator !=(PIIDetectionSkillMaskingMode left, PIIDetectionSkillMaskingMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PIIDetectionSkillMaskingMode"/>. </summary>
-        public static implicit operator PIIDetectionSkillMaskingMode(string value) => new PIIDetectionSkillMaskingMode(value);
+        public static PiiDetectionSkillMaskingMode Replace { get; } = new PiiDetectionSkillMaskingMode(ReplaceValue);
+        /// <summary> Determines if two <see cref="PiiDetectionSkillMaskingMode"/> values are the same. </summary>
+        public static bool operator ==(PiiDetectionSkillMaskingMode left, PiiDetectionSkillMaskingMode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="PiiDetectionSkillMaskingMode"/> values are not the same. </summary>
+        public static bool operator !=(PiiDetectionSkillMaskingMode left, PiiDetectionSkillMaskingMode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="PiiDetectionSkillMaskingMode"/>. </summary>
+        public static implicit operator PiiDetectionSkillMaskingMode(string value) => new PiiDetectionSkillMaskingMode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PIIDetectionSkillMaskingMode other && Equals(other);
+        public override bool Equals(object obj) => obj is PiiDetectionSkillMaskingMode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(PIIDetectionSkillMaskingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PiiDetectionSkillMaskingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

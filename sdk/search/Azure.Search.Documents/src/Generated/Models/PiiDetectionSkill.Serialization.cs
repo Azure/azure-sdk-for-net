@@ -129,7 +129,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Optional<string> defaultLanguageCode = default;
             Optional<double?> minimumPrecision = default;
-            Optional<PIIDetectionSkillMaskingMode> maskingMode = default;
+            Optional<PiiDetectionSkillMaskingMode> maskingMode = default;
             Optional<string> maskingCharacter = default;
             Optional<string> modelVersion = default;
             Optional<IList<string>> piiCategories = default;
@@ -169,7 +169,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maskingMode = new PIIDetectionSkillMaskingMode(property.Value.GetString());
+                    maskingMode = new PiiDetectionSkillMaskingMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maskingCharacter"))

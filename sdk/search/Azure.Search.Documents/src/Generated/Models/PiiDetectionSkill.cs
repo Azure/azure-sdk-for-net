@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
         /// <param name="piiCategories"> A list of PII entity categories that should be extracted and masked. </param>
         /// <param name="domain"> If specified, will set the PII domain to include only a subset of the entity categories. Possible values include: &apos;phi&apos;, &apos;none&apos;. Default is &apos;none&apos;. </param>
-        internal PiiDetectionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string defaultLanguageCode, double? minimumPrecision, PIIDetectionSkillMaskingMode? maskingMode, string maskingCharacter, string modelVersion, IList<string> piiCategories, string domain) : base(oDataType, name, description, context, inputs, outputs)
+        internal PiiDetectionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string defaultLanguageCode, double? minimumPrecision, PiiDetectionSkillMaskingMode? maskingMode, string maskingCharacter, string modelVersion, IList<string> piiCategories, string domain) : base(oDataType, name, description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
             MinimumPrecision = minimumPrecision;
@@ -60,6 +60,8 @@ namespace Azure.Search.Documents.Indexes.Models
         }
         /// <summary> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </summary>
         public double? MinimumPrecision { get; set; }
+        /// <summary> The character used to mask the text if the maskingMode parameter is set to replace. Default is &apos;*&apos;. </summary>
+        public string MaskingCharacter { get; set; }
         /// <summary> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
         public string ModelVersion { get; set; }
         /// <summary> A list of PII entity categories that should be extracted and masked. </summary>
