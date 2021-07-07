@@ -8,11 +8,11 @@ namespace Azure.Storage.Blobs.Batch.Models
         /// <summary>
         /// Include.
         /// </summary>
-        Include,
+        Include=1,
 
         /// <summary>
         /// Only.
         /// </summary>
-        Only
+        Only=2
     }
 }
