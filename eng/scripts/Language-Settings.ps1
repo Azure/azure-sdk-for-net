@@ -264,12 +264,27 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
 
 # Details on CSV schema:
 # https://review.docs.microsoft.com/en-us/help/onboard/admin/reference/dotnet/documenting-nuget?branch=master#set-up-the-ci-job
+# 
+# PowerShell's included Import-Csv cmdelt is not sufficient for parsing this 
+# format because it does not easily handle rows whose number of columns is 
+# greater than the number of columns in the first row. We must manually parse
+# this CSV file.
 function Get-DocsCiConfig($configPath) {
   Write-Host "Loading csv from $configPath"
   $output = @()
-  foreach ($row in Get-Content $configPath) { 
+  foreach ($row in Get-Content $configPath) {
+      # CSV format: 
+      # {package_moniker_base_string},{package_ID},{version_1},{version_2},...,{version_N}
+      #
+      # The {package_ID} field can contain optional properties denoted by square
+      # brackets of the format: [key=value;key=value;...]
+
+      # Split the rows by the comma
       $fields = $row.Split(',')
 
+      # If the {package_ID} field contains optional properties inside square
+      # brackets, parse those properties into key value pairs. In the case of 
+      # duplicate keys, the last one wins.
       $rawProperties = ''
       $packageProperties = [ordered]@{}
       if ($fields[1] -match '\[(.*)\]') { 
@@ -280,7 +295,11 @@ function Get-DocsCiConfig($configPath) {
           }
       }
 
-      $packageName = '' 
+      # Matches the "Package.Name" from the {package_ID} field. Possible
+      # formats:
+      # [key=value;key=value]Package.Name
+      # Package.Name
+      $packageName = ''
       if ($fields[1] -match '(\[.*\])?(.*)') { 
           $packageName = $Matches[2] 
       } else { 
@@ -294,11 +313,13 @@ function Get-DocsCiConfig($configPath) {
         $outputVersions = $fields[2..($fields.Count - 1)]
       }
 
+      # Example row: 
+      # packagemoniker,[key1=value1;key2=value2]Package.Name,1.0.0,1.2.3-beta.1
       $output += [PSCustomObject]@{
-          Id = $fields[0];
-          Name = $packageName;
-          Properties = $packageProperties;
-          Versions = $outputVersions
+          Id = $fields[0];                  # packagemoniker
+          Name = $packageName;              # Package.Name
+          Properties = $packageProperties;  # @{key1='value1'; key2='value2'}
+          Versions = $outputVersions        # @('1.0.0', '1.2.3-beta.1')
       }
   }
 
@@ -395,6 +416,8 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
   }
 
   # Add packages that exist in the metadata but are not onboarded in docs config
+  # TODO: tfm='netstandard2.0' is a temporary workaround for 
+  # https://github.com/Azure/azure-sdk-for-net/issues/22494
   $newPackageProperties = [ordered]@{ tfm = 'netstandard2.0' }
   if ($Mode -eq 'preview') {
     $newPackageProperties['isPrerelease'] = 'true'
