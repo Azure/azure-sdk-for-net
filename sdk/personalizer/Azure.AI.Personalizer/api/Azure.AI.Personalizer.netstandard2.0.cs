@@ -31,8 +31,8 @@ namespace Azure.AI.Personalizer
         public LogClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerBaseClientOptions options = null) { }
         public virtual Azure.Response Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Personalizer.Models.LogsProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.LogsProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Personalizer.Models.LogProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.LogProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ModelClient
     {
@@ -212,9 +212,9 @@ namespace Azure.AI.Personalizer.Models
         public static bool operator !=(Azure.AI.Personalizer.Models.LearningMode left, Azure.AI.Personalizer.Models.LearningMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LogsProperties
+    public partial class LogProperties
     {
-        internal LogsProperties() { }
+        internal LogProperties() { }
         public Azure.AI.Personalizer.Models.LogsPropertiesDateRange DateRange { get { throw null; } }
     }
     public partial class LogsPropertiesDateRange : Azure.AI.Personalizer.Models.DateRange
@@ -253,7 +253,7 @@ namespace Azure.AI.Personalizer.Models
     {
         public static Azure.AI.Personalizer.Models.DateRange DateRange(System.DateTimeOffset? from = default(System.DateTimeOffset?), System.DateTimeOffset? to = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Personalizer.Models.Evaluation Evaluation(string id = null, string name = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string jobId = null, Azure.AI.Personalizer.Models.EvaluationJobStatus? status = default(Azure.AI.Personalizer.Models.EvaluationJobStatus?), System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PolicyResult> policyResults = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> featureImportance = null, Azure.AI.Personalizer.Models.EvaluationType? evaluationType = default(Azure.AI.Personalizer.Models.EvaluationType?), string optimalPolicy = null, System.DateTimeOffset? creationTime = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.AI.Personalizer.Models.LogsProperties LogsProperties(Azure.AI.Personalizer.Models.LogsPropertiesDateRange dateRange = null) { throw null; }
+        public static Azure.AI.Personalizer.Models.LogProperties LogsProperties(Azure.AI.Personalizer.Models.LogsPropertiesDateRange dateRange = null) { throw null; }
         public static Azure.AI.Personalizer.Models.ModelProperties ModelProperties(System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Personalizer.Models.MultiSlotRankResponse MultiSlotRankResponse(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.SlotResponse> slots = null, string eventId = null) { throw null; }
         public static Azure.AI.Personalizer.Models.PolicyResult PolicyResult(string name = null, string arguments = null, Azure.AI.Personalizer.Models.PolicySource? policySource = default(Azure.AI.Personalizer.Models.PolicySource?), System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PolicyResultSummary> summary = null, Azure.AI.Personalizer.Models.PolicyResultTotalSummary totalSummary = null) { throw null; }
