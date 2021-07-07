@@ -28,8 +28,8 @@ int docsFailed = 0;
 
 await foreach (TranslationStatus translationStatus in client.GetAllTranslationStatusesAsync())
 {
-    if (translationStatus.Status != DocumentTranslationStatus.Failed &&
-          translationStatus.Status != DocumentTranslationStatus.Succeeded)
+    if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
+        translationStatus.Status == DocumentTranslationStatus.Running)
     {
         DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
         await operation.WaitForCompletionAsync();
