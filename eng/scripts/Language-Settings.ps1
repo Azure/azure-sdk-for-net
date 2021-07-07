@@ -265,7 +265,7 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
 # Details on CSV schema:
 # https://review.docs.microsoft.com/en-us/help/onboard/admin/reference/dotnet/documenting-nuget?branch=master#set-up-the-ci-job
 # 
-# PowerShell's included Import-Csv cmdelt is not sufficient for parsing this 
+# PowerShell's included Import-Csv cmdlet is not sufficient for parsing this 
 # format because it does not easily handle rows whose number of columns is 
 # greater than the number of columns in the first row. We must manually parse
 # this CSV file.
