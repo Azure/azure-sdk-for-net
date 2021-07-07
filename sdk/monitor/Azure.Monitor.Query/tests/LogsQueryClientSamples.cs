@@ -23,8 +23,9 @@ namespace Azure.Monitor.Query.Tests
 #else
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
-
+            #region Snippet:CreateLogsClient
             var client = new LogsQueryClient(new DefaultAzureCredential());
+            #endregion
             Response<LogsQueryResult> response = await client.QueryAsync(
                 workspaceId,
                 "AzureActivity | top 10 by TimeGenerated",

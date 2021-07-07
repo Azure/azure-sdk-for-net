@@ -24,7 +24,9 @@ namespace Azure.Monitor.Query.Tests
             string resourceId = TestEnvironment.MetricsResource;
 #endif
 
+            #region Snippet:CreateMetricsClient
             var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+            #endregion
 
             Response<MetricQueryResult> results = await metricsClient.QueryAsync(
                 resourceId,

@@ -25,6 +25,9 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Initializes a new instance of <see cref="MetricsQueryClient"/> using the default endpoint.
+        /// <code snippet="Snippet:CreateMetricsClient" language="csharp">
+        /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+        /// </code>
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public MetricsQueryClient(TokenCredential credential) : this(credential, null)

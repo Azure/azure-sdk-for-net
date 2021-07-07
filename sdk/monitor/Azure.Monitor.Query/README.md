@@ -66,7 +66,6 @@ You can query logs using the `LogsQueryClient.QueryAsync` method. The result is 
 
 ```C# Snippet:QueryLogsAsTable
 string workspaceId = "<workspace_id>";
-
 var client = new LogsQueryClient(new DefaultAzureCredential());
 Response<LogsQueryResult> response = await client.QueryAsync(
     workspaceId,
