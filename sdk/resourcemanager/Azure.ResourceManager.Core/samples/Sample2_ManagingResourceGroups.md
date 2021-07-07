@@ -53,18 +53,10 @@ Using the operation object we can perform entity-level operations, such as updat
 ***Update a resource group***
 
 ```C# Snippet:Managing_Resource_Groups_UpdateAResourceGroup
+// Note: Resource group named 'myRgName' should exist for this example to work.
 var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 string rgName = "myRgName";
-
-var rg = subscription.GetResourceGroups().TryGetAsync(rgName);
-if (rg == null)
-{
-    LocationData location = LocationData.WestUS2;
-    var rgContainer = subscription.GetResourceGroups();
-    _ = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
-}
-
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
 resourceGroup = await resourceGroup.AddTagAsync("key", "value");
 ```

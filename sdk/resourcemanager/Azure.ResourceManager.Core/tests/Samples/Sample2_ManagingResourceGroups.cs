@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Identity;
 using NUnit.Framework;
@@ -24,21 +21,6 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         }
 
         [Test]
-        public async Task SetUpWithSpecificSubscriptionAsync()
-        {
-            #region Snippet:Managing_Resource_Groups_GetResourceGroupContainer
-            var armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
-            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-
-            // code omitted for brevity
-
-            string rgName = "myRgName";
-            ResourceGroup resourceGroup = await rgContainer.GetAsync(rgName);
-            #endregion Snippet:Managing_Resource_Groups_GetResourceGroupContainer
-        }
-
-        [Test]
         public async Task CreateResourceGroup()
         {
             #region Snippet:Managing_Resource_Groups_CreateAResourceGroup
@@ -50,6 +32,30 @@ namespace Azure.ResourceManager.Core.Tests.Samples
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
             #endregion Snippet:Managing_Resource_Groups_CreateAResourceGroup
+        }
+
+        [Test]
+        public async Task GettingResourceGroupContainer()
+        {
+            #region Snippet:Managing_Resource_Groups_GetResourceGroupContainer
+            var armClient = new ArmClient(new DefaultAzureCredential());
+            Subscription subscription = armClient.DefaultSubscription;
+            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+
+            // code omitted for brevity
+
+            string rgName = "myRgName";
+#if !SNIPPET
+            //Check if "myRgName" exists, if not, create it first or run CreateResourceGroup()
+            var rg = await subscription.GetResourceGroups().TryGetAsync(rgName);
+            if (rg == null)
+            {
+                LocationData location = LocationData.WestUS2;
+                _ = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
+            }
+#endif
+            ResourceGroup resourceGroup = await rgContainer.GetAsync(rgName);
+            #endregion Snippet:Managing_Resource_Groups_GetResourceGroupContainer
         }
 
         [Test]
@@ -70,21 +76,21 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         [Test]
         public async Task UpdateAResourceGroup()
         {
-            //Check if 'myRgName' exists, if not, create it first or run CreateResourceGroup()
-
             #region Snippet:Managing_Resource_Groups_UpdateAResourceGroup
+            // Note: Resource group named 'myRgName' should exist for this example to work.
             var armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.DefaultSubscription;
             string rgName = "myRgName";
-
-            var rg = subscription.GetResourceGroups().TryGetAsync(rgName);
+#if !SNIPPET
+            //Check if 'myRgName' exists, if not, create it first or run CreateResourceGroup()
+            var rg = await subscription.GetResourceGroups().TryGetAsync(rgName);
             if (rg == null)
             {
                 LocationData location = LocationData.WestUS2;
                 var rgContainer = subscription.GetResourceGroups();
                 _ = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
             }
-
+#endif
             ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             resourceGroup = await resourceGroup.AddTagAsync("key", "value");
             #endregion Snippet:Managing_Resource_Groups_UpdateAResourceGroup
