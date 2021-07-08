@@ -61,9 +61,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
             set
             {
-                if (_skillVersion != SkillVersion.V3)
+                if (!(_skillVersion >= SkillVersion.V3))
                 {
-                    throw new InvalidOperationException($"{nameof(ModelVersion)} can only be used with {SkillVersion.V3}");
+                    throw new InvalidOperationException($"{nameof(ModelVersion)} can only be used with {SkillVersion.V3} and above");
                 }
                 _modelVersion = value;
             }

@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
             public static SkillVersion V3 { get; } = new SkillVersion(V3Value);
 
             /// <summary> Latest version of the <see cref="SkillVersion"/>. </summary>
-            public static SkillVersion Latest { get; } = SkillVersion.V3;
+            public static SkillVersion Latest { get; } = V3;
 
             /// <inheritdoc />
             [EditorBrowsable(EditorBrowsableState.Never)]
@@ -41,11 +41,32 @@ namespace Azure.Search.Documents.Indexes.Models
             public bool Equals(SkillVersion other) =>
                 string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-            /// <summary> Defines the '==' operator on <see cref="SkillVersion"/>. </summary>
+            /// <summary> Defines the equal-to comparison operator on <see cref="SkillVersion"/>. </summary>
             public static bool operator ==(SkillVersion lhs, SkillVersion rhs) => lhs.Equals(rhs);
 
-            /// <summary> Defines the '!=' operator on <see cref="SkillVersion"/>. </summary>
+            /// <summary> Defines the not-equal-to comparison operator on <see cref="SkillVersion"/>. </summary>
             public static bool operator !=(SkillVersion lhs, SkillVersion rhs) => !(lhs == rhs);
+
+            /// <summary> Defines the greater-than-or-equal-to comparison operator on <see cref="SkillVersion"/>. </summary>
+            public static bool operator >=(SkillVersion lhs, SkillVersion rhs)
+            {
+                if (lhs == rhs)
+                    return true;
+
+                if (lhs == Latest)
+                    return true;
+
+                return false;
+            }
+
+            /// <summary> Defines the less-than-or-equal-to comparison operator on <see cref="SkillVersion"/>. </summary>
+            public static bool operator <=(SkillVersion lhs, SkillVersion rhs)
+            {
+                if (lhs == rhs)
+                    return true;
+
+                return !(lhs >= rhs);
+            }
 
             /// <summary> Converts a string to a <see cref="SkillVersion"/>. </summary>
             public static implicit operator SkillVersion(string value) => new(value);
