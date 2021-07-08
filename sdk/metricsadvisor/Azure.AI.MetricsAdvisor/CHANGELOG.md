@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (2021-07-08)
+## 1.0.0 (2021-07-08)
 
 ### New Features
 - `DimensionKey` now implements the `IEnumerable<KeyValuePair<string, string>>` interface. Dimension columns can now be enumerated.
