@@ -96,6 +96,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (workspaceName == null)
             {
@@ -310,6 +314,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (workspaceName == null)
@@ -526,6 +534,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
             if (workspaceName == null)

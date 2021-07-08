@@ -45,8 +45,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        /// <param name="etag">The ETag of the saved search. To override an
-        /// existing saved search, use "*" or specify the current Etag</param>
+        /// <param name="etag">The ETag of the saved search.</param>
         /// <param name="functionAlias">The function alias if query serves as a
         /// function.</param>
         /// <param name="functionParameters">The optional function parameters
@@ -78,8 +77,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ETag of the saved search. To override an existing
-        /// saved search, use "*" or specify the current Etag
+        /// Gets or sets the ETag of the saved search.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
