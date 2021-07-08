@@ -9,11 +9,8 @@ namespace Azure.ResourceManager.Core.Tests.Samples
 {
     class Sample1_HelloWorldAsync
     {
-        public Sample1_HelloWorldAsync()
-        {
-        }
-
         [Test]
+        [Ignore("Only verifying that the sample builds")]
         public void GettingDefaultSubscription()
         {
             #region Snippet:Hello_World_Async_DefaultSubscription
@@ -36,6 +33,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         }
 
         [Test]
+        [Ignore("Only verifying that the sample builds")]
         public void RetrieveResourceGroupContainer()
         {
             var armClient = new ArmClient(new DefaultAzureCredential());

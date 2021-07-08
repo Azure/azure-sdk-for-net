@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
     class Readme
     {
         [Test]
+        [Ignore("Only verifying that the sample builds")]
         public void ClientAuth()
         {
 #endif
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         }
 
         [Test]
+        [Ignore("Only verifying that the sample builds")]
         public async Task CreateRG()
         {
             #region Snippet:Readme_CreateRG
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         }
 
         [Test]
+        [Ignore("Only verifying that the sample builds")]
         public async Task ListAllRG()
         {
             #region Snippet:Readme_ListAllRG
