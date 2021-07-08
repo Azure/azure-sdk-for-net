@@ -265,7 +265,7 @@ namespace Azure.Storage.Blobs.Test
         {
             await using TestScenario scenario = Scenario();
             BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
-            
+
             BlobBatchClient client = scenario.GetBlobBatchClient();
 
             using BlobBatch batch = client.CreateBatch();
@@ -281,7 +281,7 @@ namespace Azure.Storage.Blobs.Test
             scenario.AssertStatus(202, responses);
             await scenario.AssertDeleted(blobs);
         }
-        
+
         [RecordedTest]
         public async Task Delete_SpecialCharacters()
         {
