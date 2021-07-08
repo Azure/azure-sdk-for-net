@@ -29,9 +29,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
             string dataFeedId = DataFeedId;
 #endif
 
-            var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var endTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
-            var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime)
+            var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+            var endsOn = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
+            var options = new GetDataFeedIngestionStatusesOptions(startsOn, endsOn)
             {
                 MaxPageSize = 5
             };
@@ -89,10 +89,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string dataFeedId = DataFeedId;
 
-            var startTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
-            var endTime = DateTimeOffset.Parse("2020-08-03T00:00:00Z");
+            var startsOn = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
+            var endsOn = DateTimeOffset.Parse("2020-08-03T00:00:00Z");
 
-            await adminClient.RefreshDataFeedIngestionAsync(dataFeedId, startTime, endTime);
+            await adminClient.RefreshDataFeedIngestionAsync(dataFeedId, startsOn, endsOn);
         }
     }
 }
