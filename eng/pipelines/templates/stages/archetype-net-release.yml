@@ -151,13 +151,7 @@ stages:
                   deploy:
                     steps:
                       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-                        parameters:
-                          paths:
-                            - .github/CODEOWNERS
-                      - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
-                        parameters:
-                          TargetVariable: "OwningGHUser"
-                          ServiceDirectory: ${{parameters.ServiceDirectory}}
+
                       - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
                         parameters:
                           ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
@@ -171,7 +165,6 @@ stages:
                           ArtifactName: ${{artifact.name}}
                           Language: '.net'
                           DocRepoDestinationPath: 'api/overview/azure/'
-                          GHReviewersVariable: 'OwningGHUser'
                           CIConfigs: $(CIConfigs)
                           OnboardingBranch: 'onboarding'
                           CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
