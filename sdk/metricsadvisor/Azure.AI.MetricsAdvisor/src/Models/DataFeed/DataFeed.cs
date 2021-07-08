@@ -10,9 +10,16 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Periodically ingests data from a data source in order to build time series
-    /// to be monitored for anomaly detection.
+    /// A data feed is the entry point of data for the Metrics Advisor service and, therefore, the first
+    /// entity to be created when setting up your resource. It periodically ingests data from a
+    /// <see cref="DataFeedSource"/> and monitors it in search of anomalies.
     /// </summary>
+    /// <remarks>
+    /// In order to create a data feed, you must set up at least the properties <see cref="Name"/>,
+    /// <see cref="DataSource"/>, <see cref="Granularity"/>, <see cref="IngestionSettings"/>, and
+    /// <see cref="Schema"/>, and pass this instance to the method
+    /// <see cref="MetricsAdvisorAdministrationClient.CreateDataFeedAsync"/>.
+    /// </remarks>
     public class DataFeed
     {
         /// <summary>
@@ -47,18 +54,31 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The unique identifier of this <see cref="DataFeed"/>. Set by the service.
+        /// The unique identifier of this <see cref="DataFeed"/>.
         /// </summary>
+        /// <remarks>
+        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. This property
+        /// will be set by the service after creation.
+        /// </remarks>
         public string Id { get; internal set; }
 
         /// <summary>
-        /// The current ingestion status of this <see cref="DataFeed"/>.
+        /// The current ingestion status of this <see cref="DataFeed"/>. Only <see cref="DataFeedStatus.Active"/>
+        /// and <see cref="DataFeedStatus.Paused"/> are supported.
         /// </summary>
+        /// <remarks>
+        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. Once created,
+        /// the status is initialized as <see cref="DataFeedStatus.Active"/>.
+        /// </remarks>
         public DataFeedStatus? Status { get; }
 
         /// <summary>
-        /// Date and time, in UTC, when this <see cref="DataFeed"/> was created.
+        /// The date and time, in UTC, when this <see cref="DataFeed"/> was created.
         /// </summary>
+        /// <remarks>
+        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. This property
+        /// will be set by the service after creation.
+        /// </remarks>
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary>
@@ -68,73 +88,110 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// creator's user principal, but its value depends on the type of credential used. For instance, if a
         /// <c>ClientSecretCredential</c> is used, it will contain the client ID.
         /// </summary>
+        /// <remarks>
+        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. This property
+        /// will be set by the service after creation.
+        /// </remarks>
         public string Creator { get; }
 
         /// <summary>
         /// Whether or not the user who queried the information about this <see cref="DataFeed"/>
-        /// is one of its administrators.
+        /// is one of its administrators. The complete list of administrators can be consulted in
+        /// <see cref="Administrators"/>.
         /// </summary>
+        /// <remarks>
+        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet.
+        /// </remarks>
         public bool? IsAdministrator { get; }
 
         /// <summary>
-        /// The unique identifiers of the metrics defined in this feed's <see cref="DataFeedSchema"/>.
-        /// Set by the service.
+        /// The unique identifiers of the metrics of this <see cref="DataFeed"/>. Keys are the metric
+        /// names, and values are their corresponding IDs.
         /// </summary>
+        /// <remarks>
+        /// If empty, it means this instance has not been sent to the service to be created yet.
+        /// </remarks>
         public IReadOnlyDictionary<string, string> MetricIds { get; }
 
         /// <summary>
-        /// A custom name for this <see cref="DataFeed"/> to be displayed on the web portal.
+        /// A custom name for this <see cref="DataFeed"/> to be displayed on the web portal. Data feed names
+        /// must be unique across the same Metris Advisor resource.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// The source from which data is consumed.
+        /// The source that periodically provides data to this <see cref="DataFeed"/>.
         /// </summary>
+        /// <remarks>
+        /// Once the data feed is created, the kind of <see cref="DataFeedSource"/> cannot be changed anymore.
+        /// You can, however, update its properties.
+        /// </remarks>
         public DataFeedSource DataSource { get; set; }
 
         /// <summary>
-        /// Defines how this <see cref="DataFeed"/> structures the data ingested from the data source
-        /// in terms of metrics and dimensions.
+        /// Specifies which values, such as metrics and dimensions, will be ingested from the <see cref="DataFeedSource"/>.
         /// </summary>
+        /// <remarks>
+        /// Once the data feed is created, the metrics and dimensions defined in the schema cannot be changed
+        /// anymore. You can still update the property <see cref="DataFeedSchema.TimestampColumn"/>.
+        /// </remarks>
         public DataFeedSchema Schema { get; set; }
 
         /// <summary>
-        /// The frequency with which ingestion from the data source will happen.
+        /// The frequency with which ingestion from the <see cref="DataSource"/> will happen.
         /// </summary>
+        /// <remarks>
+        /// Once the data feed is created, this property cannot be changed anymore.
+        /// </remarks>
         public DataFeedGranularity Granularity { get; set; }
 
         /// <summary>
-        /// Configures how a <see cref="DataFeed"/> behaves during data ingestion from its data source.
+        /// Configures how a <see cref="DataFeed"/> should ingest data from its <see cref="DataSource"/>.
         /// </summary>
         public DataFeedIngestionSettings IngestionSettings { get; set; }
 
         /// <summary>
-        /// A description of this <see cref="DataFeed"/>.
+        /// A description of this <see cref="DataFeed"/>. Defaults to an empty string.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         public string Description { get; set; }
 
         /// <summary>
         /// Defines actionable HTTP URLs, which consist of the placeholders %datafeed, %metric, %timestamp, %detect_config, and %tagset.
         /// You can use the template to redirect from an anomaly or an incident to a specific URL to drill down.
-        /// See the <see href="https://docs.microsoft.com/azure/cognitive-services/metrics-advisor/how-tos/manage-data-feeds#action-link-template">documentation</see> for details.
+        /// See the <see href="https://aka.ms/metricsadvisor/actionlinktemplate">documentation</see> for details.
+        /// Defaults to an empty string.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         public string ActionLinkTemplate { get; set; }
 
         /// <summary>
-        /// The access mode for this <see cref="DataFeed"/>.
+        /// The access mode for this <see cref="DataFeed"/>. Only <see cref="DataFeedAccessMode.Private"/>
+        /// and <see cref="DataFeedAccessMode.Public"/> are supported. Defaults to <see cref="DataFeedAccessMode.Private"/>.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         public DataFeedAccessMode? AccessMode { get; set; }
 
         /// <summary>
-        /// Configures the behavior of this <see cref="DataFeed"/> for rolling-up the ingested data
+        /// Configures the behavior of this <see cref="DataFeed"/> when handling rolled-up ingested data
         /// before detecting anomalies.
         /// </summary>
         public DataFeedRollupSettings RollupSettings { get; set; }
 
         /// <summary>
-        /// Configures the behavior of this <see cref="DataFeed"/> when dealing with missing points
-        /// in the data ingested from the data source.
+        /// Configures the behavior of this <see cref="DataFeed"/> when handling missing points in the
+        /// data ingested from the <see cref="DataSource"/>. Defaults to settings with
+        /// <see cref="DataFeedMissingDataPointFillType.SmartFilling"/> set.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         public DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get; set; }
 
         /// <summary>
@@ -145,6 +202,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// user's email address. If AAD authentication will be used instead, the <c>string</c> must uniquely identify the user's
         /// principal. For instance, for a <c>ClientSecretCredential</c>, the <c>string</c> must be the client ID.
         /// </summary>
+        /// <remarks>
+        /// Upon data feed creation, the <see cref="Creator"/> is automatically assigned as an administrator by the service.
+        /// </remarks>
         public IList<string> Administrators { get; }
 
         /// <summary>

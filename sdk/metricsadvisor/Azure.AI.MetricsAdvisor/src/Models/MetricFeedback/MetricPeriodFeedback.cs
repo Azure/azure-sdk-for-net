@@ -8,8 +8,15 @@ using Azure.AI.MetricsAdvisor.Models;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// Feedback indicating that this is an interval of seasonality.
+    /// For seasonal data, when performing anomaly detection, one step is to estimate the period (seasonality) of the time series,
+    /// and apply it to the anomaly detection phase. Sometimes, it's hard to identify a precise period, and the period may also
+    /// change. An incorrectly defined period may have side effects on the anomaly detection results. This class allows providing
+    /// feedback for a period to fix this kind of anomaly detection error.
     /// </summary>
+    /// <remarks>
+    /// In order to create period feedback, you must pass this instance to the method
+    /// <see cref="MetricsAdvisorClient.AddFeedbackAsync"/>.
+    /// </remarks>
     [CodeGenModel("PeriodFeedback")]
     [CodeGenSuppress(nameof(MetricPeriodFeedback), typeof(string), typeof(FeedbackFilter))]
     public partial class MetricPeriodFeedback : MetricFeedback
@@ -24,8 +31,8 @@ namespace Azure.AI.MetricsAdvisor
         /// for the specified <paramref name="metricId"/>. If only a subset of dimensions are set, this
         /// key uniquely identifies a group of time series.
         /// </param>
-        /// <param name="periodType">The <see cref="MetricPeriodType"/>.</param>
-        /// <param name="periodValue">The period value.</param>
+        /// <param name="periodType">Tells the service how to determine the period of the seasonal data.</param>
+        /// <param name="periodValue">The expected value of the period, measured in amount of data points. 0 means non-seasonal data.</param>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionKey"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty.</exception>
         public MetricPeriodFeedback(string metricId, DimensionKey dimensionKey, MetricPeriodType periodType, int periodValue)
@@ -53,12 +60,12 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// The <see cref="MetricPeriodType"/>.
+        /// Tells the service how to determine the period of the seasonal data.
         /// </summary>
         public MetricPeriodType PeriodType => ValueInternal.PeriodType;
 
         /// <summary>
-        /// The period value.
+        /// The expected value of the period, measured in amount of data points. 0 means non-seasonal data.
         /// </summary>
         public int PeriodValue => ValueInternal.PeriodValue;
 

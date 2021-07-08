@@ -19,12 +19,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Filters the result by <see cref="DataFeed.Name"/>.
+        /// Filters the result by <see cref="DataFeed.Name"/>. Only data feeds containing the filter as a
+        /// substring of their names will be returned. Case insensitive.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Filters the result by <see cref="DataFeed.Creator"/>.
+        /// Filters the result by <see cref="DataFeed.Creator"/>. Only data feeds containing the filter as a
+        /// substring of their creators will be returned. Case insensitive.
         /// </summary>
         public string Creator { get; set; }
 

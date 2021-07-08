@@ -19,12 +19,12 @@ namespace Azure.AI.MetricsAdvisor
         None,
 
         /// <summary>
-        /// Filters feedbacks by its metric's timestamps.
+        /// Filters feedback by its metric's timestamps.
         /// </summary>
         MetricTimestamp,
 
         /// <summary>
-        /// Filters feedbacks by <see cref="MetricFeedback.CreatedOn"/>.
+        /// Filters feedback by <see cref="MetricFeedback.CreatedOn"/>.
         /// </summary>
         [CodeGenMember("FeedbackCreatedTime")]
         FeedbackCreatedOn

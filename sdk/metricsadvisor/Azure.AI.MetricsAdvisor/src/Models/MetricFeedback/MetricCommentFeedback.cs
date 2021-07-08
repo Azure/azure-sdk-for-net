@@ -7,7 +7,14 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    /// <summary> The CommentFeedback. </summary>
+    /// <summary>
+    /// Adds comments to annotate and provide context to your data. This has no impact in the process of
+    /// detecting anomalies.
+    /// </summary>
+    /// <remarks>
+    /// In order to create comment feedback, you must pass this instance to the method
+    /// <see cref="MetricsAdvisorClient.AddFeedbackAsync"/>.
+    /// </remarks>
     [CodeGenModel("CommentFeedback")]
     [CodeGenSuppress(nameof(MetricCommentFeedback), typeof(string), typeof(FeedbackFilter))]
     public partial class MetricCommentFeedback : MetricFeedback

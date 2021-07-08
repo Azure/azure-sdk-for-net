@@ -347,7 +347,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="MetricSeriesData"/>s.</returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="MetricSeriesData"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<MetricSeriesData> GetMetricSeriesDataAsync(string metricId, GetMetricSeriesDataOptions options, CancellationToken cancellationToken = default)
@@ -385,7 +385,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
         /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="MetricSeriesData"/>s.</returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="MetricSeriesData"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual Pageable<MetricSeriesData> GetMetricSeriesData(string metricId, GetMetricSeriesDataOptions options, CancellationToken cancellationToken = default)
@@ -417,12 +417,16 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        ///
+        /// Gets the enrichment status for a given metric. Enrichment status is described by the service as the process
+        /// of detecting which data points of an ingested set of data can be classified as anomalies. Each status represents
+        /// a single data source ingestion.
         /// </summary>
-        /// <param name="metricId"></param>
-        /// <param name="options"></param>
+        /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
+        /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="EnrichmentStatus"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual AsyncPageable<EnrichmentStatus> GetMetricEnrichmentStatusesAsync(string metricId, GetMetricEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -470,12 +474,16 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        ///
+        /// Gets the enrichment status for a given metric. Enrichment status is described by the service as the process
+        /// of detecting which data points of an ingested set of data can be classified as anomalies. Each status represents
+        /// a single data source ingestion.
         /// </summary>
-        /// <param name="metricId"></param>
-        /// <param name="options"></param>
+        /// <param name="metricId">The unique identifier of the <see cref="DataFeedMetric"/>.</param>
+        /// <param name="options">The set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="EnrichmentStatus"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty or not a valid GUID.</exception>
         public virtual Pageable<EnrichmentStatus> GetMetricEnrichmentStatuses(string metricId, GetMetricEnrichmentStatusesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));

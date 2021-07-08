@@ -13,25 +13,24 @@ namespace Azure.AI.MetricsAdvisor.Models
     public readonly partial struct MetricAlertConfigurationsOperator
     {
         /// <summary>
-        /// The data point will trigger an alert if every <see cref="MetricAlertConfiguration"/> defined
-        /// in <see cref="AnomalyAlertConfiguration"/> is satisfied. Note: If two
-        /// <see cref="MetricAlertConfiguration"/>s have different dimension names, an alert will never
-        /// be triggered.
+        /// The anomaly will be included in the alert if the conditions in every
+        /// <see cref="MetricAlertConfiguration"/> are satisfied. Be aware that if two metric alert
+        /// configurations have no intersection between their scopes, an alert will never be triggered.
         /// </summary>
         [CodeGenMember("AND")]
         public static MetricAlertConfigurationsOperator And { get; } = new MetricAlertConfigurationsOperator(AndValue);
 
         /// <summary>
-        /// The data point will trigger an alert if at least one <see cref="MetricAlertConfiguration"/>
-        /// defined in <see cref="AnomalyAlertConfiguration"/> is satisfied.
+        /// The anomaly will be included in the alert if the conditions of at least one
+        /// <see cref="MetricAlertConfiguration"/> are satisfied.
         /// </summary>
         [CodeGenMember("OR")]
         public static MetricAlertConfigurationsOperator Or { get; } = new MetricAlertConfigurationsOperator(OrValue);
 
         /// <summary>
-        /// It can be used only when there are up to two <see cref="MetricAlertConfiguration"/>s defined
-        /// in <see cref="AnomalyAlertConfiguration"/>. The data point will trigger an alert if exactly one of the
-        /// configurations is satisfied.
+        /// This value can only be used when there are exactly two <see cref="MetricAlertConfiguration"/>
+        /// instances defined. The anomaly will be included in the alert if the conditions of exactly one
+        /// of the configurations are satisfied.
         /// </summary>
         [CodeGenMember("XOR")]
         public static MetricAlertConfigurationsOperator Xor { get; } = new MetricAlertConfigurationsOperator(XorValue);

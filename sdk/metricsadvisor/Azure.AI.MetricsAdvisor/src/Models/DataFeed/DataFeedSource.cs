@@ -8,7 +8,23 @@ using Azure.AI.MetricsAdvisor.Models;
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
-    /// Ingests data into a <see cref="DataFeed"/> for anomaly detection.
+    /// The source that periodically provides data to a <see cref="DataFeed"/>. The service
+    /// accepts tables of aggregated data. The supported data feed sources are:
+    /// <list type="bullet">
+    ///   <item><see cref="AzureApplicationInsightsDataFeedSource"/></item>
+    ///   <item><see cref="AzureBlobDataFeedSource"/></item>
+    ///   <item><see cref="AzureCosmosDbDataFeedSource"/></item>
+    ///   <item><see cref="AzureDataExplorerDataFeedSource"/></item>
+    ///   <item><see cref="AzureDataLakeStorageDataFeedSource"/></item>
+    ///   <item><see cref="AzureEventHubsDataFeedSource"/></item>
+    ///   <item><see cref="AzureTableDataFeedSource"/></item>
+    ///   <item><see cref="InfluxDbDataFeedSource"/></item>
+    ///   <item><see cref="LogAnalyticsDataFeedSource"/></item>
+    ///   <item><see cref="MongoDbDataFeedSource"/></item>
+    ///   <item><see cref="MySqlDataFeedSource"/></item>
+    ///   <item><see cref="PostgreSqlDataFeedSource"/></item>
+    ///   <item><see cref="SqlServerDataFeedSource"/></item>
+    /// </list>
     /// </summary>
     public abstract class DataFeedSource
     {

@@ -606,7 +606,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     {
                         LowerBound = 1.0
                     },
-                    CrossConditionsOperator = DetectionConditionsOperator.And
+                    ConditionOperator = DetectionConditionOperator.And
                 }
             };
 
@@ -643,7 +643,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     {
                         LowerBound = 1.0
                     },
-                    CrossConditionsOperator = DetectionConditionsOperator.And
+                    ConditionOperator = DetectionConditionOperator.And
                 }
             };
 
@@ -677,7 +677,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                         new SuppressCondition(1, 1.0)),
                     ChangeThresholdCondition = new ChangeThresholdCondition(1.0, 1, false, AnomalyDetectorDirection.Down,
                         new SuppressCondition(1, 1.0)),
-                    CrossConditionsOperator = DetectionConditionsOperator.And
+                    ConditionOperator = DetectionConditionOperator.And
                 }
             };
 

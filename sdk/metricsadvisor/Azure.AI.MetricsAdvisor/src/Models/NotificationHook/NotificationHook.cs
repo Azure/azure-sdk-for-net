@@ -10,7 +10,13 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
-    /// An alert notification to be triggered after an anomaly is detected by Metrics Advisor.
+    /// Alert notifications are not sent by default. In order to be notified when an alert is fired, you must
+    /// create a <see cref="NotificationHook"/> and pass its ID to an <see cref="AnomalyAlertConfiguration"/>.
+    /// The supported hooks are:
+    /// <list type="bullet">
+    ///   <item><see cref="EmailNotificationHook"/></item>
+    ///   <item><see cref="WebNotificationHook"/></item>
+    /// </list>
     /// </summary>
     [CodeGenModel("HookInfo")]
     public abstract partial class NotificationHook
@@ -34,13 +40,18 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// The unique identifier for the hook.
+        /// The unique identifier of this <see cref="NotificationHook"/>.
         /// </summary>
+        /// <remarks>
+        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. This property
+        /// will be set by the service after creation.
+        /// </remarks>
         [CodeGenMember("HookId")]
         public string Id { get; }
 
         /// <summary>
-        /// The name of the hook.
+        /// A custom name for this <see cref="NotificationHook"/> to be displayed on the web portal. Hook names
+        /// must be unique across the same Metris Advisor resource.
         /// </summary>
         [CodeGenMember("HookName")]
         public string Name { get; set; }
@@ -53,6 +64,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// must uniquely identify the user's principal. For instance, for a <c>ClientSecretCredential</c>, the <c>string</c> must be
         /// the client ID.
         /// </summary>
+        /// <remarks>
+        /// Upon hook creation, the creator user is automatically assigned as an administrator by the service.
+        /// </remarks>
         [CodeGenMember("Admins")]
         public IList<string> Administrators { get; }
 
@@ -63,13 +77,20 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public NotificationHookKind HookKind { get; internal set; }
 
         /// <summary>
-        /// The hook description.
+        /// A description of this <see cref="NotificationHook"/>. Defaults to an empty string.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         public string Description { get; set; }
 
         /// <summary>
         /// Optional field which enables a customized redirect, such as for troubleshooting notes.
+        /// Defaults to an empty string.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         public Uri ExternalUri { get; set; }
 
         /// <summary>
