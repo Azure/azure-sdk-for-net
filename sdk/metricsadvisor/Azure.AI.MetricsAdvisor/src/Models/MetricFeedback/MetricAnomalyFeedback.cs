@@ -63,11 +63,13 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// The start timestamp of feedback time range.
         /// </summary>
+        [CodeGenMember("StartTime")]
         public DateTimeOffset StartsOn { get; }
 
         /// <summary>
         /// The end timestamp of feedback timerange. When this is equal to <see cref="StartsOn"/> it indicates a single timestamp.
         /// </summary>
+        [CodeGenMember("EndTime")]
         public DateTimeOffset EndsOn { get; }
 
         /// <summary>
