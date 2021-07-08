@@ -279,6 +279,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
     }
     public partial class AzureDataLakeStorageDataFeedSource : Azure.AI.MetricsAdvisor.Administration.DataFeedSource
     {
+        public AzureDataLakeStorageDataFeedSource(string accountName, string fileSystemName, string directoryTemplate, string fileTemplate) { }
         public AzureDataLakeStorageDataFeedSource(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate) { }
         public string AccountName { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Administration.AzureDataLakeStorageDataFeedSource.AuthenticationType? Authentication { get { throw null; } set { } }
@@ -403,7 +404,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
     }
     public partial class LogAnalyticsDataFeedSource : Azure.AI.MetricsAdvisor.Administration.DataFeedSource
     {
-        public LogAnalyticsDataFeedSource(string workspaceId, string query) { }
         public LogAnalyticsDataFeedSource(string workspaceId, string query, string clientId, string clientSecret, string tenantId) { }
         public string ClientId { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
@@ -528,6 +528,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
     }
     public partial class SqlServerDataFeedSource : Azure.AI.MetricsAdvisor.Administration.DataFeedSource
     {
+        public SqlServerDataFeedSource(string query) { }
         public SqlServerDataFeedSource(string connectionString, string query) { }
         public Azure.AI.MetricsAdvisor.Administration.SqlServerDataFeedSource.AuthenticationType? Authentication { get { throw null; } set { } }
         public string DataSourceCredentialId { get { throw null; } set { } }
