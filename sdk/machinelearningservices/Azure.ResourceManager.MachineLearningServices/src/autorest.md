@@ -29,20 +29,10 @@ operation-group-to-resource-type:
   StorageAccount: Microsoft.MachineLearningServices/workspaces/storageAccounts
 operation-group-to-resource:
   Operations: NonResource
-  # WorkspaceFeatures: NonResource # no PUT
-  Usages: NonResource
-  VirtualMachineSizes: NonResource # list only, but value is not value
   Quotas: NonResource # POST and GET
-  # WorkspaceSkus: NonResource # no PUT, Sub level
-  PrivateLinkResources: NonResource # no PUT
 operation-group-to-parent:
   Operations: tenant
-  WorkspaceFeatures: Workspaces
-  Usages: subscriptions
-  VirtualMachineSizes: subscriptions
   Quotas: subscriptions
-  WorkspaceSkus: Workspaces
-  PrivateLinkResources: Workspaces
 directive:
   - from: swagger-document
     where: $.definitions.ComputeNodesInformation.properties
@@ -51,15 +41,6 @@ directive:
   - rename-model:
       from: Operation
       to: RestApi
-# Following two transform are temporary, waiting on ML team to fix swagger.
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}'].put.parameters[5].schema
-    transform: >
-        $["$ref"] = "#/definitions/WorkspaceConnection";
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/services/{serviceName}'].put.parameters[5].schema
-    transform: >
-        $["$ref"] = "#/definitions/ServiceResource";
 # Following two transforms are temporary due to non-nullable properties (properties that do not declare x-nullable: true) being null in service response
   - from: swagger-document
     where: $.definitions.NotebookResourceInfo.properties.notebookPreparationError

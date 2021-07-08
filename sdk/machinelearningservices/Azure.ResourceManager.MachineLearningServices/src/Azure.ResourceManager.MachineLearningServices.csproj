@@ -8,7 +8,7 @@
     <PackageId>Azure.ResourceManager.MachineLearningServices</PackageId>
     <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <NoWarn>$(NoWarn);AZC0100;CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
