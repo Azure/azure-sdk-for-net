@@ -326,6 +326,7 @@ namespace Azure.AI.Translation.Document
 
             try
             {
+                var guid = ClientCommon.ValidateModelId(documentId, nameof(documentId));
                 return _serviceClient.GetDocumentStatus(new Guid(Id), new Guid(documentId), cancellationToken);
             }
             catch (Exception e)
