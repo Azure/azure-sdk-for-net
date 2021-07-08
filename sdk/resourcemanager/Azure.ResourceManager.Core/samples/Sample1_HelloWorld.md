@@ -2,6 +2,12 @@
 
 >Note: Before getting started with the samples, make sure to go trough the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core#prerequisites).
 
+Namespaces for this example:
+```C# Snippet:Hello_World_Namespaces
+using System;
+using Azure.Identity;
+```
+
 The following code shows how to get the default subscription:
 
 ```C# Snippet:Hello_World_DefaultSubscription
@@ -13,7 +19,7 @@ Console.WriteLine(subscription.Id);
 It's possible to get a specific subscription as follows:
 
 ```C# Snippet:Hello_World_SpecificSubscription
-string subscriptionId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c";
+string subscriptionId = "your-subscription-id";
 var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.GetSubscriptions().Get(subscriptionId);
 Console.WriteLine("Got subscription: " + subscription.Data.DisplayName);

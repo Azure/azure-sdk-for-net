@@ -1,6 +1,8 @@
-﻿using System;
+﻿#region Snippet:Managing_Resource_Groups_Namespaces
+using System;
 using System.Threading.Tasks;
 using Azure.Identity;
+#endregion
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests.Samples

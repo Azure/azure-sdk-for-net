@@ -1,5 +1,11 @@
 Example: Managing Resource Groups
 --------------------------------------
+For this example, you need the following namespaces:
+```C# Snippet:Managing_Resource_Groups_Namespaces
+using System;
+using System.Threading.Tasks;
+using Azure.Identity;
+```
 
 When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `DefaultSubscription` property that returns the default subscription configured for your user:
 

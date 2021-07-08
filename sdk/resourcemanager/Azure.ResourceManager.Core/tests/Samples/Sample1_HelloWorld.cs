@@ -1,5 +1,7 @@
-﻿using System;
+﻿#region Snippet:Hello_World_Namespaces
+using System;
 using Azure.Identity;
+#endregion
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests.Samples

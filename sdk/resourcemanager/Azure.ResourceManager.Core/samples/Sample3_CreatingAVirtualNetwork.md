@@ -1,7 +1,19 @@
 Example: Creating a Virtual Network
 --------------------------------------
 
-In this example, we'll create a virtual network. Since the SDK follows the resource hierarchy in Azure, we'll need to do this inside of a resource group. Start by creating a new resource group, like we did above:
+In this example, we'll create a virtual network. Since the SDK follows the resource hierarchy in Azure, we'll need to do this inside of a resource group.
+
+## Import the namespaces
+These are the naspaces needed for this project:
+```C# Snippet:Creating_A_Virtual_Network_Namespaces
+using System.Threading.Tasks;
+using Azure.Identity;
+```
+
+In addition, you need to install the `Azure.ResourceManager.Compute` library in your project and import it.
+
+## Create a Resource Group
+Start by creating a new resource group, like we did above:
 
 ```C# Snippet:Creating_A_Virtual_Network_CreateResourceGroup
 var armClient = new ArmClient(new DefaultAzureCredential());
@@ -9,7 +21,7 @@ ResourceGroupContainer rgContainer = armClient.DefaultSubscription.GetResourceGr
 string rgName = "myResourceGroup";
 ResourceGroup resourceGroup = await rgContainer.Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
 ```
-
+## Create a Virtual Network
 Now that we have a resource group, we'll create our virtual network. To do this, we will use a helper method on the container object called `Construct`. The helper method allows us to create the request object and then send that to the `Create` method.
 
 ```csharp
@@ -19,6 +31,7 @@ VirtualNetwork virtualNetwork = await vnetContainer
     .CreateAsync("myVnetName");
 ```
 
+## Create a Subnet 
 Now that we have a virtual network, we must create at least one subnet in order to add any virtual machines.
 Following the hierarchy in Azure, subnets belong to a virtual network, so that's where we'll get our `SubnetContainer` instance. After that, we'll again use the `Construct` helper method to create our subnet.
 
