@@ -38,11 +38,6 @@ namespace Compute.Tests
             return GetSubEntityReferenceId(subId, resourceGrpName, ApiConstants.HostGroups, dedicatedHostGroupName, ApiConstants.Hosts, dedicatedHostName);
         }
 
-        public static string GetCapacityReservationGroupRef(string subId, string resourceGrpName, string capacityReservationGroupName)
-        {
-            return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.CapacityReservationGroups, capacityReservationGroupName);
-        }
-
         public static string GetVMReferenceId(string subId, string resourceGrpName, string vmName)
         {
             return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.VirtualMachines, vmName);
