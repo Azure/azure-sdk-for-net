@@ -667,8 +667,10 @@ namespace Azure.Search.Documents.Indexes.Models
             [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override int GetHashCode() { throw null; }
             public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion lhs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion rhs) { throw null; }
+            public static bool operator >=(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion lhs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion rhs) { throw null; }
             public static implicit operator Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion (string value) { throw null; }
             public static bool operator !=(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion lhs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion rhs) { throw null; }
+            public static bool operator <=(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion lhs, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkill.SkillVersion rhs) { throw null; }
             public override string ToString() { throw null; }
         }
     }
@@ -1927,8 +1929,10 @@ namespace Azure.Search.Documents.Indexes.Models
             [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             public override int GetHashCode() { throw null; }
             public static bool operator ==(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion lhs, Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion rhs) { throw null; }
+            public static bool operator >=(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion lhs, Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion rhs) { throw null; }
             public static implicit operator Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion (string value) { throw null; }
             public static bool operator !=(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion lhs, Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion rhs) { throw null; }
+            public static bool operator <=(Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion lhs, Azure.Search.Documents.Indexes.Models.SentimentSkill.SkillVersion rhs) { throw null; }
             public override string ToString() { throw null; }
         }
     }
