@@ -37,7 +37,7 @@
 - Split the method `GetAnomalies` into two different methods: `GetAnomaliesForAlert` and `GetAnomaliesForDetectionConfiguration`.
 - Split the method `GetIncidents` into two different methods: `GetIncidentsForAlert` and `GetIncidentsForDetectionConfiguration`.
 - Removed the property `DimensionFilter` in `MetricFeedback`. It's now a property of type `DimensionKey` (named `DimensionKey` as well). Similarly, feedback constructors now require a `dimensionKey` parameter to be passed.
-- `DataFeedIngestionSettings` constructor now takes the required `ingestionStartTime` parameter. For this reason, the property `IngestionStartTime` is not nullable anymore.
+- `DataFeedIngestionSettings` constructor now takes the required `ingestionStartsOn` parameter. For this reason, the property `IngestionStartTime`, now named `IngestionStartsOn`, is not nullable anymore.
 - `DataFeedMissingDataPointFillSettings` constructor now takes the required `fillType` parameter. For this reason, the property `FillType` is not nullable anymore.
 - `EmailNotificationHook` constructor now takes the required `name` parameter.
 - `WebNotificationHook` constructor now takes the required `name` and `endpoint` parameters.
@@ -45,6 +45,7 @@
 - `MetricSingleSeriesDetectionCondition` constructor now takes the required `seriesKey` parameter.
 - Renamed all occurrences of `CreatedTime` to `CreatedOn` and `ModifiedTime` to `LastModified`.
 - Renamed `AnomalyIncident.StartTime` to `StartedOn` and `AnomalyIncident.LastTime` to `LastDetectedOn`.
+- Renamed any other occurrences of `StartTime` to `StartsOn`, and `EndTime` to `EndsOn`, including property and parameter names.
 - Renamed `AlertQueryTimeMode.AnomalyTime` to `AnomalyDetectedOn`, and `FeedbackQueryTimeMode.FeedbackCreatedTime` to `FeedbackCreatedOn`.
 - Renamed `DataFeedRollupSettings.AlreadyRollupIdentificationValue` to `RollupIdentificationValue`.
 - In `DataFeedRollupType`, renamed `AlreadyRollup` to `AlreadyRolledUp`, `NeedRollup` to `RollupNeeded`, and `NoRollup` to `NoRollupNeeded`.
