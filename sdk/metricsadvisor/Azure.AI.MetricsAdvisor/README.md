@@ -203,6 +203,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 The following section provides several code snippets illustrating common patterns used in the Metrics Advisor .NET API. The snippets below make use of asynchronous service calls, but note that the Azure.AI.MetricsAdvisor package supports both synchronous and asynchronous APIs.
 
 * [Create a data feed from a data source](#create-a-data-feed-from-a-data-source)
+* [Other data source authetication alternatives](#other-data-source-authentication-alternatives)
 * [Check the ingestion status of a data feed](#check-the-ingestion-status-of-a-data-feed)
 * [Create an anomaly detection configuration](#create-an-anomaly-detection-configuration)
 * [Create a hook for receiving anomaly alerts](#create-a-hook-for-receiving-anomaly-alerts)
@@ -258,23 +259,41 @@ foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
 }
 ```
 
-### Data source credential entities
+### Other data source authetication alternatives
 
 Some data sources support multiple types of authentication. For example, a `SqlServerDataFeedSource` supports connection string, Service Principal, and managed identity. You can check the complete list of data sources and their types of authentication [here][metricsadv_authentication].
 
 Once you've made sure that your data source supports the authentication you want to use, you need to set the `Authentication` property when creating or updating the data source:
 
 ```C# Snippet:SettingAuthentication
+var dataSoure = new SqlServerDataFeedSource("<connection-string>", "<query>")
+{
+    Authentication = SqlServerDataFeedSource.AuthenticationType.ManagedIdentity
+};
 ```
 
 Be aware that, except for the `Basic` and `ManagedIdentity` types of authentication, you also need to have the ID of a corresponding `DataSourceCredentialEntity` in the service. In order to create a credential entity, you need to do:
 
 ```C# Snippet:CreateDataSourceCredentialAsync
+string credentialName = "<credentialName>";
+
+var credentialEntity = new ServicePrincipalCredentialEntity(credentialName, "<clientId>", "<clientSecret>", "<tenantId>");
+
+Response<DataSourceCredentialEntity> response = await adminClient.CreateDataSourceCredentialAsync(credentialEntity);
+
+DataSourceCredentialEntity createdCredentialEntity = response.Value;
+
+Console.WriteLine($"Credential entity ID: {createdCredentialEntity.Id}");
 ```
 
 Once you have the ID, add it to the `DataSourceCredentialId` property when setting up your data source:
 
 ```C# Snippet:SettingCredentialAuthentication
+var dataSoure = new SqlServerDataFeedSource("<connection-string>", "<query>")
+{
+    Authentication = SqlServerDataFeedSource.AuthenticationType.ServicePrincipal,
+    DataSourceCredentialId = "<credentialId>"
+};
 ```
 
 ### Check the ingestion status of a data feed
@@ -526,15 +545,16 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 Samples showing how to use the Cognitive Services Metrics Advisor library are available in this GitHub repository. Samples are provided for each main functional area:
 
 - [Data feed CRUD operations][metricsadv-sample1]
-- [Data feed ingestion operations][metricsadv-sample2]
-- [Anomaly detection configuration CRUD operations][metricsadv-sample3]
-- [Hook CRUD operations][metricsadv-sample4]
-- [Anomaly alert configuration CRUD operations][metricsadv-sample5]
-- [Query triggered alerts][metricsadv-sample6]
-- [Query detected anomalies][metricsadv-sample7]
-- [Query incidents and their root causes][metricsadv-sample8]
-- [Query time series information][metricsadv-sample9]
-- [Feedback CRUD operations][metricsadv-sample10]
+- [Credential entity CRUD operations][metricsadv-sample2]
+- [Data feed ingestion operations][metricsadv-sample3]
+- [Anomaly detection configuration CRUD operations][metricsadv-sample4]
+- [Hook CRUD operations][metricsadv-sample5]
+- [Anomaly alert configuration CRUD operations][metricsadv-sample6]
+- [Query triggered alerts][metricsadv-sample7]
+- [Query detected anomalies][metricsadv-sample8]
+- [Query incidents and their root causes][metricsadv-sample9]
+- [Query time series information][metricsadv-sample10]
+- [Feedback CRUD operations][metricsadv-sample11]
 
 ## Contributing
 
@@ -559,15 +579,16 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [metrics_advisor_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorClient.cs
 
 [metricsadv-sample1]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample01_DataFeedCrudOperations.cs
-[metricsadv-sample2]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample02_DataFeedIngestionOperations.cs
-[metricsadv-sample3]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample03_DetectionConfigurationCrudOperations.cs
-[metricsadv-sample4]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample04_HookCrudOperations.cs
-[metricsadv-sample5]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample05_AlertConfigurationCrudOperations.cs
-[metricsadv-sample6]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample06_QueryTriggeredAlerts.cs
-[metricsadv-sample7]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample07_QueryDetectedAnomalies.cs
-[metricsadv-sample8]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample08_QueryIncidentsAndRootCauses.cs
-[metricsadv-sample9]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample09_QueryTimeSeriesInformation.cs
-[metricsadv-sample10]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample10_FeedbackCrudOperations.cs
+[metricsadv-sample2]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample02_CredentialEntityCrudOperations.cs
+[metricsadv-sample3]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample03_DataFeedIngestionOperations.cs
+[metricsadv-sample4]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample04_DetectionConfigurationCrudOperations.cs
+[metricsadv-sample5]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample05_HookCrudOperations.cs
+[metricsadv-sample6]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample06_AlertConfigurationCrudOperations.cs
+[metricsadv-sample7]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample07_QueryTriggeredAlerts.cs
+[metricsadv-sample8]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample08_QueryDetectedAnomalies.cs
+[metricsadv-sample9]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample09_QueryIncidentsAndRootCauses.cs
+[metricsadv-sample10]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample10_QueryTimeSeriesInformation.cs
+[metricsadv-sample11]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample11_FeedbackCrudOperations.cs
 
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
