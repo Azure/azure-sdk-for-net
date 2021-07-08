@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the <see cref="System.Threading.CancellationToken"/> instance which
         /// will be cancelled when <see cref="ServiceBusSessionProcessor.StopProcessingAsync"/>
-        /// is called, or when the session lock has been lost.
+        /// is called, or when the session lock has been lost, or if <see cref="MarkSessionClosed"/> is called.
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
         /// Marks the session that is being processed as closed. No new receives will be initiated for the session before the
         /// session is closed. Any already received messages will still be delivered to the user message handler, and in-flight message handlers
         /// will be allowed to complete. Messages will still be completed automatically if <see cref="ServiceBusSessionProcessorOptions.AutoCompleteMessages"/>
-        /// is <value>true</value>.
+        /// is <c>true</c>.
         /// The session may end up being reopened for processing immediately after closing if there are messages remaining in the session (
         /// This depends on what other session messages may be in the queue or subscription).
         /// </summary>
