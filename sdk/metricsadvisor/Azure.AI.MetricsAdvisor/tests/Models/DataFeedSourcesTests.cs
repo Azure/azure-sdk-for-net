@@ -80,6 +80,42 @@ namespace Azure.AI.MetricsAdvisor.Tests
         ";
 
         [Test]
+        public void AzureDataLakeStorageDataFeedSourceConstructorValidatesArguments()
+        {
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource(null, "mock", "mock", "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("", "mock", "mock", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", null, "mock", "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "", "mock", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", null, "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", null), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", ""), Throws.ArgumentException);
+
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource(null, "mock", "mock", "mock", "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("", "mock", "mock", "mock", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", null, "mock", "mock", "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "", "mock", "mock", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", null, "mock", "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "", "mock", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", null, "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "", "mock"), Throws.ArgumentException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", null), Throws.ArgumentNullException);
+            Assert.That(() => new AzureDataLakeStorageDataFeedSource("mock", "mock", "mock", "mock", ""), Throws.ArgumentException);
+        }
+
+        [Test]
+        public void SqlServerDataFeedSourceConstructorValidatesArguments()
+        {
+            Assert.That(() => new SqlServerDataFeedSource(null), Throws.ArgumentNullException);
+            Assert.That(() => new SqlServerDataFeedSource(""), Throws.ArgumentException);
+
+            Assert.That(() => new SqlServerDataFeedSource(null, "mock"), Throws.ArgumentNullException);
+            Assert.That(() => new SqlServerDataFeedSource("", "mock"), Throws.ArgumentException);
+            Assert.That(() => new SqlServerDataFeedSource("mock", null), Throws.ArgumentNullException);
+            Assert.That(() => new SqlServerDataFeedSource("mock", ""), Throws.ArgumentException);
+        }
+
+        [Test]
         [TestCaseSource(nameof(CreateDataSourceTestCases))]
         public async Task DataFeedSourceSendsSecretDuringCreation(DataFeedSource dataSource, string secretPropertyName)
         {
