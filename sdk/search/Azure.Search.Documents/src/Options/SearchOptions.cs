@@ -275,10 +275,11 @@ namespace Azure.Search.Documents
                 }
                 else
                 {
-                    if (value.Contains(QueryCaptionRawSplitter))
+                    int splitIndex = value.IndexOf(QueryCaptionRawSplitter, StringComparison.OrdinalIgnoreCase);
+                    if (splitIndex >= 0)
                     {
-                        var queryCaptionPart = value.Substring(0, value.IndexOf(QueryCaptionRawSplitter, StringComparison.OrdinalIgnoreCase));
-                        var highlightPart = value.Substring(value.IndexOf(QueryCaptionRawSplitter, StringComparison.OrdinalIgnoreCase) + QueryCaptionRawSplitter.Length);
+                        var queryCaptionPart = value.Substring(0, splitIndex);
+                        var highlightPart = value.Substring(splitIndex + QueryCaptionRawSplitter.Length);
 
                         QueryCaption = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaption(queryCaptionPart);
                         QueryCaptionHighlight = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
