@@ -231,94 +231,12 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// List the resource groups for this subscription.
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        [ForwardsClientCalls]
-        public virtual Pageable<ResourceGroup> List(CancellationToken cancellationToken = default)
-        {
-            Page<ResourceGroup> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.List(null, null, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new ResourceGroup(Parent, data)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceGroup> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListNextPage(nextLink, null, null, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new ResourceGroup(Parent, data)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List the resource groups for this subscription.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        [ForwardsClientCalls]
-        public virtual AsyncPageable<ResourceGroup> ListAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ResourceGroup>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListAsync(null, null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new ResourceGroup(Parent, data)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListNextPageAsync(nextLink, null, null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new ResourceGroup(Parent, data)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List the resource groups for this subscription.
-        /// </summary>
         /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual Pageable<ResourceGroup> List(string filter, int? top, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceGroup> List(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<ResourceGroup> FirstPageFunc(int? pageSizeHint)
             {
@@ -361,7 +279,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<ResourceGroup> ListAsync(string filter, int? top, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceGroup> ListAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceGroup>> FirstPageFunc(int? pageSizeHint)
             {
