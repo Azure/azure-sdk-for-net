@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Core
         internal SubscriptionContainer(ClientContext clientContext)
             : base(clientContext, null)
         {
-            RestClient = new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline);
+            RestClient = new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline, this.BaseUri);
         }
 
         /// <summary>
