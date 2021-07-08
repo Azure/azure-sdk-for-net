@@ -61,8 +61,12 @@ namespace Azure.AI.MetricsAdvisor
         public MetricFeedbackKind FeedbackKind { get; internal set; }
 
         /// <summary>
-        /// The unique identifier of the <see cref="MetricFeedback"/>. Set by the service.
+        /// The unique identifier of this <see cref="MetricFeedback"/>.
         /// </summary>
+        /// <remarks>
+        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. This property
+        /// will be set by the service after creation.
+        /// </remarks>
         [CodeGenMember("FeedbackId")]
         public string Id { get; }
 
@@ -79,6 +83,10 @@ namespace Azure.AI.MetricsAdvisor
         /// creator's user principal, but its value depends on the type of credential used. For instance, if a
         /// <c>ClientSecretCredential</c> is used, it will contain the client ID.
         /// </summary>
+        /// <remarks>
+        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. This property
+        /// will be set by the service after creation.
+        /// </remarks>
         public string UserPrincipal { get; }
 
         /// <summary>

@@ -8,9 +8,14 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
-    /// An email hook is the channel for anomaly alerts to be sent to email addresses specified in the Email to section.
-    /// Two types of alert emails will be sent: Data feed not available alerts, and Incident reports which contain one or multiple anomalies.
+    /// An email hook is the channel for anomaly alerts to be sent to e-mail addresses. In order to be notified when
+    /// an alert is fired, you must create an <see cref="EmailNotificationHook"/> and pass its ID to an
+    /// <see cref="AnomalyAlertConfiguration"/>.
     /// </summary>
+    /// <remarks>
+    /// In order to create an e-mail hook, you must add at least one e-mail address to <see cref="EmailsToAlert"/>,
+    /// and pass this instance to the method <see cref="MetricsAdvisorAdministrationClient.CreateHookAsync"/>.
+    /// </remarks>
     [CodeGenModel("EmailHookInfo")]
     [CodeGenSuppress(nameof(EmailNotificationHook), typeof(string), typeof(EmailHookParameter))]
     public partial class EmailNotificationHook : NotificationHook

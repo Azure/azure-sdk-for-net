@@ -9,9 +9,17 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
-    /// A webhook is the entry point for all the information available from the Metrics Advisor service, and calls a user-provided API when an alert is triggered.
-    /// All alerts can be sent through a webhook.
+    /// A web hook is a notification channel that uses an endpoint provided by the customer. In order to be
+    /// notified when an alert is fired, you must create a <see cref="WebNotificationHook"/> and pass its
+    /// ID to an <see cref="AnomalyAlertConfiguration"/>. Check the <see href="https://aka.ms/metricsadvisor/webhook">
+    /// documentation</see> for more details about the alerts sent.
     /// </summary>
+    /// <remarks>
+    /// In order to create a web hook, you must pass this instance to the method
+    /// <see cref="MetricsAdvisorAdministrationClient.CreateHookAsync"/>. When a web hook is created or modified,
+    /// the <see cref="Endpoint"/> will be called as a test with an empty request body. Your API needs to return
+    /// a 200 HTTP code to successfully pass the validation.
+    /// </remarks>
     [CodeGenModel("WebhookHookInfo")]
     [CodeGenSuppress(nameof(WebNotificationHook), typeof(string), typeof(WebhookHookParameter))]
     public partial class WebNotificationHook : NotificationHook
@@ -49,22 +57,38 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         /// <summary>
         /// The username for authenticating to the API address. Leave this blank if authentication isn't needed.
+        /// Defaults to an empty string.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         public string Username { get; set; }
 
         /// <summary>
         /// The password for authenticating to the API address. Leave this blank if authentication isn't needed.
+        /// Defaults to an empty string.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         public string Password { get; set; }
 
         /// <summary>
         /// The certificate key for authenticating to the API address. Leave this blank if authentication isn't needed.
+        /// Defaults to an empty string.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         public string CertificateKey { get; set; }
 
         /// <summary>
         /// The certificate password for authenticating to the API address. Leave this blank if authentication isn't needed.
+        /// Defaults to an empty string.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         public string CertificatePassword { get; set; }
 
         /// <summary>

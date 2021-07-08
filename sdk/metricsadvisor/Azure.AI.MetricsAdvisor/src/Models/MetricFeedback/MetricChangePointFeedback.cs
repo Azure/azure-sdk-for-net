@@ -8,8 +8,15 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// Feedback indicating that this is the start of a trend change.
+    /// Sometimes the trend change of data will affect anomaly detection results. When a decision is made as to whether
+    /// a point is an anomaly or not, the latest window of history data will be taken into consideration. When your time
+    /// series has a trend change, you could mark the exact change point, this will help our anomaly detector in future
+    /// analysis.
     /// </summary>
+    /// <remarks>
+    /// In order to create change point feedback, you must pass this instance to the method
+    /// <see cref="MetricsAdvisorClient.AddFeedbackAsync"/>.
+    /// </remarks>
     [CodeGenModel("ChangePointFeedback")]
     [CodeGenSuppress(nameof(MetricChangePointFeedback), typeof(string), typeof(FeedbackFilter))]
     public partial class MetricChangePointFeedback : MetricFeedback
@@ -26,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor
         /// </param>
         /// <param name="startsOn">The start timestamp of feedback time range.</param>
         /// <param name="endsOn">The end timestamp of feedback time range. When this is equal to <paramref name="startsOn"/> it indicates a single timestamp.</param>
-        /// <param name="value">The <see cref="Models.ChangePointValue"/> for the feedback.</param>
+        /// <param name="value">Indicate whether or not the data points should be considered change points by the service.</param>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionKey"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty.</exception>
         public MetricChangePointFeedback(string metricId, DimensionKey dimensionKey, DateTimeOffset startsOn, DateTimeOffset endsOn, ChangePointValue value)
@@ -68,7 +75,7 @@ namespace Azure.AI.MetricsAdvisor
         public DateTimeOffset EndsOn { get; }
 
         /// <summary>
-        /// The <see cref="Models.ChangePointValue"/> for the feedback.
+        /// Indicate whether or not the data points should be considered change points by the service.
         /// </summary>
         public ChangePointValue ChangePointValue => ValueInternal.ChangePointValue;
 

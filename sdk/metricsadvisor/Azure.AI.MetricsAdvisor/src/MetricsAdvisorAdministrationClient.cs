@@ -14,7 +14,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// <summary>
     /// The client to use to connect to the Metrics Advisor Cognitive Service to handle administrative
     /// operations, configuring the behavior of the service. It provides the ability to create and manage
-    /// data feeds, anomaly detection configurations, anomaly alerting configurations and hooks.
+    /// data feeds, anomaly detection configurations, anomaly alerting configurations, hooks, and credential
+    /// entities.
     /// </summary>
     public class MetricsAdvisorAdministrationClient
     {

@@ -11,9 +11,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// </summary>
     public class GetDataFeedIngestionStatusesOptions
     {
-        /// <summary> Initializes a new instance of the <see cref="GetDataFeedIngestionStatusesOptions"/> class. </summary>
-        /// <param name="startsOn"> The start point of time range to query data ingestion status. </param>
-        /// <param name="endsOn"> The end point of time range to query data ingestion status. </param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetDataFeedIngestionStatusesOptions"/> class.
+        /// </summary>
+        /// <param name="startsOn">The start point of time range to query data ingestion status.</param>
+        /// <param name="endsOn">The end point of time range to query data ingestion status.</param>
         public GetDataFeedIngestionStatusesOptions(DateTimeOffset startsOn, DateTimeOffset endsOn)
         {
             StartsOn = startsOn;

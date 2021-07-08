@@ -13,6 +13,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// authentication must be stored as secrets in a Key Vault resource, so credentials to access this Key Vault instance
     /// must also be provided.
     /// </summary>
+    /// <remarks>
+    /// In order to create a credential entity, you must pass this instance to the method
+    /// <see cref="MetricsAdvisorAdministrationClient.CreateDataSourceCredentialAsync"/>.
+    /// </remarks>
     [CodeGenModel("ServicePrincipalInKVCredential")]
     [CodeGenSuppress(nameof(ServicePrincipalInKeyVaultCredentialEntity), typeof(string), typeof(ServicePrincipalInKVParam))]
     public partial class ServicePrincipalInKeyVaultCredentialEntity

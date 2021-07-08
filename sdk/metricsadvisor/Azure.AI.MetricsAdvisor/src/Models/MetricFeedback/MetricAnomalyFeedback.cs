@@ -8,9 +8,13 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// Feedback indicating that the point was incorrectly labeled by the service.
-    /// You can specify whether a point should or shouldn't be an anomaly.
+    /// Feedback indicating that a data point was incorrectly labeled by the service.
+    /// You can specify whether a point should or shouldn't be an anomaly with <see cref="Models.AnomalyValue"/>
     /// </summary>
+    /// <remarks>
+    /// In order to create anomaly feedback, you must pass this instance to the method
+    /// <see cref="MetricsAdvisorClient.AddFeedbackAsync"/>.
+    /// </remarks>
     [CodeGenModel("AnomalyFeedback")]
     [CodeGenSuppress(nameof(MetricAnomalyFeedback), typeof(string), typeof(FeedbackFilter))]
     public partial class MetricAnomalyFeedback : MetricFeedback
@@ -27,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor
         /// </param>
         /// <param name="startsOn">The start timestamp of feedback time range.</param>
         /// <param name="endsOn">The end timestamp of feedback time range. When this is equal to <paramref name="startsOn"/> it indicates a single timestamp.</param>
-        /// <param name="value">The <see cref="Models.AnomalyValue"/> for the feedback.</param>
+        /// <param name="value">Indicates whether or not the data points should have been labeled as anomalies by the service.</param>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionKey"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty.</exception>
         public MetricAnomalyFeedback(string metricId, DimensionKey dimensionKey, DateTimeOffset startsOn, DateTimeOffset endsOn, AnomalyValue value)
@@ -91,7 +95,7 @@ namespace Azure.AI.MetricsAdvisor
         public AnomalyDetectionConfiguration DetectionConfigurationSnapshot { get; }
 
         /// <summary>
-        /// The <see cref="Models.AnomalyValue"/> for the feedback.
+        /// Indicates whether or not the data points should have been labeled as anomalies by the service.
         /// </summary>
         public AnomalyValue AnomalyValue => ValueInternal.AnomalyValue;
 

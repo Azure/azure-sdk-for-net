@@ -37,20 +37,28 @@ namespace Azure.AI.MetricsAdvisor.Administration
         public DataSourceCredentialKind CredentialKind { get; internal set; }
 
         /// <summary>
-        /// The unique identifier of this <see cref="DataSourceCredentialEntity"/>. Set by the service.
+        /// The unique identifier of this <see cref="DataSourceCredentialEntity"/>.
         /// </summary>
+        /// <remarks>
+        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. This property
+        /// will be set by the service after creation.
+        /// </remarks>
         [CodeGenMember("DataSourceCredentialId")]
         public string Id { get; }
 
         /// <summary>
-        /// A custom unique name for this <see cref="DataSourceCredentialEntity"/> to be displayed on the web portal.
+        /// A custom name for this <see cref="DataSourceCredentialEntity"/> to be displayed on the web portal. Data feed
+        /// names must be unique across the same Metris Advisor resource.
         /// </summary>
         [CodeGenMember("DataSourceCredentialName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// A description of this <see cref="DataSourceCredentialEntity"/>.
+        /// A description of this <see cref="DataSourceCredentialEntity"/>. Defaults to an empty string.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         [CodeGenMember("DataSourceCredentialDescription")]
         public string Description { get; set; }
 

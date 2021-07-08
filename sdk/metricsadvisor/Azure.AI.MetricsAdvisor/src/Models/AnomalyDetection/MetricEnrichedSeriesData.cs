@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The period of every data point in this time series, measured in amount of
-        /// points.
+        /// points. Used to describe seasonal data.
         /// </summary>
         [CodeGenMember("PeriodList")]
         public IReadOnlyList<int?> Periods { get; }
