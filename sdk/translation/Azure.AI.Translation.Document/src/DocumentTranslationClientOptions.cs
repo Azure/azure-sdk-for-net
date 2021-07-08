@@ -30,6 +30,7 @@ namespace Azure.AI.Translation.Document
         public DocumentTranslationClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
+            AddLoggedHeadersAndQueryParameters();
         }
 
         internal string GetVersionString()
@@ -51,6 +52,28 @@ namespace Azure.AI.Translation.Document
             /// Version 1.0 .
             /// </summary>
             V1_0 = 1
+        }
+
+        /// <summary>
+        /// Add headers and query parameters that are considered safe for logging or including in
+        /// error messages by default.
+        /// </summary>
+        private void AddLoggedHeadersAndQueryParameters()
+        {
+            Diagnostics.LoggedHeaderNames.Add(Constants.OperationLocationHeader);
+            Diagnostics.LoggedHeaderNames.Add("apim-request-id");
+            Diagnostics.LoggedHeaderNames.Add("Location");
+            Diagnostics.LoggedHeaderNames.Add("Strict-Transport-Security");
+            Diagnostics.LoggedHeaderNames.Add("X-Content-Type-Options");
+            Diagnostics.LoggedHeaderNames.Add("x-envoy-upstream-service-time");
+
+            Diagnostics.LoggedQueryParameters.Add("includeKeys");
+            Diagnostics.LoggedQueryParameters.Add("includeTextDetails");
+            Diagnostics.LoggedQueryParameters.Add("language");
+            Diagnostics.LoggedQueryParameters.Add("locale");
+            Diagnostics.LoggedQueryParameters.Add("pages");
+            Diagnostics.LoggedQueryParameters.Add("readingOrder");
+            Diagnostics.LoggedQueryParameters.Add("op");
         }
     }
 }

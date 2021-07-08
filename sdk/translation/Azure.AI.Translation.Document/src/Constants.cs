@@ -8,5 +8,7 @@ namespace Azure.AI.Translation.Document
         public const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
         public const string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
+
+        public const string OperationLocationHeader = "Operation-Location";
     }
 }
