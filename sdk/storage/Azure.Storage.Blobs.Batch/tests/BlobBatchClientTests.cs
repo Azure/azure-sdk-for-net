@@ -261,6 +261,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task Delete_Basic_DifferentOption()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+
+            using BlobBatch batch = client.CreateBatch();
+            Response[] responses = new Response[]
+            {
+                batch.DeleteBlob(blobs[0].Uri,DeleteSnapshotsOption.IncludeSnapshots),
+                batch.DeleteBlob(blobs[1].Uri,DeleteSnapshotsOption.OnlySnapshots),
+                batch.DeleteBlob(blobs[2].Uri)
+            };
+            Response response = await client.SubmitBatchAsync(batch);
+
+            scenario.AssertStatus(202, response);
+            scenario.AssertStatus(202, responses);
+            await scenario.AssertDeleted(blobs);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task Delete_Basic_AccountSas()
         {
