@@ -247,9 +247,9 @@ Check the ingestion status of a previously created [`DataFeed`](#data-feed).
 ```C# Snippet:GetDataFeedIngestionStatusesAsync
 string dataFeedId = "<dataFeedId>";
 
-var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-var endTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
-var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime)
+var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+var endsOn = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
+var options = new GetDataFeedIngestionStatusesOptions(startsOn, endsOn)
 {
     MaxPageSize = 5
 };
@@ -363,9 +363,9 @@ Look through the [alerts](#anomaly-alert) created by a given anomaly alert confi
 ```C# Snippet:GetAlertsAsync
 string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
 
-var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-var endTime = DateTimeOffset.UtcNow;
-var options = new GetAlertsOptions(startTime, endTime, AlertQueryTimeMode.AnomalyDetectedOn)
+var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+var endsOn = DateTimeOffset.UtcNow;
+var options = new GetAlertsOptions(startsOn, endsOn, AlertQueryTimeMode.AnomalyDetectedOn)
 {
     MaxPageSize = 5
 };

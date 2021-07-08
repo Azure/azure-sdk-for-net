@@ -534,14 +534,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="dataFeedId">The unique identifier of the <see cref="DataFeed"/>.</param>
         /// <param name="startsOn">The inclusive data back-fill time range.</param>
-        /// <param name="endTime">The exclusive data back-fill time range.</param>
+        /// <param name="endsOn">The exclusive data back-fill time range.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response> RefreshDataFeedIngestionAsync(string dataFeedId, DateTimeOffset startsOn, DateTimeOffset endTime, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RefreshDataFeedIngestionAsync(string dataFeedId, DateTimeOffset startsOn, DateTimeOffset endsOn, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
@@ -549,7 +549,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             scope.Start();
             try
             {
-                IngestionProgressResetOptions options = new IngestionProgressResetOptions(ClientCommon.NormalizeDateTimeOffset(startsOn), ClientCommon.NormalizeDateTimeOffset(endTime));
+                IngestionProgressResetOptions options = new IngestionProgressResetOptions(ClientCommon.NormalizeDateTimeOffset(startsOn), ClientCommon.NormalizeDateTimeOffset(endsOn));
 
                 return await _serviceRestClient.ResetDataFeedIngestionStatusAsync(dataFeedGuid, options, cancellationToken).ConfigureAwait(false);
             }
@@ -566,14 +566,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </summary>
         /// <param name="dataFeedId">The unique identifier of the <see cref="DataFeed"/>.</param>
         /// <param name="startsOn">The inclusive data back-fill time range.</param>
-        /// <param name="endTime">The exclusive data back-fill time range.</param>
+        /// <param name="endsOn">The exclusive data back-fill time range.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="dataFeedId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="dataFeedId"/> is empty or not a valid GUID.</exception>
-        public virtual Response RefreshDataFeedIngestion(string dataFeedId, DateTimeOffset startsOn, DateTimeOffset endTime, CancellationToken cancellationToken = default)
+        public virtual Response RefreshDataFeedIngestion(string dataFeedId, DateTimeOffset startsOn, DateTimeOffset endsOn, CancellationToken cancellationToken = default)
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
@@ -581,7 +581,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             scope.Start();
             try
             {
-                IngestionProgressResetOptions options = new IngestionProgressResetOptions(ClientCommon.NormalizeDateTimeOffset(startsOn), ClientCommon.NormalizeDateTimeOffset(endTime));
+                IngestionProgressResetOptions options = new IngestionProgressResetOptions(ClientCommon.NormalizeDateTimeOffset(startsOn), ClientCommon.NormalizeDateTimeOffset(endsOn));
 
                 return _serviceRestClient.ResetDataFeedIngestionStatus(dataFeedGuid, options, cancellationToken);
             }
