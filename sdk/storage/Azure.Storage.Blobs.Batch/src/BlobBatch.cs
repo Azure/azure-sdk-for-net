@@ -199,7 +199,7 @@ namespace Azure.Storage.Blobs.Specialized
                 blob: blobName.EscapePath(),
                 timeout: null,
                 leaseId: conditions?.LeaseId,
-                deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOptionType?)snapshotsOption,
+                deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (snapshotsOption == DeleteSnapshotsOption.IncludeSnapshots ? DeleteSnapshotsOptionType.Include : DeleteSnapshotsOptionType.Only),
                 ifModifiedSince: conditions?.IfModifiedSince,
                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                 ifMatch: conditions?.IfMatch?.ToString(),
