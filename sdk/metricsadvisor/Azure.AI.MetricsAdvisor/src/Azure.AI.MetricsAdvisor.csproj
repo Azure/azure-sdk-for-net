@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the Microsoft Azure Cognitive Services Metrics Advisor client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.MetricsAdvisor client library</AssemblyTitle>

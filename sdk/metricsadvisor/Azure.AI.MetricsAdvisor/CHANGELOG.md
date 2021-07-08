@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (2021-07-08)
+## 1.0.0 (2021-07-08)
 
 ### New Features
 - `DimensionKey` now implements the `IEnumerable<KeyValuePair<string, string>>` interface. Dimension columns can now be enumerated.
@@ -13,6 +13,8 @@
 - Added property `CredentialKind` to `DataSourceCredentialEntity`.
 - Added value `None` to `FeedbackQueryTimeMode` to indicate that no time mode is set.
 - Some properties can now be set to their default value if set to null during an Update operation. For example, `DataFeedIngestionSettings.IngestionStartOffset`, or `MetricWholeSeriesDetectionCondition.SmartDetectionCondition`.
+- Added new constructor to `AzureDataLakeStorageDataFeedSource` to be used with authentication types that are not `Basic`.
+- Added new constructor to `SqlServerDataFeedSource` to be used with the `SqlConnectionString` authentication type.
 
 ### Breaking Changes
 - Removed methods `AddDimensionColumn` and `RemoveDimensionColumn` from `DimensionKey`. In order to access elements, the new method `TryGetValue` must be used. Once the instance has been created, the columns can't be modified anymore.
@@ -80,6 +82,7 @@
 - The class `DatasourceCredential` (now called `DataSourceCredentialEntity`) is now abstract.
 - `AlertQueryTimeMode` and `FeedbackQueryTimeMode` are now regular enums.
 - The enum `AuthenticationType` present in some `DataFeedSource` subtypes is now an extensible enum.
+- Removed constructor `(string workspaceId, string query)` from the `LogAnalyticsDataFeedSource`.
 
 ## 1.0.0-beta.4 (2021-06-07)
 

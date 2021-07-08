@@ -17,7 +17,60 @@ namespace Azure.AI.MetricsAdvisor.Administration
         private string _accountKey;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureDataLakeStorageDataFeedSource"/> class.
+        /// Initializes a new instance of the <see cref="AzureDataLakeStorageDataFeedSource"/> class. This constructor does not
+        /// set an <see cref="AccountKey"/>, so you must assign an <see cref="AuthenticationType"/> to the <see cref="Authentication"/>
+        /// property. If you intend to use the default authentication type, <see cref="AuthenticationType.Basic"/>, see
+        /// <see cref="AzureDataLakeStorageDataFeedSource(string, string, string, string, string)"/>.
+        /// </summary>
+        /// <param name="accountName">The name of the Storage Account.</param>
+        /// <param name="fileSystemName">The name of the file system.</param>
+        /// <param name="directoryTemplate">The directory template.</param>
+        /// <param name="fileTemplate">
+        /// This is the file template of the Blob file. For example: X_%Y-%m-%d-%h-%M.json. The following parameters are supported:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>%Y</term>
+        /// <description>The year formatted as yyyy</description>
+        /// </item>
+        /// <item>
+        /// <term>%m</term>
+        /// <description>The month formatted as MM</description>
+        /// </item>
+        /// <item>
+        /// <term>%d</term>
+        /// <description>The day formatted as dd</description>
+        /// </item>
+        /// <item>
+        /// <term>%h</term>
+        /// <description>The hour formatted as HH</description>
+        /// </item>
+        /// <item>
+        /// <term>%M</term>
+        /// <description>The minute formatted as mm</description>
+        /// </item>
+        /// </list>
+        /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="accountName"/>, <paramref name="fileSystemName"/>, <paramref name="directoryTemplate"/>, or <paramref name="fileTemplate"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="accountName"/>, <paramref name="fileSystemName"/>, <paramref name="directoryTemplate"/>, or <paramref name="fileTemplate"/> is empty.</exception>
+        public AzureDataLakeStorageDataFeedSource(string accountName, string fileSystemName, string directoryTemplate, string fileTemplate)
+            : base(DataFeedSourceKind.AzureDataLakeStorage)
+        {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
+            Argument.AssertNotNullOrEmpty(directoryTemplate, nameof(directoryTemplate));
+            Argument.AssertNotNullOrEmpty(fileTemplate, nameof(fileTemplate));
+
+            AccountName = accountName;
+            FileSystemName = fileSystemName;
+            DirectoryTemplate = directoryTemplate;
+            FileTemplate = fileTemplate;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AzureDataLakeStorageDataFeedSource"/> class. This constructor
+        /// requires an <paramref name="accountKey"/> and is intended to be used with the default authentication type,
+        /// <see cref="AuthenticationType.Basic"/>. If you intend to use another type of authentication, see
+        /// <see cref="AzureDataLakeStorageDataFeedSource(string, string, string, string)"/>.
         /// </summary>
         /// <param name="accountName">The name of the Storage Account.</param>
         /// <param name="accountKey">The Storage Account key.</param>
@@ -48,22 +101,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// </item>
         /// </list>
         /// </param>
-        /// <exception cref="ArgumentNullException"><paramref name="accountName"/>, <paramref name="accountKey"/>, <paramref name="fileSystemName"/>, <paramref name="directoryTemplate"/>, or <paramref name="fileTemplate"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="accountName"/>, <paramref name="accountKey"/>, <paramref name="fileSystemName"/>, <paramref name="directoryTemplate"/>, or <paramref name="fileTemplate"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="accountName"/>, <paramref name="fileSystemName"/>, <paramref name="directoryTemplate"/>, <paramref name="fileTemplate"/>, or <paramref name="accountKey"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="accountName"/>, <paramref name="fileSystemName"/>, <paramref name="directoryTemplate"/>, <paramref name="fileTemplate"/>, or <paramref name="accountKey"/> is empty.</exception>
         public AzureDataLakeStorageDataFeedSource(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate)
-            : base(DataFeedSourceKind.AzureDataLakeStorage)
+            : this(accountName, fileSystemName, directoryTemplate, fileTemplate)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(accountKey, nameof(accountKey));
-            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
-            Argument.AssertNotNullOrEmpty(directoryTemplate, nameof(directoryTemplate));
-            Argument.AssertNotNullOrEmpty(fileTemplate, nameof(fileTemplate));
 
-            AccountName = accountName;
             AccountKey = accountKey;
-            FileSystemName = fileSystemName;
-            DirectoryTemplate = directoryTemplate;
-            FileTemplate = fileTemplate;
         }
 
         internal AzureDataLakeStorageDataFeedSource(AzureDataLakeStorageGen2Parameter parameter, AuthenticationTypeEnum? authentication, string credentialId)
