@@ -395,7 +395,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 Username = "username",
                 Password = "password",
-                CertificateKey = "certKey",
+                // https://github.com/Azure/azure-sdk-for-net/issues/17485
+                //CertificateKey = "certKey",
                 CertificatePassword = "certPass"
             };
 
@@ -403,17 +404,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var hookToUpdate = disposableHook.Hook as WebNotificationHook;
 
-            hookToUpdate.Username = "username";
-            hookToUpdate.Password = "password";
-            hookToUpdate.CertificateKey = "certKey";
-            hookToUpdate.CertificatePassword = "certPass";
+            hookToUpdate.Username = null;
+            hookToUpdate.Password = null;
+            hookToUpdate.CertificateKey = null;
+            hookToUpdate.CertificatePassword = null;
 
             var updatedHook = (await adminClient.UpdateHookAsync(hookToUpdate)).Value as WebNotificationHook;
 
+            var expectedPassword = (Recording.Mode == RecordedTestMode.Playback) ? "Sanitized" : string.Empty;
+            var expectedCertPassword = (Recording.Mode == RecordedTestMode.Playback) ? "Sanitized" : string.Empty;
+
             Assert.That(updatedHook.Username, Is.Empty);
-            Assert.That(updatedHook.Password, Is.Empty);
+            Assert.That(updatedHook.Password, Is.EqualTo(expectedPassword));
             Assert.That(updatedHook.CertificateKey, Is.Empty);
-            Assert.That(updatedHook.CertificatePassword, Is.Empty);
+            Assert.That(updatedHook.CertificatePassword, Is.EqualTo(expectedCertPassword));
         }
 
         [RecordedTest]
