@@ -27,33 +27,33 @@ namespace Azure.AI.MetricsAdvisor.Samples
             // Only incidents from time series that are part of one of the groups specified
             // will be returned.
 
-            var dimensionColumns = new Dictionary<string, string>()
+            var dimensions = new Dictionary<string, string>()
             {
                 { "city", "Bengaluru" }
             };
-            var groupKey1 = new DimensionKey(dimensionColumns);
+            var groupKey1 = new DimensionKey(dimensions);
 
-            dimensionColumns = new Dictionary<string, string>()
+            dimensions = new Dictionary<string, string>()
             {
                 { "city", "Hong Kong" },
                 { "category", "Industrial & Scientific" }
             };
-            var groupKey2 = new DimensionKey(dimensionColumns);
+            var groupKey2 = new DimensionKey(dimensions);
 
-            var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var endTime = DateTimeOffset.UtcNow;
-            var options = new GetIncidentsForDetectionConfigurationOptions(startTime, endTime) { MaxPageSize = 3 };
+            var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+            var endsOn = DateTimeOffset.UtcNow;
+            var options = new GetIncidentsForDetectionConfigurationOptions(startsOn, endsOn) { MaxPageSize = 3 };
 
-            options.DimensionsToFilter.Add(groupKey1);
-            options.DimensionsToFilter.Add(groupKey2);
+            options.DimensionKeys.Add(groupKey1);
+            options.DimensionKeys.Add(groupKey2);
 
             int incidentCount = 0;
 
             await foreach (AnomalyIncident incident in client.GetIncidentsForDetectionConfigurationAsync(detectionConfigurationId, options))
             {
                 Console.WriteLine($"Incident ID: {incident.Id}");
-                Console.WriteLine($"First associated anomaly occurred at: {incident.StartTime}");
-                Console.WriteLine($"Last associated anomaly occurred at: {incident.LastTime}");
+                Console.WriteLine($"First associated anomaly occurred at: {incident.StartedOn}");
+                Console.WriteLine($"Last associated anomaly occurred at: {incident.LastDetectedOn}");
                 Console.WriteLine($"Status: {incident.Status}");
                 Console.WriteLine($"Severity: {incident.Severity}");
                 Console.WriteLine($"Value of root node anomaly: {incident.ValueOfRootNode}");
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
                 Console.WriteLine("Series key of root node:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey)
+                foreach (KeyValuePair<string, string> keyValuePair in incident.RootSeriesKey)
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
@@ -103,8 +103,8 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($"Data feed ID: {incident.DataFeedId}");
                 Console.WriteLine($"Metric ID: {incident.MetricId}");
                 Console.WriteLine($"Detection configuration ID: {incident.DetectionConfigurationId}");
-                Console.WriteLine($"First associated anomaly occurred at: {incident.StartTime}");
-                Console.WriteLine($"Last associated anomaly occurred at: {incident.LastTime}");
+                Console.WriteLine($"First associated anomaly occurred at: {incident.StartedOn}");
+                Console.WriteLine($"Last associated anomaly occurred at: {incident.LastDetectedOn}");
                 Console.WriteLine($"Status: {incident.Status}");
                 Console.WriteLine($"Severity: {incident.Severity}");
                 Console.WriteLine($"Value of root node anomaly: {incident.ValueOfRootNode}");
@@ -116,7 +116,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
                 Console.WriteLine("Series key of root node:");
 
-                foreach (KeyValuePair<string, string> keyValuePair in incident.RootDimensionKey)
+                foreach (KeyValuePair<string, string> keyValuePair in incident.RootSeriesKey)
                 {
                     Console.WriteLine($"  Dimension '{keyValuePair.Key}': {keyValuePair.Value}");
                 }
