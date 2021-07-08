@@ -101,7 +101,7 @@ Example:
   ],
   "framework": [
     "net461",
-    "netcoreapp3.1",
+    "netcoreapp2.1",
     "net50"
   ],
   "additionalTestArguments": [
@@ -359,7 +359,7 @@ In the matrix job output that azure pipelines consumes, the format is a dictiona
     "operatingSystem": "ubuntu-18.04"
   },
   "netcoreapp21_windows2019": {
-    "framework": "netcoreapp3.1",
+    "framework": "netcoreapp2.1",
     "operatingSystem": "windows-2019"
   },
   "UseProjectRef_net461_windows2019": {
@@ -505,7 +505,7 @@ the below config would generate a 2x2x1x1x1 matrix (five-dimensional):
 
 ```
 "matrix": {
-  "framework": [ "net461", "netcoreapp3.1" ],
+  "framework": [ "net461", "netcoreapp2.1" ],
   "additionalTestArguments": [ "", "/p:SuperTest=true" ]
   "pool": [ "ubuntu-18.04" ],
   "container": [ "ubuntu-18.04" ],

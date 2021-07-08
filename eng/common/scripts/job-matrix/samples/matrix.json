@@ -8,7 +8,7 @@
       "windows": { "OSVmImage": "windows-2019", "Pool": "Azure Pipelines" },
       "macOS": { "OSVmImage": "macOS-10.15", "Pool": "Azure Pipelines" }
     },
-    "TestTargetFramework": [ "netcoreapp3.1", "net461", "net5.0" ]
+    "TestTargetFramework": [ "netcoreapp2.1", "net461", "net5.0" ]
   },
   "include": [
     {
@@ -22,7 +22,7 @@
   "exclude": [
     {
       "OSVmImage": "MMS2019",
-      "framework": "netcoreapp3.1"
+      "framework": "netcoreapp2.1"
     }
   ]
 }

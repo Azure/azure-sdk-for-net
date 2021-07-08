@@ -7,7 +7,7 @@ BeforeAll {
 {
     "matrix": {
         "operatingSystem": [ "windows-2019", "ubuntu-18.04", "macOS-10.15" ],
-        "framework": [ "net461", "netcoreapp3.1" ],
+        "framework": [ "net461", "netcoreapp2.1" ],
         "additionalArguments": [ "", "mode=test" ]
     }
 }
