@@ -14,12 +14,16 @@ namespace Azure.IoT.ModelsRepository
     {
         [JsonPropertyName("commitId")]
         public string CommitId { get; set; }
+
         [JsonPropertyName("publishDateUtc")]
         public string PublishDateUtc { get; set; }
+
         [JsonPropertyName("sourceRepo")]
         public string SourceRepo { get; set; }
+
         [JsonPropertyName("totalModelCount")]
         public int TotalModelCount { get; set; }
+
         [JsonPropertyName("features")]
         public RepositoryFeatures Features { get; set; }
 
@@ -27,9 +31,11 @@ namespace Azure.IoT.ModelsRepository
         {
             [JsonPropertyName("expanded")]
             public bool Expanded { get; set; }
+
             [JsonPropertyName("index")]
             public bool Index { get; set; }
         }
+
         public ModelsRepositoryMetadata(RepositoryFeatures features)
         {
             Features = features;
