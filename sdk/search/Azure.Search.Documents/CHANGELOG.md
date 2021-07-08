@@ -1,7 +1,10 @@
 # Release History
 
-## 11.4.0-beta.1 (Unreleased)
+## 11.4.0-beta.1 (2021-07-06)
 
+### Features Added
+- Support for additional/enhanced skills - [EntityLinkingSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-linking-v3), [EntityRecognitionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-recognition-v3), [PiiDetectionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-pii-detection), [SentimentSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-sentiment-v3)
+- Use managed identities in Azure Active Directory with [SearchIndexerDataIdentity](https://docs.microsoft.com/azure/search/search-howto-managed-identities-data-sources)
 
 ## 11.3.0 (2021-06-08)
 
