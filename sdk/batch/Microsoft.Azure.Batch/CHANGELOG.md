@@ -117,7 +117,7 @@ This version of the Batch .NET client library targets version 2018-08-01.7.0 of 
 - **[Breaking]** The default caching type for `DataDisk` and `OSDisk` is now `ReadWrite` instead of `None`.
 
 ### Bug fixes
-- Fixed bug when using `BatchSharedKeyCredentials` where some operations would fail with an `Unauthenticated` error in `netcoreapp2.1` even though the right shared key was used.
+- Fixed bug when using `BatchSharedKeyCredentials` where some operations would fail with an `Unauthenticated` error in `netcoreapp3.1` even though the right shared key was used.
 
 ### REST API version
 This version of the Batch .NET client library targets version 2018-08-01.7.0 of the Azure Batch REST API.

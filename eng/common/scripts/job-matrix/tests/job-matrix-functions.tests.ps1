@@ -16,7 +16,7 @@ BeforeAll {
         ],
         "framework": [
           "net461",
-          "netcoreapp2.1"
+          "netcoreapp3.1"
         ],
         "additionalArguments": [
             "",
@@ -26,7 +26,7 @@ BeforeAll {
     "include": [
         {
             "operatingSystem": "windows-2019",
-            "framework": ["net461", "netcoreapp2.1", "net50"],
+            "framework": ["net461", "netcoreapp3.1", "net50"],
             "additionalArguments": "--enableWindowsFoo"
         }
     ],
@@ -37,7 +37,7 @@ BeforeAll {
         },
         {
             "operatingSystem": "macOS-10.15",
-            "framework": "netcoreapp2.1"
+            "framework": "netcoreapp3.1"
         },
         {
             "operatingSystem": ["macOS-10.15", "ubuntu-18.04"],
@@ -279,7 +279,7 @@ Describe "Platform Matrix Generation" -Tag "generate" {
         ],
         "framework": [
           "net461",
-          "netcoreapp2.1"
+          "netcoreapp3.1"
         ],
         "additionalArguments": [
             "",
@@ -336,18 +336,18 @@ Describe "Platform Matrix Generation" -Tag "generate" {
 
         $element = GetNdMatrixElement @(1, 1, 1) $matrix $dimensions
         $element.parameters.operatingSystem | Should -Be "ubuntu-18.04"
-        $element.parameters.framework | Should -Be "netcoreapp2.1"
+        $element.parameters.framework | Should -Be "netcoreapp3.1"
         $element.parameters.additionalArguments | Should -Be "--enableFoo"
 
         $element = GetNdMatrixElement @(2, 1, 1) $matrix $dimensions
         $element.parameters.operatingSystem | Should -Be "macOS-10.15"
-        $element.parameters.framework | Should -Be "netcoreapp2.1"
+        $element.parameters.framework | Should -Be "netcoreapp3.1"
         $element.parameters.additionalArguments | Should -Be "--enableFoo"
     }
 
     It "Should initialize a sparse matrix from an N-dimensional matrix" -TestCases @(
         @{ i = 0; name = "windows2019_net461"; operatingSystem = "windows-2019"; framework = "net461"; additionalArguments = ""; }
-        @{ i = 1; name = "ubuntu1804_netcoreapp21_withfoo"; operatingSystem = "ubuntu-18.04"; framework = "netcoreapp2.1"; additionalArguments = "--enableFoo"; }
+        @{ i = 1; name = "ubuntu1804_netcoreapp21_withfoo"; operatingSystem = "ubuntu-18.04"; framework = "netcoreapp3.1"; additionalArguments = "--enableFoo"; }
         @{ i = 2; name = "macOS1015_net461"; operatingSystem = "macOS-10.15"; framework = "net461"; additionalArguments = ""; }
     ) {
         $sparseMatrix = GenerateSparseMatrix $generateConfig.matrixParameters $generateConfig.displayNamesLookup
@@ -427,12 +427,12 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
 
         $matrix[0].name | Should -Be "windows2019_netcoreapp21"
         $matrix[0].parameters.operatingSystem | Should -Be "windows-2019"
-        $matrix[0].parameters.framework | Should -Be "netcoreapp2.1"
+        $matrix[0].parameters.framework | Should -Be "netcoreapp3.1"
         $matrix[0].parameters.additionalArguments | Should -Be ""
 
         $matrix[1].name | Should -Be "windows2019_netcoreapp21_withfoo"
         $matrix[1].parameters.operatingSystem | Should -Be "windows-2019"
-        $matrix[1].parameters.framework | Should -Be "netcoreapp2.1"
+        $matrix[1].parameters.framework | Should -Be "netcoreapp3.1"
         $matrix[1].parameters.additionalArguments | Should -Be "--enableFoo"
 
         $matrix[2].name | Should -Be "ubuntu1804_net461"
@@ -583,7 +583,7 @@ Describe "Platform Matrix Display Names" -Tag "displaynames" {
         "operatingSystem": "ubuntu-18.04",
         "framework": [
           "net461",
-          "netcoreapp2.1"
+          "netcoreapp3.1"
         ],
         "TestNullField": null,
         "TestObjectField": {
@@ -600,7 +600,7 @@ Describe "Platform Matrix Display Names" -Tag "displaynames" {
 
     It "Should enforce valid display name format" {
         $generateconfig.displayNamesLookup["net461"] = '123.Some.456.Invalid_format-name$(foo)'
-        $generateconfig.displayNamesLookup["netcoreapp2.1"] = (New-Object string[] 150) -join "a"
+        $generateconfig.displayNamesLookup["netcoreapp3.1"] = (New-Object string[] 150) -join "a"
         $dimensions = GetMatrixDimensions $generateConfig.matrixParameters
         $matrix = GenerateFullMatrix $generateconfig.matrixParameters $generateconfig.displayNamesLookup
 

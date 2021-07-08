@@ -22,7 +22,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
 
         public static bool ShouldValidateBodies()
         {
-#if NETCOREAPP2_1
+#if NETCOREAPP3_1
             return true;
 #else
             return false;
