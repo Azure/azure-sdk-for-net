@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.Text.Json;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// </list>
     /// </summary>
     [CodeGenModel("DataSourceCredential")]
-    public partial class DataSourceCredentialEntity
+    public abstract partial class DataSourceCredentialEntity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DataSourceCredentialEntity"/> class.
@@ -29,6 +29,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             Name = name;
         }
+
+        /// <summary>
+        /// The credential kind.
+        /// </summary>
+        [CodeGenMember("DataSourceCredentialType")]
+        public DataSourceCredentialKind CredentialKind { get; internal set; }
 
         /// <summary>
         /// The unique identifier of this <see cref="DataSourceCredentialEntity"/>. Set by the service.
@@ -76,13 +82,68 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 {
                     Parameters = new() { ConnectionString = c.ConnectionString }
                 },
-                _ => throw new InvalidOperationException("Invalid data source credential type")
+                _ => new DataSourceCredentialPatch()
             };
 
+            patch.DataSourceCredentialType = CredentialKind;
             patch.DataSourceCredentialName = Name;
             patch.DataSourceCredentialDescription = Description;
 
             return patch;
+        }
+
+        internal static DataSourceCredentialEntity DeserializeDataSourceCredentialEntity(JsonElement element)
+        {
+            if (element.TryGetProperty("dataSourceCredentialType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureSQLConnectionString":
+                        return SqlConnectionStringCredentialEntity.DeserializeSqlConnectionStringCredentialEntity(element);
+                    case "DataLakeGen2SharedKey":
+                        return DataLakeSharedKeyCredentialEntity.DeserializeDataLakeSharedKeyCredentialEntity(element);
+                    case "ServicePrincipal":
+                        return ServicePrincipalCredentialEntity.DeserializeServicePrincipalCredentialEntity(element);
+                    case "ServicePrincipalInKV":
+                        return ServicePrincipalInKeyVaultCredentialEntity.DeserializeServicePrincipalInKeyVaultCredentialEntity(element);
+                }
+            }
+            DataSourceCredentialKind dataSourceCredentialType = default;
+            Optional<string> dataSourceCredentialId = default;
+            string dataSourceCredentialName = default;
+            Optional<string> dataSourceCredentialDescription = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("dataSourceCredentialType"))
+                {
+                    dataSourceCredentialType = new DataSourceCredentialKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dataSourceCredentialId"))
+                {
+                    dataSourceCredentialId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataSourceCredentialName"))
+                {
+                    dataSourceCredentialName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataSourceCredentialDescription"))
+                {
+                    dataSourceCredentialDescription = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new UnknownCredentialEntity(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value);
+        }
+
+        private class UnknownCredentialEntity : DataSourceCredentialEntity
+        {
+            public UnknownCredentialEntity(DataSourceCredentialKind dataSourceCredentialType, string id, string name, string description)
+                : base(dataSourceCredentialType, id, name, description)
+            {
+            }
         }
     }
 }

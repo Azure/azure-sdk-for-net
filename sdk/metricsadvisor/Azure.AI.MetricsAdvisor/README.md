@@ -16,7 +16,7 @@ Azure Cognitive Services Metrics Advisor is a cloud service that uses machine le
 Install the Azure Metrics Advisor client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0
+dotnet add package Azure.AI.MetricsAdvisor --version 1.0.0-beta.4
 ```
 
 ### Prerequisites
@@ -219,10 +219,10 @@ DataFeed createdDataFeed = response.Value;
 
 Console.WriteLine($"Data feed ID: {createdDataFeed.Id}");
 Console.WriteLine($"Data feed status: {createdDataFeed.Status.Value}");
-Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedTime.Value}");
+Console.WriteLine($"Data feed created time: {createdDataFeed.CreatedOn.Value}");
 
 Console.WriteLine($"Data feed administrators:");
-foreach (string admin in createdDataFeed.AdministratorEmails)
+foreach (string admin in createdDataFeed.Administrators)
 {
     Console.WriteLine($" - {admin}");
 }
@@ -233,7 +233,7 @@ foreach (DataFeedMetric metric in createdDataFeed.Schema.MetricColumns)
     Console.WriteLine($" - {metric.Name}: {metric.Id}");
 }
 
-Console.WriteLine($"Dimension columns:");
+Console.WriteLine($"Dimensions:");
 foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
 {
     Console.WriteLine($" - {dimension.Name}");
@@ -247,9 +247,9 @@ Check the ingestion status of a previously created [`DataFeed`](#data-feed).
 ```C# Snippet:GetDataFeedIngestionStatusesAsync
 string dataFeedId = "<dataFeedId>";
 
-var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-var endTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
-var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime)
+var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+var endsOn = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
+var options = new GetDataFeedIngestionStatusesOptions(startsOn, endsOn)
 {
     MaxPageSize = 5
 };
@@ -300,7 +300,7 @@ detectCondition.HardThresholdCondition = new HardThresholdCondition(AnomalyDetec
 var smartSuppress = new SuppressCondition(4, 50);
 detectCondition.SmartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartSuppress);
 
-detectCondition.CrossConditionsOperator = DetectionConditionsOperator.Or;
+detectCondition.ConditionOperator = DetectionConditionOperator.Or;
 
 Response<AnomalyDetectionConfiguration> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
 
@@ -344,7 +344,7 @@ AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
 
 alertConfiguration.IdsOfHooksToAlert.Add(hookId);
 
-var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+var scope = MetricAnomalyAlertScope.CreateScopeForWholeSeries();
 var metricAlertConfiguration = new MetricAlertConfiguration(anomalyDetectionConfigurationId, scope);
 
 alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
@@ -363,9 +363,9 @@ Look through the [alerts](#anomaly-alert) created by a given anomaly alert confi
 ```C# Snippet:GetAlertsAsync
 string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
 
-var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-var endTime = DateTimeOffset.UtcNow;
-var options = new GetAlertsOptions(startTime, endTime, AlertQueryTimeMode.AnomalyTime)
+var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+var endsOn = DateTimeOffset.UtcNow;
+var options = new GetAlertsOptions(startsOn, endsOn, AlertQueryTimeMode.AnomalyDetectedOn)
 {
     MaxPageSize = 5
 };
@@ -374,7 +374,7 @@ int alertCount = 0;
 
 await foreach (AnomalyAlert alert in client.GetAlertsAsync(anomalyAlertConfigurationId, options))
 {
-    Console.WriteLine($"Alert created at: {alert.CreatedTime}");
+    Console.WriteLine($"Alert created at: {alert.CreatedOn}");
     Console.WriteLine($"Alert at timestamp: {alert.Timestamp}");
     Console.WriteLine($"Id: {alert.Id}");
     Console.WriteLine();
@@ -410,14 +410,14 @@ await foreach (DataPointAnomaly anomaly in client.GetAnomaliesForAlertAsync(aler
     }
 
     Console.WriteLine($"Anomaly at timestamp: {anomaly.Timestamp}");
-    Console.WriteLine($"Anomaly detected at: {anomaly.CreatedTime}");
+    Console.WriteLine($"Anomaly detected at: {anomaly.CreatedOn}");
     Console.WriteLine($"Status: {anomaly.Status}");
     Console.WriteLine($"Severity: {anomaly.Severity}");
     Console.WriteLine("Series key:");
 
-    foreach (KeyValuePair<string, string> dimensionColumn in anomaly.SeriesKey)
+    foreach (KeyValuePair<string, string> dimension in anomaly.SeriesKey)
     {
-        Console.WriteLine($"  Dimension '{dimensionColumn.Key}': {dimensionColumn.Value}");
+        Console.WriteLine($"  Dimension '{dimension.Key}': {dimension.Value}");
     }
 
     Console.WriteLine();

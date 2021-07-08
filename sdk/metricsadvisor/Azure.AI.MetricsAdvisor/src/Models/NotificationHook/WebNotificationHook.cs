@@ -9,8 +9,8 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
-    /// A web hook is the entry point for all the information available from the Metrics Advisor service, and calls a user-provided API when an alert is triggered.
-    /// All alerts can be sent through a web hook.
+    /// A webhook is the entry point for all the information available from the Metrics Advisor service, and calls a user-provided API when an alert is triggered.
+    /// All alerts can be sent through a webhook.
     /// </summary>
     [CodeGenModel("WebhookHookInfo")]
     [CodeGenSuppress(nameof(WebNotificationHook), typeof(string), typeof(WebhookHookParameter))]
@@ -26,14 +26,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             Endpoint = endpoint;
-            HookType = HookType.Webhook;
+            HookKind = NotificationHookKind.Webhook;
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        internal WebNotificationHook(HookType hookType, string id, string name, string description, string externalLink, IReadOnlyList<string> administrators, WebhookHookParameter hookParameter)
+        internal WebNotificationHook(NotificationHookKind hookType, string id, string name, string description, string externalLink, IList<string> administrators, WebhookHookParameter hookParameter)
             : base(hookType, id, name, description, externalLink, administrators)
         {
-            HookType = hookType;
+            HookKind = hookType;
             Endpoint = new Uri(hookParameter.Endpoint);
             Username = hookParameter.Username;
             Password = hookParameter.Password;

@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             IdsOfHooksToAlert = new ChangeTrackingList<string>();
             MetricAlertConfigurations = new ChangeTrackingList<MetricAlertConfiguration>();
-            SplitAlertByDimensions = new ChangeTrackingList<string>();
+            DimensionsToSplitAlert = new ChangeTrackingList<string>();
         }
 
         /// <summary>
@@ -55,16 +55,21 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <see cref="AnomalyAlertConfiguration"/> instance. This property must be set if more than one
         /// configuration is defined in <see cref="MetricAlertConfigurations"/>.
         /// </summary>
-        [CodeGenMember("CrossMetricsOperator")]
-        public DetectionConditionOperator? ConditionOperator { get; set; }
+        public MetricAlertConfigurationsOperator? CrossMetricsOperator { get; set; }
 
         /// <summary>
         /// A description of the <see cref="AnomalyAlertConfiguration"/>.
         /// </summary>
         public string Description { get; set; }
 
-        // TODO: expose it as part of 1.0.0-beta.4
-        internal IList<string> SplitAlertByDimensions { get; }
+        /// <summary>
+        /// By default, an incident only triggers a single alert, regardless of how many anomalies
+        /// it contains. This property allows this alert to be split into multiple ones. Each element
+        /// in this list must hold a dimension name, and it creates a new alert from the original one
+        /// if the corresponding dimension is part of current incident.
+        /// </summary>
+        [CodeGenMember("SplitAlertByDimensions")]
+        public IList<string> DimensionsToSplitAlert { get; }
 
         /// <summary>
         /// Create a patch model from the current <see cref="AnomalyAlertConfiguration"/>
@@ -74,11 +79,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             return new AnomalyAlertingConfigurationPatch()
             {
-                CrossMetricsOperator = ConditionOperator,
+                CrossMetricsOperator = CrossMetricsOperator,
                 Description = Description,
                 Name = Name,
                 HookIds = IdsOfHooksToAlert.Select(h => new Guid(h)).ToList(),
-                MetricAlertingConfigurations = MetricAlertConfigurations
+                MetricAlertingConfigurations = MetricAlertConfigurations,
+                SplitAlertByDimensions = DimensionsToSplitAlert
             };
         }
     }

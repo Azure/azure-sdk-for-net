@@ -12,35 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AzureDataLakeStorageGen2ParameterPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AccountName))
-            {
-                writer.WritePropertyName("accountName");
-                writer.WriteStringValue(AccountName);
-            }
-            if (Optional.IsDefined(AccountKey))
-            {
-                writer.WritePropertyName("accountKey");
-                writer.WriteStringValue(AccountKey);
-            }
-            if (Optional.IsDefined(FileSystemName))
-            {
-                writer.WritePropertyName("fileSystemName");
-                writer.WriteStringValue(FileSystemName);
-            }
-            if (Optional.IsDefined(DirectoryTemplate))
-            {
-                writer.WritePropertyName("directoryTemplate");
-                writer.WriteStringValue(DirectoryTemplate);
-            }
-            if (Optional.IsDefined(FileTemplate))
-            {
-                writer.WritePropertyName("fileTemplate");
-                writer.WriteStringValue(FileTemplate);
-            }
-            writer.WriteEndObject();
-        }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -40,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(TimeMode))
             {
                 writer.WritePropertyName("timeMode");
-                writer.WriteStringValue(TimeMode.Value.ToString());
+                writer.WriteStringValue(TimeMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Argument.AssertNotNullOrEmpty(secretNameForClientId, nameof(secretNameForClientId));
             Argument.AssertNotNullOrEmpty(secretNameForClientSecret, nameof(secretNameForClientSecret));
 
-            DataSourceCredentialType = DataSourceCredentialType.ServicePrincipalInKV;
+            CredentialKind = DataSourceCredentialKind.ServicePrincipalInKeyVault;
             Endpoint = endpoint;
             KeyVaultClientId = keyVaultClientId;
             KeyVaultClientSecret = keyVaultClientSecret;
@@ -48,10 +48,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
             SecretNameForClientSecret = secretNameForClientSecret;
         }
 
-        internal ServicePrincipalInKeyVaultCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalInKVParam parameters)
+        internal ServicePrincipalInKeyVaultCredentialEntity(DataSourceCredentialKind dataSourceCredentialType, string id, string name, string description, ServicePrincipalInKVParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
-            DataSourceCredentialType = dataSourceCredentialType;
+            CredentialKind = dataSourceCredentialType;
             Endpoint = new Uri(parameters.KeyVaultEndpoint);
             KeyVaultClientId = parameters.KeyVaultClientId;
             KeyVaultClientSecret = parameters.KeyVaultClientSecret;
