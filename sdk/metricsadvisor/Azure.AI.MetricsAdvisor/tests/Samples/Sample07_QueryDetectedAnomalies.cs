@@ -24,9 +24,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string detectionConfigurationId = DetectionConfigurationId;
 
-            var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var endTime = DateTimeOffset.UtcNow;
-            var options = new GetAnomaliesForDetectionConfigurationOptions(startTime, endTime)
+            var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+            var endsOn = DateTimeOffset.UtcNow;
+            var options = new GetAnomaliesForDetectionConfigurationOptions(startsOn, endsOn)
             {
                 MaxPageSize = 3
             };

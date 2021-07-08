@@ -40,9 +40,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
             };
             var groupKey2 = new DimensionKey(dimensions);
 
-            var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var endTime = DateTimeOffset.UtcNow;
-            var options = new GetIncidentsForDetectionConfigurationOptions(startTime, endTime) { MaxPageSize = 3 };
+            var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+            var endsOn = DateTimeOffset.UtcNow;
+            var options = new GetIncidentsForDetectionConfigurationOptions(startsOn, endsOn) { MaxPageSize = 3 };
 
             options.DimensionKeys.Add(groupKey1);
             options.DimensionKeys.Add(groupKey2);

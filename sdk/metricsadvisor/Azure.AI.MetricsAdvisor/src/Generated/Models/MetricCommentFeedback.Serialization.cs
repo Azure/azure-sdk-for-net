@@ -17,24 +17,24 @@ namespace Azure.AI.MetricsAdvisor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartsOn))
             {
-                if (StartTime != null)
+                if (StartsOn != null)
                 {
                     writer.WritePropertyName("startTime");
-                    writer.WriteStringValue(StartTime.Value, "O");
+                    writer.WriteStringValue(StartsOn.Value, "O");
                 }
                 else
                 {
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndsOn))
             {
-                if (EndTime != null)
+                if (EndsOn != null)
                 {
                     writer.WritePropertyName("endTime");
-                    writer.WriteStringValue(EndTime.Value, "O");
+                    writer.WriteStringValue(EndsOn.Value, "O");
                 }
                 else
                 {

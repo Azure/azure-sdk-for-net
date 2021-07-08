@@ -18,9 +18,9 @@ namespace Azure.AI.MetricsAdvisor
         {
             writer.WriteStartObject();
             writer.WritePropertyName("startTime");
-            writer.WriteStringValue(StartTime, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("endTime");
-            writer.WriteStringValue(EndTime, "O");
+            writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("value");
             writer.WriteObjectValue(ValueInternal);
             if (Optional.IsDefined(DetectionConfigurationId))

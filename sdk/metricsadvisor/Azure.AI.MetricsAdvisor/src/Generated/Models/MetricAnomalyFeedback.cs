@@ -28,8 +28,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="detectionConfigurationSnapshot"> . </param>
         internal MetricAnomalyFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, AnomalyFeedbackValue valueInternal, string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfigurationSnapshot) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartsOn = startTime;
+            EndsOn = endTime;
             ValueInternal = valueInternal;
             DetectionConfigurationId = detectionConfigurationId;
             DetectionConfigurationSnapshot = detectionConfigurationSnapshot;

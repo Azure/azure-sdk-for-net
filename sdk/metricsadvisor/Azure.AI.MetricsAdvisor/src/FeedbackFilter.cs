@@ -52,18 +52,18 @@ namespace Azure.AI.MetricsAdvisor
         /// in UTC, will be returned. In order to filter by time, you also need to set the property
         /// <see cref="TimeMode"/>.
         /// </summary>
-        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary>
         /// Filters the result under the chosen <see cref="TimeMode"/>. Only results up to this point in time,
         /// in UTC, will be returned. In order to filter by time, you also need to set the property
         /// <see cref="TimeMode"/>.
         /// </summary>
-        public DateTimeOffset? EndTime { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary>
-        /// Specifies to which time property of a <see cref="MetricFeedback"/> the filters <see cref="StartTime"/>
-        /// and <see cref="EndTime"/> will be applied.
+        /// Specifies to which time property of a <see cref="MetricFeedback"/> the filters <see cref="StartsOn"/>
+        /// and <see cref="EndsOn"/> will be applied.
         /// </summary>
         public FeedbackQueryTimeMode TimeMode { get; set; }
 

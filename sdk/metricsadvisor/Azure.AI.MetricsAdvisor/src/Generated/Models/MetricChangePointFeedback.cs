@@ -26,8 +26,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="valueInternal"> . </param>
         internal MetricChangePointFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointFeedbackValue valueInternal) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartsOn = startTime;
+            EndsOn = endTime;
             ValueInternal = valueInternal;
             FeedbackKind = feedbackKind;
         }

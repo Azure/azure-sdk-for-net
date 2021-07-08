@@ -28,9 +28,9 @@ namespace Azure.AI.MetricsAdvisor.Samples
             string anomalyAlertConfigurationId = AlertConfigurationId;
 #endif
 
-            var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var endTime = DateTimeOffset.UtcNow;
-            var options = new GetAlertsOptions(startTime, endTime, AlertQueryTimeMode.AnomalyDetectedOn)
+            var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+            var endsOn = DateTimeOffset.UtcNow;
+            var options = new GetAlertsOptions(startsOn, endsOn, AlertQueryTimeMode.AnomalyDetectedOn)
             {
                 MaxPageSize = 5
             };

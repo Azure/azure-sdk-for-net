@@ -356,7 +356,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             IEnumerable<IDictionary<string, string>> series = options.SeriesKeys.Select(key => key.Dimension);
-            MetricDataQueryOptions queryOptions = new MetricDataQueryOptions(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), series);
+            MetricDataQueryOptions queryOptions = new MetricDataQueryOptions(ClientCommon.NormalizeDateTimeOffset(options.StartsOn), ClientCommon.NormalizeDateTimeOffset(options.EndsOn), series);
 
             async Task<Page<MetricSeriesData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -394,7 +394,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             IEnumerable<IDictionary<string, string>> series = options.SeriesKeys.Select(key => key.Dimension);
-            MetricDataQueryOptions queryOptions = new MetricDataQueryOptions(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), series);
+            MetricDataQueryOptions queryOptions = new MetricDataQueryOptions(ClientCommon.NormalizeDateTimeOffset(options.StartsOn), ClientCommon.NormalizeDateTimeOffset(options.EndsOn), series);
 
             Page<MetricSeriesData> FirstPageFunc(int? pageSizeHint)
             {
@@ -428,7 +428,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(options, nameof(options));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
-            EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime));
+            EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartsOn), ClientCommon.NormalizeDateTimeOffset(options.EndsOn));
             int? skip = options.Skip;
             int? maxPageSize = options.MaxPageSize;
 
@@ -481,7 +481,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(options, nameof(options));
 
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
-            EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime));
+            EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartsOn), ClientCommon.NormalizeDateTimeOffset(options.EndsOn));
             int? skip = options.Skip;
             int? maxPageSize = options.MaxPageSize;
 
@@ -549,9 +549,9 @@ namespace Azure.AI.MetricsAdvisor
 
             if (filter != null)
             {
-                queryOptions.EndTime = filter.EndTime;
+                queryOptions.EndTime = filter.EndsOn;
                 queryOptions.FeedbackType = filter.FeedbackKind;
-                queryOptions.StartTime = filter.StartTime;
+                queryOptions.StartTime = filter.StartsOn;
                 queryOptions.TimeMode = filter.TimeMode;
             }
 
@@ -618,9 +618,9 @@ namespace Azure.AI.MetricsAdvisor
 
             if (filter != null)
             {
-                queryOptions.EndTime = filter.EndTime;
+                queryOptions.EndTime = filter.EndsOn;
                 queryOptions.FeedbackType = filter.FeedbackKind;
-                queryOptions.StartTime = filter.StartTime;
+                queryOptions.StartTime = filter.StartsOn;
                 queryOptions.TimeMode = filter.TimeMode;
             }
 
@@ -818,7 +818,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(options, nameof(options));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
-            DetectionAnomalyResultQuery queryOptions = new DetectionAnomalyResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime))
+            DetectionAnomalyResultQuery queryOptions = new DetectionAnomalyResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartsOn), ClientCommon.NormalizeDateTimeOffset(options.EndsOn))
             {
                 Filter = options.Filter?.GetDetectionAnomalyFilterCondition()
             };
@@ -876,7 +876,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(options, nameof(options));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
-            DetectionAnomalyResultQuery queryOptions = new DetectionAnomalyResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime))
+            DetectionAnomalyResultQuery queryOptions = new DetectionAnomalyResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartsOn), ClientCommon.NormalizeDateTimeOffset(options.EndsOn))
             {
                 Filter = options.Filter?.GetDetectionAnomalyFilterCondition()
             };
@@ -934,7 +934,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(options, nameof(options));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
-            DetectionIncidentResultQuery queryOptions = new DetectionIncidentResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime))
+            DetectionIncidentResultQuery queryOptions = new DetectionIncidentResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartsOn), ClientCommon.NormalizeDateTimeOffset(options.EndsOn))
             {
                 Filter = options.GetDetectionIncidentFilterCondition()
             };
@@ -993,7 +993,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(options, nameof(options));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
-            DetectionIncidentResultQuery queryOptions = new DetectionIncidentResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime))
+            DetectionIncidentResultQuery queryOptions = new DetectionIncidentResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartsOn), ClientCommon.NormalizeDateTimeOffset(options.EndsOn))
             {
                 Filter = options.GetDetectionIncidentFilterCondition()
             };
@@ -1153,7 +1153,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(options, nameof(options));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
-            AnomalyDimensionQuery queryOptions = new AnomalyDimensionQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), dimensionName)
+            AnomalyDimensionQuery queryOptions = new AnomalyDimensionQuery(ClientCommon.NormalizeDateTimeOffset(options.StartsOn), ClientCommon.NormalizeDateTimeOffset(options.EndsOn), dimensionName)
             {
                 DimensionFilter = options.SeriesGroupKey?.Clone()
             };
@@ -1214,7 +1214,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(options, nameof(options));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
-            AnomalyDimensionQuery queryOptions = new AnomalyDimensionQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), dimensionName)
+            AnomalyDimensionQuery queryOptions = new AnomalyDimensionQuery(ClientCommon.NormalizeDateTimeOffset(options.StartsOn), ClientCommon.NormalizeDateTimeOffset(options.EndsOn), dimensionName)
             {
                 DimensionFilter = options.SeriesGroupKey?.Clone()
             };
@@ -1267,19 +1267,19 @@ namespace Azure.AI.MetricsAdvisor
         /// anomalies detected in one of these series will be returned. For every element, all possible dimensions must
         /// be set.
         /// </param>
-        /// <param name="startTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
-        /// <param name="endTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
+        /// <param name="startsOn">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
+        /// <param name="endsOn">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="MetricEnrichedSeriesData"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="seriesKeys"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual AsyncPageable<MetricEnrichedSeriesData> GetMetricEnrichedSeriesDataAsync(string detectionConfigurationId, IEnumerable<DimensionKey> seriesKeys, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MetricEnrichedSeriesData> GetMetricEnrichedSeriesDataAsync(string detectionConfigurationId, IEnumerable<DimensionKey> seriesKeys, DateTimeOffset startsOn, DateTimeOffset endsOn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(seriesKeys, nameof(seriesKeys));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             IEnumerable<SeriesIdentity> seriesIdentities = seriesKeys.Select(key => key?.ConvertToSeriesIdentity());
-            DetectionSeriesQuery queryOptions = new DetectionSeriesQuery(ClientCommon.NormalizeDateTimeOffset(startTime), ClientCommon.NormalizeDateTimeOffset(endTime), seriesIdentities);
+            DetectionSeriesQuery queryOptions = new DetectionSeriesQuery(ClientCommon.NormalizeDateTimeOffset(startsOn), ClientCommon.NormalizeDateTimeOffset(endsOn), seriesIdentities);
 
             async Task<Page<MetricEnrichedSeriesData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1310,19 +1310,19 @@ namespace Azure.AI.MetricsAdvisor
         /// anomalies detected in one of these series will be returned. For every element, all possible dimensions must
         /// be set.
         /// </param>
-        /// <param name="startTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
-        /// <param name="endTime">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
+        /// <param name="startsOn">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
+        /// <param name="endsOn">Filters the result. Only data points after this point in time, in UTC, will be returned.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="Pageable{T}"/> containing the collection of <see cref="MetricEnrichedSeriesData"/>s.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="detectionConfigurationId"/> or <paramref name="seriesKeys"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="detectionConfigurationId"/> is empty or not a valid GUID.</exception>
-        public virtual Pageable<MetricEnrichedSeriesData> GetMetricEnrichedSeriesData(string detectionConfigurationId, IEnumerable<DimensionKey> seriesKeys, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default)
+        public virtual Pageable<MetricEnrichedSeriesData> GetMetricEnrichedSeriesData(string detectionConfigurationId, IEnumerable<DimensionKey> seriesKeys, DateTimeOffset startsOn, DateTimeOffset endsOn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(seriesKeys, nameof(seriesKeys));
 
             Guid detectionConfigurationGuid = ClientCommon.ValidateGuid(detectionConfigurationId, nameof(detectionConfigurationId));
             IEnumerable<SeriesIdentity> seriesIdentities = seriesKeys.Select(key => key?.ConvertToSeriesIdentity());
-            DetectionSeriesQuery queryOptions = new DetectionSeriesQuery(ClientCommon.NormalizeDateTimeOffset(startTime), ClientCommon.NormalizeDateTimeOffset(endTime), seriesIdentities);
+            DetectionSeriesQuery queryOptions = new DetectionSeriesQuery(ClientCommon.NormalizeDateTimeOffset(startsOn), ClientCommon.NormalizeDateTimeOffset(endsOn), seriesIdentities);
 
             Page<MetricEnrichedSeriesData> FirstPageFunc(int? pageSizeHint)
             {
@@ -1370,7 +1370,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(options, nameof(options));
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
-            AlertingResultQuery queryOptions = new AlertingResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), options.TimeMode);
+            AlertingResultQuery queryOptions = new AlertingResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartsOn), ClientCommon.NormalizeDateTimeOffset(options.EndsOn), options.TimeMode);
             int? skip = options.Skip;
             int? maxPageSize = options.MaxPageSize;
 
@@ -1425,7 +1425,7 @@ namespace Azure.AI.MetricsAdvisor
             Argument.AssertNotNull(options, nameof(options));
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
-            AlertingResultQuery queryOptions = new AlertingResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), options.TimeMode);
+            AlertingResultQuery queryOptions = new AlertingResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartsOn), ClientCommon.NormalizeDateTimeOffset(options.EndsOn), options.TimeMode);
             int? skip = options.Skip;
             int? maxPageSize = options.MaxPageSize;
 

@@ -1735,7 +1735,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(dataFeed.Schema.TimestampColumn, Is.Not.Null);
 
                 Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-                Assert.That(dataFeed.IngestionSettings.IngestionStartTime, Is.Not.EqualTo(default(DateTimeOffset)));
+                Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.Not.EqualTo(default(DateTimeOffset)));
                 Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.Not.Null);
                 Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.Not.Null);
                 Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.Not.Null);
@@ -1919,7 +1919,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Schema.TimestampColumn, Is.Empty);
 
             Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-            Assert.That(dataFeed.IngestionSettings.IngestionStartTime, Is.EqualTo(ingestionStartTime));
+            Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.EqualTo(ingestionStartTime));
             Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.Zero));
             Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(-1)));
             Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromSeconds(-1)));
@@ -1990,7 +1990,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Schema.TimestampColumn, Is.EqualTo("timestamp"));
 
             Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-            Assert.That(dataFeed.IngestionSettings.IngestionStartTime, Is.EqualTo(ingestionStartTime));
+            Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.EqualTo(ingestionStartTime));
             Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.FromMinutes(30)));
             Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(80)));
             Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromMinutes(10)));
@@ -2053,7 +2053,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Schema.TimestampColumn, Is.EqualTo("updatedTimestampColumn"));
 
             Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-            Assert.That(dataFeed.IngestionSettings.IngestionStartTime, Is.EqualTo(ingestionStartTime));
+            Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.EqualTo(ingestionStartTime));
             Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.FromMinutes(40)));
             Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(90)));
             Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromMinutes(20)));

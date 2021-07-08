@@ -24,16 +24,16 @@ namespace Azure.AI.MetricsAdvisor
         /// for the specified <paramref name="metricId"/>. If only a subset of dimensions are set, this
         /// key uniquely identifies a group of time series.
         /// </param>
-        /// <param name="startTime">The start timestamp of feedback time range.</param>
-        /// <param name="endTime">The end timestamp of feedback time range. When this is equal to <paramref name="startTime"/> it indicates a single timestamp.</param>
+        /// <param name="startsOn">The start timestamp of feedback time range.</param>
+        /// <param name="endsOn">The end timestamp of feedback time range. When this is equal to <paramref name="startsOn"/> it indicates a single timestamp.</param>
         /// <param name="value">The <see cref="Models.ChangePointValue"/> for the feedback.</param>
         /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionKey"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty.</exception>
-        public MetricChangePointFeedback(string metricId, DimensionKey dimensionKey, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointValue value)
+        public MetricChangePointFeedback(string metricId, DimensionKey dimensionKey, DateTimeOffset startsOn, DateTimeOffset endsOn, ChangePointValue value)
             : base(metricId, dimensionKey)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ValueInternal = new ChangePointFeedbackValue(value);
             FeedbackKind = MetricFeedbackKind.ChangePoint;
         }
@@ -41,16 +41,16 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Initializes a new <see cref="MetricChangePointFeedback"/> instance. </summary>
         /// <param name="metricId"> The metric unique id. </param>
         /// <param name="feedbackFilter"> The dimension filter. </param>
-        /// <param name="startTime"> The start timestamp of feedback timerange. </param>
-        /// <param name="endTime"> The end timestamp of feedback timerange. When this is equal to <paramref name="startTime"/> it indicates a single timestamp. </param>
+        /// <param name="startsOn"> The start timestamp of feedback timerange. </param>
+        /// <param name="endsOn"> The end timestamp of feedback timerange. When this is equal to <paramref name="startsOn"/> it indicates a single timestamp. </param>
         /// <param name="value"> The <see cref="Models.ChangePointFeedbackValue"/> for the feedback. </param>
-        internal MetricChangePointFeedback(string metricId, FeedbackFilter feedbackFilter, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointFeedbackValue value)
+        internal MetricChangePointFeedback(string metricId, FeedbackFilter feedbackFilter, DateTimeOffset startsOn, DateTimeOffset endsOn, ChangePointFeedbackValue value)
             : base(metricId, feedbackFilter.DimensionKey)
         {
             Argument.AssertNotNull(value, nameof(value));
 
-            StartTime = startTime;
-            EndTime = endTime;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ValueInternal = value;
             FeedbackKind = MetricFeedbackKind.ChangePoint;
         }
@@ -58,12 +58,12 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// The start timestamp of feedback time range.
         /// </summary>
-        public DateTimeOffset StartTime { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary>
-        /// The end timestamp of feedback timerange. When this is equal to <see cref="StartTime"/> it indicates a single timestamp.
+        /// The end timestamp of feedback timerange. When this is equal to <see cref="StartsOn"/> it indicates a single timestamp.
         /// </summary>
-        public DateTimeOffset EndTime { get; }
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary>
         /// The <see cref="Models.ChangePointValue"/> for the feedback.

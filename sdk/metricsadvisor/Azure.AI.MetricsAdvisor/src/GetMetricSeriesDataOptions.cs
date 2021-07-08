@@ -17,13 +17,13 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Initializes a new instance of the <see cref="GetMetricSeriesDataOptions"/> class.
         /// </summary>
-        /// <param name="startTime">Filters the result. Only data points ingested from this point in time, in UTC, will be returned.</param>
-        /// <param name="endTime">Filters the result. Only data points ingested up to this point in time, in UTC, will be returned.</param>
-        public GetMetricSeriesDataOptions(DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <param name="startsOn">Filters the result. Only data points ingested from this point in time, in UTC, will be returned.</param>
+        /// <param name="endsOn">Filters the result. Only data points ingested up to this point in time, in UTC, will be returned.</param>
+        public GetMetricSeriesDataOptions(DateTimeOffset startsOn, DateTimeOffset endsOn)
         {
             SeriesKeys = new ChangeTrackingList<DimensionKey>();
-            StartTime = startTime;
-            EndTime = endTime;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
         }
 
         /// <summary>
@@ -36,11 +36,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Filters the result. Only data points ingested from this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset StartTime { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary>
         /// Filters the result. Only data points ingested up to this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset EndTime { get; }
+        public DateTimeOffset EndsOn { get; }
     }
 }
