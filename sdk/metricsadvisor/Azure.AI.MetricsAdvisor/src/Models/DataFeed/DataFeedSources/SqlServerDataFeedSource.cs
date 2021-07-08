@@ -17,14 +17,37 @@ namespace Azure.AI.MetricsAdvisor.Administration
         private string _connectionString;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SqlServerDataFeedSource"/> class.
+        /// Initializes a new instance of the <see cref="SqlServerDataFeedSource"/> class. This constructor does not
+        /// set a <see cref="ConnectionString"/>, so you must assign an <see cref="AuthenticationType"/> to the
+        /// <see cref="Authentication"/> property. Currently, only the <see cref="AuthenticationType.SqlConnectionString"/>
+        /// authentication is supported without a connection string. If you intend to use another type of authentication,
+        /// see <see cref="SqlServerDataFeedSource(string, string)"/>.
+        /// </summary>
+        /// <param name="query">The query to retrieve the data to be ingested.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="query"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="query"/> is empty.</exception>
+        public SqlServerDataFeedSource(string query)
+            : base(DataFeedSourceKind.SqlServer)
+        {
+            Argument.AssertNotNullOrEmpty(query, nameof(query));
+
+            Query = query;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SqlServerDataFeedSource"/> class. This constructor requires a
+        /// <paramref name="connectionString"/> and is intended to be used with the authentication types
+        /// <see cref="AuthenticationType.Basic"/> (default), <see cref="AuthenticationType.ManagedIdentity"/>,
+        /// <see cref="AuthenticationType.ServicePrincipal"/>, or <see cref="AuthenticationType.ServicePrincipalInKeyVault"/>.
+        /// If you intend to use <see cref="AuthenticationType.SqlConnectionString"/> authentication, see
+        /// <see cref="SqlServerDataFeedSource(string)"/>.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
         /// <param name="query">The query to retrieve the data to be ingested.</param>
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> or <paramref name="query"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/> or <paramref name="query"/> is empty.</exception>
         public SqlServerDataFeedSource(string connectionString, string query)
-            : base(DataFeedSourceKind.SqlServer)
+            : this(query)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(query, nameof(query));
