@@ -341,6 +341,5 @@ namespace Azure.ResourceManager.Core.Tests
             Location loc2 = string2;
             Assert.AreEqual(expected, loc1 != loc2);
         }
-
     }
 }
