@@ -22,10 +22,11 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         }
 
         [Test]
+        [Ignore("Only verifying that the sample builds")]
         public async Task GettingSpecificSubscriptionAsync()
         {
             #region Snippet:Hello_World_Async_SpecificSubscription
-            string subscriptionId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c";
+            string subscriptionId = "your-subscription-id";
             var armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = await armClient.GetSubscriptions().GetAsync(subscriptionId);
             Console.WriteLine(subscription.Id);

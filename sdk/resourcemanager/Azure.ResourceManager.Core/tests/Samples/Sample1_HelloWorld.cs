@@ -21,10 +21,11 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         }
 
         [Test]
+        [Ignore("Only verifying that the sample builds")]
         public void GettingSpecificSubscription()
         {
             #region Snippet:Hello_World_SpecificSubscription
-            string subscriptionId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c";
+            string subscriptionId = "your-subscription-id";
             var armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.GetSubscriptions().Get(subscriptionId);
             Console.WriteLine("Got subscription: " + subscription.Data.DisplayName);
