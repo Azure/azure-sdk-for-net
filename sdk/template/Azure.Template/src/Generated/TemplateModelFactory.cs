@@ -6,9 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Template.Models;
 
-namespace Azure.Template
+namespace Azure.Template.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class TemplateModelFactory

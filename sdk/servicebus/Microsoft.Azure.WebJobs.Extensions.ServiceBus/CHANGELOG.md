@@ -1,15 +1,11 @@
 # Release History
 
-## 5.0.0-beta.5 (Unreleased)
-
-### Features Added
+## 5.0.0-beta.5 (2021-07-07)
 
 ### Breaking Changes
-
-### Key Bugs Fixed
-
-### Fixed
-
+- Renamed `ServiceBusEntityType` property to `EntityType`.
+- Renamed `messageActions` and `sessionActions` parameters to `actions` in `MessageProcessor` and `SessionMessageProcessor`.
+- Renamed `MaxBatchSize` to `MaxMessageBatchSize` in `ServiceBusOptions`.
 
 ## 5.0.0-beta.4 (2021-06-22)
 

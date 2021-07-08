@@ -6,9 +6,8 @@
 #nullable disable
 
 using System;
-using Azure.Communication.CallingServer;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class CallingServerModelFactory
