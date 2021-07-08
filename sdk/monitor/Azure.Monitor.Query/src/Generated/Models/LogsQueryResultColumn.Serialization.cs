@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
         internal static LogsQueryResultColumn DeserializeLogsQueryResultColumn(JsonElement element)
         {
             string name = default;
-            LogColumnTypes type = default;
+            LogsColumnType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new LogColumnTypes(property.Value.GetString());
+                    type = new LogsColumnType(property.Value.GetString());
                     continue;
                 }
             }

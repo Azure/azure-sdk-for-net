@@ -77,7 +77,6 @@ namespace Azure.Communication.Pipeline
             }
 
             message.Request.Headers.SetValue("x-ms-content-sha256", contentHash);
-            message.Request.Headers.SetValue(HttpHeader.Names.Date, utcNowString);
             message.Request.Headers.SetValue(DATE_HEADER_NAME, utcNowString);
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, authorization);
         }

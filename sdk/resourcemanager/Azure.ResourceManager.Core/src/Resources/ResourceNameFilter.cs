@@ -67,5 +67,23 @@ namespace Azure.ResourceManager.Core
 
             return string.Join(" and ", builder);
         }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            if (obj is string other)
+                return Equals(other);
+
+            return Equals(obj as ResourceNameFilter);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
     }
 }

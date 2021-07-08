@@ -6,7 +6,7 @@ using System;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// The identifier for a resource that is contained in a location. 
+    /// The identifier for a resource that is contained in a location.
     /// </summary>
     public sealed class LocationResourceIdentifier : SubscriptionResourceIdentifier
     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LocationResourceIdentifier"/> class. 
+        /// Initializes a new instance of the <see cref="LocationResourceIdentifier"/> class.
         /// Used to initialize resources in the same namespace as the parent resource.
         /// </summary>
         /// <param name="parent"></param>
@@ -92,10 +92,8 @@ namespace Azure.ResourceManager.Core
         {
             if (other is null)
                 return null;
-            LocationResourceIdentifier id = ResourceIdentifier.Create(other) as LocationResourceIdentifier;
-            if (id is null)
-                throw new ArgumentException("Not a valid location level resource", nameof(other));
-            return id;
+
+            return ResourceIdentifier.Create(other) as LocationResourceIdentifier;
         }
     }
 }
