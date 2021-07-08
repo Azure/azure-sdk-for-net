@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Gets or sets the maximum duration within which the session lock will be renewed automatically. This value
-        /// should be greater than the queue's LockDuration Property.
+        /// should be greater than the queue's LockDuration Property. The default value is 5 minutes.
         /// </summary>
         ///
         /// <value>The maximum duration during which session locks are automatically renewed.</value>

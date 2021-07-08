@@ -18,6 +18,7 @@ namespace Azure.Messaging.ServiceBus
         /// from Queues or Subscriptions and queued locally, intended to help
         /// maximize throughput by allowing the processor to receive
         /// from a local cache rather than waiting on a service request.
+        /// The default value is 0.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   A negative value is attempted to be set for the property.
@@ -55,6 +56,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
+        /// The default value is 5 minutes.
         /// </summary>
         ///
         /// <value>The maximum duration during which message locks are automatically renewed.</value>

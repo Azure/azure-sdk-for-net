@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -1740,6 +1741,80 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(10)]
+        public async Task CanCloseSession(int maxCallsPerSession)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateNoRetryClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 10;
+
+                await sender.SendMessagesAsync(GetMessages(messageCount, "sessionId"));
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = 1,
+                    MaxConcurrentCallsPerSession = maxCallsPerSession
+                });
+
+                int receivedCount = 0;
+                int sessionCloseCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+                int firstCloseCount = 0;
+
+                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    var ct = Interlocked.Increment(ref receivedCount);
+
+                    if (ct == messageCount / 2)
+                    {
+                        args.MarkSessionClosed();
+                    }
+
+                    if (ct == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+                    return Task.CompletedTask;
+                }
+
+                Task SessionCloseHandler(ProcessSessionEventArgs args)
+                {
+                    if (firstCloseCount == 0)
+                    {
+                        firstCloseCount = receivedCount;
+                    }
+                    Interlocked.Increment(ref sessionCloseCount);
+                    return Task.CompletedTask;
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.SessionClosingAsync += SessionCloseHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+
+                Assert.AreEqual(10, receivedCount);
+                if (firstCloseCount < 10)
+                {
+                    Assert.AreEqual(2, sessionCloseCount);
+                }
+                else
+                {
+                    Assert.AreEqual(1, sessionCloseCount);
+                }
+
+                // verify all messages were autocompleted
+                await AsyncAssert.ThrowsAsync<ServiceBusException>(async () => await client.AcceptNextSessionAsync(scope.QueueName));
             }
         }
     }

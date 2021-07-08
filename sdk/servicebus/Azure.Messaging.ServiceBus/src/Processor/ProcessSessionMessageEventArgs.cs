@@ -32,6 +32,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         private readonly ServiceBusSessionReceiver _sessionReceiver;
 
+        private readonly SessionReceiverManager _receiverManager;
+
         /// <summary>
         /// Gets the Session Id associated with the <see cref="ServiceBusReceivedMessage"/>.
         /// </summary>
@@ -59,6 +61,15 @@ namespace Azure.Messaging.ServiceBus
             Message = message;
             _sessionReceiver = receiver;
             CancellationToken = cancellationToken;
+        }
+
+        internal ProcessSessionMessageEventArgs(
+            ServiceBusReceivedMessage message,
+            ServiceBusSessionReceiver receiver,
+            SessionReceiverManager receiverManager,
+            CancellationToken cancellationToken) : this(message, receiver, cancellationToken)
+        {
+            _receiverManager = receiverManager;
         }
 
         /// <inheritdoc cref="ServiceBusSessionReceiver.GetSessionStateAsync(CancellationToken)"/>
@@ -138,5 +149,16 @@ namespace Azure.Messaging.ServiceBus
             .ConfigureAwait(false);
             message.IsSettled = true;
         }
+
+        /// <summary>
+        /// Marks the session that is being processed as closed. No new receives will be initiated for the session before the
+        /// session is closed. Any already received messages will still be delivered to the user message handler, and in-flight message handlers
+        /// will be allowed to complete. Messages will still be completed automatically if <see cref="ServiceBusSessionProcessorOptions.AutoCompleteMessages"/>
+        /// is <value>true</value>.
+        /// The session may end up being reopened for processing immediately after closing if there are messages remaining in the session (
+        /// This depends on what other session messages may be in the queue or subscription).
+        /// </summary>
+        public virtual void MarkSessionClosed() =>
+            _receiverManager.MarkSessionClosed();
     }
 }
