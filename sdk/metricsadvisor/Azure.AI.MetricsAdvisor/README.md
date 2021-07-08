@@ -131,41 +131,59 @@ var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), new 
 
 ### MetricsAdvisorAdministrationClient
 
-`MetricsAdvisorAdministrationClient` is the interface responsible for managing entities in the Metrics Advisor resource. It provides synchronous and asynchronous methods for tasks such as creating and updating data feeds, anomaly detection configurations, and anomaly alerting configurations.
+`MetricsAdvisorAdministrationClient` is the interface responsible for managing entities in the Metrics Advisor resource. It provides synchronous and asynchronous methods for tasks such as creating and updating data feeds, anomaly detection configurations, and anomaly alert configurations.
 
 ### Data Feed
 
-A `DataFeed` ingests data from your data source, such as CosmosDB or a SQL server, and makes it available for the Metrics Advisor service. It's the entry point of data, and therefore, the first required agent to be set before anomaly detection can take place. See the sample [Create a data feed from a data source](#create-a-data-feed-from-a-data-source) below for more information.
+A `DataFeed` periodically ingests tables of aggregated data from your data source, such as CosmosDB or a SQL server, and makes it available for the Metrics Advisor service. It's the entry point of data, and therefore, the first required agent to be set before anomaly detection can take place. See the sample [Create a data feed from a data source](#create-a-data-feed-from-a-data-source) below for more information.
 
 ### Data Feed Metric
 
-A `DataFeedMetric`, or simply "metric", is a quantifiable measure to be monitored by the Metrics Advisor service. It could be the cost of a product over the months, or even a daily measure of temperature. The service will monitor how this value varies over time in search of any anomalous behavior. A [data feed](#data-feed) can ingest multiple metrics from the same data source.
+A `DataFeedMetric`, or simply "metric", is a quantifiable measure used to monitor an assess the status of a specific business process. It could be the cost of a product over the months, or even a daily measure of temperature. The service will monitor how this value varies over time in search of any anomalous behavior. A [data feed](#data-feed) can ingest multiple metrics from the same data source.
 
 ### Data Feed Dimension
 
-A `DataFeedDimension`, or simply "dimension", is a set of categorical values that characterize a [metric](#data-feed-metric). For instance, if a metric represents the cost of a product, the type of product (e.g., shoes, hats) and the city in which these values were measured (e.g., New York, Tokyo) could be used as a dimension. Possible dimension values would include: `(shoes, New York)`, `(shoes, Tokyo)`, `(hats, New York)`, and `(hats, Tokyo)`.
+A `DataFeedDimension`, or simply "dimension", is a categorical value that characterize a [metric](#data-feed-metric). For instance, if a metric represents the cost of a product, the type of product (e.g., shoes, hats) and the city in which these values were measured (e.g., New York, Tokyo) could be used as a dimension. The combination of multiple dimensions identify a particular univariate [time series](#time-series).
 
 ### Time Series
 
-A time series is a series of data points indexed in time order. These data points describe the variation of the value of a [metric](#data-feed-metric) over time.
+A time series is a sequence of data points indexed chronologically. These data points describe the variation of the value of a [metric](#data-feed-metric) over time.
 
-Given a metric, the Metrics Advisor service creates one series for every possible [dimension](#data-feed-dimension) value, which means that multiple time series can be monitored for the same metric.
+Given a metric, the Metrics Advisor service creates one series for every possible combination of [dimension](#data-feed-dimension) values, which means that multiple time series can be monitored for the same metric.
+
+For example, suppose the following columns of data are returned by your data source:
+
+|   City   | Category |   Cost  | Revenue |
+| -------- | -------- | ------- | ------- |
+| New York |  Shoes   | 1045.00 | 1345.00 |
+| New York |   Hats   |  670.00 |  502.00 |
+|   Delhi  |  Shoes   |  991.00 | 1009.00 |
+|   Delhi  |   Hats   |  623.00 |  711.00 |
+
+Cost and revenue are the metrics you want the service to monitor, while city and category are the dimensions that characterize those metrics. There are 4 possible dimension combinations in this data:
+
+- City = New York, Category = Shoes
+- City = New York, Category = Hats
+- City = Delhi, Category = Shoes
+- City = Delhi, Category = Hats
+
+For each metric, the service will create 4 time series to monitor data, each one representing one possible dimension combination. Every time a data source ingestion happens, these series will be updated with a new data point, if available in the newly ingested data.
 
 ### Data Point Anomaly
 
-A `DataPointAnomaly`, or simply "anomaly", occurs when a data point in a [time series](#time-series) behaves unexpectedly. It may occur when a data point value is too high or too low, or when its value changes abruptly between close points. You can specify the conditions a data point must satisfy to be considered an anomaly with an `AnomalyDetectionConfiguration`. See the sample [Create an anomaly detection configuration](#create-an-anomaly-detection-configuration) below for more information.
+A `DataPointAnomaly`, or simply "anomaly", occurs when a data point in a [time series](#time-series) behaves unexpectedly. It may occur when a data point value is too high or too low, or when its value changes abruptly between close points. You can specify the conditions a data point must satisfy to be considered an anomaly with an `AnomalyDetectionConfiguration`. After data ingestion happpens, the service applies all existing configurations to the set of new points in search of anomalies. See the sample [Create an anomaly detection configuration](#create-an-anomaly-detection-configuration) below for more information.
 
 ### Anomaly Incident
 
-Detected [anomalies](#data-point-anomaly) within the same [time series](#time-series) can be grouped into an `AnomalyIncident`, or simply "incident". The service looks for patterns across anomalies to determine which ones are likely to have the same cause, grouping them together.
+When there are [anomalies](#data-point-anomaly) detected on multiple [time series](#time-series) within one [metric](#data-feed-metric) at a particular timestamp, the Metrics Advisor service will automatically group anomalies that share the same root cause into one `AnomalyIncident`, or simply "incident". This will significantly remove the effort to check each individual anomaly and quickly finds the most important contributing factor to an issue.
 
 ### Anomaly Alert
 
-An `AnomalyAlert`, or simply "alert", is triggered when a detected [anomaly](#data-point-anomaly) meets a specified criteria. For instance, an alert could be triggered every time an anomaly with high severity is detected. You can specify the conditions an anomaly must satisfy to trigger an alert with an `AnomalyAlertConfiguration`, which make use of [hooks](#notification-hook) to send notifications to the concerned parties every time an alert is triggered. These configurations are not set by default, so you need to create one in order to start triggering and receiving alerts. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
+An `AnomalyAlert`, or simply "alert", is triggered when a detected [anomaly](#data-point-anomaly) meets a specified criteria. For instance, an alert could be triggered every time an anomaly with high severity is detected. You can specify the conditions an anomaly must satisfy to trigger an alert with an `AnomalyAlertConfiguration`. After anomaly detection is performed over newly ingested data points, the service applies all existing configurations to the new anomalies, and each configuration fires a single alert for the set of points satisfying the specified criteria. Alert configurations are not set by default, so you need to create one in order to start triggering alerts. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
 
 ### Notification Hook
 
-A `NotificationHook`, or simply "hook", is a means of subscribing to [alerts](#anomaly-alert) notifications. You can pass a hook to an `AnomalyAlertConfiguration` and start getting notifications for every alert it creates. See the sample [Create a hook for receiving anomaly alerts](#create-a-hook-for-receiving-anomaly-alerts) below for more information.
+A `NotificationHook`, or simply "hook", is a means of subscribing to [alert](#anomaly-alert) notifications. You can pass a hook to an `AnomalyAlertConfiguration` and start getting notifications for every alert it creates. See the sample [Create a hook for receiving anomaly alerts](#create-a-hook-for-receiving-anomaly-alerts) below for more information.
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -240,6 +258,25 @@ foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
 }
 ```
 
+### Data source credential entities
+
+Some data sources support multiple types of authentication. For example, a `SqlServerDataFeedSource` supports connection string, Service Principal, and managed identity. You can check the complete list of data sources and their types of authentication [here][metricsadv_authentication].
+
+Once you've made sure that your data source supports the authentication you want to use, you need to set the `Authentication` property when creating or updating the data source:
+
+```C# Snippet:SettingAuthentication
+```
+
+Be aware that, except for the `Basic` and `ManagedIdentity` types of authentication, you also need to have the ID of a corresponding `DataSourceCredentialEntity` in the service. In order to create a credential entity, you need to do:
+
+```C# Snippet:CreateDataSourceCredentialAsync
+```
+
+Once you have the ID, add it to the `DataSourceCredentialId` property when setting up your data source:
+
+```C# Snippet:SettingCredentialAuthentication
+```
+
 ### Check the ingestion status of a data feed
 
 Check the ingestion status of a previously created [`DataFeed`](#data-feed).
@@ -311,7 +348,7 @@ Console.WriteLine($"Anomaly detection configuration ID: {createdDetectionConfigu
 
 ### Create a hook for receiving anomaly alerts
 
-Metrics Advisor supports the [`EmailNotificationHook`](#notification-hook) and the [`WebNotificationHook`](#notification-hook) classes as means of subscribing to [alerts](#anomaly-alert) notifications. In this example we'll illustrate how to create an `EmailNotificationHook`. Note that you need to pass the hook to an anomaly alert configuration to start getting notifications. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
+Metrics Advisor supports the [`EmailNotificationHook`](#notification-hook) and the [`WebNotificationHook`](#notification-hook) classes as means of subscribing to [alert](#anomaly-alert) notifications. In this example we'll illustrate how to create an `EmailNotificationHook`. Note that you need to pass the hook to an anomaly alert configuration to start getting notifications. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
 
 ```C# Snippet:CreateHookAsync
 string hookName = "<hookName>";
@@ -538,6 +575,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+
+[metricsadv_authentication]: https://aka.ms/metricsadvisor/authentication
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
