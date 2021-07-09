@@ -98,11 +98,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// TODO.
+        /// Used to alias selectable properties in place of the AS keyword.
         /// </summary>
-        /// <param name="literal"></param>
-        /// <param name="alias"></param>
-        /// <returns></returns>
+        /// <param name="literal"> The proper name for the selectable property in the ADT Query Language. </param>
+        /// <param name="alias"> The alias to be assigned to the return contents in the query response. </param>
+        /// <returns> Query that contains an aliased select clause. </returns>
         public SelectAsQuery SelectAs(string literal, string alias)
         {
             return _selectAs.SelectAs(literal, alias);
@@ -115,7 +115,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public string GetQueryText()
         {
             var finalQuery = new StringBuilder();
-            finalQuery.Append(QueryConstants.Select).Append(' ');   // TODO move query keywords into here rather than seperate classes
+            finalQuery.Append(QueryConstants.Select).Append(' ');
 
             // build the select string
             string selectStatementQueryText = _selectQuery.GetQueryText();
@@ -136,10 +136,18 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             finalQuery.Append(selectStatementAliasedQueryText);
 
             // build the from string
-            finalQuery.Append(' ').Append(_fromQuery.GetQueryText());
+            finalQuery.Append(' ').Append(QueryConstants.From).Append(' ');
+            finalQuery.Append(_fromQuery.GetQueryText());
 
             // build the where string
-            finalQuery.Append(' ').Append(_whereStatement.GetQueryText());
+            string whereGetQueryText = _whereStatement.GetQueryText();
+
+            if (whereGetQueryText.Length > 0)
+            {
+                finalQuery.Append(' ').Append(QueryConstants.Where).Append(' ');
+            }
+
+            finalQuery.Append(_whereStatement.GetQueryText());
 
             return finalQuery.ToString().Trim();
         }

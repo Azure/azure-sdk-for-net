@@ -8,7 +8,7 @@ using System.Text;
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
-    /// TODO.
+    /// Query object either without and clauses or with nonaliased SELECT clause components.
     /// </summary>
     public sealed class SelectAsQuery : QueryBase
     {
@@ -24,11 +24,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// TODO.
+        /// Used to alias selectable properties in place of the AS keyword.
         /// </summary>
-        /// <param name="literal"></param>
-        /// <param name="alias"></param>
-        /// <returns></returns>
+        /// <param name="literal"> The proper name for the selectable property in the ADT Query Language. </param>
+        /// <param name="alias"> The alias to be assigned to the return contents in the query response. </param>
+        /// <returns> Query that contains an aliased select clause. </returns>
         public SelectAsQuery SelectAs(string literal, string alias)
         {
             _clauses.Add($"{literal} {QueryConstants.As} {alias}");
@@ -39,18 +39,18 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Adds the FROM clause and its argument to the query via the Clauses component.
         /// </summary>
         /// <param name="collection"> An enum different collections that users can query from. </param>
-        /// <returns> ADT query with select and from clause. </returns>
+        /// <returns> ADT query with select and from clauses. </returns>
         public WhereStatement From(AdtCollection collection)
         {
             return _fromQuery.From(collection);
         }
 
         /// <summary>
-        /// TODO.
+        /// Adds the FROM clause, its argument, and an alias for its argument into the query.
         /// </summary>
-        /// <param name="collection"></param>
-        /// <param name="alias"></param>
-        /// <returns></returns>
+        /// <param name="collection"> The collection being queried from. </param>
+        /// <param name="alias"> The alias being assigned to the collection being queried from. </param>
+        /// <returns> ADT query with select from clauses. </returns>
         public WhereStatement From(AdtCollection collection, string alias)
         {
             return _fromQuery.From(collection, alias);
@@ -61,13 +61,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// that is being queried.
         /// </summary>
         /// <param name="collection"> The name of the collection. </param>
-        /// <returns> ADT query with select and from clause. </returns>
+        /// <returns> ADT query with select and from clauses. </returns>
         public WhereStatement FromCustom(string collection)
         {
             return _fromQuery.FromCustom(collection);
         }
-
-        // rest of From methods implemented in similar manner
 
         /// <inheritdoc/>
         public override AdtQueryBuilder Build()
