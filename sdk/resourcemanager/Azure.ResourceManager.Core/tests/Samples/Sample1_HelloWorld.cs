@@ -1,6 +1,7 @@
 ﻿#region Snippet:Hello_World_Namespaces
 using System;
 using Azure.Identity;
+using Azure.ResourceManager.Core;
 #endregion
 using NUnit.Framework;
 
