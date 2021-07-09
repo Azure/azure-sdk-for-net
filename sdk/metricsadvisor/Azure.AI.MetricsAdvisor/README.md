@@ -259,7 +259,7 @@ foreach (DataFeedDimension dimension in createdDataFeed.Schema.DimensionColumns)
 }
 ```
 
-### Other data source authetication alternatives
+### Other data source authentication alternatives
 
 Some data sources support multiple types of authentication. For example, a `SqlServerDataFeedSource` supports connection string, Service Principal, and managed identity. You can check the complete list of data sources and their types of authentication [here][metricsadv_authentication].
 
