@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Core
     }
 
     /// <summary>
-    /// Base class for all operations over a resource
+    /// Base class for all operations over a resource.
     /// </summary>
     /// <typeparam name="TOperations"> The type implementing operations over the resource. </typeparam>
     /// <typeparam name="TIdentifier"> The The identifier type for the resource. </typeparam>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// The typed resource identifier for the underlying resource
+        /// The typed resource identifier for the underlying resource.
         /// </summary>
         public virtual new TIdentifier Id
         {
@@ -119,11 +119,10 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected IEnumerable<LocationData> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            var pageableProvider = ProviderContainer.List(expand: "metadata", cancellationToken: cancellationToken);
-            var resourcePageableProvider = pageableProvider.FirstOrDefault(p => string.Equals(p.Data.Namespace, resourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
+            ProviderInfo resourcePageableProvider = Tenant.GetProvider(resourceType.Namespace, null, cancellationToken);
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
-            var theResource = resourcePageableProvider.Data.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
+            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
             return theResource.Locations.Select(l => (LocationData)l);
@@ -137,13 +136,10 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            var pageableProvider = ProviderContainer.ListAsync(expand: "metadata", cancellationToken: cancellationToken);
-            var resourcePageableProvider = await pageableProvider.FirstOrDefaultAsync(
-                p => string.Equals(p.Data.Namespace, resourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase),
-                cancellationToken).ConfigureAwait(false);
+            ProviderInfo resourcePageableProvider = await Tenant.GetProviderAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
-            var theResource = resourcePageableProvider.Data.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
+            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
             return theResource.Locations.Select(l => (LocationData)l);
