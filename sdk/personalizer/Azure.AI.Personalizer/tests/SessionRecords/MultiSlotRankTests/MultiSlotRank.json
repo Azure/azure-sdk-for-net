@@ -5,7 +5,7 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "774",
+        "Content-Length": "798",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "traceparent": "00-8cb6507495bfcd4ea2dbc346a48689d4-21abb290e84ce443-00",
@@ -13,90 +13,91 @@
         "x-ms-client-request-id": "859f46bf1c22a3ec261a0a55e987810f",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": {
-        "contextFeatures": [
-          {
-            "User": {
-              "ProfileType": "AnonymousUser",
-              "LatLong": "47.6,-122.1"
-            }
-          },
-          {
-            "Environment": {
-              "DayOfMonth": "28",
-              "MonthOfYear": "8",
-              "Weather": "Sunny"
-            }
-          },
-          {
-            "Device": {
-              "Mobile": true,
-              "Windows": true
-            }
-          },
-          {
-            "RecentActivity": {
-              "ItemsInCart": 3
-            }
-          }
-        ],
-        "actions": [
-          {
-            "id": "NewsArticle",
-            "features": [
-              {
-                "Type": "News"
-              }
-            ]
-          },
-          {
-            "id": "SportsArticle",
-            "features": [
-              {
-                "Type": "Sports"
-              }
-            ]
-          },
-          {
-            "id": "EntertainmentArticle",
-            "features": [
-              {
-                "Type": "Entertainment"
-              }
-            ]
-          }
-        ],
-        "slots": [
-          {
-            "id": "Main Article",
-            "features": [
-              {
-                "Size": "Large",
-                "Position": "Top Middle"
-              }
+        "RequestBody": {
+            "contextFeatures": [
+                {
+                    "User": {
+                        "ProfileType": "AnonymousUser",
+                        "LatLong": "47.6,-122.1"
+                    }
+                },
+                {
+                    "Environment": {
+                        "DayOfMonth": "28",
+                        "MonthOfYear": "8",
+                        "Weather": "Sunny"
+                    }
+                },
+                {
+                    "Device": {
+                        "Mobile": true,
+                        "Windows": true
+                    }
+                },
+                {
+                    "RecentActivity": {
+                        "ItemsInCart": 3
+                    }
+                }
             ],
-            "excludedActions": [
-              "SportsArticle",
-              "EntertainmentArticle"
+            "actions": [
+                {
+                    "id": "NewsArticle",
+                    "features": [
+                        {
+                            "Type": "News"
+                        }
+                    ]
+                },
+                {
+                    "id": "SportsArticle",
+                    "features": [
+                        {
+                            "Type": "Sports"
+                        }
+                    ]
+                },
+                {
+                    "id": "EntertainmentArticle",
+                    "features": [
+                        {
+                            "Type": "Entertainment"
+                        }
+                    ]
+                }
             ],
-            "baselineAction": "NewsArticle"
-          },
-          {
-            "id": "Side Bar",
-            "features": [
-              {
-                "Size": "Small",
-                "Position": "Bottom Right"
-              }
+            "slots": [
+                {
+                    "id": "Main Article",
+                    "features": [
+                        {
+                            "Size": "Large",
+                            "Position": "Top Middle"
+                        }
+                    ],
+                    "excludedActions": [
+                        "SportsArticle",
+                        "EntertainmentArticle"
+                    ],
+                    "baselineAction": "NewsArticle"
+                },
+                {
+                    "id": "Side Bar",
+                    "features": [
+                        {
+                            "Size": "Small",
+                            "Position": "Bottom Right"
+                        }
+                    ],
+                    "excludedActions": [
+                        "EntertainmentArticle"
+                    ],
+                    "baselineAction": "SportsArticle"
+                }
             ],
-            "excludedActions": [
-              "EntertainmentArticle"
-            ],
-            "baselineAction": "SportsArticle"
-          }
-        ],
-        "eventId": "sdkTestEventId"
-      },
+            "eventId": "sdkTestEventId",
+            "deferActivation": false
+        },
       "StatusCode": 201,
       "ResponseHeaders": {
         "apim-request-id": "af289c3b-7ec5-4212-a61d-6b925651005f",
