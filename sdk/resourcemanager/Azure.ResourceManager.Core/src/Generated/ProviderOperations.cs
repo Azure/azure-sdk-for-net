@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> The Providers service client. </summary>
-    public partial class ProviderOperations : ResourceOperationsBase<TenantResourceIdentifier, Provider>
+    public partial class ProviderOperations : ResourceOperationsBase<SubscriptionProviderIdentifier, Provider>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderOperations"/> class for mocking.
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"></param>
-        internal ProviderOperations(ClientContext clientContext, TenantResourceIdentifier id)
+        internal ProviderOperations(ClientContext clientContext, SubscriptionProviderIdentifier id)
             : base(clientContext, id)
         {
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="operations"> The resource operations to copy the options from. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProviderOperations(OperationsBase operations, TenantResourceIdentifier id)
+        internal ProviderOperations(OperationsBase operations, SubscriptionProviderIdentifier id)
             : base(operations, id)
         {
         }
@@ -53,16 +53,10 @@ namespace Azure.ResourceManager.Core
         {
             get
             {
-                string subscription;
-                if (Id is null || !Id.TryGetSubscriptionId(out subscription))
-                {
-                    subscription = Guid.Empty.ToString();
-                }
-
                 return new ProviderRestOperations(
                     Diagnostics,
                     Pipeline,
-                    subscription,
+                    Id.SubscriptionId,
                     BaseUri);
             }
         }
@@ -148,20 +142,11 @@ namespace Azure.ResourceManager.Core
         {
             using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
             scope.Start();
-            string subscriptionId = "";
 
             try
             {
-                if (Id.TryGetSubscriptionId(out subscriptionId))
-                {
-                    var originalResponse = RestClient.Get(Id.Name, null, cancellationToken);
-                    return Response.FromValue(new Provider(this, originalResponse), originalResponse.GetRawResponse());
-                }
-                else
-                {
-                    var result = RestClient.GetAtTenantScope(Id.Name, null, cancellationToken);
-                    return Response.FromValue(new Provider(this, result), result.GetRawResponse());
-                }
+                var originalResponse = RestClient.Get(Id.Name, null, cancellationToken);
+                return Response.FromValue(new Provider(this, originalResponse), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,26 +160,26 @@ namespace Azure.ResourceManager.Core
         {
             using var scope = Diagnostics.CreateScope("ProvidersOperations.Get");
             scope.Start();
-            string subscriptionId = "";
 
             try
             {
-                if (Id.TryGetSubscriptionId(out subscriptionId))
-                {
-                    var result = await RestClient.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new Provider(this, result), result.GetRawResponse());
-                }
-                else
-                {
-                    var result = await RestClient.GetAtTenantScopeAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new Provider(this, result), result.GetRawResponse());
-                }
+                var result = await RestClient.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Provider(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the features under this provider
+        /// </summary>
+        /// <returns></returns>
+        public virtual FeatureContainer GetFeatures()
+        {
+            return new FeatureContainer(this);
         }
     }
 }
