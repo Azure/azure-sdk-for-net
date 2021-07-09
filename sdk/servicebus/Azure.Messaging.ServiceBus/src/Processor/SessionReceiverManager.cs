@@ -387,7 +387,7 @@ namespace Azure.Messaging.ServiceBus
             await Processor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
         }
 
-        internal void MarkSessionClosed()
+        internal void ReleaseSession()
         {
             _sessionCancellationSource.Cancel();
         }

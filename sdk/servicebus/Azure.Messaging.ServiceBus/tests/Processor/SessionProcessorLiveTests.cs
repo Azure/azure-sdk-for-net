@@ -1775,7 +1775,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                     if (ct == messageCount / 2)
                     {
-                        args.MarkSessionClosed();
+                        args.ReleaseSession();
                     }
 
                     if (ct == messageCount)
