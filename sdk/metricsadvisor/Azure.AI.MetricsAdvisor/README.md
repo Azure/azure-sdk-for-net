@@ -203,7 +203,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 The following section provides several code snippets illustrating common patterns used in the Metrics Advisor .NET API. The snippets below make use of asynchronous service calls, but note that the Azure.AI.MetricsAdvisor package supports both synchronous and asynchronous APIs.
 
 * [Create a data feed from a data source](#create-a-data-feed-from-a-data-source)
-* [Other data source authetication alternatives](#other-data-source-authentication-alternatives)
+* [Other data source authentication alternatives](#other-data-source-authentication-alternatives)
 * [Check the ingestion status of a data feed](#check-the-ingestion-status-of-a-data-feed)
 * [Create an anomaly detection configuration](#create-an-anomaly-detection-configuration)
 * [Create a hook for receiving anomaly alerts](#create-a-hook-for-receiving-anomaly-alerts)
