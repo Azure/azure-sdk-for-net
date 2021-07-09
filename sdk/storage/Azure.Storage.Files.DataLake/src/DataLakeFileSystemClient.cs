@@ -2156,6 +2156,309 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Delete File
 
+        #region Upload
+        /// <summary>
+        /// The <see cref="UploadBlobDirectory(string, StorageTransferOptions, BlobUploadDirectoryOptions, CancellationToken)"/> operation creates a new virtual
+        /// directory of block blobs.
+        ///
+        /// TODO: Review docs
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="localPath">
+        /// The path of the directory to be uploaded.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> object with settings for the upload.
+        /// </param>
+        /// <param name="options">
+        /// A <see cref="BlobUploadDirectoryOptions"/> object with settings for the upload.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To overwrite an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.UploadAsync(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual IEnumerable<Response<PathInfo>> UploadBlobDirectory(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            string localPath,
+            StorageTransferOptions transferOptions,
+            DataLakeDirectoryUploadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            if (options.UploadToSubdirectory.HasValue && (bool)options.UploadToSubdirectory)
+            {
+                DataLakeDirectoryClient directoryClient = GetDirectoryClient(localPath.Split('\\').Last());
+                options.UploadToSubdirectory = false;
+
+                return directoryClient.Upload(
+                    localPath,
+                    transferOptions,
+                    options,
+                    cancellationToken);
+            }
+            else
+            {
+                return UploadDirectoryInternal(
+                    localPath,
+                    transferOptions,
+                    options,
+                    async: false,
+                    cancellationToken).EnsureCompleted();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="UploadAsync(string, StorageTransferOptions, BlobUploadDirectoryOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="directory">
+        /// The path of the local directory to upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<IEnumerable<Response<PathInfo>>> UploadBlobDirectoryAsync(
+#pragma warning disable AZC0015 // Unexpected client method return type.
+            string localPath,
+            StorageTransferOptions transferOptions,
+            DataLakeDirectoryUploadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            if (options.UploadToSubdirectory.HasValue && (bool)options.UploadToSubdirectory)
+            {
+                DataLakeDirectoryClient directoryClient = GetDirectoryClient(localPath.Split('\\').Last());
+                options.UploadToSubdirectory = false;
+
+                return await directoryClient.UploadAsync(
+                    localPath,
+                    transferOptions,
+                    options,
+                    cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                return await UploadDirectoryInternal(
+                    localPath,
+                    transferOptions,
+                    options,
+                    async: true,
+                    cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="Upload(string, StorageTransferOptions, BlobUploadDirectoryOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob directory, creating a new blob
+        /// if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
+        ///
+        /// For now this will only do block blobs. For the future, we can have in BlobUploadDirectoryOptions
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="directory">
+        /// A <see cref="Directory"/> containing the content to upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual IEnumerable<Response<PathInfo>> UploadBlobDirectory(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            string localPath,
+            string remotePath,
+            StorageTransferOptions transferOptions,
+            DataLakeDirectoryUploadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DataLakeDirectoryClient directoryClient = GetDirectoryClient(remotePath);
+            options.UploadToSubdirectory = false;
+
+            return directoryClient.Upload(
+                localPath,
+                transferOptions,
+                options,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// The <see cref="UploadAsync(string, StorageTransferOptions, BlobUploadDirectoryOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="directory">
+        /// The path of the local directory to upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<IEnumerable<Response<PathInfo>>> UploadBlobDirectoryAsync(
+#pragma warning disable AZC0015 // Unexpected client method return type.
+            string localPath,
+            string remotePath,
+            StorageTransferOptions transferOptions,
+            DataLakeDirectoryUploadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DataLakeDirectoryClient directoryClient = GetDirectoryClient(remotePath);
+            options.UploadToSubdirectory = false;
+
+            return await directoryClient.UploadAsync(
+                localPath,
+                transferOptions,
+                options,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="UploadInternal"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="directory">
+        /// The path of the local directory to upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional Parameters <see cref="BlobUploadDirectoryOptions"/>
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// TODO: remove pragma warning after adding await operators
+        internal virtual async Task<IEnumerable<Response<PathInfo>>> UploadDirectoryInternal(
+            string localPath,
+            StorageTransferOptions transferOptions,
+            DataLakeDirectoryUploadOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            DataLakeUploadScheduler scheduler = new DataLakeUploadScheduler(Uri, ClientConfiguration);
+
+            return await scheduler.StartTransfer(
+                localPath,
+                transferOptions,
+                options,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+        #endregion
+
         #region GetAccessPolicy
         /// <summary>
         /// The <see cref="GetAccessPolicy"/> operation gets the

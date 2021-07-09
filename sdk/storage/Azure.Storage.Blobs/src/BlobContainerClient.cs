@@ -3055,55 +3055,18 @@ namespace Azure.Storage.Blobs
         /// and then call <see cref="BlobClient.UploadAsync(Stream, bool, CancellationToken)"/>
         /// with the override parameter set to true.
         /// </remarks>
-        /// <summary>
-        /// The <see cref="Upload(string, StorageTransferOptions, BlobUploadDirectoryOptions, CancellationToken)"/>
-        /// operation overwrites the contents of the blob directory, creating a new blob
-        /// if none exists.  Overwriting an existing block blob replaces
-        /// any existing metadata on the blob.
-        ///
-        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
-        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
-        /// to avoid overwriting existing data.
-        ///
-        /// For now this will only do block blobs. For the future, we can have in BlobUploadDirectoryOptions
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
-        /// Put Blob</see>.
-        /// </summary>
-        /// <param name="directory">
-        /// A <see cref="Directory"/> containing the content to upload.
-        /// </param>
-        /// <param name="transferOptions">
-        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
-        /// </param>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// state of the updated block blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual IEnumerable<Response<BlobContentInfo>> UploadBlobDirectory(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             string localPath,
             StorageTransferOptions transferOptions,
-            BlobUploadDirectoryOptions options,
+            BlobDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
-            if (options.uploadToSubdirectory.HasValue && (bool)options.uploadToSubdirectory)
+            if (options.UploadToSubdirectory.HasValue && (bool)options.UploadToSubdirectory)
             {
                 BlobDirectoryClient directoryClient = GetBlobDirectoryClient(localPath.Split('\\').Last());
-                options.uploadToSubdirectory = false;
+                options.UploadToSubdirectory = false;
 
                 return directoryClient.Upload(
                     localPath,
@@ -3162,13 +3125,13 @@ namespace Azure.Storage.Blobs
 #pragma warning disable AZC0015 // Unexpected client method return type.
             string localPath,
             StorageTransferOptions transferOptions,
-            BlobUploadDirectoryOptions options,
+            BlobDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
-            if (options.uploadToSubdirectory.HasValue && (bool)options.uploadToSubdirectory)
+            if (options.UploadToSubdirectory.HasValue && (bool)options.UploadToSubdirectory)
             {
                 BlobDirectoryClient directoryClient = GetBlobDirectoryClient(localPath.Split('\\').Last());
-                options.uploadToSubdirectory = false;
+                options.UploadToSubdirectory = false;
 
                 return await directoryClient.UploadAsync(
                     localPath,
@@ -3230,11 +3193,11 @@ namespace Azure.Storage.Blobs
             string localPath,
             string remotePath,
             StorageTransferOptions transferOptions,
-            BlobUploadDirectoryOptions options,
+            BlobDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             BlobDirectoryClient directoryClient = GetBlobDirectoryClient(remotePath);
-            options.uploadToSubdirectory = false;
+            options.UploadToSubdirectory = false;
 
             return directoryClient.Upload(
                 localPath,
@@ -3284,11 +3247,11 @@ namespace Azure.Storage.Blobs
             string localPath,
             string remotePath,
             StorageTransferOptions transferOptions,
-            BlobUploadDirectoryOptions options,
+            BlobDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             BlobDirectoryClient directoryClient = GetBlobDirectoryClient(remotePath);
-            options.uploadToSubdirectory = false;
+            options.UploadToSubdirectory = false;
 
             return await directoryClient.UploadAsync(
                 localPath,
@@ -3339,7 +3302,7 @@ namespace Azure.Storage.Blobs
         internal virtual async Task<IEnumerable<Response<BlobContentInfo>>> UploadBlobDirectoryInternal(
             string localPath,
             StorageTransferOptions transferOptions,
-            BlobUploadDirectoryOptions options,
+            BlobDirectoryUploadOptions options,
             bool async,
             CancellationToken cancellationToken)
         {

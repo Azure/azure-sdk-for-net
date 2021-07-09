@@ -58,11 +58,12 @@ namespace Azure.Storage.Blobs
         public async Task<IEnumerable<Response<BlobContentInfo>>> StartTransfer(
             string localPath,
             StorageTransferOptions transferOptions,
-            BlobUploadDirectoryOptions options,
+            BlobDirectoryUploadOptions options,
             bool async,
             CancellationToken cancellationToken = default)
         {
-            FilesystemScanner scanner = new FilesystemScanner(localPath);
+            PathScannerFactory scannerFactory = new PathScannerFactory(localPath);
+            PathScanner scanner = scannerFactory.BuildPathScanner();
             IEnumerable<string> fileList = scanner.Scan();
 
             TransferScheduler fileScheduler = new TransferScheduler((int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1));

@@ -381,7 +381,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0015 // Unexpected client method return type.
             string localPath,
             StorageTransferOptions transferOptions,
-            BlobUploadDirectoryOptions options,
+            BlobDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             Uri targetUri = options.uploadToSubdirectory.HasValue && (bool)options.uploadToSubdirectory
@@ -437,7 +437,7 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning disable AZC0015 // Unexpected client method return type.
             string localPath,
             StorageTransferOptions transferOptions,
-            BlobUploadDirectoryOptions options,
+            BlobDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             Uri targetUri = options.uploadToSubdirectory.HasValue && (bool)options.uploadToSubdirectory
@@ -500,7 +500,7 @@ namespace Azure.Storage.Blobs.Specialized
             string localPath,
             string remotePath,
             StorageTransferOptions transferOptions,
-            BlobUploadDirectoryOptions options,
+            BlobDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             Uri targetUri = Uri.AppendToPath(remotePath);
@@ -555,7 +555,7 @@ namespace Azure.Storage.Blobs.Specialized
             string localPath,
             string remotePath,
             StorageTransferOptions transferOptions,
-            BlobUploadDirectoryOptions options,
+            BlobDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             Uri targetUri = Uri.AppendToPath(remotePath);
@@ -613,7 +613,7 @@ namespace Azure.Storage.Blobs.Specialized
             Uri targetUri,
             string localPath,
             StorageTransferOptions transferOptions,
-            BlobUploadDirectoryOptions options,
+            BlobDirectoryUploadOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -623,7 +623,7 @@ namespace Azure.Storage.Blobs.Specialized
                 localPath,
                 transferOptions,
                 options,
-                async, 
+                async,
                 cancellationToken)
                 .ConfigureAwait(false);
         }

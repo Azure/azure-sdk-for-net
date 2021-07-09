@@ -68,7 +68,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Describes whether or not the directory being uploaded should
-        /// be located under it's own subdirectory serverside.
+        /// be located under it's own subdirectory server-side.
         /// </summary>
         public bool? UploadToSubdirectory { get; set; }
     }
