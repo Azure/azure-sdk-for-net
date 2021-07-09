@@ -2,6 +2,7 @@
 
 ## 5.0.0-beta.5 (Unreleased)
 - QueuesOptions.MaxPollingInterval other than default is now honored in "Development" environment.
+- Fixed bug where QueueTrigger would fail to renew ownership of message if function runs for long period of time (i.e. 15 minutes and longer).
 
 
 ## 5.0.0-beta.4 (2021-05-18)
