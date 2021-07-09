@@ -67,7 +67,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBForMySQL/servers/mysqlsdkserver?api-version=2017-12-01",
+      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBforMySQL/servers/mysqlsdkserver?api-version=2017-12-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Jlc291cmNlR3JvdXBzL215c3Fsc2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQkZvck15U1FML3NlcnZlcnMvbXlzcWxzZGtzZXJ2ZXI/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"B_Gen5_1\"\r\n  },\r\n  \"properties\": {\r\n    \"createMode\": \"Default\",\r\n    \"administratorLogin\": \"testUser\",\r\n    \"administratorLoginPassword\": \"testPassword1!\"\r\n  },\r\n  \"location\": \"northeurope\"\r\n}",
@@ -265,7 +265,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBForMySQL/servers/mysqlsdkserver?api-version=2017-12-01",
+      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBforMySQL/servers/mysqlsdkserver?api-version=2017-12-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Jlc291cmNlR3JvdXBzL215c3Fsc2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQkZvck15U1FML3NlcnZlcnMvbXlzcWxzZGtzZXJ2ZXI/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -322,7 +322,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBForMySQL/servers/mysqlsdkserver?api-version=2017-12-01",
+      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBforMySQL/servers/mysqlsdkserver?api-version=2017-12-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Jlc291cmNlR3JvdXBzL215c3Fsc2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQkZvck15U1FML3NlcnZlcnMvbXlzcWxzZGtzZXJ2ZXI/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -385,7 +385,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBForMySQL/servers/mysqlsdkserver?api-version=2017-12-01",
+      "RequestUri": "/subscriptions/55656d10-5b22-470b-99f7-9dbe3d3df5a7/resourceGroups/mysqlsdkrg/providers/Microsoft.DBforMySQL/servers/mysqlsdkserver?api-version=2017-12-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTU2NTZkMTAtNWIyMi00NzBiLTk5ZjctOWRiZTNkM2RmNWE3L3Jlc291cmNlR3JvdXBzL215c3Fsc2RrcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5EQkZvck15U1FML3NlcnZlcnMvbXlzcWxzZGtzZXJ2ZXI/YXBpLXZlcnNpb249MjAxNy0xMi0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
