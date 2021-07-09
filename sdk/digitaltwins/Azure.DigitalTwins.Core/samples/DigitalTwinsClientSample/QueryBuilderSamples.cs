@@ -171,6 +171,25 @@ namespace Azure.DigitalTwins.Core.Samples
                 .IsOfType("Temperature", AdtDataType.AdtNumber)
                 .Build();
             #endregion
+
+            AdtQueryBuilder selectAsSample = new AdtQueryBuilder()
+                .SelectAs("Temperature", "Temp")
+                .SelectAs("Humidity", "Hum")
+                .From(AdtCollection.DigitalTwins)
+                .Build();
+
+            AdtQueryBuilder anotherSelectAsSample = new AdtQueryBuilder()
+                .Select("T")
+                .SelectAs("Temperature", "Temp")
+                .SelectAs("Humidity", "Hum")
+                .From(AdtCollection.DigitalTwins)
+                .Build();
+
+            // figure out how to print
+                // When to print SELECT
+                // commas?
+            // figure out interfaces
+            // sealed classes
         }
     }
 }

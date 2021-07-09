@@ -94,6 +94,60 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
+        public void AdtQueryBuilder_Select_SelectAs()
+        {
+            new AdtQueryBuilder()
+                .SelectAs("Temperature", "Temp")
+                .SelectAs("Humidity", "Hum")
+                .From(AdtCollection.DigitalTwins)
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT Temperature AS Temp, Humidity AS Hum FROM DigitalTwins");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_Select_SelectAsChainedWithSelect()
+        {
+            new AdtQueryBuilder()
+                .Select("Occupants", "T")
+                .SelectAs("Temperature", "Temp")
+                .SelectAs("Humidity", "Hum")
+                .From(AdtCollection.DigitalTwins)
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT Occupants, T, Temperature AS Temp, Humidity AS Hum FROM DigitalTwins");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_Select_SelectAs_CustomFrom()
+        {
+            new AdtQueryBuilder()
+                .SelectAs("T.Temperature", "Temp")
+                .FromCustom("DigitalTwins T")
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT T.Temperature AS Temp FROM DigitalTwins T");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_Select_SelectAs_FromAlias()
+        {
+            new AdtQueryBuilder()
+                .Select("T.Temperature")
+                .SelectAs("T.Humidity", "Hum")
+                .From(AdtCollection.DigitalTwins, "T")
+                .Where()
+                .Compare("T.Temperature", QueryComparisonOperator.GreaterOrEqual, 50)
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT T.Temperature, T.Humidity AS Hum FROM DigitalTwins T WHERE T.Temperature >= 50");
+        }
+
+        [Test]
         public void AdtQueryBuilder_Where_Comparison()
         {
             new AdtQueryBuilder()

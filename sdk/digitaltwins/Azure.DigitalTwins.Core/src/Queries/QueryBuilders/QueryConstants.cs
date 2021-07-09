@@ -19,6 +19,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
         public const string And = "AND";
         public const string Or = "OR";
+        public const string As = "AS";
 
         public const string IsDefined = "IS_DEFINED";
         public const string IsNull = "IS_NULL";

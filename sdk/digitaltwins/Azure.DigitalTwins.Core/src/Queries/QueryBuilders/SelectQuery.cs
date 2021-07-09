@@ -11,17 +11,17 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public sealed class SelectQuery : QueryBase
     {
-        private readonly FromQuery _upstreamFromQuery;
+        private readonly SelectAsQuery _selectAs;
         private readonly AdtQueryBuilder _parent;
         private SelectClause _clause;
 
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
-        internal SelectQuery(AdtQueryBuilder parent, FromQuery upstreamFromQuery)
+        internal SelectQuery(AdtQueryBuilder parent, SelectAsQuery upstreamSelectAs)
         {
             _parent = parent;
-            _upstreamFromQuery = upstreamFromQuery;
+            _selectAs = upstreamSelectAs;
         }
 
         /// <summary>
@@ -29,20 +29,20 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="args"> The arguments that define what we select (e.g., *). </param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery Select(params string[] args)
+        public SelectAsQuery Select(params string[] args)
         {
             _clause = new SelectClause(args);
-            return _upstreamFromQuery;
+            return _selectAs;
         }
 
         /// <summary>
         /// Used to add a select clause and the all (*) argument to a query.
         /// </summary>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectAll()
+        public SelectAsQuery SelectAll()
         {
             _clause = new SelectClause(new string[]{ "*" });
-            return _upstreamFromQuery;
+            return _selectAs;
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <param name="count"> The argument for TOP(), ie the number of instances to return. </param>
         /// <param name="args"> The arguments that can be optionally passed with top (e.g., property name). </param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectTop(int count, params string[] args)
+        public SelectAsQuery SelectTop(int count, params string[] args)
         {
             var topArg = new StringBuilder().Append($"{QueryConstants.Top}({count})").Append(' ');
 
@@ -60,7 +60,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             topArg.Append(string.Join(", ", args));
 
             _clause = new SelectClause(new string[] { topArg.ToString() });
-            return _upstreamFromQuery;
+            return _selectAs;
         }
 
         /// <summary>
@@ -69,25 +69,25 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="count"> The argument for TOP(), i.e. the number of results to return. </param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectTopAll(int count)
+        public SelectAsQuery SelectTopAll(int count)
         {
             // turn into correct format -- eg. SELECT TOP(3)
             var topArg = new StringBuilder().Append($"{QueryConstants.Top}({count})").Append(' ');
 
             _clause = new SelectClause(new string[] { topArg.ToString() });
-            return _upstreamFromQuery;
+            return _selectAs;
         }
 
         /// <summary>
         /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-count">COUNT()</see> aggregate from the ADT query language.
         /// </summary>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectCount()
+        public SelectAsQuery SelectCount()
         {
             string countArg = $"{QueryConstants.Count}() ";
 
             _clause = new SelectClause(new string[] { countArg });
-            return _upstreamFromQuery;
+            return _selectAs;
         }
 
         /// <summary>
@@ -95,10 +95,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="customQuery"> Query in string format. </param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectCustom(string customQuery)
+        public SelectAsQuery SelectCustom(string customQuery)
         {
             _clause = new SelectClause(new string[] { customQuery });
-            return _upstreamFromQuery;
+            return _selectAs;
         }
 
         /// <inheritdoc/>
@@ -111,8 +111,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <inheritdoc/>
         public override string GetQueryText()
         {
+            if (_clause == null)
+            {
+                return string.Empty;
+            }
+
             var selectComponents = new StringBuilder();
-            selectComponents.Append(QueryConstants.Select).Append(' ');
             selectComponents.Append(string.Join(", ", _clause.ClauseArgs));
 
             return selectComponents.ToString().Trim();

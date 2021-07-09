@@ -19,6 +19,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             Collection = collection.ToString();
         }
 
+        internal FromClause(AdtCollection collection, string alias)
+        {
+            Collection = $"{collection} {alias}";
+        }
+
         internal FromClause(string literalCollection)
         {
             Collection = literalCollection;

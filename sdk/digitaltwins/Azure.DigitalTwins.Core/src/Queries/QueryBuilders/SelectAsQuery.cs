@@ -1,23 +1,38 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
-    /// Query object that already contains a select clause.
+    /// TODO.
     /// </summary>
-    public sealed class FromQuery : QueryBase
+    public sealed class SelectAsQuery : QueryBase
     {
-        private readonly WhereStatement _upsteamWhereStatement;
-        private readonly AdtQueryBuilder _parent;
-        private FromClause _clause;
+        private FromQuery _fromQuery;
+        private AdtQueryBuilder _parent;
+        private List<string> _clauses;
 
-        internal FromQuery(AdtQueryBuilder parent, WhereStatement upsteamWhereStatement)
+        internal SelectAsQuery(AdtQueryBuilder parent, FromQuery fromQuery)
         {
+            _fromQuery = fromQuery;
             _parent = parent;
-            _upsteamWhereStatement = upsteamWhereStatement;
+            _clauses = new List<string>();
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <param name="literal"></param>
+        /// <param name="alias"></param>
+        /// <returns></returns>
+        public SelectAsQuery SelectAs(string literal, string alias)
+        {
+            _clauses.Add($"{literal} {QueryConstants.As} {alias}");
+            return this;
         }
 
         /// <summary>
@@ -27,8 +42,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> ADT query with select and from clause. </returns>
         public WhereStatement From(AdtCollection collection)
         {
-            _clause = new FromClause(collection);
-            return _upsteamWhereStatement;
+            return _fromQuery.From(collection);
         }
 
         /// <summary>
@@ -39,8 +53,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns></returns>
         public WhereStatement From(AdtCollection collection, string alias)
         {
-            _clause = new FromClause(collection, alias);
-            return _upsteamWhereStatement;
+            return _fromQuery.From(collection, alias);
         }
 
         /// <summary>
@@ -51,25 +64,28 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> ADT query with select and from clause. </returns>
         public WhereStatement FromCustom(string collection)
         {
-            _clause = new FromClause(collection);
-            return _upsteamWhereStatement;
+            return _fromQuery.FromCustom(collection);
         }
+
+        // rest of From methods implemented in similar manner
 
         /// <inheritdoc/>
         public override AdtQueryBuilder Build()
         {
-            return _parent;
+            // Build can only be called on queries that have (at minimum) SELECT and FROM clauses
+            throw new InvalidOperationException("Invalid query: Missing a FROM clause.");
         }
 
         /// <inheritdoc/>
         public override string GetQueryText()
         {
-            var fromComponents = new StringBuilder();
-            fromComponents.Append(QueryConstants.From)
-                .Append(' ')
-                .Append(_clause.Collection);
+            if (_clauses.Count == 0)
+            {
+                return string.Empty;
+            }
 
-            return fromComponents.ToString();
+            string aliasedComponents = string.Join(", ", _clauses);
+            return aliasedComponents;
         }
     }
 }
