@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task TryGet()
         {
-            var foo = await Client.GetSubscriptions().TryGetAsync("/subscriptions/" + new Guid().ToString()).ConfigureAwait(false);
+            var foo = await Client.GetSubscriptions().TryGetAsync(new Guid().ToString()).ConfigureAwait(false);
             Assert.IsNull(foo);
             string subscriptionId = Client.DefaultSubscription.Id.SubscriptionId;
-            var subscription = await Client.GetSubscriptions().TryGetAsync("/subscriptions/" + subscriptionId).ConfigureAwait(false);
+            var subscription = await Client.GetSubscriptions().TryGetAsync(subscriptionId).ConfigureAwait(false);
             Assert.NotNull(subscription);
             Assert.IsTrue(subscription.Id.SubscriptionId.Equals(subscriptionId));
         }
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task DoesExist()
         {
-            var expectFalse = await Client.GetSubscriptions().DoesExistAsync("/subscriptions/" + new Guid().ToString()).ConfigureAwait(false);
+            var expectFalse = await Client.GetSubscriptions().DoesExistAsync(new Guid().ToString()).ConfigureAwait(false);
             Assert.IsFalse(expectFalse);
             string subscriptionId = Client.DefaultSubscription.Id.SubscriptionId;
-            var expectTrue = await Client.GetSubscriptions().DoesExistAsync("/subscriptions/" + subscriptionId).ConfigureAwait(false);
+            var expectTrue = await Client.GetSubscriptions().DoesExistAsync(subscriptionId).ConfigureAwait(false);
             Assert.IsTrue(expectTrue);
         }
     }
