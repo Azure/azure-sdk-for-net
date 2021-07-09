@@ -14,12 +14,12 @@ namespace Azure.Monitor.Query
     public class MetricsQueryOptions
     {
         /// <summary>
-        /// Gets or sets the time span over which the metric would be queried.
+        /// Gets or sets the timespan over which the metric will be queried.
         /// </summary>
         public DateTimeRange? TimeSpan { get; set; }
 
         /// <summary>
-        /// Gets ot sets the interval to sample metrics at.
+        /// Gets or sets the interval at which to sample metrics.
         /// </summary>
         public TimeSpan? Interval { get; set; }
 

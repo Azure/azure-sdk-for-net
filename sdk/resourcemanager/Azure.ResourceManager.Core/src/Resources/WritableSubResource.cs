@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Core
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Core
         /// Initializes an empty instance of <see cref="WritableSubResource"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        public WritableSubResource() 
+        public WritableSubResource()
         {
         }
 
@@ -30,16 +31,15 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     [ReferenceType(typeof(ResourceIdentifier))]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Types differ by type argument only")]
-    public partial class WritableSubResource <TIdentifier> : IEquatable<WritableSubResource<TIdentifier>>, IEquatable<string>,
-        IComparable<WritableSubResource<TIdentifier>>, IComparable<string> 
+    public partial class WritableSubResource <TIdentifier>
         where TIdentifier : ResourceIdentifier
     {
         /// <summary>
         /// Initializes an empty instance of <see cref="WritableSubResource{TIdentifier}"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        public WritableSubResource() 
-        { 
+        public WritableSubResource()
+        {
         }
 
         /// <summary> Initializes a new instance of <see cref="WritableSubResource{TIdentifier}"/>. </summary>
@@ -55,34 +55,5 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <value></value>
         public virtual TIdentifier Id { get; set; }
-
-        /// <inheritdoc/>
-        public int CompareTo(string other)
-        {
-            return string.Compare(Id, other, StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        /// <inheritdoc/>
-        public int CompareTo(WritableSubResource<TIdentifier> other)
-        {
-            if (other is null)
-                return 1;
-
-            if (ReferenceEquals(this, other))
-                return 0;
-            return Id.CompareTo(other.Id);
-        }
-
-        /// <inheritdoc/>
-        public bool Equals(WritableSubResource<TIdentifier> other)
-        {
-            return Id.Equals(other?.Id);
-        }
-
-        /// <inheritdoc/>
-        public bool Equals(string other)
-        {
-            return Id.Equals(other);
-        }
     }
 }

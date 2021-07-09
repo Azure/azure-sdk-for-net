@@ -6,6 +6,7 @@
     <ApiCompatVersion>7.2.0</ApiCompatVersion>
     <PackageTags>Azure;Service Bus;ServiceBus;.NET;AMQP;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
     <NoWarn>
       <!-- TODO: Investigate and remove suppressions https://github.com/Azure/azure-sdk-for-net/issues/17154 -->
       $(NoWarn);CA2213

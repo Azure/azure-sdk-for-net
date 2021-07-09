@@ -69,7 +69,10 @@ namespace Azure.Core.TestFramework
             {
                 invocation.ReturnValue = s_proxyGenerator.CreateClassProxyWithTarget(type, result, new IInterceptor[] { new ManagementInterceptor(_testBase) });
             }
-            else if (invocation.Method.Name.StartsWith("Get") && invocation.Method.Name.EndsWith("Enumerator"))
+            else if (invocation.Method.Name.StartsWith("Get") &&
+                invocation.Method.Name.EndsWith("Enumerator") &&
+                type.IsGenericType &&
+                type.GenericTypeArguments.FirstOrDefault(t => t.Name == "RestApi") == null)
             {
                 var wrapperType = typeof(AsyncPageableInterceptor<>);
                 var genericType = wrapperType.MakeGenericType(type.GetGenericArguments()[0]);

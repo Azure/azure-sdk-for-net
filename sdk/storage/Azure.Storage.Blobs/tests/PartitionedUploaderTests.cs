@@ -336,7 +336,7 @@ namespace Azure.Storage.Blobs.Test
                     IsAny<string>(),
                     IsAny<Stream>(),
                     IsAny<byte[]>(),
-                    s_conditions,
+                    IsAny<BlobRequestConditions>(),
                     IsAny<IProgress<long>>(),
                     _async,
                     s_cancellationToken

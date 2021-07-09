@@ -4208,7 +4208,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await FileRestClient.UploadRangeFromURLAsync(
                             range: range.ToString(),
-                            copySource: sourceUri.ToString(),
+                            copySource: sourceUri.AbsoluteUri,
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
@@ -4220,7 +4220,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = FileRestClient.UploadRangeFromURL(
                             range: range.ToString(),
-                            copySource: sourceUri.ToString(),
+                            copySource: sourceUri.AbsoluteUri,
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),

@@ -150,7 +150,7 @@ additional questions or comments.
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs.ChangeFeed/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Blobs.ChangeFeed/
 [product_docs]: https://docs.microsoft.com/azure/storage/blobs/storage-blob-change-feed
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org/
 [storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
 [storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell

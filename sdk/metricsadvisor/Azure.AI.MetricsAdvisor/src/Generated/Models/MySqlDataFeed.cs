@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
 
             DataSourceParameter = dataSourceParameter;
-            DataSourceType = DataFeedSourceType.MySql;
+            DataSourceType = DataFeedSourceKind.MySql;
         }
 
         /// <summary> Initializes a new instance of MySqlDataFeed. </summary>
@@ -71,7 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="authenticationType"> authentication type for corresponding data source. </param>
         /// <param name="credentialId"> The credential entity id. </param>
         /// <param name="dataSourceParameter"> . </param>
-        internal MySqlDataFeed(DataFeedSourceType dataSourceType, string dataFeedId, string dataFeedName, string dataFeedDescription, DataFeedGranularityType granularityName, int? granularityAmount, IList<DataFeedMetric> metrics, IList<DataFeedDimension> dimension, string timestampColumn, DateTimeOffset dataStartFrom, long? startOffsetInSeconds, int? maxConcurrency, long? minRetryIntervalInSeconds, long? stopRetryAfterInSeconds, DataFeedRollupType? needRollup, DataFeedAutoRollupMethod? rollUpMethod, IList<string> rollUpColumns, string allUpIdentification, DataFeedMissingDataPointFillType? fillMissingPointType, double? fillMissingPointValue, DataFeedAccessMode? viewMode, IList<string> admins, IList<string> viewers, bool? isAdmin, string creator, DataFeedStatus? status, DateTimeOffset? createdTime, string actionLinkTemplate, AuthenticationTypeEnum? authenticationType, string credentialId, SqlSourceParameter dataSourceParameter) : base(dataSourceType, dataFeedId, dataFeedName, dataFeedDescription, granularityName, granularityAmount, metrics, dimension, timestampColumn, dataStartFrom, startOffsetInSeconds, maxConcurrency, minRetryIntervalInSeconds, stopRetryAfterInSeconds, needRollup, rollUpMethod, rollUpColumns, allUpIdentification, fillMissingPointType, fillMissingPointValue, viewMode, admins, viewers, isAdmin, creator, status, createdTime, actionLinkTemplate, authenticationType, credentialId)
+        internal MySqlDataFeed(DataFeedSourceKind dataSourceType, string dataFeedId, string dataFeedName, string dataFeedDescription, DataFeedGranularityType granularityName, int? granularityAmount, IList<DataFeedMetric> metrics, IList<DataFeedDimension> dimension, string timestampColumn, DateTimeOffset dataStartFrom, long? startOffsetInSeconds, int? maxConcurrency, long? minRetryIntervalInSeconds, long? stopRetryAfterInSeconds, DataFeedRollupType? needRollup, DataFeedAutoRollupMethod? rollUpMethod, IList<string> rollUpColumns, string allUpIdentification, DataFeedMissingDataPointFillType? fillMissingPointType, double? fillMissingPointValue, DataFeedAccessMode? viewMode, IList<string> admins, IList<string> viewers, bool? isAdmin, string creator, DataFeedStatus? status, DateTimeOffset? createdTime, string actionLinkTemplate, AuthenticationTypeEnum? authenticationType, string credentialId, SqlSourceParameter dataSourceParameter) : base(dataSourceType, dataFeedId, dataFeedName, dataFeedDescription, granularityName, granularityAmount, metrics, dimension, timestampColumn, dataStartFrom, startOffsetInSeconds, maxConcurrency, minRetryIntervalInSeconds, stopRetryAfterInSeconds, needRollup, rollUpMethod, rollUpColumns, allUpIdentification, fillMissingPointType, fillMissingPointValue, viewMode, admins, viewers, isAdmin, creator, status, createdTime, actionLinkTemplate, authenticationType, credentialId)
         {
             DataSourceParameter = dataSourceParameter;
             DataSourceType = dataSourceType;

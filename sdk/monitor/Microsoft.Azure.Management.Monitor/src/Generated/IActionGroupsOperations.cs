@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Create a new action group or update an existing one.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='actionGroupName'>
         /// The name of the action group.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Get an action group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='actionGroupName'>
         /// The name of the action group.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Delete an action group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='actionGroupName'>
         /// The name of the action group.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// the CreateOrUpdate method.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='actionGroupName'>
         /// The name of the action group.
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Get a list of all action groups in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// for Email or SMS receivers.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='actionGroupName'>
         /// The name of the action group.

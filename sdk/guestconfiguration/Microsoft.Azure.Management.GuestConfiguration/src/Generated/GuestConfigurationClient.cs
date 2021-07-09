@@ -96,6 +96,16 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         public virtual IGuestConfigurationHCRPAssignmentReportsOperations GuestConfigurationHCRPAssignmentReports { get; private set; }
 
         /// <summary>
+        /// Gets the IGuestConfigurationAssignmentsVMSSOperations.
+        /// </summary>
+        public virtual IGuestConfigurationAssignmentsVMSSOperations GuestConfigurationAssignmentsVMSS { get; private set; }
+
+        /// <summary>
+        /// Gets the IGuestConfigurationAssignmentReportsVMSSOperations.
+        /// </summary>
+        public virtual IGuestConfigurationAssignmentReportsVMSSOperations GuestConfigurationAssignmentReportsVMSS { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -345,9 +355,11 @@ namespace Microsoft.Azure.Management.GuestConfiguration
             GuestConfigurationAssignmentReports = new GuestConfigurationAssignmentReportsOperations(this);
             GuestConfigurationHCRPAssignments = new GuestConfigurationHCRPAssignmentsOperations(this);
             GuestConfigurationHCRPAssignmentReports = new GuestConfigurationHCRPAssignmentReportsOperations(this);
+            GuestConfigurationAssignmentsVMSS = new GuestConfigurationAssignmentsVMSSOperations(this);
+            GuestConfigurationAssignmentReportsVMSS = new GuestConfigurationAssignmentReportsVMSSOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-06-25";
+            ApiVersion = "2021-01-25";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -23,10 +23,10 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CrossMetricsOperator))
+            if (Optional.IsDefined(ConditionOperator))
             {
                 writer.WritePropertyName("crossMetricsOperator");
-                writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
+                writer.WriteStringValue(ConditionOperator.Value.ToString());
             }
             if (Optional.IsCollectionDefined(SplitAlertByDimensions))
             {
@@ -60,10 +60,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<string> anomalyAlertingConfigurationId = default;
             string name = default;
             Optional<string> description = default;
-            Optional<MetricAnomalyAlertConfigurationsOperator> crossMetricsOperator = default;
+            Optional<DetectionConditionOperator> crossMetricsOperator = default;
             Optional<IList<string>> splitAlertByDimensions = default;
             IList<string> hookIds = default;
-            IList<MetricAnomalyAlertConfiguration> metricAlertingConfigurations = default;
+            IList<MetricAlertConfiguration> metricAlertingConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalyAlertingConfigurationId"))
@@ -88,7 +88,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    crossMetricsOperator = new MetricAnomalyAlertConfigurationsOperator(property.Value.GetString());
+                    crossMetricsOperator = new DetectionConditionOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("splitAlertByDimensions"))
@@ -118,10 +118,10 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("metricAlertingConfigurations"))
                 {
-                    List<MetricAnomalyAlertConfiguration> array = new List<MetricAnomalyAlertConfiguration>();
+                    List<MetricAlertConfiguration> array = new List<MetricAlertConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAnomalyAlertConfiguration.DeserializeMetricAnomalyAlertConfiguration(item));
+                        array.Add(MetricAlertConfiguration.DeserializeMetricAlertConfiguration(item));
                     }
                     metricAlertingConfigurations = array;
                     continue;

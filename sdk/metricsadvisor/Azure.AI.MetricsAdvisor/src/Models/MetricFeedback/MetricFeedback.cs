@@ -27,9 +27,9 @@ namespace Azure.AI.MetricsAdvisor
             DimensionFilter = dimensionFilter;
         }
 
-        /// <summary> The <see cref="FeedbackType"/> of this feedback.</summary>
+        /// <summary> The <see cref="MetricFeedbackKind"/> of this feedback.</summary>
         [CodeGenMember("FeedbackType")]
-        public FeedbackType Type { get; internal set; }
+        public MetricFeedbackKind Kind { get; internal set; }
 
         /// <summary> feedback unique id. </summary>
         [CodeGenMember("FeedbackId")]

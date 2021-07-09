@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception> 
+        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
         public ArmClient(
             string defaultSubscriptionId,
             TokenCredential credential,
@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Core
         /// <param name="baseUri"> The base URI of the service. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        private ArmClient(
+        public ArmClient(
             string defaultSubscriptionId,
             Uri baseUri,
             TokenCredential credential,
-            ArmClientOptions options)
+            ArmClientOptions options = default)
         {
             if (credential is null)
                 throw new ArgumentNullException(nameof(credential));
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Core
         /// Get the operations for a list of specific resources.
         /// </summary>
         /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
-        /// <returns></returns>
+        /// <returns> The list of operations that can be performed over the GenericResources. </returns>
         public virtual IList<GenericResourceOperations> GetGenericResourceOperations(IEnumerable<string> ids)
         {
             if (ids == null)
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Core
         /// Get the operations for an specific resource.
         /// </summary>
         /// <param name="id"> The id of the resource to retrieve. </param>
-        /// <returns></returns>
+        /// <returns> The operations that can be performed over a specific GenericResource. </returns>
         public virtual GenericResourceOperations GetGenericResourceOperations(string id)
         {
             if (id == null)
@@ -208,6 +208,16 @@ namespace Azure.ResourceManager.Core
             }
 
             return new GenericResourceOperations(DefaultSubscription, id);
+        }
+
+        /// <summary>
+        /// Gets the RestApi definition for a given Azure namespace.
+        /// </summary>
+        /// <param name="nameSpace"> The namespace to get the rest API for. </param>
+        /// <returns> A container representing the rest apis for the namespace. </returns>
+        public virtual RestApiContainer GetRestApis(string nameSpace)
+        {
+            return new RestApiContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), nameSpace);
         }
     }
 }
