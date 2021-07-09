@@ -1814,7 +1814,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 Name = name,
                 DataSource = dataSource,
-                Granularity = new DataFeedGranularity(DataFeedGranularityType.Custom) { CustomGranularityValue = 1360 },
+                Granularity = new DataFeedGranularity(DataFeedGranularityType.Custom) { CustomGranularityValue = 3000 },
                 Schema = new DataFeedSchema() { TimestampColumn = "timestamp" },
                 IngestionSettings = ingestionSettings,
                 Description = "This data feed was created to test the .NET client.",
@@ -1957,7 +1957,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(dataFeed.Granularity, Is.Not.Null);
             Assert.That(dataFeed.Granularity.GranularityType, Is.EqualTo(DataFeedGranularityType.Custom));
-            Assert.That(dataFeed.Granularity.CustomGranularityValue, Is.EqualTo(1360));
+            Assert.That(dataFeed.Granularity.CustomGranularityValue, Is.EqualTo(3000));
 
             Assert.That(dataFeed.Schema, Is.Not.Null);
             Assert.That(dataFeed.Schema.MetricColumns, Is.Not.Null);
