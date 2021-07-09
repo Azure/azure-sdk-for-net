@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement
         {
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
             _localPath = sourceLocalPath;
-            _destinationBlobClient = destinationClient.CloneClient();
+            _destinationBlobClient = destinationClient;
             _transferOptions = transferOptions;
             _uploadOptions = uploadOptions;
             TransferType = StorageTransferType.Upload;
@@ -71,7 +71,7 @@ namespace Azure.Storage.DataMovement
         {
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
             _localPath = destinationPath;
-            _sourceBlobClient = sourceClient.CloneClient();
+            _sourceBlobClient = sourceClient;
             _transferOptions = transferOptions;
             TransferType = StorageTransferType.Download;
             ProgressTracker = progressTracker;
@@ -97,7 +97,7 @@ namespace Azure.Storage.DataMovement
                     TransferType = StorageTransferType.ServiceSideSyncCopy;
                     break;
                 default: //CopyMethod.ServiceSideAsyncCopy
-                    TransferType = StorageTransferType.ServiceSideAyncCopy;
+                    TransferType = StorageTransferType.ServiceSideAsyncCopy;
                     break;
             }
             _transferOptions = transferOptions;

@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement
         /// Add upload job to perform.
         /// </summary>//
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<StorageTransferResults> ScheduleUploadJobAsync(
+        public async Task<StorageTransferResults> ScheduleUploadAsync(
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             string sourceLocalPath,
             BlobClient destinationClient,
@@ -71,7 +71,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// TODO: remove suppresion
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<StorageTransferResults> ScheduleDownloadJobAsync(
+        public async Task<StorageTransferResults> ScheduleDownloadAsync(
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             BlobClient sourceClient,
             string destinationLocalPath,
@@ -94,7 +94,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// TODO: remove suppression
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<StorageTransferResults> ScheduleUploadDirectoryJobAsync(
+        public async Task<StorageTransferResults> ScheduleUploadDirectoryAsync(
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             string sourceLocalPath,
             BlobDirectoryClient destinationClient,
@@ -114,18 +114,41 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// Add upload job to perform.
+        /// </summary>
+        /// TODO: remove suppression
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public async Task<StorageTransferResults> ScheduleDownloadDirectoryAsync(
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+            BlobDirectoryClient sourceClient,
+            string destinationLocalPath,
+            StorageTransferOptions transferOptions = default,
+            IProgress<StorageTransferStatus> progressTracker = default,
+            CancellationToken token = default)
+        {
+            //TODO: if check the local path exists and not a directory
+            // or we can go and check at the start of the job, to prevent
+            // having to check the existence of the path twice.
+            BlobDirectoryTransferJob transferJob = new BlobDirectoryTransferJob(sourceClient, destinationLocalPath, transferOptions, progressTracker, token);
+            _toScanQueue.Enqueue(transferJob);
+
+            // TODO; remove stub
+            return new StorageTransferResults();
+        }
+
+        /// <summary>
         /// Pause transfers.
         /// </summary>
         /// TODO: Returns actual object, or at least in a designated log
         /// file we have a place where people can continue transfers
-        public static void PauseTransfer()
+        public static void PauseTransfers()
         {
         }
 
         /// <summary>
         /// Cancel Transfers
         /// </summary>
-        public static void CancelTransfer()
+        public static void CancelTransfers()
         {
             // This would remove all transfers from the queue and not log the current progress
             // to the file. Maybe we would also remove the file too as a part of cleanup.
