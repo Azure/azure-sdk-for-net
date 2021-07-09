@@ -231,7 +231,7 @@ namespace Azure.AI.Personalizer.Models
     {
         public MultiSlotRankRequest() { }
         public MultiSlotRankRequest(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.RankableAction> actions, System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.SlotRequest> slots) { }
-        public MultiSlotRankRequest(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.RankableAction> actions, System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.SlotRequest> slots, System.Collections.Generic.IList<object> contextFeatures = null, string eventId = null) { }
+        public MultiSlotRankRequest(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.RankableAction> actions, System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.SlotRequest> slots, System.Collections.Generic.IList<object> contextFeatures = null, string eventId = null, bool deferActivation = false) { }
         public System.Collections.Generic.IList<Azure.AI.Personalizer.Models.RankableAction> Actions { get { throw null; } }
         public System.Collections.Generic.IList<object> ContextFeatures { get { throw null; } }
         public bool? DeferActivation { get { throw null; } set { } }
