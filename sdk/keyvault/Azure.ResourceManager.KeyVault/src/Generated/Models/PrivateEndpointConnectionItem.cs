@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Private endpoint connection item. </summary>
     public partial class PrivateEndpointConnectionItem : SubResource<ResourceIdentifier>

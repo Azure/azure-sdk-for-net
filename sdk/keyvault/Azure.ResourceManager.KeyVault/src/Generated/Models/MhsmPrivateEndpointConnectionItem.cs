@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Private endpoint connection item. </summary>
     public partial class MhsmPrivateEndpointConnectionItem

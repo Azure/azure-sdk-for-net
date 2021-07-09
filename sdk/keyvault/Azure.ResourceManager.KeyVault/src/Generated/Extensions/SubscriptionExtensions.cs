@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class to add extension methods to Subscription. </summary>
     public static partial class SubscriptionExtensions

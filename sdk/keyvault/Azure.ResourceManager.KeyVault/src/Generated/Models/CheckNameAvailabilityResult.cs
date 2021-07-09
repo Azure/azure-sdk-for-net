@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> The CheckNameAvailability operation response. </summary>
     public partial class CheckNameAvailabilityResult

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Properties of the vault. </summary>
     public partial class VaultProperties

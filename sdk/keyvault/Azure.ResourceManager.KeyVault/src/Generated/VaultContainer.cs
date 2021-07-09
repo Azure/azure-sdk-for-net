@@ -13,9 +13,8 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using KeyVaultManagementClient.Models;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing collection of Vault and their operations over a ResourceGroup. </summary>
     public partial class VaultContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, Vault, VaultData>
@@ -324,56 +323,6 @@ namespace KeyVaultManagementClient
                 var filters = new ResourceFilterCollection(VaultOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
                 return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update access policies in a key vault in the specified subscription. </summary>
-        /// <param name="parameters"> Access policy to merge into the vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VaultContainer.UpdateAccessPolicy");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.UpdateAccessPolicyAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update access policies in a key vault in the specified subscription. </summary>
-        /// <param name="parameters"> Access policy to merge into the vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<VaultAccessPolicyParameters> UpdateAccessPolicy(VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("VaultContainer.UpdateAccessPolicy");
-            scope.Start();
-            try
-            {
-                var response = _restClient.UpdateAccessPolicy(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> List of deleted managed HSM Pools. </summary>
     internal partial class DeletedManagedHsmListResult

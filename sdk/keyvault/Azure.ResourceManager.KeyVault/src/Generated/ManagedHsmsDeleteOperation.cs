@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Deletes the specified managed HSM Pool. </summary>
     public partial class ManagedHsmsDeleteOperation : Operation

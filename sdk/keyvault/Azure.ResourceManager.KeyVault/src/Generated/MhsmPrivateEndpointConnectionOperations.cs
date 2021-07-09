@@ -13,9 +13,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using KeyVaultManagementClient.Models;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the operations that can be performed over a specific MhsmPrivateEndpointConnection. </summary>
     public partial class MhsmPrivateEndpointConnectionOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, MhsmPrivateEndpointConnection>

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A private link resource. </summary>
     public partial class PrivateLinkResource : Resource

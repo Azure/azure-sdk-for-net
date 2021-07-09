@@ -12,9 +12,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using KeyVaultManagementClient.Models;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Deletes the specified private endpoint connection associated with the key vault. </summary>
     public partial class PrivateEndpointConnectionsDeleteOperation : Operation<PrivateEndpointConnectionData>, IOperationSource<PrivateEndpointConnectionData>

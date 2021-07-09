@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A rule governing the accessibility of a vault from a specific virtual network. </summary>
     public partial class VirtualNetworkRule : WritableSubResource<ResourceIdentifier>

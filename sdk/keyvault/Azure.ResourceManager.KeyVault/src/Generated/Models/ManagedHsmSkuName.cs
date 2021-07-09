@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> SKU of the managed HSM Pool. </summary>
     public enum ManagedHsmSkuName

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> The error exception. </summary>
     internal partial class ManagedHsmError

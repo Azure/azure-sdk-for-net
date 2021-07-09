@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> The type of identity. </summary>
     public readonly partial struct IdentityType : IEquatable<IdentityType>

@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Deleted vault information with extended details. </summary>
     public partial class DeletedVault : Resource<TenantResourceIdentifier>

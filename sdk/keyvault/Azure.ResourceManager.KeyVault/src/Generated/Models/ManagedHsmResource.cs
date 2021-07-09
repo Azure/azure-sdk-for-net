@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.ResourceManager.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Managed HSM resource. </summary>
     public partial class ManagedHsmResource : TrackedResource<ResourceGroupResourceIdentifier>

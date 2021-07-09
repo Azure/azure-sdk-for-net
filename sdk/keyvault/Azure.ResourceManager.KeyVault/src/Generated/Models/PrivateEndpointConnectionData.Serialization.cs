@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     public partial class PrivateEndpointConnectionData : IUtf8JsonSerializable
     {

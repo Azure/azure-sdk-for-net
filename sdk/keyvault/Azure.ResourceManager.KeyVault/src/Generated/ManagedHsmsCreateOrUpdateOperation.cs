@@ -13,9 +13,8 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using KeyVaultManagementClient.Models;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Create or update a managed HSM Pool in the specified subscription. </summary>
     public partial class ManagedHsmsCreateOrUpdateOperation : Operation<ManagedHsm>, IOperationSource<ManagedHsm>

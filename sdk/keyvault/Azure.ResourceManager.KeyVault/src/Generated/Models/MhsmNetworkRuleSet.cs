@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A set of rules governing the network accessibility of a managed hsm pool. </summary>
     public partial class MhsmNetworkRuleSet

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
     public readonly partial struct ActionsRequired : IEquatable<ActionsRequired>

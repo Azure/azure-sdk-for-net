@@ -6,15 +6,15 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using KeyVaultManagementClient.Models;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     internal partial class VaultsRestOperations
     {
@@ -139,7 +139,7 @@ namespace KeyVaultManagementClient
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string vaultName, VaultPatchParameters parameters)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string vaultName, IDictionary<string, string> tags, VaultPatchProperties properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -156,8 +156,20 @@ namespace KeyVaultManagementClient
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            VaultPatchParameters vaultPatchParameters = new VaultPatchParameters()
+            {
+                Properties = properties
+            };
+            if (tags != null)
+            {
+                foreach (var value in tags)
+                {
+                    vaultPatchParameters.Tags.Add(value);
+                }
+            }
+            var model = vaultPatchParameters;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -165,10 +177,11 @@ namespace KeyVaultManagementClient
         /// <summary> Update a key vault in the specified subscription. </summary>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the server belongs. </param>
         /// <param name="vaultName"> Name of the vault. </param>
-        /// <param name="parameters"> Parameters to patch the vault. </param>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<VaultData>> UpdateAsync(string resourceGroupName, string vaultName, VaultPatchParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
+        public async Task<Response<VaultData>> UpdateAsync(string resourceGroupName, string vaultName, IDictionary<string, string> tags = null, VaultPatchProperties properties = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -178,12 +191,8 @@ namespace KeyVaultManagementClient
             {
                 throw new ArgumentNullException(nameof(vaultName));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var message = CreateUpdateRequest(resourceGroupName, vaultName, parameters);
+            using var message = CreateUpdateRequest(resourceGroupName, vaultName, tags, properties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -203,10 +212,11 @@ namespace KeyVaultManagementClient
         /// <summary> Update a key vault in the specified subscription. </summary>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the server belongs. </param>
         /// <param name="vaultName"> Name of the vault. </param>
-        /// <param name="parameters"> Parameters to patch the vault. </param>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<VaultData> Update(string resourceGroupName, string vaultName, VaultPatchParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
+        public Response<VaultData> Update(string resourceGroupName, string vaultName, IDictionary<string, string> tags = null, VaultPatchProperties properties = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -216,12 +226,8 @@ namespace KeyVaultManagementClient
             {
                 throw new ArgumentNullException(nameof(vaultName));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var message = CreateUpdateRequest(resourceGroupName, vaultName, parameters);
+            using var message = CreateUpdateRequest(resourceGroupName, vaultName, tags, properties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -389,109 +395,6 @@ namespace KeyVaultManagementClient
                         VaultData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = VaultData.DeserializeVaultData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateAccessPolicyRequest(string resourceGroupName, string vaultName, AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.KeyVault/vaults/", false);
-            uri.AppendPath(vaultName, true);
-            uri.AppendPath("/accessPolicies/", false);
-            uri.AppendPath(operationKind.ToSerialString(), true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Update access policies in a key vault in the specified subscription. </summary>
-        /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
-        /// <param name="vaultName"> Name of the vault. </param>
-        /// <param name="operationKind"> Name of the operation. </param>
-        /// <param name="parameters"> Access policy to merge into the vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(string resourceGroupName, string vaultName, AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateUpdateAccessPolicyRequest(resourceGroupName, vaultName, operationKind, parameters);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        VaultAccessPolicyParameters value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VaultAccessPolicyParameters.DeserializeVaultAccessPolicyParameters(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Update access policies in a key vault in the specified subscription. </summary>
-        /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
-        /// <param name="vaultName"> Name of the vault. </param>
-        /// <param name="operationKind"> Name of the operation. </param>
-        /// <param name="parameters"> Access policy to merge into the vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<VaultAccessPolicyParameters> UpdateAccessPolicy(string resourceGroupName, string vaultName, AccessPolicyUpdateKind operationKind, VaultAccessPolicyParameters parameters, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateUpdateAccessPolicyRequest(resourceGroupName, vaultName, operationKind, parameters);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        VaultAccessPolicyParameters value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VaultAccessPolicyParameters.DeserializeVaultAccessPolicyParameters(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -917,7 +820,7 @@ namespace KeyVaultManagementClient
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(VaultCheckNameAvailabilityParameters vaultName)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -931,24 +834,25 @@ namespace KeyVaultManagementClient
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            var model = new VaultCheckNameAvailabilityParameters(name);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(vaultName);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
         /// <summary> Checks that the vault name is valid and is not already in use. </summary>
-        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="name"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(vaultName));
+                throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateCheckNameAvailabilityRequest(vaultName);
+            using var message = CreateCheckNameAvailabilityRequest(name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -965,17 +869,17 @@ namespace KeyVaultManagementClient
         }
 
         /// <summary> Checks that the vault name is valid and is not already in use. </summary>
-        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="name"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string name, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(vaultName));
+                throw new ArgumentNullException(nameof(name));
             }
 
-            using var message = CreateCheckNameAvailabilityRequest(vaultName);
+            using var message = CreateCheckNameAvailabilityRequest(name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Permanently deletes the specified managed HSM. </summary>
     public partial class ManagedHsmsPurgeDeletedOperation : Operation

@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     public partial class PrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.ResourceManager.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the ManagedHsm data model. </summary>
     public partial class ManagedHsmData : ManagedHsmResource

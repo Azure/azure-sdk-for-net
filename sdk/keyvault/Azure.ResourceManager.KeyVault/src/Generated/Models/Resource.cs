@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Key Vault resource. </summary>
     public partial class Resource : Resource<ResourceGroupResourceIdentifier>

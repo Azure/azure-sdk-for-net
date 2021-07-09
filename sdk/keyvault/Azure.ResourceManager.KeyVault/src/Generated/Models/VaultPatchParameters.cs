@@ -8,10 +8,10 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Parameters for creating or updating a vault. </summary>
-    public partial class VaultPatchParameters
+    internal partial class VaultPatchParameters
     {
         /// <summary> Initializes a new instance of VaultPatchParameters. </summary>
         public VaultPatchParameters()

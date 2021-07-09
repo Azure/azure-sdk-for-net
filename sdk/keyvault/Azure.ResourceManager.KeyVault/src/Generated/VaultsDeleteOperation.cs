@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Deletes the specified Azure key vault. </summary>
     public partial class VaultsDeleteOperation : Operation

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A rule governing the accessibility of a vault from a specific ip address or ip range. </summary>
     public partial class IPRule

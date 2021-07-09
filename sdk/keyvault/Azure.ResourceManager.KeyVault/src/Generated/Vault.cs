@@ -8,9 +8,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
-using KeyVaultManagementClient.Models;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A Class representing a Vault along with the instance operations that can be performed on it. </summary>
     public class Vault : VaultOperations

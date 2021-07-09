@@ -13,9 +13,8 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using KeyVaultManagementClient.Models;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing collection of ManagedHsm and their operations over a ResourceGroup. </summary>
     public partial class ManagedHsmContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, ManagedHsm, ManagedHsmData>

@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Core;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> The DeletedManagedHsm. </summary>
     public partial class DeletedManagedHsm : Resource<TenantResourceIdentifier>

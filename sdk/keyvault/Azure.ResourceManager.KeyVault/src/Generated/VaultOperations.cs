@@ -13,9 +13,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
-using KeyVaultManagementClient.Models;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the operations that can be performed over a specific Vault. </summary>
     public partial class VaultOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, Vault>
@@ -164,21 +163,16 @@ namespace KeyVaultManagementClient
             }
         }
         /// <summary> Update a key vault in the specified subscription. </summary>
-        /// <param name="parameters"> Parameters to patch the vault. </param>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<VaultData>> UpdateAsync(VaultPatchParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VaultData>> UpdateAsync(IDictionary<string, string> tags = null, VaultPatchProperties properties = null, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             using var scope = _clientDiagnostics.CreateScope("VaultOperations.Update");
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, tags, properties, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -189,21 +183,16 @@ namespace KeyVaultManagementClient
         }
 
         /// <summary> Update a key vault in the specified subscription. </summary>
-        /// <param name="parameters"> Parameters to patch the vault. </param>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<VaultData> Update(VaultPatchParameters parameters, CancellationToken cancellationToken = default)
+        public virtual Response<VaultData> Update(IDictionary<string, string> tags = null, VaultPatchProperties properties = null, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             using var scope = _clientDiagnostics.CreateScope("VaultOperations.Update");
             scope.Start();
             try
             {
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, tags, properties, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -250,21 +239,21 @@ namespace KeyVaultManagementClient
         }
 
         /// <summary> Checks that the vault name is valid and is not already in use. </summary>
-        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="name"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(vaultName));
+                throw new ArgumentNullException(nameof(name));
             }
 
             using var scope = _clientDiagnostics.CreateScope("VaultOperations.CheckNameAvailability");
             scope.Start();
             try
             {
-                var response = await _restClient.CheckNameAvailabilityAsync(vaultName, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CheckNameAvailabilityAsync(name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -275,21 +264,21 @@ namespace KeyVaultManagementClient
         }
 
         /// <summary> Checks that the vault name is valid and is not already in use. </summary>
-        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="name"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(VaultCheckNameAvailabilityParameters vaultName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(string name, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(vaultName));
+                throw new ArgumentNullException(nameof(name));
             }
 
             using var scope = _clientDiagnostics.CreateScope("VaultOperations.CheckNameAvailability");
             scope.Start();
             try
             {
-                var response = _restClient.CheckNameAvailability(vaultName, cancellationToken);
+                var response = _restClient.CheckNameAvailability(name, cancellationToken);
                 return response;
             }
             catch (Exception e)

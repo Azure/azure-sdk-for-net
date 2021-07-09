@@ -11,9 +11,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
-using KeyVaultManagementClient.Models;
 
-namespace KeyVaultManagementClient
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Updates the specified private endpoint connection associated with the key vault. </summary>
     public partial class PrivateEndpointConnectionsPutOperation : Operation<PrivateEndpointConnection>

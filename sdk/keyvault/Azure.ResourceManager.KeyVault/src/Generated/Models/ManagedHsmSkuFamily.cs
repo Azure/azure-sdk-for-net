@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> SKU Family of the managed HSM Pool. </summary>
     public readonly partial struct ManagedHsmSkuFamily : IEquatable<ManagedHsmSkuFamily>

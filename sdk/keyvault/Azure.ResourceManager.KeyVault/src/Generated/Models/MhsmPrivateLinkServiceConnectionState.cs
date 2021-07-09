@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace KeyVaultManagementClient.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> An object that represents the approval state of the private link connection. </summary>
     public partial class MhsmPrivateLinkServiceConnectionState
