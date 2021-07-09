@@ -43,6 +43,8 @@ namespace Azure.ResourceManager.Core.Tests
             string subscriptionId = Client.DefaultSubscription.Id.SubscriptionId;
             Subscription result = await Client.GetSubscriptions().GetAsync(subscriptionId).ConfigureAwait(false);
             Assert.AreEqual(subscriptionId, result.Id.SubscriptionId);
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetSubscriptions().GetAsync(null).ConfigureAwait(false));
         }
 
         [TestCase]
@@ -55,6 +57,5 @@ namespace Azure.ResourceManager.Core.Tests
             var expectTrue = await Client.GetSubscriptions().DoesExistAsync("/subscriptions/" + subscriptionId).ConfigureAwait(false);
             Assert.IsTrue(expectTrue);
         }
-
     }
 }
