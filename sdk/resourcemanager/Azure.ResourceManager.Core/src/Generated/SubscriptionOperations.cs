@@ -67,6 +67,8 @@ namespace Azure.ResourceManager.Core
 
         private SubscriptionsRestOperations RestClient => new SubscriptionsRestOperations(Diagnostics, Pipeline, BaseUri);
 
+        private FeaturesRestOperations FeaturesRestOperations => new FeaturesRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+
         /// <summary>
         /// Gets the resource group container under this subscription.
         /// </summary>
@@ -211,6 +213,80 @@ namespace Azure.ResourceManager.Core
         public virtual PreDefinedTagOperations GetPreDefinedTagOperations()
         {
             return new PreDefinedTagOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+        }
+
+        /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<Feature> ListFeatures(CancellationToken cancellationToken = default)
+        {
+            Page<Feature> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListFeatures");
+                scope.Start();
+                try
+                {
+                    var response = FeaturesRestOperations.ListAll(cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListFeatures");
+                scope.Start();
+                try
+                {
+                    var response = FeaturesRestOperations.ListAllNextPage(nextLink, cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<Feature> ListFeaturesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListFeatures");
+                scope.Start();
+                try
+                {
+                    var response = await FeaturesRestOperations.ListAllAsync(cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListFeatures");
+                scope.Start();
+                try
+                {
+                    var response = await FeaturesRestOperations.ListAllNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

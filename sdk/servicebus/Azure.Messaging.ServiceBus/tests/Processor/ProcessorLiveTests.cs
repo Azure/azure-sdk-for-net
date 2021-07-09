@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -248,7 +249,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(20, 1)]
         public async Task MaxAutoLockRenewalDurationRespected(int numThreads, int autoLockRenewalDuration)
         {
-            var lockDuration = TimeSpan.FromSeconds(5);
+            var lockDuration = ShortLockDuration;
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: false,
@@ -285,18 +286,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
                     var message = args.Message;
-                    // wait 2x lock duration in case the
-                    // lock was renewed already
-                    await Task.Delay(lockDuration.Add(lockDuration));
+                    // wait until 5 seconds past the locked until time
+                    await Task.Delay(message.LockedUntil.Subtract(DateTimeOffset.UtcNow).Add(TimeSpan.FromSeconds(5)));
                     var lockedUntil = message.LockedUntil;
                     if (!args.CancellationToken.IsCancellationRequested)
                     {
                         // only do the assertion if cancellation wasn't requested as otherwise
                         // the exception we would get is a TaskCanceledException rather than ServiceBusException
                         Assert.AreEqual(lockedUntil, message.LockedUntil);
-                        Assert.That(
-                            async () => await args.CompleteMessageAsync(message, args.CancellationToken),
-                            Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessageLockLost));
+                        ServiceBusException exception = await AsyncAssert.ThrowsAsync<ServiceBusException>(
+                            async () => await args.CompleteMessageAsync(message, args.CancellationToken));
+                        Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, exception.Reason);
                         Interlocked.Increment(ref messageCt);
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
                         if (setIndex < numThreads)
@@ -604,7 +604,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
-                enableSession: false))
+                enableSession: false,
+                lockDuration: ShortLockDuration))
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
@@ -655,7 +656,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 await processor.StopProcessingAsync();
                 var receiver = client.CreateReceiver(scope.QueueName);
-                var msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
+                var msg = await receiver.ReceiveMessageAsync(ShortLockDuration);
                 if (settleMethod == "" || settleMethod == "Abandon")
                 {
                     // if the message is abandoned (whether by user callback or
@@ -833,7 +834,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [Test]
         public async Task AutoLockRenewalContinuesUntilProcessingCompletes()
         {
-            var lockDuration = TimeSpan.FromSeconds(10);
+            var lockDuration = ShortLockDuration;
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
             {
                 await using var client = CreateClient();

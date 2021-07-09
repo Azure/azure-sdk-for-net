@@ -1,15 +1,20 @@
 # Release History
 
-## 5.0.0-beta.7 (Unreleased)
+## 5.0.0-beta.8 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-### Key Bugs Fixed
+### Bugs Fixed
 
-### Fixed
+### Other Changes
 
+## 5.0.0-beta.7 (2021-07-07)
+
+### Breaking Changes
+
+- Renamed `MaxBatchSize` to `MaxEventBatchSize` in `EventHubsOptions`.
 
 ## 5.0.0-beta.6 (2021-06-09)
 

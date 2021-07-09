@@ -6,8 +6,8 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Used as part of a <see cref="MetricBoundaryCondition"/>. Specifies which measure type should be
-    /// used when checking boundaries. Defaults to <see cref="BoundaryMeasureType.Value"/>.
+    /// Used as part of a <see cref="MetricBoundaryCondition"/>. Specifies which measure should be
+    /// used when checking boundaries. Defaults to <see cref="Value"/>.
     /// </summary>
     [CodeGenModel("ValueType")]
     public readonly partial struct BoundaryMeasureType

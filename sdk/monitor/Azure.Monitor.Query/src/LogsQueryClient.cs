@@ -27,6 +27,9 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
+        /// <code snippet="Snippet:CreateLogsClient" language="csharp">
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        /// </code>
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public LogsQueryClient(TokenCredential credential) : this(credential, null)
@@ -86,7 +89,7 @@ namespace Azure.Monitor.Query
         /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     TimeSpan.FromDays(1));
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         ///
         /// Example of querying a primitive:
@@ -94,7 +97,7 @@ namespace Azure.Monitor.Query
         /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
-        ///     TimeSpan.FromDays(1));
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
@@ -118,7 +121,7 @@ namespace Azure.Monitor.Query
         /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     TimeSpan.FromDays(1));
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         ///
         /// Example of querying a primitive:
@@ -126,7 +129,7 @@ namespace Azure.Monitor.Query
         /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
-        ///     TimeSpan.FromDays(1));
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         /// </summary>
         /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
@@ -193,10 +196,9 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Submits the batch query. Use the <see cref="LogsBatchQuery"/> to compose a batch query.
         /// <code snippet="Snippet:BatchQuery" language="csharp">
-        /// var endpoint = new Uri(&quot;https://api.loganalytics.io&quot;);
         /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
         ///
-        /// var client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
         /// // Query TOP 10 resource groups by event count
         /// // And total event count
@@ -205,11 +207,11 @@ namespace Azure.Monitor.Query
         /// string countQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     TimeSpan.FromDays(1));
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     TimeSpan.FromDays(1));
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
         ///
@@ -247,10 +249,9 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Submits the batch query. Use the <see cref="LogsBatchQuery"/> to compose a batch query.
         /// <code snippet="Snippet:BatchQuery" language="csharp">
-        /// var endpoint = new Uri(&quot;https://api.loganalytics.io&quot;);
         /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
         ///
-        /// var client = new LogsQueryClient(endpoint, new DefaultAzureCredential());
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
         /// // Query TOP 10 resource groups by event count
         /// // And total event count
@@ -259,11 +260,11 @@ namespace Azure.Monitor.Query
         /// string countQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     TimeSpan.FromDays(1));
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     TimeSpan.FromDays(1));
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
         ///

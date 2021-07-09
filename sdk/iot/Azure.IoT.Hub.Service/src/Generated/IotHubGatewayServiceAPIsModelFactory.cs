@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.IoT.Hub.Service.Models;
 
-namespace Azure.IoT.Hub.Service
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class IotHubGatewayServiceAPIsModelFactory

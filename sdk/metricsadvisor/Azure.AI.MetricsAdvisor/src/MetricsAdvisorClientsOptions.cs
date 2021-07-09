@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// The set of options that can be specified when creating a <see cref="MetricsAdvisorClient" />
-    /// to configure its behavior.
+    /// The set of options that can be specified when creating a <see cref="MetricsAdvisorClient" /> or
+    /// a <see cref="MetricsAdvisorAdministrationClient"/> to configure its behavior.
     /// </summary>
     public class MetricsAdvisorClientsOptions : ClientOptions
     {
