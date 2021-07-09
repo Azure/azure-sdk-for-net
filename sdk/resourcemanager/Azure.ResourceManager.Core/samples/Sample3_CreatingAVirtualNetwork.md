@@ -8,6 +8,7 @@ These are the naspaces needed for this project:
 ```C# Snippet:Creating_A_Virtual_Network_Namespaces
 using System.Threading.Tasks;
 using Azure.Identity;
+using Azure.ResourceManager.Core;
 ```
 
 In addition, you need to install the `Azure.ResourceManager.Compute` library in your project and import it.

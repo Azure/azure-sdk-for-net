@@ -7,6 +7,7 @@ Namespaces for this example:
 using System;
 using System.Threading.Tasks;
 using Azure.Identity;
+using Azure.ResourceManager.Core;
 ```
 
 The following code shows how to get the default subscription:
