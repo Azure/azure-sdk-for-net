@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement.Models
         /// <see href="https://docs.microsoft.com/en-us/dotnet/api/azure.storage.blobs.specialized.blobbaseclient.startcopyfromuri?view=azure-dotnet">BlobBaseClient.StartCopyFromUri</see>
         /// For SMB Files <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-file">Copy File</see>
         /// </summary>
-        ServiceSideAyncCopy,
+        ServiceSideAsyncCopy,
 
         /// <summary>
         /// For block blob sends <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">Put Blob From Url</see>

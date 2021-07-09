@@ -48,8 +48,8 @@ namespace Azure.Storage
     {
         public StorageTransferStatus() { }
         public long bytesTransferred { get { throw null; } }
-        public long failedTransfer { get { throw null; } }
-        public long skippedTransfer { get { throw null; } }
+        public long failedTransfers { get { throw null; } }
+        public long skippedTransfers { get { throw null; } }
         public long successfulTransfers { get { throw null; } }
     }
 }

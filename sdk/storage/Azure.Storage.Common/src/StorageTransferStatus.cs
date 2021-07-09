@@ -25,11 +25,11 @@ namespace Azure.Storage
         /// <summary>
         /// Number of files that failed/
         /// </summary>
-        public long failedTransfer { get; internal set; }
+        public long failedTransfers { get; internal set; }
 
         /// <summary>
         /// Number of files that were skipped.
         /// </summary>
-        public long skippedTransfer { get; internal set; }
+        public long skippedTransfers { get; internal set; }
     }
 }
