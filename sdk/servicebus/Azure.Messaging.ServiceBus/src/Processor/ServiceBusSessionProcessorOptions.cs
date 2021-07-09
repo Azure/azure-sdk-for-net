@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus
         /// the message will not be automatically completed.
         /// </summary>
         ///
-        /// <value>true to complete the message automatically on successful execution of the message handler; otherwise, false.
+        /// <value><c>true</c> to complete the message automatically on successful execution of the message handler; otherwise, <c>false</c>.
         /// The default value is <c>true</c>.</value>
         public bool AutoCompleteMessages { get; set; } = true;
 
