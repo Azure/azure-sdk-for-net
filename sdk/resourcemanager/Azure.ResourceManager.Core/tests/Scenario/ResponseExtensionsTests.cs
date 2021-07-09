@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task GetCorrelationId()
         {
-            var correlationId = Guid.NewGuid().ToString();
+            var correlationId = "0a98bb8b-ec3e-4f68-a8c1-a7705554a980";
             var pipeline = Client.DefaultSubscription.Pipeline;
             var endpoint = new Uri("https://management.azure.com");
             var message = pipeline.CreateMessage();
@@ -31,10 +31,9 @@ namespace Azure.ResourceManager.Core.Tests
             uri.AppendQuery("api-version", "2019-11-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("x-ms-correlation-id", correlationId);
+            request.Headers.Add("x-ms-correlation-request-id", correlationId);
 
             await pipeline.SendAsync(message, default).ConfigureAwait(false);
-
             var response = message.Response;
             Assert.AreEqual(correlationId, ResponseExtensions.GetCorrelationId(response));
         }
