@@ -38,7 +38,9 @@ namespace Azure.ResourceManager.Core
         {
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets the resource identifier.
+        /// </summary>
         public new SubscriptionResourceIdentifier Id => base.Id as SubscriptionResourceIdentifier;
 
         private ProviderRestOperations RestClient

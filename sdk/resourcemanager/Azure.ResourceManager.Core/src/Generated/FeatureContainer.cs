@@ -39,7 +39,9 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc />
         protected override ResourceType ValidResourceType => ProviderOperations.ResourceType;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the resource identifier.
+        /// </summary>
         public new SubscriptionProviderIdentifier Id => base.Id as SubscriptionProviderIdentifier;
 
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
@@ -116,7 +118,9 @@ namespace Azure.ResourceManager.Core
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <inheritdoc/>
+        /// <summary> Gets the preview feature with the specified name. </summary>
+        /// <param name="featureName"> The name of the feature to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Feature> Get(string featureName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FeatureContainer.Get");
@@ -133,7 +137,9 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary> Gets the preview feature with the specified name. </summary>
+        /// <param name="featureName"> The name of the feature to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Feature>> GetAsync(string featureName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FeatureContainer.Get");
