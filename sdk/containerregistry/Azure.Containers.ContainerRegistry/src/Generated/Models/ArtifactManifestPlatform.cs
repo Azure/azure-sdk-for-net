@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Manifest attributes details. </summary>
+    /// <summary> The artifact's platform. </summary>
     public partial class ArtifactManifestPlatform
     {
         /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
