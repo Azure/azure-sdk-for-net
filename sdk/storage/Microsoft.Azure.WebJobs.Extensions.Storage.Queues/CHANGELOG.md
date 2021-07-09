@@ -1,6 +1,6 @@
 # Release History
 
-## 5.0.0-beta.5 (Unreleased)
+## 5.0.0-beta.5 (2021-07-09)
 - Fixed bug where QueueTrigger would fail to renew ownership of message if function runs for long period of time (i.e. 15 minutes and longer).
 
 

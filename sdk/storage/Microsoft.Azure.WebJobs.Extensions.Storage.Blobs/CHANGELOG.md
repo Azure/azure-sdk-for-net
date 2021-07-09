@@ -1,5 +1,8 @@
 # Release History
 
+## 5.0.0-beta.5 (2021-07-09)
+- This release contains bug fixes to improve quality.
+
 ## 5.0.0-beta.4 (2021-05-18)
 - Added new configuration formats so extensions that need multiple storage services can specify them in one connection configuration.
 
