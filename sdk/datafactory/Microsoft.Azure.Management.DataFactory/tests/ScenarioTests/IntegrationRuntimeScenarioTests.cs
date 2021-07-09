@@ -178,8 +178,14 @@ namespace DataFactory.Tests.ScenarioTests
                                 ReferenceName = "stagingLinkedService"
                             },
                             Path = "fakedPath"
+                        },
+                        ManagedCredential = new EntityReference
+                        {
+                            Type = "CredentialReference",
+                            ReferenceName=  "credentialReference"
+
                         }
-        }
+                    }
                 }
             };
 

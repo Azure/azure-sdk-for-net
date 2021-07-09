@@ -32,7 +32,8 @@
     "variables": {
         "logReaderRoleId": "73c42c96-874c-492b-b04d-ab87d138a893",
         "metricPublisherRoleId": "3913510d-42f4-4e42-8a64-420c390055eb",
-        "workspaceName": "[concat(parameters('baseName'), '-logs')]"
+        "workspaceName": "[concat(parameters('baseName'), '-logs')]",
+        "secondaryWorkspaceName": "[concat(parameters('baseName'), '-logs2')]"
     },
     "resources": [
         {
@@ -62,12 +63,26 @@
             }
         },
         {
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "name": "[variables('secondaryWorkspaceName')]",
+            "apiVersion": "2020-08-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "sku": {
+                    "name": "PerGB2018"
+                },
+                "retentionInDays": 30,
+                "features": {
+                    "searchVersion": 1,
+                    "legacy": 0,
+                    "enableLogAccessUsingOnlyResourcePermissions": "true"
+                }
+            }
+        },
+        {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2019-04-01-preview",
             "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('logReaderRoleId'))]",
-            "dependsOn": [
-              "[resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceName'))]"
-            ],
             "properties": {
               "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('logReaderRoleId'))]",
               "principalId": "[parameters('testApplicationOid')]",
@@ -78,9 +93,6 @@
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2019-04-01-preview",
             "name": "[guid(resourceGroup().id, parameters('testApplicationOid'), variables('metricPublisherRoleId'))]",
-            "dependsOn": [
-              "[resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceName'))]"
-            ],
             "properties": {
               "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('metricPublisherRoleId'))]",
               "principalId": "[parameters('testApplicationOid')]",
@@ -101,8 +113,16 @@
             "value": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceName')), '2020-10-01').customerId]",
             "type": "string"
         },
+        "SECONDARY_WORKSPACE_ID": {
+            "value": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', variables('secondaryWorkspaceName')), '2020-10-01').customerId]",
+            "type": "string"
+        },
         "WORKSPACE_KEY": {
             "value": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceName')), '2020-10-01').primarySharedKey]",
+            "type": "string"
+        },
+        "SECONDARY_WORKSPACE_KEY": {
+            "value": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces', variables('secondaryWorkspaceName')), '2020-10-01').primarySharedKey]",
             "type": "string"
         },
         "METRICS_RESOURCE_ID": {
@@ -111,6 +131,10 @@
         },
         "METRICS_RESOURCE_NAMESPACE": {
             "value": "Microsoft.OperationalInsights/workspaces",
+            "type": "string"
+        },
+        "LOGS_ENDPOINT": {
+            "value": "https://api.loganalytics.io",
             "type": "string"
         }
     }

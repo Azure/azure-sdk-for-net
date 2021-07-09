@@ -2,7 +2,7 @@
 
 Azure Object Anchors enables an application to detect an object in the physical world using a 3D model and estimate its 6-DoF pose. This package supports the conversion of an existing 3D asset into a form that can be used by the Object Anchors runtime to detect physical objects.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/objectanchors/Azure.MixedReality.ObjectAnchors.Conversion) | NuGet
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/objectanchors/Azure.MixedReality.ObjectAnchors.Conversion/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.MixedReality.ObjectAnchors.Conversion/)
 
 - [Azure Object Anchors client library for .NET](#azure-object-anchors-client-library-for-net)
   - [Getting started](#getting-started)
@@ -45,7 +45,7 @@ Add a package reference:
 
 ### Prerequisites
 
-- You must have an [Azure subscription](https://azure.microsoft.com/free/).
+- You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 - You must have an [Azure Object Anchors](https://review.docs.microsoft.com/azure/object-anchors/) account.
 
 ### Authenticate the client
@@ -85,7 +85,7 @@ ObjectAnchorsConversionClient client = new ObjectAnchorsConversionClient(account
 
 AssetUploadUriResult uploadUriResult = await client.GetAssetUploadUriAsync();
 
-Uri uploadedInputAssetUri = uploadUriResult.UploadUri
+Uri uploadedInputAssetUri = uploadUriResult.UploadUri;
 
 BlobClient blobClient = new BlobClient(uploadedInputAssetUri);
 
@@ -130,8 +130,8 @@ using (FileStream file = File.OpenWrite(localFileDownloadPath))
 
 ## Troubleshooting
 
-- See [Error Handling](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#error-handling) for Azure.Identity.
-- See [Logging](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#logging) for Azure.Identity.
+- See [Error Handling](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#error-handling) for Azure.Identity.
+- See [Logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#logging) for Azure.Identity.
 
 ## Next steps
 

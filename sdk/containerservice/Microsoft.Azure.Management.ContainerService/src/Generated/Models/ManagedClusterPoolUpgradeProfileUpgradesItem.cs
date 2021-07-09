@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// Initializes a new instance of the
         /// ManagedClusterPoolUpgradeProfileUpgradesItem class.
         /// </summary>
-        /// <param name="kubernetesVersion">Kubernetes version (major, minor,
-        /// patch).</param>
-        /// <param name="isPreview">Whether Kubernetes version is currently in
-        /// preview.</param>
+        /// <param name="kubernetesVersion">The Kubernetes version
+        /// (major.minor.patch).</param>
+        /// <param name="isPreview">Whether the Kubernetes version is currently
+        /// in preview.</param>
         public ManagedClusterPoolUpgradeProfileUpgradesItem(string kubernetesVersion = default(string), bool? isPreview = default(bool?))
         {
             KubernetesVersion = kubernetesVersion;
@@ -45,13 +45,14 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets kubernetes version (major, minor, patch).
+        /// Gets or sets the Kubernetes version (major.minor.patch).
         /// </summary>
         [JsonProperty(PropertyName = "kubernetesVersion")]
         public string KubernetesVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets whether Kubernetes version is currently in preview.
+        /// Gets or sets whether the Kubernetes version is currently in
+        /// preview.
         /// </summary>
         [JsonProperty(PropertyName = "isPreview")]
         public bool? IsPreview { get; set; }

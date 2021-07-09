@@ -9,7 +9,7 @@ namespace Azure.AI.Translation.Document
     /// <summary>
     /// Represents an error that occurred during a translation operation.
     /// </summary>
-    [CodeGenModel("ErrorV2")]
+    [CodeGenModel("TranslationError")]
     public partial class DocumentTranslationError
     {
         /// <summary>
@@ -18,9 +18,9 @@ namespace Azure.AI.Translation.Document
         [CodeGenMember("Code")]
         public DocumentTranslationErrorCode ErrorCode { get; }
 
-        internal InnerErrorV2 InnerError { get; }
+        internal InnerTranslationError InnerError { get; }
 
-        internal DocumentTranslationError(DocumentTranslationErrorCode errorCode, string message, string target, InnerErrorV2 innerError)
+        internal DocumentTranslationError(DocumentTranslationErrorCode errorCode, string message, string target, InnerTranslationError innerError)
         {
             if (innerError != null)
             {

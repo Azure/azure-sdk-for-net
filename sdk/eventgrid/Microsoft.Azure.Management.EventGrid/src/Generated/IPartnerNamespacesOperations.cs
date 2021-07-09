@@ -121,8 +121,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='partnerNamespaceName'>
         /// Name of the partner namespace.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the partner namespace.
+        /// <param name='partnerNamespaceUpdateParameters'>
+        /// Partner namespace update information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PartnerNamespace>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerNamespaceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PartnerNamespace>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerNamespaceName, PartnerNamespaceUpdateParameters partnerNamespaceUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List partner namespaces under an Azure subscription.
         /// </summary>
@@ -348,8 +348,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='partnerNamespaceName'>
         /// Name of the partner namespace.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the partner namespace.
+        /// <param name='partnerNamespaceUpdateParameters'>
+        /// Partner namespace update information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PartnerNamespace>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerNamespaceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PartnerNamespace>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerNamespaceName, PartnerNamespaceUpdateParameters partnerNamespaceUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List partner namespaces under an Azure subscription.
         /// </summary>

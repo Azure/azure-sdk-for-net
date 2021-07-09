@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Monitor
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The Azure subscription Id.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
@@ -105,11 +105,6 @@ namespace Microsoft.Azure.Management.Monitor
         IActionGroupsOperations ActionGroups { get; }
 
         /// <summary>
-        /// Gets the IActivityLogAlertsOperations.
-        /// </summary>
-        IActivityLogAlertsOperations ActivityLogAlerts { get; }
-
-        /// <summary>
         /// Gets the IActivityLogsOperations.
         /// </summary>
         IActivityLogsOperations ActivityLogs { get; }
@@ -133,11 +128,6 @@ namespace Microsoft.Azure.Management.Monitor
         /// Gets the IMetricsOperations.
         /// </summary>
         IMetricsOperations Metrics { get; }
-
-        /// <summary>
-        /// Gets the IMetricBaselineOperations.
-        /// </summary>
-        IMetricBaselineOperations MetricBaseline { get; }
 
         /// <summary>
         /// Gets the IBaselinesOperations.
@@ -195,13 +185,24 @@ namespace Microsoft.Azure.Management.Monitor
         IPrivateLinkScopedResourcesOperations PrivateLinkScopedResources { get; }
 
         /// <summary>
-        /// Gets the IDataCollectionRules.
+        /// Gets the IActivityLogAlertsOperations.
         /// </summary>
-        IDataCollectionRules DataCollectionRules { get; }
+        IActivityLogAlertsOperations ActivityLogAlerts { get; }
 
         /// <summary>
-        /// Gets the IDataCollectionRuleAssociations.
+        /// Gets the IDataCollectionEndpointsOperations.
         /// </summary>
-        IDataCollectionRuleAssociations DataCollectionRuleAssociations { get; }
+        IDataCollectionEndpointsOperations DataCollectionEndpoints { get; }
+
+        /// <summary>
+        /// Gets the IDataCollectionRuleAssociationsOperations.
+        /// </summary>
+        IDataCollectionRuleAssociationsOperations DataCollectionRuleAssociations { get; }
+
+        /// <summary>
+        /// Gets the IDataCollectionRulesOperations.
+        /// </summary>
+        IDataCollectionRulesOperations DataCollectionRules { get; }
+
     }
 }

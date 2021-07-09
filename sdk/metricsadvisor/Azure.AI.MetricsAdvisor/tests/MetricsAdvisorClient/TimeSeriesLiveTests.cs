@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task GetDimensionValuesWithMinimumSetup(bool useTokenCredential)
+        public async Task GetMetricDimensionValuesWithMinimumSetup(bool useTokenCredential)
         {
             const string dimensionName = "city";
 
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var valueCount = 0;
 
-            await foreach (string value in client.GetDimensionValuesAsync(MetricId, dimensionName))
+            await foreach (string value in client.GetMetricDimensionValuesAsync(MetricId, dimensionName))
             {
                 Assert.That(value, Is.Not.Null.And.Not.Empty);
 
@@ -41,21 +41,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetDimensionValuesWithOptionalDimensionFilter()
+        public async Task GetMetricDimensionValuesWithOptionalDimensionFilter()
         {
             const string dimensionName = "city";
             const string filter = "ba";
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var options = new GetDimensionValuesOptions()
+            var options = new GetMetricDimensionValuesOptions()
             {
-                DimensionValueToFilter = filter
+                DimensionValueFilter = filter
             };
 
             var valueCount = 0;
 
-            await foreach (string value in client.GetDimensionValuesAsync(MetricId, dimensionName, options))
+            await foreach (string value in client.GetMetricDimensionValuesAsync(MetricId, dimensionName, options))
             {
                 Assert.That(value, Is.Not.Null.And.Not.Empty);
                 Assert.That(value.ToLowerInvariant().Contains(filter));
@@ -106,8 +106,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetMetricSeriesDefinitionsOptions(SamplingStartTime);
 
-            options.DimensionCombinationsToFilter.Add("city", cityFilter);
-            options.DimensionCombinationsToFilter.Add("category", categoryFilter);
+            options.DimensionCombinationsFilter.Add("city", cityFilter);
+            options.DimensionCombinationsFilter.Add("category", categoryFilter);
 
             var definitionCount = 0;
 
@@ -118,10 +118,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 ValidateSeriesKey(definition.SeriesKey);
 
-                Dictionary<string, string> dimensionColumns = definition.SeriesKey.AsDictionary();
+                DimensionKey seriesKey = definition.SeriesKey;
 
-                string city = dimensionColumns["city"];
-                string category = dimensionColumns["category"];
+                Assert.That(seriesKey.TryGetValue("city", out string city));
+                Assert.That(seriesKey.TryGetValue("category", out string category));
 
                 Assert.That(cityFilter.Contains(city));
                 Assert.That(categoryFilter.Contains(category));
@@ -142,44 +142,57 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
-            var seriesKey1 = new DimensionKey();
-            seriesKey1.AddDimensionColumn("city", "Delhi");
-            seriesKey1.AddDimensionColumn("category", "Handmade");
+            var dimensions = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
+            var seriesKey1 = new DimensionKey(dimensions);
 
-            var seriesKey2 = new DimensionKey();
-            seriesKey2.AddDimensionColumn("city", "Koltaka");
-            seriesKey2.AddDimensionColumn("category", "__SUM__");
+            dimensions = new Dictionary<string, string>() { { "city", "Kolkata" }, { "category", "__SUM__" } };
+            var seriesKey2 = new DimensionKey(dimensions);
 
-            var returnedKeys = new List<DimensionKey>();
+            var returnedKey1 = false;
+            var returnedKey2 = false;
+            var seriesDataCount = 0;
 
             var options = new GetMetricSeriesDataOptions(SamplingStartTime, SamplingEndTime)
             {
-                SeriesToFilter = { seriesKey1, seriesKey2 }
+                SeriesKeys = { seriesKey1, seriesKey2 }
             };
 
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(MetricId, options))
             {
                 Assert.That(seriesData, Is.Not.Null);
-                Assert.That(seriesData.Definition, Is.Not.Null);
-                Assert.That(seriesData.Definition.SeriesKey, Is.Not.Null);
+                Assert.That(seriesData.SeriesKey, Is.Not.Null);
                 Assert.That(seriesData.Timestamps, Is.Not.Null);
-                Assert.That(seriesData.Values, Is.Not.Null);
+                Assert.That(seriesData.MetricValues, Is.Not.Null);
 
-                Assert.That(seriesData.Definition.MetricId, Is.EqualTo(MetricId));
+                Assert.That(seriesData.MetricId, Is.EqualTo(MetricId));
 
-                Assert.That(seriesData.Timestamps.Count, Is.EqualTo(seriesData.Values.Count));
+                Assert.That(seriesData.Timestamps.Count, Is.EqualTo(seriesData.MetricValues.Count));
 
                 foreach (DateTimeOffset timestamp in seriesData.Timestamps)
                 {
                     Assert.That(timestamp, Is.InRange(SamplingStartTime, SamplingEndTime));
                 }
 
-                returnedKeys.Add(seriesData.Definition.SeriesKey);
+                var seriesKey = seriesData.SeriesKey;
+
+                Assert.That(seriesKey.TryGetValue("city", out string city));
+                Assert.That(seriesKey.TryGetValue("category", out string category));
+
+                if (city == "Delhi" && category == "Handmade")
+                {
+                    returnedKey1 = true;
+                }
+                else if (city == "Kolkata" && category == "__SUM__")
+                {
+                    returnedKey2 = true;
+                }
+
+                seriesDataCount++;
             }
 
-            Assert.That(returnedKeys.Count, Is.EqualTo(2));
-            Assert.That(returnedKeys.Contains(seriesKey1));
-            Assert.That(returnedKeys.Contains(seriesKey2));
+            Assert.That(seriesDataCount, Is.EqualTo(2));
+            Assert.That(returnedKey1);
+            Assert.That(returnedKey2);
         }
 
         [RecordedTest]

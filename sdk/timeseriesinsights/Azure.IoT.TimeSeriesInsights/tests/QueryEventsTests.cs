@@ -31,13 +31,16 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             // Arrange
             TimeSeriesInsightsClient tsiClient = GetClient();
+            TimeSeriesInsightsModelSettings timeSeriesModelSettings = tsiClient.GetModelSettingsClient();
+            TimeSeriesInsightsInstances instancesClient = tsiClient.GetInstancesClient();
+            TimeSeriesInsightsQueries queriesClient = tsiClient.GetQueriesClient();
             DeviceClient deviceClient = await GetDeviceClient().ConfigureAwait(false);
 
             // Figure out what the Time Series Id is composed of
-            TimeSeriesModelSettings modelSettings = await tsiClient.ModelSettings.GetAsync().ConfigureAwait(false);
+            TimeSeriesModelSettings modelSettings = await timeSeriesModelSettings.GetAsync().ConfigureAwait(false);
 
             // Create a Time Series Id where the number of keys that make up the Time Series Id is fetched from Model Settings
-            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(tsiClient, modelSettings.TimeSeriesIdProperties.Count)
+            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(instancesClient, modelSettings.TimeSeriesIdProperties.Count)
                 .ConfigureAwait(false);
 
             try
@@ -60,16 +63,16 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 DateTimeOffset startTime = now.AddMinutes(-10);
 
                 // This retry logic was added as the TSI instance are not immediately available after creation
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
-                    QueryAnalyzer queryEventsPages = tsiClient.Queries.CreateEventsQueryAnalyzer(tsiId, startTime, endTime);
+                    TimeSeriesQueryAnalyzer queryEventsPages = queriesClient.CreateEventsQuery(tsiId, startTime, endTime);
                     var count = 0;
                     await foreach (TimeSeriesPoint timeSeriesPoint in queryEventsPages.GetResultsAsync())
                     {
                         count++;
                         timeSeriesPoint.Timestamp.Should().BeAfter(startTime).And.BeBefore(endTime);
 
-                        var temperatureValue = (double?)timeSeriesPoint.GetValue(QueryTestsHelper.Temperature);
+                        var temperatureValue = timeSeriesPoint.GetNullableDouble(QueryTestsHelper.Temperature);
                         temperatureValue.Should().NotBeNull();
 
                         var humidityValue = (double?)timeSeriesPoint.GetValue(QueryTestsHelper.Humidity);
@@ -105,25 +108,25 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // Only project Temperature and one of the Id properties
                 var queryRequestOptions = new QueryEventsRequestOptions
                 {
-                    Filter = "$event.Temperature.Double = 1.2",
-                    StoreType = StoreType.WarmStore,
+                    Filter = new TimeSeriesExpression("$event.Temperature.Double = 1.2"),
+                    Store = StoreType.WarmStore,
                 };
                 queryRequestOptions.ProjectedProperties.Add(
-                    new EventProperty
+                    new TimeSeriesInsightsEventProperty
                     {
                         Name = QueryTestsHelper.Temperature,
-                        Type = "Double",
+                        PropertyValueType = "Double",
                     });
                 queryRequestOptions.ProjectedProperties.Add(
-                    new EventProperty
+                    new TimeSeriesInsightsEventProperty
                     {
                         Name = modelSettings.TimeSeriesIdProperties.First().Name,
-                        Type = modelSettings.TimeSeriesIdProperties.First().Type.ToString(),
+                        PropertyValueType = modelSettings.TimeSeriesIdProperties.First().PropertyType.ToString(),
                     });
 
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
-                    QueryAnalyzer queryEventsPages = tsiClient.Queries.CreateEventsQueryAnalyzer(tsiId, startTime, endTime, queryRequestOptions);
+                    TimeSeriesQueryAnalyzer queryEventsPages = queriesClient.CreateEventsQuery(tsiId, startTime, endTime, queryRequestOptions);
                     await foreach (Page<TimeSeriesPoint> page in queryEventsPages.GetResultsAsync().AsPages())
                     {
                         page.Values.Should().HaveCount(2);
@@ -138,19 +141,18 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 }, MaxNumberOfRetries, s_retryDelay);
 
                 // Query for the two events with a filter, but only take 1
-                queryRequestOptions.MaximumNumberOfEvents = 1;
-                QueryAnalyzer queryEventsPagesWithFilter = tsiClient.Queries.CreateEventsQueryAnalyzer(tsiId, startTime, endTime, queryRequestOptions);
+                queryRequestOptions.MaxNumberOfEvents = 1;
+                TimeSeriesQueryAnalyzer queryEventsPagesWithFilter = queriesClient.CreateEventsQuery(tsiId, startTime, endTime, queryRequestOptions);
                 await foreach (Page<TimeSeriesPoint> page in queryEventsPagesWithFilter.GetResultsAsync().AsPages())
                 {
                     page.Values.Should().HaveCount(1);
                 }
 
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
                     // Query for all the events using a timespan
-                    QueryAnalyzer queryEventsPagesWithTimespan = tsiClient
-                        .Queries
-                        .CreateEventsQueryAnalyzer(tsiId, TimeSpan.FromMinutes(20), endTime);
+                    TimeSeriesQueryAnalyzer queryEventsPagesWithTimespan = queriesClient
+                        .CreateEventsQuery(tsiId, TimeSpan.FromMinutes(20), endTime);
                     await foreach (Page<TimeSeriesPoint> page in queryEventsPagesWithTimespan.GetResultsAsync().AsPages())
                     {
                         page.Values.Should().HaveCount(52);

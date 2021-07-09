@@ -7,9 +7,10 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     public partial class WebNotificationHook : IUtf8JsonSerializable
     {
@@ -19,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("hookParameter");
             writer.WriteObjectValue(HookParameter);
             writer.WritePropertyName("hookType");
-            writer.WriteStringValue(HookType.ToString());
+            writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName");
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
@@ -27,10 +28,20 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ExternalLink))
+            if (Optional.IsDefined(InternalExternalLink))
             {
                 writer.WritePropertyName("externalLink");
-                writer.WriteStringValue(ExternalLink);
+                writer.WriteStringValue(InternalExternalLink);
+            }
+            if (Optional.IsCollectionDefined(Administrators))
+            {
+                writer.WritePropertyName("admins");
+                writer.WriteStartArray();
+                foreach (var item in Administrators)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -38,12 +49,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal static WebNotificationHook DeserializeWebNotificationHook(JsonElement element)
         {
             WebhookHookParameter hookParameter = default;
-            HookType hookType = default;
+            NotificationHookKind hookType = default;
             Optional<string> hookId = default;
             string hookName = default;
             Optional<string> description = default;
             Optional<string> externalLink = default;
-            Optional<IReadOnlyList<string>> admins = default;
+            Optional<IList<string>> admins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hookParameter"))
@@ -53,7 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("hookType"))
                 {
-                    hookType = new HookType(property.Value.GetString());
+                    hookType = new NotificationHookKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hookId"))

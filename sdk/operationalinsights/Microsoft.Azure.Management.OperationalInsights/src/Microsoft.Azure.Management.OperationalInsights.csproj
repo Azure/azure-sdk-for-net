@@ -7,9 +7,9 @@
 		<PackageId>Microsoft.Azure.Management.OperationalInsights</PackageId>
 		<Description>Provides Microsoft Azure Operational Insights management operations</Description>
 		<AssemblyName>Microsoft.Azure.Management.OperationalInsights</AssemblyName>
-		<Version>0.22.0-preview</Version>
+		<Version>0.24.0-preview</Version>
 		<PackageTags>Microsoft Azure OperationalInsights;OperationalInsights;</PackageTags>  
-		<PackageReleaseNotes>updated all OperationalInsights APIs to version 2020-10</PackageReleaseNotes>
+		<PackageReleaseNotes>Add cluster billingType and some minor fixes</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys
         public Uri RecoveryId
         {
             get => _recoveryId is null ? null : new Uri(_recoveryId);
-            internal set => _recoveryId = value?.ToString();
+            internal set => _recoveryId = value?.AbsoluteUri;
         }
 
         /// <summary>

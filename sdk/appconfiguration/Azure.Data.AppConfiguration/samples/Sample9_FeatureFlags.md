@@ -44,10 +44,6 @@ if (response.Value is FeatureFlagConfigurationSetting featureFlag)
 
 Use the `DeleteConfigurationSetting` method to remove the feature flag:
 
-```C# Snippet:Sample_GetFeatureFlag
-Response<ConfigurationSetting> response = client.GetConfigurationSetting(FeatureFlagConfigurationSetting.KeyPrefix + "feature_id");
-if (response.Value is FeatureFlagConfigurationSetting featureFlag)
-{
-    Console.WriteLine($"Feature flag {featureFlag.FeatureId} IsEnabled: {featureFlag.IsEnabled}");
-}
+```C# Snippet:Sample_DeleteFeatureFlag
+client.DeleteConfigurationSetting(featureFlagSetting);
 ```

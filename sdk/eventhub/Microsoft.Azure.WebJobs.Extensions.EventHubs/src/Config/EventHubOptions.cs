@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     {
         public EventHubOptions()
         {
-            MaxBatchSize = 10;
+            MaxEventBatchSize = 10;
             ConnectionOptions = new EventHubConnectionOptions()
             {
                 TransportType = EventHubsTransportType.AmqpTcp
@@ -112,14 +112,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
         }
 
-        private int _maxBatchSize;
+        private int _maxEventBatchSize;
 
         /// <summary>
         /// Gets or sets the maximum number of events delivered in a batch. Default 10.
         /// </summary>
-        public int MaxBatchSize
+        public int MaxEventBatchSize
         {
-            get => _maxBatchSize;
+            get => _maxEventBatchSize;
 
             set
             {
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 {
                     throw new ArgumentException("Batch size must be larger than 0.");
                 }
-                _maxBatchSize = value;
+                _maxEventBatchSize = value;
             }
         }
 
@@ -173,11 +173,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         }
 
         /// <summary>
-        /// Gets or sets a value indication whether a single-dispatch trigger bindings are enabled.
-        /// </summary>
-        internal bool IsSingleDispatchEnabled { get; set; }
-
-        /// <summary>
         /// Gets or sets the Azure Blobs container name that the event processor uses to coordinate load balancing listening on an event hub.
         /// </summary>
         internal string CheckpointContainer { get; set; } =  "azure-webjobs-eventhub";
@@ -192,7 +187,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         {
             JObject options = new JObject
                 {
-                    { nameof(MaxBatchSize), MaxBatchSize },
+                    { nameof(MaxEventBatchSize), MaxEventBatchSize },
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(TransportType),  TransportType.ToString()},
                     { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },

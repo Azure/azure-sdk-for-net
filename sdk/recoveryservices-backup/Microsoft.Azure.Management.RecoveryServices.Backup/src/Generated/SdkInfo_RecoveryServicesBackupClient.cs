@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 new Tuple<string, string, string>("RecoveryServices", "BackupResourceVaultConfigs", "2021-03-01"),
                 new Tuple<string, string, string>("RecoveryServices", "BackupStatus", "2021-03-01"),
                 new Tuple<string, string, string>("RecoveryServices", "BackupUsageSummaries", "2021-03-01"),
+                new Tuple<string, string, string>("RecoveryServices", "BackupUsageSummariesCRR", "2018-12-20"),
                 new Tuple<string, string, string>("RecoveryServices", "BackupWorkloadItems", "2021-03-01"),
                 new Tuple<string, string, string>("RecoveryServices", "Backups", "2021-03-01"),
                 new Tuple<string, string, string>("RecoveryServices", "CrossRegionRestore", "2018-12-20"),
@@ -81,10 +82,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/recoveryservicesbackup/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\source\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/recoveryservicesbackup/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\SWagger\\CRRFixes\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "b93bd818d2c2bf3a014dbf2306658a65fa25a160";
+      public static readonly String GithubCommidId = "4b3d05177ad63685fbbb69f147ab104b85ecd7f4";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

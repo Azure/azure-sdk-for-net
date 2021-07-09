@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
     {
         private readonly ServiceBusAttribute _attribute;
         private readonly IBindableServiceBusPath _defaultPath;
-        private readonly EntityType _entityType;
+        private readonly ServiceBusEntityType _serviceBusEntityType;
         private readonly MessagingProvider _messagingProvider;
         private readonly ServiceBusClientFactory _clientFactory;
 
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
         {
             _attribute = attribute;
             _defaultPath = defaultPath;
-            _entityType = _attribute.EntityType;
+            _serviceBusEntityType = _attribute.EntityType;
             _messagingProvider = messagingProvider;
             _clientFactory = clientFactory;
         }
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             var entity = new ServiceBusEntity
             {
                 MessageSender = messageSender,
-                EntityType = _entityType
+                ServiceBusEntityType = _serviceBusEntityType
             };
 
             return Task.FromResult(entity);

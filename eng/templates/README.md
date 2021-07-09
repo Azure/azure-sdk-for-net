@@ -9,7 +9,7 @@
 
 
 ###  list help and (ToAzure.ResourceManager.XXX) creation options for  this template:
-* dotnet new azuremgmt -!
+* dotnet new azuremgmt --help
 
 Following parameter is available
 | Parameter | Required | Description |

@@ -34,17 +34,17 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="versions">The version capability.</param>
         /// <param name="regions">The virtual machine size compatibility
         /// features.</param>
-        /// <param name="vmSizes">The virtual machine sizes.</param>
-        /// <param name="vmSizeFilters">The virtual machine size compatibility
+        /// <param name="vmsizes">The virtual machine sizes.</param>
+        /// <param name="vmsizeFilters">The virtual machine size compatibility
         /// filters.</param>
         /// <param name="features">The capability features.</param>
         /// <param name="quota">The quota capability.</param>
-        public CapabilitiesResult(IDictionary<string, VersionsCapability> versions = default(IDictionary<string, VersionsCapability>), IDictionary<string, RegionsCapability> regions = default(IDictionary<string, RegionsCapability>), IDictionary<string, VmSizesCapability> vmSizes = default(IDictionary<string, VmSizesCapability>), IList<VmSizeCompatibilityFilter> vmSizeFilters = default(IList<VmSizeCompatibilityFilter>), IList<string> features = default(IList<string>), QuotaCapability quota = default(QuotaCapability))
+        public CapabilitiesResult(IDictionary<string, VersionsCapability> versions = default(IDictionary<string, VersionsCapability>), IDictionary<string, RegionsCapability> regions = default(IDictionary<string, RegionsCapability>), IDictionary<string, VmSizesCapability> vmsizes = default(IDictionary<string, VmSizesCapability>), IList<VmSizeCompatibilityFilter> vmsizeFilters = default(IList<VmSizeCompatibilityFilter>), IList<string> features = default(IList<string>), QuotaCapability quota = default(QuotaCapability))
         {
             Versions = versions;
             Regions = regions;
-            VmSizes = vmSizes;
-            VmSizeFilters = vmSizeFilters;
+            Vmsizes = vmsizes;
+            VmsizeFilters = vmsizeFilters;
             Features = features;
             Quota = quota;
             CustomInit();
@@ -70,14 +70,14 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Gets or sets the virtual machine sizes.
         /// </summary>
-        [JsonProperty(PropertyName = "vmSizes")]
-        public IDictionary<string, VmSizesCapability> VmSizes { get; set; }
+        [JsonProperty(PropertyName = "vmsizes")]
+        public IDictionary<string, VmSizesCapability> Vmsizes { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual machine size compatibility filters.
         /// </summary>
-        [JsonProperty(PropertyName = "vmSize_filters")]
-        public IList<VmSizeCompatibilityFilter> VmSizeFilters { get; set; }
+        [JsonProperty(PropertyName = "vmsize_filters")]
+        public IList<VmSizeCompatibilityFilter> VmsizeFilters { get; set; }
 
         /// <summary>
         /// Gets or sets the capability features.
