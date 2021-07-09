@@ -5,7 +5,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
     /// </summary>
-    public class DownloadBlobOptions
+    public class UploadManifestOptions
     {
     }
 }

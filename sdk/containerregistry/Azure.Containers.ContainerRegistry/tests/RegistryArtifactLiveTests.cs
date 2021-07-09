@@ -6,6 +6,8 @@ using System.Linq;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
+using Azure.Containers.ContainerRegistry.Specialized;
+using Azure.Identity;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
@@ -563,6 +565,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateClient();
             var artifact = client.GetArtifact(repository, digest);
 
+            var uploadClient = new ContainerRegistryArtifactDataClient(new System.Uri("example.azurecr.io"), new DefaultAzureCredential());
+
             // Act
             var manifestFilePath = Path.Combine(path, "manifest.json");
             foreach (var file in Directory.GetFiles(path))
@@ -571,11 +575,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 {
                     if (file == manifestFilePath)
                     {
-                        await artifact.UploadManifestAsync(fs);
+                        await uploadClient.UploadManifestAsync(fs);
                     }
                     else
                     {
-                        await artifact.UploadBlobAsync(fs);
+                        await uploadClient.UploadBlobAsync(fs);
                     }
                 }
             }
@@ -611,6 +615,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var artifact = client.GetArtifact(repository, digest);
             string path = @"C:\temp\acr\test-pull";
 
+            var downloadClient = new ContainerRegistryArtifactDataClient(new System.Uri("example.azurecr.io"), new DefaultAzureCredential());
+
             // Act
 
             // Get Manifest
@@ -618,7 +624,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // TODO: do we need digest in this method if artifact was instantiated with it?
             // TODO: How should we handle/communicate the difference in semantics between download
             // with digest and download with tag?
-            var manifestResult = await artifact.DownloadManifestAsync(digest);
+            var manifestResult = await downloadClient.DownloadManifestAsync(digest);
 
             // Write manifest to file
             Directory.CreateDirectory(path);
@@ -636,7 +642,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 using (FileStream fs = File.Create(fileName))
                 {
-                    var layerResult = await artifact.DownloadBlobAsync(artifactFile.Digest);
+                    var layerResult = await downloadClient.DownloadBlobAsync(artifactFile.Digest);
                     Stream stream = layerResult.Value.Content;
                     await stream.CopyToAsync(fs).ConfigureAwait(false);
                 }

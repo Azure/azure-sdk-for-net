@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Azure.Containers.ContainerRegistry
+namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
     /// </summary>
