@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Core
         public static string GetCorrelationId(this Response response)
         {
             string correlationId = null;
-            response.Headers.TryGetValue("x-ms-correlation-id", out correlationId);
+            response.Headers.TryGetValue("x-ms-correlation-request-id", out correlationId);
             return correlationId;
         }
     }
