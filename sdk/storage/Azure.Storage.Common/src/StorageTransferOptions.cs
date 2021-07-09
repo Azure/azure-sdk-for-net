@@ -34,6 +34,11 @@ namespace Azure.Storage
         public int? MaximumConcurrency { get; set; }
 
         /// <summary>
+        /// The maximum number of workers that may be used in a parallel transfer.
+        /// </summary>
+        public int? MaximumJobConcurrency { get; set; }
+
+        /// <summary>
         /// The size of the first range request in bytes. Blobs smaller than this limit will
         /// be downloaded in a single request. Blobs larger than this limit will continue being
         /// downloaded in chunks of size <see cref="MaximumTransferSize"/>. This property is a

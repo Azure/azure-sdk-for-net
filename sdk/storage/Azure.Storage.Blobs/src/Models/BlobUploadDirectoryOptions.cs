@@ -17,5 +17,11 @@ namespace Azure.Storage.Blobs.Models
         /// Optional Blob Type to Upload. Defaults to upload Block Blobs.
         /// </summary>
         public BlobType blobType { get; set; }
+
+        /// <summary>
+        /// Describes whether or not the directory being uploaded should
+        /// be located under it's own subdirectory serverside.
+        /// </summary>
+        public bool? uploadToSubdirectory { get; set; }
     }
 }

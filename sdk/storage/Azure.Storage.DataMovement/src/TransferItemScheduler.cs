@@ -39,6 +39,12 @@ namespace Azure.Storage.DataMovement
         // the queue has something to process.
         //private TaskScheduler taskScheduler;
 
+        internal StorageTransferOptions _transferOptions;
+        /// <summary>
+        /// StorageTransferOptions
+        /// </summary>
+        public StorageTransferOptions TransferOptions => _transferOptions;
+
         /// <summary>
         /// The queue we hold onto as the finished scanned items are added. This is the
         /// waiting list of items ready to execute (upload, download, copy)
@@ -51,8 +57,10 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferOptions"></param>
         public TransferItemScheduler(StorageTransferOptions transferOptions = default)
         {
+            _transferOptions = transferOptions;
+
             // Set _maxWorkerCount
-            if (transferOptions.MaximumConcurrency.HasValue
+            if (transferOptions.MaximumJobConcurrency.HasValue
                 && transferOptions.MaximumConcurrency > 0)
             {
                 _maxWorkerCount = transferOptions.MaximumConcurrency.Value;

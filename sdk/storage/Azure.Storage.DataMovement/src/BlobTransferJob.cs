@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement
         {
             _localPath = localpath;
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
-            _sourceBlobClient = client;
+            _destinationBlobClient = client;
             _transferOptions = transferOptions;
             _uploadOptions = uploadOptions;
             TransferType = StorageTransferType.Upload;

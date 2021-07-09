@@ -28,19 +28,28 @@ namespace Azure.Storage.DataMovement
         // authentication from the original job and for updating the jobs for progress tracking
         private AsyncQueue<StorageTransferJob> _jobsToProcess;
         // Not sure if we should keep the jobs that in in progress here
-        //private IList<StorageTransferJob> _jobsInProgress;
+        // private IList<StorageTransferJob> _jobsInProgress;
         // local directory path to put hte memory mapped file of the progress tracking. if we pause or break
         // we will have the information on where to continue from.
         private string _progressLogDirectoryPath;
+
+        internal StorageTransferOptions _transferOptions;
+        /// <summary>
+        /// StorageTransferOptions
+        /// </summary>
+        public StorageTransferOptions TransferOptions => _transferOptions;
+
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="progressLogDirectoryPath">Specify directory path to log file to continue from.</param>
-        public StorageTransferManager(string progressLogDirectoryPath = default)
+        /// <param name="transferOptions">Transfer options basket.</param>
+        public StorageTransferManager(string progressLogDirectoryPath = default, StorageTransferOptions transferOptions = default)
         {
             _toScanQueue = new AsyncQueue<StorageTransferJob>();
             _jobsToProcess = new AsyncQueue<StorageTransferJob>();
             _progressLogDirectoryPath = progressLogDirectoryPath;
+            _transferOptions = transferOptions;
         }
 
         /// <summary>
@@ -111,6 +120,30 @@ namespace Azure.Storage.DataMovement
 
             // TODO; remove stub
             return new StorageTransferResults();
+        }
+
+        /// <summary>
+        /// TODO: Replace generated docs
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        public async Task StartTransferAsync(CancellationToken token = default)
+        {
+            JobScheduler jobScheduler = new JobScheduler(_transferOptions);
+            List<Task> tasks = new List<Task>();
+
+            while (!_jobsToProcess.IsEmpty)
+            {
+                StorageTransferJob job = await _jobsToProcess.DequeueAsync(token).ConfigureAwait(false);
+                Task task = Task.Factory.StartNew(async () =>
+                {
+                    await job.CreateTransferTaskAsync().ConfigureAwait(false);
+                }, token, default, jobScheduler);
+
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks).ConfigureAwait(false);
         }
 
         /// <summary>

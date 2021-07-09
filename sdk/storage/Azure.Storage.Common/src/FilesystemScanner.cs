@@ -11,7 +11,7 @@ namespace Azure.Storage
     /// <summary>
     /// FilesystemScanner class.
     /// </summary>
-    internal class FilesystemScanner
+    public class FilesystemScanner
     {
         /// <summary>
         /// The fully qualified path to be scanned.

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Models;
@@ -102,6 +103,26 @@ namespace Azure.Storage.DataMovement
             }
             _transferOptions = transferOptions;
             CancellationToken = cancellationToken;
+        }
+
+        /// <summary>
+        /// Create next TransferItem/Task to be processed
+        /// </summary>
+        /// <returns></returns>
+        public override Task CreateTransferTaskAsync()
+        {
+            // Stub to create Task
+            if (TransferType == StorageTransferType.Upload)
+            {
+                // Do only blockblobs for now
+                BlobUploadDirectoryOptions options = (BlobUploadDirectoryOptions)_uploadOptions;
+
+                return destinationBlobClient.UploadAsync(_localPath, _transferOptions, options);
+            }
+            else // (TransferType == StorageTransferType.Download)
+            {
+                return Task.CompletedTask;
+            }
         }
     }
 }
