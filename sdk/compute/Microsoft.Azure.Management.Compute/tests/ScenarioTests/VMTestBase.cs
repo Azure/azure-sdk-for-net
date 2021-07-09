@@ -1145,13 +1145,13 @@ namespace Compute.Tests
             {
                 if(vm.StorageProfile.DataDisks.Any(dd => dd.ManagedDisk != null && dd.ManagedDisk.StorageAccountType == StorageAccountTypes.UltraSSDLRS))
                 {
-                    Assert.NotNull(vm.AdditionalCapabilities);
-                    Assert.NotNull(vm.AdditionalCapabilities.UltraSSDEnabled);
-                    Assert.True(vm.AdditionalCapabilities.UltraSSDEnabled.Value);
+                    Assert.NotNull(vmOut.AdditionalCapabilities);
+                    Assert.NotNull(vmOut.AdditionalCapabilities.UltraSSDEnabled);
+                    Assert.True(vmOut.AdditionalCapabilities.UltraSSDEnabled.Value);
                 }
-                else
+                else if (vm.AdditionalCapabilities == null)
                 {
-                    Assert.Null(vm.AdditionalCapabilities);
+                    Assert.Null(vmOut.AdditionalCapabilities);
                 }
 
                 foreach (var dataDisk in vm.StorageProfile.DataDisks)
