@@ -1,5 +1,9 @@
 # Release History
 
+## 5.0.0-beta.5 (Unreleased)
+- Fixed bug where QueueTrigger would fail to renew ownership of message if function runs for long period of time (i.e. 15 minutes and longer).
+
+
 ## 5.0.0-beta.4 (2021-05-18)
 - Fixed bug where custom implementations of `IQueueProcessorFactory` could overwrite each other settings.
 - Added new configuration formats so extensions that need multiple storage services can specify them in one connection configuration.
