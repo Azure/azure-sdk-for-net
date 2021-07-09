@@ -11,15 +11,15 @@ using System.Linq;
 
 namespace Azure.Communication.NetworkTraversal
 {
-    /// <summary> An instance of a TURN server with credentials. </summary>
-    public partial class CommunicationTurnServer
+    /// <summary> An instance of a STUN/TURN server with credentials to be used for ICE negotiation. </summary>
+    public partial class CommunicationIceServer
     {
-        /// <summary> Initializes a new instance of CommunicationTurnServer. </summary>
-        /// <param name="urls"> List of TURN server URLs. </param>
+        /// <summary> Initializes a new instance of CommunicationIceServer. </summary>
+        /// <param name="urls"> List of STUN/TURN server URLs. </param>
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="urls"/>, <paramref name="username"/>, or <paramref name="credential"/> is null. </exception>
-        internal CommunicationTurnServer(IEnumerable<string> urls, string username, string credential)
+        internal CommunicationIceServer(IEnumerable<string> urls, string username, string credential)
         {
             if (urls == null)
             {
@@ -39,18 +39,18 @@ namespace Azure.Communication.NetworkTraversal
             Credential = credential;
         }
 
-        /// <summary> Initializes a new instance of CommunicationTurnServer. </summary>
-        /// <param name="urls"> List of TURN server URLs. </param>
+        /// <summary> Initializes a new instance of CommunicationIceServer. </summary>
+        /// <param name="urls"> List of STUN/TURN server URLs. </param>
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
-        internal CommunicationTurnServer(IReadOnlyList<string> urls, string username, string credential)
+        internal CommunicationIceServer(IReadOnlyList<string> urls, string username, string credential)
         {
             Urls = urls;
             Username = username;
             Credential = credential;
         }
 
-        /// <summary> List of TURN server URLs. </summary>
+        /// <summary> List of STUN/TURN server URLs. </summary>
         public IReadOnlyList<string> Urls { get; }
         /// <summary> User account name which uniquely identifies the credentials. </summary>
         public string Username { get; }

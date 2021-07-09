@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.NetworkTraversal
 {
-    public partial class CommunicationTurnServer
+    public partial class CommunicationIceServer
     {
-        internal static CommunicationTurnServer DeserializeCommunicationTurnServer(JsonElement element)
+        internal static CommunicationIceServer DeserializeCommunicationIceServer(JsonElement element)
         {
             IReadOnlyList<string> urls = default;
             string username = default;
@@ -41,7 +41,7 @@ namespace Azure.Communication.NetworkTraversal
                     continue;
                 }
             }
-            return new CommunicationTurnServer(urls, username, credential);
+            return new CommunicationIceServer(urls, username, credential);
         }
     }
 }
