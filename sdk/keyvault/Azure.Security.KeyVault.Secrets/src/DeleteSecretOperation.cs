@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Secrets
         protected DeleteSecretOperation() {}
 
         /// <inheritdoc/>
-        public override string Id => _value.Id.ToString();
+        public override string Id => _value.Id.AbsoluteUri;
 
         /// <summary>
         /// Gets the <see cref="DeletedSecret"/>.

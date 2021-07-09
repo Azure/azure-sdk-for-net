@@ -57,15 +57,17 @@ namespace Azure.Core.Pipeline
                 return;
             }
 
-            switch (messageHandler)
+            try
             {
-                case HttpClientHandler httpClientHandler:
-                    // Only change when the default runtime limit is used
-                    if (httpClientHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
-                    {
-                        httpClientHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
-                    }
-                    break;
+                switch (messageHandler)
+                {
+                    case HttpClientHandler httpClientHandler:
+                        // Only change when the default runtime limit is used
+                        if (httpClientHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
+                        {
+                            httpClientHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
+                        }
+                        break;
 #if NETCOREAPP
                 case SocketsHttpHandler socketsHttpHandler:
                     if (socketsHttpHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)
@@ -78,9 +80,15 @@ namespace Azure.Core.Pipeline
                     }
                     break;
 #endif
-                default:
-                    Debug.Assert(false, "Unknown handler type");
-                    break;
+                    default:
+                        Debug.Assert(false, "Unknown handler type");
+                        break;
+                }
+            }
+            catch (NotSupportedException)
+            {
+                // Some platforms might throw NotSupportedException
+                // when accessing handler options
             }
         }
     }

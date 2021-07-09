@@ -93,25 +93,6 @@ namespace Azure.ResourceManager.Core
         public abstract Task<Response<TOperations>> GetAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get details for this resource from the service or can be overriden to provide a cached instance.
-        /// </summary>
-        /// <returns> A TOperations operation for this resource. </returns>
-        protected virtual TOperations GetResource(CancellationToken cancellationToken = default)
-        {
-            return Get(cancellationToken).Value;
-        }
-
-        /// <summary>
-        /// Get details for this resource from the service or can be overriden to provide a cached instance.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a TOperations operation for this resource. </returns>
-        protected virtual async Task<TOperations> GetResourceAsync(CancellationToken cancellationToken = default)
-        {
-            return (await GetAsync(cancellationToken).ConfigureAwait(false)).Value;
-        }
-
-        /// <summary>
         /// Lists all available geo-locations.
         /// </summary>
         /// <param name="resourceType"> The <see cref="ResourceType"/> instance to use for the list. </param>

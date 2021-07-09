@@ -112,10 +112,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             int count = 0;
 
-            foreach (KeyValuePair<string, string> column in groupKey)
+            foreach (KeyValuePair<string, string> dimension in groupKey)
             {
-                Assert.That(column.Key, Is.EqualTo("city").Or.EqualTo("category"));
-                Assert.That(column.Value, Is.Not.Null.And.Not.Empty);
+                Assert.That(dimension.Key, Is.EqualTo("city").Or.EqualTo("category"));
+                Assert.That(dimension.Value, Is.Not.Null.And.Not.Empty);
 
                 count++;
             }
