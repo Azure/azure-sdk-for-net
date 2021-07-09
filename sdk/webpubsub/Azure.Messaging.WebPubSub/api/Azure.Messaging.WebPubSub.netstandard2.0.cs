@@ -21,8 +21,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Threading.Tasks.Task<Azure.Response> AddUserToGroupAsync(string group, string userId, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response<bool> CheckPermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckPermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual Azure.Response CloseClientConnection(string connectionId, string reason = null, Azure.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CloseClientConnectionAsync(string connectionId, string reason = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual Azure.Response CloseConnection(string connectionId, string reason = null, Azure.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CloseConnectionAsync(string connectionId, string reason = null, Azure.RequestOptions options = null) { throw null; }
         public virtual Azure.Response<bool> ConnectionExists(string connectionId, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ConnectionExistsAsync(string connectionId, Azure.RequestOptions options = null) { throw null; }
         public virtual System.Uri GenerateClientAccessUri(System.DateTimeOffset expiresAt, string userId = null, params string[] roles) { throw null; }
@@ -61,6 +61,7 @@ namespace Azure.Messaging.WebPubSub
     public partial class WebPubSubServiceClientOptions : Azure.Core.ClientOptions
     {
         public WebPubSubServiceClientOptions(Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.V2021_05_01_preview) { }
+        public System.Uri ReverseProxyEndpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2021_05_01_preview = 1,

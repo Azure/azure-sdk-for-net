@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.IoT.DeviceUpdate.Models;
 
-namespace Azure.IoT.DeviceUpdate
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class DeviceUpdateModelFactory
@@ -67,9 +66,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="createdDateTime"> Date and time in UTC when the operation was created. </param>
         /// <param name="etag"> Operation ETag. </param>
         /// <returns> A new <see cref="Models.Operation"/> instance for mocking. </returns>
-        public static Models.Operation Operation(string operationId = null, OperationStatus status = default, UpdateId updateId = null, string resourceLocation = null, Error error = null, string traceId = null, DateTimeOffset lastActionDateTime = default, DateTimeOffset createdDateTime = default, string etag = null)
+        public static Operation Operation(string operationId = null, OperationStatus status = default, UpdateId updateId = null, string resourceLocation = null, Error error = null, string traceId = null, DateTimeOffset lastActionDateTime = default, DateTimeOffset createdDateTime = default, string etag = null)
         {
-            return new Models.Operation(operationId, status, updateId, resourceLocation, error, traceId, lastActionDateTime, createdDateTime, etag);
+            return new Operation(operationId, status, updateId, resourceLocation, error, traceId, lastActionDateTime, createdDateTime, etag);
         }
 
         /// <summary> Initializes a new instance of Error. </summary>

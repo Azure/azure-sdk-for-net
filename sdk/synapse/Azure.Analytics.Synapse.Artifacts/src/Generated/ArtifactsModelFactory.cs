@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Analytics.Synapse.Artifacts.Models;
 
-namespace Azure.Analytics.Synapse.Artifacts
+namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ArtifactsModelFactory

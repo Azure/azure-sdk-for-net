@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.Shares
         public string AccessTier => _response.Headers.TryGetValue("x-ms-access-tier", out string value) ? value : null;
         /// <summary> Returns the last modified time (in UTC) of the access tier of the share. </summary>
         public DateTimeOffset? AccessTierChangeTime => _response.Headers.TryGetValue("x-ms-access-tier-change-time", out DateTimeOffset? value) ? value : null;
-        /// <summary> Returns the transition state betweeen access tiers, when present. </summary>
+        /// <summary> Returns the transition state between access tiers, when present. </summary>
         public string AccessTierTransitionState => _response.Headers.TryGetValue("x-ms-access-tier-transition-state", out string value) ? value : null;
         /// <summary> The protocols that have been enabled on the share. </summary>
         public string EnabledProtocols => _response.Headers.TryGetValue("x-ms-enabled-protocols", out string value) ? value : null;

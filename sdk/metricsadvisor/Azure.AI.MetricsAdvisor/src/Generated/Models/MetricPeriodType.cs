@@ -24,11 +24,6 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private const string AutoDetectValue = "AutoDetect";
         private const string AssignValueValue = "AssignValue";
-
-        /// <summary> AutoDetect. </summary>
-        public static MetricPeriodType AutoDetect { get; } = new MetricPeriodType(AutoDetectValue);
-        /// <summary> AssignValue. </summary>
-        public static MetricPeriodType AssignValue { get; } = new MetricPeriodType(AssignValueValue);
         /// <summary> Determines if two <see cref="MetricPeriodType"/> values are the same. </summary>
         public static bool operator ==(MetricPeriodType left, MetricPeriodType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricPeriodType"/> values are not the same. </summary>
