@@ -36,17 +36,5 @@ namespace Azure.ResourceManager.Core
         /// Gets the data representing this Feature.
         /// </summary>
         public virtual FeatureData Data { get; }
-
-        /// <inheritdoc />
-        protected override Feature GetResource(CancellationToken cancellation = default)
-        {
-            return this;
-        }
-
-        /// <inheritdoc />
-        protected override Task<Feature> GetResourceAsync(CancellationToken cancellationToken = default)
-        {
-            return Task.FromResult(this);
-        }
     }
 }
