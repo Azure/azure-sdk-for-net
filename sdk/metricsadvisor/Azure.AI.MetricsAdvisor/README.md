@@ -171,7 +171,7 @@ For each metric, the service will create 4 time series to monitor data, each one
 
 ### Data Point Anomaly
 
-A `DataPointAnomaly`, or simply "anomaly", occurs when a data point in a [time series](#time-series) behaves unexpectedly. It may occur when a data point value is too high or too low, or when its value changes abruptly between close points. You can specify the conditions a data point must satisfy to be considered an anomaly with an `AnomalyDetectionConfiguration`. After data ingestion happpens, the service applies all existing configurations to the set of new points in search of anomalies. See the sample [Create an anomaly detection configuration](#create-an-anomaly-detection-configuration) below for more information.
+A `DataPointAnomaly`, or simply "anomaly", occurs when a data point in a [time series](#time-series) behaves unexpectedly. It may occur when a data point value is too high or too low, or when its value changes abruptly between close points. You can specify the conditions a data point must satisfy to be considered an anomaly with an `AnomalyDetectionConfiguration`. After data ingestion happens, the service applies all existing configurations to the set of new points in search of anomalies. See the sample [Create an anomaly detection configuration](#create-an-anomaly-detection-configuration) below for more information.
 
 ### Anomaly Incident
 
