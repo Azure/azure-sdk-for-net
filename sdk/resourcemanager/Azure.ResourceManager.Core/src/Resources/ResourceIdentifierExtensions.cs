@@ -54,6 +54,22 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceName"> The name of the resource.</param>
         /// <returns> The combined resource id. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SubscriptionProviderIdentifier AppendProviderResource(this SubscriptionProviderIdentifier identifier, string providerNamespace, string resourceType, string resourceName)
+        {
+            ValidateProviderResourceParameters(providerNamespace, resourceType, resourceName);
+            return new SubscriptionProviderIdentifier(identifier, providerNamespace, resourceType, resourceName);
+        }
+
+        /// <summary>
+        /// Add a provider resource to an existing resource id.
+        /// </summary>
+        /// <param name="identifier"> The id to append to. </param>
+        /// <param name="providerNamespace"> The provider namespace of the added resource. </param>
+        /// <param name="resourceType"> The simple type of the added resource, without slashes (/),
+        /// for example, 'virtualMachines'. </param>
+        /// <param name="resourceName"> The name of the resource.</param>
+        /// <returns> The combined resource id. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceGroupResourceIdentifier AppendProviderResource(this ResourceGroupResourceIdentifier identifier, string providerNamespace, string resourceType, string resourceName)
         {
             ValidateProviderResourceParameters(providerNamespace, resourceType, resourceName);
@@ -104,6 +120,21 @@ namespace Azure.ResourceManager.Core
         {
             ValidateChildResourceParameters(childResourceType, childResourceName);
             return new SubscriptionResourceIdentifier(identifier, childResourceType, childResourceName);
+        }
+
+        /// <summary>
+        /// Add a provider resource to an existing resource id.
+        /// </summary>
+        /// <param name="identifier"> The id to append to. </param>
+        /// <param name="childResourceType"> The simple type of the child resource, without slashes (/),
+        /// for example, 'subnets'. </param>
+        /// <param name="childResourceName"> The name of the resource. </param>
+        /// <returns> The combined resource id. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SubscriptionProviderIdentifier AppendChildResource(this SubscriptionProviderIdentifier identifier, string childResourceType, string childResourceName)
+        {
+            ValidateChildResourceParameters(childResourceType, childResourceName);
+            return new SubscriptionProviderIdentifier(identifier, childResourceType, childResourceName);
         }
 
         /// <summary>
