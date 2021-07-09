@@ -453,10 +453,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     var webHook = hook as WebNotificationHook;
 
                     Assert.That(webHook, Is.Not.Null);
-                    Assert.That(webHook.CertificateKey, Is.Not.Null);
-                    Assert.That(webHook.CertificatePassword, Is.Not.Null);
-                    Assert.That(webHook.Username, Is.Not.Null);
-                    Assert.That(webHook.Password, Is.Not.Null);
                     Assert.That(webHook.Headers, Is.Not.Null);
                     Assert.That(webHook.Headers.Values.Any(value => value == null), Is.False);
                 }
