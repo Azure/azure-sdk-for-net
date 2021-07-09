@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-preview.1</Version>
+    <PackageId>Azure.ResourceManager.ManagementGroups</PackageId>
+    <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.Management</Description>
+    <PackageTags>azure;management;arm;resource manager;management</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Core"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
+  </ItemGroup>
+</Project>

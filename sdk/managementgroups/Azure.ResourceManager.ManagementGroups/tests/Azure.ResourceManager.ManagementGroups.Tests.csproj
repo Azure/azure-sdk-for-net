@@ -1,0 +1,6 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Core"/>
+    <ProjectReference Include="..\src\Azure.ResourceManager.ManagementGroups.csproj" />
+  </ItemGroup>
+</Project>
