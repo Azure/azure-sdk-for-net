@@ -510,9 +510,6 @@ namespace Compute.Tests
                     Assert.NotNull(vm.AdditionalCapabilities);
                     Assert.True(vm.AdditionalCapabilities.HibernationEnabled, "VM should have hibernation enabled");
 
-                    // Redeploying the VM in order to avoid IMC check for hibernatable VM's
-                    m_CrpClient.VirtualMachines.Redeploy(rgName, vm.Name);
-
                     // Hibernating the VM and validating instance view status
                     m_CrpClient.VirtualMachines.Deallocate(rgName, vm.Name, hibernate: true);
                     var instanceViewResponse = m_CrpClient.VirtualMachines.InstanceView(rgName, inputVM.Name);
