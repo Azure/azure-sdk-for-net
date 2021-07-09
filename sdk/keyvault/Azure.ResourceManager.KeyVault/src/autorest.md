@@ -29,4 +29,10 @@ directive:
     - from: swagger-document
       where: $.paths
       transform: delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/accessPolicies/{operationKind}']
+    - from: swagger-document
+      where: $.definitions
+      transform: delete $['VaultAccessPolicyParameters']
+    - from: swagger-document
+      where: $.definitions
+      transform: delete $['VaultAccessPolicyProperties']
 ```

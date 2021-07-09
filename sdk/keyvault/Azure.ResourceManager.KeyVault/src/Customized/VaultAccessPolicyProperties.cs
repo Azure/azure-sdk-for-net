@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Properties of the vault access policy. </summary>
-    internal partial class VaultAccessPolicyProperties
+    public partial class VaultAccessPolicyProperties
     {
         /// <summary> Initializes a new instance of VaultAccessPolicyProperties. </summary>
         /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicies"/> is null. </exception>
-        internal VaultAccessPolicyProperties(IEnumerable<AccessPolicyEntry> accessPolicies)
+        public VaultAccessPolicyProperties(IEnumerable<AccessPolicyEntry> accessPolicies)
         {
             if (accessPolicies == null)
             {
@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.KeyVault
             AccessPolicies = accessPolicies.ToList();
         }
 
+        /// <summary> Initializes a new instance of VaultAccessPolicyProperties. </summary>
+        /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </param>
+        internal VaultAccessPolicyProperties(IList<AccessPolicyEntry> accessPolicies)
+        {
+            AccessPolicies = accessPolicies;
+        }
+
         /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </summary>
-        public IReadOnlyList<AccessPolicyEntry> AccessPolicies { get; }
+        public IList<AccessPolicyEntry> AccessPolicies { get; }
     }
 }
