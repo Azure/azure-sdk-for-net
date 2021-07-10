@@ -12,7 +12,7 @@
 
     <PropertyGroup>
     <!-- Link to preapproved, registered namespaces: https://azure.github.io/azure-sdk/registered_namespaces.html  -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <NoWarn>$(NoWarn);AZC0100;CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
