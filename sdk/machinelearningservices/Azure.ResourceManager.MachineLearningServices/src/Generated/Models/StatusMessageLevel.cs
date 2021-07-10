@@ -8,9 +8,9 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> Severity level of message. </summary>
+    /// <summary> The StatusMessageLevel. </summary>
     public readonly partial struct StatusMessageLevel : IEquatable<StatusMessageLevel>
     {
         private readonly string _value;

@@ -8,9 +8,9 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> Docker specification must be either Build or Image. </summary>
+    /// <summary> Enum to determine docker specification type. Must be either Build or Image. </summary>
     public readonly partial struct DockerSpecificationType : IEquatable<DockerSpecificationType>
     {
         private readonly string _value;

@@ -8,9 +8,9 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> Name of policy configuration. </summary>
+    /// <summary> The EarlyTerminationPolicyType. </summary>
     public readonly partial struct EarlyTerminationPolicyType : IEquatable<EarlyTerminationPolicyType>
     {
         private readonly string _value;

@@ -5,9 +5,9 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> The LinkedInfo. </summary>
+    /// <summary> Information about a datastore origin, if linked. </summary>
     public partial class LinkedInfo
     {
         /// <summary> Initializes a new instance of LinkedInfo. </summary>

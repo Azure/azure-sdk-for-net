@@ -5,13 +5,13 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> The JobOutput. </summary>
+    /// <summary> Job output definition container information on where to find job output/logs. </summary>
     public partial class JobOutput
     {
         /// <summary> Initializes a new instance of JobOutput. </summary>
-        public JobOutput()
+        internal JobOutput()
         {
         }
 

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Describes information on user who created this ComputeInstance. </summary>
     public partial class ComputeInstanceCreatedBy

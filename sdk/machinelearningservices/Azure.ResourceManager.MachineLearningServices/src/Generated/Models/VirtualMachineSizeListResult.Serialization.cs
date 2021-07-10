@@ -9,16 +9,16 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class VirtualMachineSizeListResult
     {
         internal static VirtualMachineSizeListResult DeserializeVirtualMachineSizeListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualMachineSize>> amlCompute = default;
+            Optional<IReadOnlyList<VirtualMachineSize>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("amlCompute"))
+                if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     {
                         array.Add(VirtualMachineSize.DeserializeVirtualMachineSize(item));
                     }
-                    amlCompute = array;
+                    value = array;
                     continue;
                 }
             }
-            return new VirtualMachineSizeListResult(Optional.ToList(amlCompute));
+            return new VirtualMachineSizeListResult(Optional.ToList(value));
         }
     }
 }

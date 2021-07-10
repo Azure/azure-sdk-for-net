@@ -5,48 +5,30 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class ErrorResponse
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ErrorDetail>> details = default;
+            Optional<ErrorDetail> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
-                {
-                    code = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("message"))
-                {
-                    message = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("error"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ErrorDetail> array = new List<ErrorDetail>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ErrorDetail.DeserializeErrorDetail(item));
-                    }
-                    details = array;
+                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
                     continue;
                 }
             }
-            return new ErrorResponse(code.Value, message.Value, Optional.ToList(details));
+            return new ErrorResponse(error.Value);
         }
     }
 }

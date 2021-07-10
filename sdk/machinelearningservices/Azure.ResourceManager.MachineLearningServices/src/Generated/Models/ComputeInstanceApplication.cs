@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Defines an Aml Instance application and its connectivity endpoint URI. </summary>
     public partial class ComputeInstanceApplication

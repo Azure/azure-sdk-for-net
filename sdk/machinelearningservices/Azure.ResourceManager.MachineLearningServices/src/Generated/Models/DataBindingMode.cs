@@ -8,9 +8,9 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> Mechanism for accessing the data artifact. </summary>
+    /// <summary> Describes how the data should be attached to the container. </summary>
     public readonly partial struct DataBindingMode : IEquatable<DataBindingMode>
     {
         private readonly string _value;

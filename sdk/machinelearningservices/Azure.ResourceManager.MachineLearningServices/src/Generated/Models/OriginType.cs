@@ -8,9 +8,9 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> Type of the linked service. </summary>
+    /// <summary> Enum to determine the type of linked service. </summary>
     public readonly partial struct OriginType : IEquatable<OriginType>
     {
         private readonly string _value;

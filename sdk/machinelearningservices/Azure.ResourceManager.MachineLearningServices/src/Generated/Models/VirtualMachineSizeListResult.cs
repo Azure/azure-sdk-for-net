@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> The List Virtual Machine size operation response. </summary>
     public partial class VirtualMachineSizeListResult
@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
         internal VirtualMachineSizeListResult()
         {
-            AmlCompute = new ChangeTrackingList<VirtualMachineSize>();
+            Value = new ChangeTrackingList<VirtualMachineSize>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
-        /// <param name="amlCompute"> The list of virtual machine sizes supported by AmlCompute. </param>
-        internal VirtualMachineSizeListResult(IReadOnlyList<VirtualMachineSize> amlCompute)
+        /// <param name="value"> The list of virtual machine sizes supported by AmlCompute. </param>
+        internal VirtualMachineSizeListResult(IReadOnlyList<VirtualMachineSize> value)
         {
-            AmlCompute = amlCompute;
+            Value = value;
         }
 
         /// <summary> The list of virtual machine sizes supported by AmlCompute. </summary>
-        public IReadOnlyList<VirtualMachineSize> AmlCompute { get; }
+        public IReadOnlyList<VirtualMachineSize> Value { get; }
     }
 }
