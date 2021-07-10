@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Translation.Document;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class BatchDocumentTranslationModelFactory

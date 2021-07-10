@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics
         /// Setting this property to true, disables input logging and may limit our ability to investigate issues that occur.
         /// <para>
         /// Please see Cognitive Services Compliance and Privacy notes at <see href="https://aka.ms/cs-compliance"/> for additional details,
-        /// and Microsoft Responsible AI principles at <see href="https://www.microsoft.com/en-us/ai/responsible-ai"/>.
+        /// and Microsoft Responsible AI principles at <see href="https://www.microsoft.com/ai/responsible-ai"/>.
         /// </para>
         /// </summary>
         /// <remarks>

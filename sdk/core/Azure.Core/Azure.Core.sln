@@ -29,8 +29,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Perf", "perf\Azu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{33A10110-D88A-459B-82C1-FECEF86A822A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.TextAnalytics", "..\..\textanalytics\Azure.AI.TextAnalytics\src\Azure.AI.TextAnalytics.csproj", "{1862E359-6434-41AC-8000-9B8EA4BD0E71}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,10 +87,6 @@ Global
 		{33A10110-D88A-459B-82C1-FECEF86A822A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33A10110-D88A-459B-82C1-FECEF86A822A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33A10110-D88A-459B-82C1-FECEF86A822A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1862E359-6434-41AC-8000-9B8EA4BD0E71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1862E359-6434-41AC-8000-9B8EA4BD0E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1862E359-6434-41AC-8000-9B8EA4BD0E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1862E359-6434-41AC-8000-9B8EA4BD0E71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

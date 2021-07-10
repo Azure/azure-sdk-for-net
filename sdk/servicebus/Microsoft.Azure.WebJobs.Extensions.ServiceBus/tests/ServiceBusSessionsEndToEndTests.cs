@@ -751,21 +751,21 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
 
                 public override async Task<bool> BeginProcessingMessageAsync(
-                    ServiceBusSessionMessageActions sessionActions,
+                    ServiceBusSessionMessageActions actions,
                     ServiceBusReceivedMessage message, CancellationToken cancellationToken)
                 {
                     _logger?.LogInformation("Custom processor Begin called!" + message.Body.ToString());
-                    return await base.BeginProcessingMessageAsync(sessionActions, message, cancellationToken);
+                    return await base.BeginProcessingMessageAsync(actions, message, cancellationToken);
                 }
 
                 public override async Task CompleteProcessingMessageAsync(
-                    ServiceBusSessionMessageActions sessionActions,
+                    ServiceBusSessionMessageActions actions,
                     ServiceBusReceivedMessage message,
                     Executors.FunctionResult result,
                     CancellationToken cancellationToken)
                 {
                     _logger?.LogInformation("Custom processor End called!" + message.Body.ToString());
-                    await base.CompleteProcessingMessageAsync(sessionActions, message, result, cancellationToken);
+                    await base.CompleteProcessingMessageAsync(actions, message, result, cancellationToken);
                 }
             }
         }

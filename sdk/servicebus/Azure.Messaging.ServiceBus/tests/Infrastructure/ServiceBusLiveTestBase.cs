@@ -12,7 +12,9 @@ namespace Azure.Messaging.ServiceBus.Tests
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public abstract class ServiceBusLiveTestBase : ServiceBusTestBase
     {
-        private const int DefaultTryTimeout = 15;
+        private const int DefaultTryTimeout = 10;
+
+        protected TimeSpan ShortLockDuration = TimeSpan.FromSeconds(10);
 
         public ServiceBusTestEnvironment TestEnvironment { get; } = ServiceBusTestEnvironment.Instance;
 

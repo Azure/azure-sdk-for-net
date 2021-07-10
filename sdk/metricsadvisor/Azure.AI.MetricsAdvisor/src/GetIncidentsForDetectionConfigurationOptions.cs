@@ -19,30 +19,32 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Initializes a new instance of the <see cref="GetIncidentsForDetectionConfigurationOptions"/> class.
         /// </summary>
-        /// <param name="startTime">Filters the result. Only incidents detected from this point in time, in UTC, will be returned.</param>
-        /// <param name="endTime">Filters the result. Only incidents detected up to this point in time, in UTC, will be returned.</param>
-        public GetIncidentsForDetectionConfigurationOptions(DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <param name="startsOn">Filters the result. Only incidents detected from this point in time, in UTC, will be returned.</param>
+        /// <param name="endsOn">Filters the result. Only incidents detected up to this point in time, in UTC, will be returned.</param>
+        public GetIncidentsForDetectionConfigurationOptions(DateTimeOffset startsOn, DateTimeOffset endsOn)
         {
-            StartTime = startTime;
-            EndTime = endTime;
-            DimensionsToFilter = new ChangeTrackingList<DimensionKey>();
+            StartsOn = startsOn;
+            EndsOn = endsOn;
+            DimensionKeys = new ChangeTrackingList<DimensionKey>();
         }
 
         /// <summary>
         /// Filters the result. Only incidents detected from this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset StartTime { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary>
         /// Filters the result. Only incidents detected up to this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset EndTime { get; }
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary>
-        /// Filters the result by series. Only incidents detected in the time series groups specified will
-        /// be returned.
+        /// Filters the result by time series. Each element in this list represents a set of time series, and only
+        /// incidents detected in at least one of these sets will be returned. For each element, if all possible
+        /// dimensions are set, the key uniquely identifies a single time series for the corresponding metric. If
+        /// only a subset of dimensions are set, the key uniquely identifies a group of time series.
         /// </summary>
-        public IList<DimensionKey> DimensionsToFilter { get; }
+        public IList<DimensionKey> DimensionKeys { get; }
 
         /// <summary>
         /// If set, specifies the maximum limit of items returned in each page of results. Note:
@@ -55,7 +57,7 @@ namespace Azure.AI.MetricsAdvisor
         {
             DetectionIncidentFilterCondition filterCondition = new DetectionIncidentFilterCondition();
 
-            foreach (DimensionKey dimensionKey in DimensionsToFilter)
+            foreach (DimensionKey dimensionKey in DimensionKeys)
             {
                 filterCondition.DimensionFilter.Add(dimensionKey.Clone());
             }

@@ -16,7 +16,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     /// </summary>
     public static class LicenseType
     {
+        /// <summary>
+        /// No additional licensing is applied.
+        /// </summary>
         public const string None = "None";
+        /// <summary>
+        /// Enables Azure Hybrid User Benefits for Windows VMs.
+        /// </summary>
         public const string WindowsServer = "Windows_Server";
     }
 }

@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics
         /// Setting this property to true, disables input logging and may limit our ability to investigate issues that occur.
         /// <para>
         /// Please see Cognitive Services Compliance and Privacy notes at <see href="https://aka.ms/cs-compliance"/> for additional details,
-        /// and Microsoft Responsible AI principles at <see href="https://www.microsoft.com/en-us/ai/responsible-ai"/>.
+        /// and Microsoft Responsible AI principles at <see href="https://www.microsoft.com/ai/responsible-ai"/>.
         /// </para>
         /// </summary>
         /// <remarks>
@@ -60,7 +60,6 @@ namespace Azure.AI.TextAnalytics
         /// targets of a product or service (also known as Aspect-Based sentiment analysis).
         /// If set to true, the returned <see cref="SentenceSentiment.Opinions"/>
         /// will contain the result of this analysis.
-        /// <para>Only available for service version v3.1-preview and up.</para>
         /// </summary>
         /// <remarks>
         /// This property only has value for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.

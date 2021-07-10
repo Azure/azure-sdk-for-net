@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
 
         /// <summary> Initializes a new instance of MetricSeriesGroupDetectionCondition. </summary>
-        /// <param name="crossConditionsOperator">
+        /// <param name="conditionOperator">
         /// condition operator
         /// 
         /// 
@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="hardThresholdCondition"> . </param>
         /// <param name="changeThresholdCondition"> . </param>
         /// <param name="seriesGroupKey"> . </param>
-        internal MetricSeriesGroupDetectionCondition(DetectionConditionsOperator? crossConditionsOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, DimensionKey seriesGroupKey) : base(crossConditionsOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition)
+        internal MetricSeriesGroupDetectionCondition(DetectionConditionOperator? conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, DimensionKey seriesGroupKey) : base(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition)
         {
             SeriesGroupKey = seriesGroupKey;
         }
