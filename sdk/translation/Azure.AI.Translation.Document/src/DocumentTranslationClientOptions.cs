@@ -69,6 +69,15 @@ namespace Azure.AI.Translation.Document
             Diagnostics.LoggedHeaderNames.Add("X-Powered-By");
             Diagnostics.LoggedHeaderNames.Add("Strict-Transport-Security");
             Diagnostics.LoggedHeaderNames.Add("x-content-type-options");
+
+            Diagnostics.LoggedQueryParameters.Add("$top");
+            Diagnostics.LoggedQueryParameters.Add("$skip");
+            Diagnostics.LoggedQueryParameters.Add("$maxpagesize");
+            Diagnostics.LoggedQueryParameters.Add("ids");
+            Diagnostics.LoggedQueryParameters.Add("statuses");
+            Diagnostics.LoggedQueryParameters.Add("createdDateTimeUtcStart");
+            Diagnostics.LoggedQueryParameters.Add("createdDateTimeUtcEnd");
+            Diagnostics.LoggedQueryParameters.Add("$orderBy");
         }
     }
 }
