@@ -60,20 +60,15 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         private void AddLoggedHeadersAndQueryParameters()
         {
-            Diagnostics.LoggedHeaderNames.Add(Constants.OperationLocationHeader);
+            Diagnostics.LoggedHeaderNames.Add("Operation-Location");
+            Diagnostics.LoggedHeaderNames.Add("Content-Encoding");
+            Diagnostics.LoggedHeaderNames.Add("Vary");
             Diagnostics.LoggedHeaderNames.Add("apim-request-id");
-            Diagnostics.LoggedHeaderNames.Add("Location");
+            Diagnostics.LoggedHeaderNames.Add("X-RequestId");
+            Diagnostics.LoggedHeaderNames.Add("Set-Cookie");
+            Diagnostics.LoggedHeaderNames.Add("X-Powered-By");
             Diagnostics.LoggedHeaderNames.Add("Strict-Transport-Security");
-            Diagnostics.LoggedHeaderNames.Add("X-Content-Type-Options");
-            Diagnostics.LoggedHeaderNames.Add("x-envoy-upstream-service-time");
-
-            Diagnostics.LoggedQueryParameters.Add("includeKeys");
-            Diagnostics.LoggedQueryParameters.Add("includeTextDetails");
-            Diagnostics.LoggedQueryParameters.Add("language");
-            Diagnostics.LoggedQueryParameters.Add("locale");
-            Diagnostics.LoggedQueryParameters.Add("pages");
-            Diagnostics.LoggedQueryParameters.Add("readingOrder");
-            Diagnostics.LoggedQueryParameters.Add("op");
+            Diagnostics.LoggedHeaderNames.Add("x-content-type-options");
         }
     }
 }
