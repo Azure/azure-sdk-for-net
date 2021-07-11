@@ -145,6 +145,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="client">The client used to check for completion.</param>
         public DocumentTranslationOperation(string translationId, DocumentTranslationClient client)
         {
+            ClientCommon.ValidateModelId(translationId, nameof(translationId));
             Id = translationId;
             _serviceClient = client._serviceRestClient;
             _diagnostics = client._clientDiagnostics;
