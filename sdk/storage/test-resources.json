@@ -119,11 +119,17 @@
               "days": 1
             }
         },
+        "testDeleteRetentionPolicyProperties": {
+            "deleteRetentionPolicy": {
+                "enabled": true,
+                "days": 1
+            }
+        },
         "nullProperties": {
         },
         "locationsProperty": "[if(parameters('enableStorageVersioning'), variables('versioningEnableProperties'), variables('nullProperties'))]",
         "deleteContainerRetentionPolicyProperty": "[if(parameters('enableStorageVersioning'), variables('deleteContainerRetentionPolicyProperties'), variables('nullProperties'))]",
-        "deleteRetentionPolicyProperty": "[if(parameters('enableStorageVersioning'), variables('deleteRetentionPolicyProperties'), variables('nullProperties'))]"
+        "deleteRetentionPolicyProperty": "[if(parameters('enableStorageVersioning'), variables('deleteRetentionPolicyProperties'), variables('testDeleteRetentionPolicyProperties'))]"
     },
     "resources": [
         {
