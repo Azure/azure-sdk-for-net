@@ -7,7 +7,7 @@
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Sort options for ordering tags in a collection.  </summary>
+    /// <summary> Sort options for ordering tags in a collection. </summary>
     public enum ArtifactTagOrderBy
     {
         /// <summary> Do not provide an orderby value in the request. </summary>

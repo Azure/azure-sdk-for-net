@@ -10,10 +10,10 @@ using System;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class ContainerRegistryModelFactory
+    public static partial class AzureContainerRegistryModelFactory
     {
         /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
-        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
+        /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
         /// <param name="lastUpdatedOn"> Image last update time. </param>
@@ -31,7 +31,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
-        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
+        /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
