@@ -18,6 +18,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     /// <summary>
     /// AADProfile specifies attributes for Azure Active Directory integration.
     /// </summary>
+    /// <remarks>
+    /// For more details see [managed AAD on
+    /// AKS](https://docs.microsoft.com/azure/aks/managed-aad).
+    /// </remarks>
     public partial class ManagedClusterAADProfile
     {
         /// <summary>
@@ -34,8 +38,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="managed">Whether to enable managed AAD.</param>
         /// <param name="enableAzureRBAC">Whether to enable Azure RBAC for
         /// Kubernetes authorization.</param>
-        /// <param name="adminGroupObjectIDs">AAD group object IDs that will
-        /// have admin role of the cluster.</param>
+        /// <param name="adminGroupObjectIDs">The list of AAD group object IDs
+        /// that will have admin role of the cluster.</param>
         /// <param name="clientAppID">The client AAD application ID.</param>
         /// <param name="serverAppID">The server AAD application ID.</param>
         /// <param name="serverAppSecret">The server AAD application
@@ -74,8 +78,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public bool? EnableAzureRBAC { get; set; }
 
         /// <summary>
-        /// Gets or sets AAD group object IDs that will have admin role of the
-        /// cluster.
+        /// Gets or sets the list of AAD group object IDs that will have admin
+        /// role of the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "adminGroupObjectIDs")]
         public IList<string> AdminGroupObjectIDs { get; set; }

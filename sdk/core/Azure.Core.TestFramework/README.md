@@ -55,7 +55,7 @@ __Limitation__: all method calls/properties that are being used have to be `virt
 
 ## Test environment and live test resources
 
-Follow the [live test resources management](https://github.com/azure/azure-sdk-for-net/tree/master/eng/common/TestResources/README.md) to create a live test resources deployment template and get it deployed. The deployment template should be named `test-resources.json` and will live under your service directory.
+Follow the [live test resources management](https://github.com/azure/azure-sdk-for-net/tree/main/eng/common/TestResources/README.md) to create a live test resources deployment template and get it deployed. The deployment template should be named `test-resources.json` and will live under your service directory.
 
 To use the environment provided by the `New-TestResources.ps1`, create a class that inherits from `TestEnvironment` and exposes required values as properties:
 
@@ -518,4 +518,14 @@ using (var _ = new TestAppContextSwitch("Azure.Core.Pipeline.DisableHttpWebReque
 
 var isSet = AppContext.TryGetSwitch("Azure.Core.Pipeline.DisableHttpWebRequestTransport", out val))
 // isSet is false
+```
+
+### AsyncAssert
+This type contains static helper methods that cover some of the gaps in NUnit when it comes to async assertions. For instance, attempting to assert that a specific exception is thrown using Assert.That, Assert.Throws, or Assert.ThrowsAsync all result in sync over async code, which can lead to test flakiness. 
+
+#### Example usage
+```c# 
+ServiceBusException exception = await AsyncAssert.ThrowsAsync<ServiceBusException>(
+    async () => await args.CompleteMessageAsync(message, args.CancellationToken));
+Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, exception.Reason);
 ```

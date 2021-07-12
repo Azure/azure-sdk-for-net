@@ -84,8 +84,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// partner namespaces is always permitted under the same Azure
         /// subscription as the one used
         /// for creating the partner registration.</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource.</param>
+        /// <param name="systemData">The system metadata relating to Partner
+        /// Registration resource.</param>
         public PartnerRegistration(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string partnerName = default(string), string partnerResourceTypeName = default(string), string partnerResourceTypeDisplayName = default(string), string partnerResourceTypeDescription = default(string), string longDescription = default(string), string partnerCustomerServiceNumber = default(string), string partnerCustomerServiceExtension = default(string), string customerServiceUri = default(string), string setupUri = default(string), string logoUri = default(string), string visibilityState = default(string), IList<string> authorizedAzureSubscriptionIds = default(IList<string>), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public IList<string> AuthorizedAzureSubscriptionIds { get; set; }
 
         /// <summary>
-        /// Gets the system metadata relating to this resource.
+        /// Gets the system metadata relating to Partner Registration resource.
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }

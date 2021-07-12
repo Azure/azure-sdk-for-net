@@ -2,3 +2,45 @@ trigger: none
 
 jobs:
   - template: /eng/common/pipelines/templates/jobs/docindex.yml
+
+  - job: UpdateDocsMsBuildConfig
+    pool:
+      vmImage: ubuntu-20.04
+    variables:
+      DocRepoLocation: $(Pipeline.Workspace)/docs
+      DocRepoOwner: Azure
+      DocRepoName: azure-docs-sdk-dotnet
+    steps:
+      # Checkout the eng folder from the SDK repo
+      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+        parameters:
+          SkipDefaultCheckout: true
+      
+      # Sync docs repo
+      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+        parameters:
+          Paths:
+            - bundlepackages
+          Repositories:
+            - Name: $(DocRepoOwner)/$(DocRepoName)
+              WorkingDirectory: $(DocRepoLocation)
+
+      # Call update docs ci script to onboard packages
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Update-DocsMsPackages.ps1
+          arguments: -DocRepoLocation $(DocRepoLocation)
+        displayName: Update Docs Onboarding
+
+      - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+
+      - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+        parameters:
+          BaseRepoBranch: $(DefaultBranch)
+          BaseRepoOwner: $(DocRepoOwner)
+          CommitMsg: "Update docs CI configuration"
+          TargetRepoName: $(DocRepoName)
+          TargetRepoOwner: $(DocRepoOwner)
+          WorkingDirectory: $(DocRepoLocation)
+
