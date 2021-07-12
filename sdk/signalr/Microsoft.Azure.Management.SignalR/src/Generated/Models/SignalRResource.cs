@@ -78,13 +78,24 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <param name="upstream">Upstream settings when the service is in
         /// server-less mode.</param>
         /// <param name="networkACLs">Network ACLs</param>
+        /// <param name="publicNetworkAccess">Enable or disable public network
+        /// access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no
+        /// matter what you set in network ACLs.</param>
+        /// <param name="disableLocalAuth">DisableLocalAuth
+        /// Enable or disable local auth with AccessKey
+        /// When set as true, connection with AccessKey=xxx won't work.</param>
+        /// <param name="disableAadAuth">disableAadAuth
+        /// Enable or disable aad auth
+        /// When set as true, connection with AuthType=aad won't work.</param>
         /// <param name="kind">The kind of the service - e.g. "SignalR" for
         /// "Microsoft.SignalRService/SignalR". Possible values include:
         /// 'SignalR', 'RawWebSockets'</param>
         /// <param name="identity">The managed identity response</param>
         /// <param name="systemData">Metadata pertaining to creation and last
         /// modification of the resource.</param>
-        public SignalRResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku sku = default(ResourceSku), string provisioningState = default(string), string externalIP = default(string), string hostName = default(string), int? publicPort = default(int?), int? serverPort = default(int?), string version = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), IList<SharedPrivateLinkResource> sharedPrivateLinkResources = default(IList<SharedPrivateLinkResource>), SignalRTlsSettings tls = default(SignalRTlsSettings), IList<SignalRFeature> features = default(IList<SignalRFeature>), SignalRCorsSettings cors = default(SignalRCorsSettings), ServerlessUpstreamSettings upstream = default(ServerlessUpstreamSettings), SignalRNetworkACLs networkACLs = default(SignalRNetworkACLs), string kind = default(string), ManagedIdentity identity = default(ManagedIdentity), SystemData systemData = default(SystemData))
+        public SignalRResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku sku = default(ResourceSku), string provisioningState = default(string), string externalIP = default(string), string hostName = default(string), int? publicPort = default(int?), int? serverPort = default(int?), string version = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), IList<SharedPrivateLinkResource> sharedPrivateLinkResources = default(IList<SharedPrivateLinkResource>), SignalRTlsSettings tls = default(SignalRTlsSettings), IList<SignalRFeature> features = default(IList<SignalRFeature>), SignalRCorsSettings cors = default(SignalRCorsSettings), ServerlessUpstreamSettings upstream = default(ServerlessUpstreamSettings), SignalRNetworkACLs networkACLs = default(SignalRNetworkACLs), string publicNetworkAccess = default(string), bool? disableLocalAuth = default(bool?), bool? disableAadAuth = default(bool?), string kind = default(string), ManagedIdentity identity = default(ManagedIdentity), SystemData systemData = default(SystemData))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
@@ -101,6 +112,9 @@ namespace Microsoft.Azure.Management.SignalR.Models
             Cors = cors;
             Upstream = upstream;
             NetworkACLs = networkACLs;
+            PublicNetworkAccess = publicNetworkAccess;
+            DisableLocalAuth = disableLocalAuth;
+            DisableAadAuth = disableAadAuth;
             Kind = kind;
             Identity = identity;
             SystemData = systemData;
@@ -211,6 +225,32 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkACLs")]
         public SignalRNetworkACLs NetworkACLs { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable or disable public network access. Default to
+        /// "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no
+        /// matter what you set in network ACLs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets disableLocalAuth
+        /// Enable or disable local auth with AccessKey
+        /// When set as true, connection with AccessKey=xxx won't work.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets or sets disableAadAuth
+        /// Enable or disable aad auth
+        /// When set as true, connection with AuthType=aad won't work.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableAadAuth")]
+        public bool? DisableAadAuth { get; set; }
 
         /// <summary>
         /// Gets or sets the kind of the service - e.g. "SignalR" for
