@@ -144,23 +144,10 @@ jobs:
         displayName: 'Run PoliCheck'
         inputs:
           targetType: F
+          targetArgument: '$(Build.SourcesDirectory)/sdk/$(ServiceDirectoryName)'
           result: PoliCheck.sarif
           optionsFC: 0
           optionsXS: 1
-
-      - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
-        displayName: 'Post Analysis'
-        inputs:
-          GdnBreakAllTools: false
-          GdnBreakGdnToolCredScan: true
-          GdnBreakGdnToolCredScanSeverity: Error
-          GdnBreakBaselineFiles: $(Build.SourcesDirectory)\eng\dotnet.gdnbaselines
-          GdnBreakBaselines: baseline  
-          # Used for generating baseline file
-          # GdnBreakOutputBaselineFile: dotnet
-          # GdnBreakOutputBaseline: baseline
-        condition: succeededOrFailed()
-        continueOnError: true
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
         displayName: 'Publish Security Analysis Logs'
         condition: succeededOrFailed()
