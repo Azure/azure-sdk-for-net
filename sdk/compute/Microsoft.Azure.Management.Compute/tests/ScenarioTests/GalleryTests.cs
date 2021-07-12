@@ -415,6 +415,55 @@ namespace Compute.Tests
             }
         }
 
+        [Fact]
+        public void VMApplicationProfile_CRUD_Tests()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+
+                string location = ComputeManagementTestUtilities.DefaultLocation;
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", location);
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                var image = m_CrpClient.VirtualMachineImages.Get(
+                    this.m_location, imageRef.Publisher, imageRef.Offer, imageRef.Sku, imageRef.Version);
+                Assert.True(image != null);
+
+                // Create resource group
+                var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
+                VirtualMachine inputVM;
+
+                try
+                {
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    IList<VMGalleryApplication> galleryApplications = new List<VMGalleryApplication>()
+                    {
+                        new VMGalleryApplication("packageId")
+                    };                
+                    
+                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, (vm) =>
+                    {
+                        vm.StorageProfile.OsDisk.DiskSizeGB = 150;
+                        vm.ApplicationProfile = new ApplicationProfile(galleryApplications);
+                    });
+
+                    var getVMResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
+                    ValidateVM(inputVM, getVMResponse, Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name));
+                    Assert.NotNull(getVMResponse.ApplicationProfile);
+                    Assert.NotNull(getVMResponse.ApplicationProfile.GalleryApplications);
+                    Assert.Equal(1, getVMResponse.ApplicationProfile.GalleryApplications.Count);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
         private void ValidateGallery(Gallery galleryIn, Gallery galleryOut)
         {
             Assert.False(string.IsNullOrEmpty(galleryOut.ProvisioningState));
