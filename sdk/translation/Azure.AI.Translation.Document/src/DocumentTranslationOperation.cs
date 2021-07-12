@@ -327,8 +327,8 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                var guid = ClientCommon.ValidateModelId(documentId, nameof(documentId));
-                return _serviceClient.GetDocumentStatus(new Guid(Id), new Guid(documentId), cancellationToken);
+                var parsedDocumentId = ClientCommon.ValidateModelId(documentId, nameof(documentId));
+                return _serviceClient.GetDocumentStatus(new Guid(Id), parsedDocumentId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -349,7 +349,8 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                return await _serviceClient.GetDocumentStatusAsync(new Guid(Id), new Guid(documentId), cancellationToken).ConfigureAwait(false);
+                var parsedDocumentId = ClientCommon.ValidateModelId(documentId, nameof(documentId));
+                return await _serviceClient.GetDocumentStatusAsync(new Guid(Id), parsedDocumentId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
