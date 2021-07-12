@@ -6,9 +6,8 @@
 #nullable disable
 
 using System;
-using Azure.Monitor.Query.Models;
 
-namespace Azure.Monitor.Query
+namespace Azure.Monitor.Query.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class QueryModelFactory

@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Core
@@ -38,17 +36,5 @@ namespace Azure.ResourceManager.Core
         /// Gets the data representing this generic azure resource.
         /// </summary>
         public virtual ProviderData Data { get; }
-
-        /// <inheritdoc/>
-        protected override Provider GetResource(CancellationToken cancellation = default)
-        {
-            return this;
-        }
-
-        /// <inheritdoc />
-        protected override Task<Provider> GetResourceAsync(CancellationToken cancellationToken = default)
-        {
-            return Task.FromResult(this);
-        }
     }
 }

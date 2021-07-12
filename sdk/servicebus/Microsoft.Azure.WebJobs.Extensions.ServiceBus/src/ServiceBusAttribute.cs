@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebJobs
     ///// <remarks>
     ///// The method parameter type can be one of the following:
     ///// <list type="bullet">
-    ///// <item><description>BrokeredMessage (out parameter)</description></item>
+    ///// <item><description>ServiceBusMessage (out parameter)</description></item>
     ///// <item><description><see cref="string"/> (out parameter)</description></item>
     ///// <item><description><see cref="byte"/> (out parameter)</description></item>
     ///// <item><description>A user-defined type (out parameter, serialized as JSON)</description></item>
@@ -34,11 +34,11 @@ namespace Microsoft.Azure.WebJobs
         /// Initializes a new instance of the <see cref="ServiceBusAttribute"/> class.
         /// </summary>
         /// <param name="queueOrTopicName">The name of the queue or topic to bind to.</param>
-        /// <param name="serviceBusEntityType">The type of the entity to bind to.</param>
-        public ServiceBusAttribute(string queueOrTopicName, ServiceBusEntityType serviceBusEntityType = ServiceBusEntityType.Queue)
+        /// <param name="entityType">The type of the entity to bind to.</param>
+        public ServiceBusAttribute(string queueOrTopicName, ServiceBusEntityType entityType = ServiceBusEntityType.Queue)
         {
             QueueOrTopicName = queueOrTopicName;
-            ServiceBusEntityType = serviceBusEntityType;
+            EntityType = entityType;
         }
 
         /// <summary>
@@ -54,6 +54,6 @@ namespace Microsoft.Azure.WebJobs
         /// <summary>
         /// Value indicating the type of the entity to bind to.
         /// </summary>
-        public ServiceBusEntityType ServiceBusEntityType { get; set; }
+        public ServiceBusEntityType EntityType { get; set; }
     }
 }

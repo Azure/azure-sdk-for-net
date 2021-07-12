@@ -29,6 +29,23 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task ListWithParameters()
+        {
+            var tags = new Dictionary<string, string>();
+            tags.Add("MyKey", "MyValue");
+            _ = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2, tags).CreateOrUpdateAsync(Recording.GenerateAssetName("test1-"));
+            _ = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2, tags).CreateOrUpdateAsync(Recording.GenerateAssetName("test2-"));
+            _ = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("test4-"));
+            int count = 0;
+            await foreach (var rg in Client.DefaultSubscription.GetResourceGroups().ListAsync("tagName eq 'MyKey' and tagValue eq 'MyValue'", 2))
+            {
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 2);
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task CreateOrUpdate()
         {
             string rgName = Recording.GenerateAssetName("testRg-");

@@ -159,5 +159,21 @@ namespace Azure.ResourceManager.Core.Tests
             }
             return builder.ToString();
         }
+
+        [RecordedTest]
+        public async Task ListFeatures()
+        {
+            Feature testFeature = null;
+            await foreach (var feature in Client.DefaultSubscription.ListFeaturesAsync())
+            {
+                testFeature = feature;
+                break;
+            }
+            Assert.IsNotNull(testFeature);
+            Assert.IsNotNull(testFeature.Data.Id);
+            Assert.IsNotNull(testFeature.Data.Name);
+            Assert.IsNotNull(testFeature.Data.Properties);
+            Assert.IsNotNull(testFeature.Data.Type);
+        }
     }
 }

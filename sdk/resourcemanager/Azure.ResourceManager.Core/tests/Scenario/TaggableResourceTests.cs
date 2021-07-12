@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -30,20 +31,25 @@ namespace Azure.ResourceManager.Core.Tests
             _rg = await _rg.AddTagAsync("key2", "value2");
         }
 
-        [Test]
+        [TestCaseSource(nameof(TagAddSource))]
         [RecordedTest]
-        public async Task TestAddTags()
+        public async Task TestAddTags(string key, string value, IDictionary<string, string> tags)
         {
-            var result = await _rg.AddTagAsync("UpdateKey3", "UpdateValue3");
-            Assert.AreEqual(result.Value.Data.Tags, ExpectedAddTags);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task TestStartAddTags()
-        {
-            var result = await (await _rg.StartAddTagAsync("UpdateKey3", "UpdateValue3")).WaitForCompletionAsync();
-            Assert.AreEqual(result.Value.Data.Tags, ExpectedAddTags);
+            if (key is null)
+            {
+                var ex = Assert.ThrowsAsync<ArgumentException>(async () => await _rg.AddTagAsync(key, value));
+                Assert.That(ex.Message.Contains("key provided cannot be null or a whitespace"));
+            }
+            else if (value is null)
+            {
+                var ex = Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await _rg.AddTagAsync(key, value));
+                Assert.That(ex.Message.Contains("Invalid tag value. The following tags 'nullKey' have a null value. Tag value cannot be null."));
+            }
+            else
+            {
+                var result = await _rg.AddTagAsync(key, value);
+                Assert.AreEqual(result.Value.Data.Tags, tags);
+            }
         }
 
         [Test]
@@ -54,15 +60,7 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(result.Value.Data.Tags, UpdateTags);
         }
 
-        [Test]
-        [RecordedTest]
-        public async Task TestStartSetTags()
-        {
-            var result = await (await _rg.StartSetTagsAsync(UpdateTags)).WaitForCompletionAsync();
-            Assert.AreEqual(result.Value.Data.Tags, UpdateTags);
-        }
-
-        [TestCaseSource(nameof(TagSource))]
+        [TestCaseSource(nameof(TagRemoveSource))]
         [RecordedTest]
         public async Task TestRemoveTag(string key, IDictionary<string, string> tags)
         {
@@ -70,15 +68,20 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(result.Value.Data.Tags, tags);
         }
 
-        [TestCaseSource(nameof(TagSource))]
-        [RecordedTest]
-        public async Task TestStartRemoveTag(string key, IDictionary<string, string> tags)
+        static IEnumerable<object[]> TagAddSource()
         {
-            var result = await (await _rg.StartRemoveTagAsync(key)).WaitForCompletionAsync();
-            Assert.AreEqual(result.Value.Data.Tags, tags);
+            IDictionary<string, string> keyChangeTag = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" }, { "UpdateKey1", "value1" } };
+            IDictionary<string, string> valueChangeTag = new Dictionary<string, string> { { "key1", "updateValue1" }, { "key2", "value2" } };
+
+            return new[] { new object[] { "key1", "value1", OriTags },
+                new object[] {"key1", "updateValue1", valueChangeTag },
+                new object[] {"UpdateKey1", "value1", keyChangeTag },
+                new object[] {null, "nullValue", OriTags },
+                new object[] { "nullKey", null, OriTags }
+            };
         }
 
-        static IEnumerable<object[]> TagSource()
+        static IEnumerable<object[]> TagRemoveSource()
         {
             IDictionary<string, string> OriKey1 = new Dictionary<string, string> { { "key1", "value1" } };
             IDictionary<string, string> OriKey2 = new Dictionary<string, string> { { "key2", "value2" } };

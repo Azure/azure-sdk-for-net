@@ -12,7 +12,9 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public abstract class OperationsBase
     {
-        private ProviderContainer _providerContainer;
+        private TagResourceContainer _tagContainer;
+        private TagResourceOperations _tagResourceOperations;
+        private TenantOperations _tenant;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationsBase"/> class for mocking.
@@ -49,14 +51,9 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets the provider operations.
+        /// Get the tenant operations <see cref="TenantOperations"/> class.
         /// </summary>
-        protected ProviderContainer ProviderContainer => _providerContainer ??= GetProviderContainer();
-
-        private ProviderContainer GetProviderContainer()
-        {
-            return new ProviderContainer(this);
-        }
+        public TenantOperations Tenant => _tenant ??= new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
 
         internal ClientDiagnostics Diagnostics { get; }
 
@@ -90,6 +87,17 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <returns> A valid Azure resource type. </returns>
         protected abstract ResourceType ValidResourceType { get; }
+
+        /// <summary>
+        /// Gets the TagResourceOperations.
+        /// </summary>
+        /// <returns> A TagResourceOperations. </returns>
+        protected internal TagResourceOperations TagResourceOperations => _tagResourceOperations ??= new TagResourceOperations(this, Id);
+
+        /// <summary>
+        /// Gets the TagsOperations.
+        /// </summary>
+        protected internal TagResourceContainer TagContainer => _tagContainer ??= new TagResourceContainer(this);
 
         /// <summary>
         /// Validate the resource identifier against current operations.

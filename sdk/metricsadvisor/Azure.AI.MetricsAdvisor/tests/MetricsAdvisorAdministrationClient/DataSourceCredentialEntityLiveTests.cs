@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -143,6 +144,29 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        [TestCase(nameof(DataLakeSharedKeyCredentialEntity))]
+        [TestCase(nameof(ServicePrincipalCredentialEntity))]
+        [TestCase(nameof(ServicePrincipalInKeyVaultCredentialEntity))]
+        [TestCase(nameof(SqlConnectionStringCredentialEntity))]
+        public async Task UpdateCommonPropertiesWithNullSetsToDefault(string credentialKind)
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            string credentialName = Recording.GenerateAlphaNumericId("credential");
+
+            DataSourceCredentialEntity credentialToCreate = GetDataSourceCredentialEntityTestCase(credentialKind, credentialName);
+
+            await using var disposableCredential = await DisposableDataSourceCredentialEntity.CreateDataSourceCredentialEntityAsync(adminClient, credentialToCreate);
+            DataSourceCredentialEntity credentialToUpdate = disposableCredential.Credential;
+
+            credentialToUpdate.Description = null;
+
+            DataSourceCredentialEntity updatedCredential = await adminClient.UpdateDataSourceCredentialAsync(credentialToUpdate);
+
+            Assert.That(updatedCredential.Description, Is.Empty);
+        }
+
+        [RecordedTest]
         public async Task GetDataSourceCredentials()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -199,21 +223,26 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             if (credential is ServicePrincipalCredentialEntity spCredential)
             {
+                Assert.That(spCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipal));
                 Assert.That(spCredential.ClientId, Is.Not.Null.And.Not.Empty);
                 Assert.That(spCredential.TenantId, Is.Not.Null.And.Not.Empty);
             }
             else if (credential is ServicePrincipalInKeyVaultCredentialEntity kvCredential)
             {
+                Assert.That(kvCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipalInKeyVault));
                 Assert.That(kvCredential.Endpoint.AbsoluteUri, Is.Not.Null.And.Not.Empty);
                 Assert.That(kvCredential.KeyVaultClientId, Is.Not.Null.And.Not.Empty);
                 Assert.That(kvCredential.TenantId, Is.Not.Null.And.Not.Empty);
                 Assert.That(kvCredential.SecretNameForClientId, Is.Not.Null.And.Not.Empty);
                 Assert.That(kvCredential.SecretNameForClientSecret, Is.Not.Null.And.Not.Empty);
             }
-            else if (credential is DataLakeSharedKeyCredentialEntity ||
-                     credential is SqlConnectionStringCredentialEntity)
+            else if (credential is DataLakeSharedKeyCredentialEntity skCredential)
             {
-                // There's nothing to validate since these credential types do not have public properties.
+                Assert.That(skCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.DataLakeSharedKey));
+            }
+            else if (credential is SqlConnectionStringCredentialEntity csCredential)
+            {
+                Assert.That(csCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.SqlConnectionString));
             }
             else
             {
@@ -225,21 +254,26 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             if (credential is ServicePrincipalCredentialEntity spCredential)
             {
+                Assert.That(spCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipal));
                 Assert.That(spCredential.ClientId, Is.EqualTo(ClientId));
                 Assert.That(spCredential.TenantId, Is.EqualTo(TenantId));
             }
             else if (credential is ServicePrincipalInKeyVaultCredentialEntity kvCredential)
             {
+                Assert.That(kvCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipalInKeyVault));
                 Assert.That(kvCredential.Endpoint.AbsoluteUri, Is.EqualTo(Endpoint));
                 Assert.That(kvCredential.KeyVaultClientId, Is.EqualTo(ClientId));
                 Assert.That(kvCredential.TenantId, Is.EqualTo(TenantId));
                 Assert.That(kvCredential.SecretNameForClientId, Is.EqualTo(ClientIdSecretName));
                 Assert.That(kvCredential.SecretNameForClientSecret, Is.EqualTo(ClientSecretSecretName));
             }
-            else if (credential is DataLakeSharedKeyCredentialEntity ||
-                     credential is SqlConnectionStringCredentialEntity)
+            else if (credential is DataLakeSharedKeyCredentialEntity skCredential)
             {
-                // There's nothing to validate since these credential types do not have public properties.
+                Assert.That(skCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.DataLakeSharedKey));
+            }
+            else if (credential is SqlConnectionStringCredentialEntity csCredential)
+            {
+                Assert.That(csCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.SqlConnectionString));
             }
             else
             {

@@ -50,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetMetricDimensionValuesOptions()
             {
-                DimensionValueToFilter = filter
+                DimensionValueFilter = filter
             };
 
             var valueCount = 0;
@@ -106,8 +106,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetMetricSeriesDefinitionsOptions(SamplingStartTime);
 
-            options.DimensionCombinationsToFilter.Add("city", cityFilter);
-            options.DimensionCombinationsToFilter.Add("category", categoryFilter);
+            options.DimensionCombinationsFilter.Add("city", cityFilter);
+            options.DimensionCombinationsFilter.Add("category", categoryFilter);
 
             var definitionCount = 0;
 
@@ -142,11 +142,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
-            var columns = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
-            var seriesKey1 = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { "city", "Delhi" }, { "category", "Handmade" } };
+            var seriesKey1 = new DimensionKey(dimensions);
 
-            columns = new Dictionary<string, string>() { { "city", "Kolkata" }, { "category", "__SUM__" } };
-            var seriesKey2 = new DimensionKey(columns);
+            dimensions = new Dictionary<string, string>() { { "city", "Kolkata" }, { "category", "__SUM__" } };
+            var seriesKey2 = new DimensionKey(dimensions);
 
             var returnedKey1 = false;
             var returnedKey2 = false;
@@ -154,7 +154,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var options = new GetMetricSeriesDataOptions(SamplingStartTime, SamplingEndTime)
             {
-                SeriesToFilter = { seriesKey1, seriesKey2 }
+                SeriesKeys = { seriesKey1, seriesKey2 }
             };
 
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(MetricId, options))
