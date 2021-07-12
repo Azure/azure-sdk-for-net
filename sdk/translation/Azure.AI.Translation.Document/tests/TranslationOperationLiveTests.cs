@@ -392,6 +392,7 @@ namespace Azure.AI.Translation.Document.Tests
 
         [TestCase("Foo Bar", typeof(ArgumentException))]
         [TestCase("", typeof(ArgumentException))]
+        [TestCase(null, typeof(ArgumentNullException))]
         public void DocumentTranslationOperationWithInvalidGuidTest(string invalidGuid, Type expectedException)
         {
             var client = GetClient();
@@ -400,6 +401,7 @@ namespace Azure.AI.Translation.Document.Tests
 
         [TestCase("Foo Bar", typeof(ArgumentException))]
         [TestCase("", typeof(ArgumentException))]
+        [TestCase(null, typeof(ArgumentNullException))]
         public async Task GetDocumentStatusWithInvalidGuidTest(string invalidGuid, Type expectedException)
         {
             var sourceUri = await CreateSourceContainerAsync(oneTestDocuments);
