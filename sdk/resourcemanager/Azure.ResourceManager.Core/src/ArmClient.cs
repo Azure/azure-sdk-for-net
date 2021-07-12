@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Core
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
             Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, options ?? ClientOptions);
 
+            _tenant = new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptions().TryGet(defaultSubscriptionId);
-            _tenant = new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
             ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
