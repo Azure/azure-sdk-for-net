@@ -315,8 +315,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Display name. </returns>
         public override string ToString()
         {
-            return DisplayName;
-            //return Name; //TODO: change to return Name - TEST FAILURES CAUSED HERE
+            return Name;
         }
 
         /// <summary>

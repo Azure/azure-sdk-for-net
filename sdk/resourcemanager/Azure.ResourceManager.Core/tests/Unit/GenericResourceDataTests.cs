@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Core.Tests
         [Test]
         public void InvalidSerializationTest()
         {
-            string expected = "{\"properties\":{\"location\":\"East US\",\"tags\":{}}}";
+            string expected = "{\"properties\":{\"location\":\"eastus\",\"tags\":{}}}";
             ResourceGroupResourceIdentifier id = Id;
             GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, Location.EastUS, null, null, null, null, null, null, null);
 
