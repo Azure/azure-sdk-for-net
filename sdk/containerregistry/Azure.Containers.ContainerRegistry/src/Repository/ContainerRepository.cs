@@ -50,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Create a new <see cref="RegistryArtifact"/> helper object for the artifact identified by `tagOrDigest`.
+        /// Create a new <see cref="RegistryArtifact"/> helper object for the artifact identified by <paramref name="tagOrDigest"/>.
         /// </summary>
         /// <param name="tagOrDigest"> Either a tag or a digest that uniquely identifies the artifact. </param>
         /// <returns> A new <see cref="RegistryArtifact"/> for the desired repository. </returns>
