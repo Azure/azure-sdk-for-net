@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<Vault> CreateOrUpdate(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public virtual Response<Vault> CreateOrUpdate(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VaultContainer.CreateOrUpdate");
             scope.Start();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<Vault>> CreateOrUpdateAsync(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Vault>> CreateOrUpdateAsync(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VaultContainer.CreateOrUpdate");
             scope.Start();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public VaultsCreateOrUpdateOperation StartCreateOrUpdate(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public virtual VaultsCreateOrUpdateOperation StartCreateOrUpdate(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VaultContainer.StartCreateOrUpdate");
             scope.Start();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<VaultsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VaultsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VaultContainer.StartCreateOrUpdate");
             scope.Start();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<Vault> Get(string vaultName, CancellationToken cancellationToken = default)
+        public virtual Response<Vault> Get(string vaultName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VaultContainer.Get");
             scope.Start();
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<Vault>> GetAsync(string vaultName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Vault>> GetAsync(string vaultName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VaultContainer.Get");
             scope.Start();
@@ -199,6 +199,106 @@ namespace Azure.ResourceManager.KeyVault
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Vault(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual Vault TryGet(string vaultName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VaultContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (vaultName == null)
+                {
+                    throw new ArgumentNullException(nameof(vaultName));
+                }
+
+                return Get(vaultName, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<Vault> TryGetAsync(string vaultName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VaultContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (vaultName == null)
+                {
+                    throw new ArgumentNullException(nameof(vaultName));
+                }
+
+                return await GetAsync(vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual bool DoesExist(string vaultName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VaultContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (vaultName == null)
+                {
+                    throw new ArgumentNullException(nameof(vaultName));
+                }
+
+                return TryGet(vaultName, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="vaultName"> The name of the vault. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<bool> DoesExistAsync(string vaultName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VaultContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (vaultName == null)
+                {
+                    throw new ArgumentNullException(nameof(vaultName));
+                }
+
+                return await TryGetAsync(vaultName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

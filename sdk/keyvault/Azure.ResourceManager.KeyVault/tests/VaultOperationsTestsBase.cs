@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
 using Azure.Graph.Rbac;
-using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
     [ClientTestFixture]
     public abstract class VaultOperationsTestsBase : ManagementRecordedTestBase<KeyVaultManagementTestEnvironment>
     {
+        protected ArmClient Client { get; private set; }
+
         private const string ObjectIdKey = "ObjectId";
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
 
@@ -31,9 +33,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public string VaultName { get; internal set; }
         public VaultProperties VaultProperties { get; internal set; }
 
-        public VaultsOperations VaultsClient { get; set; }
-        public ResourcesOperations ResourcesClient { get; set; }
-        public ResourceGroupsOperations ResourceGroupsClient { get; set; }
+        public VaultOperations VaultOperations { get; set; }
+        public VaultContainer VaultContainer { get; set; }
+        public ResourceGroup ResourceGroup { get; set; }
         public ProvidersOperations ResourceProvidersClient { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
@@ -43,13 +45,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         protected async Task Initialize()
         {
+            Client = GetArmClient();
             var resourceManagementClient = GetResourceManagementClient();
-            ResourcesClient = resourceManagementClient.Resources;
-            ResourceGroupsClient = resourceManagementClient.ResourceGroups;
             ResourceProvidersClient = resourceManagementClient.Providers;
-
-            var keyVaultManagementClient = GetKeyVaultManagementClient();
-            VaultsClient = keyVaultManagementClient.Vaults;
 
             if (Mode == RecordedTestMode.Playback)
             {
@@ -78,9 +76,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 ).First().Locations.FirstOrDefault();
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg");
-            await ResourceGroupsClient.CreateOrUpdateAsync(ResGroupName, new ResourceManager.Resources.Models.ResourceGroup(Location));
-            VaultName = Recording.GenerateAssetName("sdktestvault");
+            var rgResponse = await Client.DefaultSubscription.GetResourceGroups().Construct(Location).CreateOrUpdateAsync(ResGroupName).ConfigureAwait(false);
+            ResourceGroup = rgResponse.Value;
 
+            VaultOperations = new VaultOperations(ResourceGroup, ResourceGroup.Id);
+            VaultContainer = new VaultContainer(ResourceGroup);
+            VaultName = Recording.GenerateAssetName("sdktestvault");
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
 
-            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuFamily.A, SkuName.Standard));
+            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuName.Standard, SkuFamily.A));
 
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
@@ -110,13 +111,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 }
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);
-        }
-
-        internal KeyVaultManagementClient GetKeyVaultManagementClient()
-        {
-            return InstrumentClient(new KeyVaultManagementClient(TestEnvironment.SubscriptionId,
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new KeyVaultManagementClientOptions())));
         }
     }
 }

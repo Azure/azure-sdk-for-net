@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified managed HSM Pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Operation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<ManagedHsmsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmOperations.StartDelete");
             scope.Start();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified managed HSM Pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Operation StartDelete(CancellationToken cancellationToken = default)
+        public ManagedHsmsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmOperations.StartDelete");
             scope.Start();
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Permanently deletes the specified managed HSM. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Operation> StartPurgeDeletedAsync(CancellationToken cancellationToken = default)
+        public async Task<ManagedHsmsPurgeDeletedOperation> StartPurgeDeletedAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmOperations.StartPurgeDeleted");
             scope.Start();
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Permanently deletes the specified managed HSM. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Operation StartPurgeDeleted(CancellationToken cancellationToken = default)
+        public ManagedHsmsPurgeDeletedOperation StartPurgeDeleted(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmOperations.StartPurgeDeleted");
             scope.Start();

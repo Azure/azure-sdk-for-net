@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="parameters"> Parameters to create or update the managed HSM Pool. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<ManagedHsm> CreateOrUpdate(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedHsm> CreateOrUpdate(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.CreateOrUpdate");
             scope.Start();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="parameters"> Parameters to create or update the managed HSM Pool. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<ManagedHsm>> CreateOrUpdateAsync(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ManagedHsm>> CreateOrUpdateAsync(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.CreateOrUpdate");
             scope.Start();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="parameters"> Parameters to create or update the managed HSM Pool. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public ManagedHsmsCreateOrUpdateOperation StartCreateOrUpdate(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public virtual ManagedHsmsCreateOrUpdateOperation StartCreateOrUpdate(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.StartCreateOrUpdate");
             scope.Start();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="parameters"> Parameters to create or update the managed HSM Pool. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<ManagedHsmsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagedHsmsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string name, ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.StartCreateOrUpdate");
             scope.Start();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<ManagedHsm> Get(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedHsm> Get(string name, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.Get");
             scope.Start();
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<ManagedHsm>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ManagedHsm>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.Get");
             scope.Start();
@@ -199,6 +199,106 @@ namespace Azure.ResourceManager.KeyVault
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ManagedHsm(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual ManagedHsm TryGet(string name, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (name == null)
+                {
+                    throw new ArgumentNullException(nameof(name));
+                }
+
+                return Get(name, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<ManagedHsm> TryGetAsync(string name, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (name == null)
+                {
+                    throw new ArgumentNullException(nameof(name));
+                }
+
+                return await GetAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual bool DoesExist(string name, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (name == null)
+                {
+                    throw new ArgumentNullException(nameof(name));
+                }
+
+                return TryGet(name, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<bool> DoesExistAsync(string name, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ManagedHsmContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (name == null)
+                {
+                    throw new ArgumentNullException(nameof(name));
+                }
+
+                return await TryGetAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

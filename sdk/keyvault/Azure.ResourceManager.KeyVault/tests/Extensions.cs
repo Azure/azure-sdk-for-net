@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.ResourceManager.KeyVault.Models;
 
 using NUnit.Framework;
 
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return true;
         }
 
-        public static bool IsEqual(this DeletedVault deletedVault, Vault createdVault)
+        public static bool IsEqual(this DeletedVault deletedVault, VaultData createdVault)
         {
             Assert.AreEqual(createdVault.Location, deletedVault.Properties.Location);
             Assert.AreEqual(createdVault.Name, deletedVault.Name);
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.NotNull(deletedVault.Id);
             return true;
         }
-        public static bool IsEqual(this Vault vault1, Vault vault2)
+        public static bool IsEqual(this VaultData vault1, VaultData vault2)
         {
             Assert.AreEqual(vault2.Location, vault1.Location);
             Assert.AreEqual(vault2.Name, vault1.Name);

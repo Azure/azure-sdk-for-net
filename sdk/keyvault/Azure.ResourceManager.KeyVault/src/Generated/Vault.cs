@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.KeyVault
@@ -24,17 +22,5 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets or sets the VaultData. </summary>
         public VaultData Data { get; private set; }
-
-        /// <inheritdoc />
-        protected override Vault GetResource(CancellationToken cancellation = default)
-        {
-            return this;
-        }
-
-        /// <inheritdoc />
-        protected override Task<Vault> GetResourceAsync(CancellationToken cancellation = default)
-        {
-            return Task.FromResult(this);
-        }
     }
 }

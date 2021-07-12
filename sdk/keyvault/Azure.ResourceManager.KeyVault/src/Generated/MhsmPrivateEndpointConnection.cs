@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.KeyVault
@@ -24,17 +22,5 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets or sets the MhsmPrivateEndpointConnectionData. </summary>
         public MhsmPrivateEndpointConnectionData Data { get; private set; }
-
-        /// <inheritdoc />
-        protected override MhsmPrivateEndpointConnection GetResource(CancellationToken cancellation = default)
-        {
-            return this;
-        }
-
-        /// <inheritdoc />
-        protected override Task<MhsmPrivateEndpointConnection> GetResourceAsync(CancellationToken cancellation = default)
-        {
-            return Task.FromResult(this);
-        }
     }
 }

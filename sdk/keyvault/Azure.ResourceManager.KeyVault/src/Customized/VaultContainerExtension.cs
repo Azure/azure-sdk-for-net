@@ -11,11 +11,11 @@ namespace Azure.ResourceManager.KeyVault
 {
     public partial class VaultContainer
     {
-        /// <summary> Update access policies in a key vault in the specified subscription. </summary>
+        /// <summary> Add access policies in a key vault in the specified subscription. </summary>
         /// <param name="properties"> Properties of the access policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<VaultAccessPolicyParameters>> UpdateAccessPolicyAsync(VaultAccessPolicyProperties properties, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VaultAccessPolicyParameters>> AddAccessPolicyAsync(VaultAccessPolicyProperties properties, CancellationToken cancellationToken = default)
         {
             if (properties == null)
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await _restClient.UpdateAccessPolicyAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.AddAccessPolicyAsync(Id.ResourceGroupName, Id.Parent.Name, properties, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Update access policies in a key vault in the specified subscription. </summary>
+        /// <summary> Add access policies in a key vault in the specified subscription. </summary>
         /// <param name="properties"> Properties of the access policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual Response<VaultAccessPolicyParameters> UpdateAccessPolicy(VaultAccessPolicyProperties properties, CancellationToken cancellationToken = default)
+        public virtual Response<VaultAccessPolicyParameters> AddAccessPolicy(VaultAccessPolicyProperties properties, CancellationToken cancellationToken = default)
         {
             if (properties == null)
             {
@@ -51,7 +51,107 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = _restClient.UpdateAccessPolicy(Id.ResourceGroupName, Id.Parent.Name, Id.Name, properties, cancellationToken);
+                var response = _restClient.AddAccessPolicy(Id.ResourceGroupName, Id.Parent.Name, properties, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace access policies in a key vault in the specified subscription. </summary>
+        /// <param name="properties"> Properties of the access policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual async Task<Response<VaultAccessPolicyParameters>> ReplaceAccessPolicyAsync(VaultAccessPolicyProperties properties, CancellationToken cancellationToken = default)
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VaultContainer.UpdateAccessPolicy");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.ReplaceAccessPolicyAsync(Id.ResourceGroupName, Id.Parent.Name, properties, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace access policies in a key vault in the specified subscription. </summary>
+        /// <param name="properties"> Properties of the access policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual Response<VaultAccessPolicyParameters> ReplaceAccessPolicy(VaultAccessPolicyProperties properties, CancellationToken cancellationToken = default)
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VaultContainer.UpdateAccessPolicy");
+            scope.Start();
+            try
+            {
+                var response = _restClient.ReplaceAccessPolicy(Id.ResourceGroupName, Id.Parent.Name, properties, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove access policies in a key vault in the specified subscription. </summary>
+        /// <param name="properties"> Properties of the access policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual async Task<Response<VaultAccessPolicyParameters>> RemoveAccessPolicyAsync(VaultAccessPolicyProperties properties, CancellationToken cancellationToken = default)
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VaultContainer.UpdateAccessPolicy");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.RemoveAccessPolicyAsync(Id.ResourceGroupName, Id.Parent.Name, properties, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove access policies in a key vault in the specified subscription. </summary>
+        /// <param name="properties"> Properties of the access policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual Response<VaultAccessPolicyParameters> RemoveAccessPolicy(VaultAccessPolicyProperties properties, CancellationToken cancellationToken = default)
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VaultContainer.UpdateAccessPolicy");
+            scope.Start();
+            try
+            {
+                var response = _restClient.RemoveAccessPolicy(Id.ResourceGroupName, Id.Parent.Name, properties, cancellationToken);
                 return response;
             }
             catch (Exception e)

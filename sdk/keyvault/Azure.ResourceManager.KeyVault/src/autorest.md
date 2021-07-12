@@ -16,16 +16,16 @@ payload-flattening-threshold: 2
 operation-group-to-resource-type:
     PrivateLinkResources: Microsoft.KeyVault/vaults/privateLinkResources
     MHSMPrivateLinkResources: Microsoft.KeyVault/managedHSMs/privateLinkResources
-    Operations: Microsoft.KeyVault/operations
+    # Operations: Microsoft.KeyVault/operations
 operation-group-to-resource:
-    PrivateLinkResources: PrivateLinkResource
-    MHSMPrivateLinkResources: MHSMPrivateLinkResource
-    Operations: NonResource
+    # PrivateLinkResources: PrivateLinkResource
+    # MHSMPrivateLinkResources: MHSMPrivateLinkResource
+    # Operations: NonResource
     Vaults: Vault
 directive:
-    - rename-model:
-        from: Operation
-        to: RestApi
+    # - rename-model:
+    #     from: Operation
+    #     to: RestApi
     - from: swagger-document
       where: $.paths
       transform: delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/accessPolicies/{operationKind}']

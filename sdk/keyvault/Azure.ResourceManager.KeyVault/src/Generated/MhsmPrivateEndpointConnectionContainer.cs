@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
         /// <param name="properties"> The intended state of private endpoint connection. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<MhsmPrivateEndpointConnection> CreateOrUpdate(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
+        public virtual Response<MhsmPrivateEndpointConnection> CreateOrUpdate(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.CreateOrUpdate");
             scope.Start();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
         /// <param name="properties"> The intended state of private endpoint connection. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<MhsmPrivateEndpointConnection>> CreateOrUpdateAsync(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MhsmPrivateEndpointConnection>> CreateOrUpdateAsync(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.CreateOrUpdate");
             scope.Start();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
         /// <param name="properties"> The intended state of private endpoint connection. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public MhsmPrivateEndpointConnectionsPutOperation StartCreateOrUpdate(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
+        public virtual MhsmPrivateEndpointConnectionsPutOperation StartCreateOrUpdate(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.StartCreateOrUpdate");
             scope.Start();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
         /// <param name="properties"> The intended state of private endpoint connection. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<MhsmPrivateEndpointConnectionsPutOperation> StartCreateOrUpdateAsync(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
+        public async virtual Task<MhsmPrivateEndpointConnectionsPutOperation> StartCreateOrUpdateAsync(string privateEndpointConnectionName, MhsmPrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.StartCreateOrUpdate");
             scope.Start();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<MhsmPrivateEndpointConnection> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<MhsmPrivateEndpointConnection> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.Get");
             scope.Start();
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<MhsmPrivateEndpointConnection>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MhsmPrivateEndpointConnection>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.Get");
             scope.Start();
@@ -199,6 +199,106 @@ namespace Azure.ResourceManager.KeyVault
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new MhsmPrivateEndpointConnection(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual MhsmPrivateEndpointConnection TryGet(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (privateEndpointConnectionName == null)
+                {
+                    throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                }
+
+                return Get(privateEndpointConnectionName, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<MhsmPrivateEndpointConnection> TryGetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (privateEndpointConnectionName == null)
+                {
+                    throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                }
+
+                return await GetAsync(privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual bool DoesExist(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (privateEndpointConnectionName == null)
+                {
+                    throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                }
+
+                return TryGet(privateEndpointConnectionName, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the managed hsm pool. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<bool> DoesExistAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (privateEndpointConnectionName == null)
+                {
+                    throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                }
+
+                return await TryGetAsync(privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {
