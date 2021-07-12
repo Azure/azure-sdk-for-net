@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Core
 {
     /// <summary> The management group resource. </summary>
-    public partial class ManagementGroupInfo
+    public partial class ManagementGroupInfoData
     {
         /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>
-        internal ManagementGroupInfo()
+        internal ManagementGroupInfoData()
         {
         }
 
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="name"> The name of the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
         /// <param name="tenantId"> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
         /// <param name="displayName"> The friendly name of the management group. </param>
-        internal ManagementGroupInfo(string id, string type, string name, string tenantId, string displayName)
+        internal ManagementGroupInfoData(string id, string type, string name, string tenantId, string displayName)
         {
             Id = id;
             Type = type;

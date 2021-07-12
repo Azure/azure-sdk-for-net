@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        internal HttpMessage CreateGetRequest(string groupId, Enum0? expand, bool? recurse, string filter, string cacheControl)
+        internal HttpMessage CreateGetRequest(string groupId, ManagementGroupExpandType? expand, bool? recurse, string filter, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public async Task<Response<ManagementGroupData>> GetAsync(string groupId, Enum0? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementGroupData>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public Response<ManagementGroupData> Get(string groupId, Enum0? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public Response<ManagementGroupData> Get(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {

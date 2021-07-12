@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class ManagementGroupInfo
+    public partial class ManagementGroupInfoData
     {
-        internal static ManagementGroupInfo DeserializeManagementGroupInfo(JsonElement element)
+        internal static ManagementGroupInfoData DeserializeManagementGroupInfo(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> type = default;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new ManagementGroupInfo(id.Value, type.Value, name.Value, tenantId.Value, displayName.Value);
+            return new ManagementGroupInfoData(id.Value, type.Value, name.Value, tenantId.Value, displayName.Value);
         }
     }
 }

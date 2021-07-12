@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Core
     {
         internal static ManagementGroupListResult DeserializeManagementGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagementGroupInfo>> value = default;
+            Optional<IReadOnlyList<ManagementGroupInfoData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagementGroupInfo> array = new List<ManagementGroupInfo>();
+                    List<ManagementGroupInfoData> array = new List<ManagementGroupInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementGroupInfo.DeserializeManagementGroupInfo(item));
+                        array.Add(ManagementGroupInfoData.DeserializeManagementGroupInfo(item));
                     }
                     value = array;
                     continue;
