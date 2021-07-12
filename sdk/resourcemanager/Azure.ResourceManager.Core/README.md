@@ -33,13 +33,14 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 
 To authenticate to Azure and create an `ArmClient`, do the following:
 
-```csharp
+```C# Snippet:Readme_AuthClient
 using Azure.Identity;
 using Azure.ResourceManager.Core;
 using System;
-    
+using System.Threading.Tasks;
+
 // code omitted for brevity
-    
+
 var armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
@@ -71,6 +72,38 @@ It also has access to all of the operations and like the **[Resource]Operations*
 to a specific resource in Azure.
 
 ## Examples
+
+### Create a resource group
+```C# Snippet:Readme_CreateRG
+// First, initialize the ArmClient and get the default subscription
+var armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+// Now we get a ResourceGroup container for that subscription
+ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+
+// With the container, we can create a new resource group with an specific name
+string rgName = "myRgName";
+Location location = Location.WestUS;
+ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
+```
+
+### List all resource groups
+```C# Snippet:Readme_ListAllRG
+// First, initialize the ArmClient and get the default subscription
+var armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+
+// Now we get a ResourceGroup container for that subscription
+ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+
+// With ListAsync(), we can get a list of the resources in the container
+AsyncPageable<ResourceGroup> response = rgContainer.ListAsync();
+await foreach (ResourceGroup rg in response)
+{
+    Console.WriteLine(rg.Data.Name);
+}
+```
+
 ### Add a tag to a virtual machine
 Imagine that our company requires all virtual machines to be tagged with the owner. We're tasked with writing a program to add the tag to any missing virtual machines in a given resource group.
 
@@ -98,36 +131,6 @@ await foreach(VirtualMachine vm in vmContainer.ListAsync())
     }
 }
  ```
-
-### Create a resource group
-```csharp
-// First, initialize the ArmClient and get the default subscription
-var armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
-// Now we get a ResourceGroup container for that subscription
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-
-// With the container, we can create a new resource group with an specific name
-string rgName = "myRgName";
-ResourceGroup resourceGroup = await rgContainer.CreateAsync(rgName);
-```
-
-### List all resource groups
-```csharp
-// First, initialize the ArmClient and get the default subscription
-var armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
-
-// Now we get a ResourceGroup container for that subscription
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-
-// With ListAsync(), we can get a list of the resources in the container
-AsyncPageable<ResourceGroup> response = rgContainer.ListAsync();
-await foreach (ResourceGroup rg in response)
-{
-    Console.WriteLine(rg.Data.Name);
-}
-```
 
 For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/samples) we have available.
 

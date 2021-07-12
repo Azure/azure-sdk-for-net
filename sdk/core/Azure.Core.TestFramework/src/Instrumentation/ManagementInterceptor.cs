@@ -72,13 +72,27 @@ namespace Azure.Core.TestFramework
             else if (invocation.Method.Name.StartsWith("Get") &&
                 invocation.Method.Name.EndsWith("Enumerator") &&
                 type.IsGenericType &&
-                type.GenericTypeArguments.FirstOrDefault(t => t.Name == "RestApi") == null)
+                InheritsFromOperationBase(type.GetGenericArguments().First()))
             {
                 var wrapperType = typeof(AsyncPageableInterceptor<>);
                 var genericType = wrapperType.MakeGenericType(type.GetGenericArguments()[0]);
                 var ctor = genericType.GetConstructor(new Type[] { typeof(ClientTestBase), result.GetType() });
                 invocation.ReturnValue = ctor.Invoke(new object[] { _testBase, result });
             }
+        }
+
+        private bool InheritsFromOperationBase(Type elementType)
+        {
+            if (elementType.BaseType == null)
+                return false;
+
+            if (elementType.BaseType == typeof(object))
+                return false;
+
+            if (elementType.BaseType.Name == "OperationsBase")
+                return true;
+
+            return InheritsFromOperationBase(elementType.BaseType);
         }
 
         private object GetValueFromOther(Type taskResultType, object instrumentedResult)

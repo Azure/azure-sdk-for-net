@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="TParent"> The type of the parents full resource object. </typeparam>
         /// <typeparam name="TParentId"> The type of the parents resource id. </typeparam>
         /// <typeparam name="TParentOperations"> The type of the parents operations object. </typeparam>
-        /// <returns> The <see cref="LocationData"/> associated with the parent object. </returns>
+        /// <returns> The <see cref="Location"/> associated with the parent object. </returns>
         protected TParent GetParentResource<TParent, TParentId, TParentOperations>()
             where TParent : TParentOperations
             where TParentOperations : ResourceOperationsBase<TParentId, TParent>
