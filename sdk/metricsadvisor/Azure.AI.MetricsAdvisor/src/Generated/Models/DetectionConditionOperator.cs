@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// cross metrics operator
+    /// condition operator
     /// 
     /// 
     /// 
-    /// should be specified when setting up multiple metric alerting configurations.
+    /// should be specified when combining multiple detection conditions.
     /// </summary>
     public readonly partial struct DetectionConditionOperator : IEquatable<DetectionConditionOperator>
     {
@@ -30,7 +30,6 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private const string AndValue = "AND";
         private const string OrValue = "OR";
-        private const string XorValue = "XOR";
         /// <summary> Determines if two <see cref="DetectionConditionOperator"/> values are the same. </summary>
         public static bool operator ==(DetectionConditionOperator left, DetectionConditionOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DetectionConditionOperator"/> values are not the same. </summary>
