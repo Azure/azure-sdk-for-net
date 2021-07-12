@@ -430,5 +430,41 @@ namespace Azure.ResourceManager.Core
                 throw;
             }
         }
+
+        /// <summary> Checks if the specified management group name is valid and unique. </summary>
+        /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CheckNameAvailability");
+            scope.Start();
+            try
+            {
+                return _restClient.CheckNameAvailability(checkNameAvailabilityRequest, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks if the specified management group name is valid and unique. </summary>
+        /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CheckNameAvailability");
+            scope.Start();
+            try
+            {
+                return await _restClient.CheckNameAvailabilityAsync(checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

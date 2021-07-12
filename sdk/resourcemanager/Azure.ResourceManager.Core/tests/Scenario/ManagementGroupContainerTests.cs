@@ -85,5 +85,14 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.DisplayName);
             Assert.AreEqual(ManagementGroupOperations.ResourceType, mgmtGroup.Data.Type);
         }
+
+        [RecordedTest]
+        public async Task CheckNameAvailability()
+        {
+            var rq = new CheckNameAvailabilityRequest();
+            rq.Name = "this-should-not-exist";
+            var rs = await Client.GetManagementGroups().CheckNameAvailabilityAsync(rq);
+            Assert.IsTrue(rs.Value.NameAvailable);
+        }
     }
 }
