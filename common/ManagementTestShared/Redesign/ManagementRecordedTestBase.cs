@@ -17,9 +17,13 @@ namespace Azure.ResourceManager.TestFramework
     public abstract class ManagementRecordedTestBase<TEnvironment> : RecordedTestBase<TEnvironment>
         where TEnvironment: TestEnvironment, new()
     {
-        protected ResourceGroupCleanupPolicy CleanupPolicy = new ResourceGroupCleanupPolicy();
+        protected ResourceGroupCleanupPolicy ResourceGroupCleanupPolicy = new ResourceGroupCleanupPolicy();
 
-        protected ResourceGroupCleanupPolicy OneTimeCleanupPolicy = new ResourceGroupCleanupPolicy();
+        protected ResourceGroupCleanupPolicy OneTimeResourceGroupCleanupPolicy = new ResourceGroupCleanupPolicy();
+
+        protected ManagementGroupCleanupPolicy ManagementGroupCleanupPolicy = new ManagementGroupCleanupPolicy();
+
+        protected ManagementGroupCleanupPolicy OneTimeManagementGroupCleanupPolicy = new ManagementGroupCleanupPolicy();
 
         protected ArmClient GlobalClient { get; private set; }
 
@@ -71,7 +75,8 @@ namespace Azure.ResourceManager.TestFramework
         protected ArmClient GetArmClient(ArmClientOptions clientOptions = default)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
-            options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
+            options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
+            options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
 
             return CreateClient<ArmClient>(
                 TestEnvironment.SubscriptionId,
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.TestFramework
         {
             if (Mode != RecordedTestMode.Playback)
             {
-                Parallel.ForEach(CleanupPolicy.ResourceGroupsCreated, resourceGroup =>
+                Parallel.ForEach(ResourceGroupCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
                 {
                     try
                     {
@@ -99,7 +104,19 @@ namespace Azure.ResourceManager.TestFramework
                     }
                     catch (RequestFailedException e) when (e.Status == 404)
                     {
-                        //we assume the test case cleaned up it up if it no longer exists.
+                        //we assume the test case cleaned it up if it no longer exists.
+                    }
+                });
+
+                Parallel.ForEach(ManagementGroupCleanupPolicy.ManagementGroupsCreated, mgmtGroupId =>
+                {
+                    try
+                    {
+                        _cleanupClient.GetManagementGroupOperations(mgmtGroupId).StartDelete();
+                    }
+                    catch (RequestFailedException e) when (e.Status == 404 || e.Status == 403)
+                    {
+                        //we assume the test case cleaned it up if it no longer exists.
                     }
                 });
             }
@@ -139,7 +156,8 @@ namespace Azure.ResourceManager.TestFramework
             StartSessionRecording();
 
             var options = InstrumentClientOptions(new ArmClientOptions(), SessionRecording);
-            options.AddPolicy(OneTimeCleanupPolicy, HttpPipelinePosition.PerCall);
+            options.AddPolicy(OneTimeResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
+            options.AddPolicy(OneTimeManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
 
             GlobalClient = CreateClient<ArmClient>(
                 SessionEnvironment.SubscriptionId,
@@ -175,10 +193,14 @@ namespace Azure.ResourceManager.TestFramework
         {
             if (Mode != RecordedTestMode.Playback)
             {
-                Parallel.ForEach(OneTimeCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
+                Parallel.ForEach(OneTimeResourceGroupCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
                 {
                     var sub = _cleanupClient.GetSubscriptions().TryGet(SessionEnvironment.SubscriptionId);
                     sub?.GetResourceGroups().Get(resourceGroup).Value.StartDelete();
+                });
+                Parallel.ForEach(OneTimeManagementGroupCleanupPolicy.ManagementGroupsCreated, mgmtGroupId =>
+                {
+                    _cleanupClient.GetManagementGroupOperations(mgmtGroupId).StartDelete();
                 });
             }
 
