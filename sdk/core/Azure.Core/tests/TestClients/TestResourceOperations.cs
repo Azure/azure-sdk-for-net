@@ -10,9 +10,11 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
 {
-    public class TestResourceOperations
+    public class TestResourceOperations : OperationsBase
     {
         private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
+
+        protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
 
         public virtual TestResourceOperations GetAnotherOperations()
         {
