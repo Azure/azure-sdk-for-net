@@ -21,7 +21,7 @@ Start by creating a new resource group, like we did above:
 var armClient = new ArmClient(new DefaultAzureCredential());
 ResourceGroupContainer rgContainer = armClient.DefaultSubscription.GetResourceGroups();
 string rgName = "myResourceGroup";
-ResourceGroup resourceGroup = await rgContainer.Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
+ResourceGroup resourceGroup = await rgContainer.Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
 ```
 ## Create a Virtual Network
 Now that we have a resource group, we'll create our virtual network. To do this, we will use a helper method on the container object called `Construct`. The helper method allows us to create the request object and then send that to the `Create` method.

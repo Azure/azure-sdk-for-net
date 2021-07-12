@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
             Subscription subscription = armClient.DefaultSubscription;
             ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
-            LocationData location = LocationData.WestUS2;
+            Location location = Location.WestUS2;
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
             #endregion Snippet:Managing_Resource_Groups_CreateAResourceGroup
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
             var rg = await subscription.GetResourceGroups().TryGetAsync(rgName);
             if (rg == null)
             {
-                LocationData location = LocationData.WestUS2;
+                Location location = Location.WestUS2;
                 _ = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
             }
 #endif
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
             var rg = await subscription.GetResourceGroups().TryGetAsync(rgName);
             if (rg == null)
             {
-                LocationData location = LocationData.WestUS2;
+                Location location = Location.WestUS2;
                 var rgContainer = subscription.GetResourceGroups();
                 _ = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
             }

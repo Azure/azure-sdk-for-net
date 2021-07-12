@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
             var armClient = new ArmClient(new DefaultAzureCredential());
             ResourceGroupContainer rgContainer = armClient.DefaultSubscription.GetResourceGroups();
             string rgName = "myResourceGroup";
-            ResourceGroup resourceGroup = await rgContainer.Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup resourceGroup = await rgContainer.Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
             #endregion Snippet:Creating_A_Virtual_Network_CreateResourceGroup
         }
     }

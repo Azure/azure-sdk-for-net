@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="parent"> The identifier of the subscription that is the parent of this resource. </param>
         /// <param name="location"> The name of the location. </param>
-        internal LocationResourceIdentifier(SubscriptionResourceIdentifier parent, LocationData location)
+        internal LocationResourceIdentifier(SubscriptionResourceIdentifier parent, Location location)
             : base(parent, ResourceIdentifier.LocationsKey, location.Name)
         {
             Location = location;
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// The location of the resource.
         /// </summary>
-        public LocationData Location { get; }
+        public Location Location { get; }
 
         /// <inheritdoc/>
-        public override bool TryGetLocation(out LocationData location)
+        public override bool TryGetLocation(out Location location)
         {
             location = Location;
             return true;

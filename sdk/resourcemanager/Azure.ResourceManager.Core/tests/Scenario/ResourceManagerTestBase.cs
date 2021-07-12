@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Core.Tests
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
             var data = new GenericResourceData();
-            data.Location = LocationData.WestUS2;
+            data.Location = Location.WestUS2;
             data.Sku = new Sku();
             data.Sku.Name = "Aligned";
             var propertyBag = new Dictionary<string, object>();

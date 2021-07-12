@@ -128,8 +128,12 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task TestListLocations()
         {
             var subOps = Client.DefaultSubscription;
-            var locations = await subOps.ListLocationsAsync(subOps.Id.SubscriptionId).ToEnumerableAsync();
+            var locations = await subOps.ListLocationsAsync().ToEnumerableAsync();
             Assert.IsTrue(locations.Count != 0);
+            var location = locations.First();
+            Assert.IsNotNull(location.Metadata, "Metadata was null");
+            Assert.IsNotNull(location.Id, "Id was null");
+            Assert.AreEqual(Client.DefaultSubscription.Id.SubscriptionId, location.SubscriptionId);
         }
 
         [RecordedTest]

@@ -35,7 +35,7 @@ var armClient = new ArmClient(new DefaultAzureCredential());
 
             // With the container, we can create a new resource group with an specific name
             string rgName = "myRgName";
-            LocationData location = LocationData.WestUS;
+            Location location = Location.WestUS;
             ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
             #endregion Snippet:Readme_CreateRG
         }
