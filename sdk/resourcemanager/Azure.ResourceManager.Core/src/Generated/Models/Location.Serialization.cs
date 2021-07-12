@@ -10,24 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class LocationExpanded
+    public partial class Location
     {
-        internal static LocationExpanded DeserializeLocationExpanded(JsonElement element)
+        internal static Location DeserializeLocation(JsonElement element)
         {
-            Location loc = DeserializeLocation(element);
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<string> regionalDisplayName = default;
             Optional<LocationMetadata> metadata = default;
-            Optional<string> id = default;
-            Optional<string> subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("name"))
                 {
-                    id = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("displayName"))
                 {
-                    subscriptionId = property.Value.GetString();
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("regionalDisplayName"))
+                {
+                    regionalDisplayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("metadata"))
@@ -41,7 +46,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new LocationExpanded(loc.Name, loc.DisplayName, loc.RegionalDisplayName, loc.CanonicalName, metadata.Value, id.Value, subscriptionId.Value);
+            return new Location(name.Value, displayName.Value, regionalDisplayName.Value);
         }
     }
 }

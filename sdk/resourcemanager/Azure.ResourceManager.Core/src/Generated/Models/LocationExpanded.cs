@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Core
         /// <param name="name"> The location name. </param>
         /// <param name="displayName"> The display name of the location. </param>
         /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
-        /// <param name="canonicalName"> The canonical name of the location. </param>
         /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
         /// <param name="id"></param>
         /// <param name="subscriptionId"></param>
-        internal LocationExpanded(string name, string displayName, string regionalDisplayName, string canonicalName, LocationMetadata metadata, string id, string subscriptionId) :
-            base(name, displayName, regionalDisplayName, canonicalName)
+        internal LocationExpanded(string id, string subscriptionId, string name, string displayName, string regionalDisplayName, LocationMetadata metadata)
+            : base(name, displayName, regionalDisplayName)
         {
             Metadata = metadata;
             Id = id;
-            SubscriptionId = subscriptionId;
+            SubscriptionResourceIdentifier subId = id;
+            SubscriptionId = subscriptionId ?? subId.SubscriptionId;
         }
 
         /// <summary> Metadata of the location, such as lat/long, paired region, and others. </summary>

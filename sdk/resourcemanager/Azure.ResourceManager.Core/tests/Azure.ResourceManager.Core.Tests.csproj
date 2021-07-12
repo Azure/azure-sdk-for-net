@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\ContainerTryGetTest\" />
+    <Folder Include="SessionRecords\LocationExpandedTests\" />
     <Folder Include="SessionRecords\ResourceGroupOperationsTests\" />
     <Folder Include="SessionRecords\RestApiContainerTests\" />
     <Folder Include="SessionRecords\SubscriptionOperationsTests\" />
