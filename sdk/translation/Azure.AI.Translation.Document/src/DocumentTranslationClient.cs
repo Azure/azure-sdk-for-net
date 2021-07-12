@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Translation.Document.Models;
@@ -216,26 +217,10 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status results for all submitted translation operations.
         /// </summary>
-        /// <param name="top">Indicates the total number of records the user wants to be returned across all pages.</param>
-        /// <param name="skip">Indicates the number of records to skip from the list of records held by the server based on the sorting method specified.  By default, we sort by descending start time.</param>
-        /// <param name="itemsPerPage">Is the maximum items returned in a page.</param>
-        /// <param name="ids">List of translation operation IDs to filter by.</param>
-        /// <param name="statuses">List of translation statuses to filter by.</param>
-        /// <param name="createdDateTimeUtcStart">Filter by operations created after a certain datetime.</param>
-        /// <param name="createdDateTimeUtcEnd">Filter by operations created before a certain datetime.</param>
-        /// <param name="orderBy">The sorting query for the operations returned. Format: ["parm1 asc/desc", "parm2 asc/desc", ...]. Ex: 'createdDateTimeUtc asc', 'createdDateTimeUtc desc').</param>
+        /// <param name="filter">A <see cref="TranslationFilterParameter"/> to control result filtering.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual Pageable<TranslationStatus> GetAllTranslationStatuses(
-            int? top = null,
-            int? skip = null,
-            int? itemsPerPage = null,
-            IEnumerable<Guid> ids = null,
-            IEnumerable<string> statuses = null,
-            DateTimeOffset? createdDateTimeUtcStart = null,
-            DateTimeOffset? createdDateTimeUtcEnd = null,
-            IEnumerable<string> orderBy = null,
-            CancellationToken cancellationToken = default)
+        public virtual Pageable<TranslationStatus> GetAllTranslationStatuses(TranslationFilterParameter filter = null, CancellationToken cancellationToken = default)
         {
             Page<TranslationStatus> FirstPageFunc(int? pageSizeHint)
             {
@@ -245,14 +230,14 @@ namespace Azure.AI.Translation.Document
                 try
                 {
                     var response = _serviceRestClient.GetTranslationsStatus(
-                        top: top,
-                        skip: skip,
-                        maxpagesize: itemsPerPage,
-                        ids: ids,
-                        statuses: statuses,
-                        createdDateTimeUtcStart: createdDateTimeUtcStart,
-                        createdDateTimeUtcEnd: createdDateTimeUtcEnd,
-                        orderBy: orderBy,
+                        top: null,
+                        skip: null,
+                        maxpagesize: null,
+                        ids: filter.Ids?.Select(id => new Guid(id)),
+                        statuses: filter.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter.CreatedOnStart,
+                        createdDateTimeUtcEnd: filter.CreatedOnEnd,
+                        orderBy: filter.OrderBy?.Select(order => order.ToString()),
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -272,14 +257,14 @@ namespace Azure.AI.Translation.Document
                 {
                     var response = _serviceRestClient.GetTranslationsStatusNextPage(
                         nextLink,
-                        top: top,
-                        skip: skip,
-                        maxpagesize: itemsPerPage,
-                        ids: ids,
-                        statuses: statuses,
-                        createdDateTimeUtcStart: createdDateTimeUtcStart,
-                        createdDateTimeUtcEnd: createdDateTimeUtcEnd,
-                        orderBy: orderBy,
+                        top: null,
+                        skip: null,
+                        maxpagesize: null,
+                        ids: filter.Ids?.Select(id => new Guid(id)),
+                        statuses: filter.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter.CreatedOnStart,
+                        createdDateTimeUtcEnd: filter.CreatedOnEnd,
+                        orderBy: filter.OrderBy?.Select(order => order.ToString()),
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -296,26 +281,10 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status results for all submitted translation operations.
         /// </summary>
-        /// <param name="top">Indicates the total number of records the user wants to be returned across all pages.</param>
-        /// <param name="skip">Indicates the number of records to skip from the list of records held by the server based on the sorting method specified.  By default, we sort by descending start time.</param>
-        /// <param name="itemsPerPage">Is the maximum items returned in a page.</param>
-        /// <param name="ids">List of translation operation IDs to filter by.</param>
-        /// <param name="statuses">List of translation statuses to filter by.</param>
-        /// <param name="createdDateTimeUtcStart">Filter by operations created after a certain datetime.</param>
-        /// <param name="createdDateTimeUtcEnd">Filter by operations created before a certain datetime.</param>
-        /// <param name="orderBy">The sorting query for the operations returned. Format: ["parm1 asc/desc", "parm2 asc/desc", ...]. Ex: 'createdDateTimeUtc asc', 'createdDateTimeUtc desc').</param>
+        /// <param name="filter">A <see cref="TranslationFilterParameter"/> to control result filtering.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual AsyncPageable<TranslationStatus> GetAllTranslationStatusesAsync(
-            int? top = null,
-            int? skip = null,
-            int? itemsPerPage = null,
-            IEnumerable<Guid> ids = null,
-            IEnumerable<string> statuses = null,
-            DateTimeOffset? createdDateTimeUtcStart = null,
-            DateTimeOffset? createdDateTimeUtcEnd = null,
-            IEnumerable<string> orderBy = null,
-            CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TranslationStatus> GetAllTranslationStatusesAsync(TranslationFilterParameter filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<TranslationStatus>> FirstPageFunc(int? pageSizeHint)
             {
@@ -325,14 +294,14 @@ namespace Azure.AI.Translation.Document
                 try
                 {
                     var response = await _serviceRestClient.GetTranslationsStatusAsync(
-                        top: top,
-                        skip: skip,
-                        maxpagesize: itemsPerPage,
-                        ids: ids,
-                        statuses: statuses,
-                        createdDateTimeUtcStart: createdDateTimeUtcStart,
-                        createdDateTimeUtcEnd: createdDateTimeUtcEnd,
-                        orderBy: orderBy,
+                        top: null,
+                        skip: null,
+                        maxpagesize: null,
+                        ids: filter.Ids?.Select(id => new Guid(id)),
+                        statuses: filter.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter.CreatedOnStart,
+                        createdDateTimeUtcEnd: filter.CreatedOnEnd,
+                        orderBy: filter.OrderBy?.Select(order => order.ToString()),
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -352,14 +321,14 @@ namespace Azure.AI.Translation.Document
                 {
                     var response = await _serviceRestClient.GetTranslationsStatusNextPageAsync(
                         nextLink,
-                        top: top,
-                        skip: skip,
-                        maxpagesize: itemsPerPage,
-                        ids: ids,
-                        statuses: statuses,
-                        createdDateTimeUtcStart: createdDateTimeUtcStart,
-                        createdDateTimeUtcEnd: createdDateTimeUtcEnd,
-                        orderBy: orderBy,
+                        top: null,
+                        skip: null,
+                        maxpagesize: null,
+                        ids: filter.Ids?.Select(id => new Guid(id)),
+                        statuses: filter.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter.CreatedOnStart,
+                        createdDateTimeUtcEnd: filter.CreatedOnEnd,
+                        orderBy: filter.OrderBy?.Select(order => order.ToString()),
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }

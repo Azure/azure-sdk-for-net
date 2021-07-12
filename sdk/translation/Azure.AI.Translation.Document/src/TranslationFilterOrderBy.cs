@@ -26,6 +26,15 @@ namespace Azure.AI.Translation.Document
         /// asd.
         /// </summary>
         public TranslationFilterOrderField OrderBy { get; set; }
+
+        /// <summary>
+        /// asd.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"{OrderBy} {Order}";
+        }
     }
 
     /// <summary>
