@@ -65,7 +65,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-## Getting Relay Configuration for a user
+## Getting a Relay Configuration for a user
 
 ```C# Snippet:GetRelayConfigurationAsync
 Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user);
