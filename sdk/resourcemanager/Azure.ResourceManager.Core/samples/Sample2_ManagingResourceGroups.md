@@ -37,7 +37,7 @@ var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
-LocationData location = LocationData.WestUS2;
+Location location = Location.WestUS2;
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
 ```
