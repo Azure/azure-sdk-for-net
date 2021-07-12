@@ -52,6 +52,10 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// The default value of this property is 'true'. This means, Text Analytics service won't log your input text.
         /// Setting this property to 'false', enables logging your input text for 48 hours, solely to allow for troubleshooting issues.
+        /// <para>
+        /// Please see Cognitive Services Compliance and Privacy notes at <see href="https://aka.ms/cs-compliance"/> for additional details,
+        /// and Microsoft Responsible AI principles at <see href="https://www.microsoft.com/ai/responsible-ai"/>.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
@@ -68,10 +72,5 @@ namespace Azure.AI.TextAnalytics
         /// Filters the response entities to entities that match the <see cref="PiiEntityCategory"/> specified.
         /// </summary>
         public IList<PiiEntityCategory> CategoriesFilter { get; internal set; } = new List<PiiEntityCategory>();
-
-        /// <summary>
-        /// Gets or sets a name for this action. If not provided, the service will generate one.
-        /// </summary>
-        public string ActionName { get; set; }
     }
 }

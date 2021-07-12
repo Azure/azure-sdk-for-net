@@ -9,6 +9,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
   </PropertyGroup>
   <ItemGroup>
     <!-- TODO: uncomment when Azure.Core ships

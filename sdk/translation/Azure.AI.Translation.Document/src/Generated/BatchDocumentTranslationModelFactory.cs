@@ -6,25 +6,28 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
+using Azure.AI.Translation.Document;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class BatchDocumentTranslationModelFactory
     {
-        /// <summary> Initializes new instance of FileFormat class. </summary>
+        /// <summary> Initializes a new instance of FileFormat. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>
         /// <param name="defaultFormatVersion"> Default version if none is specified. </param>
         /// <param name="formatVersions"> Supported Version. </param>
         /// <returns> A new <see cref="Document.FileFormat"/> instance for mocking. </returns>
-        public static FileFormat FileFormat(string format = default, IReadOnlyList<string> fileExtensions = default, IReadOnlyList<string> contentTypes = default, string defaultFormatVersion = default, IReadOnlyList<string> formatVersions = default)
+        public static FileFormat FileFormat(string format = null, IEnumerable<string> fileExtensions = null, IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, IEnumerable<string> formatVersions = null)
         {
             fileExtensions ??= new List<string>();
             contentTypes ??= new List<string>();
             formatVersions ??= new List<string>();
-            return new FileFormat(format, fileExtensions, contentTypes, defaultFormatVersion, formatVersions);
+
+            return new FileFormat(format, fileExtensions?.ToList(), contentTypes?.ToList(), defaultFormatVersion, formatVersions?.ToList());
         }
     }
 }

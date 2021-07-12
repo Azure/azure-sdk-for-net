@@ -6,32 +6,31 @@
 #nullable disable
 
 using System;
-using Azure.Monitor.Query.Models;
 
-namespace Azure.Monitor.Query
+namespace Azure.Monitor.Query.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class QueryModelFactory
     {
-        /// <summary> Initializes new instance of LogsQueryResultColumn class. </summary>
+        /// <summary> Initializes a new instance of LogsQueryResultColumn. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
         /// <returns> A new <see cref="Models.LogsQueryResultColumn"/> instance for mocking. </returns>
-        public static LogsQueryResultColumn LogsQueryResultColumn(string name = default, LogsColumnType type = default)
+        public static LogsQueryResultColumn LogsQueryResultColumn(string name = null, LogsColumnType type = default)
         {
             return new LogsQueryResultColumn(name, type);
         }
 
-        /// <summary> Initializes new instance of MetricAvailability class. </summary>
+        /// <summary> Initializes a new instance of MetricAvailability. </summary>
         /// <param name="timeGrain"> the time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </param>
         /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </param>
         /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
-        public static MetricAvailability MetricAvailability(TimeSpan? timeGrain = default, TimeSpan? retention = default)
+        public static MetricAvailability MetricAvailability(TimeSpan? timeGrain = null, TimeSpan? retention = null)
         {
             return new MetricAvailability(timeGrain, retention);
         }
 
-        /// <summary> Initializes new instance of MetricValue class. </summary>
+        /// <summary> Initializes a new instance of MetricValue. </summary>
         /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
         /// <param name="average"> the average value in the time range. </param>
         /// <param name="minimum"> the least value in the time range. </param>
@@ -39,7 +38,7 @@ namespace Azure.Monitor.Query
         /// <param name="total"> the sum of all of the values in the time range. </param>
         /// <param name="count"> the number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
         /// <returns> A new <see cref="Models.MetricValue"/> instance for mocking. </returns>
-        public static MetricValue MetricValue(DateTimeOffset timeStamp = default, double? average = default, double? minimum = default, double? maximum = default, double? total = default, double? count = default)
+        public static MetricValue MetricValue(DateTimeOffset timeStamp = default, double? average = null, double? minimum = null, double? maximum = null, double? total = null, double? count = null)
         {
             return new MetricValue(timeStamp, average, minimum, maximum, total, count);
         }

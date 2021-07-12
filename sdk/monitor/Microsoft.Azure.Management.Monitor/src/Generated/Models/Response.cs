@@ -37,15 +37,15 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// separated by '/'.  This may be adjusted in the future and returned
         /// back from what was originally requested.</param>
         /// <param name="value">the value of the collection.</param>
-        /// <param name="cost">The integer value representing the cost of the
-        /// query, for data case.</param>
+        /// <param name="cost">The integer value representing the relative cost
+        /// of the query.</param>
         /// <param name="interval">The interval (window size) for which the
         /// metric data was returned in.  This may be adjusted in the future
         /// and returned back from what was originally requested.  This is not
         /// present if a metadata request was made.</param>
-        /// <param name="namespaceProperty">The namespace of the metrics been
+        /// <param name="namespaceProperty">The namespace of the metrics being
         /// queried</param>
-        /// <param name="resourceregion">The region of the resource been
+        /// <param name="resourceregion">The region of the resource being
         /// queried for metrics.</param>
         public Response(string timespan, IList<Metric> value, double? cost = default(double?), System.TimeSpan? interval = default(System.TimeSpan?), string namespaceProperty = default(string), string resourceregion = default(string))
         {
@@ -64,8 +64,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the integer value representing the cost of the query,
-        /// for data case.
+        /// Gets or sets the integer value representing the relative cost of
+        /// the query.
         /// </summary>
         [JsonProperty(PropertyName = "cost")]
         public double? Cost { get; set; }
@@ -89,13 +89,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public System.TimeSpan? Interval { get; set; }
 
         /// <summary>
-        /// Gets or sets the namespace of the metrics been queried
+        /// Gets or sets the namespace of the metrics being queried
         /// </summary>
         [JsonProperty(PropertyName = "namespace")]
         public string NamespaceProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the region of the resource been queried for metrics.
+        /// Gets or sets the region of the resource being queried for metrics.
         /// </summary>
         [JsonProperty(PropertyName = "resourceregion")]
         public string Resourceregion { get; set; }

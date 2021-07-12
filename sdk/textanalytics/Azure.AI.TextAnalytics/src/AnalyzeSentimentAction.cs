@@ -45,6 +45,10 @@ namespace Azure.AI.TextAnalytics
         /// The default value of this property is 'false'. This means, Text Analytics service logs your input text for 48 hours,
         /// solely to allow for troubleshooting issues.
         /// Setting this property to true, disables input logging and may limit our ability to investigate issues that occur.
+        /// <para>
+        /// Please see Cognitive Services Compliance and Privacy notes at <see href="https://aka.ms/cs-compliance"/> for additional details,
+        /// and Microsoft Responsible AI principles at <see href="https://www.microsoft.com/ai/responsible-ai"/>.
+        /// </para>
         /// </summary>
         /// <remarks>
         /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
@@ -56,16 +60,10 @@ namespace Azure.AI.TextAnalytics
         /// targets of a product or service (also known as Aspect-Based sentiment analysis).
         /// If set to true, the returned <see cref="SentenceSentiment.Opinions"/>
         /// will contain the result of this analysis.
-        /// <para>Only available for service version v3.1-preview and up.</para>
         /// </summary>
         /// <remarks>
         /// This property only has value for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
         /// </remarks>
         public bool? IncludeOpinionMining { get; set; }
-
-        /// <summary>
-        /// Gets or sets a name for this action. If not provided, the service will generate one.
-        /// </summary>
-        public string ActionName { get; set; }
     }
 }

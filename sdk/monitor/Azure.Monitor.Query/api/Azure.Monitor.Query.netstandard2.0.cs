@@ -40,8 +40,9 @@ namespace Azure.Monitor.Query
     public partial class MetricsQueryClient
     {
         protected MetricsQueryClient() { }
-        public MetricsQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public MetricsQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.MetricsQueryClientOptions options) { }
+        public MetricsQueryClient(Azure.Core.TokenCredential credential) { }
+        public MetricsQueryClient(Azure.Core.TokenCredential credential, Azure.Monitor.Query.MetricsQueryClientOptions options) { }
+        public MetricsQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.MetricsQueryClientOptions options = null) { }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricNamespace>> GetMetricNamespaces(string resourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricNamespace>>> GetMetricNamespacesAsync(string resourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.MetricDefinition>> GetMetrics(string resourceId, string metricsNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -67,12 +68,6 @@ namespace Azure.Monitor.Query
         public string OrderBy { get { throw null; } set { } }
         public Azure.Core.DateTimeRange? TimeSpan { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
-    }
-    public static partial class QueryModelFactory
-    {
-        public static Azure.Monitor.Query.Models.LogsQueryResultColumn LogsQueryResultColumn(string name = null, Azure.Monitor.Query.Models.LogsColumnType type = default(Azure.Monitor.Query.Models.LogsColumnType)) { throw null; }
-        public static Azure.Monitor.Query.Models.MetricAvailability MetricAvailability(System.TimeSpan? timeGrain = default(System.TimeSpan?), System.TimeSpan? retention = default(System.TimeSpan?)) { throw null; }
-        public static Azure.Monitor.Query.Models.MetricValue MetricValue(System.DateTimeOffset timeStamp = default(System.DateTimeOffset), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?)) { throw null; }
     }
 }
 namespace Azure.Monitor.Query.Models
@@ -314,6 +309,12 @@ namespace Azure.Monitor.Query.Models
         public static implicit operator Azure.Monitor.Query.Models.NamespaceClassification (string value) { throw null; }
         public static bool operator !=(Azure.Monitor.Query.Models.NamespaceClassification left, Azure.Monitor.Query.Models.NamespaceClassification right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public static partial class QueryModelFactory
+    {
+        public static Azure.Monitor.Query.Models.LogsQueryResultColumn LogsQueryResultColumn(string name = null, Azure.Monitor.Query.Models.LogsColumnType type = default(Azure.Monitor.Query.Models.LogsColumnType)) { throw null; }
+        public static Azure.Monitor.Query.Models.MetricAvailability MetricAvailability(System.TimeSpan? timeGrain = default(System.TimeSpan?), System.TimeSpan? retention = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Monitor.Query.Models.MetricValue MetricValue(System.DateTimeOffset timeStamp = default(System.DateTimeOffset), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?)) { throw null; }
     }
     public partial class TimeSeriesElement
     {

@@ -15,15 +15,9 @@ namespace Azure.AI.TextAnalytics.Models
     {
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="taskName"> . </param>
         /// <param name="status"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, taskName, status)
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
-            if (taskName == null)
-            {
-                throw new ArgumentNullException(nameof(taskName));
-            }
         }
 
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
@@ -31,14 +25,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="taskName"> . </param>
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, PiiEntitiesResult results) : base(lastUpdateDateTime, taskName, status)
         {
-            if (taskName == null)
-            {
-                throw new ArgumentNullException(nameof(taskName));
-            }
-
             Results = results;
         }
 

@@ -26,6 +26,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("accessCredentials");
                 writer.WriteObjectValue(AccessCredentialsInternal);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity");
+                    writer.WriteObjectValue(Identity);
+                }
+                else
+                {
+                    writer.WriteNull("identity");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -35,6 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string keyVaultKeyVersion = default;
             string keyVaultUri = default;
             Optional<AzureActiveDirectoryApplicationCredentials> accessCredentials = default;
+            Optional<SearchIndexerDataIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultKeyName"))
@@ -62,8 +75,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     accessCredentials = AzureActiveDirectoryApplicationCredentials.DeserializeAzureActiveDirectoryApplicationCredentials(property.Value);
                     continue;
                 }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        identity = null;
+                        continue;
+                    }
+                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    continue;
+                }
             }
-            return new SearchResourceEncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials.Value);
+            return new SearchResourceEncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials.Value, identity.Value);
         }
     }
 }

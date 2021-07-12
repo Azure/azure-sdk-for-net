@@ -4,18 +4,12 @@
       "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1/analyze",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "276",
+        "Accept": "application/json, text/json",
+        "Content-Length": "258",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f7fa29f44f74db4abb454f7b30520fd8-a3bd837b4fd6d14f-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210629.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-        ],
+        "traceparent": "00-825145b758008c4dbe1cd4818cb66bed-05eb3a33b212f946-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210630.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "c99cb42a5a82e854b9e5b6d84f7b86ab",
         "x-ms-return-client-request-id": "true"
       },
@@ -32,9 +26,6 @@
         "tasks": {
           "keyPhraseExtractionTasks": [
             {
-              "parameters": {}
-            },
-            {
               "parameters": {
                 "model-version": "InvalidVersion"
               }
@@ -45,13 +36,13 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "0f54af41-618b-4bf7-9171-b969da9ec1f7",
+        "apim-request-id": "c84268d7-394d-46fa-97d9-99e0a38cd80f",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 29 Jun 2021 19:16:43 GMT",
+        "Date": "Wed, 30 Jun 2021 17:21:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "4"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "6"
       },
       "ResponseBody": {
         "error": {

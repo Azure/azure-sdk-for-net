@@ -13,10 +13,10 @@ namespace Microsoft.Azure.WebJobs
     [System.Diagnostics.DebuggerDisplayAttribute("{QueueOrTopicName,nq}")]
     public sealed partial class ServiceBusAttribute : System.Attribute, Microsoft.Azure.WebJobs.IConnectionProvider
     {
-        public ServiceBusAttribute(string queueOrTopicName, Microsoft.Azure.WebJobs.ServiceBus.ServiceBusEntityType serviceBusEntityType = Microsoft.Azure.WebJobs.ServiceBus.ServiceBusEntityType.Queue) { }
+        public ServiceBusAttribute(string queueOrTopicName, Microsoft.Azure.WebJobs.ServiceBus.ServiceBusEntityType entityType = Microsoft.Azure.WebJobs.ServiceBus.ServiceBusEntityType.Queue) { }
         public string Connection { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.ServiceBus.ServiceBusEntityType EntityType { get { throw null; } set { } }
         public string QueueOrTopicName { get { throw null; } }
-        public Microsoft.Azure.WebJobs.ServiceBus.ServiceBusEntityType ServiceBusEntityType { get { throw null; } set { } }
     }
     [Microsoft.Azure.WebJobs.ConnectionProviderAttribute(typeof(Microsoft.Azure.WebJobs.ServiceBusAccountAttribute))]
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
@@ -40,8 +40,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     {
         public MessageProcessor(Azure.Messaging.ServiceBus.ServiceBusProcessor processor) { }
         protected internal Azure.Messaging.ServiceBus.ServiceBusProcessor Processor { get { throw null; } }
-        protected internal virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions messageActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected internal virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions messageActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions actions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions actions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class MessagingProvider
     {
@@ -77,9 +77,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ExceptionHandler { get { throw null; } set { } }
         public Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { throw null; } set { } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
-        public int MaxBatchSize { get { throw null; } set { } }
         public int MaxConcurrentCalls { get { throw null; } set { } }
         public int MaxConcurrentSessions { get { throw null; } set { } }
+        public int MaxMessageBatchSize { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public System.TimeSpan? SessionIdleTimeout { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } set { } }
@@ -96,8 +96,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     {
         public SessionMessageProcessor(Azure.Messaging.ServiceBus.ServiceBusSessionProcessor processor) { }
         protected internal Azure.Messaging.ServiceBus.ServiceBusSessionProcessor Processor { get { throw null; } }
-        public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusSessionMessageActions sessionActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusSessionMessageActions sessionActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusSessionMessageActions actions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusSessionMessageActions actions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Hosting

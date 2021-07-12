@@ -299,7 +299,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                     IReadOnlyList<ServiceBusReceivedMessage> messages =
                         await receiver.ReceiveMessagesAsync(
-                            _serviceBusOptions.MaxBatchSize,
+                            _serviceBusOptions.MaxMessageBatchSize,
                             cancellationToken: cancellationToken).AwaitWithCancellation(cancellationToken);
 
                     if (messages.Count > 0)

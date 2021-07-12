@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/entities/recognition/general?stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1/entities/recognition/general?stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Authorization": "Sanitized",
         "Content-Length": "103",
         "Content-Type": "application/json",
-        "traceparent": "00-36c1b29585d3a0409e60a1281cf1587f-3e5428d1c0a5954b-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-87e60bbbe02026438d9c0b19c231381d-b65d339b0a73c249-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210629.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "ea644f0685369a42da05c1cab15ed4b8",
         "x-ms-return-client-request-id": "true"
       },
@@ -24,14 +24,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "54bdfa1b-7ff3-4351-9044-ba633fb7c73d",
+        "apim-request-id": "0db26ab0-8b3c-4561-a799-248a1af351a4",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Tue, 11 May 2021 16:08:39 GMT",
+        "Date": "Wed, 30 Jun 2021 00:21:53 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "22"
+        "x-envoy-upstream-service-time": "28"
       },
       "ResponseBody": {
         "documents": [
@@ -43,7 +43,7 @@
                 "category": "Organization",
                 "offset": 0,
                 "length": 9,
-                "confidenceScore": 0.97
+                "confidenceScore": 1.0
               },
               {
                 "text": "Bill Gates",
@@ -57,14 +57,14 @@
                 "category": "Person",
                 "offset": 40,
                 "length": 10,
-                "confidenceScore": 0.99
+                "confidenceScore": 1.0
               }
             ],
             "warnings": []
           }
         ],
         "errors": [],
-        "modelVersion": "2021-01-15"
+        "modelVersion": "2021-06-01"
       }
     }
   ],

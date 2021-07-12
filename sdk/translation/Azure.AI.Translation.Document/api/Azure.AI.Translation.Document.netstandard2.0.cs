@@ -1,9 +1,5 @@
 namespace Azure.AI.Translation.Document
 {
-    public static partial class BatchDocumentTranslationModelFactory
-    {
-        public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IReadOnlyList<string> fileExtensions = null, System.Collections.Generic.IReadOnlyList<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IReadOnlyList<string> formatVersions = null) { throw null; }
-    }
     public partial class DocumentFilter
     {
         public DocumentFilter() { }
@@ -214,5 +210,12 @@ namespace Azure.AI.Translation.Document
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationGlossary> Glossaries { get { throw null; } }
         public string LanguageCode { get { throw null; } }
         public System.Uri TargetUri { get { throw null; } }
+    }
+}
+namespace Azure.AI.Translation.Document.Models
+{
+    public static partial class BatchDocumentTranslationModelFactory
+    {
+        public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IEnumerable<string> fileExtensions = null, System.Collections.Generic.IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IEnumerable<string> formatVersions = null) { throw null; }
     }
 }

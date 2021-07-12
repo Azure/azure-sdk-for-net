@@ -24,8 +24,14 @@ namespace Azure.Monitor.Query.Models
         /// Gets the result for the query that was a part of the batch.
         /// </summary>
         /// <code snippet="Snippet:BatchQueryAddAndGet" language="csharp">
-        /// string countQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | count&quot;, TimeSpan.FromDays(1));
-        /// string topQueryId = batch.AddQuery(workspaceId, &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;, TimeSpan.FromDays(1));
+        /// string countQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | count&quot;,
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        /// string topQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
         ///
@@ -35,7 +41,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="queryId">The query identifier returned from the <see cref="LogsBatchQuery.AddQuery"/>.</param>
         /// <returns>The <see cref="LogsBatchQueryResults"/> with the query results.</returns>
         /// <exception cref="ArgumentException">When the query with <paramref name="queryId"/> was not part of the batch.</exception>
-        /// <exception cref="RequestFailedException">When the query  <paramref name="queryId"/> failed.</exception>
+        /// <exception cref="RequestFailedException">When the query <paramref name="queryId"/> failed.</exception>
         public LogsQueryResult GetResult(string queryId)
         {
             BatchQueryResponse result = Responses.SingleOrDefault(r => r.Id == queryId);
