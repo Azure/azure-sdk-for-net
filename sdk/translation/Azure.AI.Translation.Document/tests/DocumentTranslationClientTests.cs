@@ -57,19 +57,19 @@ namespace Azure.AI.Translation.Document.Tests
 
         #endregion
 
-        [TestCase("Foo Bar", false)]
-        [TestCase("", false)]
-        [TestCase("e78a95a6-e268-11eb-ba80-0242ac130004", true)]
-        public void ValidateGuidTest(string testGuid, bool validGuidFlag)
+        [TestCase("Foo Bar", typeof(ArgumentException))]
+        [TestCase("", typeof(ArgumentException))]
+        [TestCase("e78a95a6-e268-11eb-ba80-0242ac130004", null)]
+        public void ValidateGuidTest(string testGuid, Type expectedException)
         {
-            if (validGuidFlag)
+            if (expectedException == null)
             {
                 var parsedGuid = ClientCommon.ValidateModelId(testGuid, nameof(testGuid));
                 Assert.NotNull(parsedGuid);
             }
             else
             {
-                Assert.Throws <ArgumentException> (() => ClientCommon.ValidateModelId(testGuid, nameof(testGuid)));
+                Assert.Throws(expectedException, () => ClientCommon.ValidateModelId(testGuid, nameof(testGuid)));
             }
         }
     }
