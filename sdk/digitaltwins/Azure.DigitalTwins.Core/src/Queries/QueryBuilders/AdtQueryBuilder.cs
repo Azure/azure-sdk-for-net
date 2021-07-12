@@ -14,7 +14,6 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         private readonly FromQuery _fromQuery;
         private readonly WhereStatement _whereStatement;
         private readonly WhereLogic _whereLogic;
-
         private readonly SelectAsQuery _selectAs;
 
         /// <summary>
