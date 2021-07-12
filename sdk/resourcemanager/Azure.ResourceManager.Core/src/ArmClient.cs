@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Subscription container. </returns>
         public virtual SubscriptionContainer GetSubscriptions()
         {
-            return new SubscriptionContainer(Tenant);
+            return new SubscriptionContainer(_tenant);
         }
 
         /// <summary>
