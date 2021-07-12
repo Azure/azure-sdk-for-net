@@ -4,11 +4,12 @@ Example: Creating a Virtual Network
 In this example, we'll create a virtual network. Since the SDK follows the resource hierarchy in Azure, we'll need to do this inside of a resource group.
 
 ## Import the namespaces
-These are the naspaces needed for this project:
-```C# Snippet:Creating_A_Virtual_Network_Namespaces
-using System.Threading.Tasks;
+These are the namespaces needed for this project:
+```C#
 using Azure.Identity;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
+using System.Threading.Tasks;
 ```
 
 In addition, you need to install the `Azure.ResourceManager.Compute` library in your project and import it.

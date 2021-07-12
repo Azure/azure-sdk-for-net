@@ -1,8 +1,6 @@
-﻿#region Snippet:Creating_A_Virtual_Network_Namespaces
-using System.Threading.Tasks;
-using Azure.Identity;
+﻿using Azure.Identity;
 using Azure.ResourceManager.Core;
-#endregion
+using System.Threading.Tasks;
 using NUnit.Framework; 
 
 namespace Azure.ResourceManager.Core.Tests.Samples
