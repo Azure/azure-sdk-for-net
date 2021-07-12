@@ -42,7 +42,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
             if (Searched == null)
             {
-                searchedFormatted = string.Empty;
+                searchedFormatted = $"[]";
             }
             else
             {

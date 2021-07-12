@@ -264,7 +264,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Build()
                 .GetQueryText()
                 .Should()
-                .Be("SELECT FROM DigitalTwins");
+                .Be("SELECT  FROM DigitalTwins");
         }
 
         [Test]
@@ -276,7 +276,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Build()
                 .GetQueryText()
                 .Should()
-                .Be("SELECT FROM DigitalTwins");
+                .Be("SELECT  FROM DigitalTwins");
         }
 
         [Test]
@@ -356,7 +356,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Build()
                 .GetQueryText()
                 .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE IN []");
+                .Be("SELECT * FROM DigitalTwins WHERE  IN []");
         }
 
         [Test]
@@ -370,7 +370,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Build()
                 .GetQueryText()
                 .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE = 10");
+                .Be("SELECT * FROM DigitalTwins WHERE  = 10");
         }
     }
 }
