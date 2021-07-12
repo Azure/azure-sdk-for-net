@@ -25,8 +25,18 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
-        internal SubscriptionContainer(ClientContext clientContext)
-            : base(clientContext, null)
+        // internal SubscriptionContainer(ClientContext clientContext)
+        //     : base(clientContext, null)
+        // {
+        //     RestClient = new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline);
+        // }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class.
+        /// </summary>
+        /// <param name="parent"> The resource representing the parent resource. </param>
+        internal SubscriptionContainer(TenantOperations parent)
+            : base(parent)
         {
             RestClient = new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline);
         }

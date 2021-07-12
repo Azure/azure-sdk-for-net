@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Subscription container. </returns>
         public virtual SubscriptionContainer GetSubscriptions()
         {
-            return new SubscriptionContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
+            return new SubscriptionContainer(Tenant);
         }
 
         /// <summary>

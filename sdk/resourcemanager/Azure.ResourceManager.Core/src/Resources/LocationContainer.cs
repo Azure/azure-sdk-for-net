@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Subscription container. </returns>
         public SubscriptionContainer GetSubscriptions()
         {
-            return new SubscriptionContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
+            return new SubscriptionContainer(new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline));
         }
 
         /// <summary>
