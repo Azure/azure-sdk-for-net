@@ -652,10 +652,10 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 
 # ######## Eng Sys ######## 
-/eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
+/eng/           @weshaggard @chidozieononiwu @danieljurek
 /eng/mgmt/      @allenjzhang @m-nash @markcowl
 /**/tests.yml   @benbp
-/**/ci.yml      @mitchdenny
+/**/ci.yml      @chidozieononiwu
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml            @AlexGhiondea @maririos
