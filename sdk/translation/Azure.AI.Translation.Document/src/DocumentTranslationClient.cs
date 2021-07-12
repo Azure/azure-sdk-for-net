@@ -244,7 +244,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> response = _serviceRestClient.GetTranslationsStatus(
+                    var response = _serviceRestClient.GetTranslationsStatus(
                         top: top,
                         skip: skip,
                         maxpagesize: itemsPerPage,
@@ -270,7 +270,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> response = _serviceRestClient.GetTranslationsStatusNextPage(
+                    var response = _serviceRestClient.GetTranslationsStatusNextPage(
                         nextLink,
                         top: top,
                         skip: skip,
@@ -324,7 +324,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> response = await _serviceRestClient.GetTranslationsStatusAsync(
+                    var response = await _serviceRestClient.GetTranslationsStatusAsync(
                         top: top,
                         skip: skip,
                         maxpagesize: itemsPerPage,
@@ -350,7 +350,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> response = await _serviceRestClient.GetTranslationsStatusNextPageAsync(
+                    var response = await _serviceRestClient.GetTranslationsStatusNextPageAsync(
                         nextLink,
                         top: top,
                         skip: skip,
