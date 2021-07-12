@@ -39,9 +39,9 @@ using Azure.ResourceManager.Core;
 using System;
 using System.Threading.Tasks;
 
-            // code omitted for brevity
+// code omitted for brevity
 
-            var armClient = new ArmClient(new DefaultAzureCredential());
+var armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
 Additional documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).

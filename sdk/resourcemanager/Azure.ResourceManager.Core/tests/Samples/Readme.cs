@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         {
 #endif
 
-            // code omitted for brevity
+// code omitted for brevity
 
-            var armClient = new ArmClient(new DefaultAzureCredential());
+var armClient = new ArmClient(new DefaultAzureCredential());
 #endregion Snippet:Readme_AuthClient
         }
 
