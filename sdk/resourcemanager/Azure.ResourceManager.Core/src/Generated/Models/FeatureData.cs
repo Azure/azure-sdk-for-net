@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Previewed feature information. </summary>
-    public partial class FeatureData
+    public partial class FeatureData : Resource<SubscriptionProviderIdentifier>
     {
         /// <summary> Initializes a new instance of FeatureResult. </summary>
         internal FeatureData()
@@ -21,20 +21,12 @@ namespace Azure.ResourceManager.Core
         /// <param name="id"> The resource ID of the feature. </param>
         /// <param name="type"> The resource type of the feature. </param>
         internal FeatureData(string name, FeatureProperties properties, string id, string type)
+            :base(id, name, type)
         {
-            Name = name;
             Properties = properties;
-            Id = id;
-            Type = type;
         }
 
-        /// <summary> The name of the feature. </summary>
-        public string Name { get; }
         /// <summary> Properties of the previewed feature. </summary>
         public FeatureProperties Properties { get; }
-        /// <summary> The resource ID of the feature. </summary>
-        public string Id { get; }
-        /// <summary> The resource type of the feature. </summary>
-        public string Type { get; }
     }
 }

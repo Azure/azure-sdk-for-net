@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> The management group details. </summary>
-    public partial class ManagementGroup
+    public partial class ManagementGroupData : Resource<TenantResourceIdentifier>
     {
         /// <summary> Initializes a new instance of ManagementGroup. </summary>
-        internal ManagementGroup()
+        internal ManagementGroupData()
         {
             Children = new ChangeTrackingList<ManagementGroupChildInfo>();
         }
@@ -27,23 +27,15 @@ namespace Azure.ResourceManager.Core
         /// <param name="displayName"> The friendly name of the management group. </param>
         /// <param name="details"> The details of a management group. </param>
         /// <param name="children"> The list of children. </param>
-        internal ManagementGroup(string id, string type, string name, string tenantId, string displayName, ManagementGroupDetails details, IReadOnlyList<ManagementGroupChildInfo> children)
+        internal ManagementGroupData(string id, string type, string name, string tenantId, string displayName, ManagementGroupDetails details, IReadOnlyList<ManagementGroupChildInfo> children)
+            :base(id, name, type)
         {
-            Id = id;
-            Type = type;
-            Name = name;
             TenantId = tenantId;
             DisplayName = displayName;
             Details = details;
             Children = children;
         }
 
-        /// <summary> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
-        public string Id { get; }
-        /// <summary> The type of the resource.  For example, Microsoft.Management/managementGroups. </summary>
-        public string Type { get; }
-        /// <summary> The name of the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
-        public string Name { get; }
         /// <summary> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
         public string TenantId { get; }
         /// <summary> The friendly name of the management group. </summary>

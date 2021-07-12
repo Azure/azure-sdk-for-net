@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class ManagementGroup
+    public partial class ManagementGroupData
     {
-        internal static ManagementGroup DeserializeManagementGroup(JsonElement element)
+        internal static ManagementGroupData DeserializeManagementGroup(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> type = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Core
                     continue;
                 }
             }
-            return new ManagementGroup(id.Value, type.Value, name.Value, tenantId.Value, displayName.Value, details.Value, Optional.ToList(children));
+            return new ManagementGroupData(id.Value, type.Value, name.Value, tenantId.Value, displayName.Value, details.Value, Optional.ToList(children));
         }
     }
 }
