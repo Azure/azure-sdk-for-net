@@ -38,8 +38,17 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
         public override string GetConditionText()
         {
-            // turn the string array into the correct format ['property1', 'property2', 'etc']
-            string searchedFormatted = $"['{string.Join("', '", Searched)}']";
+            string searchedFormatted;
+
+            if (Searched == null)
+            {
+                searchedFormatted = string.Empty;
+            }
+            else
+            {
+                // turn the string array into the correct format ['property1', 'property2', 'etc']
+                searchedFormatted = $"['{string.Join("', '", Searched)}']";
+            }
 
             // form entire conditional string
             return $"{Value} {QueryConstants.ContainOperatorMap[Operator]} {searchedFormatted}";

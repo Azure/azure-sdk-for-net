@@ -30,8 +30,5 @@ namespace Azure.DigitalTwins.Core.Tests
                 .Should()
                 .Be("Temperature AS Temp, Humidity AS Hum, Occupants AS Occ");
         }
-
-        // pass in null => throw exception or handle it in some way
-        // can you replace a string with a number? => Temperature AS 2
     }
 }

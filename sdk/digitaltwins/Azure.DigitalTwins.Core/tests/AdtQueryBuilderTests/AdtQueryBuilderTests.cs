@@ -254,5 +254,123 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))");
         }
+
+        [Test]
+        public void AdtQueryBuilder_Select_Null()
+        {
+            new AdtQueryBuilder()
+                .Select(null)
+                .From(AdtCollection.DigitalTwins)
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT FROM DigitalTwins");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_Select_EmptyString()
+        {
+            new AdtQueryBuilder()
+                .Select("")
+                .From(AdtCollection.DigitalTwins)
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT FROM DigitalTwins");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_FromCustom_Null()
+        {
+            new AdtQueryBuilder()
+                .SelectAll()
+                .FromCustom(null)
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_FromCustom_EmptyString()
+        {
+            new AdtQueryBuilder()
+                .SelectAll()
+                .FromCustom("")
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_WhereLogic_Null()
+        {
+            new AdtQueryBuilder()
+                .SelectAll()
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .IsOfModel(null)
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE IS_OF_MODEL('')");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_WhereLogic_Is_Of_Type()
+        {
+            new AdtQueryBuilder()
+                .SelectAll()
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .IsOfType(null, AdtDataType.AdtBool)
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE IS_BOOL()");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_WhereLogic_StartsEndsWith_Null()
+        {
+            new AdtQueryBuilder()
+                .SelectAll()
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .StartsWith(null, null)
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE STARTSWITH(, '')");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_WhereLogic_ContainsNotContains_Null()
+        {
+            new AdtQueryBuilder()
+                .SelectAll()
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .Contains(null, null)
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE IN []");
+        }
+
+        [Test]
+        public void AdtQueryBuilder_WhereLogic_Compare_Null()
+        {
+            new AdtQueryBuilder()
+                .SelectAll()
+                .From(AdtCollection.DigitalTwins)
+                .Where()
+                .Compare(null, QueryComparisonOperator.Equal, 10)
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE = 10");
+        }
     }
 }
