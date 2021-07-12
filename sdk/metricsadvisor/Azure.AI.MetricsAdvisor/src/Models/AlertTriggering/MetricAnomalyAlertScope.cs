@@ -7,8 +7,13 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Selects which set of time series should trigger alerts in a <see cref="MetricAlertConfiguration"/>. It
-    /// must be instantiated by one of its static methods.
+    /// Selects the scope of time series in which an anomaly must be to be included in an alert. In
+    /// order to instantiate an object of this class, one of the following static methods must be used:
+    /// <list type="bullet">
+    ///   <item><see cref="CreateScopeForWholeSeries"/></item>
+    ///   <item><see cref="CreateScopeForSeriesGroup"/></item>
+    ///   <item><see cref="CreateScopeForTopNGroup"/></item>
+    /// </list>
     /// </summary>
     public class MetricAnomalyAlertScope
     {
@@ -25,17 +30,21 @@ namespace Azure.AI.MetricsAdvisor.Models
         public MetricAnomalyAlertScopeType ScopeType { get; }
 
         /// <summary>
-        /// Alerts will only be triggered for anomalies in specific dimensions of the series group.
-        /// The number of specified dimensions should be smaller than the total number dimensions.
-        /// This property is set when <see cref="ScopeType"/> is <see cref="MetricAnomalyAlertScopeType.SeriesGroup"/>.
+        /// Defines the set of time series included in this scope. If all possible dimensions are set, the
+        /// key uniquely identifies a single time series for the corresponding metric. If only a subset of
+        /// dimensions are set, the key uniquely identifies a group of time series.
         /// </summary>
+        /// <remarks>
+        /// This property is only set when <see cref="ScopeType"/> is <see cref="MetricAnomalyAlertScopeType.SeriesGroup"/>.
+        /// </remarks>
         public DimensionKey SeriesGroupInScope { get; }
 
         /// <summary>
-        /// Alerts will only be triggered for anomalies in the top N series.
-        /// Specify the number of timestamps to take into account, and how many anomalies must be in them to send the alert.
-        /// This property is set when <see cref="ScopeType"/> is <see cref="MetricAnomalyAlertScopeType.TopN"/>.
+        /// Defines the top N series included in this scope.
         /// </summary>
+        /// <remarks>
+        /// This property is only set when <see cref="ScopeType"/> is <see cref="MetricAnomalyAlertScopeType.TopN"/>.
+        /// </remarks>
         public TopNGroupScope TopNGroupInScope { get; }
 
         /// <summary>
@@ -43,17 +52,20 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// metric as the scope.
         /// </summary>
         /// <returns>A new <see cref="MetricAnomalyAlertScope"/> instance.</returns>
-        public static MetricAnomalyAlertScope GetScopeForWholeSeries() =>
+        public static MetricAnomalyAlertScope CreateScopeForWholeSeries() =>
             new MetricAnomalyAlertScope(MetricAnomalyAlertScopeType.WholeSeries, seriesGroupInScope: default, topNGroupInScope: default);
 
         /// <summary>
         /// Creates a <see cref="MetricAnomalyAlertScope"/> instance that has a fixed group of time series as the scope.
         /// </summary>
-        /// <param name="seriesGroupKey">The key that identifies the group of fixed time series that constitutes the scope.
-        /// A subset of the possible dimensions of the associated data feed must be set.</param>
+        /// <param name="seriesGroupKey">
+        /// Defines the set of time series included in this scope. If all possible dimensions are set, the
+        /// key uniquely identifies a single time series for the corresponding metric. If only a subset of
+        /// dimensions are set, the key uniquely identifies a group of time series.
+        /// </param>
         /// <returns>A new <see cref="MetricAnomalyAlertScope"/> instance.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="seriesGroupKey"/> is null.</exception>
-        public static MetricAnomalyAlertScope GetScopeForSeriesGroup(DimensionKey seriesGroupKey)
+        public static MetricAnomalyAlertScope CreateScopeForSeriesGroup(DimensionKey seriesGroupKey)
         {
             Argument.AssertNotNull(seriesGroupKey, nameof(seriesGroupKey));
 
@@ -61,13 +73,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// Creates a <see cref="MetricAnomalyAlertScope"/> instance in which alerts will only be triggered for anomalies in the top N series.
+        /// Creates a <see cref="MetricAnomalyAlertScope"/> instance that has the top N series group as the scope. For a better
+        /// definition of what this series group is, see <see cref="TopNGroupScope"/>.
         /// </summary>
-        /// <param name="topNGroup">Specify the number of timestamps to take into account, and how many anomalies must be in them to send the alert.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="topNGroup"/> is null.</exception>
-        public static MetricAnomalyAlertScope GetScopeForTopNGroup(TopNGroupScope topNGroup)
+        /// <param name="top">The value of N in the top N series group.</param>
+        /// <param name="period">The number of latest ingestion timestamps to consider when determining the top N series group.</param>
+        /// <param name="minimumTopCount">
+        /// The number of times a time series must be ranked among the highest series to be considered part of the top N series
+        /// group. This value must be less than or equal to <paramref name="period"/>.
+        /// </param>
+        /// <returns>A new <see cref="MetricAnomalyAlertScope"/> instance.</returns>
+        public static MetricAnomalyAlertScope CreateScopeForTopNGroup(int top, int period, int minimumTopCount)
         {
-            Argument.AssertNotNull(topNGroup, nameof(topNGroup));
+            var topNGroup = new TopNGroupScope(top, period, minimumTopCount);
 
             return new MetricAnomalyAlertScope(MetricAnomalyAlertScopeType.TopN, seriesGroupInScope: default, topNGroup);
         }
