@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Globalization;
 using Azure.Core.Pipeline;
+using System.Text.Json;
 
 namespace Azure.IoT.ModelsRepository.Fetchers
 {
@@ -25,20 +26,21 @@ namespace Azure.IoT.ModelsRepository.Fetchers
             _clientDiagnostics = clientDiagnostics;
         }
 
-        public Task<FetchResult> FetchAsync(string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default)
+        public Task<FetchModelResult> FetchModelAsync(string dtmi, Uri repositoryUri, bool tryFromExpanded, CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(Fetch(dtmi, repositoryUri, dependencyResolution, cancellationToken));
+            return Task.FromResult(FetchModel(dtmi, repositoryUri, tryFromExpanded, cancellationToken));
         }
 
-        public FetchResult Fetch(string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default)
+        public FetchModelResult FetchModel(string dtmi, Uri repositoryUri, bool tryFromExpanded, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(FileModelFetcher)}.{nameof(Fetch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(FileModelFetcher)}.{nameof(FetchModel)}");
             scope.Start();
 
             try
             {
                 var work = new Queue<string>();
-                if (dependencyResolution == ModelDependencyResolution.TryFromExpanded)
+
+                if (tryFromExpanded)
                 {
                     work.Enqueue(DtmiConventions.GetModelUri(dtmi, repositoryUri, true).LocalPath);
                 }
@@ -55,7 +57,7 @@ namespace Azure.IoT.ModelsRepository.Fetchers
 
                     if (File.Exists(tryContentPath))
                     {
-                        return new FetchResult
+                        return new FetchModelResult
                         {
                             Definition = File.ReadAllText(tryContentPath, Encoding.UTF8),
                             Path = tryContentPath
@@ -75,6 +77,42 @@ namespace Azure.IoT.ModelsRepository.Fetchers
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        public Task<ModelsRepositoryMetadata> FetchMetadataAsync(Uri repositoryUri, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(FetchMetadata(repositoryUri, cancellationToken));
+        }
+
+        public ModelsRepositoryMetadata FetchMetadata(Uri repositoryUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(FileModelFetcher)}.{nameof(FetchMetadata)}");
+            scope.Start();
+
+            string metadataPath = DtmiConventions.GetMetadataUri(repositoryUri).LocalPath;
+
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                if (File.Exists(metadataPath))
+                {
+                    string content = File.ReadAllText(metadataPath, Encoding.UTF8);
+                    return JsonSerializer.Deserialize<ModelsRepositoryMetadata>(content);
+                }
+            }
+            catch (OperationCanceledException ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                // Exceptions thrown from fetching Repository Metadata should not be terminal.
+                scope.Failed(ex);
+            }
+
+            ModelsRepositoryEventSource.Instance.FailureProcessingRepositoryMetadata(metadataPath);
+            return null;
         }
     }
 }
