@@ -38,6 +38,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
         ";
 
+        private string UnknownCredentialContent => $@"
+        {{
+            ""dataSourceCredentialType"": ""unknownType"",
+            ""dataSourceCredentialId"": ""{FakeGuid}"",
+            ""dataSourceCredentialName"": ""unknownCredentialName"",
+            ""dataSourceCredentialDescription"": ""unknown credential description""
+        }}
+        ";
+
         [Test]
         [TestCaseSource(nameof(DataSourceCredentialEntityTestCases))]
         public async Task DataSourceCredentialEntitySendsSecretDuringCreation(DataSourceCredentialEntity credential, string expectedSubstring)
@@ -68,7 +77,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockTransport mockTransport = new MockTransport(updateResponse);
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
 
-            var credential = new DataLakeSharedKeyCredentialEntity(DataSourceCredentialType.DataLakeGen2SharedKey, FakeGuid,
+            var credential = new DataLakeSharedKeyCredentialEntity(DataSourceCredentialKind.DataLakeSharedKey, FakeGuid,
                 default, default, new DataLakeGen2SharedKeyParam());
 
             Assert.That(credential.AccountKey, Is.Null);
@@ -92,7 +101,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockTransport mockTransport = new MockTransport(updateResponse);
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
 
-            var credential = new ServicePrincipalCredentialEntity(DataSourceCredentialType.ServicePrincipal, FakeGuid,
+            var credential = new ServicePrincipalCredentialEntity(DataSourceCredentialKind.ServicePrincipal, FakeGuid,
                 default, default, new ServicePrincipalParam("mock", "mock"));
 
             Assert.That(credential.ClientSecret, Is.Null);
@@ -116,7 +125,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockTransport mockTransport = new MockTransport(updateResponse);
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
 
-            var credential = new ServicePrincipalInKeyVaultCredentialEntity(DataSourceCredentialType.ServicePrincipal, FakeGuid,
+            var credential = new ServicePrincipalInKeyVaultCredentialEntity(DataSourceCredentialKind.ServicePrincipal, FakeGuid,
                 default, default, new ServicePrincipalInKVParam(FakeUri.AbsoluteUri, "mock", "mock", "mock", "mock"));
 
             Assert.That(credential.KeyVaultClientSecret, Is.Null);
@@ -140,7 +149,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MockTransport mockTransport = new MockTransport(updateResponse);
             MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
 
-            var credential = new SqlConnectionStringCredentialEntity(DataSourceCredentialType.AzureSQLConnectionString, FakeGuid,
+            var credential = new SqlConnectionStringCredentialEntity(DataSourceCredentialKind.SqlConnectionString, FakeGuid,
                 default, default, new AzureSQLConnectionStringParam());
 
             Assert.That(credential.ConnectionString, Is.Null);
@@ -153,6 +162,47 @@ namespace Azure.AI.MetricsAdvisor.Tests
             string content = ReadContent(request);
 
             Assert.That(content, ContainsJsonString("connectionString", "secret"));
+        }
+
+        [Test]
+        public async Task DataSourceCredentialEntityGetsUnknownCredential()
+        {
+            MockResponse getResponse = new MockResponse(200);
+            getResponse.SetContent(UnknownCredentialContent);
+
+            MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(getResponse);
+            DataSourceCredentialEntity credential = await adminClient.GetDataSourceCredentialAsync(FakeGuid);
+
+            Assert.That(credential.Id, Is.EqualTo(FakeGuid));
+            Assert.That(credential.Name, Is.EqualTo("unknownCredentialName"));
+            Assert.That(credential.Description, Is.EqualTo("unknown credential description"));
+        }
+
+        [Test]
+        public async Task DataSourceCredentialEntityUpdatesUnknownCredential()
+        {
+            MockResponse getResponse = new MockResponse(200);
+            getResponse.SetContent(UnknownCredentialContent);
+
+            MockResponse updateResponse = new MockResponse(200);
+            updateResponse.SetContent(UnknownCredentialContent);
+
+            MockTransport mockTransport = new MockTransport(getResponse, updateResponse);
+            MetricsAdvisorAdministrationClient adminClient = CreateInstrumentedAdministrationClient(mockTransport);
+            DataSourceCredentialEntity credential = await adminClient.GetDataSourceCredentialAsync(FakeGuid);
+
+            credential.Name = "newCredentialName";
+            credential.Description = "new description";
+
+            await adminClient.UpdateDataSourceCredentialAsync(credential);
+
+            MockRequest request = mockTransport.Requests.Last();
+            string content = ReadContent(request);
+
+            Assert.That(request.Uri.Path, Contains.Substring(FakeGuid));
+            Assert.That(content, ContainsJsonString("dataSourceCredentialName", "newCredentialName"));
+            Assert.That(content, ContainsJsonString("dataSourceCredentialType", "unknownType"));
+            Assert.That(content, ContainsJsonString("dataSourceCredentialDescription", "new description"));
         }
     }
 }

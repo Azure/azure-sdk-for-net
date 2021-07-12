@@ -3,7 +3,7 @@
     {
       "Agent": {
         "ubuntu_keyring_container": {
-          "OSVmImage": "ubuntu-18.04",
+          "OSVmImage": "ubuntu-20.04",
           "Pool": "Azure Pipelines",
           "Container": "ubuntu_netcore_keyring"
         }
