@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Marketplace
     public static partial class PrivateStoreOperationsExtensions
     {
             /// <summary>
-            /// Gets the list of available private stores
+            /// Gets the list of available private stores.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Marketplace
             }
 
             /// <summary>
-            /// Gets the list of available private stores
+            /// Gets the list of available private stores.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -90,37 +90,6 @@ namespace Microsoft.Azure.Management.Marketplace
             }
 
             /// <summary>
-            /// Deletes the private store. All that is not saved will be lost.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='privateStoreId'>
-            /// The store ID - must use the tenant ID
-            /// </param>
-            public static void Delete(this IPrivateStoreOperations operations, string privateStoreId)
-            {
-                operations.DeleteAsync(privateStoreId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the private store. All that is not saved will be lost.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='privateStoreId'>
-            /// The store ID - must use the tenant ID
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAsync(this IPrivateStoreOperations operations, string privateStoreId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteWithHttpMessagesAsync(privateStoreId, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Changes private store properties
             /// </summary>
             /// <param name='operations'>
@@ -156,7 +125,628 @@ namespace Microsoft.Azure.Management.Marketplace
             }
 
             /// <summary>
-            /// Gets the list of available private stores
+            /// Deletes the private store. All that is not saved will be lost.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            public static void Delete(this IPrivateStoreOperations operations, string privateStoreId)
+            {
+                operations.DeleteAsync(privateStoreId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the private store. All that is not saved will be lost.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IPrivateStoreOperations operations, string privateStoreId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(privateStoreId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// List of offers, regardless the collections
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            public static QueryOffers QueryOffersMethod(this IPrivateStoreOperations operations, string privateStoreId)
+            {
+                return operations.QueryOffersMethodAsync(privateStoreId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List of offers, regardless the collections
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<QueryOffers> QueryOffersMethodAsync(this IPrivateStoreOperations operations, string privateStoreId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.QueryOffersMethodWithHttpMessagesAsync(privateStoreId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Tenant billing accounts names
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            public static BillingAccountsResponse BillingAccounts(this IPrivateStoreOperations operations, string privateStoreId)
+            {
+                return operations.BillingAccountsAsync(privateStoreId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Tenant billing accounts names
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BillingAccountsResponse> BillingAccountsAsync(this IPrivateStoreOperations operations, string privateStoreId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BillingAccountsWithHttpMessagesAsync(privateStoreId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// For a given subscriptions list, the API will return a map of collections
+            /// and the related subscriptions from the supplied list.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            public static CollectionsToSubscriptionsMappingResponse CollectionsToSubscriptionsMapping(this IPrivateStoreOperations operations, string privateStoreId, CollectionsToSubscriptionsMappingPayload payload = default(CollectionsToSubscriptionsMappingPayload))
+            {
+                return operations.CollectionsToSubscriptionsMappingAsync(privateStoreId, payload).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// For a given subscriptions list, the API will return a map of collections
+            /// and the related subscriptions from the supplied list.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CollectionsToSubscriptionsMappingResponse> CollectionsToSubscriptionsMappingAsync(this IPrivateStoreOperations operations, string privateStoreId, CollectionsToSubscriptionsMappingPayload payload = default(CollectionsToSubscriptionsMappingPayload), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CollectionsToSubscriptionsMappingWithHttpMessagesAsync(privateStoreId, payload, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get map of plans and related approved subscriptions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            public static QueryApprovedPlansResponse QueryApprovedPlansMethod(this IPrivateStoreOperations operations, string privateStoreId, QueryApprovedPlansPayload payload = default(QueryApprovedPlansPayload))
+            {
+                return operations.QueryApprovedPlansMethodAsync(privateStoreId, payload).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get map of plans and related approved subscriptions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<QueryApprovedPlansResponse> QueryApprovedPlansMethodAsync(this IPrivateStoreOperations operations, string privateStoreId, QueryApprovedPlansPayload payload = default(QueryApprovedPlansPayload), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.QueryApprovedPlansMethodWithHttpMessagesAsync(privateStoreId, payload, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Perform an action on bulk collections
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            public static BulkCollectionsResponse BulkCollectionsAction(this IPrivateStoreOperations operations, string privateStoreId, BulkCollectionsPayload payload = default(BulkCollectionsPayload))
+            {
+                return operations.BulkCollectionsActionAsync(privateStoreId, payload).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Perform an action on bulk collections
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BulkCollectionsResponse> BulkCollectionsActionAsync(this IPrivateStoreOperations operations, string privateStoreId, BulkCollectionsPayload payload = default(BulkCollectionsPayload), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BulkCollectionsActionWithHttpMessagesAsync(privateStoreId, payload, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all open approval requests of current user
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            public static RequestApprovalsList GetApprovalRequestsList(this IPrivateStoreOperations operations, string privateStoreId)
+            {
+                return operations.GetApprovalRequestsListAsync(privateStoreId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all open approval requests of current user
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RequestApprovalsList> GetApprovalRequestsListAsync(this IPrivateStoreOperations operations, string privateStoreId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetApprovalRequestsListWithHttpMessagesAsync(privateStoreId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get open request approval details
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='requestApprovalId'>
+            /// The request approval ID to get create or update
+            /// </param>
+            public static RequestApprovalResource GetRequestApproval(this IPrivateStoreOperations operations, string privateStoreId, string requestApprovalId)
+            {
+                return operations.GetRequestApprovalAsync(privateStoreId, requestApprovalId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get open request approval details
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='requestApprovalId'>
+            /// The request approval ID to get create or update
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RequestApprovalResource> GetRequestApprovalAsync(this IPrivateStoreOperations operations, string privateStoreId, string requestApprovalId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetRequestApprovalWithHttpMessagesAsync(privateStoreId, requestApprovalId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create approval request
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='requestApprovalId'>
+            /// The request approval ID to get create or update
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            public static RequestApprovalResource CreateApprovalRequest(this IPrivateStoreOperations operations, string privateStoreId, string requestApprovalId, RequestApprovalResource payload = default(RequestApprovalResource))
+            {
+                return operations.CreateApprovalRequestAsync(privateStoreId, requestApprovalId, payload).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create approval request
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='requestApprovalId'>
+            /// The request approval ID to get create or update
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RequestApprovalResource> CreateApprovalRequestAsync(this IPrivateStoreOperations operations, string privateStoreId, string requestApprovalId, RequestApprovalResource payload = default(RequestApprovalResource), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateApprovalRequestWithHttpMessagesAsync(privateStoreId, requestApprovalId, payload, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get request statuses foreach plan, this api is used as a complex GET
+            /// action.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='requestApprovalId'>
+            /// The request approval ID to get create or update
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            public static QueryRequestApproval QueryRequestApprovalMethod(this IPrivateStoreOperations operations, string privateStoreId, string requestApprovalId, QueryRequestApprovalProperties payload = default(QueryRequestApprovalProperties))
+            {
+                return operations.QueryRequestApprovalMethodAsync(privateStoreId, requestApprovalId, payload).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get request statuses foreach plan, this api is used as a complex GET
+            /// action.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='requestApprovalId'>
+            /// The request approval ID to get create or update
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<QueryRequestApproval> QueryRequestApprovalMethodAsync(this IPrivateStoreOperations operations, string privateStoreId, string requestApprovalId, QueryRequestApprovalProperties payload = default(QueryRequestApprovalProperties), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.QueryRequestApprovalMethodWithHttpMessagesAsync(privateStoreId, requestApprovalId, payload, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get list of admin request approvals
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            public static AdminRequestApprovalsList AdminRequestApprovalsListMethod(this IPrivateStoreOperations operations, string privateStoreId)
+            {
+                return operations.AdminRequestApprovalsListMethodAsync(privateStoreId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get list of admin request approvals
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AdminRequestApprovalsList> AdminRequestApprovalsListMethodAsync(this IPrivateStoreOperations operations, string privateStoreId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AdminRequestApprovalsListMethodWithHttpMessagesAsync(privateStoreId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get open approval requests
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='publisherId'>
+            /// The publisher id of this offer.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='adminRequestApprovalId'>
+            /// The admin request approval ID to get create or update
+            /// </param>
+            public static AdminRequestApprovalsResource GetAdminRequestApproval(this IPrivateStoreOperations operations, string publisherId, string privateStoreId, string adminRequestApprovalId)
+            {
+                return operations.GetAdminRequestApprovalAsync(publisherId, privateStoreId, adminRequestApprovalId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get open approval requests
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='publisherId'>
+            /// The publisher id of this offer.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='adminRequestApprovalId'>
+            /// The admin request approval ID to get create or update
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AdminRequestApprovalsResource> GetAdminRequestApprovalAsync(this IPrivateStoreOperations operations, string publisherId, string privateStoreId, string adminRequestApprovalId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAdminRequestApprovalWithHttpMessagesAsync(publisherId, privateStoreId, adminRequestApprovalId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update the admin action, weather the request is approved or rejected and
+            /// the approved plans
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='adminRequestApprovalId'>
+            /// The admin request approval ID to get create or update
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            public static AdminRequestApprovalsResource UpdateAdminRequestApproval(this IPrivateStoreOperations operations, string privateStoreId, string adminRequestApprovalId, AdminRequestApprovalsResource payload = default(AdminRequestApprovalsResource))
+            {
+                return operations.UpdateAdminRequestApprovalAsync(privateStoreId, adminRequestApprovalId, payload).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update the admin action, weather the request is approved or rejected and
+            /// the approved plans
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='adminRequestApprovalId'>
+            /// The admin request approval ID to get create or update
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AdminRequestApprovalsResource> UpdateAdminRequestApprovalAsync(this IPrivateStoreOperations operations, string privateStoreId, string adminRequestApprovalId, AdminRequestApprovalsResource payload = default(AdminRequestApprovalsResource), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateAdminRequestApprovalWithHttpMessagesAsync(privateStoreId, adminRequestApprovalId, payload, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get private store notifications state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            public static PrivateStoreNotificationsState QueryNotificationsState(this IPrivateStoreOperations operations, string privateStoreId)
+            {
+                return operations.QueryNotificationsStateAsync(privateStoreId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get private store notifications state
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateStoreNotificationsState> QueryNotificationsStateAsync(this IPrivateStoreOperations operations, string privateStoreId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.QueryNotificationsStateWithHttpMessagesAsync(privateStoreId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Acknowledge notification for offer
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='offerId'>
+            /// The offer ID to update or delete
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            public static void AcknowledgeOfferNotification(this IPrivateStoreOperations operations, string privateStoreId, string offerId, AcknowledgeOfferNotificationProperties payload = default(AcknowledgeOfferNotificationProperties))
+            {
+                operations.AcknowledgeOfferNotificationAsync(privateStoreId, offerId, payload).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Acknowledge notification for offer
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='offerId'>
+            /// The offer ID to update or delete
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task AcknowledgeOfferNotificationAsync(this IPrivateStoreOperations operations, string privateStoreId, string offerId, AcknowledgeOfferNotificationProperties payload = default(AcknowledgeOfferNotificationProperties), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.AcknowledgeOfferNotificationWithHttpMessagesAsync(privateStoreId, offerId, payload, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Withdraw a user request approval on specific plan
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='requestApprovalId'>
+            /// The request approval ID to get create or update
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            public static void WithdrawPlan(this IPrivateStoreOperations operations, string privateStoreId, string requestApprovalId, WithdrawProperties payload = default(WithdrawProperties))
+            {
+                operations.WithdrawPlanAsync(privateStoreId, requestApprovalId, payload).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Withdraw a user request approval on specific plan
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='requestApprovalId'>
+            /// The request approval ID to get create or update
+            /// </param>
+            /// <param name='payload'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task WithdrawPlanAsync(this IPrivateStoreOperations operations, string privateStoreId, string requestApprovalId, WithdrawProperties payload = default(WithdrawProperties), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.WithdrawPlanWithHttpMessagesAsync(privateStoreId, requestApprovalId, payload, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the list of available private stores.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -170,7 +760,7 @@ namespace Microsoft.Azure.Management.Marketplace
             }
 
             /// <summary>
-            /// Gets the list of available private stores
+            /// Gets the list of available private stores.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

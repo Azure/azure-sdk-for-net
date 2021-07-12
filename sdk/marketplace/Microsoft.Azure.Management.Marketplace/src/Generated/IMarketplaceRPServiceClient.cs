@@ -16,9 +16,9 @@ namespace Microsoft.Azure.Management.Marketplace
     using Newtonsoft.Json;
 
     /// <summary>
-    /// REST APIs for Azure Marketplace
+    /// REST APIs for Private Marketplace
     /// </summary>
-    public partial interface IMarketplaceManagementClient : System.IDisposable
+    public partial interface IMarketplaceRPServiceClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -65,29 +65,19 @@ namespace Microsoft.Azure.Management.Marketplace
 
 
         /// <summary>
-        /// Gets the IPrivateStoreOffersOperations.
-        /// </summary>
-        IPrivateStoreOffersOperations PrivateStoreOffers { get; }
-
-        /// <summary>
-        /// Gets the IPrivateStorePrivateOffersOperations.
-        /// </summary>
-        IPrivateStorePrivateOffersOperations PrivateStorePrivateOffers { get; }
-
-        /// <summary>
-        /// Gets the IPrivateStoreOfferOperations.
-        /// </summary>
-        IPrivateStoreOfferOperations PrivateStoreOffer { get; }
-
-        /// <summary>
-        /// Gets the IPrivateStorePrivateOfferOperations.
-        /// </summary>
-        IPrivateStorePrivateOfferOperations PrivateStorePrivateOffer { get; }
-
-        /// <summary>
         /// Gets the IPrivateStoreOperations.
         /// </summary>
         IPrivateStoreOperations PrivateStore { get; }
+
+        /// <summary>
+        /// Gets the IPrivateStoreCollectionOperations.
+        /// </summary>
+        IPrivateStoreCollectionOperations PrivateStoreCollection { get; }
+
+        /// <summary>
+        /// Gets the IPrivateStoreCollectionOfferOperations.
+        /// </summary>
+        IPrivateStoreCollectionOfferOperations PrivateStoreCollectionOffer { get; }
 
         /// <summary>
         /// Gets the IOperations.

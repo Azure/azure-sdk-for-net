@@ -16,27 +16,24 @@ namespace Microsoft.Azure.Management.Marketplace.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of the request to list Marketplace operations. It contains a
-    /// list of operations and a URL link to get the next set of results.
+    /// List of admin request approval resources
     /// </summary>
-    public partial class OperationListResult
+    public partial class AdminRequestApprovalsList
     {
         /// <summary>
-        /// Initializes a new instance of the OperationListResult class.
+        /// Initializes a new instance of the AdminRequestApprovalsList class.
         /// </summary>
-        public OperationListResult()
+        public AdminRequestApprovalsList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OperationListResult class.
+        /// Initializes a new instance of the AdminRequestApprovalsList class.
         /// </summary>
-        /// <param name="value">List of Microsoft.Marketplace operations
-        /// supported by the Microsoft.Marketplace resource provider.</param>
-        /// <param name="nextLink">URL to get the next set of operation list
-        /// results if there are any.</param>
-        public OperationListResult(IList<SingleOperation> value = default(IList<SingleOperation>), string nextLink = default(string))
+        /// <param name="nextLink">URL to get the next set of notifications
+        /// list results if there are any.</param>
+        public AdminRequestApprovalsList(IList<AdminRequestApprovalsResource> value = default(IList<AdminRequestApprovalsResource>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -49,15 +46,13 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of Microsoft.Marketplace operations supported by
-        /// the Microsoft.Marketplace resource provider.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<SingleOperation> Value { get; set; }
+        public IList<AdminRequestApprovalsResource> Value { get; set; }
 
         /// <summary>
-        /// Gets URL to get the next set of operation list results if there are
-        /// any.
+        /// Gets URL to get the next set of notifications list results if there
+        /// are any.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; private set; }

@@ -14,29 +14,27 @@ namespace Microsoft.Azure.Management.Marketplace.Models
     using System.Linq;
 
     /// <summary>
-    /// Microsoft.Marketplace REST API operation
+    /// Collection name and id.
     /// </summary>
-    public partial class Operation1
+    public partial class CollectionsDetails
     {
         /// <summary>
-        /// Initializes a new instance of the Operation1 class.
+        /// Initializes a new instance of the CollectionsDetails class.
         /// </summary>
-        public Operation1()
+        public CollectionsDetails()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Operation1 class.
+        /// Initializes a new instance of the CollectionsDetails class.
         /// </summary>
-        /// <param name="name">Operation name:
-        /// {provider}/{resource}/{operation}</param>
-        /// <param name="display">The object that represents the
-        /// operation.</param>
-        public Operation1(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="collectionName">Collection name.</param>
+        /// <param name="collectionId">Collection id.</param>
+        public CollectionsDetails(string collectionName = default(string), string collectionId = default(string))
         {
-            Name = name;
-            Display = display;
+            CollectionName = collectionName;
+            CollectionId = collectionId;
             CustomInit();
         }
 
@@ -46,16 +44,16 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets operation name: {provider}/{resource}/{operation}
+        /// Gets or sets collection name.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "collectionName")]
+        public string CollectionName { get; set; }
 
         /// <summary>
-        /// Gets or sets the object that represents the operation.
+        /// Gets or sets collection id.
         /// </summary>
-        [JsonProperty(PropertyName = "display")]
-        public OperationDisplay Display { get; set; }
+        [JsonProperty(PropertyName = "collectionId")]
+        public string CollectionId { get; set; }
 
     }
 }

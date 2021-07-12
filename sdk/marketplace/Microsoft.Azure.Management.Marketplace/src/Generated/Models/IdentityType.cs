@@ -12,13 +12,13 @@ namespace Microsoft.Azure.Management.Marketplace.Models
 {
 
     /// <summary>
-    /// Defines values for Operation.
+    /// Defines values for IdentityType.
     /// </summary>
-    public static class Operation
+    public static class IdentityType
     {
-        public const string DeletePrivateStoreOffer = "DeletePrivateStoreOffer";
-        public const string DeletePrivateStoreCollection = "DeletePrivateStoreCollection";
-        public const string DeletePrivateStoreCollectionOffer = "DeletePrivateStoreCollectionOffer";
-        public const string Ping = "Ping";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }

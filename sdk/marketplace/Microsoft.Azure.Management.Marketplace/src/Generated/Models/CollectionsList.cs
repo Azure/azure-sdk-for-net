@@ -11,28 +11,29 @@
 namespace Microsoft.Azure.Management.Marketplace.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class Icon
+    public partial class CollectionsList
     {
         /// <summary>
-        /// Initializes a new instance of the Icon class.
+        /// Initializes a new instance of the CollectionsList class.
         /// </summary>
-        public Icon()
+        public CollectionsList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Icon class.
+        /// Initializes a new instance of the CollectionsList class.
         /// </summary>
-        /// <param name="iconKind">Icon size. Possible values include: 'Small',
-        /// 'Medium', 'Large', 'Wide', 'Hero'</param>
-        /// <param name="uri">Icon uri</param>
-        public Icon(string iconKind = default(string), string uri = default(string))
+        /// <param name="nextLink">URL to get the next set of offer list
+        /// results if there are any.</param>
+        public CollectionsList(IList<Collection> value = default(IList<Collection>), string nextLink = default(string))
         {
-            IconKind = iconKind;
-            Uri = uri;
+            Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -42,17 +43,16 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets icon size. Possible values include: 'Small', 'Medium',
-        /// 'Large', 'Wide', 'Hero'
         /// </summary>
-        [JsonProperty(PropertyName = "iconKind")]
-        public string IconKind { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<Collection> Value { get; set; }
 
         /// <summary>
-        /// Gets or sets icon uri
+        /// Gets or sets URL to get the next set of offer list results if there
+        /// are any.
         /// </summary>
-        [JsonProperty(PropertyName = "uri")]
-        public string Uri { get; set; }
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
 
     }
 }

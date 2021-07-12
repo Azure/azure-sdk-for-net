@@ -12,13 +12,13 @@ namespace Microsoft.Azure.Management.Marketplace.Models
 {
 
     /// <summary>
-    /// Defines values for Operation.
+    /// Defines values for Status.
     /// </summary>
-    public static class Operation
+    public static class Status
     {
-        public const string DeletePrivateStoreOffer = "DeletePrivateStoreOffer";
-        public const string DeletePrivateStoreCollection = "DeletePrivateStoreCollection";
-        public const string DeletePrivateStoreCollectionOffer = "DeletePrivateStoreCollectionOffer";
-        public const string Ping = "Ping";
+        public const string Pending = "Pending";
+        public const string Rejected = "Rejected";
+        public const string Approved = "Approved";
+        public const string None = "None";
     }
 }
