@@ -44,15 +44,25 @@
             "defaultValue": "textanalytics",
             "type": "string"
         },
-        "endpointSuffix": {
+        "cognitiveServicesEndpointSuffix": {
             "defaultValue": ".cognitiveservices.azure.com",
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Endpoint suffix for sovereign clouds, requies the preceeding '.'. The default uses the public Azure Cloud (.cognitiveservices.azure.com)"
+            }
+        },
+        "textAnalyticsSku": {
+            "type": "string",
+            "defaultValue": "S",
+            "metadata": {
+                "description": "Text Analytics SKU to deploy. The default is 'S'"
+            }
         }
     },
     "variables": {
         "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]",
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
-        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]"
+        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('cognitiveServicesEndpointSuffix'))]"
     },
     "resources": [
         {
@@ -61,7 +71,7 @@
             "name": "[variables('uniqueSubDomainName')]",
             "location":"[parameters('location')]",
             "sku": {
-                "name": "S"
+                "name": "[parameters('textAnalyticsSku')]"
             },
             "kind": "TextAnalytics",
             "properties": {

@@ -17,6 +17,41 @@
             "metadata": {
                 "description": "The principal to assign the role to. This is application object id."
             }
+        },
+        "storageEndpointSuffix": {
+            "type": "string",
+            "defaultValue": "core.windows.net",
+            "metadata": {
+                "description": "The storage endpoint suffix. Its value will be changed for different clouds test."
+            }
+        },
+        "keyVaultEndpointSuffix": {
+            "defaultValue": ".vault.azure.net",
+            "type": "string",
+            "metadata": {
+                "description": "Endpoint suffix for sovereign clouds, requies the preceeding '.'. The default uses the public Azure Cloud (.vault.azure.net)"
+            }
+        },
+        "azureAuthorityHost": {
+            "type": "string",
+            "defaultValue": "https://login.microsoftonline.com",
+            "metadata": {
+                "description": "The azure authority host. Its value will be changed for different clouds test."
+            }
+        },
+        "keyVaultSku": {
+            "type": "string",
+            "defaultValue": "premium",
+            "metadata": {
+                "description": "Key Vault SKU to deploy. The default is 'premium'"
+            }
+        },
+        "enableStorageVersioning": {
+            "type": "bool",
+            "metadata": {
+              "description": "Enable Versioning enabled setting, default value is true"
+            },
+            "defaultValue": true
         }
     },
     "variables": {
@@ -36,7 +71,7 @@
         "webjobsPrimaryAccountName": "[concat(parameters('baseName'), 'wjprim')]",
         "webjobsSecondaryAccountName": "[concat(parameters('baseName'), 'wjsec')]",
         "keyvaultName": "[concat(parameters('baseName'), 'kvlt')]",
-        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', variables('keyvaultName'))]",
+        "azureKeyVaultUrl": "[format('https://{0}{1}', variables('keyvaultName'), parameters('keyVaultEndpointSuffix'))]",
         "location": "[resourceGroup().location]",
         "resourceGroupName": "[resourceGroup().name]",
         "subscriptionId": "[subscription().subscriptionId]",
@@ -56,7 +91,45 @@
             "virtualNetworkRules": [],
             "ipRules": [],
             "defaultAction": "Allow"
-        }
+        },
+        "versioningEnableProperties": {
+            "isVersioningEnabled": true,
+            "lastAccessTimeTrackingPolicy": {
+                "enable": true,
+                "name": "AccessTimeTracking",
+                "trackingGranularityInDays": 1,
+                "blobType": [
+                    "blockBlob"
+                ]
+            }
+        },
+        "deleteContainerRetentionPolicyProperties": {
+            "containerDeleteRetentionPolicy": {
+                "enabled": true,
+                "days": 1
+            }
+        },
+        "deleteRetentionPolicyProperties": {
+            "deleteRetentionPolicy": {
+                "enabled": true,
+                "days": 1
+            },
+            "containerDeleteRetentionPolicy": {
+              "enabled": true,
+              "days": 1
+            }
+        },
+        "testDeleteRetentionPolicyProperties": {
+            "deleteRetentionPolicy": {
+                "enabled": true,
+                "days": 1
+            }
+        },
+        "nullProperties": {
+        },
+        "locationsProperty": "[if(parameters('enableStorageVersioning'), variables('versioningEnableProperties'), variables('nullProperties'))]",
+        "deleteContainerRetentionPolicyProperty": "[if(parameters('enableStorageVersioning'), variables('deleteContainerRetentionPolicyProperties'), variables('nullProperties'))]",
+        "deleteRetentionPolicyProperty": "[if(parameters('enableStorageVersioning'), variables('deleteRetentionPolicyProperties'), variables('testDeleteRetentionPolicyProperties'))]"
     },
     "resources": [
         {
@@ -107,17 +180,7 @@
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[concat(variables('primaryAccountName'), '/default')]",
-            "properties": {
-                "isVersioningEnabled": true,
-                "lastAccessTimeTrackingPolicy": {
-                    "enable": true,
-                    "name": "AccessTimeTracking",
-                    "trackingGranularityInDays": 1,
-                    "blobType": [
-                        "blockBlob"
-                    ]
-                }
-            },
+            "properties": "[variables('locationsProperty')]",
             "dependsOn": [
                 "[variables('primaryAccountName')]"
             ]
@@ -190,12 +253,7 @@
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[concat(variables('dataLakeAccountName'), '/default')]",
-            "properties": {
-                "containerDeleteRetentionPolicy": {
-                    "enabled": true,
-                    "days": 1
-                }
-            },
+            "properties": "[variables('deleteContainerRetentionPolicyProperty')]",
             "dependsOn": [
                 "[variables('dataLakeAccountName')]"
             ]
@@ -221,16 +279,7 @@
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[concat(variables('softDeleteAccountName'), '/default')]",
-            "properties": {
-                "deleteRetentionPolicy": {
-                      "enabled": true,
-                      "days": 1
-                },
-                "containerDeleteRetentionPolicy": {
-                    "enabled": true,
-                    "days": 1
-                }
-            },
+            "properties": "[variables('deleteRetentionPolicyProperty')]",
             "dependsOn": [
                 "[variables('softDeleteAccountName')]"
             ]
@@ -308,7 +357,7 @@
             "properties": {
                 "sku": {
                     "family": "A",
-                    "name": "premium"
+                    "name": "[parameters('keyVaultSku')]"
                 },
                 "tenantId": "[parameters('tenantId')]",
                 "accessPolicies": [
@@ -524,6 +573,14 @@
     "SOFT_DELETE_ACCOUNT_NAME": {
       "type": "string",
       "value": "[variables('softDeleteAccountName')]"
+    },
+    "STORAGE_ENDPOINT_SUFFIX": {
+        "type": "string",
+        "value": "[parameters('storageEndpointSuffix')]"
+    },
+    "AZURE_AUTHORITY_HOST": {
+        "type": "string",
+        "value": "[parameters('azureAuthorityHost')]"
     },
     "SOFT_DELETE_ACCOUNT_KEY": {
       "type": "string",

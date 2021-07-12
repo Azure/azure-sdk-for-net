@@ -31,6 +31,8 @@ $PremiumAccountKey = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_KEY']
 $PremiumAccountBlobEndpointSuffix = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
 $DataLakeAccountName = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_NAME']
 $DataLakeAccountKey = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_KEY']
+$StorageEndpointSuffix = $DeploymentOutputs['STORAGE_ENDPOINT_SUFFIX']
+$AzureAuthorityHost = $DeploymentOutputs['AZURE_AUTHORITY_HOST']
 $DataLakeAccountBlobEndpointSuffix = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
 $DataLakeAccountQueueEndpointSuffix = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX']
 $DataLakeAccountFileEndpointSuffix = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
@@ -67,15 +69,15 @@ $content =
       <TenantType>Cloud</TenantType>
       <AccountName>$PrimaryAccountName</AccountName>
       <AccountKey>$PrimaryAccountKey</AccountKey>
-      <BlobServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountTableEndpointSuffix</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountFileEndpointSuffix</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
-      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;BlobEndpoint=https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix;FileEndpoint=https://$PrimaryAccountName.$PrimaryAccountFileEndpointSuffix;QueueEndpoint=https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix;TableEndpoint=https://$PrimaryAccountName.$PrimaryAccountTableEndpointSuffix</ConnectionString>
+      <BlobServiceEndpoint>https://$PrimaryAccountName.blob.$StorageEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$PrimaryAccountName.queue.$StorageEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$PrimaryAccountName.table.$StorageEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$PrimaryAccountName.file.$StorageEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.blob.$StorageEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.queue.$StorageEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.file.$StorageEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.table.$StorageEndpointSuffix</TableServiceSecondaryEndpoint>
+      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;EndpointSuffix=$StorageEndpointSuffix</ConnectionString>
       <EncryptionScope>encryptionScope</EncryptionScope>
     </TenantConfiguration>
     <TenantConfiguration>
@@ -83,23 +85,23 @@ $content =
       <TenantType>Cloud</TenantType>
       <AccountName>$PremiumAccountName</AccountName>
       <AccountKey>$PremiumAccountKey</AccountKey>
-      <BlobServiceEndpoint>https://$PremiumAccountName.$PremiumAccountBlobEndpointSuffix</BlobServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$PremiumAccountName-secondary.$PremiumAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
-      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PremiumAccountName;AccountKey=$PremiumAccountKey;BlobEndpoint=https://$PremiumAccountName.$PremiumAccountBlobEndpointSuffix</ConnectionString>
+      <BlobServiceEndpoint>https://$PremiumAccountName.blob.$StorageEndpointSuffix</BlobServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$PremiumAccountName-secondary.blob.$StorageEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PremiumAccountName;AccountKey=$PremiumAccountKey;EndpointSuffix=$StorageEndpointSuffix</ConnectionString>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>ProductionTenant2</TenantName>
       <TenantType>Cloud</TenantType>
       <AccountName>$SecondaryAccountName</AccountName>
       <AccountKey>$SecondaryAccountKey</AccountKey>
-      <BlobServiceEndpoint>https://$SecondaryAccountName.$SecondaryAccountBlobEndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$SecondaryAccountName.$SecondaryAccountQueueEndpointSuffix</QueueServiceEndpoint>
-      <FileServiceEndpoint>https://$SecondaryAccountName.$SecondaryAccountFileEndpointSuffix</FileServiceEndpoint>
-      <TableServiceEndpoint>https://$SecondaryAccountName.$SecondaryAccountTableEndpointSuffix</TableServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary.$SecondaryAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary.$SecondaryAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary.$SecondaryAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary.$SecondaryAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
+      <BlobServiceEndpoint>https://$SecondaryAccountName.blob.$StorageEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$SecondaryAccountName.queue.$StorageEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$SecondaryAccountName.table.$StorageEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$SecondaryAccountName.file.$StorageEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary.blob.$StorageEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary.queue.$StorageEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary.file.$StorageEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary.table.$StorageEndpointSuffix</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>OAuthTenant</TenantName>
@@ -111,16 +113,16 @@ $content =
       <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
       <ResourceGroupName>$ResourceGroupName</ResourceGroupName>
       <SubscriptionId>$SubscriptionId</SubscriptionId>
-      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
-      <BlobServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountTableEndpointSuffix</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountFileEndpointSuffix</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
-      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;BlobEndpoint=https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix;FileEndpoint=https://$PrimaryAccountName.$PrimaryAccountFileEndpointSuffix;QueueEndpoint=https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix;TableEndpoint=https://$PrimaryAccountName.$PrimaryAccountTableEndpointSuffix</ConnectionString>
+      <ActiveDirectoryAuthEndpoint>$AzureAuthorityHost</ActiveDirectoryAuthEndpoint>
+      <BlobServiceEndpoint>https://$PrimaryAccountName.blob.$StorageEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$PrimaryAccountName.queue.$StorageEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$PrimaryAccountName.table.$StorageEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$PrimaryAccountName.file.$StorageEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.blob.$StorageEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.queue.$StorageEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.file.$StorageEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.table.$StorageEndpointSuffix</TableServiceSecondaryEndpoint>
+      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;EndpointSuffix=$StorageEndpointSuffix</ConnectionString>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>NamespaceTenant</TenantName>
@@ -130,29 +132,29 @@ $content =
       <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
       <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
-      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
-      <BlobServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountBlobEndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountQueueEndpointSuffix</QueueServiceEndpoint>
-      <FileServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountFileEndpointSuffix</FileServiceEndpoint>
-      <TableServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountTableEndpointSuffix</TableServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
+      <ActiveDirectoryAuthEndpoint>$AzureAuthorityHost</ActiveDirectoryAuthEndpoint>
+      <BlobServiceEndpoint>https://$DataLakeAccountName.blob.$StorageEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$DataLakeAccountName.queue.$StorageEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$DataLakeAccountName.table.$StorageEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$DataLakeAccountName.file.$StorageEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.blob.$StorageEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.queue.$StorageEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.file.$StorageEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.table.$StorageEndpointSuffix</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>SoftDeleteTenant</TenantName>
       <TenantType>Cloud</TenantType>
       <AccountName>$SoftDeleteAccountName</AccountName>
       <AccountKey>$SoftDeleteAccountKey</AccountKey>
-      <BlobServiceEndpoint>https://$SoftDeleteAccountName.$SoftDeleteAccountBlobEndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$SoftDeleteAccountName.$SoftDeleteAccountQueueEndpointSuffix</QueueServiceEndpoint>
-      <FileServiceEndpoint>https://$SoftDeleteAccountName.$SoftDeleteAccountFileEndpointSuffix</FileServiceEndpoint>
-      <TableServiceEndpoint>https://$SoftDeleteAccountName.$SoftDeleteAccountTableEndpointSuffix</TableServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.$SoftDeleteAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.$SoftDeleteAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.$SoftDeleteAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.$SoftDeleteAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
+      <BlobServiceEndpoint>https://$SoftDeleteAccountName.blob.$StorageEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$SoftDeleteAccountName.queue.$StorageEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$SoftDeleteAccountName.table.$StorageEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$SoftDeleteAccountName.file.$StorageEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.blob.$StorageEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.queue.$StorageEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.file.$StorageEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.table.$StorageEndpointSuffix</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>PremiumFileTenant</TenantName>
@@ -170,7 +172,7 @@ $content =
       <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
       <ActiveDirectoryTenantId>$StorageTenantId</ActiveDirectoryTenantId>
-      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
+      <ActiveDirectoryAuthEndpoint>$AzureAuthorityHost</ActiveDirectoryAuthEndpoint>
     </KeyVaultConfiguration>
   </KeyVaultConfigurations>
 </TestConfigurations>"
