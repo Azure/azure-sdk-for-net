@@ -86,10 +86,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             certificates = request.ClientCertificates;
                             break;
                         }
-                    case RequestType.Disconnect:
+                    case RequestType.Disconnected:
                         {
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            var request = JsonConvert.DeserializeObject<DisconnectEventRequest>(content);
+                            var request = JsonConvert.DeserializeObject<DisconnectedEventRequest>(content);
                             reason = request.Reason;
                             break;
                         }

@@ -7,6 +7,12 @@ namespace Azure.Messaging.WebPubSub
         public string Thumbprint { get { throw null; } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
+    public partial class ConnectedEventRequest : Azure.Messaging.WebPubSub.ServiceRequest
+    {
+        public ConnectedEventRequest() : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
+        public override string Name { get { throw null; } }
+    }
+    [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
     public sealed partial class ConnectEventRequest : Azure.Messaging.WebPubSub.ServiceRequest
     {
         public ConnectEventRequest(System.Collections.Generic.IDictionary<string, string[]> claims, System.Collections.Generic.IDictionary<string, string[]> query, string[] subprotocols, Azure.Messaging.WebPubSub.ClientCertificateInfo[] clientCertificateInfos) : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
@@ -17,9 +23,9 @@ namespace Azure.Messaging.WebPubSub
         public string[] Subprotocols { get { throw null; } }
     }
     [Newtonsoft.Json.JsonObjectAttribute(NamingStrategyType=typeof(Newtonsoft.Json.Serialization.CamelCaseNamingStrategy))]
-    public sealed partial class DisconnectEventRequest : Azure.Messaging.WebPubSub.ServiceRequest
+    public sealed partial class DisconnectedEventRequest : Azure.Messaging.WebPubSub.ServiceRequest
     {
-        public DisconnectEventRequest(string reason) : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
+        public DisconnectedEventRequest(string reason) : base (default(bool), default(bool), default(bool), default(bool), default(string)) { }
         public override string Name { get { throw null; } }
         public string Reason { get { throw null; } }
     }

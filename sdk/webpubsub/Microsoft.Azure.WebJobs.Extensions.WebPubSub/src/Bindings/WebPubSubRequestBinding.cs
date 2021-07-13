@@ -64,6 +64,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
 
             // Signature check
+            // TODO: make the check more accurate for current function instead from global settings.
             if (!Utilities.ValidateSignature(connectionContext.ConnectionId, connectionContext.Signature, _options.AccessKeys))
             {
                 return new WebPubSubRequestValueProvider(new WebPubSubRequest(connectionContext, new InvalidRequest(HttpStatusCode.Unauthorized, Constants.ErrorMessages.SignatureValidationFailed), HttpStatusCode.Unauthorized), _userType);
@@ -81,10 +82,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                         wpsRequest = new WebPubSubRequest(connectionContext, eventRequest);
                     }
                     break;
-                case RequestType.Disconnect:
+                case RequestType.Connected:
+                    {
+                        wpsRequest = new WebPubSubRequest(connectionContext, new ConnectedEventRequest());
+                    }
+                    break;
+                case RequestType.Disconnected:
                     {
                         var content = await ReadString(request.Body).ConfigureAwait(false);
-                        var eventRequest = JsonConvert.DeserializeObject<DisconnectEventRequest>(content);
+                        var eventRequest = JsonConvert.DeserializeObject<DisconnectedEventRequest>(content);
                         wpsRequest = new WebPubSubRequest(connectionContext, eventRequest);
                     }
                     break;
@@ -164,7 +170,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         private static string GetHeaderValueOrDefault(IHeaderDictionary header, string key)
         {
-            return header.TryGetValue(key, out var value) ? value[0] : string.Empty;
+            return header.TryGetValue(key, out var value) ? value[0] : null;
         }
     }
 }

@@ -7,16 +7,12 @@ using Newtonsoft.Json.Serialization;
 namespace Azure.Messaging.WebPubSub
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public sealed class DisconnectEventRequest : ServiceRequest
+    public class ConnectedEventRequest : ServiceRequest
     {
-        public string Reason { get; }
+        public override string Name => nameof(ConnectEventRequest);
 
-        public override string Name => nameof(DisconnectEventRequest);
-
-        public DisconnectEventRequest(string reason)
-            : base(false, true)
+        public ConnectedEventRequest() : base(false, true)
         {
-            Reason = reason;
         }
     }
 }

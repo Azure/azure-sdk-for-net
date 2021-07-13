@@ -131,7 +131,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
             if (eventName.Equals(Constants.Events.DisconnectedEvent, StringComparison.OrdinalIgnoreCase))
             {
-                return RequestType.Disconnect;
+                return RequestType.Disconnected;
+            }
+            if (eventName.Equals(Constants.Events.ConnectedEvent, StringComparison.OrdinalIgnoreCase))
+            {
+                return RequestType.Connected;
             }
             return RequestType.Ignored;
         }
