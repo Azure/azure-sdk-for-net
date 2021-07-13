@@ -4,7 +4,7 @@
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
-    /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models#schema">Data types</see> in the ADT query language.
+    /// <see href="https://docs.microsoft.com/azure/digital-twins/concepts-models#schema">Data types</see>in the ADT query language.
     /// </summary>
     public enum AdtDataType
     {

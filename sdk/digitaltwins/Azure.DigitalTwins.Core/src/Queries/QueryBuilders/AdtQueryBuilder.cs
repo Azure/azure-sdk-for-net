@@ -14,6 +14,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         private readonly FromQuery _fromQuery;
         private readonly WhereStatement _whereStatement;
         private readonly WhereLogic _whereLogic;
+        private readonly SelectAsQuery _selectAs;
 
         /// <summary>
         /// Initializes an instance of an AdtQueryBuilder object.
@@ -23,15 +24,16 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             _whereLogic = new WhereLogic(this);
             _whereStatement = new WhereStatement(this, _whereLogic);
             _fromQuery = new FromQuery(this, _whereStatement);
-            _selectQuery = new SelectQuery(this, _fromQuery);
+            _selectAs = new SelectAsQuery(this, _fromQuery);
+            _selectQuery = new SelectQuery(this, _selectAs);
         }
 
         /// <summary>
-        /// Specifies the list of columns that the query will return
+        /// Specifies the list of columns that the query will return.
         /// </summary>
-        /// <param name="args"> The arguments that can be queried (e.g., *, somePropertyName, etc.) </param>
+        /// <param name="args">The arguments that can be queried (e.g., *, somePropertyName, etc.)</param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery Select(params string[] args)
+        public SelectAsQuery Select(params string[] args)
         {
             return _selectQuery.Select(args);
         }
@@ -40,7 +42,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Specifies the list of all possible columns to return.
         /// </summary>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectAll()
+        public SelectAsQuery SelectAll()
         {
             return _selectQuery.SelectAll();
         }
@@ -48,10 +50,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used to return only a certain number of top items that meet the query requirements.
         /// </summary>
-        /// <param name="count"> The argument for TOP(), i.e. the number of results to return. </param>
-        /// <param name="args"> The arguments that can be optionally passed with top (e.g., property name). </param>
+        /// <param name="count">The argument for TOP(), i.e. the number of results to return.</param>
+        /// <param name="args">The arguments that can be optionally passed with top (e.g., property name).</param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectTop(int count, params string[] args)
+        public SelectAsQuery SelectTop(int count, params string[] args)
         {
             return _selectQuery.SelectTop(count, args);
         }
@@ -59,9 +61,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used to return only a certain number of top items that meet the query requirements.
         /// </summary>
-        /// <param name="count"> The argument for TOP(), i.e. the number of results to return. </param>
+        /// <param name="count">The argument for TOP(), i.e. the number of results to return.</param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectTopAll(int count)
+        public SelectAsQuery SelectTopAll(int count)
         {
             return _selectQuery.SelectTopAll(count);
         }
@@ -70,7 +72,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Used to return the number of items that meet the query requirements.
         /// </summary>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectCount()
+        public SelectAsQuery SelectCount()
         {
             return _selectQuery.SelectCount();
         }
@@ -87,11 +89,22 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// .Build();
         /// </code>
         /// </example>
-        /// <param name="customQuery"> Query in string format. </param>
+        /// <param name="customQuery">Query in string format.</param>
         /// <returns> Query that contains a select clause. </returns>
-        public FromQuery SelectCustom(string customQuery)
+        public SelectAsQuery SelectCustom(string customQuery)
         {
-            return _selectQuery.Select(customQuery);
+            return _selectQuery.SelectCustom(customQuery);
+        }
+
+        /// <summary>
+        /// Used to alias selectable properties in place of the AS keyword.
+        /// </summary>
+        /// <param name="field">The proper name for the selectable property in the ADT Query Language.</param>
+        /// <param name="alias">The alias to be assigned to the return contents in the query response.</param>
+        /// <returns> Query that contains an aliased select clause. </returns>
+        public SelectAsQuery SelectAs(string field, string alias)
+        {
+            return _selectAs.SelectAs(field, alias);
         }
 
         /// <summary>
@@ -101,15 +114,41 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public string GetQueryText()
         {
             var finalQuery = new StringBuilder();
+            finalQuery.Append(QueryConstants.Select).Append(' ');
 
             // build the select string
-            finalQuery.Append(_selectQuery.GetQueryText());
+            string selectStatementQueryText = _selectQuery.GetQueryText();
+            string selectStatementAliasedQueryText = _selectAs.GetQueryText();
+
+            bool nonAliasedSelectStatements = selectStatementQueryText.Length > 0;
+            bool aliasedSelectStatements = selectStatementAliasedQueryText.Length > 0;
+
+            // add aliased select components
+            if (nonAliasedSelectStatements)
+            {
+                // begin with any non-aliased select components
+                finalQuery.Append(selectStatementQueryText);
+
+                if (aliasedSelectStatements)
+                {
+                    finalQuery.Append($", ");
+                }
+            }
+
+            finalQuery.Append(selectStatementAliasedQueryText);
 
             // build the from string
-            finalQuery.Append(' ').Append(_fromQuery.GetQueryText());
+            finalQuery.Append(' ').Append(QueryConstants.From).Append(' ');
+            finalQuery.Append(_fromQuery.GetQueryText());
 
             // build the where string
-            finalQuery.Append(' ').Append(_whereStatement.GetQueryText());
+            string whereGetQueryText = _whereStatement.GetQueryText();
+
+            if (!string.IsNullOrWhiteSpace(whereGetQueryText))
+            {
+                finalQuery.Append(' ').Append(QueryConstants.Where).Append(' ');
+                finalQuery.Append(_whereStatement.GetQueryText());
+            }
 
             return finalQuery.ToString().Trim();
         }

@@ -196,19 +196,21 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     {
         public AdtQueryBuilder() { }
         public string GetQueryText() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery Select(params string[] args) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectAll() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectCount() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectCustom(string customQuery) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTop(int count, params string[] args) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTopAll(int count) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery Select(params string[] args) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery SelectAll() { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery SelectAs(string field, string alias) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery SelectCount() { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery SelectCustom(string customQuery) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery SelectTop(int count, params string[] args) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery SelectTopAll(int count) { throw null; }
     }
     public sealed partial class FromQuery : Azure.DigitalTwins.Core.QueryBuilder.QueryBase
     {
         internal FromQuery() { }
         public override Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder Build() { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.WhereStatement From(Azure.DigitalTwins.Core.QueryBuilder.AdtCollection collection) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.WhereStatement From(string collection) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.WhereStatement From(Azure.DigitalTwins.Core.QueryBuilder.AdtCollection collection, string alias) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.WhereStatement FromCustom(string collection) { throw null; }
         public override string GetQueryText() { throw null; }
     }
     public partial class LogicalOperator : Azure.DigitalTwins.Core.QueryBuilder.QueryBase
@@ -239,17 +241,27 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         In = 0,
         NotIn = 1,
     }
+    public sealed partial class SelectAsQuery : Azure.DigitalTwins.Core.QueryBuilder.QueryBase
+    {
+        internal SelectAsQuery() { }
+        public override Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder Build() { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.WhereStatement From(Azure.DigitalTwins.Core.QueryBuilder.AdtCollection collection) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.WhereStatement From(Azure.DigitalTwins.Core.QueryBuilder.AdtCollection collection, string alias) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.WhereStatement FromCustom(string collection) { throw null; }
+        public override string GetQueryText() { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery SelectAs(string field, string alias) { throw null; }
+    }
     public sealed partial class SelectQuery : Azure.DigitalTwins.Core.QueryBuilder.QueryBase
     {
         internal SelectQuery() { }
         public override Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder Build() { throw null; }
         public override string GetQueryText() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery Select(string literalQuery) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery Select(params string[] args) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectAll() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectCount() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTop(int count, params string[] args) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTopAll(int count) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery Select(params string[] args) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery SelectAll() { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery SelectCount() { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery SelectCustom(string customQuery) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery SelectTop(int count, params string[] args) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.SelectAsQuery SelectTopAll(int count) { throw null; }
     }
     public sealed partial class WhereLogic
     {

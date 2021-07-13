@@ -13,7 +13,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Constructor for SELECT clause.
         /// </summary>
-        /// <param name="arguments"> Arguments for what to select (collection, property, etc.). </param>
+        /// <param name="arguments">Arguments for what to select (collection, property, etc.).</param>
         internal SelectClause(string[] arguments)
         {
             ClauseArgs = arguments;

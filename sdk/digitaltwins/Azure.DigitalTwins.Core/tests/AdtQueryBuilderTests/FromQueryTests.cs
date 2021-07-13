@@ -33,7 +33,7 @@ namespace Azure.DigitalTwins.Core.Tests
         public void FromQuery_Override()
         {
             var query = new FromQuery(null, null);
-            query.From("DIGITALTWINS");
+            query.FromCustom("DIGITALTWINS");
             query.GetQueryText()
                 .Should()
                 .Be("FROM DIGITALTWINS");
