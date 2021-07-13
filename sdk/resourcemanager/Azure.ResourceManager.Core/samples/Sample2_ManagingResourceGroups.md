@@ -33,21 +33,27 @@ Using the container object, we can perform collection-level operations such as l
 ***Create a resource group***
 
 ```C# Snippet:Managing_Resource_Groups_CreateAResourceGroup
+// First, initialize the ArmClient and get the default subscription
 var armClient = new ArmClient(new DefaultAzureCredential());
+// Now we get a ResourceGroup container for that subscription
 Subscription subscription = armClient.DefaultSubscription;
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
-Location location = Location.WestUS2;
+// With the container, we can create a new resource group with an specific name
 string rgName = "myRgName";
+Location location = Location.WestUS2;
 ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
 ```
 
 ***List all resource groups***
 
 ```C# Snippet:Managing_Resource_Groups_ListAllResourceGroup
+// First, initialize the ArmClient and get the default subscription
 var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
+// Now we get a ResourceGroup container for that subscription
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+// With ListAsync(), we can get a list of the resources in the container
 AsyncPageable<ResourceGroup> response = rgContainer.ListAsync();
 await foreach (ResourceGroup rg in response)
 {
