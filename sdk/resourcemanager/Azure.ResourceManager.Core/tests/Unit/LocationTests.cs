@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [TestCase("", "")]
-        [TestCase("West US", "West US")]
-        [TestCase("west-us", "West US")]
-        [TestCase("westus2", "West US 2")]
-        [TestCase("private-cloud", "Private Cloud")]
+        [TestCase("West US", "westus")]
+        [TestCase("west-us", "westus")]
+        [TestCase("westus2", "westus2")]
+        [TestCase("private-cloud", "privatecloud")]
         public void CanParseToString(string name, string expected)
         {
             Location location1 = name;
@@ -198,11 +198,11 @@ namespace Azure.ResourceManager.Core.Tests
             }
         }
 
-        [TestCase("West US", "West US")]
-        [TestCase("west-us", "West US")]
-        [TestCase("westus", "West US")]
-        [TestCase("Private Cloud", "Private Cloud")]
-        [TestCase("private-cloud", "Private Cloud")]
+        [TestCase("West US", "westus")]
+        [TestCase("west-us", "westus")]
+        [TestCase("westus", "westus")]
+        [TestCase("Private Cloud", "privatecloud")]
+        [TestCase("private-cloud", "privatecloud")]
         [TestCase("privatecloud", "privatecloud")]
         [TestCase("1$S#@$%^", "1$S#@$%^")]
         [TestCase("", "")]

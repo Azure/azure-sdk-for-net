@@ -33,6 +33,8 @@ namespace Azure.ResourceManager.TestFramework
 
         private ArmClient _cleanupClient;
 
+        protected abstract Type OperationInternalsType { get; }
+
         protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
         {
             SessionEnvironment = new TEnvironment();
@@ -51,8 +53,7 @@ namespace Azure.ResourceManager.TestFramework
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                var opInternalType = typeof(OperationInternals);
-                var pollField = opInternalType.GetField("<DefaultPollingInterval>k__BackingField", BindingFlags.Static | BindingFlags.NonPublic);
+                var pollField = OperationInternalsType.GetField("<DefaultPollingInterval>k__BackingField", BindingFlags.Static | BindingFlags.NonPublic);
                 pollField.SetValue(null, TimeSpan.Zero);
             }
         }

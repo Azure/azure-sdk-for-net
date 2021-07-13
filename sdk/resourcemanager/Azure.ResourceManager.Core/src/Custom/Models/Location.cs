@@ -310,13 +310,12 @@ namespace Azure.ResourceManager.Core
         public static ref readonly Location Default => ref WestUS;
 
         /// <summary>
-        /// Gets the display name of a location object.
+        /// Gets the name of a location object.
         /// </summary>
-        /// <returns> Display name. </returns>
+        /// <returns> The name. </returns>
         public override string ToString()
         {
-            return DisplayName;
-            //return Name; //TODO: change to return Name - TEST FAILURES CAUSED HERE
+            return Name;
         }
 
         /// <summary>
