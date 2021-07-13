@@ -215,17 +215,17 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusMessageBatch" /> class.
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch" /> class.
         /// </summary>
         ///
         /// <param name="batchSizeBytes">The size, in bytes, that the batch should report; this is a static value and will not mutate as messages are added.</param>
-        /// <param name="batchMessageStore">A list to which messages will be added when <see cref="ServiceBusMessageBatch.TryAddMessage" /> calls are successful.</param>
+        /// <param name="batchMessageStore">A list to which messages will be added when <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch.TryAddMessage" /> calls are successful.</param>
         /// <param name="batchOptions">The set of options to consider when creating this batch.</param>
-        /// <param name="tryAddCallback"> A function that will be invoked when <see cref="ServiceBusMessageBatch.TryAddMessage" /> is called;
-        /// the return of this callback represents the result of <see cref="ServiceBusMessageBatch.TryAddMessage" />.
+        /// <param name="tryAddCallback"> A function that will be invoked when <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch.TryAddMessage" /> is called;
+        /// the return of this callback represents the result of <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch.TryAddMessage" />.
         /// If not provided, all events will be accepted into the batch.</param>
         ///
-        /// <returns>The <see cref="ServiceBusMessageBatch" /> instance that was created.</returns>
+        /// <returns>The <see cref="Azure.Messaging.ServiceBus.ServiceBusMessageBatch" /> instance that was created.</returns>
         ///
         public static ServiceBusMessageBatch ServiceBusMessageBatch(long batchSizeBytes,
                                                     IList<ServiceBusMessage> batchMessageStore,

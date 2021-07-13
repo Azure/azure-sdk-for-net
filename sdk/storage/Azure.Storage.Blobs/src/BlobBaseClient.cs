@@ -608,6 +608,22 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API has been deprecated. Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadContent</term>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadTo</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreaming</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobDownloadInfo> Download() =>
@@ -629,6 +645,22 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API has been deprecated. Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadContentAsync</term>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadToAsync</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreamingAsync</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync() =>
@@ -654,6 +686,22 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API has been deprecated. Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadContent</term>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadTo</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreaming</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobDownloadInfo> Download(
@@ -683,6 +731,22 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API has been deprecated. Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadContentAsync</term>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadToAsync</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreamingAsync</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
@@ -729,6 +793,22 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API has been deprecated. Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadContent</term>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadTo</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreaming</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobDownloadInfo> Download(
@@ -781,6 +861,22 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API has been deprecated. Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadContentAsync</term>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadToAsync</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreamingAsync</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
@@ -903,6 +999,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API gives access directly to network stream that should be disposed after usage.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadContent</term>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadTo</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         public virtual Response<BlobDownloadStreamingResult> DownloadStreaming(
             HttpRange range = default,
@@ -955,6 +1064,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API gives access directly to network stream that should be disposed after usage.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadContentAsync</term>
+        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadToAsync</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         public virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingAsync(
             HttpRange range = default,
@@ -1199,6 +1321,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API is a prefered way to fetch blobs that can fit into memory.
+        /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
+        /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadTo</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreaming</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         public virtual Response<BlobDownloadResult> DownloadContent() =>
             DownloadContent(CancellationToken.None);
@@ -1219,6 +1356,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API is a prefered way to fetch blobs that can fit into memory.
+        /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
+        /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadToAsync</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreamingAsync</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         public virtual async Task<Response<BlobDownloadResult>> DownloadContentAsync() =>
             await DownloadContentAsync(CancellationToken.None).ConfigureAwait(false);
@@ -1243,6 +1395,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API is a prefered way to fetch blobs that can fit into memory.
+        /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
+        /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadTo</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreaming</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         public virtual Response<BlobDownloadResult> DownloadContent(
             CancellationToken cancellationToken = default) =>
@@ -1271,6 +1438,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API is a prefered way to fetch blobs that can fit into memory.
+        /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
+        /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadToAsync</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreamingAsync</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         public virtual async Task<Response<BlobDownloadResult>> DownloadContentAsync(
             CancellationToken cancellationToken) =>
@@ -1304,6 +1486,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API is a prefered way to fetch blobs that can fit into memory.
+        /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
+        /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadTo</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreaming</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         public virtual Response<BlobDownloadResult> DownloadContent(
             BlobRequestConditions conditions = default,
@@ -1339,6 +1536,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        ///
+        /// This API is a prefered way to fetch blobs that can fit into memory.
+        /// The content is provided as <see cref="BinaryData"/> that provides a lightweight abstraction for a payload of bytes.
+        /// It provides convenient helper methods to get out commonly used primitives, such as streams, strings, or bytes.
+        /// Consider the following alternatives:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <term>DownloadToAsync</term>
+        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <term>DownloadStreamingAsync</term>
+        ///         <description>as a replacement to this API. Use it to access network stream directly for any advanced scenario.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         public virtual async Task<Response<BlobDownloadResult>> DownloadContentAsync(
             BlobRequestConditions conditions = default,

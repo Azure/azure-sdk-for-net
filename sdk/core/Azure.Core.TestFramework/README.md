@@ -519,3 +519,13 @@ using (var _ = new TestAppContextSwitch("Azure.Core.Pipeline.DisableHttpWebReque
 var isSet = AppContext.TryGetSwitch("Azure.Core.Pipeline.DisableHttpWebRequestTransport", out val))
 // isSet is false
 ```
+
+### AsyncAssert
+This type contains static helper methods that cover some of the gaps in NUnit when it comes to async assertions. For instance, attempting to assert that a specific exception is thrown using Assert.That, Assert.Throws, or Assert.ThrowsAsync all result in sync over async code, which can lead to test flakiness. 
+
+#### Example usage
+```c# 
+ServiceBusException exception = await AsyncAssert.ThrowsAsync<ServiceBusException>(
+    async () => await args.CompleteMessageAsync(message, args.CancellationToken));
+Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, exception.Reason);
+```

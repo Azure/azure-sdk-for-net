@@ -284,6 +284,42 @@ namespace NetApp.Tests.ResourceTests
                 var response = netAppMgmtClient.NetAppResource.CheckNameAvailability(ResourceUtils.location, ResourceUtils.accountName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccounts, ResourceUtils.resourceGroup);
                 Assert.True(response.IsAvailable);
 
+                // now check file path availability                
+                response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, ResourceUtils.subnetId);
+                Assert.True(response.IsAvailable);
+
+                // create the volume
+                var volume = ResourceUtils.CreateVolume(netAppMgmtClient);
+
+                // check volume resource name - should be unavailable after its creation
+                var resourceName = ResourceUtils.accountName1 + '/' + ResourceUtils.poolName1 + '/' + ResourceUtils.volumeName1;
+
+                response = netAppMgmtClient.NetAppResource.CheckNameAvailability(ResourceUtils.location, resourceName, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
+                Assert.False(response.IsAvailable);
+
+                // now check file path availability again
+                response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, ResourceUtils.subnetId);
+                Assert.False(response.IsAvailable);
+
+                // clean up
+                ResourceUtils.DeleteVolume(netAppMgmtClient);
+                ResourceUtils.DeletePool(netAppMgmtClient);
+                ResourceUtils.DeleteAccount(netAppMgmtClient);
+            }
+        }
+
+        [Fact]
+        public void CheckAvailabilityPre2021_04()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // check account resource name - should be available
+                var response = netAppMgmtClient.NetAppResource.CheckNameAvailability(ResourceUtils.location, ResourceUtils.accountName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccounts, ResourceUtils.resourceGroup);
+                Assert.True(response.IsAvailable);
+
                 // now check file path availability
                 response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
                 Assert.True(response.IsAvailable);

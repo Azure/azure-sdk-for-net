@@ -56,7 +56,7 @@ Add a package reference:
 
 ### Prerequisites
 
-- You must have an [Azure subscription](https://azure.microsoft.com/free/).
+- You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 - You must have an account with an [Azure Mixed Reality service](https://azure.microsoft.com/topic/mixed-reality/):
   - [Azure Remote Rendering](https://docs.microsoft.com/azure/remote-rendering/)
   - [Azure Spatial Anchors](https://docs.microsoft.com/azure/spatial-anchors/)

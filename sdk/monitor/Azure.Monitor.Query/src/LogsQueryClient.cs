@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -27,6 +27,9 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
+        /// <code snippet="Snippet:CreateLogsClient" language="csharp">
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        /// </code>
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public LogsQueryClient(TokenCredential credential) : this(credential, null)
@@ -79,17 +82,65 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Executes the logs query.
+        /// Executes the logs query. Deserializes the result into a strongly typed model class or a primitive type if the query returns a single column.
+        ///
+        /// Example of querying a model:
+        /// <code snippet="Snippet:QueryLogsAsModelCall" language="csharp">
+        /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        /// </code>
+        ///
+        /// Example of querying a primitive:
+        /// <code snippet="Snippet:QueryLogsAsPrimitiveCall" language="csharp">
+        /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        /// </code>
         /// </summary>
-        /// <param name="workspace">The workspace to include in the query.</param>
+        /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
+        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
-        public virtual Response<IReadOnlyList<T>> Query<T>(string workspace, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<T>> Query<T>(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            Response<LogsQueryResult> response = Query(workspace, query, timeRange, options, cancellationToken);
+            Response<LogsQueryResult> response = Query(workspaceId, query, timeRange, options, cancellationToken);
+
+            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.Tables), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Executes the logs query. Deserializes the result into a strongly typed model class or a primitive type if the query returns a single column.
+        ///
+        /// Example of querying a model:
+        /// <code snippet="Snippet:QueryLogsAsModelCall" language="csharp">
+        /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryAsync&lt;MyLogEntryModel&gt;(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        /// </code>
+        ///
+        /// Example of querying a primitive:
+        /// <code snippet="Snippet:QueryLogsAsPrimitiveCall" language="csharp">
+        /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryAsync&lt;string&gt;(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        /// </code>
+        /// </summary>
+        /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
+        /// <param name="query">The query text to execute.</param>
+        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            Response<LogsQueryResult> response = await QueryAsync(workspaceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
 
             return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.Tables), response.GetRawResponse());
         }
@@ -97,35 +148,19 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Executes the logs query.
         /// </summary>
-        /// <param name="workspace">The workspace to include in the query.</param>
+        /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
-        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
-        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspace, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
-        {
-            Response<LogsQueryResult> response = await QueryAsync(workspace, query, timeRange, options, cancellationToken).ConfigureAwait(false);
-
-            return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.Tables), response.GetRawResponse());
-        }
-
-        /// <summary>
-        /// Executes the logs query.
-        /// </summary>
-        /// <param name="workspace">The workspace to include in the query.</param>
-        /// <param name="query">The query text to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
+        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> containing the query results.</returns>
-        public virtual Response<LogsQueryResult> Query(string workspace, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<LogsQueryResult> Query(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return ExecuteAsync(workspace, query, timeRange, options, false, cancellationToken).EnsureCompleted();
+                return ExecuteAsync(workspaceId, query, timeRange, options, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -137,19 +172,19 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Executes the logs query.
         /// </summary>
-        /// <param name="workspace">The workspace to include in the query.</param>
+        /// <param name="workspaceId">The workspace id to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
         /// <param name="query">The query text to execute.</param>
-        /// <param name="timeRange">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
+        /// <param name="timeRange">The timespan over which to query data. Logs will be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
-        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspace, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, DateTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return await ExecuteAsync(workspace, query, timeRange, options, true, cancellationToken).ConfigureAwait(false);
+                return await ExecuteAsync(workspaceId, query, timeRange, options, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -159,7 +194,36 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Submits the batch query.
+        /// Submits the batch query. Use the <see cref="LogsBatchQuery"/> to compose a batch query.
+        /// <code snippet="Snippet:BatchQuery" language="csharp">
+        /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
+        ///
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// // Query TOP 10 resource groups by event count
+        /// // And total event count
+        /// var batch = new LogsBatchQuery();
+        ///
+        /// string countQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | count&quot;,
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        /// string topQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        ///
+        /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
+        ///
+        /// var count = response.Value.GetResult&lt;int&gt;(countQueryId).Single();
+        /// var topEntries = response.Value.GetResult&lt;MyLogEntryModel&gt;(topQueryId);
+        ///
+        /// Console.WriteLine($&quot;AzureActivity has total {count} events&quot;);
+        /// foreach (var logEntryModel in topEntries)
+        /// {
+        ///     Console.WriteLine($&quot;{logEntryModel.ResourceGroup} had {logEntryModel.Count} events&quot;);
+        /// }
+        /// </code>
         /// </summary>
         /// <param name="batch">The batch of queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -183,7 +247,36 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Submits the batch query.
+        /// Submits the batch query. Use the <see cref="LogsBatchQuery"/> to compose a batch query.
+        /// <code snippet="Snippet:BatchQuery" language="csharp">
+        /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
+        ///
+        /// var client = new LogsQueryClient(new DefaultAzureCredential());
+        ///
+        /// // Query TOP 10 resource groups by event count
+        /// // And total event count
+        /// var batch = new LogsBatchQuery();
+        ///
+        /// string countQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | count&quot;,
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        /// string topQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        ///
+        /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
+        ///
+        /// var count = response.Value.GetResult&lt;int&gt;(countQueryId).Single();
+        /// var topEntries = response.Value.GetResult&lt;MyLogEntryModel&gt;(topQueryId);
+        ///
+        /// Console.WriteLine($&quot;AzureActivity has total {count} events&quot;);
+        /// foreach (var logEntryModel in topEntries)
+        /// {
+        ///     Console.WriteLine($&quot;{logEntryModel.ResourceGroup} had {logEntryModel.Count} events&quot;);
+        /// }
+        /// </code>
         /// </summary>
         /// <param name="batch">The batch of queries to send.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -207,7 +300,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Create a Kusto query from an interpolated string.  The interpolated values will be quoted and escaped as necessary.
+        /// Create a Kusto query from an interpolated string. The interpolated values will be quoted and escaped as necessary.
         /// </summary>
         /// <param name="filter">An interpolated query string.</param>
         /// <returns>A valid Kusto query.</returns>
@@ -222,8 +315,8 @@ namespace Azure.Monitor.Query
                 {
                     // Null
                     null => throw new ArgumentException(
-                        $"Unable to convert argument {i} to an Kusto literal. " +
-                        $"Unable to format an untyped null value, please use typed-null expression " +
+                        $"Unable to convert argument {i} to a Kusto literal. " +
+                        $"Unable to format an untyped null value. Please use typed-null expression " +
                         $"(bool(null), datetime(null), dynamic(null), guid(null), int(null), long(null), real(null), double(null), time(null))"),
 
                     // Boolean
@@ -261,7 +354,7 @@ namespace Azure.Monitor.Query
 
                     // Everything else
                     object x => throw new ArgumentException(
-                        $"Unable to convert argument {i} from type {x.GetType()} to an Kusto literal.")
+                        $"Unable to convert argument {i} from type {x.GetType()} to a Kusto literal.")
                 };
             }
 

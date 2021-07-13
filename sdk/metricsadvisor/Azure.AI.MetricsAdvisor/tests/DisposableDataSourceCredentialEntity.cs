@@ -64,10 +64,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             DataSourceCredentialEntity credential = authenticationType switch
             {
-                "ServicePrincipal" => new DataSourceServicePrincipal(name, "mock", "mock", "mock"),
-                "ServicePrincipalInKeyVault" => new DataSourceServicePrincipalInKeyVault(name, new Uri("https://mock.com/"), "mock", "mock", "mock", "mock", "mock"),
-                "SharedKey" => new DataSourceDataLakeGen2SharedKey(name, "mock"),
-                "SqlConnectionString" => new DataSourceSqlConnectionString(name, "mock"),
+                "ServicePrincipal" => new ServicePrincipalCredentialEntity(name, "mock", "mock", "mock"),
+                "ServicePrincipalInKeyVault" => new ServicePrincipalInKeyVaultCredentialEntity(name, new Uri("https://mock.com/"), "mock", "mock", "mock", "mock", "mock"),
+                "SharedKey" => new DataLakeSharedKeyCredentialEntity(name, "mock"),
+                "SqlConnectionString" => new SqlConnectionStringCredentialEntity(name, "mock"),
                 _ => throw new ArgumentOutOfRangeException($"Invalid data source credential type: {authenticationType}")
             };
 
