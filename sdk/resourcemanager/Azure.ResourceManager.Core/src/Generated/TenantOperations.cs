@@ -213,5 +213,14 @@ namespace Azure.ResourceManager.Core
         {
             return new ManagementGroupOperations(this, id);
         }
+
+        /// <summary>
+        /// Gets the subscription container for this tenant.
+        /// </summary>
+        /// <returns> A container of the subscriptions. </returns>
+        public virtual SubscriptionContainer GetSubscriptions()
+        {
+            return new SubscriptionContainer(this);
+        }
     }
 }

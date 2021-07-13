@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Core
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
             Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, options ?? ClientOptions);
 
+            _tenant = new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptions().TryGet(defaultSubscriptionId);
-            _tenant = new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
             ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
@@ -128,10 +128,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the Azure subscriptions.
         /// </summary>
         /// <returns> Subscription container. </returns>
-        public virtual SubscriptionContainer GetSubscriptions()
-        {
-            return new SubscriptionContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
-        }
+        public virtual SubscriptionContainer GetSubscriptions()  => _tenant.GetSubscriptions();
 
         /// <summary>
         /// Gets the tenants.

@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
 
+        /// <summary>
+        /// Gets the parent resource of this resource.
+        /// </summary>
+        protected new SubscriptionOperations Parent { get {return base.Parent as SubscriptionOperations;} }
+
         private ResourceGroupsRestOperations RestClient
         {
             get
