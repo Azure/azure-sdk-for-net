@@ -13,6 +13,8 @@ namespace Azure.Core.Tests.Management
     [Parallelizable]
     internal class ManagementRecordedTestBaseTests : ManagementRecordedTestBase<TestEnvironmentTests.MockTestEnvironment>
     {
+        protected override Type OperationInternalsType => typeof(OperationInternals);
+
         public ManagementRecordedTestBaseTests(bool isAsync)
             : base(isAsync)
         {
