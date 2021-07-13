@@ -60,15 +60,6 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        public void ValidateOptionsTestLocation()
-        {
-            var x = new ArmClientOptions();
-            var y = x.Clone();
-            Assert.IsTrue(ReferenceEquals(x.DefaultLocation, y.DefaultLocation));
-        }
-
-        [TestCase]
-        [RecordedTest]
         public void ValidateOptionsTestApiVersions()
         {
             var x = new ArmClientOptions();
