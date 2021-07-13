@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// A class representing the a sub resource of ResourceIdentifier.
+    /// A class representing the sub resource of a ResourceIdentifier.
     /// </summary>
     [ReferenceType]
     public class SubResource : SubResource<ResourceIdentifier>
@@ -15,7 +13,7 @@ namespace Azure.ResourceManager.Core
         /// Initializes an empty instance of <see cref="SubResource"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        public SubResource()
+        protected SubResource()
         {
         }
 
@@ -26,7 +24,7 @@ namespace Azure.ResourceManager.Core
     }
 
     /// <summary>
-    /// A class representing a sub-resource that contains only the ID.
+    /// A class representing a sub-resource that contains only the read-only ID.
     /// </summary>
     [ReferenceType(typeof(ResourceIdentifier))]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Types differ by type argument only")]
@@ -37,7 +35,7 @@ namespace Azure.ResourceManager.Core
         /// Initializes an empty instance of <see cref="SubResource{TIdentifier}"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        public SubResource()
+        protected SubResource()
         {
         }
 
