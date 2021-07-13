@@ -516,6 +516,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <param name="consumerGroup">The consumer group to associate with the consumer.</param>
         /// <param name="partitionId">The partition to associated with the consumer.</param>
+        /// <param name="consumerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="eventPosition">The position in the event stream where the consumer should begin reading.</param>
         /// <param name="connection">The connection to use for the consumer.</param>
         /// <param name="options">The options to use for configuring the consumer.</param>
@@ -524,10 +525,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         internal virtual TransportConsumer CreateConsumer(string consumerGroup,
                                                           string partitionId,
+                                                          string consumerIdentifier,
                                                           EventPosition eventPosition,
                                                           EventHubConnection connection,
                                                           EventProcessorOptions options) =>
-            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, prefetchCount: (uint?)options.PrefetchCount, prefetchSizeInBytes: options.PrefetchSizeInBytes, ownerLevel: 0);
+            connection.CreateTransportConsumer(consumerGroup, partitionId, consumerIdentifier, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, prefetchCount: (uint?)options.PrefetchCount, prefetchSizeInBytes: options.PrefetchSizeInBytes, ownerLevel: 0);
 
         /// <summary>
         ///   Performs the tasks needed to process a batch of events.
@@ -686,7 +688,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 {
                     try
                     {
-                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, startingPosition, connection, Options);
+                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, $"P{ partition.PartitionId }-{ Identifier }", startingPosition, connection, Options);
 
                         // Register for notification when the cancellation token is triggered.  Attempt to close the consumer
                         // in response to force-close the link and short-circuit any receive operation that is blocked and

@@ -308,6 +308,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="linkIdentifier">The identifier to assign to the link; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use with consumer operations.</returns>
@@ -320,6 +321,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                            long? prefetchSizeInBytes,
                                                                            long? ownerLevel,
                                                                            bool trackLastEnqueuedEventProperties,
+                                                                           string linkIdentifier,
                                                                            CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
@@ -341,6 +343,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
+                if (string.IsNullOrEmpty(linkIdentifier))
+                {
+                    linkIdentifier = Guid.NewGuid().ToString();
+                }
+
                 var link = await CreateReceivingLinkAsync(
                     connection,
                     consumerEndpoint,
@@ -350,6 +357,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     prefetchSizeInBytes,
                     ownerLevel,
                     trackLastEnqueuedEventProperties,
+                    linkIdentifier,
                     cancellationToken
                 ).ConfigureAwait(false);
 
@@ -379,6 +387,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="features">The set of features which are active for the producer requesting the link.</param>
         /// <param name="options">The set of options to consider when creating the link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="linkIdentifier">The identifier to assign to the link; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use with producer operations.</returns>
@@ -387,6 +396,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                          TransportProducerFeatures features,
                                                                          PartitionPublishingOptions options,
                                                                          TimeSpan timeout,
+                                                                         string linkIdentifier,
                                                                          CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
@@ -405,7 +415,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                var link = await CreateSendingLinkAsync(connection, producerEndpoint, features, options, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
+                if (string.IsNullOrEmpty(linkIdentifier))
+                {
+                    linkIdentifier = Guid.NewGuid().ToString();
+                }
+
+                var link = await CreateSendingLinkAsync(connection, producerEndpoint, features, options, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), linkIdentifier, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
@@ -587,12 +602,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
+        /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="eventPosition">The position of the event in the partition where the link should be filtered to.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
-        /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="linkIdentifier">The identifier to assign to the link; this is assumed to be a non-null value.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use for operations related to receiving events.</returns>
@@ -605,6 +621,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                                  long? prefetchSizeInBytes,
                                                                                  long? ownerLevel,
                                                                                  bool trackLastEnqueuedEventProperties,
+                                                                                 string linkIdentifier,
                                                                                  CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
@@ -641,7 +658,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     AutoSendFlow = prefetchCount > 0,
                     SettleType = SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
-                    Target = new Target { Address = Guid.NewGuid().ToString() },
+                    Target = new Target { Address = linkIdentifier },
                     TotalCacheSizeInBytes = prefetchSizeInBytes
                 };
 
@@ -650,6 +667,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                 if (ownerLevel.HasValue)
                 {
                     linkSettings.AddProperty(AmqpProperty.ConsumerOwnerLevel, ownerLevel.Value);
+                }
+
+                if (linkIdentifier != null)
+                {
+                    linkSettings.AddProperty(AmqpProperty.ConsumerIdentifier, linkIdentifier);
                 }
 
                 if (trackLastEnqueuedEventProperties)
@@ -705,6 +727,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="features">The set of features which are active for the producer for which the link is being created.</param>
         /// <param name="options">The set of options to consider when creating the link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="linkIdentifier">The identifier to assign to the link; this is assumed to be a non-null value.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use for operations related to receiving events.</returns>
@@ -714,6 +737,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                              TransportProducerFeatures features,
                                                                              PartitionPublishingOptions options,
                                                                              TimeSpan timeout,
+                                                                             string linkIdentifier,
                                                                              CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
@@ -744,7 +768,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     Role = false,
                     InitialDeliveryCount = 0,
-                    Source = new Source { Address = Guid.NewGuid().ToString() },
+                    Source = new Source { Address = linkIdentifier },
                     Target = new Target { Address = endpoint.AbsolutePath }
                 };
 

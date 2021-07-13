@@ -1025,6 +1025,97 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task ReceiversWithAnIdentityCanRead()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                using var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+                var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var partition = (await QueryPartitionsAsync(connectionString, cancellationSource.Token)).First();
+
+                await SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
+
+                await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString, new PartitionReceiverOptions { Identifier = "first" }))
+                {
+                    var monitor = MonitorReadingEvents(receiver, sourceEvents.Count, cancellationSource.Token);
+
+                    await Task.WhenAny(monitor.EndCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+                    var firstState = await monitor.ReadTask;
+                    cancellationSource.Cancel();
+
+                    foreach (var sourceEvent in sourceEvents)
+                    {
+                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        Assert.That(firstState.Events.TryGetValue(sourceId, out var firstReadEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed by the receiver.");
+                        Assert.That(sourceEvent.IsEquivalentTo(firstReadEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event for the receiver.");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="PartitionReceiver" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task MultipleReceiversCanReadConcurrently()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
+            {
+                using var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+                var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var partitions = await QueryPartitionsAsync(connectionString, cancellationSource.Token);
+
+                await Task.WhenAll
+                (
+                    SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partitions[0] }, cancellationSource.Token),
+                    SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partitions[1] }, cancellationSource.Token)
+                );
+
+                await using (var firstReceiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partitions[0], EventPosition.Earliest, connectionString, new PartitionReceiverOptions { Identifier = "first" }))
+                await using (var secondReceiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partitions[1], EventPosition.Earliest, connectionString, new PartitionReceiverOptions { Identifier = "second" }))
+                {
+                    var firstMonitor = MonitorReadingEvents(firstReceiver, sourceEvents.Count, cancellationSource.Token);
+                    var secondMonitor = MonitorReadingEvents(secondReceiver, sourceEvents.Count, cancellationSource.Token);
+
+                    await Task.WhenAny(firstMonitor.EndCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+                    await Task.WhenAny(secondMonitor.EndCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+                    var firstState = await firstMonitor.ReadTask;
+                    var secondState = await secondMonitor.ReadTask;
+                    cancellationSource.Cancel();
+
+                    foreach (var sourceEvent in sourceEvents)
+                    {
+                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        Assert.That(firstState.Events.TryGetValue(sourceId, out var firstReadEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed by the first receiver.");
+                        Assert.That(sourceEvent.IsEquivalentTo(firstReadEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event for the first receiver.");
+
+                        Assert.That(secondState.Events.TryGetValue(sourceId, out var secondReadEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed by the second receiver.");
+                        Assert.That(sourceEvent.IsEquivalentTo(secondReadEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event for the second receiver.");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="PartitionReceiver" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
         public async Task ReceiverCannotReadAsNonExclusiveWhenAnExclusiveReaderIsActive()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
