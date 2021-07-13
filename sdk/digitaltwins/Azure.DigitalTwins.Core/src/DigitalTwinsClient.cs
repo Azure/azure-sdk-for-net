@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
+using Azure.DigitalTwins.Core.QueryBuilder;
 using static Azure.DigitalTwins.Core.StreamHelper;
 
 namespace Azure.DigitalTwins.Core
@@ -2132,6 +2133,56 @@ namespace Azure.DigitalTwins.Core
                 }
 
                 return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Queries for digital twins by iterating through a collection asynchronously.
+        /// </summary>
+        /// <param name="adtQueryBuilder"> Query object made with the ADT query builder. </param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of query results.</returns>
+        /// <typeparam name="T">The type to deserialize the result to.</typeparam>
+        public virtual AsyncPageable<T> QueryAsync<T>(AdtQueryBuilder adtQueryBuilder, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
+            scope.Start();
+
+            Argument.AssertNotNull(adtQueryBuilder, nameof(adtQueryBuilder));
+
+            try
+            {
+                return QueryAsync<T>(adtQueryBuilder.GetQueryText(), cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Queries for digital twins by iterating through a collection synchronously.
+        /// </summary>
+        /// <param name="adtQueryBuilder"> Query object made with the ADT query builder. </param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="Pageable{T}"/> of query results.</returns>
+        /// <typeparam name="T">The type to deserialize the result to.</typeparam>
+        public virtual Pageable<T> Query<T>(AdtQueryBuilder adtQueryBuilder, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
+            scope.Start();
+
+            Argument.AssertNotNull(adtQueryBuilder, nameof(adtQueryBuilder));
+
+            try
+            {
+                return Query<T>(adtQueryBuilder.GetQueryText(), cancellationToken);
             }
             catch (Exception ex)
             {
