@@ -84,7 +84,7 @@ You can usually tell by the id string itself which type it is, but if you are un
 #### Casting to a specific type
 ```C# Snippet:Readme_CastToSpecificType
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-//we know the subnet is a resource group level identifier since it has a resource group name in its string
+// We know the subnet is a resource group level identifier since it has a resource group name in its string
 ResourceGroupResourceIdentifier id = resourceId;
 Console.WriteLine($"Subscription: {id.SubscriptionId}");
 Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
@@ -95,7 +95,7 @@ Console.WriteLine($"Subnet: {id.Name}");
 #### Casting to the base resource identifier
 ```C# Snippet:Readme_CastToBaseResourceIdentifier
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-//assume we don't know what type of resource id we have we can cast to the base type
+// Assume we don't know what type of resource id we have we can cast to the base type
 ResourceIdentifier id = resourceId;
 string property;
 if (id.TryGetSubscriptionId(out property))
@@ -109,34 +109,42 @@ Console.WriteLine($"Subnet: {id.Name}");
 ### Managing Existing Resources By Id
 Performing operations on resources that already exist is a common use case when using the management SDK. In this scenario you usually have the identifier of the resource you want to work on as a string. Although the new object hierarchy is great for provisioning and working within the scope of a given parent, it is a tad awkward when it comes to this specific scenario.  
 
-Here is how you would access an availability set object and manage it with its id:
-
+Here is an example how you to access an `AvailabilitySet` object and manage it directly with its id: 
 ```csharp
-    string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet";
-    //we know the availability set is a resource group level identifier since it has a resource group name in its string
-    ResourceGroupResourceIdentifier id = resourceId;
-    //we then construct a new armClient to work with
-    ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-    //next we get the specific subscription this resource belongs to
-    Subscription subscription = armClient.GetSubscriptions().Get(id.SubscriptionId);
-    //next we get the specific resource group this resource belongs to
-    ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(id.ResourceGroupName);
-    //finally we get the resource itself
-    AvailabilitySet availabilitySet = resourceGroup.GetAvailabilitySets().Get(id.Name);
+using Azure.Identity;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Compute;
+using System;
+using System.Threading.Tasks;
+
+// Code omitted for brevity
+
+string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet";
+// We know the availability set is a resource group level identifier since it has a resource group name in its string
+ResourceGroupResourceIdentifier id = resourceId;
+// We then construct a new armClient to work with
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+// Next we get the specific subscription this resource belongs to
+Subscription subscription = await armClient.GetSubscriptions().GetAsync(id.SubscriptionId);
+// Next we get the specific resource group this resource belongs to
+ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(id.ResourceGroupName);
+// Finally we get the resource itself
+// Note: for this last stept in this example, Azure.ResourceManager.Compute is needed
+AvailabilitySet availabilitySet = await resourceGroup.GetAvailabilitySets().GetAsync(id.Name);
 ```
 However, this approach required a lot of code and 3 API calls to Azure. The same can be done with less code and without any API calls by using extension methods that we have provided on the client itself. These extension methods allow you to pass in a resource identifier and retrieve a scoped client. The object returned is a *[Resource]Operations* mentioned above, since it has not reached out to Azure to retrieve the data yet.
 
 So, the previous example would end up looking like this:
 
 ```csharp
-    string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet";
-    //we construct a new armClient to work with
-    ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-    //next we get the AvailabilitySetOperations object from the client
-    //the method takes in a ResourceIdentifier but we can use the implicit cast from string
-    AvailabilitySetOperations availabilitySetOperations = armClient.GetAvailabilitySetOperations(resourceId);
-    //now if we want to retrieve the objects data we can simply call get
-    AvailabilitySet availabilitySet = availabilitySetOperations.Get();
+string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet";
+// We construct a new armClient to work with
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+// Next we get the AvailabilitySetOperations object from the client
+// The method takes in a ResourceIdentifier but we can use the implicit cast from string
+AvailabilitySetOperations availabilitySetOperations = armClient.GetAvailabilitySetOperations(resourceId);
+// Now if we want to retrieve the objects data we can simply call get
+AvailabilitySet availabilitySet = await availabilitySetOperations.GetAsync();
 ```
 
 ## Examples
