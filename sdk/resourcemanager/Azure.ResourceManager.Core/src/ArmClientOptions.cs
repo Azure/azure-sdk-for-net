@@ -47,20 +47,6 @@ namespace Azure.ResourceManager.Core
         public Location DefaultLocation { get; }
 
         /// <summary>
-        /// Converts client options.
-        /// </summary>
-        /// <typeparam name="T"> The type of the underlying model this class wraps. </typeparam>
-        /// <returns> The converted client options. </returns>
-        public T Convert<T>()
-            where T : ClientOptions, new()
-        {
-            var newOptions = new T();
-            newOptions.Transport = Transport;
-
-            return newOptions;
-        }
-
-        /// <summary>
         /// Gets override object.
         /// </summary>
         /// <typeparam name="T"> The type of the underlying model this class wraps. </typeparam>
