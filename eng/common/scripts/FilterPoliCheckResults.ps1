@@ -1,3 +1,16 @@
+<#
+.SYNOPSIS
+Filters PoliCheck Result.
+.DESCRIPTION
+This script will read data speciefied in one or more PoliCheckAllowList.yml files,
+It then reamoves all allwed entries from the PoliCheckResult 
+.PARAMETER PoliCheckResultFilePath
+The Path to the PoliCheck Result. Usually named PoliCheck.sarif
+.PARAMETER ServiceDirtectory
+If the PoliCheck scan is scoped to a particular service provide the ServiceDirectory
+.EXAMPLE
+PS> ./FilterPoliCheckResults.ps1 -PoliCheckResultFilePath .\PoliCheck.sarif
+#>
 [CmdletBinding()]
 param(
   [Parameter(Mandatory=$true)]
