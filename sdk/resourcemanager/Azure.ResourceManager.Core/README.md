@@ -82,28 +82,28 @@ There are 3 types of ResourceIdentifiers and they correspond to which level the 
 You can usually tell by the id string itself which type it is, but if you are unsure you can always cast it onto a `ResourceIdentifier` and use the Try methods to retrieve the values.
 
 #### Casting to a specific type
-```csharp
-    string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-    //we know the subnet is a resource group level identifier since it has a resource group name in its string
-    ResourceGroupResourceIdentifier id = resourceId;
-    Console.WriteLine($"Subscription: {id.SubscriptionId}");
-    Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
-    Console.WriteLine($"Vnet: {id.Parent.Name}");
-    Console.WriteLine($"Subnet: {id.Name}");
+```C# Snippet:Readme_CastToSpecificType
+string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
+//we know the subnet is a resource group level identifier since it has a resource group name in its string
+ResourceGroupResourceIdentifier id = resourceId;
+Console.WriteLine($"Subscription: {id.SubscriptionId}");
+Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
+Console.WriteLine($"Vnet: {id.Parent.Name}");
+Console.WriteLine($"Subnet: {id.Name}");
 ```
 
 #### Casting to the base resource identifier
-```csharp
-    string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-    //assume we don't know what type of resource id we have we can cast to the base type
-    ResourceIdentifier id = resourceId;
-    string property;
-    if(id.TryGetSubscriptionId(out property))
-        Console.WriteLine($"Subscription: {property}");
-    if(id.TryGetResourceGroupName(out property))
-        Console.WriteLine($"ResourceGroup: {property}");
-    Console.WriteLine($"Vnet: {id.Parent.Name}");
-    Console.WriteLine($"Subnet: {id.Name}");
+```C# Snippet:Readme_CastToBaseResourceIdentifier
+string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
+//assume we don't know what type of resource id we have we can cast to the base type
+ResourceIdentifier id = resourceId;
+string property;
+if (id.TryGetSubscriptionId(out property))
+    Console.WriteLine($"Subscription: {property}");
+if (id.TryGetResourceGroupName(out property))
+    Console.WriteLine($"ResourceGroup: {property}");
+Console.WriteLine($"Vnet: {id.Parent.Name}");
+Console.WriteLine($"Subnet: {id.Name}");
 ```
 
 ### Managing Existing Resources By Id
@@ -142,29 +142,21 @@ So, the previous example would end up looking like this:
 ## Examples
 
 ### Create a resource group
-```C# Snippet:Readme_CreateRG
-// First, initialize the ArmClient and get the default subscription
+```C# Snippet:Managing_Resource_Groups_CreateAResourceGroup
 var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
-// Now we get a ResourceGroup container for that subscription
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
-// With the container, we can create a new resource group with an specific name
+Location location = Location.WestUS2;
 string rgName = "myRgName";
-Location location = Location.WestUS;
 ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
 ```
 
 ### List all resource groups
-```C# Snippet:Readme_ListAllRG
-// First, initialize the ArmClient and get the default subscription
+```C# Snippet:Managing_Resource_Groups_ListAllResourceGroup
 var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
-
-// Now we get a ResourceGroup container for that subscription
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-
-// With ListAsync(), we can get a list of the resources in the container
 AsyncPageable<ResourceGroup> response = rgContainer.ListAsync();
 await foreach (ResourceGroup rg in response)
 {
@@ -172,6 +164,26 @@ await foreach (ResourceGroup rg in response)
 }
 ```
 
+### Update a resource group
+
+```C# Snippet:Managing_Resource_Groups_UpdateAResourceGroup
+// Note: Resource group named 'myRgName' should exist for this example to work.
+var armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+string rgName = "myRgName";
+ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+resourceGroup = await resourceGroup.AddTagAsync("key", "value");
+```
+
+### Delete a resource group
+
+```C# Snippet:Managing_Resource_Groups_DeleteResourceGroup
+var armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+string rgName = "myRgName";
+ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+await resourceGroup.DeleteAsync();
+```
 ### Add a tag to a virtual machine
 Imagine that our company requires all virtual machines to be tagged with the owner. We're tasked with writing a program to add the tag to any missing virtual machines in a given resource group.
 
