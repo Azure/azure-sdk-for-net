@@ -17,5 +17,13 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => { list.Trim(-1); });
             Assert.Throws<ArgumentOutOfRangeException>(() => { list.Trim(4); });
         }
+
+        [Test]
+        public void ValidTrimTest()
+        {
+            List<int> list1 = new List<int>() { 1, 2, 3 };
+            List<int> list2 = new List<int>() { 3 };
+            Assert.AreEqual(list2, list1.Trim(2));
+        }
     }
 }
