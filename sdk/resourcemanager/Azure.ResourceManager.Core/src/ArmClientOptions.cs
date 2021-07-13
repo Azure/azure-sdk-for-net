@@ -24,27 +24,9 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
         /// </summary>
         public ArmClientOptions()
-            : this(Location.Default)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
-        /// </summary>
-        /// <param name="defaultLocation"> The default location to use if can't be inherited from parent. </param>
-        public ArmClientOptions(Location defaultLocation)
-        {
-            if (defaultLocation is null)
-                throw new ArgumentNullException(nameof(defaultLocation));
-
-            DefaultLocation = defaultLocation;
             ApiVersions = new ApiVersions(this);
         }
-
-        /// <summary>
-        /// Gets the default location to use if can't be inherited from parent.
-        /// </summary>
-        public Location DefaultLocation { get; }
 
         /// <summary>
         /// Gets override object.
@@ -63,7 +45,7 @@ namespace Azure.ResourceManager.Core
 
         internal ArmClientOptions Clone()
         {
-            ArmClientOptions copy = new ArmClientOptions(DefaultLocation);
+            ArmClientOptions copy = new ArmClientOptions();
 
             copy.ApiVersions = ApiVersions.Clone();
             copy.Transport = Transport;
