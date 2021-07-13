@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.21.0
+###  Feature Additions
+- Added properties pipelineName and pipelineRunId to PipelineRunInvokedBy definition
+- Updated avroCompressionCodec and orcCompressionCodec from string to object
+
 ## Version 4.20.0
 ###  Feature Additions
 - Added disableMetricsCollection in read/wirte properties
