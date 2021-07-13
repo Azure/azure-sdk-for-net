@@ -3,6 +3,7 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
+title: Container Registry
 input-file:
  - https://github.com/Azure/azure-rest-api-specs/blob/49f1a1102a2a5c0eeb97e6f00b2fabeec04fa70a/specification/containerregistry/data-plane/Azure.ContainerRegistry/preview/2019-08-15-preview/containerregistry.json
  

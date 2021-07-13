@@ -11,8 +11,10 @@ namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> `Artifact` is the general term for items stored in a container registry,
     /// and can include Docker images or other Open Container Initiative (OCI) artifact types.
-    ///
-    /// The <see cref="RegistryArtifact"/> class is a helper class that groups information and operations about an image or artifact in this container registry. </summary>
+    /// <para>
+    /// The <see cref="RegistryArtifact"/> class is a helper class that groups information and operations about an image or artifact in this container registry.
+    /// </para>
+    /// </summary>
     public partial class RegistryArtifact
     {
         private readonly ClientDiagnostics _clientDiagnostics;

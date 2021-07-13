@@ -134,7 +134,7 @@ namespace Azure.Containers.ContainerRegistry
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List the repositories in this registry. </summary>
+        /// <summary> List the names of the repositories in this registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Pageable<string> GetRepositoryNames(CancellationToken cancellationToken = default)

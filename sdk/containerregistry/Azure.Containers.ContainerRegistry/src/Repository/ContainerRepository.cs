@@ -12,9 +12,11 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary>
     /// A `repository` in a container registry is a logical grouping of images or artifacts that share the same name.  For example,
     /// different versions of a `hello-world` application could have tags `v1` and `v2`, and be grouped by the repository `hello-world`.
-    ///
+    /// <para>
     /// The <see cref="ContainerRepository"/> class is a helper class that groups information and operations about a repository in this
-    /// container registry. </summary>
+    /// container registry.
+    /// </para>
+    /// </summary>
     public partial class ContainerRepository
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -161,7 +163,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Delete the repository and artifacts that share its name. </summary>
+        /// <summary> Delete the repository and all artifacts that are part of its logical group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
@@ -179,7 +181,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Delete the repository and artifacts that share its name. </summary>
+        /// <summary> Delete the repository and all artifacts that are part of its logical group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response Delete(CancellationToken cancellationToken = default)

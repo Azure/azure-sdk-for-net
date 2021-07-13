@@ -10,7 +10,7 @@ using System;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class AzureContainerRegistryModelFactory
+    public static partial class ContainerRegistryModelFactory
     {
         /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>

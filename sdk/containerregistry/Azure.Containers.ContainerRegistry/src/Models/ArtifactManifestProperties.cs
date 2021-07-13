@@ -21,7 +21,7 @@ namespace Azure.Containers.ContainerRegistry
         public bool? CanDelete { get; set; }
         /// <summary> Whether or not this tag can be written to. </summary>
         public bool? CanWrite { get; set;  }
-        /// <summary> Whether or not to include this tag in the collection returned from the tag listing operation. </summary>
+        /// <summary> Whether or not to include this artifact in the collection returned from <see cref="ContainerRepository.GetManifestPropertiesCollection"/>. </summary>
         public bool? CanList { get; set;  }
         /// <summary> Whether or not this tag can be read. </summary>
         public bool? CanRead { get; set; }
