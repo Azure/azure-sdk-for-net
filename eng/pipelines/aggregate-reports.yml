@@ -163,6 +163,14 @@ jobs:
           result: PoliCheck.sarif
           optionsFC: 0
           optionsXS: 1
+      - task: PowerShell@2
+        displayName: 'Filter PoliCheck Results using AllowList'
+        inputs:
+          pwsh: true
+          filePath: 'eng/common/scripts/FilterPoliCheckResults.ps1'
+          arguments: >
+            -PoliCheckResultFilePath '$(Build.SourcesDirectory)/../.gdn/.r/PoliCheck/001/PoliCheck.sarif'
+            -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
         displayName: 'Publish Security Analysis Logs'
         condition: succeededOrFailed()
