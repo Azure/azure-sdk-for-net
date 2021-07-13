@@ -16,25 +16,25 @@ namespace Azure.Communication.NetworkTraversal
     {
         /// <summary> Initializes a new instance of CommunicationRelayConfiguration. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. </param>
-        /// <param name="turnServers"> An array representing the credentials and the TURN server URL. </param>
+        /// <param name="iceServers"> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </param>
         /// <returns> A new <see cref="NetworkTraversal.CommunicationRelayConfiguration"/> instance for mocking. </returns>
-        public static CommunicationRelayConfiguration CommunicationRelayConfiguration(DateTimeOffset expiresOn = default, IEnumerable<CommunicationTurnServer> turnServers = null)
+        public static CommunicationRelayConfiguration CommunicationRelayConfiguration(DateTimeOffset expiresOn = default, IEnumerable<CommunicationIceServer> iceServers = null)
         {
-            turnServers ??= new List<CommunicationTurnServer>();
+            iceServers ??= new List<CommunicationIceServer>();
 
-            return new CommunicationRelayConfiguration(expiresOn, turnServers?.ToList());
+            return new CommunicationRelayConfiguration(expiresOn, iceServers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CommunicationTurnServer. </summary>
-        /// <param name="urls"> List of TURN server URLs. </param>
+        /// <summary> Initializes a new instance of CommunicationIceServer. </summary>
+        /// <param name="urls"> List of STUN/TURN server URLs. </param>
         /// <param name="username"> User account name which uniquely identifies the credentials. </param>
         /// <param name="credential"> Credential for the server. </param>
-        /// <returns> A new <see cref="NetworkTraversal.CommunicationTurnServer"/> instance for mocking. </returns>
-        public static CommunicationTurnServer CommunicationTurnServer(IEnumerable<string> urls = null, string username = null, string credential = null)
+        /// <returns> A new <see cref="NetworkTraversal.CommunicationIceServer"/> instance for mocking. </returns>
+        public static CommunicationIceServer CommunicationIceServer(IEnumerable<string> urls = null, string username = null, string credential = null)
         {
             urls ??= new List<string>();
 
-            return new CommunicationTurnServer(urls?.ToList(), username, credential);
+            return new CommunicationIceServer(urls?.ToList(), username, credential);
         }
     }
 }
