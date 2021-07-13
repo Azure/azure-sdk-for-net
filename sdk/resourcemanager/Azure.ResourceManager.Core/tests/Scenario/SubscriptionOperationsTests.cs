@@ -128,8 +128,12 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task TestListLocations()
         {
             var subOps = Client.DefaultSubscription;
-            var locations = await subOps.ListLocationsAsync(subOps.Id.SubscriptionId).ToEnumerableAsync();
+            var locations = await subOps.ListLocationsAsync().ToEnumerableAsync();
             Assert.IsTrue(locations.Count != 0);
+            var location = locations.First();
+            Assert.IsNotNull(location.Metadata, "Metadata was null");
+            Assert.IsNotNull(location.Id, "Id was null");
+            Assert.AreEqual(Client.DefaultSubscription.Id.SubscriptionId, location.SubscriptionId);
         }
 
         [RecordedTest]
@@ -154,6 +158,22 @@ namespace Azure.ResourceManager.Core.Tests
                 builder.Append('a');
             }
             return builder.ToString();
+        }
+
+        [RecordedTest]
+        public async Task ListFeatures()
+        {
+            Feature testFeature = null;
+            await foreach (var feature in Client.DefaultSubscription.ListFeaturesAsync())
+            {
+                testFeature = feature;
+                break;
+            }
+            Assert.IsNotNull(testFeature);
+            Assert.IsNotNull(testFeature.Data.Id);
+            Assert.IsNotNull(testFeature.Data.Name);
+            Assert.IsNotNull(testFeature.Data.Properties);
+            Assert.IsNotNull(testFeature.Data.Type);
         }
     }
 }

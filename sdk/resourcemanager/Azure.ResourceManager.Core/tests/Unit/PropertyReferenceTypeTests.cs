@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Core.Tests
                 var serializationCtor = refType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(c => HasAttribute(c.GetCustomAttributes<Attribute>(false), SerializationConstructor)).FirstOrDefault();
                 Assert.IsNotNull(serializationCtor);
-                Assert.IsTrue(serializationCtor.IsPublic, $"Serialization ctor for {refType.Name} should not be public");
+                Assert.IsFalse(serializationCtor.IsPublic, $"Serialization ctor for {refType.Name} should not be public");
             }
         }
 

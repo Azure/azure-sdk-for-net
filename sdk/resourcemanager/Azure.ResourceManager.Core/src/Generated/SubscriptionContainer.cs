@@ -24,17 +24,22 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class.
         /// </summary>
-        /// <param name="clientContext"></param>
-        internal SubscriptionContainer(ClientContext clientContext)
-            : base(clientContext, null)
+        /// <param name="parent"> The resource representing the parent resource. </param>
+        internal SubscriptionContainer(TenantOperations parent)
+            : base(parent)
         {
-            RestClient = new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline);
+            RestClient = new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline, this.BaseUri);
         }
+
+        /// <summary>
+        /// Gets the parent resource of this resource.
+        /// </summary>
+        protected new TenantOperations Parent { get {return base.Parent as TenantOperations;} }
 
         /// <summary>
         /// Gets the valid resource type associated with the container.
         /// </summary>
-        protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
+        protected override ResourceType ValidResourceType => TenantOperations.ResourceType;
 
         /// <summary>
         /// Gets the operations that can be performed on the container.
@@ -126,16 +131,6 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Validate the resource identifier is supported in the current container.
-        /// </summary>
-        /// <param name="identifier"> The identifier of the resource. </param>
-        protected override void Validate(ResourceIdentifier identifier)
-        {
-            if (!(identifier is null))
-                throw new ArgumentException("Invalid parent for subscription container", nameof(identifier));
-        }
-
-        /// <summary>
         /// Gets details for this subscription from the service.
         /// </summary>
         /// <param name="subscriptionGuid"> The Id of the subscription to get. </param>
@@ -144,9 +139,18 @@ namespace Azure.ResourceManager.Core
         /// <exception cref="ArgumentException"> subscriptionGuid cannot be null or a whitespace. </exception>
         public Response<Subscription> Get(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            return new SubscriptionOperations(
-                    new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
-                    subscriptionGuid).Get(cancellationToken);
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.Get");
+            scope.Start();
+            try
+            {
+                var response = RestClient.Get(subscriptionGuid, cancellationToken);
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -156,27 +160,102 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{TOperations}"/> operation for this subscription. </returns>
         /// <exception cref="ArgumentException"> subscriptionGuid cannot be null or a whitespace. </exception>
-        public virtual Task<Response<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            return new SubscriptionOperations(
-                new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
-                subscriptionGuid).GetAsync(cancellationToken);
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.Get");
+            scope.Start();
+            try
+            {
+                var response = await RestClient.GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Get an instance of the operations this container holds.
+        /// Returns the resource from Azure if it exists.
         /// </summary>
-        /// <param name="subscriptionGuid"> The guid of the subscription to be found. </param>
-        /// <returns> An instance of <see cref="ResourceOperationsBase{TenantResourceIdentifier, Subscription}"/>. </returns>
-        protected override ResourceOperationsBase<SubscriptionResourceIdentifier, Subscription> GetOperation(string subscriptionGuid)
+        /// <param name="subscriptionGuid"> The name of the resource you want to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual Subscription TryGet(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            return new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), subscriptionGuid);
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.TryGet");
+            scope.Start();
+
+            try
+            {
+                return Get(subscriptionGuid, cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        //TODO: can make static?
-        private Func<SubscriptionData, Subscription> Converter()
+        /// <summary>
+        /// Returns the resource from Azure if it exists.
+        /// </summary>
+        /// <param name="subscriptionGuid"> The name of the resource you want to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual async Task<Subscription> TryGetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            return s => new Subscription(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), s.Id), s);
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.TryGet");
+            scope.Start();
+
+            try
+            {
+                return await GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether or not the azure resource exists in this container.
+        /// </summary>
+        /// <param name="subscriptionGuid"> The name of the resource you want to check. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual bool DoesExist(string subscriptionGuid, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.DoesExist");
+            scope.Start();
+            return TryGet(subscriptionGuid, cancellationToken) != null;
+        }
+
+        /// <summary>
+        /// Determines whether or not the azure resource exists in this container.
+        /// </summary>
+        /// <param name="subscriptionGuid"> The name of the resource you want to check. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual async Task<bool> DoesExistAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.DoesExist");
+            scope.Start();
+            return await TryGetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false) != null;
         }
     }
 }

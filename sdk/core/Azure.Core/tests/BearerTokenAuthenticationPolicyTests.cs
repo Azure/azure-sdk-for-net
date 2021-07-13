@@ -729,6 +729,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Retry(3)] //https://github.com/Azure/azure-sdk-for-net/issues/21005
         public async Task BearerTokenAuthenticationPolicy_BackgroundRefreshFailsAndLogs()
         {
             var requestMre = new ManualResetEventSlim(true);
@@ -740,6 +741,7 @@ namespace Azure.Core.Tests
             string msg = "fail to refresh";
             var credential = new BearerTokenAuthenticationPolicyTests.TokenCredentialStub((r, c) =>
                 {
+                    TestContext.WriteLine($"Start TokenCredentialStub: callCount: {callCount}");
                     if (callCount > 0)
                     {
                         throw new Exception(msg);
@@ -749,12 +751,14 @@ namespace Azure.Core.Tests
                     requestMre.Reset();
                     callCount++;
 
+                    TestContext.WriteLine($"End TokenCredentialStub: callCount: {callCount}");
                     return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
                 },
                 IsAsync);
 
             AzureEventSourceListener listener = new((args, text) =>
             {
+                TestContext.WriteLine(text);
                 if (args.EventName == "BackgroundRefreshFailed" && text.Contains(msg))
                 {
                     logged = true;
@@ -768,7 +772,6 @@ namespace Azure.Core.Tests
             responseMre.Reset();
 
             Task requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/Refresh"));
-            // requestMre.Wait();
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/2/AlmostExpired"));
             await requestTask;

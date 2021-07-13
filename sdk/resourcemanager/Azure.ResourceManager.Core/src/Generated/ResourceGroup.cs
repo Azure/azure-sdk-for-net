@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
@@ -33,17 +30,5 @@ namespace Azure.ResourceManager.Core
         /// Gets the data representing this ResourceGroup.
         /// </summary>
         public virtual ResourceGroupData Data { get; }
-
-        /// <inheritdoc />
-        protected override ResourceGroup GetResource(CancellationToken cancellation = default)
-        {
-            return this;
-        }
-
-        /// <inheritdoc />
-        protected override Task<ResourceGroup> GetResourceAsync(CancellationToken cancellationToken = default)
-        {
-            return Task.FromResult(this);
-        }
     }
 }

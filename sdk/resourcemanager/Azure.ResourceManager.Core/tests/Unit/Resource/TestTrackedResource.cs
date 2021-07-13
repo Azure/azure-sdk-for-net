@@ -8,7 +8,7 @@ namespace Azure.ResourceManager.Core.Tests
 {
     public class TestTrackedResource<TIdentifier> : TrackedResource<TIdentifier> where TIdentifier : TenantResourceIdentifier
     {
-        public TestTrackedResource(TIdentifier id) : this(id, LocationData.Default)
+        public TestTrackedResource(TIdentifier id) : this(id, Location.Default)
         {
         }
 

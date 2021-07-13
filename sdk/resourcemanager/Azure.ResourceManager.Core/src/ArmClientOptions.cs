@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
         /// </summary>
         public ArmClientOptions()
-            : this(LocationData.Default)
+            : this(Location.Default)
         {
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
         /// </summary>
         /// <param name="defaultLocation"> The default location to use if can't be inherited from parent. </param>
-        public ArmClientOptions(LocationData defaultLocation)
+        public ArmClientOptions(Location defaultLocation)
         {
             if (defaultLocation is null)
                 throw new ArgumentNullException(nameof(defaultLocation));
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the default location to use if can't be inherited from parent.
         /// </summary>
-        public LocationData DefaultLocation { get; }
+        public Location DefaultLocation { get; }
 
         /// <summary>
         /// Converts client options.

@@ -67,6 +67,8 @@ namespace Azure.ResourceManager.Core
 
         private SubscriptionsRestOperations RestClient => new SubscriptionsRestOperations(Diagnostics, Pipeline, BaseUri);
 
+        private FeaturesRestOperations FeaturesRestOperations => new FeaturesRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
+
         /// <summary>
         /// Gets the resource group container under this subscription.
         /// </summary>
@@ -77,12 +79,12 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets the location group container under this subscription.
+        /// Gets the predefined tag container under this subscription.
         /// </summary>
-        /// <returns> The resource group container. </returns>
-        public virtual LocationContainer GetLocations()
+        /// <returns> The tags container. </returns>
+        public virtual PreDefinedTagContainer GetPredefinedTags()
         {
-            return new LocationContainer(this);
+            return new PreDefinedTagContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
         }
 
         /// <summary>
@@ -129,23 +131,16 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual AsyncPageable<LocationData> ListLocationsAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LocationExpanded> ListLocationsAsync(CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-
-            async Task<Page<LocationData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<LocationExpanded>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListLocations");
                 scope.Start();
                 try
                 {
-                    var response = await RestClient.ListLocationsAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
+                    var response = await RestClient.ListLocationsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -158,23 +153,16 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual Pageable<LocationData> ListLocations(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Pageable<LocationExpanded> ListLocations(CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-
-            Page<LocationData> FirstPageFunc(int? pageSizeHint)
+            Page<LocationExpanded> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListLocations");
                 scope.Start();
                 try
                 {
-                    var response = RestClient.ListLocations(subscriptionId, cancellationToken);
+                    var response = RestClient.ListLocations(Id.Name, cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -193,6 +181,89 @@ namespace Azure.ResourceManager.Core
         public virtual GenericResourceContainer GetGenericResources()
         {
             return new GenericResourceContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+        }
+
+        /// <summary>
+        /// Gets the predefined tag operations under this subscription.
+        /// </summary>
+        /// <returns> The predefined tags operations. </returns>
+        public virtual PreDefinedTagOperations GetPreDefinedTagOperations()
+        {
+            return new PreDefinedTagOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+        }
+
+        /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<Feature> ListFeatures(CancellationToken cancellationToken = default)
+        {
+            Page<Feature> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListFeatures");
+                scope.Start();
+                try
+                {
+                    var response = FeaturesRestOperations.ListAll(cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListFeatures");
+                scope.Start();
+                try
+                {
+                    var response = FeaturesRestOperations.ListAllNextPage(nextLink, cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<Feature> ListFeaturesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListFeatures");
+                scope.Start();
+                try
+                {
+                    var response = await FeaturesRestOperations.ListAllAsync(cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListFeatures");
+                scope.Start();
+                try
+                {
+                    var response = await FeaturesRestOperations.ListAllNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(d => new Feature(this, d)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

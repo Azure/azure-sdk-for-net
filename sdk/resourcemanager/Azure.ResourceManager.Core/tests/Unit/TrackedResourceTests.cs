@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void SerializationTest()
         {
             string expected = "{\"properties\":{\"location\":\"eastus\",\"tags\":{\"key1\":\"value1\",\"key2\":\"value2\"}}}";
-            TestTrackedResource<ResourceGroupResourceIdentifier> data = new("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1", LocationData.EastUS);
+            TestTrackedResource<ResourceGroupResourceIdentifier> data = new("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1", Location.EastUS);
             data.Tags.Add("key1", "value1");
             data.Tags.Add("key2", "value2");
             var json = JsonHelper.SerializePropertiesToString(data);

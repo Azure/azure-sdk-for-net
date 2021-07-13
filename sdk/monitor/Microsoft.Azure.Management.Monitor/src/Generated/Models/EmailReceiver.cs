@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// alert schema.</param>
         /// <param name="status">The receiver status of the e-mail. Possible
         /// values include: 'NotSpecified', 'Enabled', 'Disabled'</param>
-        public EmailReceiver(string name, string emailAddress, bool useCommonAlertSchema, ReceiverStatus? status = default(ReceiverStatus?))
+        public EmailReceiver(string name, string emailAddress, bool? useCommonAlertSchema = default(bool?), ReceiverStatus? status = default(ReceiverStatus?))
         {
             Name = name;
             EmailAddress = emailAddress;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Gets or sets indicates whether to use common alert schema.
         /// </summary>
         [JsonProperty(PropertyName = "useCommonAlertSchema")]
-        public bool UseCommonAlertSchema { get; set; }
+        public bool? UseCommonAlertSchema { get; set; }
 
         /// <summary>
         /// Gets the receiver status of the e-mail. Possible values include:

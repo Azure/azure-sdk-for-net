@@ -17,7 +17,7 @@
       "model": "ModelForSku",
       "capacity": 15464547
     },
-    "location": "East US",
+    "location": "eastus",
     "tags": {
       "key1": "value1",
       "key2": "value2"

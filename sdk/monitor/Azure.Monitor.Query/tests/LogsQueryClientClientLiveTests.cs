@@ -80,6 +80,20 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [RecordedTest]
+        public async Task CanQueryPartialSuccess()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryAsync(TestEnvironment.WorkspaceId,
+                $"set truncationmaxrecords=1; datatable (s: string) ['a', 'b']",
+                _logsTestData.DataTimeRange);
+
+            Assert.NotNull(results.Value.Error.Code);
+            Assert.NotNull(results.Value.Error.Message);
+            CollectionAssert.IsNotEmpty(results.Value.Error.Details);
+        }
+
+        [RecordedTest]
         public async Task CanQueryAdditionalWorkspace()
         {
             var client = CreateClient();
@@ -171,13 +185,38 @@ namespace Azure.Monitor.Query.Tests
             LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
             string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
-            Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
+            Response<LogsBatchQueryResults> response = await client.QueryBatchAsync(batch);
 
             var result1 = response.Value.GetResult(id1);
             var result2 = response.Value.GetResult(id2);
 
             CollectionAssert.IsNotEmpty(result1.Tables[0].Columns);
             CollectionAssert.IsNotEmpty(result2.Tables[0].Columns);
+        }
+
+        [RecordedTest]
+        public async Task CanQueryBatchMixed()
+        {
+            var client = CreateClient();
+            LogsBatchQuery batch = new LogsBatchQuery();
+            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
+            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeats", _logsTestData.DataTimeRange);
+            string id3 = batch.AddQuery(TestEnvironment.WorkspaceId, "set truncationmaxrecords=1; datatable (s: string) ['a', 'b']", _logsTestData.DataTimeRange);
+
+            Response<LogsBatchQueryResults> response = await client.QueryBatchAsync(batch);
+
+            Assert.False(response.Value.Results.Single(r => r.Id == id1).HasFailed);
+
+            var failedResult = response.Value.Results.Single(r => r.Id == id2);
+            Assert.True(failedResult.HasFailed);
+            Assert.NotNull(failedResult.Error.Code);
+            Assert.NotNull(failedResult.Error.Message);
+
+            var partialResult = response.Value.Results.Single(r => r.Id == id3);
+            Assert.False(partialResult.HasFailed);
+            CollectionAssert.IsNotEmpty(partialResult.PrimaryTable.Rows);
+            Assert.NotNull(partialResult.Error.Code);
+            Assert.NotNull(partialResult.Error.Message);
         }
 
         [RecordedTest]
@@ -414,7 +453,7 @@ namespace Azure.Monitor.Query.Tests
             LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}", _logsTestData.DataTimeRange);
             string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}", timespan);
-            Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
+            Response<LogsBatchQueryResults> response = await client.QueryBatchAsync(batch);
 
             var result1 = response.Value.GetResult<DateTimeOffset>(id1);
             var result2 = response.Value.GetResult<DateTimeOffset>(id2);
@@ -448,7 +487,7 @@ namespace Azure.Monitor.Query.Tests
             var exception = Assert.Throws<RequestFailedException>(() => batchResult.Value.GetResult(queryId));
 
             Assert.AreEqual("BadArgumentError", exception.ErrorCode);
-            StringAssert.StartsWith("The request had some invalid properties", exception.Message);
+            StringAssert.StartsWith("Batch query with id '0' failed.", exception.Message);
         }
 
         [RecordedTest]
@@ -464,7 +503,7 @@ namespace Azure.Monitor.Query.Tests
             var exception = Assert.Throws<ArgumentException>(() => batchResult.Value.GetResult("12345"));
 
             Assert.AreEqual("queryId", exception.ParamName);
-            StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of the LogsBatchQuery.AddQuery as the 'queryId' argument.", exception.Message);
+            StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of LogsBatchQuery.AddQuery as the 'queryId' argument.", exception.Message);
         }
 
         [RecordedTest]
@@ -481,12 +520,12 @@ namespace Azure.Monitor.Query.Tests
 
             if (include)
             {
-                using JsonDocument document = JsonDocument.Parse(response.Value.Statistics);
+                using JsonDocument document = JsonDocument.Parse(response.Value.GetStatistics());
                 Assert.Greater(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
             }
             else
             {
-                Assert.AreEqual(default, response.Value.Statistics);
+                Assert.AreEqual(default, response.Value.GetStatistics());
             }
         }
 
@@ -504,12 +543,12 @@ namespace Azure.Monitor.Query.Tests
 
             if (include)
             {
-                using JsonDocument document = JsonDocument.Parse(response.Value.Visualization);
+                using JsonDocument document = JsonDocument.Parse(response.Value.GetVisualization());
                 Assert.AreNotEqual(JsonValueKind.Undefined, document.RootElement.GetProperty("visualization").ValueKind);
             }
             else
             {
-                Assert.AreEqual(default, response.Value.Visualization);
+                Assert.AreEqual(default, response.Value.GetVisualization());
             }
         }
 
@@ -530,12 +569,12 @@ namespace Azure.Monitor.Query.Tests
 
             if (include)
             {
-                using JsonDocument document = JsonDocument.Parse(result.Statistics);
+                using JsonDocument document = JsonDocument.Parse(result.GetStatistics());
                 Assert.Greater(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
             }
             else
             {
-                Assert.AreEqual(default, result.Statistics);
+                Assert.AreEqual(default, result.GetStatistics());
             }
         }
 

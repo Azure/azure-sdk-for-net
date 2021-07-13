@@ -6,15 +6,14 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Tue, 15 Jun 2021 17:52:07 GMT",
-        "traceparent": "00-ee7e4ae51ed2b8478afe747d091895d6-2533d136385cf54e-00",
+        "traceparent": "00-43ec06fb3d0e6c40ab3ef4c6a96453eb-e6f0a6bcf9439d4a-00",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210615.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "b19373036a2faecc7ae04103bf28fcdc",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 15 Jun 2021 17:52:07 GMT",
+        "x-ms-date": "Tue, 22 Jun 2021 22:03:26 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -22,13 +21,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Jun 2021 17:52:09 GMT",
-        "MS-CV": "6AE/cU5Gyk274P1mBjafuQ.0",
+        "Date": "Tue, 22 Jun 2021 22:03:28 GMT",
+        "MS-CV": "366ZqRCSOkiIICM9Ekq/gw.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0x\u002BjIYAAAAADCY2trZcsfRKyf3BfVoWS5WVZSMzBFREdFMDQxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0Ll7SYAAAAABJCENM7XGoT4HNmdr3vfMYWVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "2900ms"
+        "X-Processing-Time": "1666ms"
       },
       "ResponseBody": {
         "phoneNumbers": [
@@ -174,7 +173,7 @@
             "countryCode": "US",
             "phoneNumberType": "tollFree",
             "capabilities": {
-              "calling": "none",
+              "calling": "inbound",
               "sms": "outbound"
             },
             "assignmentType": "application",
@@ -191,7 +190,7 @@
             "countryCode": "US",
             "phoneNumberType": "tollFree",
             "capabilities": {
-              "calling": "inbound",
+              "calling": "outbound",
               "sms": "inbound\u002Boutbound"
             },
             "assignmentType": "application",

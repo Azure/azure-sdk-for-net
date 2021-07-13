@@ -29,7 +29,6 @@ namespace Azure.AI.TextAnalytics
         private const string RejectedValue = "rejected";
         private const string CancelledValue = "cancelled";
         private const string CancellingValue = "cancelling";
-        private const string PartiallyCompletedValue = "partiallyCompleted";
 
         /// <summary> notStarted. </summary>
         public static TextAnalyticsOperationStatus NotStarted { get; } = new TextAnalyticsOperationStatus(NotStartedValue);
@@ -45,8 +44,6 @@ namespace Azure.AI.TextAnalytics
         public static TextAnalyticsOperationStatus Cancelled { get; } = new TextAnalyticsOperationStatus(CancelledValue);
         /// <summary> cancelling. </summary>
         public static TextAnalyticsOperationStatus Cancelling { get; } = new TextAnalyticsOperationStatus(CancellingValue);
-        /// <summary> partiallyCompleted. </summary>
-        public static TextAnalyticsOperationStatus PartiallyCompleted { get; } = new TextAnalyticsOperationStatus(PartiallyCompletedValue);
         /// <summary> Determines if two <see cref="TextAnalyticsOperationStatus"/> values are the same. </summary>
         public static bool operator ==(TextAnalyticsOperationStatus left, TextAnalyticsOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TextAnalyticsOperationStatus"/> values are not the same. </summary>

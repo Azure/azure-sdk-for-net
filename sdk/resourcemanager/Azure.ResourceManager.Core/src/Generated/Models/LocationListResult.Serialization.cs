@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core
     {
         internal static LocationListResult DeserializeLocationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<LocationData>> value = default;
+            Optional<IReadOnlyList<LocationExpanded>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LocationData> array = new List<LocationData>();
+                    List<LocationExpanded> array = new List<LocationExpanded>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetProperty("displayName").GetString());
+                        array.Add(LocationExpanded.DeserializeLocationExpanded(item));
                     }
                     value = array;
                     continue;
