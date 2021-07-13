@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
 using System;
-using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -12,6 +12,8 @@ namespace Azure.ResourceManager.TestFramework
 {
     public abstract class MockTestBase : ManagementRecordedTestBase<MockTestEnvironment>
     {
+        protected override Type OperationInternalsType => typeof(OperationInternals);
+
         public MockTestBase(bool isAsync) : base(isAsync)
         {
             EnsureMockServerRunning();
