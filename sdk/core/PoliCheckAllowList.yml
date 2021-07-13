@@ -1,0 +1,7 @@
+PC1001:
+  - FilePath: /Azure.Core/src/Response.cs
+    instances:
+      - Text: hanging
+        ContextRegion: |-
+          // connection hanging open
+

@@ -170,7 +170,7 @@ jobs:
           filePath: 'eng/common/scripts/FilterPoliCheckResults.ps1'
           arguments: >
             -PoliCheckResultFilePath '$(Build.SourcesDirectory)/../.gdn/.r/PoliCheck/001/PoliCheck.sarif'
-            -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
+            -ServiceDirtectory '$(ServiceDirectoryName)'
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
         displayName: 'Publish Security Analysis Logs'
         condition: succeededOrFailed()
