@@ -24,17 +24,22 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class.
         /// </summary>
-        /// <param name="clientContext"></param>
-        internal SubscriptionContainer(ClientContext clientContext)
-            : base(clientContext, null)
+        /// <param name="parent"> The resource representing the parent resource. </param>
+        internal SubscriptionContainer(TenantOperations parent)
+            : base(parent)
         {
             RestClient = new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline, this.BaseUri);
         }
 
         /// <summary>
+        /// Gets the parent resource of this resource.
+        /// </summary>
+        protected new TenantOperations Parent { get {return base.Parent as TenantOperations;} }
+
+        /// <summary>
         /// Gets the valid resource type associated with the container.
         /// </summary>
-        protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
+        protected override ResourceType ValidResourceType => TenantOperations.ResourceType;
 
         /// <summary>
         /// Gets the operations that can be performed on the container.
@@ -123,16 +128,6 @@ namespace Azure.ResourceManager.Core
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Validate the resource identifier is supported in the current container.
-        /// </summary>
-        /// <param name="identifier"> The identifier of the resource. </param>
-        protected override void Validate(ResourceIdentifier identifier)
-        {
-            if (!(identifier is null))
-                throw new ArgumentException("Invalid parent for subscription container", nameof(identifier));
         }
 
         /// <summary>

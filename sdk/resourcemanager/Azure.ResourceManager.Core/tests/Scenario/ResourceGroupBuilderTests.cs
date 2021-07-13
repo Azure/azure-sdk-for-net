@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public void CreateOrUpdate(string value)
         {
-            Assert.ThrowsAsync<ArgumentException>(async () => _ = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(value));
+            Assert.ThrowsAsync<ArgumentException>(async () => _ = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(value));
         }
 
         [TestCase(null)]
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             Assert.ThrowsAsync<ArgumentException>(async () =>
             {
-                var createOp = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(value);
+                var createOp = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).StartCreateOrUpdateAsync(value);
                 _ = await createOp.WaitForCompletionAsync();
             });
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public void Build()
         {
-            var location = LocationData.WestUS2;
+            var location = Location.WestUS2;
             var tags = new Dictionary<string, string>()
             {
                 { "key", "value"}

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -93,10 +92,10 @@ namespace Azure.ResourceManager.Core
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
             Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, options ?? ClientOptions);
 
+            _tenant = new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptions().TryGet(defaultSubscriptionId);
-            _tenant = new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
             ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
@@ -129,10 +128,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the Azure subscriptions.
         /// </summary>
         /// <returns> Subscription container. </returns>
-        public virtual SubscriptionContainer GetSubscriptions()
-        {
-            return new SubscriptionContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
-        }
+        public virtual SubscriptionContainer GetSubscriptions()  => _tenant.GetSubscriptions();
 
         /// <summary>
         /// Gets the tenants.
@@ -243,5 +239,18 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual async Task<Response<ProviderInfo>> GetProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => await _tenant.GetProviderAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
-}
+
+        /// <summary>
+        /// Gets the management group container for this tenant.
+        /// </summary>
+        /// <returns> A container of the management groups. </returns>
+        public virtual ManagementGroupContainer GetManagementGroups() => _tenant.GetManagementGroups();
+
+        /// <summary>
+        /// Gets the managmeent group operations object associated with the id.
+        /// </summary>
+        /// <param name="id"> The id of the management group operations. </param>
+        /// <returns> A client to perform operations on the management group. </returns>
+        public virtual ManagementGroupOperations GetManagementGroupOperations(string id) => _tenant.GetManagementGroupOperations(id);
+    }
 }

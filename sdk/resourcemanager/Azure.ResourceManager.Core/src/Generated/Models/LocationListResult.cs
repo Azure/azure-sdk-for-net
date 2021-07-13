@@ -12,17 +12,17 @@ namespace Azure.ResourceManager.Core
         /// <summary> Initializes a new instance of LocationListResult. </summary>
         internal LocationListResult()
         {
-            Value = new ChangeTrackingList<LocationData>();
+            Value = new ChangeTrackingList<LocationExpanded>();
         }
 
         /// <summary> Initializes a new instance of LocationListResult. </summary>
         /// <param name="value"> An array of locations. </param>
-        internal LocationListResult(IReadOnlyList<LocationData> value)
+        internal LocationListResult(IReadOnlyList<LocationExpanded> value)
         {
             Value = value;
         }
 
         /// <summary> An array of locations. </summary>
-        public IReadOnlyList<LocationData> Value { get; }
+        public IReadOnlyList<LocationExpanded> Value { get; }
     }
 }

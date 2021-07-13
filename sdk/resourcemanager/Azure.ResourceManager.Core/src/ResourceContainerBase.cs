@@ -49,11 +49,6 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets the parent resource of this resource.
-        /// </summary>
-        protected new ResourceOperationsBase Parent { get {return base.Parent as ResourceOperationsBase;} }
-
-        /// <summary>
         /// Verify that the input resource Id is a valid container for this type.
         /// </summary>
         /// <param name="identifier"> The input resource Id to check. </param>
@@ -70,7 +65,7 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="TParent"> The type of the parents full resource object. </typeparam>
         /// <typeparam name="TParentId"> The type of the parents resource id. </typeparam>
         /// <typeparam name="TParentOperations"> The type of the parents operations object. </typeparam>
-        /// <returns> The <see cref="LocationData"/> associated with the parent object. </returns>
+        /// <returns> The <see cref="Location"/> associated with the parent object. </returns>
         protected TParent GetParentResource<TParent, TParentId, TParentOperations>()
             where TParent : TParentOperations
             where TParentOperations : ResourceOperationsBase<TParentId, TParent>

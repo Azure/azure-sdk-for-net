@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="location"> The location of the resource. </param>
         /// <param name="parts"> The path segments in the resource id following the location. </param>
         /// <returns> The resource identifier for the given resource path. </returns>
-        internal static ResourceIdentifier CreateBaseLocationIdentifier(SubscriptionResourceIdentifier subscription, LocationData location, List<string> parts)
+        internal static ResourceIdentifier CreateBaseLocationIdentifier(SubscriptionResourceIdentifier subscription, Location location, List<string> parts)
         {
             var parent = new LocationResourceIdentifier(subscription, location);
             if (parts.Count == 0)
@@ -413,9 +413,9 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="location"> The location for thsi resource. </param>
         /// <returns> True if the resource is contained in a location, otherwise false. </returns>
-        public virtual bool TryGetLocation(out LocationData location)
+        public virtual bool TryGetLocation(out Location location)
         {
-            location = default(LocationData);
+            location = default(Location);
             return false;
         }
 

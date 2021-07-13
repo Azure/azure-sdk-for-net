@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Core
             _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
+        /// <summary>
+        /// Gets the parent resource of this resource.
+        /// </summary>
+        protected new ProviderOperations Parent { get {return base.Parent as ProviderOperations;} }
+
         /// <inheritdoc />
         protected override ResourceType ValidResourceType => ProviderOperations.ResourceType;
 
