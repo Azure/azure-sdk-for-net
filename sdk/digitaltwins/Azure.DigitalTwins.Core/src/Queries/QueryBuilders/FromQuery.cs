@@ -23,7 +23,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Adds the FROM clause and its argument to the query via the Clauses component.
         /// </summary>
-        /// <param name="collection"> An enum different collections that users can query from. </param>
+        /// <param name="collection">An enum different collections that users can query from.</param>
         /// <returns> ADT query with select and from clauses. </returns>
         public WhereStatement From(AdtCollection collection)
         {
@@ -34,8 +34,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Adds the FROM clause, its argument, and an alias for its argument into the query.
         /// </summary>
-        /// <param name="collection"> The collection being queried from. </param>
-        /// <param name="alias"> The alias being assigned to the collection being queried from. </param>
+        /// <param name="collection">The collection being queried from.</param>
+        /// <param name="alias">The alias being assigned to the collection being queried from.</param>
         /// <returns> ADT query with select from clauses. </returns>
         public WhereStatement From(AdtCollection collection, string alias)
         {
@@ -47,7 +47,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// An overloaded alternative to passing in a Collection that allows for simply passing in the string name of the collection
         /// that is being queried.
         /// </summary>
-        /// <param name="collection"> The name of the collection. </param>
+        /// <param name="collection">The name of the collection.</param>
         /// <returns> ADT query with select and from clauses. </returns>
         public WhereStatement FromCustom(string collection)
         {

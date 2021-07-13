@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used to add a select clause (and its corresponding argument) to the query.
         /// </summary>
-        /// <param name="args"> The arguments that define what we select (e.g., *). </param>
+        /// <param name="args">The arguments that define what we select (e.g., *).</param>
         /// <returns> Query that contains a select clause. </returns>
         public SelectAsQuery Select(params string[] args)
         {
@@ -49,8 +49,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the ADT query language. Same functionality as select
         /// but inserts TOP() into the query structure as well as well as specific properties to select.
         /// </summary>
-        /// <param name="count"> The argument for TOP(), ie the number of instances to return. </param>
-        /// <param name="args"> The arguments that can be optionally passed with top (e.g., property name). </param>
+        /// <param name="count">The argument for TOP(), ie the number of instances to return.</param>
+        /// <param name="args">The arguments that can be optionally passed with top (e.g., property name).</param>
         /// <returns> Query that contains a select clause. </returns>
         public SelectAsQuery SelectTop(int count, params string[] args)
         {
@@ -67,7 +67,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the ADT query language. Same functionality as select
         /// but inserts TOP() into the query structure as well.
         /// </summary>
-        /// <param name="count"> The argument for TOP(), i.e. the number of results to return. </param>
+        /// <param name="count">The argument for TOP(), i.e. the number of results to return.</param>
         /// <returns> Query that contains a select clause. </returns>
         public SelectAsQuery SelectTopAll(int count)
         {
@@ -93,7 +93,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used when overriding the query builder with the literal query string.
         /// </summary>
-        /// <param name="customQuery"> Query in string format. </param>
+        /// <param name="customQuery">Query in string format.</param>
         /// <returns> Query that contains a select clause. </returns>
         public SelectAsQuery SelectCustom(string customQuery)
         {

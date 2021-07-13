@@ -29,9 +29,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Specifies the list of columns that the query will return
+        /// Specifies the list of columns that the query will return.
         /// </summary>
-        /// <param name="args"> The arguments that can be queried (e.g., *, somePropertyName, etc.) </param>
+        /// <param name="args">The arguments that can be queried (e.g., *, somePropertyName, etc.)</param>
         /// <returns> Query that contains a select clause. </returns>
         public SelectAsQuery Select(params string[] args)
         {
@@ -50,8 +50,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used to return only a certain number of top items that meet the query requirements.
         /// </summary>
-        /// <param name="count"> The argument for TOP(), i.e. the number of results to return. </param>
-        /// <param name="args"> The arguments that can be optionally passed with top (e.g., property name). </param>
+        /// <param name="count">The argument for TOP(), i.e. the number of results to return.</param>
+        /// <param name="args">The arguments that can be optionally passed with top (e.g., property name).</param>
         /// <returns> Query that contains a select clause. </returns>
         public SelectAsQuery SelectTop(int count, params string[] args)
         {
@@ -61,7 +61,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used to return only a certain number of top items that meet the query requirements.
         /// </summary>
-        /// <param name="count"> The argument for TOP(), i.e. the number of results to return. </param>
+        /// <param name="count">The argument for TOP(), i.e. the number of results to return.</param>
         /// <returns> Query that contains a select clause. </returns>
         public SelectAsQuery SelectTopAll(int count)
         {
@@ -89,7 +89,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// .Build();
         /// </code>
         /// </example>
-        /// <param name="customQuery"> Query in string format. </param>
+        /// <param name="customQuery">Query in string format.</param>
         /// <returns> Query that contains a select clause. </returns>
         public SelectAsQuery SelectCustom(string customQuery)
         {
@@ -99,12 +99,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used to alias selectable properties in place of the AS keyword.
         /// </summary>
-        /// <param name="literal"> The proper name for the selectable property in the ADT Query Language. </param>
-        /// <param name="alias"> The alias to be assigned to the return contents in the query response. </param>
+        /// <param name="field">The proper name for the selectable property in the ADT Query Language.</param>
+        /// <param name="alias">The alias to be assigned to the return contents in the query response.</param>
         /// <returns> Query that contains an aliased select clause. </returns>
-        public SelectAsQuery SelectAs(string literal, string alias)
+        public SelectAsQuery SelectAs(string field, string alias)
         {
-            return _selectAs.SelectAs(literal, alias);
+            return _selectAs.SelectAs(field, alias);
         }
 
         /// <summary>
@@ -123,13 +123,16 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             bool nonAliasedSelectStatements = selectStatementQueryText.Length > 0;
             bool aliasedSelectStatements = selectStatementAliasedQueryText.Length > 0;
 
-            // begin with any non-aliased select components
-            finalQuery.Append(selectStatementQueryText);
-
             // add aliased select components
-            if (nonAliasedSelectStatements && aliasedSelectStatements)
+            if (nonAliasedSelectStatements)
             {
-                finalQuery.Append($", ");
+                // begin with any non-aliased select components
+                finalQuery.Append(selectStatementQueryText);
+
+                if (aliasedSelectStatements)
+                {
+                    finalQuery.Append($", ");
+                }
             }
 
             finalQuery.Append(selectStatementAliasedQueryText);
