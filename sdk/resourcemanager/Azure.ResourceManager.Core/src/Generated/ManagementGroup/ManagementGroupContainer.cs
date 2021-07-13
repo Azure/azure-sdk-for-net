@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Core
             _restClient = new ManagementGroupsRestOperations(_clientDiagnostics, Pipeline, BaseUri);
         }
 
+        /// <summary>
+        /// Gets the parent resource of this resource.
+        /// </summary>
+        protected new TenantOperations Parent { get {return base.Parent as TenantOperations;} }
+
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => TenantOperations.ResourceType;
 
