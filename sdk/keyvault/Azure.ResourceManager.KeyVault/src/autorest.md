@@ -16,18 +16,12 @@ payload-flattening-threshold: 2
 operation-group-to-resource-type:
     PrivateLinkResources: Microsoft.KeyVault/vaults/privateLinkResources
     MHSMPrivateLinkResources: Microsoft.KeyVault/managedHSMs/privateLinkResources
-    # Operations: Microsoft.KeyVault/operations
+    DeletedVaults: Microsoft.KeyVault/deletedVaults
 operation-group-to-resource:
-    # PrivateLinkResources: PrivateLinkResource
-    # MHSMPrivateLinkResources: MHSMPrivateLinkResource
-    # Operations: NonResource
     Vaults: Vault
 operation-group-to-parent:
-   VirtualMachineExtensionImages: subscriptions
+   DeletedVaults: subscriptions
 directive:
-    # - rename-model:
-    #     from: Operation
-    #     to: RestApi
     - from: swagger-document
       where: $.paths
       transform: delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/accessPolicies/{operationKind}']
@@ -38,6 +32,6 @@ directive:
       where: $.definitions
       transform: delete $['VaultAccessPolicyProperties']
     - from: swagger-document
-      where: $.paths.'/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults'.'get'.operationId
-      transform: 
+      where: $['paths']['/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults']['get']
+      transform: $.operationId = 'DeletedVaults_ListBySubscription'
 ```

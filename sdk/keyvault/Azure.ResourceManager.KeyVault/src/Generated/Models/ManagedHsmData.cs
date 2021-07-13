@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault
     {
         /// <summary> Initializes a new instance of ManagedHsmData. </summary>
         /// <param name="location"> The location. </param>
-        public ManagedHsmData(LocationData location) : base(location)
+        public ManagedHsmData(Location location) : base(location)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="sku"> SKU details. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the key vault resource. </param>
         /// <param name="properties"> Properties of the managed HSM. </param>
-        internal ManagedHsmData(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, ManagedHsmSku sku, SystemData systemData, ManagedHsmProperties properties) : base(id, name, type, location, tags, sku, systemData)
+        internal ManagedHsmData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, ManagedHsmSku sku, SystemData systemData, ManagedHsmProperties properties) : base(id, name, type, location, tags, sku, systemData)
         {
             Properties = properties;
         }

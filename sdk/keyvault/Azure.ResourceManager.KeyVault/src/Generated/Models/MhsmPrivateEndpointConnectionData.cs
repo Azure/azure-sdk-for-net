@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault
     {
         /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionData. </summary>
         /// <param name="location"> The location. </param>
-        public MhsmPrivateEndpointConnectionData(LocationData location) : base(location)
+        public MhsmPrivateEndpointConnectionData(Location location) : base(location)
         {
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal MhsmPrivateEndpointConnectionData(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, ManagedHsmSku sku, SystemData systemData, string etag, MhsmPrivateEndpoint privateEndpoint, MhsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, type, location, tags, sku, systemData)
+        internal MhsmPrivateEndpointConnectionData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, ManagedHsmSku sku, SystemData systemData, string etag, MhsmPrivateEndpoint privateEndpoint, MhsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, type, location, tags, sku, systemData)
         {
             Etag = etag;
             PrivateEndpoint = privateEndpoint;

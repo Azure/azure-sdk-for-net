@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault
     {
         /// <summary> Initializes a new instance of MhsmPrivateLinkResource. </summary>
         /// <param name="location"> The location. </param>
-        public MhsmPrivateLinkResource(LocationData location) : base(location)
+        public MhsmPrivateLinkResource(Location location) : base(location)
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="groupId"> Group identifier of private link resource. </param>
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
-        internal MhsmPrivateLinkResource(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, ManagedHsmSku sku, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type, location, tags, sku, systemData)
+        internal MhsmPrivateLinkResource(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, ManagedHsmSku sku, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type, location, tags, sku, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

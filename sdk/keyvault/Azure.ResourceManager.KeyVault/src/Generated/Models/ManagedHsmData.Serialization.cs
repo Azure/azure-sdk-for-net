@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault
             Optional<ManagedHsmSku> sku = default;
             Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
-            LocationData location = default;
+            Location location = default;
             ResourceGroupResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
