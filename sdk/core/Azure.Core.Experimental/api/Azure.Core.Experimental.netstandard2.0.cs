@@ -199,6 +199,7 @@ namespace Azure.Core
         public Azure.Core.ResponseInnerError? InnerError { get { throw null; } }
         public string? Message { get { throw null; } }
         public string? Target { get { throw null; } }
+        public override string ToString() { throw null; }
     }
     public sealed partial class ResponseInnerError
     {
@@ -206,5 +207,6 @@ namespace Azure.Core
         public string? Code { get { throw null; } }
         public Azure.Core.ResponseInnerError? InnerError { get { throw null; } }
         public string? Message { get { throw null; } }
+        public override string ToString() { throw null; }
     }
 }

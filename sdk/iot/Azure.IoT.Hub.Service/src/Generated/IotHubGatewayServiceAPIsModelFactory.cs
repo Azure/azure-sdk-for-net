@@ -7,86 +7,88 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.IoT.Hub.Service.Models;
+using System.Linq;
 
-namespace Azure.IoT.Hub.Service
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class IotHubGatewayServiceAPIsModelFactory
     {
-        /// <summary> Initializes new instance of ConfigurationQueriesTestResponse class. </summary>
+        /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>
         /// <param name="targetConditionError"> The errors from running the target condition query. </param>
         /// <param name="customMetricQueryErrors"> The errors from running the custom metric query. </param>
         /// <returns> A new <see cref="Models.ConfigurationQueriesTestResponse"/> instance for mocking. </returns>
-        public static ConfigurationQueriesTestResponse ConfigurationQueriesTestResponse(string targetConditionError = default, IReadOnlyDictionary<string, string> customMetricQueryErrors = default)
+        public static ConfigurationQueriesTestResponse ConfigurationQueriesTestResponse(string targetConditionError = null, IReadOnlyDictionary<string, string> customMetricQueryErrors = null)
         {
             customMetricQueryErrors ??= new Dictionary<string, string>();
+
             return new ConfigurationQueriesTestResponse(targetConditionError, customMetricQueryErrors);
         }
 
-        /// <summary> Initializes new instance of DevicesStatistics class. </summary>
+        /// <summary> Initializes a new instance of DevicesStatistics. </summary>
         /// <param name="totalDeviceCount"> The total number of devices registered for the IoT Hub. </param>
         /// <param name="enabledDeviceCount"> The number of currently enabled devices. </param>
         /// <param name="disabledDeviceCount"> The number of currently disabled devices. </param>
         /// <returns> A new <see cref="Models.DevicesStatistics"/> instance for mocking. </returns>
-        public static DevicesStatistics DevicesStatistics(long? totalDeviceCount = default, long? enabledDeviceCount = default, long? disabledDeviceCount = default)
+        public static DevicesStatistics DevicesStatistics(long? totalDeviceCount = null, long? enabledDeviceCount = null, long? disabledDeviceCount = null)
         {
             return new DevicesStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount);
         }
 
-        /// <summary> Initializes new instance of ServiceStatistics class. </summary>
+        /// <summary> Initializes a new instance of ServiceStatistics. </summary>
         /// <param name="connectedDeviceCount"> The number of currently connected devices. </param>
         /// <returns> A new <see cref="Models.ServiceStatistics"/> instance for mocking. </returns>
-        public static ServiceStatistics ServiceStatistics(long? connectedDeviceCount = default)
+        public static ServiceStatistics ServiceStatistics(long? connectedDeviceCount = null)
         {
             return new ServiceStatistics(connectedDeviceCount);
         }
 
-        /// <summary> Initializes new instance of BulkRegistryOperationResponse class. </summary>
+        /// <summary> Initializes a new instance of BulkRegistryOperationResponse. </summary>
         /// <param name="isSuccessful"> The operation result. </param>
         /// <param name="errors"> The device registry operation errors. </param>
         /// <param name="warnings"> The device registry operation warnings. </param>
         /// <returns> A new <see cref="Models.BulkRegistryOperationResponse"/> instance for mocking. </returns>
-        public static BulkRegistryOperationResponse BulkRegistryOperationResponse(bool? isSuccessful = default, IReadOnlyList<DeviceRegistryOperationError> errors = default, IReadOnlyList<DeviceRegistryOperationWarning> warnings = default)
+        public static BulkRegistryOperationResponse BulkRegistryOperationResponse(bool? isSuccessful = null, IEnumerable<DeviceRegistryOperationError> errors = null, IEnumerable<DeviceRegistryOperationWarning> warnings = null)
         {
             errors ??= new List<DeviceRegistryOperationError>();
             warnings ??= new List<DeviceRegistryOperationWarning>();
-            return new BulkRegistryOperationResponse(isSuccessful, errors, warnings);
+
+            return new BulkRegistryOperationResponse(isSuccessful, errors?.ToList(), warnings?.ToList());
         }
 
-        /// <summary> Initializes new instance of DeviceRegistryOperationError class. </summary>
+        /// <summary> Initializes a new instance of DeviceRegistryOperationError. </summary>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorStatus"> The details of the error. </param>
         /// <param name="moduleId"> The unique identifier of the module, if applicable. </param>
         /// <param name="operation"> The type of the operation that failed. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryOperationError"/> instance for mocking. </returns>
-        public static DeviceRegistryOperationError DeviceRegistryOperationError(string deviceId = default, DeviceRegistryOperationErrorCode? errorCode = default, string errorStatus = default, string moduleId = default, string operation = default)
+        public static DeviceRegistryOperationError DeviceRegistryOperationError(string deviceId = null, DeviceRegistryOperationErrorCode? errorCode = null, string errorStatus = null, string moduleId = null, string operation = null)
         {
             return new DeviceRegistryOperationError(deviceId, errorCode, errorStatus, moduleId, operation);
         }
 
-        /// <summary> Initializes new instance of DeviceRegistryOperationWarning class. </summary>
+        /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="warningCode"> The warning code. </param>
         /// <param name="warningStatus"> The details of the warning. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryOperationWarning"/> instance for mocking. </returns>
-        public static DeviceRegistryOperationWarning DeviceRegistryOperationWarning(string deviceId = default, string warningCode = default, string warningStatus = default)
+        public static DeviceRegistryOperationWarning DeviceRegistryOperationWarning(string deviceId = null, string warningCode = null, string warningStatus = null)
         {
             return new DeviceRegistryOperationWarning(deviceId, warningCode, warningStatus);
         }
 
-        /// <summary> Initializes new instance of PurgeMessageQueueResult class. </summary>
+        /// <summary> Initializes a new instance of PurgeMessageQueueResult. </summary>
         /// <param name="totalMessagesPurged"> The total number of messages purged. </param>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="moduleId"> The unique identifier of the module. </param>
         /// <returns> A new <see cref="Models.PurgeMessageQueueResult"/> instance for mocking. </returns>
-        public static PurgeMessageQueueResult PurgeMessageQueueResult(int? totalMessagesPurged = default, string deviceId = default, string moduleId = default)
+        public static PurgeMessageQueueResult PurgeMessageQueueResult(int? totalMessagesPurged = null, string deviceId = null, string moduleId = null)
         {
             return new PurgeMessageQueueResult(totalMessagesPurged, deviceId, moduleId);
         }
 
-        /// <summary> Initializes new instance of JobResponse class. </summary>
+        /// <summary> Initializes a new instance of JobResponse. </summary>
         /// <param name="jobId"> System generated.  Ignored at creation. The unique identifier of the job. </param>
         /// <param name="queryCondition"> The device query condition. </param>
         /// <param name="createdTime"> System generated.  Ignored at creation. The creation date and time of the job. </param>
@@ -101,39 +103,40 @@ namespace Azure.IoT.Hub.Service
         /// <param name="statusMessage"> The status message of the job. </param>
         /// <param name="deviceJobStatistics"> The details regarding job execution status. </param>
         /// <returns> A new <see cref="Models.JobResponse"/> instance for mocking. </returns>
-        public static JobResponse JobResponse(string jobId = default, string queryCondition = default, DateTimeOffset? createdTime = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, long? maxExecutionTimeInSeconds = default, JobResponseType? type = default, CloudToDeviceMethodRequest cloudToDeviceMethod = default, TwinData updateTwin = default, JobResponseStatus? status = default, string failureReason = default, string statusMessage = default, DeviceJobStatistics deviceJobStatistics = default)
+        public static JobResponse JobResponse(string jobId = null, string queryCondition = null, DateTimeOffset? createdTime = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, long? maxExecutionTimeInSeconds = null, JobResponseType? type = null, CloudToDeviceMethodRequest cloudToDeviceMethod = null, TwinData updateTwin = null, JobResponseStatus? status = null, string failureReason = null, string statusMessage = null, DeviceJobStatistics deviceJobStatistics = null)
         {
             return new JobResponse(jobId, queryCondition, createdTime, startTime, endTime, maxExecutionTimeInSeconds, type, cloudToDeviceMethod, updateTwin, status, failureReason, statusMessage, deviceJobStatistics);
         }
 
-        /// <summary> Initializes new instance of DeviceJobStatistics class. </summary>
+        /// <summary> Initializes a new instance of DeviceJobStatistics. </summary>
         /// <param name="deviceCount"> The number of devices targeted by the job. </param>
         /// <param name="failedCount"> The number of failed jobs. </param>
         /// <param name="succeededCount"> The number of succeeded jobs. </param>
         /// <param name="runningCount"> The number of running jobs. </param>
         /// <param name="pendingCount"> The number of pending (scheduled) jobs. </param>
         /// <returns> A new <see cref="Models.DeviceJobStatistics"/> instance for mocking. </returns>
-        public static DeviceJobStatistics DeviceJobStatistics(int? deviceCount = default, int? failedCount = default, int? succeededCount = default, int? runningCount = default, int? pendingCount = default)
+        public static DeviceJobStatistics DeviceJobStatistics(int? deviceCount = null, int? failedCount = null, int? succeededCount = null, int? runningCount = null, int? pendingCount = null)
         {
             return new DeviceJobStatistics(deviceCount, failedCount, succeededCount, runningCount, pendingCount);
         }
 
-        /// <summary> Initializes new instance of QueryResult class. </summary>
+        /// <summary> Initializes a new instance of QueryResult. </summary>
         /// <param name="type"> The query result type. </param>
         /// <param name="items"> The query result items, as a collection. </param>
         /// <param name="continuationToken"> The continuation token. </param>
         /// <returns> A new <see cref="Models.QueryResult"/> instance for mocking. </returns>
-        public static QueryResult QueryResult(QueryResultType? type = default, IReadOnlyList<object> items = default, string continuationToken = default)
+        public static QueryResult QueryResult(QueryResultType? type = null, IEnumerable<object> items = null, string continuationToken = null)
         {
             items ??= new List<object>();
-            return new QueryResult(type, items, continuationToken);
+
+            return new QueryResult(type, items?.ToList(), continuationToken);
         }
 
-        /// <summary> Initializes new instance of CloudToDeviceMethodResponse class. </summary>
+        /// <summary> Initializes a new instance of CloudToDeviceMethodResponse. </summary>
         /// <param name="status"> Method invocation result status. </param>
         /// <param name="payload"> Method invocation result payload. </param>
         /// <returns> A new <see cref="Models.CloudToDeviceMethodResponse"/> instance for mocking. </returns>
-        public static CloudToDeviceMethodResponse CloudToDeviceMethodResponse(int? status = default, object payload = default)
+        public static CloudToDeviceMethodResponse CloudToDeviceMethodResponse(int? status = null, object payload = null)
         {
             return new CloudToDeviceMethodResponse(status, payload);
         }

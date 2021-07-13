@@ -18,29 +18,29 @@ namespace Azure.AI.MetricsAdvisor
         {
             writer.WriteStartObject();
             writer.WritePropertyName("startTime");
-            writer.WriteStringValue(StartTime, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("endTime");
-            writer.WriteStringValue(EndTime, "O");
+            writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("value");
             writer.WriteObjectValue(ValueInternal);
-            if (Optional.IsDefined(AnomalyDetectionConfigurationId))
+            if (Optional.IsDefined(DetectionConfigurationId))
             {
-                if (AnomalyDetectionConfigurationId != null)
+                if (DetectionConfigurationId != null)
                 {
                     writer.WritePropertyName("anomalyDetectionConfigurationId");
-                    writer.WriteStringValue(AnomalyDetectionConfigurationId);
+                    writer.WriteStringValue(DetectionConfigurationId);
                 }
                 else
                 {
                     writer.WriteNull("anomalyDetectionConfigurationId");
                 }
             }
-            if (Optional.IsDefined(AnomalyDetectionConfigurationSnapshot))
+            if (Optional.IsDefined(DetectionConfigurationSnapshot))
             {
-                if (AnomalyDetectionConfigurationSnapshot != null)
+                if (DetectionConfigurationSnapshot != null)
                 {
                     writer.WritePropertyName("anomalyDetectionConfigurationSnapshot");
-                    writer.WriteObjectValue(AnomalyDetectionConfigurationSnapshot);
+                    writer.WriteObjectValue(DetectionConfigurationSnapshot);
                 }
                 else
                 {
@@ -48,7 +48,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
             }
             writer.WritePropertyName("feedbackType");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(FeedbackKind.ToString());
             writer.WritePropertyName("metricId");
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter");
@@ -63,12 +63,12 @@ namespace Azure.AI.MetricsAdvisor
             AnomalyFeedbackValue value = default;
             Optional<string> anomalyDetectionConfigurationId = default;
             Optional<AnomalyDetectionConfiguration> anomalyDetectionConfigurationSnapshot = default;
-            FeedbackType feedbackType = default;
+            MetricFeedbackKind feedbackType = default;
             Optional<string> feedbackId = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> userPrincipal = default;
             string metricId = default;
-            FeedbackDimensionFilter dimensionFilter = default;
+            FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"))
@@ -108,7 +108,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
                 if (property.NameEquals("feedbackType"))
                 {
-                    feedbackType = new FeedbackType(property.Value.GetString());
+                    feedbackType = new MetricFeedbackKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("feedbackId"))
@@ -138,7 +138,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
                 if (property.NameEquals("dimensionFilter"))
                 {
-                    dimensionFilter = FeedbackDimensionFilter.DeserializeFeedbackDimensionFilter(property.Value);
+                    dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
                     continue;
                 }
             }

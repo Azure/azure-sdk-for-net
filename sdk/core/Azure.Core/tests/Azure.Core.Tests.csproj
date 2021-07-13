@@ -20,7 +20,6 @@
     <ProjectReference Include="..\src\Azure.Core.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
-    <ProjectReference Include="..\..\..\textanalytics\Azure.AI.TextAnalytics\src\Azure.AI.TextAnalytics.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Shared\Multipart\*.cs" LinkBase="Shared\Multipart" />

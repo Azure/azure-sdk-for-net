@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var credential = new DataSourceServicePrincipal("credentialName", "clientId", "clientSecret", "tenantId");
+            var credential = new ServicePrincipalCredentialEntity("credentialName", "clientId", "clientSecret", "tenantId");
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
@@ -50,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(() => adminClient.UpdateDataSourceCredentialAsync(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.UpdateDataSourceCredential(null), Throws.InstanceOf<ArgumentNullException>());
 
-            var credentialWithNullId = new DataSourceServicePrincipal("name", "clientId", "clientSecret", "tenantId");
+            var credentialWithNullId = new ServicePrincipalCredentialEntity("name", "clientId", "clientSecret", "tenantId");
 
             Assert.That(() => adminClient.UpdateDataSourceCredentialAsync(credentialWithNullId), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.UpdateDataSourceCredential(credentialWithNullId), Throws.InstanceOf<ArgumentNullException>());
@@ -61,7 +61,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var credential = new DataSourceServicePrincipal(default, FakeGuid, default, default, new ServicePrincipalParam("clientId", "clientSecret"));
+            var credential = new ServicePrincipalCredentialEntity(default, FakeGuid, default, default, new ServicePrincipalParam("clientId", "clientSecret"));
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();

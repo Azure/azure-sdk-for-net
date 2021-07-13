@@ -20,27 +20,26 @@ namespace Azure.IoT.ModelsRepository.Samples
             #region Snippet:ModelsRepositorySamplesCreateServiceClientWithGlobalEndpoint
 
             // When no URI is provided for instantiation, the Azure IoT Models Repository global endpoint
-            // https://devicemodels.azure.com/ is used and the model dependency resolution
-            // configuration is set to TryFromExpanded.
+            // https://devicemodels.azure.com/ is used.
             var client = new ModelsRepositoryClient(new ModelsRepositoryClientOptions());
-            Console.WriteLine($"Initialized client pointing to global endpoint: {client.RepositoryUri}");
+            Console.WriteLine($"Initialized client pointing to global endpoint: {client.RepositoryUri.AbsoluteUri}");
 
             #endregion Snippet:ModelsRepositorySamplesCreateServiceClientWithGlobalEndpoint
 
+            #region Snippet:ModelsRepositorySamplesCreateServiceClientWithCustomEndpoint
+
             // This form shows specifing a custom URI for the models repository with default client options.
-            // The default client options will enable model dependency resolution.
             const string remoteRepoEndpoint = "https://contoso.com/models";
             client = new ModelsRepositoryClient(new Uri(remoteRepoEndpoint));
-            Console.WriteLine($"Initialized client pointing to custom endpoint: {client.RepositoryUri}");
+            Console.WriteLine($"Initialized client pointing to custom endpoint: {client.RepositoryUri.AbsoluteUri}");
 
+            #endregion Snippet:ModelsRepositorySamplesCreateServiceClientWithCustomEndpoint
 
             #region Snippet:ModelsRepositorySamplesCreateServiceClientWithLocalRepository
 
-            // The client will also work with a local filesystem URI. This example shows initalization
-            // with a local URI and disabling model dependency resolution.
-            client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository),
-                new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled));
-            Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri}");
+            // The client will also work with a local filesystem URI.
+            client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsRepository));
+            Console.WriteLine($"Initialized client pointing to local path: {client.RepositoryUri.LocalPath}");
 
             #endregion Snippet:ModelsRepositorySamplesCreateServiceClientWithLocalRepository
         }
@@ -63,6 +62,28 @@ namespace Azure.IoT.ModelsRepository.Samples
             Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
 
             #endregion Snippet:ModelsRepositorySamplesGetModelsFromGlobalRepoAsync
+        }
+
+        public static async Task GetModelsDisabledDependencyResolution()
+        {
+            #region Snippet:ModelsRepositorySamplesGetModelsDisabledDependencyResolution
+
+            // Global endpoint client
+            var client = new ModelsRepositoryClient();
+
+            // In this example model dependency resolution is disabled by passing in ModelDependencyResolution.Disabled
+            // as the value for the dependencyResolution parameter of GetModelsAsync(). By default the parameter has a value
+            // of ModelDependencyResolution.Enabled.
+            // When model dependency resolution is disabled, only the input dtmi(s) will be processed and
+            // model dependencies (if any) will be ignored.
+            var dtmi = "dtmi:com:example:TemperatureController;1";
+            IDictionary<string, string> models = await client.GetModelsAsync(dtmi, ModelDependencyResolution.Disabled).ConfigureAwait(false);
+
+            // In this case the above dtmi has 2 model dependencies but are not returned
+            // due to disabling model dependency resolution.
+            Console.WriteLine($"{dtmi} resolved in {models.Count} interfaces.");
+
+            #endregion Snippet:ModelsRepositorySamplesGetModelsDisabledDependencyResolution
         }
 
         public static async Task GetMultipleModelsFromGlobalRepoAsync()

@@ -101,10 +101,10 @@ namespace Azure.Monitor.Query.Models
         public BinaryData GetDynamic(int index) => new BinaryData(_row[index].GetString());
 
         /// <summary>
-        /// Returns true if the value of the column at the specified index is null, otherwise false.
+        /// Returns <c>true</c> if the value of the column at the specified index is <c>null</c>, otherwise <c>false</c>.
         /// </summary>
         /// <param name="index">The column index.</param>
-        /// <returns>True if the value is null, otherwise false.</returns>
+        /// <returns><c>true</c> if the value is <c>null</c>, otherwise <c>false</c>.</returns>
         public bool IsNull(int index) => _row[index].ValueKind == JsonValueKind.Null;
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Azure.Monitor.Query.Models
         /// Returns true if the value of the column with the specified name is null, otherwise false.
         /// </summary>
         /// <param name="name">The column name.</param>
-        /// <returns>True if the value is null, otherwise false.</returns>
+        /// <returns><c>true</c> if the value is <c>null</c>, otherwise <c>false</c>.</returns>
         public bool IsNull(string name) => IsNull(_columnMap[name]);
 
         /// <summary>
@@ -271,5 +271,11 @@ namespace Azure.Monitor.Query.Models
         public object this[string name] => GetObject(name);
 
         internal bool TryGetColumn(string name, out int column) => _columnMap.TryGetValue(name, out column);
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return _row.ToString();
+        }
     }
 }

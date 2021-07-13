@@ -1,6 +1,16 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0 (2021-07-06)
 
 ### Added
 - All section properties of the `AmqpAnnotatedMessage` are now lazily allocated to reflect that they are defined as optional in the AMQP specification, section 3.2.

@@ -1,6 +1,16 @@
 # Release History
 
-## 1.5.0-beta.2 (Unreleased)
+## 1.5.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.5.0-beta.2 (2021-07-12)
 
 ### New Features
 
@@ -15,6 +25,11 @@
   ```
   
 ## 1.5.0-beta.1 (2021-06-08)
+
+### New Features
+- Added regional STS support to client credential types
+  - Added `RegionalAuthority` extensible enum
+  - Added `RegionalAuthority` property to `ClientSecretCredentialOptions` and `ClientCertificateCredentialOptions`
 
 ### Fixes and improvements
 
