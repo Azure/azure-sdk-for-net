@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Core.Tests
             var resource2 = WritableSubResource.DeserializeWritableSubResource(json);
             Assert.AreEqual(expected, jsonString);
             Assert.AreEqual(jsonString, JsonHelper.SerializeToString(resource2));
+
+            var resource3 = new WritableSubResource();
+            resource3.Id = id;
+            Assert.AreEqual(jsonString, JsonHelper.SerializeToString(resource3));
         }
     }
 }
