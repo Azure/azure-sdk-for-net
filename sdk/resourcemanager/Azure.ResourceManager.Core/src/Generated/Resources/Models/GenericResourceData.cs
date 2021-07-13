@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="sku"> The SKU of the resource. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        internal GenericResourceData(string id, string name, string type, string location, IDictionary<string, string> tags, Plan plan, object properties, string kind, string managedBy, Sku sku, Identity identity) : base(id, name, type, location, tags)
+        internal GenericResourceData(string id, string name, string type, string location, IDictionary<string, string> tags, Plan plan, object properties, string kind, string managedBy, Sku sku, ResourceIdentity identity) : base(id, name, type, location, tags)
         {
             Plan = plan;
             Properties = properties;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.Core
         /// <summary> The SKU of the resource. </summary>
         public Sku Sku { get; set; }
         /// <summary> The identity of the resource. </summary>
-        public Identity Identity { get; set; }
+        public ResourceIdentity Identity { get; set; }
     }
 }

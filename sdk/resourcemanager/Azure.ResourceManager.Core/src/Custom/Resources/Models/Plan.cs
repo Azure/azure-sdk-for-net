@@ -12,53 +12,6 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public sealed partial class Plan : IEquatable<Plan>, IComparable<Plan>
     {
-        /// <summary> Initializes a new instance of Plan. </summary>
-        public Plan()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Plan"/> class.
-        /// </summary>
-        /// <param name="name"> Plan's Name. </param>
-        /// <param name="publisher"> Plan's Publisher.</param>
-        /// <param name="product"> Plan's Product. </param>
-        /// <param name="promotionCode"> Plan's Promotion Code. </param>
-        /// <param name="version"> Plan's Version. </param>
-        internal Plan(string name, string publisher, string product, string promotionCode, string version)
-        {
-            Name = name;
-            Publisher = publisher;
-            Product = product;
-            PromotionCode = promotionCode;
-            Version = version;
-        }
-
-        /// <summary>
-        /// Gets or sets the plan's Name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the plan's Publisher.
-        /// </summary>
-        public string Publisher { get; set; }
-
-        /// <summary>
-        /// Gets or sets the plan's product.
-        /// </summary>
-        public string Product { get; set; }
-
-        /// <summary>
-        /// Gets or sets the plan's Promotion Code.
-        /// </summary>
-        public string PromotionCode { get; set; }
-
-        /// <summary>
-        /// Gets or sets the plan's version.
-        /// </summary>
-        public string Version { get; set; }
-
         /// <summary>
         /// Compares this <see cref="Plan"/> with another instance.
         /// </summary>

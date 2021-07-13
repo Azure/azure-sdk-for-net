@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="createdTime"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="changedTime"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        internal GenericResourceExpandedData(string id, string name, string type, string location, IDictionary<string, string> tags, Plan plan, object properties, string kind, string managedBy, Sku sku, Identity identity, DateTimeOffset? createdTime, DateTimeOffset? changedTime, string provisioningState) : base(id, name, type, location, tags, plan, properties, kind, managedBy, sku, identity)
+        internal GenericResourceExpandedData(string id, string name, string type, string location, IDictionary<string, string> tags, Plan plan, object properties, string kind, string managedBy, Sku sku, ResourceIdentity identity, DateTimeOffset? createdTime, DateTimeOffset? changedTime, string provisioningState) : base(id, name, type, location, tags, plan, properties, kind, managedBy, sku, identity)
         {
             CreatedTime = createdTime;
             ChangedTime = changedTime;
