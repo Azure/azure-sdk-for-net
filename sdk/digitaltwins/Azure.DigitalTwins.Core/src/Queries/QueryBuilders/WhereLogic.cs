@@ -79,7 +79,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_defined">IS_DEFINED</see>function to the condition statement of the query.
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_defined">IS_DEFINED</see> function to the condition statement of the query.
         /// </summary>
         /// <param name="property">The property that the query is looking for as defined.</param>
         /// <returns>Logical operator to combine different WHERE functions or conditions.</returns>
@@ -90,7 +90,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_null">IS_NULL</see>function to the condition statement of the query.
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_null">IS_NULL</see> function to the condition statement of the query.
         /// </summary>
         /// <param name="expression">The expression being checked for null.</param>
         /// <returns>Logical operator to combine different WHERE functions or conditions.</returns>
@@ -101,7 +101,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#startswith">STARTSWITH</see>function to the condition statement of the query.
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#startswith">STARTSWITH</see> function to the condition statement of the query.
         /// </summary>
         /// <param name="stringToCheck">String to check the beginning of.</param>
         /// <param name="beginningString">String representing the beginning to check for.</param>
@@ -113,7 +113,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#endswith">ENDSWITH</see>function to the condition statement of the query.
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#endswith">ENDSWITH</see> function to the condition statement of the query.
         /// </summary>
         /// <param name="stringToCheck">String to check the ending of.</param>
         /// <param name="endingString">String representing the ending to check for.</param>
@@ -125,7 +125,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_of_model">IS_OF_MODEL</see>function to the condition statement of the query.
+        /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_of_model">IS_OF_MODEL</see> function to the condition statement of the query.
         /// </summary>
         /// <param name="model">Model Id to check for.</param>
         /// <param name="exact">Whether or not an exact match is required.</param>

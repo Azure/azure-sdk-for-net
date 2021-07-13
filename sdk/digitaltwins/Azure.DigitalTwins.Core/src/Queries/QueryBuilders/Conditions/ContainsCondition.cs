@@ -12,7 +12,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Constructor for ContainsCondition.
         /// </summary>
         /// <param name="value">The value being searched for within some list of objects.</param>
-        /// <param name="containOperator">The ADT <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#contains-operators">contains operator</see>being invoked.</param>
+        /// <param name="containOperator">The ADT <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#contains-operators">contains operator</see> being invoked.</param>
         /// <param name="searched">The list of objects being searched for a value.</param>
         public ContainsCondition(string value, QueryContainsOperator containOperator, string[] searched)
         {
@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public string Value { get; set; }
 
         /// <summary>
-        /// The ADT <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#contains-operators">contains operator</see>being invoked.
+        /// The ADT <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#contains-operators">contains operator</see> being invoked.
         /// </summary>
         public QueryContainsOperator Operator { get; set; }
 
