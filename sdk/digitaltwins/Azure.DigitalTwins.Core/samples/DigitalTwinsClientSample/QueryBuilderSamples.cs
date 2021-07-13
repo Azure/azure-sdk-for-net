@@ -211,6 +211,94 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Compare("T.Humidity", QueryComparisonOperator.Equal, 30)
                 .Build();
             #endregion
+
+            AdtQuery test = new AdtQuery()
+                .Select("Temperature", "Humidity")
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsDefined("Occupants")
+                .And()
+                .WhereCustom("IS_BOOL(is_occupied)");         
+            
+            AdtQuery test2 = new AdtQuery()
+                .And()
+                .Select("Temperature", "Humidity")
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsDefined("Occupants")
+                .And()
+                .WhereCustom("IS_BOOL(is_occupied)");
+            
+            AdtQuery test3 = new AdtQuery()
+                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.Relationships)
+                .Select("Temperature", "Humidity")
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsDefined("Occupants")
+                .And()
+                .WhereCustom("IS_BOOL(is_occupied)");
+                        
+            AdtQuery test4 = new AdtQuery()
+                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.Relationships)
+                .Select("Temperature", "Humidity")
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsDefined("Occupants")
+                .And()
+                .WhereCustom("IS_BOOL(is_occupied)");             
+            
+            AdtQuery test5 = new AdtQuery()
+                .Select("Temperature", "Humidity")
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsDefined("Occupants")
+                .And()
+                .WhereCustom("IS_BOOL(is_occupied)")
+                .And()
+                .Parenthetical(q => q
+                    .WhereCustom("Temperature > 30")
+                    .And()
+                    .WhereCustom("Humidity < 20"));
+
+            AdtQuery statement = new AdtQuery();
+            statement.Select("Temperature", "Humidity");
+            statement.From(AdtCollection.DigitalTwins);
+            statement.WhereIsDefined("Occupants");
+            statement.And();
+            statement.WhereCustom("IS_BOOL(occupied)");
+            statement.And();
+            statement.Parenthetical(q =>
+            {
+                q.WhereCustom("Temperature > 30");
+                q.And();
+                q.WhereCustom("humidity > 20");
+                return q;
+            });
+                        
+            AdtQuery test6 = new AdtQuery()
+                .And()
+                .Select("Temperature", "Humidity")
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsDefined("Occupants")
+                .And()
+                .WhereCustom("IS_BOOL(is_occupied)")
+                .And()
+                .Parenthetical(q => q
+                    .WhereCustom("Temperature > 30")
+                    .And()
+                    .Select("someProperty")
+                    .And()
+                    .From(AdtCollection.Relationships)
+                    .WhereCustom("Humidity < 20"));
+
+
+            AdtQuery azadTest = new AdtQuery()
+                .Select("Temp")
+                .From(AdtCollection.DigitalTwins)
+                .WhereCustom("")
+                .And(q => 
+                    q.Select("*")
+                    .From(AdtCollection.DigitalTwins)
+                    .WhereCustom("")
+                    .And(q => q.WhereCustom(""))
+                .And(q => q.WhereCustom("")));
         }
     }
 }
