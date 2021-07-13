@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Represents an Azure geography region where supported resource providers live.
     /// </summary>
-    public partial class Location : IEquatable<Location>, IComparable<Location>
+    public partial class Location
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Location"/> class.

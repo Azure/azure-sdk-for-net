@@ -31,12 +31,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
-
-        /// <inheritdoc/>
-        protected override void Validate(ResourceIdentifier identifier)
-        {
-        }
+        protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
 
         /// <summary>
         /// Gets the resource identifier.
