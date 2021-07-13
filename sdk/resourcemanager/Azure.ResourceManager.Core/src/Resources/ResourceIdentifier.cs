@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Core
             StringBuilder builder = new StringBuilder(Parent.ToResourceString());
             if (IsChild)
             {
-                builder.Append($"/{ResourceType.Types.Last()}");
+                builder.Append($"/{ResourceType.Types[ResourceType.Types.Count - 1]}");
                 if (!string.IsNullOrWhiteSpace(Name))
                     builder.Append($"/{Name}");
             }
