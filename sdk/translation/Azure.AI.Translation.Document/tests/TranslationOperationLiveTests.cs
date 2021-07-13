@@ -390,6 +390,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(new DocumentTranslationErrorCode("TargetFileAlreadyExists"), documentsList[0].Error.ErrorCode);
         }
 
+        [RecordedTest]
         [TestCase("Foo Bar", typeof(ArgumentException))]
         [TestCase("", typeof(ArgumentException))]
         [TestCase(null, typeof(ArgumentNullException))]
@@ -399,6 +400,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.Throws(expectedException, () => new DocumentTranslationOperation(invalidGuid, client));
         }
 
+        [RecordedTest]
         [TestCase("Foo Bar", typeof(ArgumentException))]
         [TestCase("", typeof(ArgumentException))]
         [TestCase(null, typeof(ArgumentNullException))]
