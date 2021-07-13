@@ -171,6 +171,46 @@ namespace Azure.DigitalTwins.Core.Samples
                 .IsOfType("Temperature", AdtDataType.AdtNumber)
                 .Build();
             #endregion
+
+            #region Snippet:DigitalTwinsQueryBuilder_Aliasing
+            // SELECT Temperature AS Temp, Humidity AS HUM FROM DigitalTwins
+            AdtQueryBuilder selectAsSample = new AdtQueryBuilder()
+                .SelectAs("Temperature", "Temp")
+                .SelectAs("Humidity", "Hum")
+                .From(AdtCollection.DigitalTwins)
+                .Build();
+
+            // SELECT Temperature, Humidity AS Hum FROM DigitalTwins
+            AdtQueryBuilder selectAndSelectAs = new AdtQueryBuilder()
+                .Select("Temperature")
+                .SelectAs("Humidity", "Hum")
+                .From(AdtCollection.DigitalTwins)
+                .Build();
+
+            // SELECT T FROM DigitalTwins T
+            AdtQueryBuilder anotherSelectAsSample = new AdtQueryBuilder()
+                .Select("T")
+                .From(AdtCollection.DigitalTwins, "T")
+                .Build();
+
+            // SELECT T.Temperature, T.Humdity FROM DigitalTwins T
+            AdtQueryBuilder collectionAliasing = new AdtQueryBuilder()
+                .Select("T.Temperature", "T.Humidity")
+                .From(AdtCollection.DigitalTwins)
+                .Build();
+
+            // SELECT T.Temperature AS Temp, T.Humidity AS Hum FROM DigitalTwins T
+            // WHERE T.Temerpature = 50 AND T.Humidity = 30
+            AdtQueryBuilder bothAliasingTypes = new AdtQueryBuilder()
+                .SelectAs("T.Temperature", "Temp")
+                .SelectAs("T.Humidity", "Hum")
+                .From(AdtCollection.DigitalTwins, "T")
+                .Where()
+                .Compare("T.Temperature", QueryComparisonOperator.Equal, 50)
+                .And()
+                .Compare("T.Humidity", QueryComparisonOperator.Equal, 30)
+                .Build();
+            #endregion
         }
     }
 }
