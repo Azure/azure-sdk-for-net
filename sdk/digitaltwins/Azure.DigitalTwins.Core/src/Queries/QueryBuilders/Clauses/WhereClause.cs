@@ -13,7 +13,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Constructor for a WHERE clause.
         /// </summary>
-        /// <param name="condition"> Condition argument for the WHERE clause. </param>
+        /// <param name="condition">Condition argument for the WHERE clause.</param>
         internal WhereClause(ConditionBase condition)
         {
             Condition = condition.GetConditionText();
@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Constructor for a WHERE clause that allows for overridden conditional statements.
         /// </summary>
-        /// <param name="condition"> Condition argument for the WHERE clause. </param>
+        /// <param name="condition">Condition argument for the WHERE clause.</param>
         internal WhereClause(string condition)
         {
             Condition = condition;

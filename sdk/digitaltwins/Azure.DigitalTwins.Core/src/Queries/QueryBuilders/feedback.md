@@ -2,7 +2,7 @@
 
 The ADT query builder allows for fast and intelligent query building in the [Azure Digital Twins Query Language](https://docs.microsoft.com/azure/digital-twins/concepts-query-language) a SQL-like query language used to get information about digital twins and relationships that they may contain. When building a query, the place to start is with an `AdtQueryBuilder()` object. From this point, the induvidual components of the query (called clauses) are added one by one using fluent-style syntax. An example query resembles the following:
 
-``` C# Snippet
+``` C#
 // SELECT * FROM DIGITALTWINS
 new AdtQueryBuilder().SelectAll().From(AdtCollection.DigitalTwins).Build();
 ```
@@ -28,7 +28,7 @@ In the simple query above, a `Select` method is called on the `AdtQueryBuilder` 
 
 After a select clause, the collection that the query is acting upon must be specified. This is done with a `From` clause, which requires an argument that specifies a queryable collection:
 
-``` csharp
+``` C#
 From(AdtCollection.DigitalTwins)
 From(AdtCollection.Relationships)
 FromCustom("DigitalTwins")
@@ -67,7 +67,7 @@ new AdtQueryBuilder.SelectAll().From(...)
 
 A query with a single logical component could be written like the following:
 
-``` C# Snippet
+``` C#
 new AdtQueryBuilder()
 .SelectAll()
 .From(AdtCollection.DigitalTwins)
@@ -78,7 +78,7 @@ new AdtQueryBuilder()
 
 To add more than one logical condition to a query, multiple `WhereLogic` objects are chained together with [Logical Operators](#logical-operators):
 
-``` C# Snippet
+``` C#
 new AdtQueryBuilder()
 .SelectAll()
 .From(AdtCollection.DigitalTwins)
@@ -91,7 +91,7 @@ new AdtQueryBuilder()
 
 To nest multiple `WhereLogic` objects in parenthesis in order to create queries with complex logical conditions, the `Parenthetical` method is used:
 
-``` C# Snippet
+``` C#
 .Where()
 .Parentheitcal(q => q
     .IsOfModel("dtmi:example:hvac;1")
@@ -108,7 +108,7 @@ To nest multiple `WhereLogic` objects in parenthesis in order to create queries 
 
 When building a query that contains multiple `WhereLogic` components, [logical operators](https://docs.microsoft.com/azure/digital-twins/reference-query-operators#logical-operators) are used to chain them together. In the query builder, logical operators are represented with the `And()` and the `Or()` methods:
 
-```
+``` C#
 .Where()
 .WhereLogic()
 .And()
