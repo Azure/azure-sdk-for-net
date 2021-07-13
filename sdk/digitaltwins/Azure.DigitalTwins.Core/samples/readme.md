@@ -417,6 +417,13 @@ AdtQueryBuilder selectAsSample = new AdtQueryBuilder()
     .From(AdtCollection.DigitalTwins)
     .Build();
 
+// SELECT Temperature, Humidity AS Hum FROM DigitalTwins
+AdtQueryBuilder selectAndSelectAs = new AdtQueryBuilder()
+    .Select("Temperature")
+    .SelectAs("Humidity", "Hum")
+    .From(AdtCollection.DigitalTwins)
+    .Build();
+
 // SELECT T FROM DigitalTwins T
 AdtQueryBuilder anotherSelectAsSample = new AdtQueryBuilder()
     .Select("T")
