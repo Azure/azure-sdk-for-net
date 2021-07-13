@@ -169,7 +169,7 @@ namespace Compute.Tests
 
                     GalleryImageVersion imageVersionFromGet = m_CrpClient.GalleryImageVersions.Get(rgName,
                         galleryName, galleryImageName, galleryImageVersionName);
-                    Assert.NotNull(imageVersionFromGet);
+                    Assert.Null(imageVersionFromGet);
                     ValidateGalleryImageVersion(inputImageVersion, imageVersionFromGet);
                     imageVersionFromGet = m_CrpClient.GalleryImageVersions.Get(rgName, galleryName, galleryImageName,
                         galleryImageVersionName, ReplicationStatusTypes.ReplicationStatus);
@@ -412,6 +412,53 @@ namespace Compute.Tests
                 Trace.TraceInformation("Deleting this gallery.");
                 m_CrpClient.Galleries.Delete(rgName, galleryName);
                 // resource groups cleanup is taken cared by MockContext.Dispose() method.
+            }
+        }
+
+        [Fact]
+        public void VMApplicationProfile_Tests()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                var image = m_CrpClient.VirtualMachineImages.Get(
+                    this.m_location, imageRef.Publisher, imageRef.Offer, imageRef.Sku, imageRef.Version);
+                Assert.True(image != null);
+
+                // Create resource group
+                var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
+                VirtualMachine inputVM;
+
+                try
+                {
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    IList<VMGalleryApplication> galleryApplications = new List<VMGalleryApplication>()
+                    {
+                        new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8")
+                    };                
+                    
+                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, (vm) =>
+                    {
+                        vm.StorageProfile.OsDisk.DiskSizeGB = 150;
+                        vm.ApplicationProfile = new ApplicationProfile(galleryApplications);
+                    });
+
+                    var getVMResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name);
+                    ValidateVM(inputVM, getVMResponse, Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name));
+                    Assert.NotNull(getVMResponse.ApplicationProfile);
+                    Assert.NotNull(getVMResponse.ApplicationProfile.GalleryApplications);
+                    Assert.Equal(1, getVMResponse.ApplicationProfile.GalleryApplications.Count);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
             }
         }
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Rest.Azure;
@@ -116,6 +117,68 @@ namespace Compute.Tests.VMScaleSetTests
                     var response = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
                     Assert.True(response.VirtualMachineProfile.DiagnosticsProfile.BootDiagnostics.Enabled.GetValueOrDefault(true));
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Checks if application profile can be set through API
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetApplicationProfile()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                EnsureClientsInitialized(context);
+
+                // Create resource group
+                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                IList<VMGalleryApplication> galleryApplications = new List<VMGalleryApplication>()
+                {
+                    new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8")
+                };
+
+                VirtualMachineScaleSet inputVMScaleSet;
+                Action<VirtualMachineScaleSet> vmProfileCustomizer = vmss =>
+                {
+                    vmss.VirtualMachineProfile.ApplicationProfile = new ApplicationProfile(galleryApplications);
+                };
+
+                //Action<VirtualMachineScaleSet> vmProfileCustomizer = vmss =>
+                //{
+                //    vmss.VirtualMachineProfile.DiagnosticsProfile = new DiagnosticsProfile(
+                //        new BootDiagnostics
+                //        {
+                //            Enabled = true,
+                //            StorageUri = string.Format(Constants.StorageAccountBlobUriTemplate, storageAccountName)
+                //        });
+                //};
+
+                try
+                {
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
+                        rgName: rgName,
+                        vmssName: vmssName,
+                        storageAccount: storageAccountOutput,
+                        imageRef: GetPlatformVMImage(true),
+                        inputVMScaleSet: out inputVMScaleSet,
+                        createWithManagedDisks: true,
+                        vmScaleSetCustomizer: vmProfileCustomizer
+                        );
+
+                    var response = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    Assert.NotNull(response.VirtualMachineProfile.ApplicationProfile);
+                    Assert.NotNull(response.VirtualMachineProfile.ApplicationProfile.GalleryApplications);
+                    Assert.Equal(1, response.VirtualMachineProfile.ApplicationProfile.GalleryApplications.Count);
                 }
                 finally
                 {
