@@ -292,6 +292,21 @@ namespace Microsoft.Azure.Management.Compute
         public virtual ICloudServiceOperatingSystemsOperations CloudServiceOperatingSystems { get; private set; }
 
         /// <summary>
+        /// Gets the IDiagnosticOperations.
+        /// </summary>
+        public virtual IDiagnosticOperations DiagnosticOperations { get; private set; }
+
+        /// <summary>
+        /// Gets the IDiskInspectionOperations.
+        /// </summary>
+        public virtual IDiskInspectionOperations DiskInspection { get; private set; }
+
+        /// <summary>
+        /// Gets the IDiagnosticsOperations.
+        /// </summary>
+        public virtual IDiagnosticsOperations Diagnostics { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the ComputeManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -576,6 +591,9 @@ namespace Microsoft.Azure.Management.Compute
             CloudServices = new CloudServicesOperations(this);
             CloudServicesUpdateDomain = new CloudServicesUpdateDomainOperations(this);
             CloudServiceOperatingSystems = new CloudServiceOperatingSystemsOperations(this);
+            DiagnosticOperations = new DiagnosticOperations(this);
+            DiskInspection = new DiskInspectionOperations(this);
+            Diagnostics = new DiagnosticsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

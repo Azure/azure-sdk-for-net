@@ -12,10 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SecurityTypes.
+    /// Defines values for ResultStatus.
     /// </summary>
-    public static class SecurityTypes
+    public static class ResultStatus
     {
-        public const string TrustedLaunch = "TrustedLaunch";
+        public const string Success = "Success";
+        public const string Failed = "Failed";
     }
 }

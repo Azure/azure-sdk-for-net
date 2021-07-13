@@ -286,5 +286,20 @@ namespace Microsoft.Azure.Management.Compute
         /// </summary>
         ICloudServiceOperatingSystemsOperations CloudServiceOperatingSystems { get; }
 
+        /// <summary>
+        /// Gets the IDiagnosticOperations.
+        /// </summary>
+        IDiagnosticOperations DiagnosticOperations { get; }
+
+        /// <summary>
+        /// Gets the IDiskInspectionOperations.
+        /// </summary>
+        IDiskInspectionOperations DiskInspection { get; }
+
+        /// <summary>
+        /// Gets the IDiagnosticsOperations.
+        /// </summary>
+        IDiagnosticsOperations Diagnostics { get; }
+
     }
 }
