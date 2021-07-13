@@ -34,7 +34,7 @@ var client = new CommunicationRelayClient(endpoint, tokenCredential);
 
 ## Get Relay Configuration
 
-The example code snippet below shows how to get a relay configuration for an Azure Communication user. For examples on how to create a Azure Communication user, view the [Identity Sampes][identity_samples].
+The example code snippet below shows how to get a relay configuration for an Azure Communication user. For examples on how to create a Azure Communication user, view the [Identity Samples][identity_samples].
 A configuration is returned for the user. Each configuration consists of a URL for a TURN server, its corresponding username and a credential. 
 
 Every relay configuration has an expiry date and time stamped on it, indicating when the set of TURN credentials will no longer be accepted. Once the credentials have expired, you can renew the token by calling the same method.
