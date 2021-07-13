@@ -1,13 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// A class representing the a writable sub resource of ResourceIdentifier.
+    /// A class representing the writable sub resource of a ResourceIdentifier.
     /// </summary>
     [ReferenceType]
     public class WritableSubResource : WritableSubResource<ResourceIdentifier>
@@ -27,11 +24,11 @@ namespace Azure.ResourceManager.Core
     }
 
     /// <summary>
-    /// A class representing a sub-resource that contains only the read-only ID.
+    /// A class representing a sub-resource that contains only the ID.
     /// </summary>
     [ReferenceType(typeof(ResourceIdentifier))]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Types differ by type argument only")]
-    public partial class WritableSubResource <TIdentifier>
+    public partial class WritableSubResource<TIdentifier>
         where TIdentifier : ResourceIdentifier
     {
         /// <summary>
@@ -47,7 +44,7 @@ namespace Azure.ResourceManager.Core
         [SerializationConstructor]
         protected internal WritableSubResource(string id)
         {
-           Id = (TIdentifier)id;
+            Id = (TIdentifier)id;
         }
 
         /// <summary>
