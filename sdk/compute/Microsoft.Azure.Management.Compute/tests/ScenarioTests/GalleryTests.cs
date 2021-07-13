@@ -169,7 +169,7 @@ namespace Compute.Tests
 
                     GalleryImageVersion imageVersionFromGet = m_CrpClient.GalleryImageVersions.Get(rgName,
                         galleryName, galleryImageName, galleryImageVersionName);
-                    Assert.NotNull(imageVersionFromGet);
+                    Assert.Null(imageVersionFromGet);
                     ValidateGalleryImageVersion(inputImageVersion, imageVersionFromGet);
                     imageVersionFromGet = m_CrpClient.GalleryImageVersions.Get(rgName, galleryName, galleryImageName,
                         galleryImageVersionName, ReplicationStatusTypes.ReplicationStatus);
@@ -416,14 +416,12 @@ namespace Compute.Tests
         }
 
         [Fact]
-        public void VMApplicationProfile_CRUD_Tests()
+        public void VMApplicationProfile_Tests()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-
-                string location = ComputeManagementTestUtilities.DefaultLocation;
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", location);
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -442,7 +440,7 @@ namespace Compute.Tests
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
                     IList<VMGalleryApplication> galleryApplications = new List<VMGalleryApplication>()
                     {
-                        new VMGalleryApplication("packageId")
+                        new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8")
                     };                
                     
                     var vm1 = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, (vm) =>
