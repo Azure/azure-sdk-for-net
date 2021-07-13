@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         {
 #endif
 
-// code omitted for brevity
+// Code omitted for brevity
 
 var armClient = new ArmClient(new DefaultAzureCredential());
 #endregion Snippet:Readme_AuthClient
@@ -28,7 +28,7 @@ var armClient = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_CastToSpecificType
             string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-            //we know the subnet is a resource group level identifier since it has a resource group name in its string
+            // We know the subnet is a resource group level identifier since it has a resource group name in its string
             ResourceGroupResourceIdentifier id = resourceId;
             Console.WriteLine($"Subscription: {id.SubscriptionId}");
             Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
@@ -43,7 +43,7 @@ var armClient = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_CastToBaseResourceIdentifier
             string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
-            //assume we don't know what type of resource id we have we can cast to the base type
+            // Assume we don't know what type of resource id we have we can cast to the base type
             ResourceIdentifier id = resourceId;
             string property;
             if (id.TryGetSubscriptionId(out property))
