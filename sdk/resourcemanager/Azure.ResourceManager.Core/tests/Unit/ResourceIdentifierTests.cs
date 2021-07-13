@@ -352,9 +352,9 @@ namespace Azure.ResourceManager.Core.Tests
             string subscription;
             Assert.AreEqual(true, id1.TryGetSubscriptionId(out subscription));
             Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", subscription);
-            LocationData location;
+            Location location;
             Assert.AreEqual(true, id1.TryGetLocation(out location));
-            Assert.AreEqual(LocationData.WestUS2, location);
+            Assert.AreEqual(Location.WestUS2, location);
             Assert.AreEqual(false, id1.TryGetResourceGroupName(out _));
             ResourceIdentifier expectedId = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2";
             ResourceIdentifier parentId;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(!(subscription is null), id1.TryGetSubscriptionId(out outputSubscription));
             if (!(subscription is null))
                 Assert.AreEqual(subscription, outputSubscription);
-            LocationData outputLocation;
+            Location outputLocation;
             Assert.AreEqual(!(location is null), id1.TryGetLocation(out outputLocation));
             if (!(location is null))
                 Assert.AreEqual(location, outputLocation.Name);

@@ -194,5 +194,24 @@ namespace Azure.ResourceManager.Core
                 throw;
             }
         }
+
+        /// <summary>
+        /// Gets the management group container for this tenant.
+        /// </summary>
+        /// <returns> A container of the management groups. </returns>
+        public virtual ManagementGroupContainer GetManagementGroups()
+        {
+            return new ManagementGroupContainer(this);
+        }
+
+        /// <summary>
+        /// Gets the managmeent group operations object associated with the id.
+        /// </summary>
+        /// <param name="id"> The id of the management group operations. </param>
+        /// <returns> A client to perform operations on the management group. </returns>
+        internal ManagementGroupOperations GetManagementGroupOperations(string id)
+        {
+            return new ManagementGroupOperations(this, id);
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Core.Tests
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
             var data = new GenericResourceData();
-            data.Location = LocationData.WestUS2;
+            data.Location = Location.WestUS2;
             data.Sku = new Sku();
             data.Sku.Name = "Aligned";
             var propertyBag = new Dictionary<string, object>();
@@ -79,6 +79,16 @@ namespace Azure.ResourceManager.Core.Tests
             await foreach (var resource in pageable)
                 result++;
             return result;
+        }
+        protected void CompareMgmtGroups(ManagementGroup expected, ManagementGroup actual)
+        {
+            Assert.AreEqual(expected.Data.DisplayName, actual.Data.DisplayName);
+            Assert.AreEqual(expected.Data.Id, actual.Data.Id);
+            Assert.AreEqual(expected.Data.Name, actual.Data.Name);
+            Assert.AreEqual(expected.Data.TenantId, actual.Data.TenantId);
+            Assert.AreEqual(expected.Data.Type, actual.Data.Type);
+            Assert.IsNotNull(actual.Data.Details, "Details were null");
+            Assert.IsNotNull(actual.Data.Children, "Children were null");
         }
     }
 }

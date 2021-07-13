@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Core.Tests
         [SetUp]
         public async Task SetUpAsync()
         {
-            _rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(_rgPrefix));
+            _rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName(_rgPrefix));
             _rg = await _rg.AddTagAsync("key1", "value1");
             _rg = await _rg.AddTagAsync("key2", "value2");
         }

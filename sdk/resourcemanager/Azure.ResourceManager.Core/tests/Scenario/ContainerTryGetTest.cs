@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Core.Tests
             _rgName = Recording.GenerateAssetName("CoreRg");
             _client = GetArmClient();
             _container = _client.DefaultSubscription.GetResourceGroups();
-            _resourceGroup = await _container.Construct(LocationData.WestUS2).CreateOrUpdateAsync(_rgName);
+            _resourceGroup = await _container.Construct(Location.WestUS2).CreateOrUpdateAsync(_rgName);
         }
 
         [TestCase]
