@@ -22,6 +22,8 @@ operation-group-to-resource:
     # MHSMPrivateLinkResources: MHSMPrivateLinkResource
     # Operations: NonResource
     Vaults: Vault
+operation-group-to-parent:
+   VirtualMachineExtensionImages: subscriptions
 directive:
     # - rename-model:
     #     from: Operation
@@ -35,4 +37,7 @@ directive:
     - from: swagger-document
       where: $.definitions
       transform: delete $['VaultAccessPolicyProperties']
+    - from: swagger-document
+      where: $.paths.'/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults'.'get'.operationId
+      transform: 
 ```
