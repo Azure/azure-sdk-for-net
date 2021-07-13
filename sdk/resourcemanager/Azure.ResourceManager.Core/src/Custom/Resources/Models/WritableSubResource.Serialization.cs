@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.Core
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
             writer.WriteEndObject();
         }
 
