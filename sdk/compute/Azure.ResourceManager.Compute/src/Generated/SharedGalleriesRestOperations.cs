@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
-        public async Task<Response<SharedGallery>> GetAsync(string location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        public async Task<Response<SharedGalleryData>> GetAsync(string location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        SharedGallery value = default;
+                        SharedGalleryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SharedGallery.DeserializeSharedGallery(document.RootElement);
+                        value = SharedGalleryData.DeserializeSharedGalleryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
-        public Response<SharedGallery> Get(string location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        public Response<SharedGalleryData> Get(string location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        SharedGallery value = default;
+                        SharedGalleryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SharedGallery.DeserializeSharedGallery(document.RootElement);
+                        value = SharedGalleryData.DeserializeSharedGalleryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

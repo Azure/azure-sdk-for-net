@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineExtensionData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineExtensionData(LocationData location) : base(location)
+        public VirtualMachineExtensionData(Location location) : base(location)
         {
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The virtual machine extension instance view. </param>
-        internal VirtualMachineExtensionData(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView) : base(id, name, type, location, tags)
+        internal VirtualMachineExtensionData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, string forceUpdateTag, string publisher, string typePropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, object settings, object protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView) : base(id, name, type, location, tags)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;

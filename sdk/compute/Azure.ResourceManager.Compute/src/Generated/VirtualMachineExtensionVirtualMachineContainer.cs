@@ -45,26 +45,28 @@ namespace Azure.ResourceManager.Compute
 
         // Container level operations.
 
-        /// <summary> The operation to create or update a VirtualMachineExtensionVirtualMachine. Please note some properties can be set only during creation. </summary>
+        /// <summary> The operation to create or update the extension. </summary>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Virtual Machine Extension operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmExtensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
         public Response<VirtualMachineExtensionVirtualMachine> CreateOrUpdate(string vmExtensionName, VirtualMachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
         {
+            if (vmExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(vmExtensionName));
+            }
+            if (extensionParameters == null)
+            {
+                throw new ArgumentNullException(nameof(extensionParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (vmExtensionName == null)
-                {
-                    throw new ArgumentNullException(nameof(vmExtensionName));
-                }
-                if (extensionParameters == null)
-                {
-                    throw new ArgumentNullException(nameof(extensionParameters));
-                }
-
-                return StartCreateOrUpdate(vmExtensionName, extensionParameters, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartCreateOrUpdate(vmExtensionName, extensionParameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -73,26 +75,27 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a VirtualMachineExtensionVirtualMachine. Please note some properties can be set only during creation. </summary>
+        /// <summary> The operation to create or update the extension. </summary>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Virtual Machine Extension operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmExtensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
         public async Task<Response<VirtualMachineExtensionVirtualMachine>> CreateOrUpdateAsync(string vmExtensionName, VirtualMachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
         {
+            if (vmExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(vmExtensionName));
+            }
+            if (extensionParameters == null)
+            {
+                throw new ArgumentNullException(nameof(extensionParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (vmExtensionName == null)
-                {
-                    throw new ArgumentNullException(nameof(vmExtensionName));
-                }
-                if (extensionParameters == null)
-                {
-                    throw new ArgumentNullException(nameof(extensionParameters));
-                }
-
-                var operation = await StartCreateOrUpdateAsync(vmExtensionName, extensionParameters, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(vmExtensionName, extensionParameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -102,27 +105,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a VirtualMachineExtensionVirtualMachine. Please note some properties can be set only during creation. </summary>
+        /// <summary> The operation to create or update the extension. </summary>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Virtual Machine Extension operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmExtensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
         public VirtualMachineExtensionsCreateOrUpdateOperation StartCreateOrUpdate(string vmExtensionName, VirtualMachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
         {
+            if (vmExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(vmExtensionName));
+            }
+            if (extensionParameters == null)
+            {
+                throw new ArgumentNullException(nameof(extensionParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (vmExtensionName == null)
-                {
-                    throw new ArgumentNullException(nameof(vmExtensionName));
-                }
-                if (extensionParameters == null)
-                {
-                    throw new ArgumentNullException(nameof(extensionParameters));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, vmExtensionName, extensionParameters, cancellationToken: cancellationToken);
-                return new VirtualMachineExtensionsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, vmExtensionName, extensionParameters).Request, originalResponse);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, vmExtensionName, extensionParameters, cancellationToken);
+                return new VirtualMachineExtensionsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, vmExtensionName, extensionParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -131,27 +135,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a VirtualMachineExtensionVirtualMachine. Please note some properties can be set only during creation. </summary>
+        /// <summary> The operation to create or update the extension. </summary>
         /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="extensionParameters"> Parameters supplied to the Create Virtual Machine Extension operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmExtensionName"/> or <paramref name="extensionParameters"/> is null. </exception>
         public async Task<VirtualMachineExtensionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string vmExtensionName, VirtualMachineExtensionData extensionParameters, CancellationToken cancellationToken = default)
         {
+            if (vmExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(vmExtensionName));
+            }
+            if (extensionParameters == null)
+            {
+                throw new ArgumentNullException(nameof(extensionParameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (vmExtensionName == null)
-                {
-                    throw new ArgumentNullException(nameof(vmExtensionName));
-                }
-                if (extensionParameters == null)
-                {
-                    throw new ArgumentNullException(nameof(extensionParameters));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, vmExtensionName, extensionParameters, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineExtensionsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, vmExtensionName, extensionParameters).Request, originalResponse);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, vmExtensionName, extensionParameters, cancellationToken).ConfigureAwait(false);
+                return new VirtualMachineExtensionsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Name, vmExtensionName, extensionParameters).Request, response);
             }
             catch (Exception e)
             {
@@ -202,6 +207,110 @@ namespace Azure.ResourceManager.Compute
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, vmExtensionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualMachineExtensionVirtualMachine(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public VirtualMachineExtensionVirtualMachine TryGet(string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (vmExtensionName == null)
+                {
+                    throw new ArgumentNullException(nameof(vmExtensionName));
+                }
+
+                return Get(vmExtensionName, expand, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<VirtualMachineExtensionVirtualMachine> TryGetAsync(string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (vmExtensionName == null)
+                {
+                    throw new ArgumentNullException(nameof(vmExtensionName));
+                }
+
+                return await GetAsync(vmExtensionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public bool DoesExist(string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (vmExtensionName == null)
+                {
+                    throw new ArgumentNullException(nameof(vmExtensionName));
+                }
+
+                return TryGet(vmExtensionName, expand, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="vmExtensionName"> The name of the virtual machine extension. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<bool> DoesExistAsync(string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (vmExtensionName == null)
+                {
+                    throw new ArgumentNullException(nameof(vmExtensionName));
+                }
+
+                return await TryGetAsync(vmExtensionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

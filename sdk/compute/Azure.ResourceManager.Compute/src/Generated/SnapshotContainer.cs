@@ -45,26 +45,28 @@ namespace Azure.ResourceManager.Compute
 
         // Container level operations.
 
-        /// <summary> The operation to create or update a Snapshot. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a snapshot. </summary>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="snapshot"/> is null. </exception>
         public Response<Snapshot> CreateOrUpdate(string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
         {
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshot == null)
+            {
+                throw new ArgumentNullException(nameof(snapshot));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (snapshotName == null)
-                {
-                    throw new ArgumentNullException(nameof(snapshotName));
-                }
-                if (snapshot == null)
-                {
-                    throw new ArgumentNullException(nameof(snapshot));
-                }
-
-                return StartCreateOrUpdate(snapshotName, snapshot, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartCreateOrUpdate(snapshotName, snapshot, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -73,26 +75,27 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a Snapshot. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a snapshot. </summary>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="snapshot"/> is null. </exception>
         public async Task<Response<Snapshot>> CreateOrUpdateAsync(string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
         {
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshot == null)
+            {
+                throw new ArgumentNullException(nameof(snapshot));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (snapshotName == null)
-                {
-                    throw new ArgumentNullException(nameof(snapshotName));
-                }
-                if (snapshot == null)
-                {
-                    throw new ArgumentNullException(nameof(snapshot));
-                }
-
-                var operation = await StartCreateOrUpdateAsync(snapshotName, snapshot, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(snapshotName, snapshot, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -102,27 +105,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a Snapshot. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a snapshot. </summary>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="snapshot"/> is null. </exception>
         public SnapshotsCreateOrUpdateOperation StartCreateOrUpdate(string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
         {
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshot == null)
+            {
+                throw new ArgumentNullException(nameof(snapshot));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (snapshotName == null)
-                {
-                    throw new ArgumentNullException(nameof(snapshotName));
-                }
-                if (snapshot == null)
-                {
-                    throw new ArgumentNullException(nameof(snapshot));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.ResourceGroupName, snapshotName, snapshot, cancellationToken: cancellationToken);
-                return new SnapshotsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, snapshotName, snapshot).Request, originalResponse);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, snapshotName, snapshot, cancellationToken);
+                return new SnapshotsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, snapshotName, snapshot).Request, response);
             }
             catch (Exception e)
             {
@@ -131,27 +135,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a Snapshot. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a snapshot. </summary>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="snapshot"/> is null. </exception>
         public async Task<SnapshotsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
         {
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshot == null)
+            {
+                throw new ArgumentNullException(nameof(snapshot));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (snapshotName == null)
-                {
-                    throw new ArgumentNullException(nameof(snapshotName));
-                }
-                if (snapshot == null)
-                {
-                    throw new ArgumentNullException(nameof(snapshot));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, snapshotName, snapshot, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new SnapshotsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, snapshotName, snapshot).Request, originalResponse);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, snapshotName, snapshot, cancellationToken).ConfigureAwait(false);
+                return new SnapshotsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, snapshotName, snapshot).Request, response);
             }
             catch (Exception e)
             {
@@ -200,6 +205,106 @@ namespace Azure.ResourceManager.Compute
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Snapshot(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public Snapshot TryGet(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (snapshotName == null)
+                {
+                    throw new ArgumentNullException(nameof(snapshotName));
+                }
+
+                return Get(snapshotName, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<Snapshot> TryGetAsync(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (snapshotName == null)
+                {
+                    throw new ArgumentNullException(nameof(snapshotName));
+                }
+
+                return await GetAsync(snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public bool DoesExist(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (snapshotName == null)
+                {
+                    throw new ArgumentNullException(nameof(snapshotName));
+                }
+
+                return TryGet(snapshotName, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<bool> DoesExistAsync(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (snapshotName == null)
+                {
+                    throw new ArgumentNullException(nameof(snapshotName));
+                }
+
+                return await TryGetAsync(snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

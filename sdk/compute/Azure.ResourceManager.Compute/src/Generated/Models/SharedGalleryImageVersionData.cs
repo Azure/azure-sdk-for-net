@@ -9,21 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
-    public partial class SharedGalleryImageVersion : PirSharedGalleryResource
+    /// <summary> A class representing the SharedGalleryImageVersion data model. </summary>
+    public partial class SharedGalleryImageVersionData : PirSharedGalleryResource
     {
-        /// <summary> Initializes a new instance of SharedGalleryImageVersion. </summary>
-        internal SharedGalleryImageVersion()
+        /// <summary> Initializes a new instance of SharedGalleryImageVersionData. </summary>
+        internal SharedGalleryImageVersionData()
         {
         }
 
-        /// <summary> Initializes a new instance of SharedGalleryImageVersion. </summary>
+        /// <summary> Initializes a new instance of SharedGalleryImageVersionData. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <param name="publishedDate"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeDate"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        internal SharedGalleryImageVersion(string name, string location, string uniqueId, DateTimeOffset? publishedDate, DateTimeOffset? endOfLifeDate) : base(name, location, uniqueId)
+        internal SharedGalleryImageVersionData(string name, string location, string uniqueId, DateTimeOffset? publishedDate, DateTimeOffset? endOfLifeDate) : base(name, location, uniqueId)
         {
             PublishedDate = publishedDate;
             EndOfLifeDate = endOfLifeDate;

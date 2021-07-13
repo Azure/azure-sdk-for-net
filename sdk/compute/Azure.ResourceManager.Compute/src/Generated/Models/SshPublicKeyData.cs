@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of SshPublicKeyData. </summary>
         /// <param name="location"> The location. </param>
-        public SshPublicKeyData(LocationData location) : base(location)
+        public SshPublicKeyData(Location location) : base(location)
         {
         }
 
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="publicKey"> SSH public key used to authenticate to a virtual machine through ssh. If this property is not initially provided when the resource is created, the publicKey property will be populated when generateKeyPair is called. If the public key is provided upon resource creation, the provided public key needs to be at least 2048-bit and in ssh-rsa format. </param>
-        internal SshPublicKeyData(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, string publicKey) : base(id, name, type, location, tags)
+        internal SshPublicKeyData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, string publicKey) : base(id, name, type, location, tags)
         {
             PublicKey = publicKey;
         }

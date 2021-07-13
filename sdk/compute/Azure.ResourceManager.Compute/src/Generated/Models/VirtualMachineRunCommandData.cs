@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of VirtualMachineRunCommandData. </summary>
         /// <param name="location"> The location. </param>
-        public VirtualMachineRunCommandData(LocationData location) : base(location)
+        public VirtualMachineRunCommandData(Location location) : base(location)
         {
             Parameters = new ChangeTrackingList<RunCommandInputParameter>();
             ProtectedParameters = new ChangeTrackingList<RunCommandInputParameter>();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="errorBlobUri"> Specifies the Azure storage blob where script error stream will be uploaded. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The virtual machine run command instance view. </param>
-        internal VirtualMachineRunCommandData(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, VirtualMachineRunCommandScriptSource source, IList<RunCommandInputParameter> parameters, IList<RunCommandInputParameter> protectedParameters, bool? asyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, string outputBlobUri, string errorBlobUri, string provisioningState, VirtualMachineRunCommandInstanceView instanceView) : base(id, name, type, location, tags)
+        internal VirtualMachineRunCommandData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, VirtualMachineRunCommandScriptSource source, IList<RunCommandInputParameter> parameters, IList<RunCommandInputParameter> protectedParameters, bool? asyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, string outputBlobUri, string errorBlobUri, string provisioningState, VirtualMachineRunCommandInstanceView instanceView) : base(id, name, type, location, tags)
         {
             Source = source;
             Parameters = parameters;

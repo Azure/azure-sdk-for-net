@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of GalleryData. </summary>
         /// <param name="location"> The location. </param>
-        public GalleryData(LocationData location) : base(location)
+        public GalleryData(Location location) : base(location)
         {
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="identifier"> Describes the gallery unique name. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="sharingProfile"> Profile for gallery sharing to subscription or tenant. </param>
-        internal GalleryData(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, string description, GalleryIdentifier identifier, GalleryPropertiesProvisioningState? provisioningState, SharingProfile sharingProfile) : base(id, name, type, location, tags)
+        internal GalleryData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, string description, GalleryIdentifier identifier, GalleryPropertiesProvisioningState? provisioningState, SharingProfile sharingProfile) : base(id, name, type, location, tags)
         {
             Description = description;
             Identifier = identifier;

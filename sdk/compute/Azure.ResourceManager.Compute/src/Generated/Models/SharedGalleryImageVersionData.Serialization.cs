@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharedGalleryImageVersion
+    public partial class SharedGalleryImageVersionData
     {
-        internal static SharedGalleryImageVersion DeserializeSharedGalleryImageVersion(JsonElement element)
+        internal static SharedGalleryImageVersionData DeserializeSharedGalleryImageVersionData(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> location = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SharedGalleryImageVersion(name.Value, location.Value, uniqueId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate));
+            return new SharedGalleryImageVersionData(name.Value, location.Value, uniqueId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate));
         }
     }
 }

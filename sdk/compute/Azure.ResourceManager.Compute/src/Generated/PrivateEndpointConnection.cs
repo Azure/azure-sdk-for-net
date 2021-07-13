@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
@@ -25,17 +23,5 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets or sets the PrivateEndpointConnectionData. </summary>
         public PrivateEndpointConnectionData Data { get; private set; }
-
-        /// <inheritdoc />
-        protected override PrivateEndpointConnection GetResource(CancellationToken cancellation = default)
-        {
-            return this;
-        }
-
-        /// <inheritdoc />
-        protected override Task<PrivateEndpointConnection> GetResourceAsync(CancellationToken cancellation = default)
-        {
-            return Task.FromResult(this);
-        }
     }
 }

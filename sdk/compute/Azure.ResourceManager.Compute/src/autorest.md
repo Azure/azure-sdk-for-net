@@ -45,9 +45,9 @@ operation-group-to-resource:
   Locations: NonResource
   DiskRestorePoint: NonResource
   GallerySharingProfile: NonResource
-  SharedGalleries: NonResource
-  SharedGalleryImages: NonResource
-  SharedGalleryImageVersions: NonResource
+  SharedGalleries: SharedGallery
+  SharedGalleryImages: SharedGalleryImage
+  SharedGalleryImageVersions: SharedGalleryImageVersion
 operation-group-to-parent:
   Usage: subscriptions
   LogAnalytics: subscriptions
@@ -67,10 +67,8 @@ operation-group-to-parent:
   ResourceSkus: subscriptions
   DiskRestorePoint: resourceGroups
   SharedGalleries: subscriptions
-#   SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries # how could we keep this hierarchy if its parent is not a resource?
-  SharedGalleryImages: subscriptions
-#   SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images # how could we keep this hierarchy if its parent is not a resource?
-  SharedGalleryImageVersions: subscriptions # how could we keep this hierarchy?
+  SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries
+  SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images
   Locations: subscriptions ## this operation group comes from directive
 # operation-group-is-tuple: VirtualMachineImages;VirtualMachineExtensionImages
 operation-group-is-extension: VirtualMachineRunCommands;VirtualMachineScaleSetVMRunCommands;VirtualMachineScaleSetVMExtensions;VirtualMachineExtensions
@@ -132,11 +130,25 @@ directive:
     transform: return "Galleries_ListBySubscription"
   ## temporary approach
   - from: swagger-document
-    where: $.paths
-    transform:  delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/updateDomains']
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/updateDomains/{updateDomain}'].put.parameters
+    transform: >
+        $[2] = {
+            "in": "path",
+            "name": "updateDomain",
+            "description": "Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on.",
+            "required": true,
+            "type": "string"
+        }
   - from: swagger-document
-    where: $.paths
-    transform: delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/updateDomains/{updateDomain}']
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/updateDomains/{updateDomain}'].get.parameters
+    transform: >
+        $[2] = {
+            "in": "path",
+            "name": "updateDomain",
+            "description": "Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on.",
+            "required": true,
+            "type": "string"
+        }
   - from: swagger-document
     where: $.paths
     transform: delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateLinkResources']

@@ -45,26 +45,28 @@ namespace Azure.ResourceManager.Compute
 
         // Container level operations.
 
-        /// <summary> The operation to create or update a GalleryImageVersion. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a gallery image version. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery image version operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> or <paramref name="galleryImageVersion"/> is null. </exception>
         public Response<GalleryImageVersion> CreateOrUpdate(string galleryImageVersionName, GalleryImageVersionData galleryImageVersion, CancellationToken cancellationToken = default)
         {
+            if (galleryImageVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersionName));
+            }
+            if (galleryImageVersion == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersion));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (galleryImageVersionName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryImageVersionName));
-                }
-                if (galleryImageVersion == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryImageVersion));
-                }
-
-                return StartCreateOrUpdate(galleryImageVersionName, galleryImageVersion, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartCreateOrUpdate(galleryImageVersionName, galleryImageVersion, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -73,26 +75,27 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a GalleryImageVersion. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a gallery image version. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery image version operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> or <paramref name="galleryImageVersion"/> is null. </exception>
         public async Task<Response<GalleryImageVersion>> CreateOrUpdateAsync(string galleryImageVersionName, GalleryImageVersionData galleryImageVersion, CancellationToken cancellationToken = default)
         {
+            if (galleryImageVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersionName));
+            }
+            if (galleryImageVersion == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersion));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (galleryImageVersionName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryImageVersionName));
-                }
-                if (galleryImageVersion == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryImageVersion));
-                }
-
-                var operation = await StartCreateOrUpdateAsync(galleryImageVersionName, galleryImageVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(galleryImageVersionName, galleryImageVersion, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -102,27 +105,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a GalleryImageVersion. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a gallery image version. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery image version operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> or <paramref name="galleryImageVersion"/> is null. </exception>
         public GalleryImageVersionsCreateOrUpdateOperation StartCreateOrUpdate(string galleryImageVersionName, GalleryImageVersionData galleryImageVersion, CancellationToken cancellationToken = default)
         {
+            if (galleryImageVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersionName));
+            }
+            if (galleryImageVersion == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersion));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (galleryImageVersionName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryImageVersionName));
-                }
-                if (galleryImageVersion == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryImageVersion));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion, cancellationToken: cancellationToken);
-                return new GalleryImageVersionsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion).Request, originalResponse);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion, cancellationToken);
+                return new GalleryImageVersionsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion).Request, response);
             }
             catch (Exception e)
             {
@@ -131,27 +135,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a GalleryImageVersion. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a gallery image version. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery image version operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> or <paramref name="galleryImageVersion"/> is null. </exception>
         public async Task<GalleryImageVersionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string galleryImageVersionName, GalleryImageVersionData galleryImageVersion, CancellationToken cancellationToken = default)
         {
+            if (galleryImageVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersionName));
+            }
+            if (galleryImageVersion == null)
+            {
+                throw new ArgumentNullException(nameof(galleryImageVersion));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (galleryImageVersionName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryImageVersionName));
-                }
-                if (galleryImageVersion == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryImageVersion));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new GalleryImageVersionsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion).Request, originalResponse);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion, cancellationToken).ConfigureAwait(false);
+                return new GalleryImageVersionsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, galleryImageVersion).Request, response);
             }
             catch (Exception e)
             {
@@ -202,6 +207,110 @@ namespace Azure.ResourceManager.Compute
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GalleryImageVersion(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public GalleryImageVersion TryGet(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (galleryImageVersionName == null)
+                {
+                    throw new ArgumentNullException(nameof(galleryImageVersionName));
+                }
+
+                return Get(galleryImageVersionName, expand, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<GalleryImageVersion> TryGetAsync(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (galleryImageVersionName == null)
+                {
+                    throw new ArgumentNullException(nameof(galleryImageVersionName));
+                }
+
+                return await GetAsync(galleryImageVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public bool DoesExist(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (galleryImageVersionName == null)
+                {
+                    throw new ArgumentNullException(nameof(galleryImageVersionName));
+                }
+
+                return TryGet(galleryImageVersionName, expand, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<bool> DoesExistAsync(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (galleryImageVersionName == null)
+                {
+                    throw new ArgumentNullException(nameof(galleryImageVersionName));
+                }
+
+                return await TryGetAsync(galleryImageVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

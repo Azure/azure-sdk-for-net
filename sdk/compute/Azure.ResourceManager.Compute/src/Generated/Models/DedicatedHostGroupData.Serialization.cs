@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<IList<string>> zones = default;
             IDictionary<string, string> tags = default;
-            LocationData location = default;
+            Location location = default;
             ResourceGroupResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

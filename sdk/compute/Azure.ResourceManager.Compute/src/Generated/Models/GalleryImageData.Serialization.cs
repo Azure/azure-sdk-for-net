@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static GalleryImageData DeserializeGalleryImageData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            LocationData location = default;
+            Location location = default;
             ResourceGroupResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

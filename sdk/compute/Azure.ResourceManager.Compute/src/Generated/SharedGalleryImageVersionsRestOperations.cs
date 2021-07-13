@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImageVersionName"/> is null. </exception>
-        public async Task<Response<SharedGalleryImageVersion>> GetAsync(string location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public async Task<Response<SharedGalleryImageVersionData>> GetAsync(string location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        SharedGalleryImageVersion value = default;
+                        SharedGalleryImageVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SharedGalleryImageVersion.DeserializeSharedGalleryImageVersion(document.RootElement);
+                        value = SharedGalleryImageVersionData.DeserializeSharedGalleryImageVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImageVersionName"/> is null. </exception>
-        public Response<SharedGalleryImageVersion> Get(string location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public Response<SharedGalleryImageVersionData> Get(string location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -242,9 +242,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        SharedGalleryImageVersion value = default;
+                        SharedGalleryImageVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SharedGalleryImageVersion.DeserializeSharedGalleryImageVersion(document.RootElement);
+                        value = SharedGalleryImageVersionData.DeserializeSharedGalleryImageVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

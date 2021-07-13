@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<CloudServiceProperties> properties = default;
             IDictionary<string, string> tags = default;
-            LocationData location = default;
+            Location location = default;
             ResourceGroupResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

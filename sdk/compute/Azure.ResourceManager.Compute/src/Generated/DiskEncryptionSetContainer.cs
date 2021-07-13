@@ -45,26 +45,28 @@ namespace Azure.ResourceManager.Compute
 
         // Container level operations.
 
-        /// <summary> The operation to create or update a DiskEncryptionSet. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a disk encryption set. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Put disk encryption set operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> or <paramref name="diskEncryptionSet"/> is null. </exception>
         public Response<DiskEncryptionSet> CreateOrUpdate(string diskEncryptionSetName, DiskEncryptionSetData diskEncryptionSet, CancellationToken cancellationToken = default)
         {
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+            if (diskEncryptionSet == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSet));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (diskEncryptionSetName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
-                }
-                if (diskEncryptionSet == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSet));
-                }
-
-                return StartCreateOrUpdate(diskEncryptionSetName, diskEncryptionSet, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartCreateOrUpdate(diskEncryptionSetName, diskEncryptionSet, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -73,26 +75,27 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a DiskEncryptionSet. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a disk encryption set. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Put disk encryption set operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> or <paramref name="diskEncryptionSet"/> is null. </exception>
         public async Task<Response<DiskEncryptionSet>> CreateOrUpdateAsync(string diskEncryptionSetName, DiskEncryptionSetData diskEncryptionSet, CancellationToken cancellationToken = default)
         {
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+            if (diskEncryptionSet == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSet));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (diskEncryptionSetName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
-                }
-                if (diskEncryptionSet == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSet));
-                }
-
-                var operation = await StartCreateOrUpdateAsync(diskEncryptionSetName, diskEncryptionSet, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(diskEncryptionSetName, diskEncryptionSet, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -102,27 +105,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a DiskEncryptionSet. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a disk encryption set. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Put disk encryption set operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> or <paramref name="diskEncryptionSet"/> is null. </exception>
         public DiskEncryptionSetsCreateOrUpdateOperation StartCreateOrUpdate(string diskEncryptionSetName, DiskEncryptionSetData diskEncryptionSet, CancellationToken cancellationToken = default)
         {
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+            if (diskEncryptionSet == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSet));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (diskEncryptionSetName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
-                }
-                if (diskEncryptionSet == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSet));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet, cancellationToken: cancellationToken);
-                return new DiskEncryptionSetsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet).Request, originalResponse);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet, cancellationToken);
+                return new DiskEncryptionSetsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet).Request, response);
             }
             catch (Exception e)
             {
@@ -131,27 +135,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a DiskEncryptionSet. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a disk encryption set. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Put disk encryption set operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> or <paramref name="diskEncryptionSet"/> is null. </exception>
         public async Task<DiskEncryptionSetsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string diskEncryptionSetName, DiskEncryptionSetData diskEncryptionSet, CancellationToken cancellationToken = default)
         {
+            if (diskEncryptionSetName == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSetName));
+            }
+            if (diskEncryptionSet == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSet));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (diskEncryptionSetName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
-                }
-                if (diskEncryptionSet == null)
-                {
-                    throw new ArgumentNullException(nameof(diskEncryptionSet));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new DiskEncryptionSetsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet).Request, originalResponse);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet, cancellationToken).ConfigureAwait(false);
+                return new DiskEncryptionSetsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskEncryptionSetName, diskEncryptionSet).Request, response);
             }
             catch (Exception e)
             {
@@ -200,6 +205,106 @@ namespace Azure.ResourceManager.Compute
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DiskEncryptionSet(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public DiskEncryptionSet TryGet(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (diskEncryptionSetName == null)
+                {
+                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
+                }
+
+                return Get(diskEncryptionSetName, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<DiskEncryptionSet> TryGetAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (diskEncryptionSetName == null)
+                {
+                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
+                }
+
+                return await GetAsync(diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public bool DoesExist(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (diskEncryptionSetName == null)
+                {
+                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
+                }
+
+                return TryGet(diskEncryptionSetName, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<bool> DoesExistAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (diskEncryptionSetName == null)
+                {
+                    throw new ArgumentNullException(nameof(diskEncryptionSetName));
+                }
+
+                return await TryGetAsync(diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

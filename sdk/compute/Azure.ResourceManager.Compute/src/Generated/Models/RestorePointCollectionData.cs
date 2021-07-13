@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of RestorePointCollectionData. </summary>
         /// <param name="location"> The location. </param>
-        public RestorePointCollectionData(LocationData location) : base(location)
+        public RestorePointCollectionData(Location location) : base(location)
         {
             RestorePoints = new ChangeTrackingList<RestorePointData>();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
         /// <param name="restorePointCollectionId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
-        internal RestorePointCollectionData(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, RestorePointCollectionSourceProperties source, string provisioningState, string restorePointCollectionId, IReadOnlyList<RestorePointData> restorePoints) : base(id, name, type, location, tags)
+        internal RestorePointCollectionData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, RestorePointCollectionSourceProperties source, string provisioningState, string restorePointCollectionId, IReadOnlyList<RestorePointData> restorePoints) : base(id, name, type, location, tags)
         {
             Source = source;
             ProvisioningState = provisioningState;

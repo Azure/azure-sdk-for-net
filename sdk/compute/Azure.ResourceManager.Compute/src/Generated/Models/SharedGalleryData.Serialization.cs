@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharedGallery
+    public partial class SharedGalleryData
     {
-        internal static SharedGallery DeserializeSharedGallery(JsonElement element)
+        internal static SharedGalleryData DeserializeSharedGalleryData(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> location = default;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SharedGallery(name.Value, location.Value, uniqueId.Value);
+            return new SharedGalleryData(name.Value, location.Value, uniqueId.Value);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of CloudServiceData. </summary>
         /// <param name="location"> The location. </param>
-        public CloudServiceData(LocationData location) : base(location)
+        public CloudServiceData(Location location) : base(location)
         {
         }
 
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="properties"> Cloud service properties. </param>
-        internal CloudServiceData(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, CloudServiceProperties properties) : base(id, name, type, location, tags)
+        internal CloudServiceData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, CloudServiceProperties properties) : base(id, name, type, location, tags)
         {
             Properties = properties;
         }

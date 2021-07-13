@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of AvailabilitySetData. </summary>
         /// <param name="location"> The location. </param>
-        public AvailabilitySetData(LocationData location) : base(location)
+        public AvailabilitySetData(Location location) : base(location)
         {
             VirtualMachines = new ChangeTrackingList<SubResource>();
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
         /// <param name="proximityPlacementGroup"> Specifies information about the proximity placement group that the availability set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal AvailabilitySetData(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, Sku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<SubResource> virtualMachines, SubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses) : base(id, name, type, location, tags)
+        internal AvailabilitySetData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, Sku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<SubResource> virtualMachines, SubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses) : base(id, name, type, location, tags)
         {
             Sku = sku;
             PlatformUpdateDomainCount = platformUpdateDomainCount;

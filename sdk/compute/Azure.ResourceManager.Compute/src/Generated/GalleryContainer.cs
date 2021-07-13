@@ -45,26 +45,28 @@ namespace Azure.ResourceManager.Compute
 
         // Container level operations.
 
-        /// <summary> The operation to create or update a Gallery. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a Shared Image Gallery. </summary>
         /// <param name="galleryName"> The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
         public Response<Gallery> CreateOrUpdate(string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (gallery == null)
+            {
+                throw new ArgumentNullException(nameof(gallery));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (galleryName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryName));
-                }
-                if (gallery == null)
-                {
-                    throw new ArgumentNullException(nameof(gallery));
-                }
-
-                return StartCreateOrUpdate(galleryName, gallery, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartCreateOrUpdate(galleryName, gallery, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -73,26 +75,27 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a Gallery. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a Shared Image Gallery. </summary>
         /// <param name="galleryName"> The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
         public async Task<Response<Gallery>> CreateOrUpdateAsync(string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (gallery == null)
+            {
+                throw new ArgumentNullException(nameof(gallery));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (galleryName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryName));
-                }
-                if (gallery == null)
-                {
-                    throw new ArgumentNullException(nameof(gallery));
-                }
-
-                var operation = await StartCreateOrUpdateAsync(galleryName, gallery, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(galleryName, gallery, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -102,27 +105,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a Gallery. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a Shared Image Gallery. </summary>
         /// <param name="galleryName"> The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
         public GalleriesCreateOrUpdateOperation StartCreateOrUpdate(string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (gallery == null)
+            {
+                throw new ArgumentNullException(nameof(gallery));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (galleryName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryName));
-                }
-                if (gallery == null)
-                {
-                    throw new ArgumentNullException(nameof(gallery));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.ResourceGroupName, galleryName, gallery, cancellationToken: cancellationToken);
-                return new GalleriesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, galleryName, gallery).Request, originalResponse);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, galleryName, gallery, cancellationToken);
+                return new GalleriesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, galleryName, gallery).Request, response);
             }
             catch (Exception e)
             {
@@ -131,27 +135,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a Gallery. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a Shared Image Gallery. </summary>
         /// <param name="galleryName"> The name of the Shared Image Gallery. The allowed characters are alphabets and numbers with dots and periods allowed in the middle. The maximum length is 80 characters. </param>
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
         public async Task<GalleriesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (gallery == null)
+            {
+                throw new ArgumentNullException(nameof(gallery));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("GalleryContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (galleryName == null)
-                {
-                    throw new ArgumentNullException(nameof(galleryName));
-                }
-                if (gallery == null)
-                {
-                    throw new ArgumentNullException(nameof(gallery));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, galleryName, gallery, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new GalleriesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, galleryName, gallery).Request, originalResponse);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, galleryName, gallery, cancellationToken).ConfigureAwait(false);
+                return new GalleriesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, galleryName, gallery).Request, response);
             }
             catch (Exception e)
             {
@@ -202,6 +207,110 @@ namespace Azure.ResourceManager.Compute
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, galleryName, select, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Gallery(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="select"> The select expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public Gallery TryGet(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("GalleryContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (galleryName == null)
+                {
+                    throw new ArgumentNullException(nameof(galleryName));
+                }
+
+                return Get(galleryName, select, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="select"> The select expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<Gallery> TryGetAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("GalleryContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (galleryName == null)
+                {
+                    throw new ArgumentNullException(nameof(galleryName));
+                }
+
+                return await GetAsync(galleryName, select, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="select"> The select expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public bool DoesExist(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("GalleryContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (galleryName == null)
+                {
+                    throw new ArgumentNullException(nameof(galleryName));
+                }
+
+                return TryGet(galleryName, select, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="select"> The select expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<bool> DoesExistAsync(string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("GalleryContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (galleryName == null)
+                {
+                    throw new ArgumentNullException(nameof(galleryName));
+                }
+
+                return await TryGetAsync(galleryName, select, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

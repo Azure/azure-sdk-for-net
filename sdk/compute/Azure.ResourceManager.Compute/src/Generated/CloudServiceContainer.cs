@@ -45,22 +45,24 @@ namespace Azure.ResourceManager.Compute
 
         // Container level operations.
 
-        /// <summary> The operation to create or update a CloudService. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a cloud service. Please note some properties can be set only during cloud service creation. </summary>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="parameters"> The cloud service object. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
         public Response<CloudService> CreateOrUpdate(string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
         {
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (cloudServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(cloudServiceName));
-                }
-
-                return StartCreateOrUpdate(cloudServiceName, parameters, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartCreateOrUpdate(cloudServiceName, parameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -69,22 +71,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a CloudService. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a cloud service. Please note some properties can be set only during cloud service creation. </summary>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="parameters"> The cloud service object. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
         public async Task<Response<CloudService>> CreateOrUpdateAsync(string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
         {
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (cloudServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(cloudServiceName));
-                }
-
-                var operation = await StartCreateOrUpdateAsync(cloudServiceName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(cloudServiceName, parameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -94,23 +97,24 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a CloudService. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a cloud service. Please note some properties can be set only during cloud service creation. </summary>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="parameters"> The cloud service object. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
         public CloudServicesCreateOrUpdateOperation StartCreateOrUpdate(string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
         {
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (cloudServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(cloudServiceName));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.ResourceGroupName, cloudServiceName, parameters, cancellationToken: cancellationToken);
-                return new CloudServicesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, cloudServiceName, parameters).Request, originalResponse);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, cloudServiceName, parameters, cancellationToken);
+                return new CloudServicesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, cloudServiceName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -119,23 +123,24 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a CloudService. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a cloud service. Please note some properties can be set only during cloud service creation. </summary>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="parameters"> The cloud service object. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
         public async Task<CloudServicesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
         {
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(cloudServiceName));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (cloudServiceName == null)
-                {
-                    throw new ArgumentNullException(nameof(cloudServiceName));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, cloudServiceName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new CloudServicesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, cloudServiceName, parameters).Request, originalResponse);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, cloudServiceName, parameters, cancellationToken).ConfigureAwait(false);
+                return new CloudServicesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, cloudServiceName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -184,6 +189,106 @@ namespace Azure.ResourceManager.Compute
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public CloudService TryGet(string cloudServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (cloudServiceName == null)
+                {
+                    throw new ArgumentNullException(nameof(cloudServiceName));
+                }
+
+                return Get(cloudServiceName, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<CloudService> TryGetAsync(string cloudServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (cloudServiceName == null)
+                {
+                    throw new ArgumentNullException(nameof(cloudServiceName));
+                }
+
+                return await GetAsync(cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public bool DoesExist(string cloudServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (cloudServiceName == null)
+                {
+                    throw new ArgumentNullException(nameof(cloudServiceName));
+                }
+
+                return TryGet(cloudServiceName, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<bool> DoesExistAsync(string cloudServiceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (cloudServiceName == null)
+                {
+                    throw new ArgumentNullException(nameof(cloudServiceName));
+                }
+
+                return await TryGetAsync(cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

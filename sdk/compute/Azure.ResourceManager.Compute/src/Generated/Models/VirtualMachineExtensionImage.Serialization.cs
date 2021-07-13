@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineExtensionImage DeserializeVirtualMachineExtensionImage(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            LocationData location = default;
+            Location location = default;
             TenantResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

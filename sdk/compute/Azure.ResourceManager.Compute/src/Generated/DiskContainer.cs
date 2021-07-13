@@ -45,26 +45,28 @@ namespace Azure.ResourceManager.Compute
 
         // Container level operations.
 
-        /// <summary> The operation to create or update a Disk. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a disk. </summary>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
         public Response<Disk> CreateOrUpdate(string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
+            if (diskName == null)
+            {
+                throw new ArgumentNullException(nameof(diskName));
+            }
+            if (disk == null)
+            {
+                throw new ArgumentNullException(nameof(disk));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (diskName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskName));
-                }
-                if (disk == null)
-                {
-                    throw new ArgumentNullException(nameof(disk));
-                }
-
-                return StartCreateOrUpdate(diskName, disk, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartCreateOrUpdate(diskName, disk, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -73,26 +75,27 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a Disk. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a disk. </summary>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
         public async Task<Response<Disk>> CreateOrUpdateAsync(string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
+            if (diskName == null)
+            {
+                throw new ArgumentNullException(nameof(diskName));
+            }
+            if (disk == null)
+            {
+                throw new ArgumentNullException(nameof(disk));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (diskName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskName));
-                }
-                if (disk == null)
-                {
-                    throw new ArgumentNullException(nameof(disk));
-                }
-
-                var operation = await StartCreateOrUpdateAsync(diskName, disk, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(diskName, disk, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -102,27 +105,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a Disk. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a disk. </summary>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
         public DisksCreateOrUpdateOperation StartCreateOrUpdate(string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
+            if (diskName == null)
+            {
+                throw new ArgumentNullException(nameof(diskName));
+            }
+            if (disk == null)
+            {
+                throw new ArgumentNullException(nameof(disk));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (diskName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskName));
-                }
-                if (disk == null)
-                {
-                    throw new ArgumentNullException(nameof(disk));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.ResourceGroupName, diskName, disk, cancellationToken: cancellationToken);
-                return new DisksCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskName, disk).Request, originalResponse);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, diskName, disk, cancellationToken);
+                return new DisksCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskName, disk).Request, response);
             }
             catch (Exception e)
             {
@@ -131,27 +135,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a Disk. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a disk. </summary>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
         public async Task<DisksCreateOrUpdateOperation> StartCreateOrUpdateAsync(string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
+            if (diskName == null)
+            {
+                throw new ArgumentNullException(nameof(diskName));
+            }
+            if (disk == null)
+            {
+                throw new ArgumentNullException(nameof(disk));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (diskName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskName));
-                }
-                if (disk == null)
-                {
-                    throw new ArgumentNullException(nameof(disk));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, diskName, disk, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new DisksCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskName, disk).Request, originalResponse);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, diskName, disk, cancellationToken).ConfigureAwait(false);
+                return new DisksCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskName, disk).Request, response);
             }
             catch (Exception e)
             {
@@ -200,6 +205,106 @@ namespace Azure.ResourceManager.Compute
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, diskName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Disk(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public Disk TryGet(string diskName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (diskName == null)
+                {
+                    throw new ArgumentNullException(nameof(diskName));
+                }
+
+                return Get(diskName, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<Disk> TryGetAsync(string diskName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (diskName == null)
+                {
+                    throw new ArgumentNullException(nameof(diskName));
+                }
+
+                return await GetAsync(diskName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public bool DoesExist(string diskName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (diskName == null)
+                {
+                    throw new ArgumentNullException(nameof(diskName));
+                }
+
+                return TryGet(diskName, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<bool> DoesExistAsync(string diskName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (diskName == null)
+                {
+                    throw new ArgumentNullException(nameof(diskName));
+                }
+
+                return await TryGetAsync(diskName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

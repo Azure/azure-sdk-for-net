@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of DiskEncryptionSetData. </summary>
         /// <param name="location"> The location. </param>
-        public DiskEncryptionSetData(LocationData location) : base(location)
+        public DiskEncryptionSetData(Location location) : base(location)
         {
             PreviousKeys = new ChangeTrackingList<KeyForDiskEncryptionSet>();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The disk encryption set provisioning state. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of this disk encryption set to the latest key version. </param>
         /// <param name="lastKeyRotationTimestamp"> The time when the active key of this disk encryption set was updated. </param>
-        internal DiskEncryptionSetData(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, EncryptionSetIdentity identity, DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IReadOnlyList<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationTimestamp) : base(id, name, type, location, tags)
+        internal DiskEncryptionSetData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, EncryptionSetIdentity identity, DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IReadOnlyList<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationTimestamp) : base(id, name, type, location, tags)
         {
             Identity = identity;
             EncryptionType = encryptionType;

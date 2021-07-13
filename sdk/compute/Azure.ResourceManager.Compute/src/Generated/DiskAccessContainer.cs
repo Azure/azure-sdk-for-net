@@ -45,26 +45,28 @@ namespace Azure.ResourceManager.Compute
 
         // Container level operations.
 
-        /// <summary> The operation to create or update a DiskAccess. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a disk access resource. </summary>
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="diskAccess"> disk access object supplied in the body of the Put disk access operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
         public Response<DiskAccess> CreateOrUpdate(string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
+            if (diskAccessName == null)
+            {
+                throw new ArgumentNullException(nameof(diskAccessName));
+            }
+            if (diskAccess == null)
+            {
+                throw new ArgumentNullException(nameof(diskAccess));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskAccessContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (diskAccessName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskAccessName));
-                }
-                if (diskAccess == null)
-                {
-                    throw new ArgumentNullException(nameof(diskAccess));
-                }
-
-                return StartCreateOrUpdate(diskAccessName, diskAccess, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartCreateOrUpdate(diskAccessName, diskAccess, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -73,26 +75,27 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a DiskAccess. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a disk access resource. </summary>
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="diskAccess"> disk access object supplied in the body of the Put disk access operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
         public async Task<Response<DiskAccess>> CreateOrUpdateAsync(string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
+            if (diskAccessName == null)
+            {
+                throw new ArgumentNullException(nameof(diskAccessName));
+            }
+            if (diskAccess == null)
+            {
+                throw new ArgumentNullException(nameof(diskAccess));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskAccessContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (diskAccessName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskAccessName));
-                }
-                if (diskAccess == null)
-                {
-                    throw new ArgumentNullException(nameof(diskAccess));
-                }
-
-                var operation = await StartCreateOrUpdateAsync(diskAccessName, diskAccess, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(diskAccessName, diskAccess, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -102,27 +105,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a DiskAccess. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a disk access resource. </summary>
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="diskAccess"> disk access object supplied in the body of the Put disk access operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
         public DiskAccessesCreateOrUpdateOperation StartCreateOrUpdate(string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
+            if (diskAccessName == null)
+            {
+                throw new ArgumentNullException(nameof(diskAccessName));
+            }
+            if (diskAccess == null)
+            {
+                throw new ArgumentNullException(nameof(diskAccess));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskAccessContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (diskAccessName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskAccessName));
-                }
-                if (diskAccess == null)
-                {
-                    throw new ArgumentNullException(nameof(diskAccess));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.ResourceGroupName, diskAccessName, diskAccess, cancellationToken: cancellationToken);
-                return new DiskAccessesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskAccessName, diskAccess).Request, originalResponse);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, diskAccessName, diskAccess, cancellationToken);
+                return new DiskAccessesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskAccessName, diskAccess).Request, response);
             }
             catch (Exception e)
             {
@@ -131,27 +135,28 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to create or update a DiskAccess. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a disk access resource. </summary>
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="diskAccess"> disk access object supplied in the body of the Put disk access operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
         public async Task<DiskAccessesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
+            if (diskAccessName == null)
+            {
+                throw new ArgumentNullException(nameof(diskAccessName));
+            }
+            if (diskAccess == null)
+            {
+                throw new ArgumentNullException(nameof(diskAccess));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("DiskAccessContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (diskAccessName == null)
-                {
-                    throw new ArgumentNullException(nameof(diskAccessName));
-                }
-                if (diskAccess == null)
-                {
-                    throw new ArgumentNullException(nameof(diskAccess));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, diskAccessName, diskAccess, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new DiskAccessesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskAccessName, diskAccess).Request, originalResponse);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, diskAccessName, diskAccess, cancellationToken).ConfigureAwait(false);
+                return new DiskAccessesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, diskAccessName, diskAccess).Request, response);
             }
             catch (Exception e)
             {
@@ -200,6 +205,106 @@ namespace Azure.ResourceManager.Compute
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, diskAccessName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DiskAccess(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public DiskAccess TryGet(string diskAccessName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (diskAccessName == null)
+                {
+                    throw new ArgumentNullException(nameof(diskAccessName));
+                }
+
+                return Get(diskAccessName, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<DiskAccess> TryGetAsync(string diskAccessName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (diskAccessName == null)
+                {
+                    throw new ArgumentNullException(nameof(diskAccessName));
+                }
+
+                return await GetAsync(diskAccessName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public bool DoesExist(string diskAccessName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (diskAccessName == null)
+                {
+                    throw new ArgumentNullException(nameof(diskAccessName));
+                }
+
+                return TryGet(diskAccessName, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async Task<bool> DoesExistAsync(string diskAccessName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (diskAccessName == null)
+                {
+                    throw new ArgumentNullException(nameof(diskAccessName));
+                }
+
+                return await TryGetAsync(diskAccessName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

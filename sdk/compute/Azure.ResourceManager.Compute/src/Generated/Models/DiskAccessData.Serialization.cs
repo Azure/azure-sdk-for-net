@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static DiskAccessData DeserializeDiskAccessData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            LocationData location = default;
+            Location location = default;
             ResourceGroupResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

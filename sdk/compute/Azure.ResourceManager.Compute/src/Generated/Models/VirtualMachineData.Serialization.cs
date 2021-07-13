@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("plan");
                 writer.WriteObjectValue(Plan);
             }
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(ResourceIdentity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, ResourceIdentity);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<Plan> plan = default;
             Optional<IReadOnlyList<VirtualMachineExtensionData>> resources = default;
-            Optional<VirtualMachineIdentity> identity = default;
+            Optional<ResourceIdentity> identity = default;
             Optional<IList<string>> zones = default;
             Optional<ExtendedLocation> extendedLocation = default;
             IDictionary<string, string> tags = default;
-            LocationData location = default;
+            Location location = default;
             ResourceGroupResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = VirtualMachineIdentity.DeserializeVirtualMachineIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ResourceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineData(id, name, type, location, tags, plan.Value, Optional.ToList(resources), identity.Value, Optional.ToList(zones), extendedLocation.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, availabilitySet.Value, virtualMachineScaleSet.Value, proximityPlacementGroup.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, host.Value, hostGroup.Value, provisioningState.Value, instanceView.Value, licenseType.Value, vmId.Value, extensionsTimeBudget.Value, Optional.ToNullable(platformFaultDomain), scheduledEventsProfile.Value, userData.Value);
+            return new VirtualMachineData(id, name, type, location, tags, plan.Value, Optional.ToList(resources), identity, Optional.ToList(zones), extendedLocation.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, availabilitySet.Value, virtualMachineScaleSet.Value, proximityPlacementGroup.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, host.Value, hostGroup.Value, provisioningState.Value, instanceView.Value, licenseType.Value, vmId.Value, extensionsTimeBudget.Value, Optional.ToNullable(platformFaultDomain), scheduledEventsProfile.Value, userData.Value);
         }
     }
 }
