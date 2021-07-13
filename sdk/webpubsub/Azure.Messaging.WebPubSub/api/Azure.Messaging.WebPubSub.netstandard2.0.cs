@@ -64,8 +64,7 @@ namespace Azure.Messaging.WebPubSub
         public System.Uri ReverseProxyEndpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
-            V2021_05_01_preview = 1,
-            V2021_07_01_preview = 2,
+            V2021_07_01_preview = 1,
         }
     }
 }
