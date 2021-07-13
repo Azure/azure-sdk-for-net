@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="database"/>, or <paramref name="command"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="database"/>, or <paramref name="command"/> is empty.</exception>
         public MongoDbDataFeedSource(string connectionString, string database, string command)
-            : base(DataFeedSourceType.MongoDb)
+            : base(DataFeedSourceKind.MongoDb)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(database, nameof(database));
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Command = command;
         }
         internal MongoDbDataFeedSource(MongoDBParameter parameter)
-            : base(DataFeedSourceType.MongoDb)
+            : base(DataFeedSourceKind.MongoDb)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

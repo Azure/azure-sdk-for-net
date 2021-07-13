@@ -1,11 +1,5 @@
 namespace Azure.DigitalTwins.Core
 {
-    public static partial class AzureDigitalTwinsAPIModelFactory
-    {
-        public static Azure.DigitalTwins.Core.DigitalTwinsEventRoute DigitalTwinsEventRoute(string id = null, string endpointName = null, string filter = null) { throw null; }
-        public static Azure.DigitalTwins.Core.DigitalTwinsModelData DigitalTwinsModelData(System.Collections.Generic.IReadOnlyDictionary<string, string> languageDisplayNames = null, System.Collections.Generic.IReadOnlyDictionary<string, string> languageDescriptions = null, string id = null, System.DateTimeOffset? uploadedOn = default(System.DateTimeOffset?), bool? decommissioned = default(bool?), string dtdlModel = null) { throw null; }
-        public static Azure.DigitalTwins.Core.IncomingRelationship IncomingRelationship(string relationshipId = null, string sourceId = null, string relationshipName = null, string relationshipLink = null) { throw null; }
-    }
     public partial class BasicDigitalTwin
     {
         public BasicDigitalTwin() { }
@@ -100,9 +94,7 @@ namespace Azure.DigitalTwins.Core
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishComponentTelemetryAsync(string digitalTwinId, string componentName, string messageId, string payload, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PublishTelemetry(string digitalTwinId, string messageId, string payload, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PublishTelemetryAsync(string digitalTwinId, string messageId, string payload, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<T> QueryAsync<T>(Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder adtQueryBuilder, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<T> QueryAsync<T>(string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<T> Query<T>(Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder adtQueryBuilder, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<T> Query<T>(string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateComponent(string digitalTwinId, string componentName, Azure.JsonPatchDocument jsonPatchDocument, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateComponentAsync(string digitalTwinId, string componentName, Azure.JsonPatchDocument jsonPatchDocument, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -174,100 +166,12 @@ namespace Azure.DigitalTwins.Core
         public static bool TryGetQueryCharge<T>(Azure.Page<T> page, out float queryCharge) { throw null; }
     }
 }
-namespace Azure.DigitalTwins.Core.QueryBuilder
+namespace Azure.DigitalTwins.Core.Models
 {
-    public enum AdtCollection
+    public static partial class AzureDigitalTwinsAPIModelFactory
     {
-        DigitalTwins = 0,
-        Relationships = 1,
-    }
-    public enum AdtDataType
-    {
-        AdtBool = 0,
-        AdtNumber = 1,
-        AdtString = 2,
-        AdtPrimative = 3,
-        AdtObject = 4,
-    }
-    public partial class AdtQueryBuilder
-    {
-        public AdtQueryBuilder() { }
-        public string GetQueryText() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery Select(params string[] args) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectAll() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectCount() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectCustom(string customQuery) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTop(int count, params string[] args) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTopAll(int count) { throw null; }
-    }
-    public sealed partial class FromQuery : Azure.DigitalTwins.Core.QueryBuilder.QueryBase
-    {
-        internal FromQuery() { }
-        public override Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder Build() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.WhereStatement From(Azure.DigitalTwins.Core.QueryBuilder.AdtCollection collection) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.WhereStatement From(string collection) { throw null; }
-        public override string GetQueryText() { throw null; }
-    }
-    public partial class LogicalOperator : Azure.DigitalTwins.Core.QueryBuilder.QueryBase
-    {
-        internal LogicalOperator() { }
-        public Azure.DigitalTwins.Core.QueryBuilder.WhereLogic And() { throw null; }
-        public override Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder Build() { throw null; }
-        public override string GetQueryText() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.WhereLogic Or() { throw null; }
-    }
-    public abstract partial class QueryBase
-    {
-        protected QueryBase() { }
-        public abstract Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder Build();
-        public abstract string GetQueryText();
-    }
-    public enum QueryComparisonOperator
-    {
-        Equal = 0,
-        NotEqual = 1,
-        GreaterThan = 2,
-        LessThan = 3,
-        GreaterOrEqual = 4,
-        LessOrEqual = 5,
-    }
-    public enum QueryContainsOperator
-    {
-        In = 0,
-        NotIn = 1,
-    }
-    public sealed partial class SelectQuery : Azure.DigitalTwins.Core.QueryBuilder.QueryBase
-    {
-        internal SelectQuery() { }
-        public override Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder Build() { throw null; }
-        public override string GetQueryText() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery Select(string literalQuery) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery Select(params string[] args) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectAll() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectCount() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTop(int count, params string[] args) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.FromQuery SelectTopAll(int count) { throw null; }
-    }
-    public sealed partial class WhereLogic
-    {
-        internal WhereLogic() { }
-        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator Compare<T>(string field, Azure.DigitalTwins.Core.QueryBuilder.QueryComparisonOperator comparisonOperator, T value) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator Contains(string value, string[] searched) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator CustomClause(string condition) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator EndsWith(string stringToCheck, string endingString) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator IsDefined(string property) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator IsNull(string expression) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator IsOfModel(string model, bool exact = false) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator IsOfType(string expression, Azure.DigitalTwins.Core.QueryBuilder.AdtDataType type) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator NotContains(string value, string[] searched) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator Parenthetical(System.Func<Azure.DigitalTwins.Core.QueryBuilder.WhereLogic, Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator> nested) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.LogicalOperator StartsWith(string stringToCheck, string beginningString) { throw null; }
-    }
-    public partial class WhereStatement : Azure.DigitalTwins.Core.QueryBuilder.QueryBase
-    {
-        internal WhereStatement() { }
-        public override Azure.DigitalTwins.Core.QueryBuilder.AdtQueryBuilder Build() { throw null; }
-        public override string GetQueryText() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.WhereLogic Where() { throw null; }
+        public static Azure.DigitalTwins.Core.DigitalTwinsEventRoute DigitalTwinsEventRoute(string id = null, string endpointName = null, string filter = null) { throw null; }
+        public static Azure.DigitalTwins.Core.DigitalTwinsModelData DigitalTwinsModelData(System.Collections.Generic.IReadOnlyDictionary<string, string> languageDisplayNames = null, System.Collections.Generic.IReadOnlyDictionary<string, string> languageDescriptions = null, string id = null, System.DateTimeOffset? uploadedOn = default(System.DateTimeOffset?), bool? decommissioned = default(bool?), string dtdlModel = null) { throw null; }
+        public static Azure.DigitalTwins.Core.IncomingRelationship IncomingRelationship(string relationshipId = null, string sourceId = null, string relationshipName = null, string relationshipLink = null) { throw null; }
     }
 }

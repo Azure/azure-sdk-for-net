@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -35,6 +36,11 @@ namespace Azure.Core.Tests
             Assert.AreEqual("MoreDetailedBadError", error.InnerError.Code);
             Assert.AreEqual("Inner message", error.InnerError.Message);
             Assert.Null(error.InnerError.InnerError);
+            Assert.AreEqual("BadError: Something wasn't awesome" + Environment.NewLine +
+                            "Target: Error target" + Environment.NewLine +
+                            "Inner Error:" + Environment.NewLine +
+                            "MoreDetailedBadError: Inner message" + Environment.NewLine,
+                error.ToString());
         }
 
         [Test]
@@ -80,6 +86,16 @@ namespace Azure.Core.Tests
             Assert.AreEqual(2, error.Details.Count);
 
             Assert.Null(error.InnerError.InnerError.InnerError);
+
+            Assert.AreEqual("BadError: Something wasn't awesome" + Environment.NewLine +
+                            "Target: Error target" + Environment.NewLine +
+                            "Inner Error:" + Environment.NewLine +
+                            "MoreDetailedBadError: Inner message" + Environment.NewLine +
+                            "Inner Error:" + Environment.NewLine +
+                            "InnerMoreDetailedBadError: Inner Inner message" + Environment.NewLine +
+                            "Details:" + Environment.NewLine +
+                            "Code 1: Message 1" + Environment.NewLine +
+                            "Code 2: Message 2" + Environment.NewLine, error.ToString());
         }
     }
 }

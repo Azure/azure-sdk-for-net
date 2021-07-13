@@ -457,7 +457,7 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_cloud_shell]: https://shell.azure.com/bash
 [azure_confidential_computing]: https://azure.microsoft.com/solutions/confidential-compute
-[azure_sub]: https://azure.microsoft.com/free
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [ccf]: https://github.com/Microsoft/CCF
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [default_cred_ref]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential

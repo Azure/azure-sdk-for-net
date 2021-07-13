@@ -1250,8 +1250,8 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Restores a previously deleted Share. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="deletedShareName"> Specifies the name of the preivously-deleted share. </param>
-        /// <param name="deletedShareVersion"> Specifies the version of the preivously-deleted share. </param>
+        /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
+        /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<ShareRestoreHeaders>> RestoreAsync(int? timeout = null, string deletedShareName = null, string deletedShareVersion = null, CancellationToken cancellationToken = default)
         {
@@ -1269,8 +1269,8 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Restores a previously deleted Share. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="deletedShareName"> Specifies the name of the preivously-deleted share. </param>
-        /// <param name="deletedShareVersion"> Specifies the version of the preivously-deleted share. </param>
+        /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
+        /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<ShareRestoreHeaders> Restore(int? timeout = null, string deletedShareName = null, string deletedShareVersion = null, CancellationToken cancellationToken = default)
         {

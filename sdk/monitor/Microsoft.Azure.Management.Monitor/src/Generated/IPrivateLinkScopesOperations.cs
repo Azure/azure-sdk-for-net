@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Deletes a Azure Monitor PrivateLinkScope.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='scopeName'>
         /// The name of the Azure Monitor PrivateLinkScope resource.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Returns a Azure Monitor PrivateLinkScope.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='scopeName'>
         /// The name of the Azure Monitor PrivateLinkScope resource.
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// in the Put operation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='scopeName'>
         /// The name of the Azure Monitor PrivateLinkScope resource.
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// use the CreateOrUpdate method.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='scopeName'>
         /// The name of the Azure Monitor PrivateLinkScope resource.
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Deletes a Azure Monitor PrivateLinkScope.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='scopeName'>
         /// The name of the Azure Monitor PrivateLinkScope resource.

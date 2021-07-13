@@ -23,10 +23,25 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Gets the result for the query that was a part of the batch.
         /// </summary>
+        /// <code snippet="Snippet:BatchQueryAddAndGet" language="csharp">
+        /// string countQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | count&quot;,
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        /// string topQueryId = batch.AddQuery(
+        ///     workspaceId,
+        ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
+        ///
+        /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
+        ///
+        /// var count = response.Value.GetResult&lt;int&gt;(countQueryId).Single();
+        /// var topEntries = response.Value.GetResult&lt;MyLogEntryModel&gt;(topQueryId);
+        /// </code>
         /// <param name="queryId">The query identifier returned from the <see cref="LogsBatchQuery.AddQuery"/>.</param>
         /// <returns>The <see cref="LogsBatchQueryResults"/> with the query results.</returns>
         /// <exception cref="ArgumentException">When the query with <paramref name="queryId"/> was not part of the batch.</exception>
-        /// <exception cref="RequestFailedException">When the query  <paramref name="queryId"/> failed.</exception>
+        /// <exception cref="RequestFailedException">When the query <paramref name="queryId"/> failed.</exception>
         public LogsQueryResult GetResult(string queryId)
         {
             BatchQueryResponse result = Responses.SingleOrDefault(r => r.Id == queryId);
@@ -39,7 +54,8 @@ namespace Azure.Monitor.Query.Models
 
             if (result.Body.HasFailed)
             {
-                throw new RequestFailedException(result.Status ?? 0, result.Body.Error.Message, result.Body.Error.Code, null);
+                var message = $"Batch query with id '{queryId}' failed.{Environment.NewLine}{result.Body.Error}";
+                throw new RequestFailedException(result.Status ?? 0, message, result.Body.Error.Code, null);
             }
 
             return result.Body;

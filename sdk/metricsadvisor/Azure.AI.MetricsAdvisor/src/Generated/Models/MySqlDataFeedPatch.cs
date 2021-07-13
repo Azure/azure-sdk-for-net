@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of MySqlDataFeedPatch. </summary>
         public MySqlDataFeedPatch()
         {
-            DataSourceType = DataFeedSourceType.MySql;
+            DataSourceType = DataFeedSourceKind.MySql;
         }
 
         public SQLSourceParameterPatch DataSourceParameter { get; set; }

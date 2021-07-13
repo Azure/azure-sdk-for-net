@@ -7,6 +7,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 tag: package-sms-2021-03-07
+model-namespace: false
 require:
     -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/896d05e37dbb00712726620b8d679cc3c3be09fb/specification/communication/data-plane/Sms/readme.md
 payload-flattening-threshold: 10

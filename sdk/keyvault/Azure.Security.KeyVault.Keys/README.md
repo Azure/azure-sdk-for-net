@@ -450,7 +450,7 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact opencode@
 [API_reference]: https://docs.microsoft.com/dotnet/api/azure.security.keyvault.keys
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [backup_and_restore_sample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample2_BackupAndRestore.md
 [certificates_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Certificates
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/

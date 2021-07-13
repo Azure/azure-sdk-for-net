@@ -98,7 +98,7 @@ v12
 The new library only supports constructing a client with a fully constructed SAS URI. Note that since client URIs are immutable once created, a new client instance with a new SAS must be created in order to rotate a SAS.
 
 ```C# Snippet:SampleSnippetsBlobMigration_SasUri
-BlobClient blob = new BlobClient(new Uri(blobLocationWithSas));
+BlobClient blob = new BlobClient(sasUri);
 ```
 
 #### Connection string
@@ -446,7 +446,7 @@ v12
 
 v12 has explicit methods for listing by hierarchy.
 ```C# Snippet:SampleSnippetsBlobMigration_ListHierarchy
-IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix);
+IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix, delimiter: delimiter);
 await foreach (BlobHierarchyItem item in results)
 {
     MyConsumeBlobItemFunc(item);
@@ -546,19 +546,50 @@ sasBlobToken = blob.GetSharedAccessSignature(null, policyName);
 
 v12
 
-The modern SDK uses a builder pattern for constructing a SAS token. Clients are not involved in the process.
+The modern SDK uses a builder pattern for constructing a SAS token. Similar to the pattern to create a SAS in v11, you can generate a SAS URI from the client. This is the preferred method in order to prevent passing the key to more than one place. It also is more convenient to generate from the client in the case of authenticating with a connection string, as you would not have to parse the connection string to grab the storage account name and key.
+
+To create a simple SAS with any optional parameters, use the convenience overload of GenerateSas which only requires taking in permissions and the expiry time.
+
+```C# Snippet:SampleSnippetsBlobMigration_GenerateSas
+// Create a BlobClient with a shared key credential
+BlobClient blobClient = new BlobClient(blobUri, sharedKeyCredential);
+
+Uri sasUri;
+// Ensure our client has the credentials required to generate a SAS
+if (blobClient.CanGenerateSasUri)
+{
+    // Create full, self-authenticating URI to the resource from the BlobClient
+    sasUri = blobClient.GenerateSasUri(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1));
+
+    // Use newly made as SAS URI to download the blob
+    await new BlobClient(sasUri).DownloadToAsync(new MemoryStream());
+}
+```
+
+To create a more complex SAS pass the SAS builder to the GenerateSas method.
+
+```C# Snippet:SampleSnippetsBlobMigration_GenerateSas_Builder
+BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
+{
+    // Since we are generating from the client, the client will have the container and blob name
+    // Specify any optional paremeters here
+    StartsOn = DateTimeOffset.UtcNow.AddHours(-1)
+};
+
+// Create full, self-authenticating URI to the resource from the BlobClient
+Uri sasUri = blobClient.GenerateSasUri(sasBuilder);
+```
+
+You can also generate a SAS without use of the client.
 
 ```C# Snippet:SampleSnippetsBlobMigration_SasBuilder
 // Create BlobSasBuilder and specify parameters
-BlobSasBuilder sasBuilder = new BlobSasBuilder()
+BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1))
 {
     // with no url in a client to read from, container and blob name must be provided if applicable
     BlobContainerName = containerName,
-    BlobName = blobName,
-    ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
+    BlobName = blobName
 };
-// permissions applied separately, using the appropriate enum to the scope of your SAS
-sasBuilder.SetPermissions(BlobSasPermissions.Read);
 
 // Create full, self-authenticating URI to the resource
 BlobUriBuilder uriBuilder = new BlobUriBuilder(StorageAccountBlobUri)
@@ -574,10 +605,8 @@ If using a stored access policy, construct your `BlobSasBuilder` from the exampl
 
 ```C# Snippet:SampleSnippetsBlobMigration_SasBuilderIdentifier
 // Create BlobSasBuilder and specify parameters
-BlobSasBuilder sasBuilder = new BlobSasBuilder()
+BlobSasBuilder sasBuilder = new BlobSasBuilder
 {
-    BlobContainerName = containerName,
-    BlobName = blobName,
     Identifier = "mysignedidentifier"
 };
 ```
