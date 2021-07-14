@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of SnapshotContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SnapshotContainer(ResourceOperationsBase parent) : base(parent)
+        internal SnapshotContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="snapshot"/> is null. </exception>
-        public Response<Snapshot> CreateOrUpdate(string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
+        public virtual Response<Snapshot> CreateOrUpdate(string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
         {
             if (snapshotName == null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="snapshot"/> is null. </exception>
-        public async Task<Response<Snapshot>> CreateOrUpdateAsync(string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Snapshot>> CreateOrUpdateAsync(string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
         {
             if (snapshotName == null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="snapshot"/> is null. </exception>
-        public SnapshotsCreateOrUpdateOperation StartCreateOrUpdate(string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
+        public virtual SnapshotsCreateOrUpdateOperation StartCreateOrUpdate(string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
         {
             if (snapshotName == null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="snapshot"/> is null. </exception>
-        public async Task<SnapshotsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
         {
             if (snapshotName == null)
             {

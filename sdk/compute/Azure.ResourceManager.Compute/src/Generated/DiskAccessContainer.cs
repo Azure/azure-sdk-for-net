@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of DiskAccessContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DiskAccessContainer(ResourceOperationsBase parent) : base(parent)
+        internal DiskAccessContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccess"> disk access object supplied in the body of the Put disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
-        public Response<DiskAccess> CreateOrUpdate(string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
+        public virtual Response<DiskAccess> CreateOrUpdate(string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
             if (diskAccessName == null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccess"> disk access object supplied in the body of the Put disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
-        public async Task<Response<DiskAccess>> CreateOrUpdateAsync(string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DiskAccess>> CreateOrUpdateAsync(string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
             if (diskAccessName == null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccess"> disk access object supplied in the body of the Put disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
-        public DiskAccessesCreateOrUpdateOperation StartCreateOrUpdate(string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
+        public virtual DiskAccessesCreateOrUpdateOperation StartCreateOrUpdate(string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
             if (diskAccessName == null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskAccess"> disk access object supplied in the body of the Put disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> or <paramref name="diskAccess"/> is null. </exception>
-        public async Task<DiskAccessesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
+        public async virtual Task<DiskAccessesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string diskAccessName, DiskAccessData diskAccess, CancellationToken cancellationToken = default)
         {
             if (diskAccessName == null)
             {

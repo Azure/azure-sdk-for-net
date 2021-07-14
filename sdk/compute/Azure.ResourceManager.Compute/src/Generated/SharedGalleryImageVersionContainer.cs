@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of SharedGalleryImageVersionContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SharedGalleryImageVersionContainer(ResourceOperationsBase parent) : base(parent)
+        internal SharedGalleryImageVersionContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }

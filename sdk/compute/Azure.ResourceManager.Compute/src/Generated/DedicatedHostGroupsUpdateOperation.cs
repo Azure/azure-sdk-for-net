@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        internal DedicatedHostGroupsUpdateOperation(ResourceOperationsBase operationsBase, Response<DedicatedHostGroupData> response)
+        internal DedicatedHostGroupsUpdateOperation(OperationsBase operationsBase, Response<DedicatedHostGroupData> response)
         {
             _operation = new OperationOrResponseInternals<DedicatedHostGroup>(Response.FromValue(new DedicatedHostGroup(operationsBase, response.Value), response.GetRawResponse()));
         }

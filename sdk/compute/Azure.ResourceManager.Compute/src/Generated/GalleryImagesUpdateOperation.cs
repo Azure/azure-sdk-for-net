@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly OperationInternals<GalleryImage> _operation;
 
-        private readonly ResourceOperationsBase _operationBase;
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of GalleryImagesUpdateOperation for mocking. </summary>
         protected GalleryImagesUpdateOperation()
         {
         }
 
-        internal GalleryImagesUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal GalleryImagesUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<GalleryImage>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "GalleryImagesUpdateOperation");
             _operationBase = operationsBase;

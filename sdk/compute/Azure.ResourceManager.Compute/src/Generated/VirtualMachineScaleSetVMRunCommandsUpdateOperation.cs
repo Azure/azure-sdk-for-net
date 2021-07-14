@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly OperationInternals<VirtualMachineRunCommandVirtualMachineScaleSetVM> _operation;
 
-        private readonly ResourceOperationsBase _operationBase;
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMRunCommandsUpdateOperation for mocking. </summary>
         protected VirtualMachineScaleSetVMRunCommandsUpdateOperation()
         {
         }
 
-        internal VirtualMachineScaleSetVMRunCommandsUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualMachineScaleSetVMRunCommandsUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VirtualMachineRunCommandVirtualMachineScaleSetVM>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVMRunCommandsUpdateOperation");
             _operationBase = operationsBase;

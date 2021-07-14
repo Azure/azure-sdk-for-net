@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of CloudServiceContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal CloudServiceContainer(ResourceOperationsBase parent) : base(parent)
+        internal CloudServiceContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The cloud service object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public Response<CloudService> CreateOrUpdate(string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
+        public virtual Response<CloudService> CreateOrUpdate(string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             if (cloudServiceName == null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The cloud service object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public async Task<Response<CloudService>> CreateOrUpdateAsync(string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CloudService>> CreateOrUpdateAsync(string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             if (cloudServiceName == null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The cloud service object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public CloudServicesCreateOrUpdateOperation StartCreateOrUpdate(string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
+        public virtual CloudServicesCreateOrUpdateOperation StartCreateOrUpdate(string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             if (cloudServiceName == null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The cloud service object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public async Task<CloudServicesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServicesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string cloudServiceName, CloudServiceData parameters = null, CancellationToken cancellationToken = default)
         {
             if (cloudServiceName == null)
             {

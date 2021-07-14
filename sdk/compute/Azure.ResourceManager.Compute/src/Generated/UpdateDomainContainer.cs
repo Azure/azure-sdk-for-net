@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of UpdateDomainContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal UpdateDomainContainer(ResourceOperationsBase parent) : base(parent)
+        internal UpdateDomainContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -50,18 +50,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateDomain"/> is null. </exception>
-        public Response WalkUpdateDomain(string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
+        public virtual Response CreateOrUpdate(string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
         {
             if (updateDomain == null)
             {
                 throw new ArgumentNullException(nameof(updateDomain));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.WalkUpdateDomain");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                var operation = StartWalkUpdateDomain(updateDomain, parameters, cancellationToken);
+                var operation = StartCreateOrUpdate(updateDomain, parameters, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateDomain"/> is null. </exception>
-        public async Task<Response> WalkUpdateDomainAsync(string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response> CreateOrUpdateAsync(string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
         {
             if (updateDomain == null)
             {
                 throw new ArgumentNullException(nameof(updateDomain));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.WalkUpdateDomain");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                var operation = await StartWalkUpdateDomainAsync(updateDomain, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(updateDomain, parameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -102,14 +102,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateDomain"/> is null. </exception>
-        public CloudServicesUpdateDomainWalkUpdateDomainOperation StartWalkUpdateDomain(string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
+        public virtual CloudServicesUpdateDomainWalkUpdateDomainOperation StartCreateOrUpdate(string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
         {
             if (updateDomain == null)
             {
                 throw new ArgumentNullException(nameof(updateDomain));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.StartWalkUpdateDomain");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> The update domain object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateDomain"/> is null. </exception>
-        public async Task<CloudServicesUpdateDomainWalkUpdateDomainOperation> StartWalkUpdateDomainAsync(string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
+        public async virtual Task<CloudServicesUpdateDomainWalkUpdateDomainOperation> StartCreateOrUpdateAsync(string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
         {
             if (updateDomain == null)
             {
                 throw new ArgumentNullException(nameof(updateDomain));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.StartWalkUpdateDomain");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {

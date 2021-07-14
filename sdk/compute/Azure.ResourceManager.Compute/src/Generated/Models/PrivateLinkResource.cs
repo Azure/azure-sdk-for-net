@@ -12,13 +12,27 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> A private link resource. </summary>
-    internal partial class PrivateLinkResource : Resource<TenantResourceIdentifier>
+    public partial class PrivateLinkResource : Resource<TenantResourceIdentifier>
     {
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
         internal PrivateLinkResource()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="type"> The type. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource DNS zone name. </param>
+        internal PrivateLinkResource(TenantResourceIdentifier id, string name, ResourceType type, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames) : base(id, name, type)
+        {
+            GroupId = groupId;
+            RequiredMembers = requiredMembers;
+            RequiredZoneNames = requiredZoneNames;
         }
 
         /// <summary> The private link resource group id. </summary>

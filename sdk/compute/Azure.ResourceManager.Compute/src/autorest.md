@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: C:/Users/dapzhang/Documents/workspace/azure-rest-api-specs/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/654c237832960c2753b7a4a4459a434af6d57a4a/specification/compute/resource-manager/readme.md
 tag: package-2021-03-01
 clear-output-folder: true
 skip-csproj: true
@@ -70,7 +70,6 @@ operation-group-to-parent:
   SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries
   SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images
   Locations: subscriptions ## this operation group comes from directive
-# operation-group-is-tuple: VirtualMachineImages;VirtualMachineExtensionImages
 operation-group-is-extension: VirtualMachineRunCommands;VirtualMachineScaleSetVMRunCommands;VirtualMachineScaleSetVMExtensions;VirtualMachineExtensions
 directive:
   - from: compute.json
@@ -149,7 +148,4 @@ directive:
             "required": true,
             "type": "string"
         }
-  - from: swagger-document
-    where: $.paths
-    transform: delete $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateLinkResources']
 ```

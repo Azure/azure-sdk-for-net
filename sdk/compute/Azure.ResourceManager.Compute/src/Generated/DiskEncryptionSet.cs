@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref = "DiskEncryptionSet"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DiskEncryptionSet(ResourceOperationsBase options, DiskEncryptionSetData resource) : base(options, resource.Id)
+        internal DiskEncryptionSet(OperationsBase options, DiskEncryptionSetData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

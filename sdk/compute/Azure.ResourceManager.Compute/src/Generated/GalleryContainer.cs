@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of GalleryContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal GalleryContainer(ResourceOperationsBase parent) : base(parent)
+        internal GalleryContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
-        public Response<Gallery> CreateOrUpdate(string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
+        public virtual Response<Gallery> CreateOrUpdate(string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             if (galleryName == null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
-        public async Task<Response<Gallery>> CreateOrUpdateAsync(string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Gallery>> CreateOrUpdateAsync(string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             if (galleryName == null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
-        public GalleriesCreateOrUpdateOperation StartCreateOrUpdate(string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
+        public virtual GalleriesCreateOrUpdateOperation StartCreateOrUpdate(string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             if (galleryName == null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> or <paramref name="gallery"/> is null. </exception>
-        public async Task<GalleriesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleriesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             if (galleryName == null)
             {

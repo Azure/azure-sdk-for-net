@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly OperationInternals<CloudService> _operation;
 
-        private readonly ResourceOperationsBase _operationBase;
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of CloudServicesCreateOrUpdateOperation for mocking. </summary>
         protected CloudServicesCreateOrUpdateOperation()
         {
         }
 
-        internal CloudServicesCreateOrUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CloudServicesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<CloudService>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CloudServicesCreateOrUpdateOperation");
             _operationBase = operationsBase;

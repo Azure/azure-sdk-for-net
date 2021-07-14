@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of DiskContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DiskContainer(ResourceOperationsBase parent) : base(parent)
+        internal DiskContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
-        public Response<Disk> CreateOrUpdate(string diskName, DiskData disk, CancellationToken cancellationToken = default)
+        public virtual Response<Disk> CreateOrUpdate(string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
             if (diskName == null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
-        public async Task<Response<Disk>> CreateOrUpdateAsync(string diskName, DiskData disk, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Disk>> CreateOrUpdateAsync(string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
             if (diskName == null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
-        public DisksCreateOrUpdateOperation StartCreateOrUpdate(string diskName, DiskData disk, CancellationToken cancellationToken = default)
+        public virtual DisksCreateOrUpdateOperation StartCreateOrUpdate(string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
             if (diskName == null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
-        public async Task<DisksCreateOrUpdateOperation> StartCreateOrUpdateAsync(string diskName, DiskData disk, CancellationToken cancellationToken = default)
+        public async virtual Task<DisksCreateOrUpdateOperation> StartCreateOrUpdateAsync(string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
             if (diskName == null)
             {

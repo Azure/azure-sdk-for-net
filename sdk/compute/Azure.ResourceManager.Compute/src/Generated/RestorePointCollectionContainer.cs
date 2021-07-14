@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of RestorePointCollectionContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal RestorePointCollectionContainer(ResourceOperationsBase parent) : base(parent)
+        internal RestorePointCollectionContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Create or Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<RestorePointCollection> CreateOrUpdate(string restorePointCollectionName, RestorePointCollectionData parameters, CancellationToken cancellationToken = default)
+        public virtual Response<RestorePointCollection> CreateOrUpdate(string restorePointCollectionName, RestorePointCollectionData parameters, CancellationToken cancellationToken = default)
         {
             if (restorePointCollectionName == null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Create or Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<RestorePointCollection>> CreateOrUpdateAsync(string restorePointCollectionName, RestorePointCollectionData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<RestorePointCollection>> CreateOrUpdateAsync(string restorePointCollectionName, RestorePointCollectionData parameters, CancellationToken cancellationToken = default)
         {
             if (restorePointCollectionName == null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Create or Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public RestorePointCollectionsCreateOrUpdateOperation StartCreateOrUpdate(string restorePointCollectionName, RestorePointCollectionData parameters, CancellationToken cancellationToken = default)
+        public virtual RestorePointCollectionsCreateOrUpdateOperation StartCreateOrUpdate(string restorePointCollectionName, RestorePointCollectionData parameters, CancellationToken cancellationToken = default)
         {
             if (restorePointCollectionName == null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Create or Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<RestorePointCollectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string restorePointCollectionName, RestorePointCollectionData parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<RestorePointCollectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string restorePointCollectionName, RestorePointCollectionData parameters, CancellationToken cancellationToken = default)
         {
             if (restorePointCollectionName == null)
             {

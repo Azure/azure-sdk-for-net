@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly OperationInternals<Disk> _operation;
 
-        private readonly ResourceOperationsBase _operationBase;
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of DisksCreateOrUpdateOperation for mocking. </summary>
         protected DisksCreateOrUpdateOperation()
         {
         }
 
-        internal DisksCreateOrUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DisksCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<Disk>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DisksCreateOrUpdateOperation");
             _operationBase = operationsBase;
