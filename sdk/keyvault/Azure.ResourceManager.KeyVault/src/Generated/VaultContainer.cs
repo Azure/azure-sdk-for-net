@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Initializes a new instance of VaultContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal VaultContainer(ResourceOperationsBase parent) : base(parent)
+        internal VaultContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }

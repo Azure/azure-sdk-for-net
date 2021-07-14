@@ -21,6 +21,7 @@ operation-group-to-resource:
     Vaults: Vault
 operation-group-to-parent:
    DeletedVaults: subscriptions
+   Vaults_GetDeleted：subscriptions
 directive:
     - from: swagger-document
       where: $.paths

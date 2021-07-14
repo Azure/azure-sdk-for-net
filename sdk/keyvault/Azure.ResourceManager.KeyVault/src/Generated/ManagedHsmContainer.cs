@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Initializes a new instance of ManagedHsmContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ManagedHsmContainer(ResourceOperationsBase parent) : base(parent)
+        internal ManagedHsmContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }

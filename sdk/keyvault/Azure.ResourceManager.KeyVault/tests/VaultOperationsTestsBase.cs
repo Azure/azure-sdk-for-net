@@ -79,8 +79,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             var rgResponse = await Client.DefaultSubscription.GetResourceGroups().Construct(Location).CreateOrUpdateAsync(ResGroupName).ConfigureAwait(false);
             ResourceGroup = rgResponse.Value;
 
-            VaultOperations = new VaultOperations(ResourceGroup, ResourceGroup.Id);
-            VaultContainer = new VaultContainer(ResourceGroup);
+            VaultContainer = ResourceGroup.GetVaults();
             VaultName = Recording.GenerateAssetName("sdktestvault");
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };

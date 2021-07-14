@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal PrivateEndpointConnectionContainer(ResourceOperationsBase parent) : base(parent)
+        internal PrivateEndpointConnectionContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }

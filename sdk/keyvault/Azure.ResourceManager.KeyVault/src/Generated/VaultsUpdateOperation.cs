@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.KeyVault
         {
         }
 
-        internal VaultsUpdateOperation(ResourceOperationsBase operationsBase, Response<VaultData> response)
+        internal VaultsUpdateOperation(OperationsBase operationsBase, Response<VaultData> response)
         {
             _operation = new OperationOrResponseInternals<Vault>(Response.FromValue(new Vault(operationsBase, response.Value), response.GetRawResponse()));
         }

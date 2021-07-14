@@ -118,6 +118,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             // Delete
+            VaultOperations = new VaultOperations(rawRetrievedVault.Value, rawRetrievedVault.Value.Id);
             await VaultOperations.DeleteAsync();
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -132,13 +133,14 @@ namespace Azure.ResourceManager.KeyVault.Tests
             this.AccessPolicy.ApplicationId = Guid.Parse(TestEnvironment.ClientId);
             this.VaultProperties.EnableSoftDelete = false;
 
-            var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
+            var parameters = new VaultCreateOrUpdateParameters("westeurope", VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             var vault = await VaultContainer.StartCreateOrUpdateAsync(VaultName, parameters);
             var vaultValue = await WaitForCompletionAsync(vault);
 
             Assert.False(vaultValue.Value.Data.Properties.EnableSoftDelete);
 
+            VaultOperations = new VaultOperations(vaultValue.Value, vaultValue.Value.Id);
             await VaultOperations.DeleteAsync();
         }
 
@@ -191,6 +193,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             // Delete
+            VaultOperations = new VaultOperations(retrievedVault.Value, retrievedVault.Value.Id);
             await VaultOperations.DeleteAsync();
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -207,7 +210,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             VaultProperties.EnableSoftDelete = null;
 
             List<string> resourceIds = new List<string>();
-            List<string> vaultNameList = new List<string>();
+            List<Vault> vaultList = new List<Vault>();
             for (int i = 0; i < n; i++)
             {
                 string vaultName = Recording.GenerateAssetName("sdktestvault");
@@ -221,7 +224,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Assert.NotNull(vaultValue);
                 Assert.NotNull(vaultValue.Id);
                 resourceIds.Add(vaultValue.Id);
-                vaultNameList.Add(vaultValue.Name);
+                vaultList.Add(vaultResponse.Value);
             }
 
             var vaults = VaultContainer.ListAsync(top);
@@ -237,8 +240,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.NotNull(vaults);
 
             // Delete
-            foreach (var v in vaultNameList)
+            foreach (var item in vaultList)
             {
+                VaultOperations = new VaultOperations(item, item.Id);
                 await VaultOperations.DeleteAsync();
             }
         }
@@ -253,6 +257,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             var vaultValue = await WaitForCompletionAsync(createdVault);
 
             // Delete
+            VaultOperations = new VaultOperations(vaultValue.Value, vaultValue.Value.Id);
             await VaultOperations.DeleteAsync();
 
             // Get deleted vault
@@ -269,9 +274,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.True(recoveredVault.Value.Data.IsEqual(vaultValue.Value.Data));
 
             // Get recovered vault
-            await VaultContainer.GetAsync(VaultName);
+            var getResult =  await VaultContainer.GetAsync(VaultName);
 
             // Delete
+            VaultOperations = new VaultOperations(getResult.Value, getResult.Value.Id);
             await VaultOperations.DeleteAsync();
 
             VaultProperties.CreateMode = CreateMode.Recover;
@@ -284,9 +290,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.True(recoveredVault2.Value.Data.IsEqual(vaultValue.Value.Data));
 
             // Get recovered vault
-            await VaultContainer.GetAsync(VaultName);
+            getResult = await VaultContainer.GetAsync(VaultName);
 
             // Delete
+            VaultOperations = new VaultOperations(getResult.Value, getResult.Value.Id);
             await VaultOperations.DeleteAsync();
         }
 
@@ -295,7 +302,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             int n = 3;
             List<string> resourceIds = new List<string>();
-            List<string> vaultNameList = new List<string>();
+            List<Vault> vaultList = new List<Vault>();
             var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             for (int i = 0; i < n; i++)
@@ -303,17 +310,18 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 string vaultName = Recording.GenerateAssetName("sdktestvault");
                 var createdRawVault = await VaultContainer.StartCreateOrUpdateAsync(vaultName, parameters);
 
-                var createdVault = (await WaitForCompletionAsync(createdRawVault)).Value.Data;
+                var createdVault = (await WaitForCompletionAsync(createdRawVault)).Value;
 
-                Assert.NotNull(createdVault);
-                Assert.NotNull(createdVault.Id);
-                resourceIds.Add(createdVault.Id);
-                vaultNameList.Add(createdVault.Name);
+                Assert.NotNull(createdVault.Data);
+                Assert.NotNull(createdVault.Data.Id);
+                resourceIds.Add(createdVault.Data.Id);
+                vaultList.Add(createdVault);
 
+                VaultOperations = new VaultOperations(createdVault, createdVault.Id);
                 await VaultOperations.DeleteAsync();
 
                 var deletedVault = await VaultOperations.GetDeletedAsync();
-                Assert.IsTrue(deletedVault.Value.Name.Equals(createdVault.Name));
+                Assert.IsTrue(deletedVault.Value.Name.Equals(createdVault.Data.Name));
             }
 
             var deletedVaults = Client.DefaultSubscription.ListDeletedVaultsBySubscriptionAsync().ToEnumerableAsync().Result;
@@ -358,7 +366,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             string resourceIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/vaults/{2}";
             string expectedResourceId = string.Format(resourceIdFormat, expectedSubId, expectedResourceGroupName, expectedVaultName);
 
-            Assert.AreEqual(expectedResourceId, vaultData.Id);
+            Assert.AreEqual(expectedResourceId, vaultData.Id.ToString());
             Assert.AreEqual(expectedLocation, vaultData.Location);
             Assert.AreEqual(expectedTenantId, vaultData.Properties.TenantId);
             Assert.AreEqual(expectedSku, vaultData.Properties.Sku.Name);
