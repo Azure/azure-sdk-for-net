@@ -24,4 +24,4 @@ These code samples show common scenario operations with the Anomaly Detector cli
 [sample_detect_entire_series_anomaly]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample1_DetectEntireSeriesAnomaly.cs
 [sample_detect_last_point_anomaly]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample2_DetectLastPointAnomaly.cs
 [sample_detect_change_point]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample3_DetectChangePoint.cs
-[sample_multivariate_detect]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample4_MultivariateDetect.cs
+[sample_multivariate_detect]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample4_MultivariateDetect.cs 
