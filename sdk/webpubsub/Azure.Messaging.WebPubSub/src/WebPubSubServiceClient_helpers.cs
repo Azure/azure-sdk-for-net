@@ -4,6 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Text;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub
 {
@@ -18,44 +21,72 @@ namespace Azure.Messaging.WebPubSub
         private static readonly char[] KeyValueSeparator = { '=' };
         private static readonly char[] PropertySeparator = { ';' };
 
+        internal static byte[] s_role = Encoding.UTF8.GetBytes("role");
+
         /// <summary>
         /// Creates a URI with authentication token.
         /// </summary>
+        /// <param name="expiresAt">UTC time when the token expires.</param>
+        /// <param name="userId"></param>
+        /// <param name="roles"></param>
         /// <returns></returns>
-        public virtual Uri GetClientAccessUri(string userId = default, string[] roles = default, TimeSpan expireAfter = default)
+        public virtual Uri GenerateClientAccessUri(DateTimeOffset expiresAt, string userId = default, params string[] roles)
         {
-            if (expireAfter == default)
-            {
-                expireAfter = TimeSpan.FromHours(1);
-            }
+            var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
+            var jwt = new JwtBuilder(keyBytes);
+            var now = DateTimeOffset.UtcNow;
 
-            List<Claim> claims = new List<Claim>();
-            if (userId != default)
-            {
-                var subject = new Claim("sub", userId);
-                claims.Add(subject);
-            }
-            if (roles != default && roles.Length > 0)
-            {
-                var jsonArray = BinaryData.FromObjectAsJson(roles).ToString();
-                var role = new Claim("role", jsonArray);
-                claims.Add(role);
-            }
-
-            string endpoint = _endpoint.AbsoluteUri;
+            string endpoint = this.endpoint.AbsoluteUri;
             if (!endpoint.EndsWith("/", StringComparison.Ordinal))
             {
                 endpoint += "/";
             }
-            var audience = $"{endpoint}client/hubs/{_hub}";
+            var audience = $"{endpoint}client/hubs/{hub}";
 
-            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, _credential, expireAfter);
+            if (userId != default)
+            {
+                jwt.AddClaim(JwtBuilder.Sub, userId);
+            }
+            if (roles != default && roles.Length > 0)
+            {
+                jwt.AddClaim(s_role, roles);
+            }
+            jwt.AddClaim(JwtBuilder.Nbf, now);
+            jwt.AddClaim(JwtBuilder.Exp, expiresAt);
+            jwt.AddClaim(JwtBuilder.Iat, now);
+            jwt.AddClaim(JwtBuilder.Aud, audience);
+
+            string token = jwt.BuildString();
 
             var clientEndpoint = new UriBuilder(endpoint);
-            clientEndpoint.Scheme = "wss";
-            var uriString = $"{clientEndpoint}client/hubs/{_hub}?access_token={token}";
+            clientEndpoint.Scheme = this.endpoint.Scheme == "http" ? "ws" : "wss";
+            var uriString = $"{clientEndpoint}client/hubs/{hub}?access_token={token}";
 
             return new Uri(uriString);
+        }
+
+        /// <summary>
+        /// Creates a URI with authentication token.
+        /// </summary>
+        /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
+        /// <param name="userId"></param>
+        /// <param name="roles"></param>
+        /// <returns></returns>
+        public virtual Uri GenerateClientAccessUri(TimeSpan expiresAfter = default, string userId = default, params string[] roles)
+        {
+            if (expiresAfter.TotalMilliseconds < 0)
+                throw new ArgumentOutOfRangeException(nameof(expiresAfter));
+
+            DateTimeOffset expiresAt = DateTimeOffset.UtcNow;
+            if (expiresAfter == default)
+            {
+                expiresAt += TimeSpan.FromHours(1);
+            }
+            else
+            {
+                expiresAt += expiresAfter;
+            }
+            return GenerateClientAccessUri(expiresAt, userId, roles);
         }
 
         /// <summary>
@@ -64,6 +95,8 @@ namespace Azure.Messaging.WebPubSub
         /// <returns></returns>
         internal static (Uri Endpoint, AzureKeyCredential Credential) ParseConnectionString(string connectionString)
         {
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
             var properties = connectionString.Split(PropertySeparator, StringSplitOptions.RemoveEmptyEntries);
 
             var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -113,6 +146,19 @@ namespace Azure.Messaging.WebPubSub
             }
 
             return (uriBuilder.Uri, new AzureKeyCredential(accessKey));
+        }
+
+        internal static string PermissionToString(WebPubSubPermission permission)
+        {
+            switch (permission)
+            {
+                case WebPubSubPermission.SendToGroup:
+                    return "sendToGroup";
+                case WebPubSubPermission.JoinLeaveGroup:
+                    return "joinLeaveGroup";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(permission));
+            }
         }
     }
 }

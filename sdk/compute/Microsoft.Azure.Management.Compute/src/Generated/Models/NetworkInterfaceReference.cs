@@ -35,10 +35,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="id">Resource Id</param>
         /// <param name="primary">Specifies the primary network interface in
         /// case the virtual machine has more than 1 network interface.</param>
-        public NetworkInterfaceReference(string id = default(string), bool? primary = default(bool?))
+        /// <param name="deleteOption">Specify what happens to the network
+        /// interface when the VM is deleted. Possible values include:
+        /// 'Delete', 'Detach'</param>
+        public NetworkInterfaceReference(string id = default(string), bool? primary = default(bool?), string deleteOption = default(string))
             : base(id)
         {
             Primary = primary;
+            DeleteOption = deleteOption;
             CustomInit();
         }
 
@@ -53,6 +57,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify what happens to the network interface when the
+        /// VM is deleted. Possible values include: 'Delete', 'Detach'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deleteOption")]
+        public string DeleteOption { get; set; }
 
     }
 }

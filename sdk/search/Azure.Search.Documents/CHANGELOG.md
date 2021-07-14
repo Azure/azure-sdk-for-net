@@ -1,9 +1,30 @@
 # Release History
 
-## 11.3.0-beta.2 (2021-04-12)
+## 11.4.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 11.4.0-beta.1 (2021-07-06)
+
+### Features Added
+- Support for additional/enhanced skills - [EntityLinkingSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-linking-v3), [EntityRecognitionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-recognition-v3), [PiiDetectionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-pii-detection), [SentimentSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-sentiment-v3)
+- Use managed identities in Azure Active Directory with [SearchIndexerDataIdentity](https://docs.microsoft.com/azure/search/search-howto-managed-identities-data-sources)
+
+## 11.3.0 (2021-06-08)
 
 ### Added
-- Added support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview)
+- Adds stable features and bug fixes from the [11.3.0-beta.1](https://github.com/Azure/azure-sdk-for-net/blob/Azure.Search.Documents_11.3.0-beta.1/sdk/search/Azure.Search.Documents/CHANGELOG.md#1130-beta1-2021-04-06) and [11.3.0-beta.2](https://github.com/Azure/azure-sdk-for-net/blob/Azure.Search.Documents_11.3.0-beta.2/sdk/search/Azure.Search.Documents/CHANGELOG.md#1130-beta2-2021-05-11) releases. Preview service features not generally available yet, like Semantic Search and Normalizers, are not included in this GA release.
+
+## 11.3.0-beta.2 (2021-05-11)
+
+### Added
+- Added support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview).
 
 ## 11.3.0-beta.1 (2021-04-06)
 

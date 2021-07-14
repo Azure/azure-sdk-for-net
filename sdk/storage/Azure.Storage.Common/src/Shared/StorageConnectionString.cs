@@ -346,7 +346,7 @@ namespace Azure.Storage
             account.Settings.Add(Constants.ConnectionStrings.UseDevelopmentSetting, "true");
             if (proxyUri != null)
             {
-                account.Settings.Add(Constants.ConnectionStrings.DevelopmentProxyUriSetting, proxyUri.ToString());
+                account.Settings.Add(Constants.ConnectionStrings.DevelopmentProxyUriSetting, proxyUri.AbsoluteUri);
             }
 
             account.IsDevStoreAccount = true;

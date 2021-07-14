@@ -1,41 +1,81 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    [CodeGenModel("BatchResponse")]
-    public partial class LogsBatchQueryResult
+    [CodeGenModel("batchQueryResults")]
+    public partial class LogsBatchQueryResult: LogsQueryResult
     {
-        private IReadOnlyList<LogQueryResponse> Responses { get; }
-        private  BatchResponseError Error { get; }
-        internal RowBinder RowBinder { get; set; }
+        /// <summary>
+        /// Gets or sets the value indicating whether the batch query was successful.
+        /// </summary>
+        public bool HasFailed { get; internal set; }
 
-        public LogsQueryResult GetResult(string queryId)
+        /// <summary>
+        /// Gets or sets the query id.
+        /// </summary>
+        public string Id { get; internal set; }
+
+        // TODO, remove after https://github.com/Azure/azure-sdk-for-net/issues/21655 is fixed
+        internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element)
         {
-            LogQueryResponse result = Responses.SingleOrDefault(r => r.Id == queryId);
+            Optional<JsonElement> error = default;
+            IReadOnlyList<LogsQueryResultTable> tables = default;
+            Optional<JsonElement> statistics = default;
+            Optional<JsonElement> render = default;
 
-            if (result == null)
+            // This is the workaround to remove the double-encoding
+            if (element.ValueKind == JsonValueKind.String)
             {
-                throw new ArgumentException($"Query with ID '{queryId}' wasn't part of the batch." +
-                                            $" Please use the return value of the {nameof(LogsBatchQuery)}.{nameof(LogsBatchQuery.AddQuery)} as the '{nameof(queryId)}' argument.", nameof(queryId));
+                try
+                {
+                    using var document = JsonDocument.Parse(element.GetString());
+                    element = document.RootElement.Clone();
+                }
+                catch
+                {
+                    // ignore
+                }
             }
 
-            if (result.Body.Error != null)
+            foreach (var property in element.EnumerateObject())
             {
-                throw new RequestFailedException(result.Status ?? 0, result.Body.Error.Message, result.Body.Error.Code, null);
+                if (property.NameEquals("error"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    error = property.Value.Clone();
+                    continue;
+                }
+                if (property.NameEquals("tables"))
+                {
+                    List<LogsQueryResultTable> array = new List<LogsQueryResultTable>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LogsQueryResultTable.DeserializeLogsQueryResultTable(item));
+                    }
+                    tables = array;
+                    continue;
+                }
+                if (property.NameEquals("statistics"))
+                {
+                    statistics = property.Value.Clone();
+                    continue;
+                }
+                if (property.NameEquals("render"))
+                {
+                    render = property.Value.Clone();
+                    continue;
+                }
             }
-
-            return result.Body;
-        }
-
-        public IReadOnlyList<T> GetResult<T>(string queryId)
-        {
-            return RowBinder.BindResults<T>(GetResult(queryId));
+            return new LogsBatchQueryResult(tables, statistics, render, error);
         }
     }
 }

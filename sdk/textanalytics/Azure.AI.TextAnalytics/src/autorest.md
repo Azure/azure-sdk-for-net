@@ -6,9 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: release_3_1_preview.4
+tag: release_3_1
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/c2e50d64a580169c9925b33712421f59462ad761/specification/cognitiveservices/data-plane/TextAnalytics/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/9820e5b189076cb9b329b6968a8d2fc405eef2f6/specification/cognitiveservices/data-plane/TextAnalytics/readme.md
 ```
 
 ### Make generated models internal by default
@@ -48,6 +48,16 @@ directive:
   transform: >
     $.properties.id["x-nullable"] = true;
     $.properties.text["x-nullable"] = true;
+```
+
+### Make taskName non-required
+This should be deleted in service v3.2 when service enables taskName again
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.TaskState
+  transform: >
+    $["required"] = ["status", "lastUpdateDateTime"]
 ```
 
 ### Add x-ms-paths section if not exists
@@ -95,9 +105,6 @@ directive:
           "operationId": "HealthStatusNextPage",
           "summary": "Get healthcare analysis job status and results",
           "parameters": [
-            {
-              "$ref": "#/parameters/ShowStats"
-            },
             {
               "name": "nextLink",
               "in": "path",
@@ -167,9 +174,6 @@ directive:
           "operationId": "AnalyzeStatusNextPage",
           "summary": "Get analysis status and results",
           "parameters": [
-            {
-              "$ref": "#/parameters/ShowStats"
-            },
             {
               "name": "nextLink",
               "in": "path",

@@ -12,7 +12,7 @@ namespace Azure.Identity
 {
     internal class AppServiceV2017ManagedIdentitySource : ManagedIdentitySource
     {
-        // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity
+        // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/azure/app-service/overview-managed-identity
         private const string AppServiceMsiApiVersion = "2017-09-01";
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
 

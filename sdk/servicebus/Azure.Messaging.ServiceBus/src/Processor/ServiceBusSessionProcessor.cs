@@ -8,10 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Plugins;
-using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -29,7 +26,7 @@ namespace Azure.Messaging.ServiceBus
         /// The <see cref="ServiceBusProcessor"/> that the session processor delegates to.
         /// This can be overriden for testing purposes.
         /// </summary>
-        protected virtual ServiceBusProcessor InnerProcessor { get; }
+        protected internal virtual ServiceBusProcessor InnerProcessor { get; }
 
         /// <inheritdoc cref="ServiceBusProcessor.EntityPath"/>
         public virtual string EntityPath => InnerProcessor.EntityPath;
@@ -212,8 +209,8 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Optional handler that can be set to be notified when a session is about to be closed for processing.
-        /// This means that the most recent <see cref="ServiceBusReceiver.ReceiveMessageAsync"/> call timed out,
-        /// so there are currently no messages available to be received for the session.
+        /// This means that the most recent <see cref="ServiceBusReceiver.ReceiveMessageAsync"/> call timed out, or
+        /// that <see cref="ProcessSessionMessageEventArgs.ReleaseSession"/> was called in the <see cref="ProcessMessageAsync"/> handler.
         /// </summary>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
@@ -273,13 +270,16 @@ namespace Azure.Messaging.ServiceBus
         /// request to cancel the operation.</param>
         public virtual async Task CloseAsync(
             CancellationToken cancellationToken = default) =>
-            await InnerProcessor.CloseAsync().ConfigureAwait(false);
+            await InnerProcessor.CloseAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSessionProcessor" />.
-        ///   This is equivalent to calling <see cref="CloseAsync"/> with the default <see cref="LinkCloseMode"/>.
+        ///   This is equivalent to calling <see cref="CloseAsync"/>.
         /// </summary>
-        public async ValueTask DisposeAsync() =>
+        public async ValueTask DisposeAsync()
+        {
             await CloseAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
+        }
     }
 }

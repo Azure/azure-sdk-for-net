@@ -33,6 +33,9 @@ parameters:
 - name: MatrixReplace
   type: object
   default: []
+- name: SpellCheckPublicApiSurface
+  type: boolean
+  default: false
 
 jobs:
   - job: Build
@@ -45,10 +48,11 @@ jobs:
           PackageName: "Azure.Template"
           ServiceDirectory: "template"
           TestPipeline: ${{ parameters.TestPipeline }}
+      - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
-        condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
+        condition: and(eq(variables['Build.SourceBranchName'],variables['DefaultBranch']),eq(variables['Build.Reason'],'Schedule'))
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
         parameters:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
@@ -97,9 +101,10 @@ jobs:
   - job: "Analyze"
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
     pool:
-      name: azsdk-pool-mms-ubuntu-1804-general
-      vmImage: MMSUbuntu18.04
+      name: azsdk-pool-mms-ubuntu-2004-general
+      vmImage: MMSUbuntu20.04
     steps:
+      - template: /eng/common/pipelines/templates/steps/check-spelling.yml
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
         inputs:
@@ -135,6 +140,7 @@ jobs:
           arguments: >
            -ServiceDirectory ${{ parameters.ServiceToTest }}
            -SDKType ${{ parameters.SDKType }}
+           -SpellCheckPublicApiSurface:$${{ parameters.SpellCheckPublicApiSurface }}
           pwsh: true
           failOnStderr:  false
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0

@@ -107,10 +107,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (workspaceName == null)
             {
@@ -131,7 +127,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
                     throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$");
                 }
             }
-            string apiVersion = "2020-10-01";
+            string apiVersion = "2020-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -288,8 +284,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <param name='tableName'>
         /// The name of the table.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters required to update table properties.
+        /// <param name='retentionInDays'>
+        /// The data table data retention in days, between 30 and 730. Setting this
+        /// property to null will default to the workspace retention.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -312,7 +309,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Table>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string tableName, Table parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Table>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string tableName, int? retentionInDays = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -339,10 +336,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (workspaceName == null)
             {
@@ -367,11 +360,20 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "tableName");
             }
-            if (parameters == null)
+            if (retentionInDays > 730)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "retentionInDays", 730);
             }
-            string apiVersion = "2020-10-01";
+            if (retentionInDays < 30)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "retentionInDays", 30);
+            }
+            string apiVersion = "2020-08-01";
+            Table parameters = new Table();
+            if (retentionInDays != null)
+            {
+                parameters.RetentionInDays = retentionInDays;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -585,10 +587,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
             }
             if (workspaceName == null)
             {
@@ -613,7 +611,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "tableName");
             }
-            string apiVersion = "2020-10-01";
+            string apiVersion = "2020-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

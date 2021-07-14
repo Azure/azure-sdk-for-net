@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.CosmosDB.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -25,11 +26,28 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the BackupPolicy class.
+        /// </summary>
+        /// <param name="migrationState">The object representing the state of
+        /// the migration between the backup policies.</param>
+        public BackupPolicy(BackupPolicyMigrationState migrationState = default(BackupPolicyMigrationState))
+        {
+            MigrationState = migrationState;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the object representing the state of the migration
+        /// between the backup policies.
+        /// </summary>
+        [JsonProperty(PropertyName = "migrationState")]
+        public BackupPolicyMigrationState MigrationState { get; set; }
 
     }
 }

@@ -8,7 +8,7 @@
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Represents a metric metadata value. </summary>
-    public partial class MetadataValue
+    internal partial class MetadataValue
     {
         /// <summary> Initializes a new instance of MetadataValue. </summary>
         internal MetadataValue()
@@ -16,13 +16,16 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> Initializes a new instance of MetadataValue. </summary>
-        /// <param name="localizedName"> the name of the metadata. </param>
+        /// <param name="name"> the name of the metadata. </param>
         /// <param name="value"> the value of the metadata. </param>
-        internal MetadataValue(LocalizableString localizedName, string value)
+        internal MetadataValue(LocalizableString name, string value)
         {
-            LocalizedName = localizedName;
+            Name = name;
             Value = value;
         }
+
+        /// <summary> the name of the metadata. </summary>
+        public LocalizableString Name { get; }
         /// <summary> the value of the metadata. </summary>
         public string Value { get; }
     }

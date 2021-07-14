@@ -32,8 +32,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have selection marks used for live tests.</summary>
         internal const string SelectionMarkBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_SELECTION_MARK_BLOB_CONTAINER_SAS_URL";
 
-        /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have tables with variable rows used for live tests.</summary>
-        internal const string TableVariableRowsBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_TABLE_VARIABLE_ROWS_BLOB_CONTAINER_SAS_URL";
+        /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have tables with dynamic rows used for live tests.</summary>
+        internal const string TableDynamicRowsBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_TABLE_VARIABLE_ROWS_BLOB_CONTAINER_SAS_URL";
 
         /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have tables with fixed rows used for live tests.</summary>
         internal const string TableFixedRowsBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL";
@@ -48,14 +48,14 @@ namespace Azure.AI.FormRecognizer.Tests
         private const string AssetsFolderName = "Assets";
 
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
-        private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
+        private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
 
         public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
         public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
         public string SelectionMarkBlobContainerSasUrl => GetRecordedVariable(SelectionMarkBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
         public string MultipageBlobContainerSasUrl => GetRecordedVariable(MultipageBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string TableVariableRowsContainerSasUrl => GetRecordedVariable(TableVariableRowsBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
+        public string TableDynamicRowsContainerSasUrl => GetRecordedVariable(TableDynamicRowsBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
         public string TableFixedRowsContainerSasUrl => GetRecordedVariable(TableFixedRowsBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
         public string TargetResourceId => GetRecordedVariable(TargetResourceIdEnvironmentVariableName);
         public string TargetResourceRegion => GetRecordedVariable(TargetResourceRegionEnvironmentVariableName);

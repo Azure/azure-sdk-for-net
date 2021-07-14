@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "260",
+        "Content-Length": "352",
         "Content-Type": "application/json",
-        "traceparent": "00-25dab67c9f13d3458ac4cebcfc883cff-8d5b83a319843148-00",
+        "traceparent": "00-9fb151b0f99a674aacb53b373146706d-f16c78e1dd3c1444-00",
         "User-Agent": [
-          "azsdk-net-Monitory.Query/1.0.0-alpha.20210420.1",
-          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "ea2d66241d6f5f8ec0ff4748506e6f68",
         "x-ms-return-client-request-id": "true"
@@ -21,20 +21,22 @@
           {
             "id": "0",
             "body": {
-              "query": "Heartbeat"
+              "query": "Heartbeat",
+              "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
             },
             "path": "/query",
             "method": "POST",
-            "workspace": "9a15b791-8d2f-436f-a734-25d128c72254"
+            "workspace": "50e32c19-2b4b-4152-b97e-0e02441cae60"
           },
           {
             "id": "1",
             "body": {
-              "query": "Heartbeat"
+              "query": "Heartbeat",
+              "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
             },
             "path": "/query",
             "method": "POST",
-            "workspace": "9a15b791-8d2f-436f-a734-25d128c72254"
+            "workspace": "50e32c19-2b4b-4152-b97e-0e02441cae60"
           }
         ]
       },
@@ -44,14 +46,14 @@
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 20 Apr 2021 18:26:31 GMT",
+        "Date": "Thu, 13 May 2021 21:58:16 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "Vary": [
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-6f48f8487b-ghgph",
+        "Via": "1.1 draft-oms-6b5d48d5bb-wlvxk",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -60,7 +62,7 @@
             "id": "0",
             "status": 200,
             "headers": {
-              "Age": "5",
+              "Age": "22",
               "request-context": "appId=cid-v1:70941e4f-7e8f-40b7-b730-183893db0297"
             },
             "body": {
@@ -198,7 +200,7 @@
             "id": "1",
             "status": 200,
             "headers": {
-              "Age": "5",
+              "Age": "22",
               "request-context": "appId=cid-v1:70941e4f-7e8f-40b7-b730-183893db0297"
             },
             "body": {
@@ -337,8 +339,9 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-20T11:26:31.5549835-07:00",
+    "DateTimeOffsetNow": "2021-05-13T14:58:16.0624767-07:00",
+    "LOGS_ENDPOINT": "https://api.loganalytics.io",
     "RandomSeed": "163342615",
-    "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254"
+    "WORKSPACE_ID": "50e32c19-2b4b-4152-b97e-0e02441cae60"
   }
 }

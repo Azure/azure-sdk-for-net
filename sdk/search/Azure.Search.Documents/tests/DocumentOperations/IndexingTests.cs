@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Azure.Core.Serialization;
 using Azure.Core.GeoJson;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
@@ -434,11 +434,7 @@ namespace Azure.Search.Documents.Tests
                     Serializer = new JsonObjectSerializer(
                         new JsonSerializerOptions()
                         {
-                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                            Converters =
-                            {
-                                new GeoJsonConverter()
-                            }
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                         })
                 });
             UncasedHotel expected = new UncasedHotel

@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="options">A key-value pair of options to be applied for
         /// the request. This corresponds to the headers sent with the
         /// request.</param>
-        public TableCreateUpdateParameters(TableResource resource, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), CreateUpdateOptions options = default(CreateUpdateOptions))
-            : base(id, name, type, location, tags, identity)
+        public TableCreateUpdateParameters(TableResource resource, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CreateUpdateOptions options = default(CreateUpdateOptions))
+            : base(id, name, type, location, tags)
         {
             Resource = resource;
             Options = options;

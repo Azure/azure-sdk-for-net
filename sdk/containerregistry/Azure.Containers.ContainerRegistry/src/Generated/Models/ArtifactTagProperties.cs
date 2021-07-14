@@ -13,18 +13,22 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ArtifactTagProperties
     {
         /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
-        /// <param name="repository"> Image name. </param>
+        /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
+        /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
-        /// <param name="writeableProperties"> Writeable properties of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="repository"/>, <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="writeableProperties"/> is null. </exception>
-        internal ArtifactTagProperties(string repository, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ContentProperties writeableProperties)
+        /// <exception cref="ArgumentNullException"> <paramref name="registryLoginServer"/>, <paramref name="repositoryName"/>, <paramref name="name"/>, or <paramref name="digest"/> is null. </exception>
+        internal ArtifactTagProperties(string registryLoginServer, string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
-            if (repository == null)
+            if (registryLoginServer == null)
             {
-                throw new ArgumentNullException(nameof(repository));
+                throw new ArgumentNullException(nameof(registryLoginServer));
+            }
+            if (repositoryName == null)
+            {
+                throw new ArgumentNullException(nameof(repositoryName));
             }
             if (name == null)
             {
@@ -34,21 +38,44 @@ namespace Azure.Containers.ContainerRegistry
             {
                 throw new ArgumentNullException(nameof(digest));
             }
-            if (writeableProperties == null)
-            {
-                throw new ArgumentNullException(nameof(writeableProperties));
-            }
 
-            Repository = repository;
+            RegistryLoginServer = registryLoginServer;
+            RepositoryName = repositoryName;
             Name = name;
             Digest = digest;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
-            WriteableProperties = writeableProperties;
         }
 
+        /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
+        /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
+        /// <param name="repositoryName"> Image name. </param>
+        /// <param name="name"> Tag name. </param>
+        /// <param name="digest"> Tag digest. </param>
+        /// <param name="createdOn"> Tag created time. </param>
+        /// <param name="lastUpdatedOn"> Tag last update time. </param>
+        /// <param name="canDelete"> Delete enabled. </param>
+        /// <param name="canWrite"> Write enabled. </param>
+        /// <param name="canList"> List enabled. </param>
+        /// <param name="canRead"> Read enabled. </param>
+        internal ArtifactTagProperties(string registryLoginServer, string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        {
+            RegistryLoginServer = registryLoginServer;
+            RepositoryName = repositoryName;
+            Name = name;
+            Digest = digest;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
+            CanDelete = canDelete;
+            CanWrite = canWrite;
+            CanList = canList;
+            CanRead = canRead;
+        }
+
+        /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>
+        public string RegistryLoginServer { get; }
         /// <summary> Image name. </summary>
-        public string Repository { get; }
+        public string RepositoryName { get; }
         /// <summary> Tag name. </summary>
         public string Name { get; }
         /// <summary> Tag digest. </summary>
@@ -57,7 +84,5 @@ namespace Azure.Containers.ContainerRegistry
         public DateTimeOffset CreatedOn { get; }
         /// <summary> Tag last update time. </summary>
         public DateTimeOffset LastUpdatedOn { get; }
-        /// <summary> Writeable properties of the resource. </summary>
-        public ContentProperties WriteableProperties { get; }
     }
 }

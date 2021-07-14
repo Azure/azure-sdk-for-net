@@ -35,21 +35,21 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the LoggerContract class.
         /// </summary>
         /// <param name="loggerType">Logger type. Possible values include:
-        /// 'azureEventHub', 'applicationInsights'</param>
-        /// <param name="credentials">The name and SendRule connection string
-        /// of the event hub for azureEventHub logger.
-        /// Instrumentation key for applicationInsights logger.</param>
+        /// 'azureEventHub', 'applicationInsights', 'azureMonitor'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
         /// resource.</param>
         /// <param name="description">Logger description.</param>
+        /// <param name="credentials">The name and SendRule connection string
+        /// of the event hub for azureEventHub logger.
+        /// Instrumentation key for applicationInsights logger.</param>
         /// <param name="isBuffered">Whether records are buffered in the logger
         /// before publishing. Default is assumed to be true.</param>
         /// <param name="resourceId">Azure Resource Id of a log target (either
         /// Azure Event Hub resource or Azure Application Insights
         /// resource).</param>
-        public LoggerContract(string loggerType, IDictionary<string, string> credentials, string id = default(string), string name = default(string), string type = default(string), string description = default(string), bool? isBuffered = default(bool?), string resourceId = default(string))
+        public LoggerContract(string loggerType, string id = default(string), string name = default(string), string type = default(string), string description = default(string), IDictionary<string, string> credentials = default(IDictionary<string, string>), bool? isBuffered = default(bool?), string resourceId = default(string))
             : base(id, name, type)
         {
             LoggerType = loggerType;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets logger type. Possible values include: 'azureEventHub',
-        /// 'applicationInsights'
+        /// 'applicationInsights', 'azureMonitor'
         /// </summary>
         [JsonProperty(PropertyName = "properties.loggerType")]
         public string LoggerType { get; set; }
@@ -112,9 +112,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "LoggerType");
             }
-            if (Credentials == null)
+            if (Description != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Credentials");
+                if (Description.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 256);
+                }
             }
         }
     }

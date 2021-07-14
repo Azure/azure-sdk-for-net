@@ -31,9 +31,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         /// <param name="resourceId">Full resource id of a Microsoft.Storage
         /// resource.</param>
-        public UserOwnedStorage(string resourceId = default(string))
+        public UserOwnedStorage(string resourceId = default(string), string identityClientId = default(string))
         {
             ResourceId = resourceId;
+            IdentityClientId = identityClientId;
             CustomInit();
         }
 
@@ -47,6 +48,11 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "resourceId")]
         public string ResourceId { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identityClientId")]
+        public string IdentityClientId { get; set; }
 
     }
 }

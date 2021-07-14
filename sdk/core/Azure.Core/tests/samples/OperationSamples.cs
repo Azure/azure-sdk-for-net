@@ -50,5 +50,49 @@ namespace Azure.Core.Samples
             Console.WriteLine(operation.HasValue);
             #endregion
         }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task GetValuesAsyncSample()
+        {
+            #region Snippet:PageableOperationGetValuesAsync
+            // create a client
+            var client = new MyStoreClient();
+
+            // Start the operation
+            GetProductsOperation operation = client.StartGetProducts();
+
+            await operation.WaitForCompletionAsync();
+
+            await foreach (Product product in operation.GetValuesAsync())
+            {
+                Console.WriteLine($"Name: {product.Name}");
+                Console.WriteLine($"Quantity: {product.Quantity}");
+                Console.WriteLine($"Price: {product.Price}");
+            }
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task GetValuesSample()
+        {
+            #region Snippet:PageableOperationGetValues
+            // create a client
+            var client = new MyStoreClient();
+
+            // Start the operation
+            GetProductsOperation operation = client.StartGetProducts();
+
+            await operation.WaitForCompletionAsync();
+
+            foreach (Product product in operation.GetValues())
+            {
+                Console.WriteLine($"Name: {product.Name}");
+                Console.WriteLine($"Quantity: {product.Quantity}");
+                Console.WriteLine($"Price: {product.Price}");
+            }
+            #endregion
+        }
     }
 }

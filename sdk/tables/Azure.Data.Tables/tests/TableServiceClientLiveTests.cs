@@ -216,7 +216,7 @@ namespace Azure.Data.Tables.Tests
 
                 // Get the table list.
                 var remainingItems = createdTables.Count;
-                await foreach (var page in service.GetTablesAsync(/*maxPerPage: pageCount*/).AsPages(pageSizeHint: pageCount))
+                await foreach (var page in service.QueryAsync(/*maxPerPage: pageCount*/).AsPages(pageSizeHint: pageCount))
                 {
                     Assert.That(page.Values, Is.Not.Empty);
                     if (pageCount.HasValue)
@@ -262,14 +262,14 @@ namespace Azure.Data.Tables.Tests
 
                 // Query with a filter.
 
-                var tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{tableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+                var tableResponses = (await service.QueryAsync(filter: $"TableName eq '{tableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
                 Assert.AreEqual(tableName, tableResponses.Select(r => r.Name).SingleOrDefault());
 
                 // Query with a filter.
 
-                tableResponses = (await service.GetTablesAsync(filter: t => t.Name == tableName).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+                tableResponses = (await service.QueryAsync(filter: t => t.Name == tableName).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
                 Assert.AreEqual(tableName, tableResponses.Select(r => r.Name).SingleOrDefault());
@@ -315,12 +315,9 @@ namespace Azure.Data.Tables.Tests
         public async Task GetTableServiceStatsReturnsStats()
         {
             // Get statistics
-
             TableServiceStatistics stats = await service.GetStatisticsAsync().ConfigureAwait(false);
 
-            // Test that the secondary location is live
-
-            Assert.AreEqual(new TableGeoReplicationStatus("live"), stats.GeoReplication.Status);
+            Assert.That(stats.GeoReplication.Status, Is.AnyOf(new TableGeoReplicationStatus("live"), new TableGeoReplicationStatus("unavailable")));
         }
 
         private void CompareServiceProperties(TableServiceProperties expected, TableServiceProperties actual)

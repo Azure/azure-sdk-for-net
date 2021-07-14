@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.IoT.TimeSeriesInsights.Models
+namespace Azure.IoT.TimeSeriesInsights
 {
     public partial class TimeSeriesHierarchySource : IUtf8JsonSerializable
     {

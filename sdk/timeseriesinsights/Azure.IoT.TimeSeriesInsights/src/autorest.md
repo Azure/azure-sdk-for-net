@@ -16,6 +16,9 @@ Run `generate.ps1` in this directory to generate the code.
 
 # Change accessibility
 ``` yaml
+
+model-namespace: false
+
 directive:
   from: timeseriesinsights.json
   where: $.definitions
@@ -27,7 +30,6 @@ directive:
           path.includes("Availability") ||
           path.includes("EventSchema") ||
           path.includes("InstanceHit") ||
-          path.includes("InstanceHitHighlights") ||
           path.includes("InstancesSearchStringSuggestion") ||
           path.includes("InstancesSortParameter") ||
           path.includes("InstancesSuggestResponse") ||
@@ -43,7 +45,20 @@ directive:
           path.includes("HierarchiesSortBy") ||
           path.includes("HierarchiesSortParameter") ||
           path.includes("HierarchiesExpandParameter") ||
-          path.includes("HierarchiesSortParameter"))
+          path.includes("HierarchiesSortParameter") ||
+          path.includes("QueryRequest") ||
+          path.includes("InstancesBatchRequest") ||
+          path.includes("GetHierarchiesPage") ||
+          path.includes("GetInstancesPage") ||
+          path.includes("GetTypesPage") ||
+          path.includes("HierarchiesBatchRequest") ||
+          path.includes("HierarchiesRequestBatchGetDelete") ||
+          path.includes("ModelSettingsResponse") ||
+          path.includes("TypesBatchRequest") ||
+          path.includes("TypesRequestBatchGetOrDelete") ||
+          path.includes("DateTimeRange") ||
+          path.includes("PagedResponse") ||
+          path.includes("QueryResultPage"))
       {
         $[path]["x-accessibility"] = "internal"
       }
@@ -54,13 +69,6 @@ directive:
 # when generating from official source - The raw link must have a commit hash for C# generator
 #input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/9a6510d0597a55d39ab1edcf22abab4631cbc0d3/specification/timeseriesinsights/data-plane/Microsoft.TimeSeriesInsights/stable/2020-07-31/timeseriesinsights.json
 
-# Change model namespace
-directive:
-  from: timeseriesinsights.json
-  where: $.definitions.*
-  transform: >
-    $["x-namespace"] = "Azure.IoT.TimeSeriesInsights"
-    
 # It is highly recommended that you generate the REST layer from the official source. However, in this case we are using a local file because there are a couple of minor issues fixed in the local swagger. These fixes should be made on the official source.
 input-file: $(this-folder)/swagger/timeseriesinsights.json
 ```

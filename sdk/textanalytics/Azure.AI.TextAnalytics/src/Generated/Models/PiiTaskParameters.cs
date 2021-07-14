@@ -22,8 +22,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         public PiiTaskParametersDomain? Domain { get; set; }
         public string ModelVersion { get; set; }
-        /// <summary> (Optional) describes the PII categories to return. </summary>
-        public IList<PiiEntityCategory> PiiCategories { get; }
+        public bool? LoggingOptOut { get; set; }
         public StringIndexType? StringIndexType { get; set; }
     }
 }

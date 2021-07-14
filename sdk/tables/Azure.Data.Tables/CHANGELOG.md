@@ -1,6 +1,55 @@
 # Release History
 
-## 12.0.0-beta.8 (Unreleased)
+## 12.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.1.0 (2021-07-07)
+
+### Features Added
+
+- Support for Azure Active Directory (AAD) authorization has been added to `TableServiceClient` and `TableClient`. This enables use of `TokenCredential` credentials. Note: Only Azure Storage API endpoints currently support AAD authorization.
+
+## 12.0.1 (2021-06-10)
+
+### Key Bugs Fixed
+
+- Fixed an issue which would result in calls to `TableClient.Delete`, `TableClient.DeleteAsync`, `TableClient.DeleteEntity`, `TableClient.DeleteEntityAsync` throwing a `NullReferenceException` if the client was constructed with the `TableClient(string connectionString, string tableName, TableClientOptions options)` constructor.
+
+## 12.0.0 (2021-06-08)
+
+- Added `GenerateSasUri` methods to both `TableClient` and `TableServiceClient`.
+
+## 12.0.0-beta.8 (2021-05-11)
+
+### Breaking Changes
+
+- Eliminated the `TableTransactionalBatch` type and added the `TableTransactionAction` type.
+   - Submitting a batch transaction is now accomplished via the `TableClient.SubmitTransaction` or `TableClient.SubmitTransactionAsync` methods which accepts
+    an `IEnumerable<TableTransactionAction>`.
+- `TableClient.SubmitTransaction` and `TableClient.SubmitTransactionAsync` now return `Response<IReadOnlyList<Response>>` rather than `TableBatchResponse`.
+    - `TableBatchResponse.GetResponseForEntity` is no longer necessary as the responses can now be correlated directly between the `Response<IReadOnlyList<Response>>`
+    and the list of `TableTransactionAction`s provided to the submit method.
+ - The following renames have occurred: 
+    - `TableServiceClient` methods `GetTables` and `GetTablesAsync` have been renamed to `Query` and `QueryAsync`
+    - `TableServiceClient` methods `GetAccessPolicy` and `GetAccessPolicyAsync` have been renamed to `GetAccessPolicies` and `GetAccessPoliciesAsync`
+    - `TableClientOptions` has been renamed to `TablesClientOptions`
+    - `RetentionPolicy` has been renamed to `TableRetentionPolicy`
+    - `SignedIdentifier` has been renamed to `TableSignedIdentifier`
+    
+### Changed
+- Failed batch transaction operations now throw `TableTransactionFailedException` which contains a `FailedTransactionActionIndex` property to indicate which 
+`TableTransactionAction` caused the failure.
+  
+### Added
+
+- Added `TableOdataFilter` to assist with odata string filter quoting and escaping.
 
 ### Key Bug Fixes
 
@@ -78,5 +127,5 @@ Thank you to our developer community members who helped to make Azure Tables bet
 
 This is the first beta of the `Azure.Data.Tables` client library. The Azure Tables client library can seamlessly target either Azure Table storage or Azure Cosmos DB table service endpoints with no code changes.
 
-This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/tables/Azure.Data.Tables/README.md) 
-and [samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/tables/Azure.Data.Tables/samples) demonstrate the new API.
+This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/README.md) 
+and [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/tables/Azure.Data.Tables/samples) demonstrate the new API.

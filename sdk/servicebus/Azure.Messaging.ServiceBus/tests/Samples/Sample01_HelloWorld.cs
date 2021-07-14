@@ -16,12 +16,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
-                string queueName = scope.QueueName;
                 #region Snippet:ServiceBusSendAndReceive
                 #region Snippet:ServiceBusSendSingleMessage
-                //@@ string connectionString = "<connection_string>";
-                //@@ string queueName = "<queue_name>";
+#if SNIPPET
+                string connectionString = "<connection_string>";
+                string queueName = "<queue_name>";
+#else
+                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string queueName = scope.QueueName;
+#endif
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
@@ -90,9 +93,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
 
-                #region Snippet:ServiceBusInitializeSend
-                //@@ string connectionString = "<connection_string>";
-                //@@ string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
@@ -105,8 +105,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // send the messages
                 await sender.SendMessagesAsync(messages);
                 #endregion
-                #endregion
-                #region Snippet:ServiceBusReceiveBatch
                 // create a receiver that we can use to receive the messages
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
@@ -119,7 +117,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     string body = receivedMessage.Body.ToString();
                     Console.WriteLine(body);
                 }
-                #endregion
 
                 var sentMessagesEnum = messages.GetEnumerator();
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
@@ -135,11 +132,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
+#if SNIPPET
+                string connectionString = "<connection_string>";
+                string queueName = "<queue_name>";
+#else
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
-
-                //@@ string connectionString = "<connection_string>";
-                //@@ string queueName = "<queue_name>";
+#endif
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
@@ -250,7 +249,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         /// <summary>
-        /// Authenticate with <see cref="DefaultAzureCredential"/>.
+        /// Authenticate with a connection string/>.
         /// </summary>
         public void AuthenticateWithConnectionString()
         {

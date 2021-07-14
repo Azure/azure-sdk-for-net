@@ -236,7 +236,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential)
-            : this(fileUri, credential.AsPolicy(), null, null)
+            : this(fileUri, credential.AsPolicy(new DataLakeClientOptions()), null, null)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -258,7 +258,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy(), options, null)
+            : this(fileUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -1690,7 +1690,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The <see cref="Append"/> operation uploads data to be appended to a file.
         /// Data can only be appended to a file.
-        /// To apply perviously uploaded data to a file, call Flush Data.
+        /// To apply previously uploaded data to a file, call Flush Data.
         /// Append is currently limited to 4000 MB per request.  To upload large files all at once, consider using <see cref="Upload(Stream)"/>.
         ///
         /// For more information, see
