@@ -63,7 +63,10 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         public string Type { get; private set; }
 
-        internal IList<string> Types { get; } = new List<string>();
+        /// <summary>
+        /// Gets the resource Types.
+        /// </summary>
+        public IReadOnlyList<string> Types { get; } = new List<string>();
 
         /// <summary>
         /// Determines if this resource type is the parent of the given resource.
