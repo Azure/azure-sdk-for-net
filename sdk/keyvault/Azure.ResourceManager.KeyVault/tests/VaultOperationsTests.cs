@@ -316,10 +316,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Assert.IsTrue(deletedVault.Value.Name.Equals(createdVault.Name));
             }
 
-            var deletedVaults = VaultOperations.ListDeletedAsync();
+            var deletedVaults = Client.DefaultSubscription.ListDeletedVaultsBySubscriptionAsync().ToEnumerableAsync().Result;
             Assert.NotNull(deletedVaults);
 
-            await foreach (var v in deletedVaults)
+            foreach (var v in deletedVaults)
             {
                 var exists = resourceIds.Remove(v.Properties.VaultId);
 
