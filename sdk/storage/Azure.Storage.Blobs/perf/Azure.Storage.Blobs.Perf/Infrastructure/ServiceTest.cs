@@ -12,12 +12,8 @@ namespace Azure.Storage.Blobs.Perf
 
         public ServiceTest(TOptions options) : base(options)
         {
-            var blobClientOptions = new BlobClientOptions()
-            {
-                Transport = PerfTransport.Create(options)
-            };
-
-            BlobServiceClient = new BlobServiceClient(PerfTestEnvironment.Instance.BlobStorageConnectionString, blobClientOptions);
+            BlobServiceClient = new BlobServiceClient(
+                PerfTestEnvironment.Instance.BlobStorageConnectionString, ConfigureClientOptions(new BlobClientOptions()));
 
             StorageSharedKeyCredential = new StorageSharedKeyCredential(
                 PerfTestEnvironment.Instance.BlobStorageAccountName, PerfTestEnvironment.Instance.BlobStorageAccountKey);

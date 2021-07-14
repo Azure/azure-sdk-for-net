@@ -103,6 +103,15 @@ namespace Azure.Test.Perf
                         setupStatusCts.Cancel();
                         setupStatusThread.Join();
 
+                        if (options.TestProxy != null)
+                        {
+                            using var recordStatusCts = new CancellationTokenSource();
+                            var recordStatusThread = PerfStressUtilities.PrintStatus("=== Record and Start Playback ===", () => ".", newLine: false, recordStatusCts.Token);
+                            await Task.WhenAll(tests.Select(t => t.RecordAndStartPlayback()));
+                            recordStatusCts.Cancel();
+                            recordStatusThread.Join();
+                        }
+
                         if (options.Warmup > 0)
                         {
                             await RunTestsAsync(tests, options, "Warmup", warmup: true);
@@ -133,6 +142,15 @@ namespace Azure.Test.Perf
                     }
                     finally
                     {
+                        if (options.TestProxy != null)
+                        {
+                            using var playbackStatusCts = new CancellationTokenSource();
+                            var playbackStatusThread = PerfStressUtilities.PrintStatus("=== Stop Playback ===", () => ".", newLine: false, playbackStatusCts.Token);
+                            await Task.WhenAll(tests.Select(t => t.StopPlayback()));
+                            playbackStatusCts.Cancel();
+                            playbackStatusThread.Join();
+                        }
+
                         if (!options.NoCleanup)
                         {
                             if (cleanupStatusThread == null)

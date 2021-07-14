@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Keys.Perf.Infrastructure
                 PerfTestEnvironment.Instance.Credential,
                 new()
                 {
-                    Transport = PerfTransport.Create(Options),
+                    Transport = Transport,
                 });
         }
     }
