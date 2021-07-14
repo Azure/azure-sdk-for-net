@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.Security.KeyVault.Administration.Models;
 using Azure.Security.KeyVault.Administration.Tests;
 using NUnit.Framework;
 
@@ -17,8 +16,8 @@ namespace Azure.Security.KeyVault.Administration.Samples
     /// </summary>
     public class AccessControlSampleSnippets : AccessControlTestBase
     {
-        public AccessControlSampleSnippets(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public AccessControlSampleSnippets(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [SetUp]
