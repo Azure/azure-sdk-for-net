@@ -10,7 +10,7 @@ namespace Azure.AI.Translation.Document
     /// Represents an error that occurred during a translation operation.
     /// </summary>
     [CodeGenModel("TranslationError")]
-    public partial class DocumentTranslationError
+    public readonly partial struct DocumentTranslationError
     {
         /// <summary>
         /// Error code that serves as an indicator of the HTTP error code.
@@ -18,7 +18,18 @@ namespace Azure.AI.Translation.Document
         [CodeGenMember("Code")]
         public DocumentTranslationErrorCode ErrorCode { get; }
 
-        internal InnerTranslationError InnerError { get; }
+        /// <summary>
+        /// Message that contains more information about the reason of the error.
+        /// </summary>
+        public string Message { get; }
+
+        /// <summary>
+        /// Gets the source of the error.
+        /// For example it would be 'documents' or 'document id' in case of invalid document.
+        /// </summary>
+        public string Target { get; }
+
+        internal readonly InnerTranslationError InnerError { get; }
 
         internal DocumentTranslationError(DocumentTranslationErrorCode errorCode, string message, string target, InnerTranslationError innerError)
         {
@@ -35,6 +46,8 @@ namespace Azure.AI.Translation.Document
                 Message = message;
                 Target = target;
             }
+
+            InnerError = null;
         }
     }
 }

@@ -25,12 +25,12 @@ namespace Azure.AI.Translation.Document.Models
 
         /// <summary> Initializes a new instance of TranslationErrorResponse. </summary>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
-        internal TranslationErrorResponse(DocumentTranslationError error)
+        internal TranslationErrorResponse(DocumentTranslationError? error)
         {
             Error = error;
         }
 
         /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
-        public DocumentTranslationError Error { get; }
+        public DocumentTranslationError? Error { get; }
     }
 }

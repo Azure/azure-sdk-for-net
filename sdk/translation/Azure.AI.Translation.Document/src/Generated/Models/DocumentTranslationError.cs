@@ -11,29 +11,7 @@ using Azure.AI.Translation.Document.Models;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
-    public partial class DocumentTranslationError
+    public readonly partial struct DocumentTranslationError
     {
-        /// <summary> Initializes a new instance of DocumentTranslationError. </summary>
-        /// <param name="errorCode"> Enums containing high level error codes. </param>
-        /// <param name="message"> Gets high level error message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        internal DocumentTranslationError(DocumentTranslationErrorCode errorCode, string message)
-        {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
-
-            ErrorCode = errorCode;
-            Message = message;
-        }
-        /// <summary> Gets high level error message. </summary>
-        public string Message { get; }
-        /// <summary>
-        /// Gets the source of the error.
-        /// 
-        /// For example it would be &quot;documents&quot; or &quot;document id&quot; in case of invalid document.
-        /// </summary>
-        public string Target { get; }
     }
 }

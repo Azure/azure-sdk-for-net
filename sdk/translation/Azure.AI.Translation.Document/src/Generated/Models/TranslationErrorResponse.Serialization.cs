@@ -29,7 +29,7 @@ namespace Azure.AI.Translation.Document.Models
                     continue;
                 }
             }
-            return new TranslationErrorResponse(error.Value);
+            return new TranslationErrorResponse(Optional.ToNullable(error));
         }
     }
 }
