@@ -32,6 +32,7 @@ namespace Azure.Storage.DataMovement
         // local directory path to put hte memory mapped file of the progress tracking. if we pause or break
         // we will have the information on where to continue from.
         private string _progressLogDirectoryPath;
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -51,7 +52,6 @@ namespace Azure.Storage.DataMovement
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             string sourceLocalPath,
             BlobClient destinationClient,
-            StorageTransferOptions transferOptions = default,
             BlobUploadOptions uploadOptions = default,
             IProgress<StorageTransferStatus> progressTracker = default,
             CancellationToken token = default)
@@ -59,7 +59,7 @@ namespace Azure.Storage.DataMovement
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobTransferJob transferJob = new BlobTransferJob(sourceLocalPath, destinationClient, transferOptions, uploadOptions, progressTracker, token);
+            BlobUploadTransferJob transferJob = new BlobUploadTransferJob(sourceLocalPath, destinationClient, uploadOptions, progressTracker, token);
             _jobsToProcess.Enqueue(transferJob);
 
             // TODO: remove stub
@@ -82,7 +82,7 @@ namespace Azure.Storage.DataMovement
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobTransferJob transferJob = new BlobTransferJob(sourceClient, destinationLocalPath, transferOptions, progressTracker, token);
+            BlobDownloadTransferJob transferJob = new BlobDownloadTransferJob(sourceClient, destinationLocalPath, transferOptions, progressTracker, token);
             _jobsToProcess.Enqueue(transferJob);
 
             // TODO; remove stub
@@ -98,15 +98,14 @@ namespace Azure.Storage.DataMovement
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             string sourceLocalPath,
             BlobDirectoryClient destinationClient,
-            StorageTransferOptions transferOptions = default,
-            BlobUploadOptions uploadOptions = default,
+            BlobUploadDirectoryOptions uploadOptions = default,
             IProgress<StorageTransferStatus> progressTracker = default,
             CancellationToken token = default)
         {
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobDirectoryTransferJob transferJob = new BlobDirectoryTransferJob(sourceLocalPath, destinationClient, transferOptions, uploadOptions, progressTracker, token);
+            BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(sourceLocalPath, destinationClient, uploadOptions, progressTracker, token);
             _toScanQueue.Enqueue(transferJob);
 
             // TODO; remove stub
@@ -129,7 +128,7 @@ namespace Azure.Storage.DataMovement
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobDirectoryTransferJob transferJob = new BlobDirectoryTransferJob(sourceClient, destinationLocalPath, transferOptions, progressTracker, token);
+            BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(sourceClient, destinationLocalPath, transferOptions, progressTracker, token);
             _toScanQueue.Enqueue(transferJob);
 
             // TODO; remove stub
