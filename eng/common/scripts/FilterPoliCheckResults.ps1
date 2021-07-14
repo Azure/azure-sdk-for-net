@@ -15,20 +15,13 @@ PS> ./FilterPoliCheckResults.ps1 -PoliCheckResultFilePath .\PoliCheck.sarif
 param(
   [Parameter(Mandatory=$true)]
   [String] $PoliCheckResultFilePath,
-  [Parameter(Mandatory=$true)]
   [String] $ServiceDirtectory
 )
 
 . "${PSScriptRoot}\logging.ps1"
 
-# Install Powershell Yaml
-$ProgressPreference = "SilentlyContinue"
-$ToolsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2"
-Register-PSRepository -Name azure-sdk-tools-feed -SourceLocation $ToolsFeed -PublishLocation $ToolsFeed -InstallationPolicy Trusted -ErrorAction SilentlyContinue
-Install-Module -Repository azure-sdk-tools-feed powershell-yaml
-
 $RepoRoot = Resolve-Path -Path "${PSScriptRoot}\..\..\..\"
-$PathToAllowListFiles = Join-Path $RepoRoot "sdk" $ServiceDirtectory
+$PathToAllowListFiles = Join-Path $RepoRoot $ServiceDirtectory
 $PolicCheckAllowListFiles = Get-ChildItem -Path $PathToAllowListFiles -Recurse -File -Include "PoliCheckAllowList.yml"
 $allowListData = @{}
 
@@ -57,22 +50,16 @@ foreach ($run in $poliCheckData.runs)
     {
         $ruleId = $result.ruleId
         $allowedEntries = $allowListData[$ruleId]
-
-        $updatedLocations = @()
-
-        foreach ($location in $result.locations)
+        if ($allowedEntries)
         {
-            $filePath = $location.physicalLocation.artifactLocation.uri
-            $text = $location.physicalLocation.region.snippet.text
-            $contextRegion = $location.physicalLocation.contextRegion.snippet.text
+            $updatedLocations = @()
 
-            if ($filePath.EndsWith("PoliCheckAllowList.yml"))
+            foreach ($location in $result.locations)
             {
-                continue
-            }
+                $filePath = $location.physicalLocation.artifactLocation.uri
+                $text = $location.physicalLocation.region.snippet.text
+                $contextRegion = $location.physicalLocation.contextRegion.snippet.text
 
-            if ($allowedEntries)
-            {
                 $allowedEntry = $allowedEntries[0] | Where-Object { $_.FilePath -eq $filePath }
 
                 if ($allowedEntry.Count -gt 0)
@@ -91,12 +78,12 @@ foreach ($run in $poliCheckData.runs)
                         continue
                     }
                 }
+
+                $updatedLocations += $location
             }
 
-            $updatedLocations += $location
+            $result.locations = $updatedLocations
         }
-
-        $result.locations = $updatedLocations
 
         if ($result.locations.Count -gt 0)
         {
