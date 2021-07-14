@@ -1,4 +1,4 @@
-PC1001:
+PC1005:
   - FilePath: /Azure.Core/src/Response.cs
     instances:
       - Text: hanging
