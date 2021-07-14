@@ -145,9 +145,15 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
                 if (result.Value.Summary.Status != DetectionStatus.Ready)
                 {
-                    Console.WriteLine(String.Format("Request timeout after {0} tryouts"));
+                    Console.WriteLine(String.Format("Inference failed."));
+                    IReadOnlyList<ErrorResponse> errors = result.Value.Summary.Errors;
+                    foreach (ErrorResponse error in errors)
+                    {
+                        Console.WriteLine(String.Format("Error code: {0}.", error.Code));
+                        Console.WriteLine(String.Format("Error message: {0}.", error.Message));
+                    };
                     return null;
-                }
+                };
 
                 return result.Value;
             }
