@@ -15,8 +15,6 @@ namespace Azure.ResourceManager.Core.Tests
     {
         protected ArmClient Client { get; private set; }
 
-        protected override Type OperationInternalsType => typeof(OperationInternals);
-
         protected ResourceManagerTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {

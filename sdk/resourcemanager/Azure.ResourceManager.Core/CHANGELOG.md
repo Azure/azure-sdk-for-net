@@ -2,4 +2,6 @@
 
 ## 1.0.0-beta.1 (Unreleased)
 
--Initial checkin
+### Features Added
+
+-Initial checkin and introduction of object hierarchy in the SDK.

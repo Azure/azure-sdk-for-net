@@ -55,6 +55,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="backupOperators">Users to be added to the Built-in
         /// Backup Operator active directory group. A list of unique usernames
         /// without domain specifier</param>
+        /// <param name="administrators">Users to be added to the Built-in
+        /// Administrators active directory group. A list of unique usernames
+        /// without domain specifier</param>
         /// <param name="kdcIP">kdc server IP addresses for the active
         /// directory machine. This optional parameter is used only while
         /// creating kerberos volume.</param>
@@ -79,7 +82,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="allowLocalNfsUsersWithLdap"> If enabled, NFS client
         /// local users can also (in addition to LDAP users) access the NFS
         /// volumes.</param>
-        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string statusDetails = default(string), string smbServerName = default(string), string organizationalUnit = default(string), string site = default(string), IList<string> backupOperators = default(IList<string>), string kdcIP = default(string), string adName = default(string), string serverRootCACertificate = default(string), bool? aesEncryption = default(bool?), bool? ldapSigning = default(bool?), IList<string> securityOperators = default(IList<string>), bool? ldapOverTLS = default(bool?), bool? allowLocalNfsUsersWithLdap = default(bool?))
+        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string statusDetails = default(string), string smbServerName = default(string), string organizationalUnit = default(string), string site = default(string), IList<string> backupOperators = default(IList<string>), IList<string> administrators = default(IList<string>), string kdcIP = default(string), string adName = default(string), string serverRootCACertificate = default(string), bool? aesEncryption = default(bool?), bool? ldapSigning = default(bool?), IList<string> securityOperators = default(IList<string>), bool? ldapOverTLS = default(bool?), bool? allowLocalNfsUsersWithLdap = default(bool?))
         {
             ActiveDirectoryId = activeDirectoryId;
             Username = username;
@@ -92,6 +95,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             OrganizationalUnit = organizationalUnit;
             Site = site;
             BackupOperators = backupOperators;
+            Administrators = administrators;
             KdcIP = kdcIP;
             AdName = adName;
             ServerRootCACertificate = serverRootCACertificate;
@@ -182,6 +186,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "backupOperators")]
         public IList<string> BackupOperators { get; set; }
+
+        /// <summary>
+        /// Gets or sets users to be added to the Built-in Administrators
+        /// active directory group. A list of unique usernames without domain
+        /// specifier
+        /// </summary>
+        [JsonProperty(PropertyName = "administrators")]
+        public IList<string> Administrators { get; set; }
 
         /// <summary>
         /// Gets or sets kdc server IP addresses for the active directory
