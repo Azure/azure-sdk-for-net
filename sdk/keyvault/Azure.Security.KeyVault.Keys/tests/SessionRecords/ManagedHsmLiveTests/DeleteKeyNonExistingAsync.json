@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskvtesthsm.managedhsm.azure.net/keys/2016630281?api-version=7.2",
+      "RequestUri": "https://heathskvtesthsm.managedhsm.azure.net/keys/2016630281?api-version=7.3-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "traceparent": "00-59bc8b05ce96e347b9e24aa4e64376c0-06946335e9658747-00",
+        "traceparent": "00-ac56d270f6e3df4c85166334d3ddd3c8-d3435c0cdf0d8742-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210713.1",
+          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210714.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "45fd3aa24ace8264834df5c62f95b2a9",
@@ -25,21 +25,21 @@
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-request-id": "76c32ab8-e448-11eb-ae79-000d3a72214d",
+        "x-ms-request-id": "341d00f4-e4ec-11eb-aac9-000d3aeb0164",
         "x-ms-server-latency": "0"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://heathskvtesthsm.managedhsm.azure.net/keys/2016630281?api-version=7.2",
+      "RequestUri": "https://heathskvtesthsm.managedhsm.azure.net/keys/2016630281?api-version=7.3-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "traceparent": "00-59bc8b05ce96e347b9e24aa4e64376c0-06946335e9658747-00",
+        "traceparent": "00-ac56d270f6e3df4c85166334d3ddd3c8-d3435c0cdf0d8742-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210713.1",
+          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210714.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "45fd3aa24ace8264834df5c62f95b2a9",
@@ -55,13 +55,13 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-request-id": "76da556c-e448-11eb-ae79-000d3a72214d",
-        "x-ms-server-latency": "18"
+        "x-ms-request-id": "3439f240-e4ec-11eb-aac9-000d3aeb0164",
+        "x-ms-server-latency": "33"
       },
       "ResponseBody": {
         "error": {
           "code": "KeyNotFound",
-          "message": "Key not found: https://heathskvtesthsm.managedhsm.azure.net/keys/2016630281 (Activity ID: 76da556c-e448-11eb-ae79-000d3a72214d)"
+          "message": "Key not found: https://heathskvtesthsm.managedhsm.azure.net/keys/2016630281 (Activity ID: 3439f240-e4ec-11eb-aac9-000d3aeb0164)"
         }
       }
     }

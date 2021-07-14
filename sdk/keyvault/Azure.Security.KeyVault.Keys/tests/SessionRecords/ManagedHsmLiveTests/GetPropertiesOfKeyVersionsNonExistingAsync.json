@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskvtesthsm.managedhsm.azure.net/keys/898418167/versions?api-version=7.2",
+      "RequestUri": "https://heathskvtesthsm.managedhsm.azure.net/keys/898418167/versions?api-version=7.3-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "traceparent": "00-c7fc9c49c30e5a438776ddea087eee92-af4a51583188054b-00",
+        "traceparent": "00-a16801cf5957ed4bbdf98e3884a1766c-99c1e22334e8dd46-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210713.1",
+          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210714.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "c03d19843c042cf22d2785dd6661fe62",
@@ -26,21 +26,21 @@
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
         "x-ms-build-version": "1.0.20210605-1-ffd80f31-develop",
-        "x-ms-request-id": "858928e0-e448-11eb-adb3-000d3aeb0164",
-        "x-ms-server-latency": "1"
+        "x-ms-request-id": "432d931a-e4ec-11eb-b27f-000d3aeb0164",
+        "x-ms-server-latency": "0"
       },
       "ResponseBody": "OK"
     },
     {
-      "RequestUri": "https://heathskvtesthsm.managedhsm.azure.net/keys/898418167/versions?api-version=7.2",
+      "RequestUri": "https://heathskvtesthsm.managedhsm.azure.net/keys/898418167/versions?api-version=7.3-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "traceparent": "00-c7fc9c49c30e5a438776ddea087eee92-af4a51583188054b-00",
+        "traceparent": "00-a16801cf5957ed4bbdf98e3884a1766c-99c1e22334e8dd46-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210713.1",
+          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210714.1",
           "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "c03d19843c042cf22d2785dd6661fe62",
@@ -59,8 +59,8 @@
         "x-ms-build-version": "1.0.20210605-1-ffd80f31-develop",
         "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=Ipv4;",
         "x-ms-keyvault-region": "southcentralus",
-        "x-ms-request-id": "85a16f90-e448-11eb-adb3-000d3aeb0164",
-        "x-ms-server-latency": "14"
+        "x-ms-request-id": "434a3cb8-e4ec-11eb-b27f-000d3aeb0164",
+        "x-ms-server-latency": "20"
       },
       "ResponseBody": {
         "value": []
