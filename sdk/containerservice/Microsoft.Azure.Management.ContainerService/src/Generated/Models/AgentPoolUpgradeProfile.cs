@@ -34,18 +34,19 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <summary>
         /// Initializes a new instance of the AgentPoolUpgradeProfile class.
         /// </summary>
-        /// <param name="kubernetesVersion">Kubernetes version (major, minor,
-        /// patch).</param>
-        /// <param name="osType">OsType to be used to specify os type. Choose
-        /// from Linux and Windows. Default to Linux. Possible values include:
-        /// 'Linux', 'Windows'</param>
-        /// <param name="id">Id of the agent pool upgrade profile.</param>
-        /// <param name="name">Name of the agent pool upgrade profile.</param>
-        /// <param name="type">Type of the agent pool upgrade profile.</param>
+        /// <param name="kubernetesVersion">The Kubernetes version
+        /// (major.minor.patch).</param>
+        /// <param name="osType">Possible values include: 'Linux',
+        /// 'Windows'</param>
+        /// <param name="id">The ID of the agent pool upgrade profile.</param>
+        /// <param name="name">The name of the agent pool upgrade
+        /// profile.</param>
+        /// <param name="type">The type of the agent pool upgrade
+        /// profile.</param>
         /// <param name="upgrades">List of orchestrator types and versions
         /// available for upgrade.</param>
-        /// <param name="latestNodeImageVersion">LatestNodeImageVersion is the
-        /// latest AKS supported node image version.</param>
+        /// <param name="latestNodeImageVersion">The latest AKS supported node
+        /// image version.</param>
         public AgentPoolUpgradeProfile(string kubernetesVersion, string osType, string id = default(string), string name = default(string), string type = default(string), IList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = default(IList<AgentPoolUpgradeProfilePropertiesUpgradesItem>), string latestNodeImageVersion = default(string))
         {
             Id = id;
@@ -64,33 +65,31 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets id of the agent pool upgrade profile.
+        /// Gets the ID of the agent pool upgrade profile.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of the agent pool upgrade profile.
+        /// Gets the name of the agent pool upgrade profile.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets type of the agent pool upgrade profile.
+        /// Gets the type of the agent pool upgrade profile.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets kubernetes version (major, minor, patch).
+        /// Gets or sets the Kubernetes version (major.minor.patch).
         /// </summary>
         [JsonProperty(PropertyName = "properties.kubernetesVersion")]
         public string KubernetesVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets osType to be used to specify os type. Choose from
-        /// Linux and Windows. Default to Linux. Possible values include:
-        /// 'Linux', 'Windows'
+        /// Gets or sets possible values include: 'Linux', 'Windows'
         /// </summary>
         [JsonProperty(PropertyName = "properties.osType")]
         public string OsType { get; set; }
@@ -103,8 +102,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public IList<AgentPoolUpgradeProfilePropertiesUpgradesItem> Upgrades { get; set; }
 
         /// <summary>
-        /// Gets or sets latestNodeImageVersion is the latest AKS supported
-        /// node image version.
+        /// Gets or sets the latest AKS supported node image version.
         /// </summary>
         [JsonProperty(PropertyName = "properties.latestNodeImageVersion")]
         public string LatestNodeImageVersion { get; set; }

@@ -17,6 +17,8 @@ namespace Azure.Identity
     /// </summary>
     public class InteractiveBrowserCredential : TokenCredential
     {
+        private readonly string _tenantId;
+        private readonly bool _allowMultiTenantAuthentication;
         internal string ClientId { get; }
         internal string LoginHint { get; }
         internal MsalPublicClient Client { get; }
@@ -25,7 +27,6 @@ namespace Azure.Identity
         internal AuthenticationRecord Record { get; private set; }
 
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to interactively authenticate.";
-
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
 
         /// <summary>
@@ -76,6 +77,8 @@ namespace Azure.Identity
             Argument.AssertNotNull(clientId, nameof(clientId));
 
             ClientId = clientId;
+            _tenantId = tenantId;
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             LoginHint = (options as InteractiveBrowserCredentialOptions)?.LoginHint;
             var redirectUrl = (options as InteractiveBrowserCredentialOptions)?.RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;
@@ -180,12 +183,9 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(
-                                requestContext.Scopes,
-                                requestContext.Claims,
-                                Record,
-                                async,
-                                cancellationToken)
+                        var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record.TenantId, requestContext, _allowMultiTenantAuthentication);
+                        AuthenticationResult result = await Client
+                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, async, cancellationToken)
                             .ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
@@ -217,17 +217,12 @@ namespace Azure.Identity
                 _ => Prompt.NoPrompt
             };
 
-            AuthenticationResult result = await Client.AcquireTokenInteractiveAsync(
-                    context.Scopes,
-                    context.Claims,
-                    prompt,
-                    LoginHint,
-                    async,
-                    cancellationToken)
+            var tenantId = TenantIdResolver.Resolve(_tenantId ?? Record?.TenantId, context, _allowMultiTenantAuthentication);
+            AuthenticationResult result = await Client
+                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, async, cancellationToken)
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
-
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
     }

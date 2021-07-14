@@ -97,4 +97,4 @@ using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 
 To see the full example source, see:
 
-* [Sample06_Transactions.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample06_Transactions.cs)
+* [Sample06_Transactions.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample06_Transactions.cs)

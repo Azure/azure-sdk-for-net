@@ -13,11 +13,20 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly RecognizeLinkedEntitiesResultCollection _documentsResults;
 
-        internal RecognizeLinkedEntitiesActionResult(RecognizeLinkedEntitiesResultCollection result, DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
-            : base(completedOn, error)
+        /// <summary>
+        /// Successful action.
+        /// </summary>
+        internal RecognizeLinkedEntitiesActionResult(RecognizeLinkedEntitiesResultCollection result, DateTimeOffset completedOn)
+            : base(completedOn)
         {
             _documentsResults = result;
         }
+
+        /// <summary>
+        /// Action with an error.
+        /// </summary>
+        internal RecognizeLinkedEntitiesActionResult(DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+            : base(completedOn, error) { }
 
         /// <summary>
         /// Gets the result of the execution of a <see cref="RecognizeLinkedEntitiesAction"/> per each input document.

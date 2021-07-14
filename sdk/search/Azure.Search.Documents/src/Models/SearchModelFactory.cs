@@ -4,13 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary>
-    /// Helps mock the types in Azure.Search.Documents.Models.
+    /// Helper class that acts as a factory for read-only models, to mock the types in <c>Azure.Search.Documents.Models</c>.
     /// </summary>
+    [CodeGenModel("SearchServiceModelFactory")]
+    [CodeGenSuppress("IndexDocumentsResult", typeof(IReadOnlyList<IndexingResult>))]
     public static partial class SearchModelFactory
     {
         /// <summary> Initializes a new instance of AnalyzedTokenInfo. </summary>

@@ -476,7 +476,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
        [Test]
-       [Ignore("Send claims are not available for the topic. Leaving for now in case this is supported in the future.")]
         public async Task CrossEntityTransactionReceivesFirstRollbackSubscription()
         {
             await using var client = CreateCrossEntityTxnClient();
@@ -497,7 +496,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 await receiverA.CompleteMessageAsync(receivedMessage);
-                // claims exception thrown here
                 await senderB.SendMessageAsync(message);
                 await senderC.SendMessageAsync(message);
             }
@@ -508,12 +506,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             Assert.IsNotNull(receivedMessage);
             await receiverA.AbandonMessageAsync(receivedMessage);
 
-            var receiverB = client.CreateReceiver(queueB.QueueName);
+            var receiverB = noTxClient.CreateReceiver(queueB.QueueName);
 
             receivedMessage = await receiverB.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
             Assert.IsNull(receivedMessage);
 
-            var receiverC = client.CreateReceiver(queueC.QueueName);
+            var receiverC = noTxClient.CreateReceiver(queueC.QueueName);
             receivedMessage = await receiverC.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
             Assert.IsNull(receivedMessage);
 
@@ -784,7 +782,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             var senderA = client.CreateSender(queueA.QueueName);
-            var processorA = client.CreateProcessor(queueA.QueueName);
+            await using var processorA = client.CreateProcessor(queueA.QueueName);
 
             var receiverA = client.CreateReceiver(queueA.QueueName);
             var receiverB = client.CreateReceiver(queueB.QueueName);
@@ -830,7 +828,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             var senderA = noTxClient.CreateSender(queueA.QueueName);
-            var processorA = client.CreateProcessor(queueA.QueueName);
+            await using var processorA = client.CreateProcessor(queueA.QueueName);
 
             var receiverA = noTxClient.CreateReceiver(queueA.QueueName);
             var receiverB = noTxClient.CreateReceiver(queueB.QueueName);
@@ -880,7 +878,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
             var senderA = client.CreateSender(queueA.QueueName);
-            var processorA = client.CreateSessionProcessor(queueA.QueueName);
+            await using var processorA = client.CreateSessionProcessor(queueA.QueueName);
             var senderB = client.CreateSender(queueB.QueueName);
             var senderC = client.CreateSender(queueC.QueueName);
 
@@ -925,7 +923,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             await using var noTxClient = CreateNoRetryClient();
             var senderA = noTxClient.CreateSender(queueA.QueueName);
 
-            var processorA = client.CreateSessionProcessor(queueA.QueueName);
+            await using var processorA = client.CreateSessionProcessor(queueA.QueueName);
             var senderB = client.CreateSender(queueB.QueueName);
             var senderC = client.CreateSender(queueC.QueueName);
 

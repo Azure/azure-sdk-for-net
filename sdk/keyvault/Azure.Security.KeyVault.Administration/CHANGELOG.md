@@ -1,8 +1,23 @@
 # Release History
 
-## 4.0.0-beta.6 (Unreleased)
+## 4.1.0-beta.1 (Unreleased)
+
+### Features Added
 
 ### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+- The default service version is now "7.3-preview".
+
+## 4.0.0 (2021-06-15)
+
+- Initial release of `KeyVaultAccessControlClient` to managed role assignments and definitions for Managed HSM.
+- Initial release of `KeyVaultBackupClient` to backup and restore Managed HSM.
+
+### Breaking Changes since 4.0.0-beta.5
 
 - Changed `KeyVaultBackupClient.StartSelectiveRestore` and `StartSelectiveRestoreAsync` to `StartSelectiveKeyRestore` and `StartSelectiveKeyRestoreAsync`.
 - Return only a `Response` from `KeyVaultAccessControlClient.DeleteRoleAssignment` and `DeleteRoleAssignmentAsync`. HTTP 404 responses no longer throw a `RequestFailedException`.

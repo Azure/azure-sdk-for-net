@@ -13,8 +13,19 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(SubscriptionValidationResponseConverter))]
-    public partial class SubscriptionValidationResponse
+    public partial class SubscriptionValidationResponse : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ValidationResponse))
+            {
+                writer.WritePropertyName("validationResponse");
+                writer.WriteStringValue(ValidationResponse);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static SubscriptionValidationResponse DeserializeSubscriptionValidationResponse(JsonElement element)
         {
             Optional<string> validationResponse = default;
@@ -33,7 +44,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             public override void Write(Utf8JsonWriter writer, SubscriptionValidationResponse model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override SubscriptionValidationResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

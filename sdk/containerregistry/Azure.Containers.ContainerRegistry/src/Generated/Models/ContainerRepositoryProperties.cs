@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ContainerRepositoryProperties
     {
         /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
-        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
+        /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
         /// <param name="lastUpdatedOn"> Image last update time. </param>
@@ -40,7 +40,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
-        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
+        /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
         /// <param name="lastUpdatedOn"> Image last update time. </param>
@@ -66,7 +66,7 @@ namespace Azure.Containers.ContainerRegistry
             TeleportEnabled = teleportEnabled;
         }
 
-        /// <summary> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </summary>
+        /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>
         public string RegistryLoginServer { get; }
         /// <summary> Image name. </summary>
         public string Name { get; }

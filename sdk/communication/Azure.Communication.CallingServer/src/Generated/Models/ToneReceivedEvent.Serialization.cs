@@ -10,47 +10,26 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class ToneReceivedEvent : IUtf8JsonSerializable
+    public partial class ToneReceivedEvent
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ToneInfo))
-            {
-                writer.WritePropertyName("toneInfo");
-                writer.WriteObjectValue(ToneInfo);
-            }
-            if (Optional.IsDefined(CallLegId))
-            {
-                writer.WritePropertyName("callLegId");
-                writer.WriteStringValue(CallLegId);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ToneReceivedEvent DeserializeToneReceivedEvent(JsonElement element)
         {
-            Optional<ToneInfo> toneInfo = default;
-            Optional<string> callLegId = default;
+            ToneInfo toneInfo = default;
+            Optional<string> callConnectionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("toneInfo"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     toneInfo = ToneInfo.DeserializeToneInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("callLegId"))
+                if (property.NameEquals("callConnectionId"))
                 {
-                    callLegId = property.Value.GetString();
+                    callConnectionId = property.Value.GetString();
                     continue;
                 }
             }
-            return new ToneReceivedEvent(toneInfo.Value, callLegId.Value);
+            return new ToneReceivedEvent(toneInfo, callConnectionId.Value);
         }
     }
 }
