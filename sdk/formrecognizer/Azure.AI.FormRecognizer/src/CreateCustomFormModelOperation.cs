@@ -97,7 +97,7 @@ namespace Azure.AI.FormRecognizer.Training
             _serviceClient = allOperations;
             _diagnostics = diagnostics;
             _serviceVersion = serviceVersion;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(_diagnostics, this, rawResponse: null, nameof(CreateCustomFormModelOperation));
 
             // TODO: validate this
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
@@ -118,7 +118,7 @@ namespace Azure.AI.FormRecognizer.Training
             _diagnostics = client.Diagnostics;
             _serviceClient = client.ServiceClient;
             _serviceVersion = client.ServiceVersion;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(_diagnostics, this, rawResponse: null, nameof(CreateCustomFormModelOperation));
         }
 
         /// <summary>
