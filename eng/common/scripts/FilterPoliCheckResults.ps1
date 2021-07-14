@@ -15,13 +15,14 @@ PS> ./FilterPoliCheckResults.ps1 -PoliCheckResultFilePath .\PoliCheck.sarif
 param(
   [Parameter(Mandatory=$true)]
   [String] $PoliCheckResultFilePath,
+  [Parameter(Mandatory=$true)]
   [String] $ServiceDirtectory
 )
 
 . "${PSScriptRoot}\logging.ps1"
 
 $RepoRoot = Resolve-Path -Path "${PSScriptRoot}\..\..\..\"
-$PathToAllowListFiles = Join-Path $RepoRoot $ServiceDirtectory
+$PathToAllowListFiles = Join-Path $RepoRoot "sdk" $ServiceDirtectory
 $PolicCheckAllowListFiles = Get-ChildItem -Path $PathToAllowListFiles -Recurse -File -Include "PoliCheckAllowList.yml"
 $allowListData = @{}
 
