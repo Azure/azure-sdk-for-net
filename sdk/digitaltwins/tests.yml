@@ -15,7 +15,7 @@ extends:
         Location: eastus2euap
     Clouds: Public,Canary
     PreSteps:
-      # Remove when https://github.com/actions/virtual-environments/pull/3655 is deployed to our macOS agents
+      # Remove when https://github.com/actions/virtual-environments/pull/3655 is deployed to our MacOS agents
       - pwsh: |
           if (!(Get-Command bicep -ErrorAction Ignore)) {
             brew tap azure/bicep
