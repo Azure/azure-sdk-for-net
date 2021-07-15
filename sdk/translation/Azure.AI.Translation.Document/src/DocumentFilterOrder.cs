@@ -30,6 +30,14 @@ namespace Azure.AI.Translation.Document
         /// <see cref="DocumentFilterProperty"/> for list of properties supported.
         /// </summary>
         public DocumentFilterProperty Property { get; set; }
+        /// <summary>
+        /// Convert the order filter to string.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"{Property} {OrderBy}";
+        }
     }
 
     /// <summary>
