@@ -1,16 +1,42 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary>
-    /// The set of options that can be specified to filter the documents by name in the
-    /// <see cref="TranslationSource"/> class.
+    /// A class which defines filtering and ordering options
+    /// for listing all document statuses for a certain translation operation.
     /// </summary>
-    [CodeGenModel("DocumentFilter")]
-    internal partial class DocumentFilterInternal
+    public partial class DocumentFilter
     {
+        /// <summary>
+        /// Filter results by <see cref="DocumentStatus.CreatedOn"/>.
+        /// Get documents created AFTER a certain datetime.
+        /// </summary>
+        public DateTimeOffset CreatedAfter { get; set; }
+        /// <summary>
+        /// Filter results by <see cref="DocumentStatus.CreatedOn"/>.
+        /// Get documents created BEFORE a certain datetime.
+        /// </summary>
+        public DateTimeOffset CreatedBefore { get; set; }
+        /// <summary>
+        /// Filter results by <see cref="DocumentStatus.Id"/>.
+        /// Get documents with certain IDs.
+        /// </summary>
+        public IList<string> Ids { get; }
+        /// <summary>
+        /// Sorts translation results.
+        /// <see cref="DocumentFilterOrder"/> for more info on which sorting options to use.
+        /// </summary>
+        public IList<DocumentFilterOrder> OrderBy { get; }
+        /// <summary>
+        /// Filter results by <see cref="DocumentStatus.Status"/>.
+        /// <see cref="DocumentTranslationStatus"/> to know which statuses to use.
+        /// </summary>
+        public IList<DocumentTranslationStatus> Statuses { get; }
     }
 }
