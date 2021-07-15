@@ -65,21 +65,21 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-## Generating TURN credentials for a user
+## Getting a Relay Configuration for a user
 
 ```C# Snippet:GetRelayConfigurationAsync
-Response<CommunicationRelayConfiguration> turnTokenResponse = await client.GetRelayConfigurationAsync(user);
-DateTimeOffset turnTokenExpiresOn = turnTokenResponse.Value.ExpiresOn;
-IReadOnlyList<CommunicationTurnServer> turnServers = turnTokenResponse.Value.TurnServers;
+Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user);
+DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
 Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
-foreach (CommunicationTurnServer turnServer in turnServers)
+foreach (CommunicationIceServer iceServer in iceServers)
 {
-    foreach (string url in turnServer.Urls)
+    foreach (string url in iceServer.Urls)
     {
-        Console.WriteLine($"TURN Url: {url}");
+        Console.WriteLine($"ICE Server Url: {url}");
     }
-    Console.WriteLine($"TURN Username: {turnServer.Username}");
-    Console.WriteLine($"TURN Credential: {turnServer.Credential}");
+    Console.WriteLine($"ICE Server Username: {iceServer.Username}");
+    Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
 }
 ```
 

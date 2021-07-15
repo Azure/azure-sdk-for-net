@@ -1,7 +1,20 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.2 (2021-07-13)
+
+- Renamed `CommunicationTurnServer` to `CommunicationIceServer`
+- Renamed field `turnServers` to `iceServers` in `CommunicationRelayConfiguration`
+- Renamed `IssueCredentials[Async]` to `IssueRelayConfiguration[Async]`
 
 ## 1.0.0-beta.1 (2021-05-24)
 
