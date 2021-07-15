@@ -14,3 +14,12 @@ extends:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
         Location: eastus2euap
     Clouds: Public,Canary
+    PreSteps:
+      # Remove when https://github.com/actions/virtual-environments/pull/3655 is deployed to our macOS agents
+      - pwsh: |
+          if (!(Get-Command bicep -ErrorAction Ignore)) {
+            brew tap azure/bicep
+            brew install bicep
+          }
+        condition: contains(variables['OSVmImage'], 'mac')
+        displayName: Ensure Bicep CLI is installed on macOS
