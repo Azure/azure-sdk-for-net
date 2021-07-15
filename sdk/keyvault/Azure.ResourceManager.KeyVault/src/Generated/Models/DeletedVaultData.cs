@@ -9,20 +9,20 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> Deleted vault information with extended details. </summary>
-    public partial class DeletedVault : Resource<TenantResourceIdentifier>
+    /// <summary> A class representing the DeletedVault data model. </summary>
+    public partial class DeletedVaultData : Resource<SubscriptionResourceIdentifier>
     {
-        /// <summary> Initializes a new instance of DeletedVault. </summary>
-        internal DeletedVault()
+        /// <summary> Initializes a new instance of DeletedVaultData. </summary>
+        internal DeletedVaultData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedVault. </summary>
+        /// <summary> Initializes a new instance of DeletedVaultData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="properties"> Properties of the vault. </param>
-        internal DeletedVault(TenantResourceIdentifier id, string name, ResourceType type, DeletedVaultProperties properties) : base(id, name, type)
+        internal DeletedVaultData(SubscriptionResourceIdentifier id, string name, ResourceType type, DeletedVaultProperties properties) : base(id, name, type)
         {
             Properties = properties;
         }

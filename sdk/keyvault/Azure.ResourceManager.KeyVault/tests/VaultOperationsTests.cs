@@ -321,22 +321,23 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 VaultOperations = new VaultOperations(createdVault, createdVault.Id);
                 await VaultOperations.DeleteAsync();
 
-                var deletedVault = await VaultOperations.GetDeletedAsync();
-                Assert.IsTrue(deletedVault.Value.Name.Equals(createdVault.Data.Name));
+                var deletedVault = await DeletedVaultContainer.GetAsync(Location).ConfigureAwait(false);
+                Assert.IsTrue(deletedVault.Value.Data.Name.Equals(createdVault.Data.Name));
             }
 
-            var deletedVaults = Client.DefaultSubscription.ListDeletedVaultsBySubscriptionAsync().ToEnumerableAsync().Result;
+            var deletedVaults = DeletedVaultContainer.ListAsync().ToEnumerableAsync().Result;
             Assert.NotNull(deletedVaults);
 
             foreach (var v in deletedVaults)
             {
-                var exists = resourceIds.Remove(v.Properties.VaultId);
+                var exists = resourceIds.Remove(v.Data.Properties.VaultId);
 
                 if (exists)
                 {
                     // Purge vault
-                    await VaultOperations.StartPurgeDeletedAsync().ConfigureAwait(false);
-                    Assert.ThrowsAsync<RequestFailedException>(async () => await VaultOperations.GetDeletedAsync());
+                    var deletedVaultOperations = new DeletedVaultOperations(v, Client.DefaultSubscription.Id);
+                    await deletedVaultOperations.StartPurgeAsync().ConfigureAwait(false);
+                    Assert.ThrowsAsync<RequestFailedException>(async () => await DeletedVaultContainer.GetAsync(Location));
                 }
                 if (resourceIds.Count == 0)
                     break;

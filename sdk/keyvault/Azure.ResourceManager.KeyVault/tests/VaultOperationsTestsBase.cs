@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         public VaultOperations VaultOperations { get; set; }
         public VaultContainer VaultContainer { get; set; }
+        public DeletedVaultContainer DeletedVaultContainer { get; set; }
         public ResourceGroup ResourceGroup { get; set; }
         public ProvidersOperations ResourceProvidersClient { get; set; }
 
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         protected async Task Initialize()
         {
             Client = GetArmClient();
+            DeletedVaultContainer = Client.DefaultSubscription.GetDeletedVaultContainer();
             var resourceManagementClient = GetResourceManagementClient();
             ResourceProvidersClient = resourceManagementClient.Providers;
 

@@ -44,26 +44,28 @@ namespace Azure.ResourceManager.KeyVault
 
         // Container level operations.
 
-        /// <summary> The operation to create or update a Vault. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a key vault in the specified subscription. </summary>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual Response<Vault> CreateOrUpdate(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VaultContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-                if (parameters == null)
-                {
-                    throw new ArgumentNullException(nameof(parameters));
-                }
-
-                return StartCreateOrUpdate(vaultName, parameters, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartCreateOrUpdate(vaultName, parameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -72,26 +74,27 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> The operation to create or update a Vault. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a key vault in the specified subscription. </summary>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<Response<Vault>> CreateOrUpdateAsync(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VaultContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-                if (parameters == null)
-                {
-                    throw new ArgumentNullException(nameof(parameters));
-                }
-
-                var operation = await StartCreateOrUpdateAsync(vaultName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(vaultName, parameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -101,27 +104,28 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> The operation to create or update a Vault. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a key vault in the specified subscription. </summary>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="parameters"/> is null. </exception>
         public virtual VaultsCreateOrUpdateOperation StartCreateOrUpdate(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VaultContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-                if (parameters == null)
-                {
-                    throw new ArgumentNullException(nameof(parameters));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.ResourceGroupName, vaultName, parameters, cancellationToken: cancellationToken);
-                return new VaultsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vaultName, parameters).Request, originalResponse);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, vaultName, parameters, cancellationToken);
+                return new VaultsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vaultName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -130,27 +134,28 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> The operation to create or update a Vault. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update a key vault in the specified subscription. </summary>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="parameters"> Parameters to create or update the vault. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="parameters"/> is null. </exception>
         public async virtual Task<VaultsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string vaultName, VaultCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VaultContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (vaultName == null)
-                {
-                    throw new ArgumentNullException(nameof(vaultName));
-                }
-                if (parameters == null)
-                {
-                    throw new ArgumentNullException(nameof(parameters));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, vaultName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new VaultsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vaultName, parameters).Request, originalResponse);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, vaultName, parameters, cancellationToken).ConfigureAwait(false);
+                return new VaultsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, vaultName, parameters).Request, response);
             }
             catch (Exception e)
             {

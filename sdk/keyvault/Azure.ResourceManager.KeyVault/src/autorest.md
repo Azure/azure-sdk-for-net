@@ -19,6 +19,7 @@ operation-group-to-resource-type:
     DeletedVaults: Microsoft.KeyVault/deletedVaults
 operation-group-to-resource:
     Vaults: Vault
+    DeletedVaults: DeletedVault
 operation-group-to-parent:
    DeletedVaults: subscriptions
 directive:
@@ -40,10 +41,10 @@ directive:
     - from: swagger-document
       where: $['paths']['/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults']['get']
       transform: $.operationId = 'DeletedVaults_ListBySubscription'
-    # - from: swagger-document
-    #   where: $['paths']['/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}']['get']
-    #   transform: $.operationId = 'DeletedVaults_GetDeletedByLocation'
-    # - from: swagger-document
-    #   where: $['paths']['/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}/purge']['post']
-    #   transform: $.operationId = 'DeletedVaults_PurgeDeleted'
+    - from: swagger-document
+      where: $['paths']['/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}']['get']
+      transform: $.operationId = 'DeletedVaults_Get'
+    - from: swagger-document
+      where: $['paths']['/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}/purge']['post']
+      transform: $.operationId = 'DeletedVaults_Purge'
 ```

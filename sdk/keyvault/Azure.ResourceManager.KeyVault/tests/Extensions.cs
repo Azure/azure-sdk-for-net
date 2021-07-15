@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         public static bool IsEqual(this DeletedVault deletedVault, VaultData createdVault)
         {
-            Assert.AreEqual(createdVault.Location, deletedVault.Properties.Location);
-            Assert.AreEqual(createdVault.Name, deletedVault.Name);
-            Assert.AreEqual(createdVault.Id, deletedVault.Properties.VaultId);
-            Assert.AreEqual("Microsoft.KeyVault/deletedVaults", deletedVault.Type);
-            Assert.True(createdVault.Tags.DictionaryEqual(deletedVault.Properties.Tags));
-            Assert.NotNull(deletedVault.Properties.ScheduledPurgeDate);
-            Assert.NotNull(deletedVault.Properties.DeletionDate);
+            Assert.AreEqual(createdVault.Location, deletedVault.Data.Properties.Location);
+            Assert.AreEqual(createdVault.Name, deletedVault.Data.Name);
+            Assert.AreEqual(createdVault.Id, deletedVault.Data.Properties.VaultId);
+            Assert.AreEqual("Microsoft.KeyVault/deletedVaults", deletedVault.Data.Type);
+            Assert.True(createdVault.Tags.DictionaryEqual(deletedVault.Data.Properties.Tags));
+            Assert.NotNull(deletedVault.Data.Properties.ScheduledPurgeDate);
+            Assert.NotNull(deletedVault.Data.Properties.DeletionDate);
             Assert.NotNull(deletedVault.Id);
             return true;
         }

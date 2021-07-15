@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault
     {
         internal static DeletedVaultListResult DeserializeDeletedVaultListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DeletedVault>> value = default;
+            Optional<IReadOnlyList<DeletedVaultData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.KeyVault
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeletedVault> array = new List<DeletedVault>();
+                    List<DeletedVaultData> array = new List<DeletedVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedVault.DeserializeDeletedVault(item));
+                        array.Add(DeletedVaultData.DeserializeDeletedVaultData(item));
                     }
                     value = array;
                     continue;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -204,42 +203,6 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Gets the deleted Azure key vault. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeletedVault>> GetDeletedAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VaultOperations.GetDeleted");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetDeletedAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the deleted Azure key vault. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeletedVault> GetDeleted(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VaultOperations.GetDeleted");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetDeleted(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Checks that the vault name is valid and is not already in use. </summary>
         /// <param name="name"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -318,78 +281,6 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = _privateLinkResourcesRestClient.ListByVault(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> PurgeDeletedAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VaultOperations.PurgeDeleted");
-            scope.Start();
-            try
-            {
-                var operation = await StartPurgeDeletedAsync(cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response PurgeDeleted(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VaultOperations.PurgeDeleted");
-            scope.Start();
-            try
-            {
-                var operation = StartPurgeDeleted(cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<VaultsPurgeDeletedOperation> StartPurgeDeletedAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VaultOperations.StartPurgeDeleted");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.PurgeDeletedAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new VaultsPurgeDeletedOperation(_clientDiagnostics, Pipeline, _restClient.CreatePurgeDeletedRequest(Id.ResourceGroupName, Id.Name).Request, response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public VaultsPurgeDeletedOperation StartPurgeDeleted(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VaultOperations.StartPurgeDeleted");
-            scope.Start();
-            try
-            {
-                var response = _restClient.PurgeDeleted(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new VaultsPurgeDeletedOperation(_clientDiagnostics, Pipeline, _restClient.CreatePurgeDeletedRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {

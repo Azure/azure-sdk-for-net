@@ -11,12 +11,12 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class DeletedVault
+    public partial class DeletedVaultData
     {
-        internal static DeletedVault DeserializeDeletedVault(JsonElement element)
+        internal static DeletedVaultData DeserializeDeletedVaultData(JsonElement element)
         {
             Optional<DeletedVaultProperties> properties = default;
-            TenantResourceIdentifier id = default;
+            SubscriptionResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new DeletedVault(id, name, type, properties.Value);
+            return new DeletedVaultData(id, name, type, properties.Value);
         }
     }
 }

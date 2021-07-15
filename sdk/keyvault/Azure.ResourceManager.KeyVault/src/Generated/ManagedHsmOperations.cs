@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -380,8 +379,8 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await _restClient.PurgeDeletedAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ManagedHsmsPurgeDeletedOperation(_clientDiagnostics, Pipeline, _restClient.CreatePurgeDeletedRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _restClient.PurgeDeletedAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new ManagedHsmsPurgeDeletedOperation(_clientDiagnostics, Pipeline, _restClient.CreatePurgeDeletedRequest(Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -398,8 +397,8 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = _restClient.PurgeDeleted(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new ManagedHsmsPurgeDeletedOperation(_clientDiagnostics, Pipeline, _restClient.CreatePurgeDeletedRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _restClient.PurgeDeleted(Id.Parent.Name, Id.Name, cancellationToken);
+                return new ManagedHsmsPurgeDeletedOperation(_clientDiagnostics, Pipeline, _restClient.CreatePurgeDeletedRequest(Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
