@@ -36,6 +36,8 @@ namespace Batch.Tests.ScenarioTests
 
                     // Create an account
                     BatchAccountCreateParameters createParams = new BatchAccountCreateParameters(this.Location);
+                    AuthenticationMode authMode = AuthenticationMode.SharedKey;
+                    createParams.AllowedAuthenticationModes = new List<AuthenticationMode?> { authMode };
                     await this.BatchManagementClient.BatchAccount.CreateAsync(resourceGroupName, batchAccountName, createParams);
 
                     // Check if the account exists now
@@ -49,6 +51,7 @@ namespace Batch.Tests.ScenarioTests
                     Assert.Equal(batchAccountName, batchAccount.Name);
                     Assert.True(batchAccount.DedicatedCoreQuota > 0);
                     Assert.True(batchAccount.LowPriorityCoreQuota > 0);
+                    Assert.True(batchAccount.AllowedAuthenticationModes.Single() == authMode);
 
                     // Rotate a key
                     BatchAccountKeys originalKeys = await this.BatchManagementClient.BatchAccount.GetKeysAsync(resourceGroupName, batchAccountName);
@@ -69,6 +72,20 @@ namespace Batch.Tests.ScenarioTests
 
                     Assert.Single(accounts);
                     Assert.Equal(batchAccountName, accounts.First().Name);
+
+                    IPage<OutboundEnvironmentEndpoint> endpointsResponse = await this.BatchManagementClient.BatchAccount.ListOutboundNetworkDependenciesEndpointsAsync(resourceGroupName, batchAccount.Name);
+                    List<OutboundEnvironmentEndpoint> endpoints = new List<OutboundEnvironmentEndpoint>();
+
+                    do
+                    {
+                        endpointsResponse = await this.BatchManagementClient.BatchAccount.ListOutboundNetworkDependenciesEndpointsAsync(resourceGroupName, batchAccount.Name);
+                        endpoints.AddRange(endpointsResponse);
+                        nextLink = endpointsResponse.NextPageLink;
+                    }
+                    while (nextLink != null);
+
+                    Assert.NotEmpty(endpoints);
+                    Assert.True(endpoints.First().Endpoints.Count() > 0);
 
                     // Delete the account
                     try
@@ -185,6 +202,5 @@ namespace Batch.Tests.ScenarioTests
                 }
             }
         }
-
     }
 }

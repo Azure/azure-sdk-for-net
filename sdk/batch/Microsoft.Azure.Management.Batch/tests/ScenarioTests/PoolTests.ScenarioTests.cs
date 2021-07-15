@@ -44,8 +44,12 @@ namespace Batch.Tests.ScenarioTests
                             OsFamily = "5"
                         }
                     };
+
+                    string userId = "refUserId123"; 
+                    ComputeNodeIdentityReference identity = new ComputeNodeIdentityReference(userId);
+                    
                     var resources = new List<ResourceFile>();
-                    resources.Add(new ResourceFile(httpUrl: "https://blobsource.com", filePath: "filename.txt"));
+                    resources.Add(new ResourceFile(httpUrl: "https://blobsource.com", filePath: "filename.txt", identityReference: identity));
                     var environments = new List<EnvironmentSetting>();
                     environments.Add(new EnvironmentSetting("ENV_VAR", "env_value"));
                     paasPool.StartTask = new StartTask()
@@ -75,6 +79,8 @@ namespace Batch.Tests.ScenarioTests
 
                     var paasPoolResponse = await this.BatchManagementClient.Pool.CreateAsync(resourceGroupName, batchAccountName, paasPoolName, paasPool);
                     Assert.NotNull(paasPoolResponse.StartTask);
+                    Assert.Equal(userId, paasPoolResponse.StartTask.ResourceFiles.Single().IdentityReference.ResourceId);
+
                     var referenceId =
                         $"/subscriptions/{this.BatchManagementClient.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{batchAccountName}/pools/{paasPoolName.ToLowerInvariant()}";
                     Assert.Equal(referenceId, paasPoolResponse.Id);
@@ -94,7 +100,8 @@ namespace Batch.Tests.ScenarioTests
                                 Sku = "2016-Datacenter-smalldisk"
                             },
                             NodeAgentSkuId = "batch.node.windows amd64",
-                            WindowsConfiguration = new WindowsConfiguration(true)
+                            WindowsConfiguration = new WindowsConfiguration(true),
+                            OsDisk = new OSDisk(new DiffDiskSettings(DiffDiskPlacement.CacheDisk))
                         }
                     };
                     iaasPool.ScaleSettings = new ScaleSettings()
@@ -122,6 +129,8 @@ namespace Batch.Tests.ScenarioTests
                     Assert.Equal(displayName, pool.DisplayName);
                     Assert.Equal(AllocationState.Resizing, pool.AllocationState);
                     Assert.Equal("batch.node.windows amd64", pool.DeploymentConfiguration.VirtualMachineConfiguration.NodeAgentSkuId);
+                    Assert.NotNull(pool.DeploymentConfiguration.VirtualMachineConfiguration.OsDisk);
+                    Assert.Equal(DiffDiskPlacement.CacheDisk, pool.DeploymentConfiguration.VirtualMachineConfiguration.OsDisk.EphemeralOSDiskSettings.Placement);
 
                     // Verify stop resize operation
                     await this.BatchManagementClient.Pool.StopResizeAsync(resourceGroupName, batchAccountName, iaasPoolName);
