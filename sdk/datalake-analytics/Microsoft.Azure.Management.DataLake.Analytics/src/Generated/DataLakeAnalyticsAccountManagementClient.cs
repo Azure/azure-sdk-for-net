@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DataLakeAnalyticsAccountManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public DataLakeAnalyticsAccountManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DataLakeAnalyticsAccountManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        public DataLakeAnalyticsAccountManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DataLakeAnalyticsAccountManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public DataLakeAnalyticsAccountManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DataLakeAnalyticsAccountManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public DataLakeAnalyticsAccountManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DataLakeAnalyticsAccountManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public DataLakeAnalyticsAccountManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
