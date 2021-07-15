@@ -2,6 +2,9 @@
 
 ## 1.0.0-beta.2 (2021-07-16)
 
+### Features Added
+- Added `WebPubSubRequest` input binding to support Static Web Apps.
+
 ### Bugs Fixed
 - Fixed exceptions when the library is used in Static Web Apps.
 
