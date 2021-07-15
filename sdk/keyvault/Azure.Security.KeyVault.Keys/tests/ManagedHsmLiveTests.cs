@@ -9,7 +9,9 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-    [ClientTestFixture(KeyClientOptions.ServiceVersion.V7_2)]
+    [ClientTestFixture(
+        KeyClientOptions.ServiceVersion.V7_2,
+        KeyClientOptions.ServiceVersion.V7_3_Preview)]
     public class ManagedHsmLiveTests : KeyClientLiveTests
     {
         public ManagedHsmLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
