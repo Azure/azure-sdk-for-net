@@ -26,8 +26,11 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<MaintenanceRedeployStatus> maintenanceRedeployStatus = default;
             Optional<IReadOnlyList<DiskInstanceView>> disks = default;
             Optional<IReadOnlyList<VirtualMachineExtensionInstanceView>> extensions = default;
+            Optional<VirtualMachineHealthStatus> vmHealth = default;
             Optional<BootDiagnosticsInstanceView> bootDiagnostics = default;
+            Optional<string> assignedHost = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Optional<VirtualMachinePatchStatus> patchStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("platformUpdateDomain"))
@@ -130,6 +133,16 @@ namespace Azure.ResourceManager.Compute.Models
                     extensions = array;
                     continue;
                 }
+                if (property.NameEquals("vmHealth"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vmHealth = VirtualMachineHealthStatus.DeserializeVirtualMachineHealthStatus(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("bootDiagnostics"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -138,6 +151,11 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     bootDiagnostics = BootDiagnosticsInstanceView.DeserializeBootDiagnosticsInstanceView(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("assignedHost"))
+                {
+                    assignedHost = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("statuses"))
@@ -155,8 +173,18 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
+                if (property.NameEquals("patchStatus"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    patchStatus = VirtualMachinePatchStatus.DeserializeVirtualMachinePatchStatus(property.Value);
+                    continue;
+                }
             }
-            return new VirtualMachineInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), computerName.Value, osName.Value, osVersion.Value, Optional.ToNullable(hyperVGeneration), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, Optional.ToList(disks), Optional.ToList(extensions), bootDiagnostics.Value, Optional.ToList(statuses));
+            return new VirtualMachineInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), computerName.Value, osName.Value, osVersion.Value, Optional.ToNullable(hyperVGeneration), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, Optional.ToList(disks), Optional.ToList(extensions), vmHealth.Value, bootDiagnostics.Value, assignedHost.Value, Optional.ToList(statuses), patchStatus.Value);
         }
     }
 }

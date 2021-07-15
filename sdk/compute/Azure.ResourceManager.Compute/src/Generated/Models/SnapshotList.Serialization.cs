@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static SnapshotList DeserializeSnapshotList(JsonElement element)
         {
-            IReadOnlyList<Snapshot> value = default;
+            IReadOnlyList<SnapshotData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<Snapshot> array = new List<Snapshot>();
+                    List<SnapshotData> array = new List<SnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Snapshot.DeserializeSnapshot(item));
+                        array.Add(SnapshotData.DeserializeSnapshotData(item));
                     }
                     value = array;
                     continue;

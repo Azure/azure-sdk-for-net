@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string galleryName, Gallery gallery)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string galleryName, GalleryData gallery)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="gallery"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, Gallery gallery, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="gallery"> Parameters supplied to the create or update Shared Image Gallery operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="gallery"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string galleryName, Gallery gallery, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string galleryName, GalleryData gallery, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string galleryName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string galleryName, SelectPermissions? select)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -234,7 +234,11 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select.Value.ToString(), true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -243,9 +247,10 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Retrieves information about a Shared Image Gallery. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
-        public async Task<Response<Gallery>> GetAsync(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryData>> GetAsync(string resourceGroupName, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -256,15 +261,15 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, galleryName);
+            using var message = CreateGetRequest(resourceGroupName, galleryName, select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        Gallery value = default;
+                        GalleryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Gallery.DeserializeGallery(document.RootElement);
+                        value = GalleryData.DeserializeGalleryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -275,9 +280,10 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Retrieves information about a Shared Image Gallery. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
+        /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
-        public Response<Gallery> Get(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        public Response<GalleryData> Get(string resourceGroupName, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -288,15 +294,15 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, galleryName);
+            using var message = CreateGetRequest(resourceGroupName, galleryName, select);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        Gallery value = default;
+                        GalleryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Gallery.DeserializeGallery(document.RootElement);
+                        value = GalleryData.DeserializeGalleryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -317,7 +323,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -393,7 +399,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -453,7 +459,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListRequest()
+        internal HttpMessage CreateListBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -463,7 +469,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/galleries", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -471,9 +477,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List galleries under a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GalleryList>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryList>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest();
+            using var message = CreateListBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -491,9 +497,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List galleries under a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GalleryList> List(CancellationToken cancellationToken = default)
+        public Response<GalleryList> ListBySubscription(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest();
+            using var message = CreateListBySubscriptionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -586,7 +592,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink)
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -603,14 +609,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<GalleryList>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryList>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListNextPageRequest(nextLink);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -630,14 +636,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<GalleryList> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<GalleryList> ListBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListNextPageRequest(nextLink);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

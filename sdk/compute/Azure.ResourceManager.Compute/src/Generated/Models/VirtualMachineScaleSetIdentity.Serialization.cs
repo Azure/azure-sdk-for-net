@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> principalId = default;
             Optional<string> tenantId = default;
             Optional<ResourceIdentityType> type = default;
-            Optional<IDictionary<string, ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties>> userAssignedIdentities = default;
+            Optional<IDictionary<string, VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties> dictionary = new Dictionary<string, ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties>();
+                    Dictionary<string, VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue> dictionary = new Dictionary<string, VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties.DeserializeComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties(property0.Value));
+                        dictionary.Add(property0.Name, VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue.DeserializeVirtualMachineScaleSetIdentityUserAssignedIdentitiesValue(property0.Value));
                     }
                     userAssignedIdentities = dictionary;
                     continue;

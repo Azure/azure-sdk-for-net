@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     /// <summary> Run command on a virtual machine in a VM scale set. </summary>
     public partial class VirtualMachineScaleSetVMsRunCommandOperation : Operation<RunCommandResult>, IOperationSource<RunCommandResult>
     {
-        private readonly ArmOperationHelpers<RunCommandResult> _operation;
+        private readonly OperationInternals<RunCommandResult> _operation;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMsRunCommandOperation for mocking. </summary>
         protected VirtualMachineScaleSetVMsRunCommandOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Compute
 
         internal VirtualMachineScaleSetVMsRunCommandOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<RunCommandResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVMsRunCommandOperation");
+            _operation = new OperationInternals<RunCommandResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachineScaleSetVMsRunCommandOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

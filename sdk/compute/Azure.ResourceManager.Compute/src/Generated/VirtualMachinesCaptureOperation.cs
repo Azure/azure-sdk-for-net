@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     /// <summary> Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs. </summary>
     public partial class VirtualMachinesCaptureOperation : Operation<VirtualMachineCaptureResult>, IOperationSource<VirtualMachineCaptureResult>
     {
-        private readonly ArmOperationHelpers<VirtualMachineCaptureResult> _operation;
+        private readonly OperationInternals<VirtualMachineCaptureResult> _operation;
 
         /// <summary> Initializes a new instance of VirtualMachinesCaptureOperation for mocking. </summary>
         protected VirtualMachinesCaptureOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Compute
 
         internal VirtualMachinesCaptureOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VirtualMachineCaptureResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachinesCaptureOperation");
+            _operation = new OperationInternals<VirtualMachineCaptureResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachinesCaptureOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

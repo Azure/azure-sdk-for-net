@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     /// <summary> Grants access to a snapshot. </summary>
     public partial class SnapshotsGrantAccessOperation : Operation<AccessUri>, IOperationSource<AccessUri>
     {
-        private readonly ArmOperationHelpers<AccessUri> _operation;
+        private readonly OperationInternals<AccessUri> _operation;
 
         /// <summary> Initializes a new instance of SnapshotsGrantAccessOperation for mocking. </summary>
         protected SnapshotsGrantAccessOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Compute
 
         internal SnapshotsGrantAccessOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<AccessUri>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SnapshotsGrantAccessOperation");
+            _operation = new OperationInternals<AccessUri>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SnapshotsGrantAccessOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
