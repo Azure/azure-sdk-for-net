@@ -54,10 +54,6 @@ namespace Azure.Storage.DataMovement
         /// Transfer Options for the specific download job.
         /// See <see cref="StorageTransferOptions"/>.
         /// </param>
-        /// <param name="progressTracker">
-        /// Progress Tracker.
-        /// TODO: Considering to throw this in options bag.
-        /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -66,13 +62,14 @@ namespace Azure.Storage.DataMovement
             BlobBaseClient sourceClient,
             string destinationPath,
             StorageTransferOptions transferOptions,
-            IProgress<StorageTransferStatus> progressTracker,
+            // TODO: make options bag to include progressTracker
+            //IProgress<StorageTransferStatus> progressTracker,
             CancellationToken cancellationToken)
         {
             _sourceBlobClient = sourceClient;
             _destinationLocalPath = destinationPath;
             _transferOptions = transferOptions;
-            ProgressTracker = progressTracker;
+            //ProgressTracker = progressTracker;
             CancellationToken = cancellationToken;
         }
 

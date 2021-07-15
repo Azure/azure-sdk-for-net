@@ -31,35 +31,42 @@ namespace Azure.Storage.DataMovement
         //private IList<StorageTransferJob> _jobsInProgress;
         // local directory path to put hte memory mapped file of the progress tracking. if we pause or break
         // we will have the information on where to continue from.
-        private string _progressLogDirectoryPath;
+        private string _transferStateDirectoryPath;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="progressLogDirectoryPath">Specify directory path to log file to continue from.</param>
-        public StorageTransferManager(string progressLogDirectoryPath = default)
+        /// <param name="transferStateDirectoryPath">Directory path where transfer state is kept.</param>
+        public StorageTransferManager(string transferStateDirectoryPath = default)
         {
             _toScanQueue = new AsyncQueue<StorageTransferJob>();
             _jobsToProcess = new AsyncQueue<StorageTransferJob>();
-            _progressLogDirectoryPath = progressLogDirectoryPath;
+            _transferStateDirectoryPath = transferStateDirectoryPath;
         }
 
         /// <summary>
-        /// Add upload job to perform.
-        /// </summary>//
+        /// Add Upload Job to perform
+        ///
+        /// TODO: Better description and param comments.
+        /// </summary>
+        /// <param name="sourceLocalPath"></param>
+        /// <param name="destinationClient"></param>
+        /// <param name="uploadOptions"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        /// TODO: remove suppression
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<StorageTransferResults> ScheduleUploadAsync(
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             string sourceLocalPath,
             BlobClient destinationClient,
             BlobUploadOptions uploadOptions = default,
-            IProgress<StorageTransferStatus> progressTracker = default,
             CancellationToken token = default)
         {
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobUploadTransferJob transferJob = new BlobUploadTransferJob(sourceLocalPath, destinationClient, uploadOptions, progressTracker, token);
+            BlobUploadTransferJob transferJob = new BlobUploadTransferJob(sourceLocalPath, destinationClient, uploadOptions, token);
             _jobsToProcess.Enqueue(transferJob);
 
             // TODO: remove stub
@@ -67,8 +74,15 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Add upload job to perform.
+        /// Add Download Job to perform
+        ///
+        /// TODO: Better description and param comments.
         /// </summary>
+        /// <param name="sourceClient"></param>
+        /// <param name="destinationLocalPath"></param>
+        /// <param name="transferOptions"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         /// TODO: remove suppresion
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<StorageTransferResults> ScheduleDownloadAsync(
@@ -76,13 +90,15 @@ namespace Azure.Storage.DataMovement
             BlobClient sourceClient,
             string destinationLocalPath,
             StorageTransferOptions transferOptions = default,
-            IProgress<StorageTransferStatus> progressTracker = default,
+            //TODO: make options bag to include progress tracker
+            //IProgress<StorageTransferStatus> progressTracker,
+            // IProgress<StorageTransferStatus> progressTracker = default,
             CancellationToken token = default)
         {
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobDownloadTransferJob transferJob = new BlobDownloadTransferJob(sourceClient, destinationLocalPath, transferOptions, progressTracker, token);
+            BlobDownloadTransferJob transferJob = new BlobDownloadTransferJob(sourceClient, destinationLocalPath, transferOptions, token);
             _jobsToProcess.Enqueue(transferJob);
 
             // TODO; remove stub
@@ -90,8 +106,15 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Add upload job to perform.
+        /// Add Upload Directory Job to perform
+        ///
+        /// TODO: Better description and param comments.
         /// </summary>
+        /// <param name="sourceLocalPath"></param>
+        /// <param name="destinationClient"></param>
+        /// <param name="uploadOptions"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         /// TODO: remove suppression
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<StorageTransferResults> ScheduleUploadDirectoryAsync(
@@ -99,13 +122,12 @@ namespace Azure.Storage.DataMovement
             string sourceLocalPath,
             BlobDirectoryClient destinationClient,
             BlobUploadDirectoryOptions uploadOptions = default,
-            IProgress<StorageTransferStatus> progressTracker = default,
             CancellationToken token = default)
         {
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(sourceLocalPath, destinationClient, uploadOptions, progressTracker, token);
+            BlobUploadDirectoryTransferJob transferJob = new BlobUploadDirectoryTransferJob(sourceLocalPath, destinationClient, uploadOptions, token);
             _toScanQueue.Enqueue(transferJob);
 
             // TODO; remove stub
@@ -113,8 +135,15 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Add upload job to perform.
+        /// Add Download Directory Job to perform
+        ///
+        /// TODO: Better description and param comments.
         /// </summary>
+        /// <param name="sourceClient"></param>
+        /// <param name="destinationLocalPath"></param>
+        /// <param name="transferOptions"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         /// TODO: remove suppression
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<StorageTransferResults> ScheduleDownloadDirectoryAsync(
@@ -122,13 +151,15 @@ namespace Azure.Storage.DataMovement
             BlobDirectoryClient sourceClient,
             string destinationLocalPath,
             StorageTransferOptions transferOptions = default,
-            IProgress<StorageTransferStatus> progressTracker = default,
+            //TODO: make options bag to include progress tracker
+            //IProgress<StorageTransferStatus> progressTracker,
+            //IProgress<StorageTransferStatus> progressTracker = default,
             CancellationToken token = default)
         {
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(sourceClient, destinationLocalPath, transferOptions, progressTracker, token);
+            BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(sourceClient, destinationLocalPath, transferOptions, token);
             _toScanQueue.Enqueue(transferJob);
 
             // TODO; remove stub

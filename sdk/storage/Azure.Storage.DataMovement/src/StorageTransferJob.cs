@@ -32,16 +32,7 @@ namespace Azure.Storage.DataMovement
         public CancellationToken CancellationToken;
 
         /// <summary>
-        /// Progress Tracker
-        /// </summary>
-        public IProgress<StorageTransferStatus> ProgressTracker;
-
-        /// <summary>
-        /// Create next TransferItem/Task to be processed
-        /// </summary>
-        /// <returns></returns>
-        /// <summary>
-        /// Create next TransferItem/Task to be processed
+        /// Create next TransferItem/Task to be processed.
         /// </summary>
         /// <returns></returns>
         public virtual Task CreateTransferTaskAsync()

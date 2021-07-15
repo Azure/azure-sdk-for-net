@@ -21,6 +21,9 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optional standard HTTP header properties that can be set for the
         /// each blob that is uploaded.
+        ///
+        /// TODO: remove and replace with onl ythe headers that can apply
+        /// to all blows iwthin the directory
         /// </summary>
         public BlobHttpHeaders HttpHeaders { get; set; }
 
@@ -41,9 +44,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
-        /// TODO: I might consider removing this and putting this functionality
-        /// only in DMLib.
-        /// TODO: replace long value with appropriate model similar to StorageTransferResults
+        /// TODO: replace long value with appropriate model similar to BlobUploadDirectoryResponse
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
 

@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement
     /// TODO; descriptions and comments for this entire class
     /// TODO: Add possible options bag for copy transfer
     /// </summary>
-    internal class BlobCopyTransferJob : StorageTransferJob
+    internal class BlobLocalCopyTransferJob : StorageTransferJob
     {
         internal BlobBaseClient _destinationBlobClient;
 
@@ -24,29 +24,33 @@ namespace Azure.Storage.DataMovement
 
         public BlobBaseClient sourceBlobClient => _sourceBlobClient;
 
-        public readonly CopyMethod _copyMethod;
+        /// <summary>
+        /// The <see cref="BlobSyncCopyOptions"/>.
+        /// </summary>
+        internal BlobSyncCopyOptions _copyOptions;
+        /// <summary>
+        /// Gets the <see cref="BlobSyncCopyOptions"/>.
+        /// </summary>
+        public BlobSyncCopyOptions copyOptions => _copyOptions;
 
         /// <summary>
-        /// The <see cref="StorageTransferOptions"/>.
+        /// Creates Single Copy Transfer Job
+        ///
+        /// TODO: better description and param descriptions.
         /// </summary>
-        internal StorageTransferOptions _transferOptions;
-        /// <summary>
-        /// Gets the <see cref="StorageTransferOptions"/>.
-        /// </summary>
-        public StorageTransferOptions TransferOptions => _transferOptions;
-
-        // Creates Copy Transfer Job
-        public BlobCopyTransferJob(
+        /// <param name="sourceClient"></param>
+        /// <param name="destinationClient"></param>
+        /// <param name="copyOptions"></param>
+        /// <param name="cancellationToken"></param>
+        public BlobLocalCopyTransferJob(
             BlobBaseClient sourceClient,
             BlobBaseClient destinationClient,
-            CopyMethod copyMethod,
-            StorageTransferOptions transferOptions,
+            BlobSyncCopyOptions copyOptions,
             CancellationToken cancellationToken)
         {
             _sourceBlobClient = sourceClient;
             _destinationBlobClient = destinationClient;
-            _copyMethod = copyMethod;
-            _transferOptions = transferOptions;
+            _copyOptions = copyOptions;
             CancellationToken = cancellationToken;
         }
 
@@ -56,9 +60,8 @@ namespace Azure.Storage.DataMovement
         /// <returns>The Task to perform the Upload operation.</returns>
         public override Task CreateTransferTaskAsync()
         {
-            // TODO: add other Copymethod Options
-            // for now only do CopyMethod.ServiceSideAsyncCopy as a stub
-            return destinationBlobClient.StartCopyFromUriAsync(sourceBlobClient.Uri, cancellationToken: CancellationToken);
+            // TODO: implement download the blob and store it and upload to the destination.
+            return Task.CompletedTask;
         }
     }
 }

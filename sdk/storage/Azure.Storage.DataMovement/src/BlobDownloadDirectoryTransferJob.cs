@@ -43,20 +43,19 @@ namespace Azure.Storage.DataMovement
         /// <param name="sourceClient"></param>
         /// <param name="destinationPath"></param>
         /// <param name="transferOptions"></param>
-        /// <param name="progressTracker"></param>
         /// <param name="cancellationToken"></param>
         public BlobDownloadDirectoryTransferJob(
             BlobDirectoryClient sourceClient,
             string destinationPath,
             StorageTransferOptions transferOptions,
-            IProgress<StorageTransferStatus> progressTracker,
+            //TODO: make options bag to include progress tracker
+            //IProgress<StorageTransferStatus> progressTracker,
             CancellationToken cancellationToken)
         {
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
             _localPath = destinationPath;
             _sourceBlobClient = sourceClient;
             _transferOptions = transferOptions;
-            ProgressTracker = progressTracker;
             CancellationToken = cancellationToken;
         }
 

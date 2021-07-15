@@ -49,10 +49,6 @@ namespace Azure.Storage.DataMovement
         /// <param name="uploadOptions">
         /// Upload Transfer Options for the specific job.
         /// </param>
-        /// <param name="progressTracker">
-        /// Progress Tracker.
-        /// TODO: Considering to throw this in options bag.
-        /// </param>
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -61,14 +57,12 @@ namespace Azure.Storage.DataMovement
             string sourceLocalPath,
             BlobClient destinationClient,
             BlobUploadOptions uploadOptions,
-            IProgress<StorageTransferStatus> progressTracker,
             CancellationToken cancellationToken)
         {
             _localPath = sourceLocalPath;
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
             _destinationBlobClient = destinationClient;
             _uploadOptions = uploadOptions;
-            ProgressTracker = progressTracker;
             CancellationToken = cancellationToken;
         }
 
