@@ -743,6 +743,11 @@ namespace Compute.Tests
             {
                 Assert.Equal(dedicatedHostGroupReferenceId, vmScaleSetOut.HostGroup.Id, StringComparer.OrdinalIgnoreCase);
             }
+
+            if(vmScaleSet.ScaleInPolicy?.ForceDeletion != null)
+            {
+                Assert.Equal(vmScaleSet.ScaleInPolicy.ForceDeletion, vmScaleSetOut.ScaleInPolicy.ForceDeletion);
+            }
         }
 
         protected void CompareVmssNicConfig(VirtualMachineScaleSetNetworkConfiguration nicconfig,

@@ -85,9 +85,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Virtual Machine Scale Set. For instance: whether the Virtual
         /// Machines have the capability to support attaching managed data
         /// disks with UltraSSD_LRS storage account type.</param>
-        /// <param name="scaleInPolicy">Specifies the scale-in policy that
-        /// decides which virtual machines are chosen for removal when a
-        /// Virtual Machine Scale Set is scaled-in.</param>
+        /// <param name="scaleInPolicy">Specifies the policies applied when
+        /// scaling in Virtual Machines in the Virtual Machine Scale
+        /// Set.</param>
         /// <param name="orchestrationMode">Specifies the orchestration mode
         /// for the virtual machine scale set. Possible values include:
         /// 'Uniform', 'Flexible'</param>
@@ -245,9 +245,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the scale-in policy that decides which
-        /// virtual machines are chosen for removal when a Virtual Machine
-        /// Scale Set is scaled-in.
+        /// Gets or sets specifies the policies applied when scaling in Virtual
+        /// Machines in the Virtual Machine Scale Set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scaleInPolicy")]
         public ScaleInPolicy ScaleInPolicy { get; set; }
