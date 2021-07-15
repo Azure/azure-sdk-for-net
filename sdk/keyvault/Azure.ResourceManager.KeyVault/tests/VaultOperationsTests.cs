@@ -127,6 +127,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             });
         }
 
+        [Ignore("This parameter should be deprecated")]
         [Test]
         public async Task CreateKeyVaultDisableSoftDelete()
         {

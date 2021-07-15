@@ -11,26 +11,17 @@ namespace Azure.ResourceManager.KeyVault
     public partial class Sku
     {
         /// <summary> Initializes a new instance of Sku. </summary>
-        /// <param name="name"> SKU name to specify whether the key vault is a standard vault or a premium vault. </param>
         /// <param name="family"> SKU family name. </param>
-        public Sku(SkuName name, SkuFamily? family = null)
-        {
-            Name = name;
-            Family = family ?? SkuFamily.A;
-        }
-
-        /// <summary> Initializes a new instance of Sku. </summary>
         /// <param name="name"> SKU name to specify whether the key vault is a standard vault or a premium vault. </param>
-        /// <param name="family"> SKU family name. </param>
-        internal Sku(SkuName name, SkuFamily family)
+        public Sku(SkuFamily family, SkuName name)
         {
-            Name = name;
             Family = family;
+            Name = name;
         }
 
-        /// <summary> SKU name to specify whether the key vault is a standard vault or a premium vault. </summary>
-        public SkuName Name { get; set; }
         /// <summary> SKU family name. </summary>
         public SkuFamily Family { get; set; }
+        /// <summary> SKU name to specify whether the key vault is a standard vault or a premium vault. </summary>
+        public SkuName Name { get; set; }
     }
 }

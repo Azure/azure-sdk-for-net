@@ -11,26 +11,17 @@ namespace Azure.ResourceManager.KeyVault
     public partial class ManagedHsmSku
     {
         /// <summary> Initializes a new instance of ManagedHsmSku. </summary>
-        /// <param name="name"> SKU of the managed HSM Pool. </param>
         /// <param name="family"> SKU Family of the managed HSM Pool. </param>
-        public ManagedHsmSku(ManagedHsmSkuName name, ManagedHsmSkuFamily? family = null)
-        {
-            Name = name;
-            Family = family ?? ManagedHsmSkuFamily.B;
-        }
-
-        /// <summary> Initializes a new instance of ManagedHsmSku. </summary>
         /// <param name="name"> SKU of the managed HSM Pool. </param>
-        /// <param name="family"> SKU Family of the managed HSM Pool. </param>
-        internal ManagedHsmSku(ManagedHsmSkuName name, ManagedHsmSkuFamily family)
+        public ManagedHsmSku(ManagedHsmSkuFamily family, ManagedHsmSkuName name)
         {
-            Name = name;
             Family = family;
+            Name = name;
         }
 
-        /// <summary> SKU of the managed HSM Pool. </summary>
-        public ManagedHsmSkuName Name { get; set; }
         /// <summary> SKU Family of the managed HSM Pool. </summary>
         public ManagedHsmSkuFamily Family { get; set; }
+        /// <summary> SKU of the managed HSM Pool. </summary>
+        public ManagedHsmSkuName Name { get; set; }
     }
 }

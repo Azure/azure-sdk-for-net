@@ -15,31 +15,31 @@ namespace Azure.ResourceManager.KeyVault
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name.ToSerialString());
             writer.WritePropertyName("family");
             writer.WriteStringValue(Family.ToString());
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name.ToSerialString());
             writer.WriteEndObject();
         }
 
         internal static ManagedHsmSku DeserializeManagedHsmSku(JsonElement element)
         {
-            ManagedHsmSkuName name = default;
             ManagedHsmSkuFamily family = default;
+            ManagedHsmSkuName name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString().ToManagedHsmSkuName();
-                    continue;
-                }
                 if (property.NameEquals("family"))
                 {
                     family = new ManagedHsmSkuFamily(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString().ToManagedHsmSkuName();
+                    continue;
+                }
             }
-            return new ManagedHsmSku(name, family);
+            return new ManagedHsmSku(family, name);
         }
     }
 }

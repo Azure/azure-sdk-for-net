@@ -15,31 +15,31 @@ namespace Azure.ResourceManager.KeyVault
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name.ToSerialString());
             writer.WritePropertyName("family");
             writer.WriteStringValue(Family.ToString());
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name.ToSerialString());
             writer.WriteEndObject();
         }
 
         internal static Sku DeserializeSku(JsonElement element)
         {
-            SkuName name = default;
             SkuFamily family = default;
+            SkuName name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString().ToSkuName();
-                    continue;
-                }
                 if (property.NameEquals("family"))
                 {
                     family = new SkuFamily(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString().ToSkuName();
+                    continue;
+                }
             }
-            return new Sku(name, family);
+            return new Sku(family, name);
         }
     }
 }

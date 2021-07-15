@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
 
-            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuName.Standard, SkuFamily.A));
+            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuFamily.A, SkuName.Standard));
 
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
