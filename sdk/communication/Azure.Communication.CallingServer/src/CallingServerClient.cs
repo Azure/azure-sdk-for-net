@@ -76,7 +76,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// Create an outgoing call from source to target identities.
-        /// <param name="source"> The source identity </param>
+        /// <param name="source"> The source identity. </param>
         /// <param name="targets"> The target identities. </param>
         /// <param name="options"> The call options. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
@@ -158,29 +158,29 @@ namespace Azure.Communication.CallingServer
         }
 
         /// Join the call using server call id.
-        /// <param name="serverCallId"> The server call id. </param>
-        /// <param name="source"> The source identity. </param>
-        /// <param name="callOptions"> The call Options. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <param name="serverCallId"> Server call id. </param>
+        /// <param name="source"> Source identity. </param>
+        /// <param name="joinCallOptions"> Join call options. </param>
+        /// <param name="cancellationToken"> Cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="serverCallId"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
-        public virtual async Task<Response<CallConnection>> JoinCallAsync(string serverCallId, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="joinCallOptions"/> is null.</exception>
+        public virtual async Task<Response<CallConnection>> JoinCallAsync(string serverCallId, CommunicationIdentifier source, JoinCallOptions joinCallOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(JoinCall)}");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(source, nameof(source));
-                Argument.AssertNotNull(callOptions, nameof(callOptions));
+                Argument.AssertNotNull(joinCallOptions, nameof(joinCallOptions));
 
                 var joinCallResponse = await ServerCallRestClient.JoinCallAsync(
                     serverCallId: serverCallId,
                     source: CommunicationIdentifierSerializer.Serialize(source),
-                    callbackUri: callOptions.CallbackUri?.AbsoluteUri,
-                    requestedMediaTypes: callOptions.RequestedMediaTypes,
-                    requestedCallEvents: callOptions.RequestedCallEvents,
+                    callbackUri: joinCallOptions.CallbackUri?.AbsoluteUri,
+                    requestedMediaTypes: joinCallOptions.RequestedMediaTypes,
+                    requestedCallEvents: joinCallOptions.RequestedCallEvents,
                     subject: null,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -197,29 +197,29 @@ namespace Azure.Communication.CallingServer
         }
 
         /// Join the call using server call id.
-        /// <param name="serverCallId"> The server call id. </param>
-        /// <param name="source"> The source identity. </param>
-        /// <param name="callOptions"> The call Options. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <param name="serverCallId"> Server call id. </param>
+        /// <param name="source"> Source identity. </param>
+        /// <param name="joinCallOptions"> Join call options. </param>
+        /// <param name="cancellationToken"> Cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="serverCallId"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
-        public virtual Response<CallConnection> JoinCall(string serverCallId, CommunicationIdentifier source, JoinCallOptions callOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="joinCallOptions"/> is null.</exception>
+        public virtual Response<CallConnection> JoinCall(string serverCallId, CommunicationIdentifier source, JoinCallOptions joinCallOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(JoinCall)}");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(source, nameof(source));
-                Argument.AssertNotNull(callOptions, nameof(callOptions));
+                Argument.AssertNotNull(joinCallOptions, nameof(joinCallOptions));
 
                 var joinCallResponse = ServerCallRestClient.JoinCall(
                     serverCallId: serverCallId,
                     source: CommunicationIdentifierSerializer.Serialize(source),
-                    callbackUri: callOptions.CallbackUri?.AbsoluteUri,
-                    requestedMediaTypes: callOptions.RequestedMediaTypes,
-                    requestedCallEvents: callOptions.RequestedCallEvents,
+                    callbackUri: joinCallOptions.CallbackUri?.AbsoluteUri,
+                    requestedMediaTypes: joinCallOptions.RequestedMediaTypes,
+                    requestedCallEvents: joinCallOptions.RequestedCallEvents,
                     subject: null,
                     cancellationToken: cancellationToken
                     );
@@ -237,6 +237,9 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>
         /// <param name="callConnectionId"> The thread id for the ChatThreadClient instance. </param>
+        /// <returns>
+        /// CallConnection object.
+        /// </returns>
         public virtual CallConnection GetCallConnection(string callConnectionId)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CallingServerClient)}");
@@ -257,8 +260,10 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Initializes a server call.
         /// </summary>
-        /// <param name="serverCallId">The server call id. </param>
-        /// <returns></returns>
+        /// <param name="serverCallId">Server call id. </param>
+        /// <returns>
+        /// ServerCall object.
+        /// </returns>
         public virtual ServerCall InitializeServerCall(string serverCallId)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(InitializeServerCall)}");

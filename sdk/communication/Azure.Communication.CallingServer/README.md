@@ -2,7 +2,7 @@
 
 This package contains a C# SDK for Azure Communication Services for Calling.
 
-[Source code][source] |[Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
 ## Getting started
 
 ### Install the package
@@ -61,6 +61,11 @@ Console.WriteLine($"Call connection id: {callConnection.Value.CallConnectionId}"
 A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
 
 ## Next steps
+- [Read more about CallingServer Call Automation in Azure Communication Services][call_automation_apis_overview]
+- [Read more about CallingServer Call Recording in Azure Communication Services][call_recording_overview]
+- For a basic guide on how to use call automation apis please refer to the [Call Automation APIs Quickstart][call_automation_apis_quickstart].
+- For a basic guide on how to use call recording apis please refer to the [Call Recording Quickstart][call_recording_quickstart].
+- For a basic guide on how to record and download calls with Event Grid please refer to the [Record and download calls with Event Grid][record_and_download_calls_with_event_grid].
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
@@ -78,6 +83,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+[package]: https://www.nuget.org/packages/Azure.Communication.CallingServer
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
+[call_automation_apis_overview]:https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/call-automation-apis
+[call_recording_overview]:https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/call-recording
+[call_automation_apis_quickstart]:https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/voice-video-calling/call-automation-api-sample?pivots=programming-language-csharp
+[call_recording_quickstart]:https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/voice-video-calling/call-recording-sample?pivots=programming-language-csharp
+[record_and_download_calls_with_event_grid]:https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/voice-video-calling/download-recording-file-sample
 [nuget]: https://www.nuget.org/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/src
