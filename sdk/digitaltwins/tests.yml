@@ -22,4 +22,4 @@ extends:
             brew install bicep
           }
         condition: contains(variables['OSVmImage'], 'mac')
-        displayName: Ensure Bicep CLI is installed on macOS
+        displayName: (MacOS) Ensure Bicep CLI
