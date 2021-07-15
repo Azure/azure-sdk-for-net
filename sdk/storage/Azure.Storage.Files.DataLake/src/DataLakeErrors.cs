@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Azure.Storage.Files.DataLake.Models;
 
@@ -59,5 +60,13 @@ namespace Azure.Storage.Files.DataLake
                 $"{nameof(DataLakeAclChangeFailedException.ContinuationToken)}={continuationToken} after addressing the error.",
                 exception,
                 continuationToken);
+
+        internal static void VerifyValidAppendStream(Stream stream)
+        {
+            if (stream == null || stream.Length == 0)
+            {
+                throw new ArgumentException($"Stream is null or empty.");
+            }
+        }
     }
 }

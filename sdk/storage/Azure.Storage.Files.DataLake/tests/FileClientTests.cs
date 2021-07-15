@@ -1715,19 +1715,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             using (var stream = new MemoryStream())
             {
-                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                     file.AppendAsync(stream, 0),
-                    e =>
-                    {
-                        Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
-                        Assert.IsTrue(e.Message.Contains("The value for one of the HTTP headers is not in the correct format."));
-                        if (_serviceVersion > DataLakeClientOptions.ServiceVersion.V2019_02_02)
-                        {
-                            Assert.AreEqual("Content-Length", e.Data["HeaderName"]);
-                            Assert.AreEqual("0", e.Data["HeaderValue"]);
-                        }
-                    }
-                );
+                    e => Assert.AreEqual("Stream is null or empty.", e.Message));
             }
         }
 
@@ -1872,11 +1862,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             using (var stream = (MemoryStream)null)
             {
                 // Check if the correct param name that is causing the error is being returned
-                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                     file.AppendAsync(
                         content: stream,
                         offset: 0),
-                    e => Assert.AreEqual("body", e.ParamName));
+                    e => Assert.AreEqual("Stream is null or empty.", e.Message));
             }
         }
 

@@ -1901,6 +1901,7 @@ namespace Azure.Storage.Files.DataLake
             bool async,
             CancellationToken cancellationToken)
         {
+            DataLakeErrors.VerifyValidAppendStream(content);
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
                 content = content?.WithNoDispose().WithProgress(progressHandler);

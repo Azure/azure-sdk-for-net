@@ -5,6 +5,7 @@
 - Added support for Parquet as an input format in DataLakeFileClient.Query().
 - Added support for RequestConditions parameter validation.  If a request condition is set for an API that doesn't support it, and ArguementException will be thrown.
     - This feature can be disabled with the environment variable "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION" or the App Context switch "Azure.Storage.DisableRequestConditionsValidation".
+- Fixed bug where DataLakeFileClient.Append() accepts an empty stream which lead to a InvalidHeaderValue error. This will now throw a ArgumentException with a clear error message.
 
 ## 12.7.0 (2021-06-08)
 - Includes all features from 12.7.0-beta.4
