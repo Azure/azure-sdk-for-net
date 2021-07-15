@@ -160,7 +160,8 @@
                 "enabledForDeployment": false,
                 "enabledForDiskEncryption": false,
                 "enabledForTemplateDeployment": false,
-                "enableSoftDelete": true
+                "enableSoftDelete": true,
+                "softDeleteRetentionInDays": 7
             }
         },
         {
@@ -180,6 +181,7 @@
                 ],
                 "enablePurgeProtection": false,
                 "enableSoftDelete": true,
+                "softDeleteRetentionInDays": 7,
                 "publicNetworkAccess": "Enabled",
                 "networkAcls": "[variables('networkAcls')]"
             }

@@ -189,7 +189,8 @@ Accept wildcard characters: False
 
 ### -ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories
-specified - in which to discover pre removal script named 'remove-test-resources-pre.json'.
+specified - in which to discover pre- and post-removal scripts named
+'remove-test-resources-pre.ps1' or 'remove-test-resources-post.ps1' respectively.
 
 ```yaml
 Type: String
@@ -228,6 +229,22 @@ Aliases:
 Required: False
 Position: Named
 Default value: AzureCloud
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CI
+Indicates the script is run as part of a Continuous Integration / Continuous
+Deployment (CI/CD) build (only Azure Pipelines is currently supported).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: ($null -ne $env:SYSTEM_TEAMPROJECTID)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

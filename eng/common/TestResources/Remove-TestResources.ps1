@@ -49,6 +49,9 @@ param (
     [string] $Environment = 'AzureCloud',
 
     [Parameter()]
+    [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),
+
+    [Parameter()]
     [switch] $Force,
 
     # Captures any arguments not declared here (no parameter errors)
@@ -131,6 +134,8 @@ if (!$ResourceGroupName) {
 
         $BaseName = "$UserName$ServiceDirectory"
         Log "BaseName was not set. Using default base name '$BaseName'"
+
+        $PSBoundParameters['BaseName'] = $BaseName
     }
 
     # Format the resource group name like in New-TestResources.ps1.
@@ -183,7 +188,7 @@ if ($ServiceDirectory) {
     $root = [System.IO.Path]::Combine("$PSScriptRoot/../../../sdk", $ServiceDirectory) | Resolve-Path
     $preRemovalScript = Join-Path -Path $root -ChildPath 'remove-test-resources-pre.ps1'
     if (Test-Path $preRemovalScript) {
-        Log "Invoking pre resource removal script '$preRemovalScript'"
+        Log "Invoking pre-resource removal script '$preRemovalScript'"
 
         if (!$PSCmdlet.ParameterSetName.StartsWith('ResourceGroup')) {
             $PSBoundParameters.Add('ResourceGroupName', $ResourceGroupName);
@@ -221,6 +226,20 @@ if ($Force) {
 } else {
     # Don't swallow interactive confirmation when Force is false
     Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force
+}
+
+if ($ServiceDirectory) {
+    $root = [System.IO.Path]::Combine("$PSScriptRoot/../../../sdk", $ServiceDirectory) | Resolve-Path
+    $postRemovalScript = Join-Path -Path $root -ChildPath 'remove-test-resources-post.ps1'
+    if (Test-Path $postRemovalScript) {
+        Log "Invoking post-resource removal script '$postRemovalScript'"
+
+        if (!$PSCmdlet.ParameterSetName.StartsWith('ResourceGroup')) {
+            $PSBoundParameters.Add('ResourceGroupName', $ResourceGroupName);
+        }
+
+        &$postRemovalScript @PSBoundParameters
+    }
 }
 
 $exitActions.Invoke()
@@ -266,11 +285,16 @@ A service principal secret (password) to provision test resources when a provisi
 
 .PARAMETER ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories
-specified - in which to discover pre removal script named 'remove-test-resources-pre.json'.
+specified - in which to discover pre- and post-removal scripts named
+'remove-test-resources-pre.ps1' or 'remove-test-resources-post.ps1' respectively.
 
 .PARAMETER Environment
 Name of the cloud environment. The default is the Azure Public Cloud
 ('PublicCloud')
+
+.PARAMETER CI
+Indicates the script is run as part of a Continuous Integration / Continuous
+Deployment (CI/CD) build (only Azure Pipelines is currently supported).
 
 .PARAMETER Force
 Force removal of resource group without asking for user confirmation
