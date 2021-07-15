@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("networkProfile");
                 writer.WriteObjectValue(NetworkProfile);
             }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile");
+                writer.WriteObjectValue(SecurityProfile);
+            }
             if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile");
@@ -54,6 +59,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("scheduledEventsProfile");
                 writer.WriteObjectValue(ScheduledEventsProfile);
+            }
+            if (Optional.IsDefined(UserData))
+            {
+                writer.WritePropertyName("userData");
+                writer.WriteStringValue(UserData);
             }
             writer.WriteEndObject();
         }

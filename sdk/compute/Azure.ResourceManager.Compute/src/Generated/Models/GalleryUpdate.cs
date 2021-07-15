@@ -21,5 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryIdentifier Identifier { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public GalleryPropertiesProvisioningState? ProvisioningState { get; }
+        /// <summary> Profile for gallery sharing to subscription or tenant. </summary>
+        public SharingProfile SharingProfile { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string hostGroupName, string hostName, DedicatedHost parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string hostGroupName, string hostName, DedicatedHostData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(hostGroupName, true);
             uri.AppendPath("/hosts/", false);
             uri.AppendPath(hostName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Create Dedicated Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="hostGroupName"/>, <paramref name="hostName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string hostGroupName, string hostName, DedicatedHost parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string hostGroupName, string hostName, DedicatedHostData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Create Dedicated Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="hostGroupName"/>, <paramref name="hostName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string hostGroupName, string hostName, DedicatedHost parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string hostGroupName, string hostName, DedicatedHostData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(hostGroupName, true);
             uri.AppendPath("/hosts/", false);
             uri.AppendPath(hostName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(hostGroupName, true);
             uri.AppendPath("/hosts/", false);
             uri.AppendPath(hostName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             return message;
         }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string hostGroupName, string hostName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string hostGroupName, string hostName, InstanceViewTypes? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -346,8 +346,11 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(hostGroupName, true);
             uri.AppendPath("/hosts/", false);
             uri.AppendPath(hostName, true);
-            uri.AppendQuery("$expand", "instanceView", true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
+            }
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -357,9 +360,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="hostGroupName"> The name of the dedicated host group. </param>
         /// <param name="hostName"> The name of the dedicated host. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated host. &apos;UserData&apos; is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="hostGroupName"/>, or <paramref name="hostName"/> is null. </exception>
-        public async Task<Response<DedicatedHost>> GetAsync(string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default)
+        public async Task<Response<DedicatedHostData>> GetAsync(string resourceGroupName, string hostGroupName, string hostName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -374,15 +378,15 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, hostGroupName, hostName);
+            using var message = CreateGetRequest(resourceGroupName, hostGroupName, hostName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DedicatedHost value = default;
+                        DedicatedHostData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DedicatedHost.DeserializeDedicatedHost(document.RootElement);
+                        value = DedicatedHostData.DeserializeDedicatedHostData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -394,9 +398,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="hostGroupName"> The name of the dedicated host group. </param>
         /// <param name="hostName"> The name of the dedicated host. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated host. &apos;UserData&apos; is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="hostGroupName"/>, or <paramref name="hostName"/> is null. </exception>
-        public Response<DedicatedHost> Get(string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default)
+        public Response<DedicatedHostData> Get(string resourceGroupName, string hostGroupName, string hostName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -411,15 +416,15 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(hostName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, hostGroupName, hostName);
+            using var message = CreateGetRequest(resourceGroupName, hostGroupName, hostName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DedicatedHost value = default;
+                        DedicatedHostData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DedicatedHost.DeserializeDedicatedHost(document.RootElement);
+                        value = DedicatedHostData.DeserializeDedicatedHostData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -441,7 +446,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/hostGroups/", false);
             uri.AppendPath(hostGroupName, true);
             uri.AppendPath("/hosts", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

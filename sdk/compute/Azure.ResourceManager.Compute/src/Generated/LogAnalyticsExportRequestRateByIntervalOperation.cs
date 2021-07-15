@@ -17,9 +17,9 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Export logs that show Api requests made by this subscription in the given time window to show throttling activities. </summary>
-    public partial class LogAnalyticsExportRequestRateByIntervalOperation : Operation<LogAnalyticsOperationResult>, IOperationSource<LogAnalyticsOperationResult>
+    public partial class LogAnalyticsExportRequestRateByIntervalOperation : Operation<LogAnalytics>, IOperationSource<LogAnalytics>
     {
-        private readonly ArmOperationHelpers<LogAnalyticsOperationResult> _operation;
+        private readonly OperationInternals<LogAnalytics> _operation;
 
         /// <summary> Initializes a new instance of LogAnalyticsExportRequestRateByIntervalOperation for mocking. </summary>
         protected LogAnalyticsExportRequestRateByIntervalOperation()
@@ -28,13 +28,14 @@ namespace Azure.ResourceManager.Compute
 
         internal LogAnalyticsExportRequestRateByIntervalOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<LogAnalyticsOperationResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LogAnalyticsExportRequestRateByIntervalOperation");
+            _operation = new OperationInternals<LogAnalytics>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LogAnalyticsExportRequestRateByIntervalOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override LogAnalyticsOperationResult Value => _operation.Value;
+        public override LogAnalytics Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,21 +53,21 @@ namespace Azure.ResourceManager.Compute
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<LogAnalyticsOperationResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<LogAnalytics>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<LogAnalyticsOperationResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<LogAnalytics>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        LogAnalyticsOperationResult IOperationSource<LogAnalyticsOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        LogAnalytics IOperationSource<LogAnalytics>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return LogAnalyticsOperationResult.DeserializeLogAnalyticsOperationResult(document.RootElement);
+            return LogAnalytics.DeserializeLogAnalytics(document.RootElement);
         }
 
-        async ValueTask<LogAnalyticsOperationResult> IOperationSource<LogAnalyticsOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LogAnalytics> IOperationSource<LogAnalytics>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return LogAnalyticsOperationResult.DeserializeLogAnalyticsOperationResult(document.RootElement);
+            return LogAnalytics.DeserializeLogAnalytics(document.RootElement);
         }
     }
 }

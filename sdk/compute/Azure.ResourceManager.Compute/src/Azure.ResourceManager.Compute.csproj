@@ -7,15 +7,9 @@
       This is a beta preview vesion. This version uses a next-generation code generator that introduces important breaking changes, but also new features (such as intuitive authentication, custom HTTP pipeline, distributed tracing and much more).
     </Description>
     <PackageTags>azure;management;compute</PackageTags>
-    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
+    <NoWarn>$(NoWarn);AZC0001;AZC0100;CS1591;IDT003;</NoWarn>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- TODO: Temp workaround. Should be fixed prior to release  -->
-    <NoWarn>$(NoWarn);AZC0008</NoWarn>
-  </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
+    <ProjectReference Include="..\..\..\resourcemanager\Azure.ResourceManager.Core\src\Azure.ResourceManager.Core.csproj" />
   </ItemGroup>
 </Project>

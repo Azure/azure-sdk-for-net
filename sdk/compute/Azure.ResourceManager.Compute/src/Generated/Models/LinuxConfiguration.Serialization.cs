@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("provisionVMAgent");
                 writer.WriteBooleanValue(ProvisionVMAgent.Value);
             }
+            if (Optional.IsDefined(PatchSettings))
+            {
+                writer.WritePropertyName("patchSettings");
+                writer.WriteObjectValue(PatchSettings);
+            }
             writer.WriteEndObject();
         }
 
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> disablePasswordAuthentication = default;
             Optional<SshConfiguration> ssh = default;
             Optional<bool> provisionVMAgent = default;
+            Optional<LinuxPatchSettings> patchSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disablePasswordAuthentication"))
@@ -70,8 +76,18 @@ namespace Azure.ResourceManager.Compute.Models
                     provisionVMAgent = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("patchSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    patchSettings = LinuxPatchSettings.DeserializeLinuxPatchSettings(property.Value);
+                    continue;
+                }
             }
-            return new LinuxConfiguration(Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Optional.ToNullable(provisionVMAgent));
+            return new LinuxConfiguration(Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Optional.ToNullable(provisionVMAgent), patchSettings.Value);
         }
     }
 }

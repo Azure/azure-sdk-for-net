@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Compute.Models
         public string TypeHandlerVersion { get; set; }
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
         public bool? AutoUpgradeMinorVersion { get; set; }
+        /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </summary>
+        public bool? EnableAutomaticUpgrade { get; set; }
         /// <summary> Json formatted public settings for the extension. </summary>
         public object Settings { get; set; }
         /// <summary> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </summary>

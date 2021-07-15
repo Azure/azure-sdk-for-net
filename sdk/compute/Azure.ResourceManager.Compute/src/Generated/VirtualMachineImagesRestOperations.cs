@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(skus, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$orderby", orderby, true);
             }
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/publishers/", false);
             uri.AppendPath(publisherName, true);
             uri.AppendPath("/artifacttypes/vmimage/offers", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/publishers", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/artifacttypes/vmimage/offers/", false);
             uri.AppendPath(offer, true);
             uri.AppendPath("/skus", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

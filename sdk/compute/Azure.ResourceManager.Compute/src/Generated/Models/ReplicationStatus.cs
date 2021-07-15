@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> This is the replication status of the gallery Image Version. </summary>
+    /// <summary> This is the replication status of the gallery image version. </summary>
     public partial class ReplicationStatus
     {
         /// <summary> Initializes a new instance of ReplicationStatus. </summary>

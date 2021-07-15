@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/virtualMachines", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/capture", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string vmName, VirtualMachine parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string vmName, VirtualMachineData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Create Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string vmName, VirtualMachine parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string vmName, VirtualMachineData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to the Create Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string vmName, VirtualMachine parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string vmName, VirtualMachineData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -343,7 +343,6 @@ namespace Azure.ResourceManager.Compute
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                     return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -376,14 +375,13 @@ namespace Azure.ResourceManager.Compute
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                     return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string vmName)
+        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string vmName, bool? forceDeletion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -396,7 +394,11 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            if (forceDeletion != null)
+            {
+                uri.AppendQuery("forceDeletion", forceDeletion.Value, true);
+            }
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             return message;
         }
@@ -404,9 +406,10 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The operation to delete a virtual machine. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="forceDeletion"> Optional parameter to force delete virtual machines.(Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string resourceGroupName, string vmName, bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -417,7 +420,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, vmName);
+            using var message = CreateDeleteRequest(resourceGroupName, vmName, forceDeletion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -433,9 +436,10 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The operation to delete a virtual machine. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="forceDeletion"> Optional parameter to force delete virtual machines.(Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
-        public Response Delete(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
+        public Response Delete(string resourceGroupName, string vmName, bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -446,7 +450,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateDeleteRequest(resourceGroupName, vmName);
+            using var message = CreateDeleteRequest(resourceGroupName, vmName, forceDeletion);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -459,7 +463,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string vmName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string vmName, InstanceViewTypes? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -472,8 +476,11 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
-            uri.AppendQuery("$expand", "instanceView", true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
+            }
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -482,9 +489,10 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Retrieves information about the model view or the instance view of a virtual machine. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
-        public async Task<Response<VirtualMachine>> GetAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineData>> GetAsync(string resourceGroupName, string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -495,15 +503,15 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, vmName);
+            using var message = CreateGetRequest(resourceGroupName, vmName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VirtualMachine value = default;
+                        VirtualMachineData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualMachine.DeserializeVirtualMachine(document.RootElement);
+                        value = VirtualMachineData.DeserializeVirtualMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -514,9 +522,10 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Retrieves information about the model view or the instance view of a virtual machine. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
-        public Response<VirtualMachine> Get(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineData> Get(string resourceGroupName, string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -527,15 +536,15 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateGetRequest(resourceGroupName, vmName);
+            using var message = CreateGetRequest(resourceGroupName, vmName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VirtualMachine value = default;
+                        VirtualMachineData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualMachine.DeserializeVirtualMachine(document.RootElement);
+                        value = VirtualMachineData.DeserializeVirtualMachineData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -557,7 +566,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/instanceView", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -641,7 +650,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/convertToManagedDisks", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             return message;
         }
@@ -716,7 +725,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/deallocate", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             return message;
         }
@@ -791,12 +800,12 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/generalize", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             return message;
         }
 
-        /// <summary> Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation. &lt;br&gt;For Windows, please refer to [Create a managed image of a generalized VM in Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For Linux, please refer to [How to create an image of a virtual machine or VHD](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image). </summary>
+        /// <summary> Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation. &lt;br&gt;For Windows, please refer to [Create a managed image of a generalized VM in Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For Linux, please refer to [How to create an image of a virtual machine or VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image). </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -823,7 +832,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation. &lt;br&gt;For Windows, please refer to [Create a managed image of a generalized VM in Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For Linux, please refer to [How to create an image of a virtual machine or VHD](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image). </summary>
+        /// <summary> Sets the OS state of the virtual machine to generalized. It is recommended to sysprep the virtual machine before performing this operation. &lt;br&gt;For Windows, please refer to [Create a managed image of a generalized VM in Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For Linux, please refer to [How to create an image of a virtual machine or VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image). </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -862,7 +871,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -932,7 +941,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             if (statusOnly != null)
             {
                 uri.AppendQuery("statusOnly", statusOnly, true);
@@ -998,7 +1007,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/vmSizes", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1086,7 +1095,7 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("skipShutdown", skipShutdown.Value, true);
             }
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             return message;
         }
@@ -1163,7 +1172,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/reapply", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1239,7 +1248,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/restart", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             return message;
         }
@@ -1314,7 +1323,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             return message;
         }
@@ -1389,7 +1398,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/redeploy", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             return message;
         }
@@ -1464,7 +1473,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/reimage", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             if (parameters != null)
             {
@@ -1534,6 +1543,96 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal HttpMessage CreateRetrieveBootDiagnosticsDataRequest(string resourceGroupName, string vmName, int? sasUriExpirationTimeInMinutes)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
+            uri.AppendPath(vmName, true);
+            uri.AppendPath("/retrieveBootDiagnosticsData", false);
+            if (sasUriExpirationTimeInMinutes != null)
+            {
+                uri.AppendQuery("sasUriExpirationTimeInMinutes", sasUriExpirationTimeInMinutes.Value, true);
+            }
+            uri.AppendQuery("api-version", "2021-03-01", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> The operation to retrieve SAS URIs for a virtual machine&apos;s boot diagnostic logs. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="sasUriExpirationTimeInMinutes"> Expiration duration in minutes for the SAS URIs with a value between 1 to 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not specified, SAS URIs will be generated with a default expiration duration of 120 minutes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
+        public async Task<Response<RetrieveBootDiagnosticsDataResult>> RetrieveBootDiagnosticsDataAsync(string resourceGroupName, string vmName, int? sasUriExpirationTimeInMinutes = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (vmName == null)
+            {
+                throw new ArgumentNullException(nameof(vmName));
+            }
+
+            using var message = CreateRetrieveBootDiagnosticsDataRequest(resourceGroupName, vmName, sasUriExpirationTimeInMinutes);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RetrieveBootDiagnosticsDataResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RetrieveBootDiagnosticsDataResult.DeserializeRetrieveBootDiagnosticsDataResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The operation to retrieve SAS URIs for a virtual machine&apos;s boot diagnostic logs. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="sasUriExpirationTimeInMinutes"> Expiration duration in minutes for the SAS URIs with a value between 1 to 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not specified, SAS URIs will be generated with a default expiration duration of 120 minutes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
+        public Response<RetrieveBootDiagnosticsDataResult> RetrieveBootDiagnosticsData(string resourceGroupName, string vmName, int? sasUriExpirationTimeInMinutes = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (vmName == null)
+            {
+                throw new ArgumentNullException(nameof(vmName));
+            }
+
+            using var message = CreateRetrieveBootDiagnosticsDataRequest(resourceGroupName, vmName, sasUriExpirationTimeInMinutes);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RetrieveBootDiagnosticsDataResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RetrieveBootDiagnosticsDataResult.DeserializeRetrieveBootDiagnosticsDataResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreatePerformMaintenanceRequest(string resourceGroupName, string vmName)
         {
             var message = _pipeline.CreateMessage();
@@ -1548,7 +1647,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/performMaintenance", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             return message;
         }
@@ -1623,12 +1722,12 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/simulateEviction", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             return message;
         }
 
-        /// <summary> The operation to simulate the eviction of spot virtual machine. The eviction will occur within 30 minutes of calling the API. </summary>
+        /// <summary> The operation to simulate the eviction of spot virtual machine. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1655,7 +1754,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> The operation to simulate the eviction of spot virtual machine. The eviction will occur within 30 minutes of calling the API. </summary>
+        /// <summary> The operation to simulate the eviction of spot virtual machine. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1682,6 +1781,172 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal HttpMessage CreateAssessPatchesRequest(string resourceGroupName, string vmName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
+            uri.AppendPath(vmName, true);
+            uri.AppendPath("/assessPatches", false);
+            uri.AppendQuery("api-version", "2021-03-01", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Assess patches on the VM. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
+        public async Task<Response> AssessPatchesAsync(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (vmName == null)
+            {
+                throw new ArgumentNullException(nameof(vmName));
+            }
+
+            using var message = CreateAssessPatchesRequest(resourceGroupName, vmName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Assess patches on the VM. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
+        public Response AssessPatches(string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (vmName == null)
+            {
+                throw new ArgumentNullException(nameof(vmName));
+            }
+
+            using var message = CreateAssessPatchesRequest(resourceGroupName, vmName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateInstallPatchesRequest(string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
+            uri.AppendPath(vmName, true);
+            uri.AppendPath("/installPatches", false);
+            uri.AppendQuery("api-version", "2021-03-01", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(installPatchesInput);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Installs patches on the VM. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="installPatchesInput"> Input for InstallPatches as directly received by the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="installPatchesInput"/> is null. </exception>
+        public async Task<Response> InstallPatchesAsync(string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (vmName == null)
+            {
+                throw new ArgumentNullException(nameof(vmName));
+            }
+            if (installPatchesInput == null)
+            {
+                throw new ArgumentNullException(nameof(installPatchesInput));
+            }
+
+            using var message = CreateInstallPatchesRequest(resourceGroupName, vmName, installPatchesInput);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Installs patches on the VM. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="installPatchesInput"> Input for InstallPatches as directly received by the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, or <paramref name="installPatchesInput"/> is null. </exception>
+        public Response InstallPatches(string resourceGroupName, string vmName, VirtualMachineInstallPatchesParameters installPatchesInput, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (vmName == null)
+            {
+                throw new ArgumentNullException(nameof(vmName));
+            }
+            if (installPatchesInput == null)
+            {
+                throw new ArgumentNullException(nameof(installPatchesInput));
+            }
+
+            using var message = CreateInstallPatchesRequest(resourceGroupName, vmName, installPatchesInput);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateRunCommandRequest(string resourceGroupName, string vmName, RunCommandInput parameters)
         {
             var message = _pipeline.CreateMessage();
@@ -1696,7 +1961,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
             uri.AppendPath(vmName, true);
             uri.AppendPath("/runCommand", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");

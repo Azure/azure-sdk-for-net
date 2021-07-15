@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     /// <summary> Run command on the VM. </summary>
     public partial class VirtualMachinesRunCommandOperation : Operation<RunCommandResult>, IOperationSource<RunCommandResult>
     {
-        private readonly ArmOperationHelpers<RunCommandResult> _operation;
+        private readonly OperationInternals<RunCommandResult> _operation;
 
         /// <summary> Initializes a new instance of VirtualMachinesRunCommandOperation for mocking. </summary>
         protected VirtualMachinesRunCommandOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Compute
 
         internal VirtualMachinesRunCommandOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<RunCommandResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachinesRunCommandOperation");
+            _operation = new OperationInternals<RunCommandResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualMachinesRunCommandOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

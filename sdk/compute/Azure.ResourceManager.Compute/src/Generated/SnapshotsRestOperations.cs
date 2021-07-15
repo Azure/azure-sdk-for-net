@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string snapshotName, Snapshot snapshot)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string snapshotName, SnapshotData snapshot)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/snapshots/", false);
             uri.AppendPath(snapshotName, true);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="snapshotName"/>, or <paramref name="snapshot"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string snapshotName, Snapshot snapshot, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="snapshotName"/>, or <paramref name="snapshot"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string snapshotName, Snapshot snapshot, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/snapshots/", false);
             uri.AppendPath(snapshotName, true);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/snapshots/", false);
             uri.AppendPath(snapshotName, true);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="snapshotName"/> is null. </exception>
-        public async Task<Response<Snapshot>> GetAsync(string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default)
+        public async Task<Response<SnapshotData>> GetAsync(string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -262,9 +262,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        Snapshot value = default;
+                        SnapshotData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Snapshot.DeserializeSnapshot(document.RootElement);
+                        value = SnapshotData.DeserializeSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="snapshotName"/> is null. </exception>
-        public Response<Snapshot> Get(string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default)
+        public Response<SnapshotData> Get(string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        Snapshot value = default;
+                        SnapshotData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Snapshot.DeserializeSnapshot(document.RootElement);
+                        value = SnapshotData.DeserializeSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/snapshots/", false);
             uri.AppendPath(snapshotName, true);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             return message;
         }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/snapshots", false);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Compute/snapshots", false);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/snapshots/", false);
             uri.AppendPath(snapshotName, true);
             uri.AppendPath("/beginGetAccess", false);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/snapshots/", false);
             uri.AppendPath(snapshotName, true);
             uri.AppendPath("/endGetAccess", false);
-            uri.AppendQuery("api-version", "2019-11-01", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             return message;
         }
