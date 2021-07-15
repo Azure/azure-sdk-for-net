@@ -529,7 +529,7 @@ namespace Azure.AI.Translation.Document
         {
             ValidateOperationStatus();
 
-            return GetAllDocumentStatusesAsync(cancellationToken);
+            return GetAllDocumentStatusesAsync(null, cancellationToken);
         }
 
         /// <summary>
@@ -542,7 +542,7 @@ namespace Azure.AI.Translation.Document
         {
             ValidateOperationStatus();
 
-            return GetAllDocumentStatuses(cancellationToken);
+            return GetAllDocumentStatuses(null, cancellationToken);
         }
 
         private void ValidateOperationStatus()
