@@ -8,7 +8,8 @@
     </Description>
     <PackageTags>azure;management;keyvault</PackageTags>
     <!-- TODO: Temp workaround. Should be fixed prio release  -->
-    <NoWarn>$(NoWarn);AZC0001;AZC0008;</NoWarn>
+    <NoWarn>$(NoWarn);AZC0008;</NoWarn>
+    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
   </PropertyGroup>
 
   <ItemGroup>

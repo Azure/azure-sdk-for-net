@@ -2,12 +2,18 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
-namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
+namespace Azure.Messaging.WebPubSub
 {
-    internal sealed class ClientCertificateInfo
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+    public sealed class ClientCertificateInfo
     {
-        [JsonProperty("thumbprint")]
         public string Thumbprint { get; }
+
+        public ClientCertificateInfo(string thumbprint)
+        {
+            Thumbprint = thumbprint;
+        }
     }
 }

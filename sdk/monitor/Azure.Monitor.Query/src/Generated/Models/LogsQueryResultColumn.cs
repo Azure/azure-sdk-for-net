@@ -16,7 +16,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal LogsQueryResultColumn(string name, LogColumnTypes type)
+        internal LogsQueryResultColumn(string name, LogsColumnType type)
         {
             if (name == null)
             {
@@ -30,6 +30,6 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The name of this column. </summary>
         public string Name { get; }
         /// <summary> The data type of this column. </summary>
-        public LogColumnTypes Type { get; }
+        public LogsColumnType Type { get; }
     }
 }

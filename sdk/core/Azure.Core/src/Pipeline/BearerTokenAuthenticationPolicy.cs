@@ -136,7 +136,7 @@ namespace Azure.Core.Pipeline
                 // If we succeed in getting the context, authenticate the request and pass it up the policy chain.
                 if (async)
                 {
-                    if (await AuthorizeRequestOnChallengeAsync((message)).ConfigureAwait(false))
+                    if (await AuthorizeRequestOnChallengeAsync(message).ConfigureAwait(false))
                     {
                         await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
                     }

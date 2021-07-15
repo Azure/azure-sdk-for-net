@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
                     Receiver.ReceiveMode == ServiceBusReceiveMode.PeekLock &&
                     AutoRenewLock)
                 {
-                    renewLockCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                    renewLockCancellationTokenSource = new CancellationTokenSource();
                     renewLock = RenewMessageLock(
                         message,
                         renewLockCancellationTokenSource);
@@ -187,8 +187,6 @@ namespace Azure.Messaging.ServiceBus
                         CancellationToken.None)
                         .ConfigureAwait(false);
                 }
-
-                await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
             }
             catch (Exception ex)
             // This prevents exceptions relating to processing a message from bubbling up all
@@ -240,7 +238,7 @@ namespace Azure.Messaging.ServiceBus
             }
             finally
             {
-                renewLockCancellationTokenSource?.Cancel();
+                await CancelTask(renewLockCancellationTokenSource, renewLock).ConfigureAwait(false);
                 renewLockCancellationTokenSource?.Dispose();
             }
         }

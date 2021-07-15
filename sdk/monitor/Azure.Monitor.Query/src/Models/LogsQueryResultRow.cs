@@ -101,10 +101,10 @@ namespace Azure.Monitor.Query.Models
         public BinaryData GetDynamic(int index) => new BinaryData(_row[index].GetString());
 
         /// <summary>
-        /// Returns true if the value of the column at the specified index is null, otherwise false.
+        /// Returns <c>true</c> if the value of the column at the specified index is <c>null</c>, otherwise <c>false</c>.
         /// </summary>
         /// <param name="index">The column index.</param>
-        /// <returns>True if the value is null, otherwise false.</returns>
+        /// <returns><c>true</c> if the value is <c>null</c>, otherwise <c>false</c>.</returns>
         public bool IsNull(int index) => _row[index].ValueKind == JsonValueKind.Null;
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Azure.Monitor.Query.Models
         /// Returns true if the value of the column with the specified name is null, otherwise false.
         /// </summary>
         /// <param name="name">The column name.</param>
-        /// <returns>True if the value is null, otherwise false.</returns>
+        /// <returns><c>true</c> if the value is <c>null</c>, otherwise <c>false</c>.</returns>
         public bool IsNull(string name) => IsNull(_columnMap[name]);
 
         /// <summary>
@@ -199,25 +199,25 @@ namespace Azure.Monitor.Query.Models
             var element = _row[index];
             switch (_columns[index].Type.ToString())
             {
-                case LogColumnTypes.DatetimeTypeValue:
+                case LogsColumnType.DatetimeTypeValue:
                     return GetDateTimeOffset(index);
-                case LogColumnTypes.BoolTypeValue:
+                case LogsColumnType.BoolTypeValue:
                     return GetBoolean(index);
-                case LogColumnTypes.GuidTypeValue:
+                case LogsColumnType.GuidTypeValue:
                     return GetGuid(index);
-                case LogColumnTypes.IntTypeValue:
+                case LogsColumnType.IntTypeValue:
                     return GetInt32(index);
-                case LogColumnTypes.LongTypeValue:
+                case LogsColumnType.LongTypeValue:
                     return GetInt64(index);
-                case LogColumnTypes.RealTypeValue:
+                case LogsColumnType.RealTypeValue:
                     return GetDouble(index);
-                case LogColumnTypes.StringTypeValue:
+                case LogsColumnType.StringTypeValue:
                     return GetString(index);
-                case LogColumnTypes.TimespanTypeValue:
+                case LogsColumnType.TimespanTypeValue:
                     return GetTimeSpan(index);
-                case LogColumnTypes.DecimalTypeValue:
+                case LogsColumnType.DecimalTypeValue:
                     return GetDecimal(index);
-                case LogColumnTypes.DynamicValueTypeValue:
+                case LogsColumnType.DynamicValueTypeValue:
                     return GetDynamic(index);
             }
 
@@ -271,5 +271,11 @@ namespace Azure.Monitor.Query.Models
         public object this[string name] => GetObject(name);
 
         internal bool TryGetColumn(string name, out int column) => _columnMap.TryGetValue(name, out column);
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return _row.ToString();
+        }
     }
 }

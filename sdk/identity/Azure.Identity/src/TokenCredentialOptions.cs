@@ -12,6 +12,7 @@ namespace Azure.Identity
     public class TokenCredentialOptions : ClientOptions
     {
         private Uri _authorityHost;
+
         /// <summary>
         /// The host of the Azure Active Directory authority. The default is https://login.microsoftonline.com/. For well known authority hosts for Azure cloud instances see <see cref="AzureAuthorityHosts"/>.
         /// </summary>
@@ -20,5 +21,11 @@ namespace Azure.Identity
             get { return _authorityHost ?? AzureAuthorityHosts.GetDefault(); }
             set { _authorityHost = Validations.ValidateAuthorityHost(value); }
         }
+
+        /// <summary>
+        /// If <c>true</c>, enables the credential to fetch tokens for any tenants the user or multi-tenant application registration is a member of.
+        /// Otherwise the credential will only acquire tokens from the tenant configured when the credential was constructed.
+        /// </summary>
+        public bool AllowMultiTenantAuthentication { get; set; }
     }
 }

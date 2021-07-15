@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30, SearchClientOptions.ServiceVersion.V2020_06_30_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30, SearchClientOptions.ServiceVersion.V2021_04_30_Preview)]
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -651,6 +651,43 @@ namespace Azure.Search.Documents.Tests
                 };
             }
 
+            EntityRecognitionSkill CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion skillVersion)
+            {
+                var inputs = new[] { "languageCode", "text" }.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
+                var outputs = new[] { "persons" }.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+
+                if (skillVersion == EntityRecognitionSkill.SkillVersion.V1)
+                {
+                    return new EntityRecognitionSkill(inputs, outputs);
+                }
+                if (skillVersion == EntityRecognitionSkill.SkillVersion.V3)
+                {
+                    return new EntityRecognitionSkill(inputs, outputs, skillVersion);
+                }
+
+                throw new NotSupportedException($"Unknown version {skillVersion}");
+            }
+
+            SentimentSkill CreateSentimentSkill(SentimentSkill.SkillVersion skillVersion)
+            {
+                var inputs = new[] { "languageCode", "text" }.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
+
+                if (skillVersion == SentimentSkill.SkillVersion.V1)
+                {
+                    var outputs = new[] { "score" }.
+                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+                    return new SentimentSkill(inputs, outputs);
+                }
+                if (skillVersion == SentimentSkill.SkillVersion.V3)
+                {
+                    var outputs = new[] { "sentiment", "confidenceScores", "sentences" }.
+                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+                    return new SentimentSkill(inputs, outputs, skillVersion);
+                }
+
+                throw new NotSupportedException($"Unknown version {skillVersion}");
+            }
+
             List<SearchIndexerSkill> skills = typeof(SearchIndexerSkill).Assembly.GetExportedTypes()
                 .Where(t => t != typeof(SearchIndexerSkill) && typeof(SearchIndexerSkill).IsAssignableFrom(t))
                 .Select(t => t switch
@@ -658,20 +695,25 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(ConditionalSkill) => CreateSkill(t, new[] { "condition", "whenTrue", "whenFalse" }, new[] { "output" }),
                     Type _ when t == typeof(CustomEntityLookupSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "entities" }),
                     Type _ when t == typeof(DocumentExtractionSkill) => CreateSkill(t, new[] { "file_data" }, new[] { "content", "normalized_images" }),
-                    Type _ when t == typeof(EntityRecognitionSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "persons" }),
+                    Type _ when t == typeof(EntityLinkingSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "entities" }),
+                    Type _ when t == typeof(EntityRecognitionSkill) => CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion.V1),
                     Type _ when t == typeof(ImageAnalysisSkill) => CreateSkill(t, new[] { "image" }, new[] { "categories" }),
                     Type _ when t == typeof(KeyPhraseExtractionSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "keyPhrases" }),
                     Type _ when t == typeof(LanguageDetectionSkill) => CreateSkill(t, new[] { "text" }, new[] { "languageCode", "languageName", "score" }),
                     Type _ when t == typeof(MergeSkill) => CreateSkill(t, new[] { "text", "itemsToInsert", "offsets" }, new[] { "mergedText" }),
                     Type _ when t == typeof(OcrSkill) => CreateSkill(t, new[] { "image" }, new[] { "text", "layoutText" }),
-                    Type _ when t == typeof(SentimentSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "score" }),
+                    Type _ when t == typeof(PiiDetectionSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "piiEntities", "maskedText" }),
+                    Type _ when t == typeof(SentimentSkill) => CreateSentimentSkill(SentimentSkill.SkillVersion.V1),
                     Type _ when t == typeof(ShaperSkill) => CreateSkill(t, new[] { "text" }, new[] { "output" }),
                     Type _ when t == typeof(SplitSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "textItems" }),
                     Type _ when t == typeof(TextTranslationSkill) => CreateSkill(t, new[] { "text", "toLanguageCode", "fromLanguageCode" }, new[] { "translatedText", "translatedToLanguageCode", "translatedFromLanguageCode" }),
                     Type _ when t == typeof(WebApiSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
-                    _ => throw new NotSupportedException(),
+                    _ => throw new NotSupportedException($"{t.FullName}"),
                 })
                 .ToList();
+
+            skills.Add(CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion.V3));
+            skills.Add(CreateSentimentSkill(SentimentSkill.SkillVersion.V3));
 
             SearchIndexerSkillset specifiedSkillset = new SearchIndexerSkillset(skillsetName, skills)
             {

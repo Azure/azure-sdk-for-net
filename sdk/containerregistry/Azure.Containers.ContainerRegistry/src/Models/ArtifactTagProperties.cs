@@ -15,13 +15,13 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
-        /// <summary> Delete enabled. </summary>
+        /// <summary> Whether or not this tag can be deleted. </summary>
         public bool? CanDelete { get; set; }
-        /// <summary> Write enabled. </summary>
+        /// <summary> Whether or not this tag can be written to. </summary>
         public bool? CanWrite { get; set;  }
-        /// <summary> List enabled. </summary>
+        /// <summary> Whether or not to include this tag in the collection returned from <see cref="RegistryArtifact.GetTagPropertiesCollection"/>. </summary>
         public bool? CanList { get; set; }
-        /// <summary> Read enabled. </summary>
+        /// <summary> Whether or not this tag can be read. </summary>
         public bool? CanRead { get; set; }
     }
 }

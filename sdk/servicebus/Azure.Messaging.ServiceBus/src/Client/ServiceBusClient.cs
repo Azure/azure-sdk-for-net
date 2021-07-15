@@ -67,8 +67,8 @@ namespace Azure.Messaging.ServiceBus
         internal IList<ServiceBusPlugin> Plugins { get; set; } = new List<ServiceBusPlugin>();
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
-        ///   including ensuring that the connection itself has been closed.
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusClient" />,
+        ///   including ensuring that the client itself has been closed.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -407,7 +407,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="queueName">The session-enabled queue to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
-        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <param name="options">The set of <see cref="ServiceBusSessionReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -445,7 +445,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
         /// <param name="subscriptionName">The session-enabled subscription to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
-        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <param name="options">The set of <see cref="ServiceBusSessionReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -484,7 +484,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="queueName">The session-enabled queue to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
         /// <param name="sessionId">Gets or sets a session ID to scope the <see cref="ServiceBusSessionReceiver"/> to.</param>
-        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <param name="options">The set of <see cref="ServiceBusSessionReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -525,7 +525,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
         /// <param name="subscriptionName">The session-enabled subscription to create a <see cref="ServiceBusSessionReceiver"/> for.</param>
         /// <param name="sessionId">Gets or sets a session ID to scope the <see cref="ServiceBusSessionReceiver"/> to.</param>
-        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <param name="options">The set of <see cref="ServiceBusSessionReceiverOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionReceiver"/>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -678,7 +678,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="queueName">The queue to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
-        /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
+        /// <param name="options">The set of <see cref="ServiceBusSessionProcessorOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
         /// <returns>A <see cref="ServiceBusSessionProcessor"/> scoped to the specified queue.</returns>
         public virtual ServiceBusSessionProcessor CreateSessionProcessor(
@@ -702,7 +702,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="topicName">The topic to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
         /// <param name="subscriptionName">The subscription to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
-        /// <param name="options">The set of <see cref="ServiceBusSessionProcessor"/> to use for configuring the
+        /// <param name="options">The set of <see cref="ServiceBusSessionProcessorOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
