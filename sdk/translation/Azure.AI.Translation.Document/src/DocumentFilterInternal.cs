@@ -29,7 +29,7 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         public IList<string> Ids { get; }
         /// <summary>
-        /// Sorts translation results.
+        /// Defines sorting options for the result.
         /// <see cref="DocumentFilterOrder"/> for more info on which sorting options to use.
         /// </summary>
         public IList<DocumentFilterOrder> OrderBy { get; }
