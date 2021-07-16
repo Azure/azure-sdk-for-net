@@ -28,7 +28,7 @@ namespace Azure.Core.TestFramework
 
         private readonly string _prefix;
 
-        protected internal TokenCredential _credential;
+        private TokenCredential _credential;
         private TestRecording _recording;
 
         private readonly Dictionary<string, string> _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);

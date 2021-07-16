@@ -17,19 +17,8 @@ namespace Azure.ResourceManager.TestFramework
 
         public virtual string MockEndPoint => $"https://localhost:8441";
 
-        public override TokenCredential Credential
-        {
-            get
-            {
-                if (_credential != null)
-                {
-                    return _credential;
-                }
+        private TokenCredential _mockCredential;
 
-                _credential = new MockCredential();
-
-                return _credential;
-            }
-        }
+        public override TokenCredential Credential => _mockCredential ??= new MockCredential();
     }
 }

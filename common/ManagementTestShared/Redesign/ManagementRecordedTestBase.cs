@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         [OneTimeSetUp]
-        public virtual void OneTimeSetUp()
+        public void OneTimeSetUp()
         {
             if (!HasOneTimeSetup())
                 return;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         [OneTimeTearDown]
-        public virtual void OneTimeCleanupResourceGroups()
+        public void OneTimeCleanupResourceGroups()
         {
             if (Mode != RecordedTestMode.Playback)
             {
