@@ -320,6 +320,11 @@ namespace Azure.Core.TestFramework
 
             if (value == null)
             {
+                value = Environment.GetEnvironmentVariable($"AZURE_{name}");
+            }
+
+            if (value == null)
+            {
                 _environmentFile.TryGetValue(name, out value);
             }
 

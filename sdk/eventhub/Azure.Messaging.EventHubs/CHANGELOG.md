@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Added the ability to adjust the connection idle timeout using the `EventHubConnectionOptions` available within the options for each client type.
+
 ## 5.5.0 (2021-07-07)
 
 ### Acknowledgments

@@ -390,6 +390,36 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(new DocumentTranslationErrorCode("TargetFileAlreadyExists"), documentsList[0].Error.ErrorCode);
         }
 
+        [RecordedTest]
+        [TestCase("Foo Bar", typeof(ArgumentException))]
+        [TestCase("", typeof(ArgumentException))]
+        [TestCase(null, typeof(ArgumentNullException))]
+        public void DocumentTranslationOperationWithInvalidGuidTest(string invalidGuid, Type expectedException)
+        {
+            var client = GetClient();
+            Assert.Throws(expectedException, () => new DocumentTranslationOperation(invalidGuid, client));
+        }
+
+        [RecordedTest]
+        [TestCase("Foo Bar", typeof(ArgumentException))]
+        [TestCase("", typeof(ArgumentException))]
+        [TestCase(null, typeof(ArgumentNullException))]
+        public async Task GetDocumentStatusWithInvalidGuidTest(string invalidGuid, Type expectedException)
+        {
+            var sourceUri = await CreateSourceContainerAsync(oneTestDocuments);
+            var targetUri = await CreateTargetContainerAsync();
+            string translateTo = "fr";
+
+            var client = GetClient();
+
+            var input = new DocumentTranslationInput(sourceUri, targetUri, translateTo);
+            var operation = await client.StartTranslationAsync(input);
+
+            await operation.WaitForCompletionAsync();
+
+            Assert.Throws(expectedException, () => operation.GetDocumentStatus(invalidGuid));
+        }
+
         private async Task PrintNotSucceededDocumentsAsync(DocumentTranslationOperation operation)
         {
             await foreach (var document in operation.GetValuesAsync())

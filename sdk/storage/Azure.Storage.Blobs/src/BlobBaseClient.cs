@@ -946,6 +946,13 @@ namespace Azure.Storage.Blobs.Specialized
                 $"{nameof(BlobBaseClient)}.{nameof(Download)}",
                 async,
                 cancellationToken).ConfigureAwait(false);
+
+            // Return an exploding Response on 304
+            if (response.IsUnavailable())
+            {
+                return response.GetRawResponse().AsNoBodyResponse<BlobDownloadInfo>();
+            }
+
             BlobDownloadStreamingResult blobDownloadStreamingResult = response.Value;
             BlobDownloadDetails blobDownloadDetails = blobDownloadStreamingResult.Details;
             return Response.FromValue(
@@ -1573,6 +1580,13 @@ namespace Azure.Storage.Blobs.Specialized
                 operationName: $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
                 async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+
+            // Return an exploding Response on 304
+            if (response.IsUnavailable())
+            {
+                return response.GetRawResponse().AsNoBodyResponse<BlobDownloadResult>();
+            }
+
             using BlobDownloadStreamingResult blobDownloadStreamingResult = response.Value;
             BinaryData data;
             if (async)
