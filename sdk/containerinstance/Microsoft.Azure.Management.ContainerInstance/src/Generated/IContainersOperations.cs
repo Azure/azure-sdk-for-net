@@ -43,6 +43,10 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// The number of lines to show from the tail of the container instance
         /// log. If not provided, all available logs are shown up to 4mb.
         /// </param>
+        /// <param name='timestamps'>
+        /// If true, adds a timestamp at the beginning of every line of log
+        /// output. If not provided, defaults to false.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -58,7 +62,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Logs>> ListLogsWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Logs>> ListLogsWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?), bool? timestamps = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Executes a command in a specific container instance.
         /// </summary>
@@ -94,5 +98,37 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ContainerExecResponse>> ExecuteCommandWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, string containerName, ContainerExecRequest containerExecRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Attach to the output of a specific container instance.
+        /// </summary>
+        /// <remarks>
+        /// Attach to the output stream of a specific container instance in a
+        /// specified resource group and container group.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='containerGroupName'>
+        /// The name of the container group.
+        /// </param>
+        /// <param name='containerName'>
+        /// The name of the container instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ContainerAttachResponse>> AttachWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, string containerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
