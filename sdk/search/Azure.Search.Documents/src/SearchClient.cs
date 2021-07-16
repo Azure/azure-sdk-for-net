@@ -613,7 +613,7 @@ namespace Azure.Search.Documents
                     }
                     case 404:
                     {
-                        if (options.ThrowOnMissingDocument)
+                        if ((options == null) || options.ThrowOnMissingDocument)
                         {
                             goto default;
                         }
