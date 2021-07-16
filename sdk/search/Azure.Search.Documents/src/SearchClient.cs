@@ -611,6 +611,17 @@ namespace Azure.Search.Documents
                             .ConfigureAwait(false);
                         return Response.FromValue(value, message.Response);
                     }
+                    case 404:
+                    {
+                        if (options.ThrowOnMissingDocument)
+                        {
+                            goto default;
+                        }
+                        else
+                        {
+                            return Response.FromValue<T>(default, message.Response);
+                        }
+                    }
                     default:
                         throw async ?
                             await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false) :

@@ -535,6 +535,20 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task DoesNotThrowWithOptionSetWhenNotFound()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            SearchClient client = resources.GetQueryClient();
+
+            Response<SearchDocument> response = await client.GetDocumentAsync<SearchDocument>(
+                    "ThisDocumentDoesNotExist",
+                    new GetDocumentOptions() { ThrowOnMissingDocument = false }
+                    );
+
+            Assert.IsNull(response.Value);
+        }
+
+        [Test]
         public async Task ThrowsWhenMalformed()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);

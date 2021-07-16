@@ -12,6 +12,12 @@ namespace Azure.Search.Documents
     public class GetDocumentOptions
     {
         /// <summary>
+        /// Throws a <see cref="RequestFailedException"/> if the document is missing. This is the default behavior.
+        /// If set to <c>false</c>, a <c>null</c> <see cref="Response{T}"/> is instead returned.
+        /// </summary>
+        public bool ThrowOnMissingDocument { get; set; } = true;
+
+        /// <summary>
         /// A list of field names to retrieve.  Only fields marked as
         /// retrievable can be included in this clause.  Any field not
         /// retrieved will be missing from the returned document.  If empty,

@@ -16,6 +16,7 @@ namespace Azure.Search.Documents
     {
         public GetDocumentOptions() { }
         public System.Collections.Generic.IList<string> SelectedFields { get { throw null; } }
+        public bool ThrowOnMissingDocument { get { throw null; } set { } }
     }
     public partial class IndexDocumentsOptions
     {

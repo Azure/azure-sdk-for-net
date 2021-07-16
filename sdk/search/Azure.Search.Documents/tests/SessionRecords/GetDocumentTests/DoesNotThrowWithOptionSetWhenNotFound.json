@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027esbsesmp\u0027)/docs(\u0027ThisDocumentDoesNotExist\u0027)?api-version=2020-06-30",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
+        "api-key": "Sanitized",
+        "traceparent": "00-eafe0716062d6b43915208dffef125d9-901cb4bdc7c9e145-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.4.0-alpha.20210715.1",
+          "(.NET Framework 4.8.4360.0; Microsoft Windows 10.0.19043 )"
+        ],
+        "x-ms-client-request-id": "c9b21a9eaea33f514fa8c1c80cc81ec3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "c9b21a9e-aea3-3f51-4fa8-c1c80cc81ec3",
+        "Content-Length": "0",
+        "Date": "Fri, 16 Jul 2021 04:39:59 GMT",
+        "elapsed-time": "85",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "c9b21a9e-aea3-3f51-4fa8-c1c80cc81ec3",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "c9b21a9e-aea3-3f51-4fa8-c1c80cc81ec3"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "68804551",
+    "SearchIndexName": "esbsesmp",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
+  }
+}
