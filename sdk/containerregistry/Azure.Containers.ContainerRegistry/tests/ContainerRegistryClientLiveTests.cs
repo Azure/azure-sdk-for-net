@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
@@ -102,7 +103,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             string registry = TestEnvironment.Registry;
-            string repository = $"library/hello-world";
+            string repository = $"library/hello-world" + GetPlatformSuffix();
+            
             List<string> tags = new List<string>()
             {
                 "latest",
@@ -113,32 +115,22 @@ namespace Azure.Containers.ContainerRegistry.Tests
             };
             var client = CreateClient();
 
-            try
+            if (Mode != RecordedTestMode.Playback)
             {
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await ImportImageAsync(registry, repository, tags);
-                }
-
-                // Act
-                await client.DeleteRepositoryAsync(repository);
-
-                var repositories = client.GetRepositoryNamesAsync();
-
-                await foreach (var item in repositories)
-                {
-                    if (item.Contains(repository))
-                    {
-                        Assert.Fail($"Repository {repository} was not deleted.");
-                    }
-                }
+                await ImportImageAsync(registry, repository, tags);
             }
-            finally
+
+            // Act
+            await client.DeleteRepositoryAsync(repository);
+
+            var repositories = client.GetRepositoryNamesAsync();
+
+            // Assert
+            await foreach (var item in repositories)
             {
-                // Clean up - put the repository with tags back.
-                if (Mode != RecordedTestMode.Playback)
+                if (item.Contains(repository))
                 {
-                    await ImportImageAsync(registry, repository, tags);
+                    Assert.Fail($"Repository {repository} was not deleted.");
                 }
             }
         }
