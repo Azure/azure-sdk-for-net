@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Translation.Document.Models;
@@ -216,8 +217,10 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status results for all submitted translation operations.
         /// </summary>
+        /// <param name="filter">A <see cref="TranslationFilterParameter"/> to control result filtering.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Pageable<TranslationStatus> GetAllTranslationStatuses(CancellationToken cancellationToken = default)
+        /// <returns></returns>
+        public virtual Pageable<TranslationStatus> GetAllTranslationStatuses(TranslationFilterParameter filter = null, CancellationToken cancellationToken = default)
         {
             Page<TranslationStatus> FirstPageFunc(int? pageSizeHint)
             {
@@ -226,7 +229,16 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> response = _serviceRestClient.GetTranslationsStatus(cancellationToken: cancellationToken);
+                    var response = _serviceRestClient.GetTranslationsStatus(
+                        top: null,
+                        skip: null,
+                        maxpagesize: null,
+                        ids: filter.Ids?.Select(id => new Guid(id)),
+                        statuses: filter.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter.CreatedOnStart,
+                        createdDateTimeUtcEnd: filter.CreatedOnEnd,
+                        orderBy: filter.OrderBy?.Select(order => order.ToString()),
+                        cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -243,7 +255,17 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> response = _serviceRestClient.GetTranslationsStatusNextPage(nextLink, cancellationToken: cancellationToken);
+                    var response = _serviceRestClient.GetTranslationsStatusNextPage(
+                        nextLink,
+                        top: null,
+                        skip: null,
+                        maxpagesize: null,
+                        ids: filter.Ids?.Select(id => new Guid(id)),
+                        statuses: filter.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter.CreatedOnStart,
+                        createdDateTimeUtcEnd: filter.CreatedOnEnd,
+                        orderBy: filter.OrderBy?.Select(order => order.ToString()),
+                        cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -259,8 +281,10 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status results for all submitted translation operations.
         /// </summary>
+        /// <param name="filter">A <see cref="TranslationFilterParameter"/> to control result filtering.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual AsyncPageable<TranslationStatus> GetAllTranslationStatusesAsync(CancellationToken cancellationToken = default)
+        /// <returns></returns>
+        public virtual AsyncPageable<TranslationStatus> GetAllTranslationStatusesAsync(TranslationFilterParameter filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<TranslationStatus>> FirstPageFunc(int? pageSizeHint)
             {
@@ -269,7 +293,16 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> response = await _serviceRestClient.GetTranslationsStatusAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceRestClient.GetTranslationsStatusAsync(
+                        top: null,
+                        skip: null,
+                        maxpagesize: null,
+                        ids: filter.Ids?.Select(id => new Guid(id)),
+                        statuses: filter.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter.CreatedOnStart,
+                        createdDateTimeUtcEnd: filter.CreatedOnEnd,
+                        orderBy: filter.OrderBy?.Select(order => order.ToString()),
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -286,7 +319,17 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> response = await _serviceRestClient.GetTranslationsStatusNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceRestClient.GetTranslationsStatusNextPageAsync(
+                        nextLink,
+                        top: null,
+                        skip: null,
+                        maxpagesize: null,
+                        ids: filter.Ids?.Select(id => new Guid(id)),
+                        statuses: filter.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter.CreatedOnStart,
+                        createdDateTimeUtcEnd: filter.CreatedOnEnd,
+                        orderBy: filter.OrderBy?.Select(order => order.ToString()),
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

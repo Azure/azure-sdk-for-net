@@ -362,8 +362,26 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status of all documents in the translation operation.
         /// </summary>
+        /// <param name="top">Indicates the total number of records the user wants to be returned across all pages.</param>
+        /// <param name="skip">Indicates the number of records to skip from the list of records held by the server based on the sorting method specified.  By default, we sort by descending start time.</param>
+        /// <param name="itemsPerPage">Is the maximum items returned in a page.</param>
+        /// <param name="ids">List of document IDs to filter by.</param>
+        /// <param name="statuses">List of document statuses to filter by.</param>
+        /// <param name="translatedAfter">Filter by documents translated after a certain datetime.</param>
+        /// <param name="translatedBefore">Filter by documents translated before a certain datetime.</param>
+        /// <param name="orderBy">The sorting query for the document statuses returned. Format: ["parm1 asc/desc", "parm2 asc/desc", ...]. Ex: 'createdDateTimeUtc asc', 'createdDateTimeUtc desc').</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        public virtual Pageable<DocumentStatus> GetAllDocumentStatuses(CancellationToken cancellationToken = default)
+        /// <returns></returns>
+        public virtual Pageable<DocumentStatus> GetAllDocumentStatuses(
+            int? top = null,
+            int? skip = null,
+            int? itemsPerPage = null,
+            IEnumerable<Guid> ids = null,
+            IEnumerable<string> statuses = null,
+            DateTimeOffset? translatedAfter = null,
+            DateTimeOffset? translatedBefore = null,
+            IEnumerable<string> orderBy = null,
+            CancellationToken cancellationToken = default)
         {
             Page<DocumentStatus> FirstPageFunc(int? pageSizeHint)
             {
@@ -372,7 +390,17 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var response = _serviceClient.GetDocumentsStatus(new Guid(Id), cancellationToken: cancellationToken);
+                    var response = _serviceClient.GetDocumentsStatus(
+                        new Guid(Id),
+                        top: top,
+                        skip: skip,
+                        maxpagesize: itemsPerPage,
+                        ids: ids,
+                        statuses: statuses,
+                        createdDateTimeUtcStart: translatedAfter,
+                        createdDateTimeUtcEnd: translatedBefore,
+                        orderBy: orderBy,
+                        cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -389,7 +417,18 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var response = _serviceClient.GetDocumentsStatusNextPage(nextLink, new Guid(Id), cancellationToken: cancellationToken);
+                    var response = _serviceClient.GetDocumentsStatusNextPage(
+                        nextLink,
+                        new Guid(Id),
+                        top: top,
+                        skip: skip,
+                        maxpagesize: itemsPerPage,
+                        ids: ids,
+                        statuses: statuses,
+                        createdDateTimeUtcStart: translatedAfter,
+                        createdDateTimeUtcEnd: translatedBefore,
+                        orderBy: orderBy,
+                        cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -405,8 +444,26 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status of all documents in the translation operation.
         /// </summary>
+        /// <param name="top">Indicates the total number of records the user wants to be returned across all pages.</param>
+        /// <param name="skip">Indicates the number of records to skip from the list of records held by the server based on the sorting method specified.  By default, we sort by descending start time.</param>
+        /// <param name="itemsPerPage">Is the maximum items returned in a page.</param>
+        /// <param name="ids">List of document IDs to filter by.</param>
+        /// <param name="statuses">List of document statuses to filter by.</param>
+        /// <param name="translatedAfter">Filter by documents translated after a certain datetime.</param>
+        /// <param name="translatedBefore">Filter by documents translated before a certain datetime.</param>
+        /// <param name="orderBy">The sorting query for the document statuses returned. Format: ["parm1 asc/desc", "parm2 asc/desc", ...]. Ex: 'createdDateTimeUtc asc', 'createdDateTimeUtc desc').</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        public virtual AsyncPageable<DocumentStatus> GetAllDocumentStatusesAsync(CancellationToken cancellationToken = default)
+        /// <returns></returns>
+        public virtual AsyncPageable<DocumentStatus> GetAllDocumentStatusesAsync(
+            int? top = null,
+            int? skip = null,
+            int? itemsPerPage = null,
+            IEnumerable<Guid> ids = null,
+            IEnumerable<string> statuses = null,
+            DateTimeOffset? translatedAfter = null,
+            DateTimeOffset? translatedBefore = null,
+            IEnumerable<string> orderBy = null,
+            CancellationToken cancellationToken = default)
         {
             async Task<Page<DocumentStatus>> FirstPageFunc(int? pageSizeHint)
             {
@@ -415,7 +472,17 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var response = await _serviceClient.GetDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceClient.GetDocumentsStatusAsync(
+                        new Guid(Id),
+                        top: top,
+                        skip: skip,
+                        maxpagesize: itemsPerPage,
+                        ids: ids,
+                        statuses: statuses,
+                        createdDateTimeUtcStart: translatedAfter,
+                        createdDateTimeUtcEnd: translatedBefore,
+                        orderBy: orderBy,
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -432,7 +499,18 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var response = await _serviceClient.GetDocumentsStatusNextPageAsync(nextLink, new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceClient.GetDocumentsStatusNextPageAsync(
+                        nextLink,
+                        new Guid(Id),
+                        top: top,
+                        skip: skip,
+                        maxpagesize: itemsPerPage,
+                        ids: ids,
+                        statuses: statuses,
+                        createdDateTimeUtcStart: translatedAfter,
+                        createdDateTimeUtcEnd: translatedBefore,
+                        orderBy: orderBy,
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
