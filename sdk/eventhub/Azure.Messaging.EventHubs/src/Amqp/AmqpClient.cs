@@ -182,6 +182,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     credential,
                     clientOptions.TransportType,
                     clientOptions.Proxy,
+                    clientOptions.ConnectionIdleTimeout,
                     null,
                     clientOptions.SendBufferSizeInBytes,
                     clientOptions.ReceiveBufferSizeInBytes,
