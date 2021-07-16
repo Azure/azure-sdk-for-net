@@ -6,42 +6,42 @@ This script will read data speciefied in one or more PoliCheckAllowList.yml file
 It then reamoves all allwed entries from the PoliCheckResult 
 .PARAMETER PoliCheckResultFilePath
 The Path to the PoliCheck Result. Usually named PoliCheck.sarif
-.PARAMETER ServiceDirtectory
+.PARAMETER ServiceDirectory
 If the PoliCheck scan is scoped to a particular service provide the ServiceDirectory
+.PARAMETER AllowListLocation
+A path to a folder containing yml defined policheck allowlist
 .EXAMPLE
-PS> ./FilterPoliCheckResults.ps1 -PoliCheckResultFilePath .\PoliCheck.sarif
+PS> ./FilterPoliCheckResults.ps1 -PoliCheckResultFilePath .\PoliCheck.sarif -ServiceDirectory <servicedirname> -AllowListLocation <location>
 #>
 [CmdletBinding()]
 param(
   [Parameter(Mandatory=$true)]
   [String] $PoliCheckResultFilePath,
   [Parameter(Mandatory=$true)]
-  [String] $ServiceDirtectory
+  [String] $ServiceDirectory,
+  [Parameter(Mandatory=$true)]
+  [String] $AllowListLocation
 )
 
 . "${PSScriptRoot}\logging.ps1"
 
 # Install Powershell Yaml
 $ProgressPreference = "SilentlyContinue"
-$ToolsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2"
-Register-PSRepository -Name azure-sdk-tools-feed -SourceLocation $ToolsFeed -PublishLocation $ToolsFeed -InstallationPolicy Trusted -ErrorAction SilentlyContinue
+$toolsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2"
+Register-PSRepository -Name azure-sdk-tools-feed -SourceLocation $toolsFeed -PublishLocation $toolsFeed -InstallationPolicy Trusted -ErrorAction SilentlyContinue
 Install-Module -Repository azure-sdk-tools-feed powershell-yaml
 
-$RepoRoot = Resolve-Path -Path "${PSScriptRoot}\..\..\..\"
-$PathToAllowListFiles = Join-Path $RepoRoot "sdk" $ServiceDirtectory
-$PolicCheckAllowListFiles = Get-ChildItem -Path $PathToAllowListFiles -Recurse -File -Include "PoliCheckAllowList.yml"
+$allowListFilePath = Join-Path $AllowListLocation "${ServiceDirectory}.yml"
 $allowListData = @{}
 
-# Combine all AllowLists Found
-foreach ($file in $PolicCheckAllowListFiles)
+if (Test-Path -Path $allowListFilePath)
 {
-    $allowListDataInFile = ConvertFrom-Yaml (Get-Content $file.FullName -Raw)
-    $allowListData["PC1001"] += $allowListDataInFile["PC1001"]
-    $allowListData["PC1002"] += $allowListDataInFile["PC1002"]
-    $allowListData["PC1003"] += $allowListDataInFile["PC1003"]
-    $allowListData["PC1004"] += $allowListDataInFile["PC1004"]
-    $allowListData["PC1005"] += $allowListDataInFile["PC1005"]
-    $allowListData["PC1006"] += $allowListDataInFile["PC1006"]
+    $allowListData = ConvertFrom-Yaml (Get-Content $allowListFilePath -Raw)
+}
+else
+{
+    LogError "Allow list path ${allowListFilePath} does not exisit."
+    exit 1
 }
 
 $poliCheckData = Get-Content $PoliCheckResultFilePath | ConvertFrom-Json
