@@ -169,6 +169,17 @@ namespace Azure.Security.KeyVault.Keys
         };
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Keys.ReleaseKeyResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="value">Sets the <see cref="Keys.ReleaseKeyResult.Value"/> property.</param>
+        /// <param name="algorithm">Sets the <see cref="Keys.ReleaseKeyResult.Algorithm"/> property.</param>
+        /// <returns></returns>
+        public static ReleaseKeyResult ReleaseKeyResult(string value, KeyExportEncryptionAlgorithm? algorithm) => new ReleaseKeyResult(algorithm)
+        {
+            Value = value,
+        };
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Keys.RandomBytes"/> for mocking purposes.
         /// </summary>
         /// <param name="value">Sets the <see cref="Keys.RandomBytes.Value"/> property.</param>
