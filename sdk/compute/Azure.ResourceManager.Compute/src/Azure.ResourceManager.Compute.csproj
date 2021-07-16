@@ -8,8 +8,9 @@
     </Description>
     <PackageTags>azure;management;compute</PackageTags>
     <NoWarn>$(NoWarn);AZC0001;AZC0100;CS1591;IDT003;</NoWarn>
+    <IsMgmtLibrary>true</IsMgmtLibrary>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\resourcemanager\Azure.ResourceManager.Core\src\Azure.ResourceManager.Core.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Core"/>
   </ItemGroup>
 </Project>

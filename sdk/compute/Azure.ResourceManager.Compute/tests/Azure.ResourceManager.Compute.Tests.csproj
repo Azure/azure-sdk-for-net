@@ -3,11 +3,15 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <TestHelperProjects>;</TestHelperProjects>
     <UseNewMgmtFramework>true</UseNewMgmtFramework>
+    <IsMgmtLibrary>true</IsMgmtLibrary>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Compute.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Core"/>
   </ItemGroup>
 </Project>
