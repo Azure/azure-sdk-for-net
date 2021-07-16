@@ -11,26 +11,10 @@ namespace Azure.Storage.DataMovement
     internal class TransferItemScheduler
     {
         /// <summary>
-        /// The maximum number of simultaneous workers.
+        /// The maximum number of simultaneous workers. Handles the amount of items
+        /// allowed to transfer at the same time.
         /// </summary>
         private readonly int _maxWorkerCount;
-
-        /// <summary>
-        /// The size of the first range requested (which can be larger than the
-        /// other ranges).
-        /// </summary>
-        private readonly long _initialDownloadRangeSize;
-
-        /// <summary>
-        /// The size of subsequent ranges.
-        /// </summary>
-        private readonly long _rangeSize;
-
-        /// <summary>
-        /// The size we use to determine whether to upload as a one-off request or
-        /// a partitioned/committed upload
-        /// </summary>
-        private readonly long _singleUploadThreshold;
 
         // TaskScheduler
         //
@@ -38,12 +22,6 @@ namespace Azure.Storage.DataMovement
         // We might have to consider making a custom TaskScheduler to start a new one, once
         // the queue has something to process.
         //private TaskScheduler taskScheduler;
-
-        internal StorageTransferOptions _transferOptions;
-        /// <summary>
-        /// StorageTransferOptions
-        /// </summary>
-        public StorageTransferOptions TransferOptions => _transferOptions;
 
         /// <summary>
         /// The queue we hold onto as the finished scanned items are added. This is the
@@ -54,53 +32,20 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// TransferItemScheduler Constructor
         /// </summary>
-        /// <param name="transferOptions"></param>
-        public TransferItemScheduler(StorageTransferOptions transferOptions = default)
+        /// <param name="maxWorkerCount">The maximum number of simultaneous workers.</param>
+        public TransferItemScheduler(int? maxWorkerCount = default)
         {
-            _transferOptions = transferOptions;
-
             // Set _maxWorkerCount
-            if (transferOptions.MaximumJobConcurrency.HasValue
-                && transferOptions.MaximumConcurrency > 0)
+            if (maxWorkerCount.HasValue && maxWorkerCount > 0)
             {
-                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
+                _maxWorkerCount = (int) maxWorkerCount;
             }
             else
             {
+                // TODO: come up with an optimal amount to set the default
+                // amount of workers. For now it will be 5, which is the current
+                // constant amount of block blob transfer.
                 _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
-            }
-
-            // Set _rangeSize
-            if (transferOptions.MaximumTransferSize.HasValue
-                && transferOptions.MaximumTransferSize.Value > 0)
-            {
-                _rangeSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
-            }
-            else
-            {
-                _rangeSize = Constants.DefaultBufferSize;
-            }
-
-            // Set _initialRangeSize
-            if (transferOptions.InitialTransferSize.HasValue
-                && transferOptions.InitialTransferSize.Value > 0)
-            {
-                _initialDownloadRangeSize = transferOptions.InitialTransferSize.Value;
-            }
-            else
-            {
-                _initialDownloadRangeSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
-            }
-
-            // Set _singleUploadThreshold
-            if (transferOptions.InitialTransferSize.HasValue
-                && transferOptions.InitialTransferSize.Value > 0)
-            {
-                _singleUploadThreshold = Math.Min(transferOptions.InitialTransferSize.Value, Constants.Blob.Block.MaxUploadBytes);
-            }
-            else
-            {
-                _singleUploadThreshold = Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
             }
         }
 

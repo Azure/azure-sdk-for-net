@@ -11,12 +11,8 @@ namespace Azure.Storage.DataMovement.Models
     /// Copy Method.
     /// Users can specify what type copy to occur.
     /// </summary>
-    public enum CopyMethod
+    public enum ServiceCopyMethod
     {
-        /// <summary>
-        /// Dowloads data form source to memory, then uploads the data from memory to destination
-        /// </summary>
-        SyncCopy,
         /// <summary>
         /// For Blobs sends <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob">Copy Blob</see>
         /// for blob operations. This utilizes the

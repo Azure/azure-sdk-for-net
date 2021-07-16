@@ -913,5 +913,177 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion Download
+
+        #region StartCopyFromUri
+        /// <summary>
+        /// The <see cref="StartCopyFromUri(Uri, BlobDirectoryCopyFromUriOptions, CancellationToken)"/>
+        /// operation begins an asynchronous copy of the data from the <paramref name="sourceDirectoryUri"/> to this
+        /// blob directory. It will make a <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob">
+        /// Copy Blob</see>. for each blob in the source blob directory.
+        ///
+        /// TODO: Proper response type for copy from directory uri
+        /// </summary>
+        /// <param name="sourceDirectoryUri">
+        /// Specifies the <see cref="Uri"/> of the source blob.  The value may
+        /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
+        /// blob.  A source blob in the same storage account can be
+        /// authenticated via Shared Key.  However, if the source is a blob in
+        /// another account, the source blob must either be public or must be
+        /// authenticated via a shared access signature. If the source blob
+        /// is public, no authentication is required to perform the copy
+        /// operation.
+        ///
+        /// The source object may be a file in the Azure File service.  If the
+        /// source object is a file that is to be copied to a blob, then the
+        /// source file must be authenticated using a shared access signature,
+        /// whether it resides in the same account or in a different account.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="CopyFromUriOperation"/> describing the
+        /// state of the copy operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual CopyFromUriOperation StartCopyFromUri(
+            Uri sourceDirectoryUri,
+            BlobDirectoryCopyFromUriOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            Response<BlobCopyInfo> response = StartCopyFromUriInternal(
+                sourceDirectoryUri,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+            // TODO: Create actual return type specific to DirectoryCopyResults
+            // CopyFromUriOperation will be exchanged the progress tracking in the options bag.
+            // TODO: remove stub.
+            return default;
+        }
+
+        /// <summary>
+        /// The <see cref="StartCopyFromUriAsync(Uri, BlobDirectoryCopyFromUriOptions, CancellationToken)"/>
+        /// operation begins an asynchronous copy of the data from the <paramref name="sourceDirectoryUri"/> to this
+        /// blob directory. It will make a <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob">
+        /// Copy Blob</see>. for each blob in the source blob directory.
+        ///
+        /// TODO: Proper response type for copy from directory uri
+        /// </summary>
+        /// <param name="sourceDirectoryUri">
+        /// Specifies the <see cref="Uri"/> of the source blob directory.
+        /// The value may be a <see cref="Uri" /> of up to 2 KB in length that
+        /// specifies a diretory blob.  A source directory blob in the same
+        /// storage account can be authenticated via Shared Key.
+        /// However, if the source is a directory blob in another account,
+        /// the source directory blob must either be public or must be
+        /// authenticated via a shared access signature. If the source directory
+        /// blob is public, no authentication is required to perform the copy
+        /// operation.
+        ///
+        /// The source object may be a file in the Azure File service.  If the
+        /// source object is a file that is to be copied to a blob, then the
+        /// source file must be authenticated using a shared access signature,
+        /// whether it resides in the same account or in a different account.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="CopyFromUriOperation"/> describing the
+        /// state of the copy operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
+            Uri sourceDirectoryUri,
+            BlobDirectoryCopyFromUriOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            Response<BlobCopyInfo> response = await StartCopyFromUriInternal(
+                sourceDirectoryUri,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+            // TODO: Create actual return type specific to DirectoryCopyResults
+            // CopyFromUriOperation will be exchanged the progress tracking in the options bag.
+            // TODO: remove stub.
+            return default;
+        }
+
+        /// <summary>
+        /// The <see cref="StartCopyFromUriInternal"/> operation begins an
+        /// asynchronous copy of the data from the <paramref name="sourceDirectoryUri"/> to this
+        /// blob directory. It will make a
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob">
+        /// Copy Blob</see>. for each blob in the source blob directory.
+        ///
+        /// TODO: Proper response type for copy from directory uri
+        /// </summary>
+        /// <param name="sourceDirectoryUri">
+        /// Specifies the <see cref="Uri"/> of the source blob.  The value may
+        /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
+        /// blob.  A source blob in the same storage account can be
+        /// authenticated via Shared Key.  However, if the source is a blob in
+        /// another account, the source blob must either be public or must be
+        /// authenticated via a shared access signature. If the source blob
+        /// is public, no authentication is required to perform the copy
+        /// operation.
+        ///
+        /// The source object may be a file in the Azure File service.  If the
+        /// source object is a file that is to be copied to a blob, then the
+        /// source file must be authenticated using a shared access signature,
+        /// whether it resides in the same account or in a different account.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobCopyInfo}"/> describing the
+        /// state of the copy operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// TODO; remove supression for unused parameters after implementation.
+        /// TODO: remove static and async supression
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private static async Task<Response<BlobCopyInfo>> StartCopyFromUriInternal(
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+#pragma warning disable CA1801 // Review unused parameters
+            Uri sourceDirectoryUri,
+            BlobDirectoryCopyFromUriOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+#pragma warning restore CA1801 // Review unused parameters
+        {
+            //TODO: Implement directory copy
+            ResponseWithHeaders<BlobCopyInfo> response = ResponseWithHeaders.FromValue((BlobCopyInfo)default, default);
+            return Response.FromValue(response.Headers, response.GetRawResponse());
+        }
+        #endregion
     }
 }

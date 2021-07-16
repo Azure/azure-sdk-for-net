@@ -26,34 +26,13 @@ namespace Azure.Storage.DataMovement
         public int jobId => _jobId;
         */
 
-        internal StorageTransferOptions _transferOptions;
-        /// <summary>
-        /// StorageTransferOptions
-        /// </summary>
-        public StorageTransferOptions TransferOptions => _transferOptions;
-
-        /// <summary>
-        /// Transfer type, see <see cref="StorageTransferType"/>.
-        /// If we made a job type for each kind of transfer, we would remove this.
-        /// </summary>
-        public StorageTransferType TransferType;
-
         /// <summary>
         /// Cancellation Token
         /// </summary>
         public CancellationToken CancellationToken;
 
         /// <summary>
-        /// Progress Tracker
-        /// </summary>
-        public IProgress<StorageTransferStatus> ProgressTracker;
-
-        /// <summary>
-        /// Create next TransferItem/Task to be processed
-        /// </summary>
-        /// <returns></returns>
-        /// <summary>
-        /// Create next TransferItem/Task to be processed
+        /// Create next TransferItem/Task to be processed.
         /// </summary>
         /// <returns></returns>
         public virtual Task CreateTransferTaskAsync()
