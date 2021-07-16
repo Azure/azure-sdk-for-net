@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.Azure.Management.ContainerRegistry;
 using Microsoft.Azure.Management.ContainerRegistry.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
 
 namespace Azure.Containers.ContainerRegistry.Tests
@@ -25,6 +27,18 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
 
+        private readonly Dictionary<string, string> _nationalCloudIgnoreTests = new()
+        {
+            { "GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints." },
+            { "GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints." },
+            { "GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints." },
+            { "ValidateSasCredentialsWithRowKeyAndPartitionKeyRanges", "Shared access signature with PartitionKey or RowKey are not supported" },
+            { "ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported" },
+            { "ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported" },
+            { "ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported" },
+            { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" }
+        };
+
         public ContainerRegistryClient CreateClient(bool anonymousAccess = false)
         {
             return anonymousAccess ? CreateAnonymousClient() : CreateAuthenticatedClient();
@@ -33,7 +47,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
         private ContainerRegistryClient CreateAuthenticatedClient()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string authenticationScope = GetAuthenticationScope(endpoint);
+            Uri authorityHost = GetAuthorityHost(endpoint);
+            string authenticationScope = GetAuthenticationScope(authorityHost);
 
             return InstrumentClient(new ContainerRegistryClient(
                     new Uri(endpoint),
@@ -48,7 +63,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
         private ContainerRegistryClient CreateAnonymousClient()
         {
             string endpoint = TestEnvironment.AnonymousAccessEndpoint;
-            string authenticationScope = GetAuthenticationScope(endpoint);
+            Uri authorityHost = GetAuthorityHost(endpoint);
+            string authenticationScope = GetAuthenticationScope(authorityHost);
 
             return InstrumentClient(new ContainerRegistryClient(
                     new Uri(endpoint),
@@ -59,34 +75,71 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 ));
         }
 
-        private string GetAuthenticationScope(string endpoint)
+        private Uri GetAuthorityHost(string endpoint)
         {
             if (endpoint.Contains(".azurecr.io"))
             {
-                // ACR's authentication scope for Azure Public cloud
-                return "https://management.core.windows.net/.default";
+                return AzureAuthorityHosts.AzurePublicCloud;
             }
 
             if (endpoint.Contains(".azurecr.cn"))
             {
-                // ACR's authentication scope for Azure China cloud
-                return "https://management.chinacloudapi.cn/.default";
+                return AzureAuthorityHosts.AzureChina;
             }
 
             if (endpoint.Contains(".azurecr.us"))
+            {
+                return AzureAuthorityHosts.AzureGovernment;
+            }
+
+            if (endpoint.Contains(".azurecr.de"))
+            {
+                return AzureAuthorityHosts.AzureGermany;
+            }
+
+            throw new NotSupportedException($"Cloud for endpoint {endpoint} is not supported.");
+        }
+
+        private string GetAuthenticationScope(Uri authorityHost)
+        {
+            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
+            {
+                return "https://management.core.windows.net/.default";
+            }
+
+            if (authorityHost == AzureAuthorityHosts.AzureChina)
+            {
+                return "https://management.chinacloudapi.cn/.default";
+            }
+
+            if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
                 // ACR's authentication scope for US Government cloud
                 return "https://management.usgovcloudapi.net/.default";
             }
 
-            if (endpoint.Contains(".azurecr.de"))
+            if (authorityHost == AzureAuthorityHosts.AzureGermany)
             {
-                // ACR's authentication scope for Azure Germany cloud
                 return "https://management.microsoftazure.de/";
             }
 
-            throw new NotSupportedException($"Cloud for endpoint {endpoint} is not supported.");
+            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
         }
+
+        [SetUp]
+        public void ContainerRegistryTestSetup()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            if (GetAuthorityHost(endpoint) != AzureAuthorityHosts.AzurePublicCloud /*&& anonymous*/)
+            {
+                TestContext context = TestContext.CurrentContext;
+                //bool anonymous = TestContext.CurrentContext.Test.Arguments?.Where(arg => arg.ToString() == "anonymous").FirstOrDefault();
+
+                Assert.Ignore("Anonymous client is not enabled in national clouds.");
+            }
+        }
+
+        #region Methods using Track 1 Management Plane library
 
         public async Task ImportImageAsync(string registry, string repository, string tag)
         {
@@ -135,28 +188,30 @@ namespace Azure.Containers.ContainerRegistry.Tests
         private AzureEnvironment GetManagementCloudEnvironment()
         {
             string endpoint = TestEnvironment.Endpoint;
+            Uri authorityHost = GetAuthorityHost(endpoint);
 
-            if (endpoint.Contains(".azurecr.io"))
+            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
             {
                 return AzureEnvironment.AzureGlobalCloud;
             }
 
-            if (endpoint.Contains(".azurecr.cn"))
+            if (authorityHost == AzureAuthorityHosts.AzureChina)
             {
                 return AzureEnvironment.AzureChinaCloud;
             }
 
-            if (endpoint.Contains(".azurecr.us"))
+            if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
                 return AzureEnvironment.AzureUSGovernment;
             }
 
-            if (endpoint.Contains(".azurecr.de"))
+            if (authorityHost == AzureAuthorityHosts.AzureGermany)
             {
                 return AzureEnvironment.AzureGermanCloud;
             }
 
-            throw new NotSupportedException($"Cloud for endpoint {endpoint} is not supported.");
+            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
         }
+        #endregion
     }
 }
