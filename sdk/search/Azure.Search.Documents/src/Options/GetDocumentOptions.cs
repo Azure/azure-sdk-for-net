@@ -13,7 +13,7 @@ namespace Azure.Search.Documents
     {
         /// <summary>
         /// Throws a <see cref="RequestFailedException"/> if the document is missing. This is the default behavior.
-        /// If set to <c>false</c>, a <c>null</c> <see cref="Response{T}"/> is instead returned.
+        /// If set to <c>false</c>, a <c>null</c> <see cref="Response{T}.Value"/> is instead returned.
         /// </summary>
         public bool ThrowOnMissingDocument { get; set; } = true;
 
