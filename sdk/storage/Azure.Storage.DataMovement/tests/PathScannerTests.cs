@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement.Tests
             PathScanner scanner = scannerFactory.BuildPathScanner();
 
             // Act
-            IEnumerable<string> result = scanner.Scan(); // Conversion to list is necessary because results from Scan() disappear once read
+            IEnumerable<string> result = scanner.Scan().Select(item => item.FullName); // Conversion to list is necessary because results from Scan() disappear once read
 
             // Assert
             Assert.Multiple(() =>
@@ -87,7 +87,7 @@ namespace Azure.Storage.DataMovement.Tests
             PathScanner scanner = scannerFactory.BuildPathScanner();
 
             // Act
-            IEnumerable<string> result = scanner.Scan();
+            IEnumerable<string> result = scanner.Scan().Select(item => item.FullName);
 
             // Act/Assert
             CollectionAssert.Contains(result, folder);
@@ -108,7 +108,7 @@ namespace Azure.Storage.DataMovement.Tests
             PathScanner scanner = scannerFactory.BuildPathScanner();
 
             // Act
-            IEnumerable<string> result = scanner.Scan();
+            IEnumerable<string> result = scanner.Scan().Select(item => item.FullName);
 
             // Assert
             CollectionAssert.Contains(result, file);
@@ -129,7 +129,7 @@ namespace Azure.Storage.DataMovement.Tests
             PathScanner scanner = scannerFactory.BuildPathScanner();
 
             // Act
-            IEnumerable<string> result = scanner.Scan();
+            IEnumerable<string> result = scanner.Scan().Select(item => item.FullName);
 
             // Assert
             CollectionAssert.Contains(result, file);

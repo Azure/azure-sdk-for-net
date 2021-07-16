@@ -114,10 +114,13 @@ namespace Azure.Storage.DataMovement
             // Stub to create Task
             if (TransferType == StorageTransferType.Upload)
             {
-                // Do only blockblobs for now
-                BlobUploadDirectoryOptions options = (BlobUploadDirectoryOptions)_uploadOptions;
+                /* // Do only blockblobs for now
+                 BlobDirectoryUploadOptions options = (BlobDirectoryUploadOptions)_uploadOptions;
 
-                return destinationBlobClient.UploadAsync(_localPath, _transferOptions, options);
+                 return destinationBlobClient.UploadAsync(_localPath, _transferOptions, options);*/
+
+                // TODO: Fix options implementation and re-enable upload
+                return Task.CompletedTask;
             }
             else // (TransferType == StorageTransferType.Download)
             {

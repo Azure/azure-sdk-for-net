@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage
 {
-    public class PathScanner
+    internal class PathScanner
     {
         /// <summary>
         /// The fully qualified path to be scanned.
@@ -30,12 +30,12 @@ namespace Azure.Storage
             }
         }
 
-        public IEnumerable<string> Scan(bool continueOnError = true)
+        public IEnumerable<FileSystemInfo> Scan(bool continueOnError = true)
         {
             // If the given path is a single file, return only the given path
             if (!((File.GetAttributes(_basePath) & FileAttributes.Directory) == FileAttributes.Directory))
             {
-                yield return _basePath;
+                yield return new FileInfo(_basePath);
                 yield break;
             }
 
@@ -49,7 +49,7 @@ namespace Azure.Storage
                 string dir = folders.Dequeue();
 
                 // Send the current directory to the scan results
-                yield return dir;
+                yield return new DirectoryInfo(dir);
 
                 // Try to enumerate and queue all subdirectories of the current folder
                 try
@@ -83,7 +83,7 @@ namespace Azure.Storage
                 // Send all files in the directory to the scan results
                 foreach (string file in EnumerateFiles(dir))
                 {
-                    yield return file;
+                    yield return new FileInfo(file);
                 }
             }
         }

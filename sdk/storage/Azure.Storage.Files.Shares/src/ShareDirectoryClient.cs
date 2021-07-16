@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -2771,6 +2772,313 @@ namespace Azure.Storage.Files.Shares
                     cancellationToken)
                 .ConfigureAwait(false);
         #endregion DeleteFile
+
+        #region Upload
+        /// <summary>
+        /// The <see cref="Upload(string, StorageTransferOptions, ShareDirectoryUploadOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob directory, creating a new blob
+        /// if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        /// </summary>
+        /// <param name="localPath">
+        /// A string pointing to the directory containing the content to upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual IEnumerable<Response<ShareFileUploadInfo>> Upload(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            string localPath,
+            StorageTransferOptions transferOptions,
+            ShareDirectoryUploadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            return UploadInternal(
+                localPath,
+                null,
+                transferOptions,
+                options,
+                async: false,
+                cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="UploadAsync(string, StorageTransferOptions, ShareDirectoryUploadOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// </summary>
+        /// <param name="localPath">
+        /// The path of the local directory to upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        ///
+        [ForwardsClientCalls]
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<IEnumerable<Response<ShareFileUploadInfo>>> UploadAsync(
+#pragma warning disable AZC0015 // Unexpected client method return type.
+            string localPath,
+            StorageTransferOptions transferOptions,
+            ShareDirectoryUploadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            return await UploadInternal(
+                localPath,
+                null,
+                transferOptions,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="Upload(string, StorageTransferOptions, ShareDirectoryUploadOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob directory, creating a new blob
+        /// if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// TODO: implement overloads for overwrite parameter
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="localPath">
+        /// A string of the path to the local directory containing the local files to upload.
+        /// </param>
+        /// <param name="remotePath">
+        /// A string of the path to the remote virtual directory where files will be uploaded.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual IEnumerable<Response<ShareFileUploadInfo>> Upload(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            string localPath,
+            string remotePath,
+            StorageTransferOptions transferOptions,
+            ShareDirectoryUploadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            return UploadInternal(
+                localPath,
+                remotePath,
+                transferOptions,
+                options,
+                async: false,
+                cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="UploadAsync(string, StorageTransferOptions, ShareDirectoryUploadOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        /// </summary>
+        /// <param name="localPath">
+        /// A string of the path to the local directory containing the local files to upload.
+        /// </param>
+        /// <param name="remotePath">
+        /// A string of the path to the remote virtual directory where files will be uploaded.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<IEnumerable<Response<ShareFileUploadInfo>>> UploadAsync(
+#pragma warning disable AZC0015 // Unexpected client method return type.
+            string localPath,
+            string remotePath,
+            StorageTransferOptions transferOptions,
+            ShareDirectoryUploadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            return await UploadInternal(
+                localPath,
+                remotePath,
+                transferOptions,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="UploadInternal"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        /// </summary>
+        /// <param name="localPath">
+        /// The path of the local directory to upload.
+        /// </param>
+        /// <param name="remotePath">
+        /// The remote path of the directory to which to upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional Parameters <see cref="ShareDirectoryUploadOptions"/>
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// TODO: remove pragma warning after adding await operators
+        internal async Task<IEnumerable<Response<ShareFileUploadInfo>>> UploadInternal(
+            string localPath,
+            string remotePath,
+            StorageTransferOptions transferOptions,
+            ShareDirectoryUploadOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareDirectoryClient),
+                    message:
+                    $"{nameof(localPath)}: {localPath}\n" +
+                    $"{nameof(options)}: {options}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareDirectoryClient)}.{nameof(Upload)}");
+
+                try
+                {
+                    scope.Start();
+
+                    Uri targetUri = Uri;
+
+                    if (remotePath != null)
+                    {
+                        targetUri = targetUri.AppendToPath(remotePath);
+
+                        if (async)
+                            await GetSubdirectoryClient(remotePath)
+                                .CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        else
+                            GetSubdirectoryClient(remotePath)
+                                .CreateIfNotExists(cancellationToken: cancellationToken);
+                    }
+
+                    if (options.UploadToSubdirectory.HasValue && (bool)options.UploadToSubdirectory)
+                    {
+                        string localDirName = localPath.Split('\\').Last();
+                        targetUri = targetUri.AppendToPath(localDirName);
+
+                        if (async)
+                            await GetSubdirectoryClient($"{(remotePath != null ? $"{remotePath}/" : "")}{localDirName}")
+                                .CreateIfNotExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        else
+                            GetSubdirectoryClient($"{(remotePath != null ? $"{remotePath}/" : "")}{localDirName}")
+                                .CreateIfNotExists(cancellationToken: cancellationToken);
+                    }
+
+                    ShareUploadScheduler scheduler = new ShareUploadScheduler(targetUri, ClientConfiguration);
+
+                    return await scheduler.StartTransfer(
+                        localPath,
+                        transferOptions,
+                        options,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
 
         #region GenerateSas
         /// <summary>

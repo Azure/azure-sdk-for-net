@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage
 {
-    public class PathScannerFactory
+    internal class PathScannerFactory
     {
         private string _path;
 

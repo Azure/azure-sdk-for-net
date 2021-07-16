@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.Files.DataLake.Models
+namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
     /// DataLakeDirectoryUploadOptions for
     /// </summary>
-    public class DataLakeDirectoryUploadOptions
+    public class ShareDirectoryUploadOptions
     {
         /// <summary>
         /// Describes whether or not the directory being uploaded should

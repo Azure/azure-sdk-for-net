@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +13,6 @@ namespace Azure.Storage.Files.DataLake
 {
     internal class DataLakeUploadScheduler : DataLakePathClient
     {
-
         internal DataLakeUploadScheduler(
             Uri baseUri,
             DataLakeClientConfiguration clientConfiguration)
@@ -36,16 +36,19 @@ namespace Azure.Storage.Files.DataLake
                 $"{Path}/{fileName}",
                 ClientConfiguration);
 
+        // TODO: Implement options object usage and remove warning pragma
         public async Task<IEnumerable<Response<PathInfo>>> StartTransfer(
             string localPath,
             StorageTransferOptions transferOptions,
+#pragma warning disable CA1801 // Review unused parameters
             DataLakeDirectoryUploadOptions options,
+#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken = default)
         {
             PathScannerFactory scannerFactory = new PathScannerFactory(localPath);
             PathScanner scanner = scannerFactory.BuildPathScanner();
-            IEnumerable<string> fileList = scanner.Scan();
+            IEnumerable<System.IO.FileSystemInfo> fileList = scanner.Scan();
 
             TransferScheduler fileScheduler = new TransferScheduler((int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1));
             List<Task> tasks = new List<Task>();
@@ -53,20 +56,27 @@ namespace Azure.Storage.Files.DataLake
 
             string fullPath = System.IO.Path.GetFullPath(localPath);
 
-            foreach (string file in fileList)
+            string permissions = "0777";
+            string umask = "0057";
+            DataLakeFileUploadOptions fileOptions = new DataLakeFileUploadOptions
             {
-                if (file == fullPath)
+                Permissions = permissions,
+                Umask = umask
+            };
+
+            foreach (System.IO.FileSystemInfo file in fileList)
+            {
+                if (file.GetType() == typeof(DirectoryInfo))
                 {
                     continue;
                 }
 
                 Task task = Task.Factory.StartNew(() =>
                 {
-                    responses.Add(GetFileClient(file.Substring(fullPath.Length + 1))
+                    responses.Add(GetFileClient(file.FullName.Substring(fullPath.Length + 1))
                        .Upload(
-                           file,
-                           overwrite: false,
-                           cancellationToken));
+                           file.FullName,
+                           fileOptions));
                 }, cancellationToken, default, fileScheduler);
 
                 tasks.Add(task);

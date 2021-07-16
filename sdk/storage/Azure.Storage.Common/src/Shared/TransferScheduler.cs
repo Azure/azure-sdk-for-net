@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public class TransferScheduler : TaskScheduler
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    internal class TransferScheduler : TaskScheduler
     {
         // Indicates whether the current thread is processing work items.
         [ThreadStatic]

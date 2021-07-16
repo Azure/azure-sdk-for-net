@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
@@ -55,16 +56,19 @@ namespace Azure.Storage.Blobs
                 ClientSideEncryption);
         }
 
+        // TODO: Add options object usage and remove pragma
         public async Task<IEnumerable<Response<BlobContentInfo>>> StartTransfer(
             string localPath,
             StorageTransferOptions transferOptions,
+#pragma warning disable CA1801 // Review unused parameters
             BlobDirectoryUploadOptions options,
+#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken = default)
         {
             PathScannerFactory scannerFactory = new PathScannerFactory(localPath);
             PathScanner scanner = scannerFactory.BuildPathScanner();
-            IEnumerable<string> fileList = scanner.Scan();
+            IEnumerable<FileSystemInfo> fileList = scanner.Scan();
 
             TransferScheduler fileScheduler = new TransferScheduler((int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1));
             List<Task> tasks = new List<Task>();
@@ -72,18 +76,18 @@ namespace Azure.Storage.Blobs
 
             string fullPath = Path.GetFullPath(localPath);
 
-            foreach (string file in fileList)
+            foreach (FileSystemInfo file in fileList)
             {
-                if (file == fullPath)
+                if (file.GetType() == typeof(DirectoryInfo))
                 {
                     continue;
                 }
 
                 Task task = Task.Factory.StartNew(() =>
                 {
-                    responses.Add(GetBlobClient(file.Substring(fullPath.Length + 1))
+                    responses.Add(GetBlobClient(file.FullName.Substring(fullPath.Length + 1))
                        .Upload(
-                           file,
+                           file.FullName,
                            cancellationToken));
                 }, cancellationToken, default, fileScheduler);
 
