@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="type">The type of this referenced entity. Possible
         /// values include: 'IntegrationRuntimeReference',
-        /// 'LinkedServiceReference', 'CredentialReference'</param>
+        /// 'LinkedServiceReference'</param>
         /// <param name="referenceName">The name of this referenced
         /// entity.</param>
         public EntityReference(string type = default(string), string referenceName = default(string))
@@ -48,8 +48,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the type of this referenced entity. Possible values
-        /// include: 'IntegrationRuntimeReference', 'LinkedServiceReference',
-        /// 'CredentialReference'
+        /// include: 'IntegrationRuntimeReference', 'LinkedServiceReference'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

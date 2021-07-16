@@ -4,6 +4,7 @@
 ###  Feature Additions
 - Added properties pipelineName and pipelineRunId to PipelineRunInvokedBy definition
 - Updated avroCompressionCodec and orcCompressionCodec from string to object
+- Supported UAMI in ADF IR/LS/Activity
 
 ## Version 4.20.0
 ###  Feature Additions

@@ -134,7 +134,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// vNet. If virtualNetworkId was specified, then this property is
         /// required. Type: string (or Expression with resultType
         /// string).</param>
-        public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object clusterNamePrefix = default(object), object clusterUserName = default(object), SecretBase clusterPassword = default(SecretBase), object clusterSshUserName = default(object), SecretBase clusterSshPassword = default(SecretBase), IList<LinkedServiceReference> additionalLinkedServiceNames = default(IList<LinkedServiceReference>), LinkedServiceReference hcatalogLinkedServiceName = default(LinkedServiceReference), object clusterType = default(object), object sparkVersion = default(object), object coreConfiguration = default(object), object hBaseConfiguration = default(object), object hdfsConfiguration = default(object), object hiveConfiguration = default(object), object mapReduceConfiguration = default(object), object oozieConfiguration = default(object), object stormConfiguration = default(object), object yarnConfiguration = default(object), object encryptedCredential = default(object), object headNodeSize = default(object), object dataNodeSize = default(object), object zookeeperNodeSize = default(object), IList<ScriptAction> scriptActions = default(IList<ScriptAction>), object virtualNetworkId = default(object), object subnetName = default(object))
+        /// <param name="credential">The credential reference containing
+        /// authentication information.</param>
+        public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object clusterNamePrefix = default(object), object clusterUserName = default(object), SecretBase clusterPassword = default(SecretBase), object clusterSshUserName = default(object), SecretBase clusterSshPassword = default(SecretBase), IList<LinkedServiceReference> additionalLinkedServiceNames = default(IList<LinkedServiceReference>), LinkedServiceReference hcatalogLinkedServiceName = default(LinkedServiceReference), object clusterType = default(object), object sparkVersion = default(object), object coreConfiguration = default(object), object hBaseConfiguration = default(object), object hdfsConfiguration = default(object), object hiveConfiguration = default(object), object mapReduceConfiguration = default(object), object oozieConfiguration = default(object), object stormConfiguration = default(object), object yarnConfiguration = default(object), object encryptedCredential = default(object), object headNodeSize = default(object), object dataNodeSize = default(object), object zookeeperNodeSize = default(object), IList<ScriptAction> scriptActions = default(IList<ScriptAction>), object virtualNetworkId = default(object), object subnetName = default(object), CredentialReference credential = default(CredentialReference))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ClusterSize = clusterSize;
@@ -170,6 +172,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             ScriptActions = scriptActions;
             VirtualNetworkId = virtualNetworkId;
             SubnetName = subnetName;
+            Credential = credential;
             CustomInit();
         }
 
@@ -418,6 +421,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object SubnetName { get; set; }
 
         /// <summary>
+        /// Gets or sets the credential reference containing authentication
+        /// information.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.credential")]
+        public CredentialReference Credential { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -481,6 +491,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
                         element1.Validate();
                     }
                 }
+            }
+            if (Credential != null)
+            {
+                Credential.Validate();
             }
         }
     }
