@@ -6,6 +6,11 @@ resources:
     branch: main
     tags: 
     - scheduled
+  repositories:
+    - repository: azure-sdk-build-tools
+      type: git
+      name: internal/azure-sdk-build-tools
+      ref: refs/tags/azure-sdk-build-tools_20210603.1
 
 trigger: none
 
@@ -155,7 +160,8 @@ jobs:
           filePath: 'eng/common/scripts/FilterPoliCheckResults.ps1'
           arguments: >
             -PoliCheckResultFilePath '$(Build.SourcesDirectory)/../.gdn/.r/PoliCheck/001/PoliCheck.sarif'
-            -ServiceDirtectory '$(ServiceDirectoryName)'
+            -ServiceDirectory '$(ServiceDirectoryName)'
+            -AllowListLocation: '$(AzureSDKBuildToolsPath)/tools/policheck-allow-list/dotnet'
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
         displayName: 'Publish Security Analysis Logs'
         condition: succeededOrFailed()
