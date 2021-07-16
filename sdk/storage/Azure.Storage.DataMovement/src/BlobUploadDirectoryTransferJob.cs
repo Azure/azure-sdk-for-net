@@ -26,13 +26,13 @@ namespace Azure.Storage.DataMovement
 
         public BlobDirectoryClient destinationBlobClient => _destinationBlobClient;
 
-        internal BlobUploadDirectoryOptions _uploadOptions;
+        internal BlobDirectoryUploadOptions _uploadOptions;
 
         // Should only be used for upload options. Felt redudant
         // to create a whole other class that inherited this just
         // for uploads. Is it worth it to make a whole other class
         // for each operation type.
-        public BlobUploadDirectoryOptions options => _uploadOptions;
+        public BlobDirectoryUploadOptions options => _uploadOptions;
 
         // this is if we decide to prescan everything instead of
         // scanning right before upload/downloading
@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement
         public BlobUploadDirectoryTransferJob(
             string sourceLocalPath,
             BlobDirectoryClient destinationClient,
-            BlobUploadDirectoryOptions uploadOptions,
+            BlobDirectoryUploadOptions uploadOptions,
             CancellationToken cancellationToken)
         {
             _localPath = sourceLocalPath;

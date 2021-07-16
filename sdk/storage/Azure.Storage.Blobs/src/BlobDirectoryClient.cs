@@ -322,7 +322,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(string, BlobUploadDirectoryOptions, CancellationToken)"/>
+        /// The <see cref="Upload(string, BlobDirectoryUploadOptions, CancellationToken)"/>
         /// operation overwrites the blobs contained in the blob directory, creating a
         /// blob if none exists.  Overwriting an existing blobs in the blob directory
         /// replaces any existing metadata on the blob.
@@ -360,7 +360,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobContentInfo> Upload(
             string directoryPath,
-            BlobUploadDirectoryOptions options = default,
+            BlobDirectoryUploadOptions options = default,
             CancellationToken cancellationToken = default)
         {
             return UploadInternal(
@@ -371,7 +371,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, BlobUploadDirectoryOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(string, BlobDirectoryUploadOptions, CancellationToken)"/>
         /// operation overwrites the contents of the blob, creating a new block
         /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
@@ -404,7 +404,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             string directoryPath,
-            BlobUploadDirectoryOptions options = default,
+            BlobDirectoryUploadOptions options = default,
             CancellationToken cancellationToken = default)
         {
             return await UploadInternal(
@@ -433,7 +433,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The path of the local directory to upload.
         /// </param>
         /// <param name="options">
-        /// Optional Parameters <see cref="BlobUploadDirectoryOptions"/>
+        /// Optional Parameters <see cref="BlobDirectoryUploadOptions"/>
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -455,7 +455,7 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual async Task<Response<BlobContentInfo>> UploadInternal(
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             string directoryPath,
-            BlobUploadDirectoryOptions options,
+            BlobDirectoryUploadOptions options,
             bool async,
             CancellationToken cancellationToken)
         {

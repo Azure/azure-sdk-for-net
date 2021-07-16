@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Optional parameters for uploading to a Blob directory.
     /// </summary>
-    public class BlobUploadDirectoryOptions
+    public class BlobDirectoryUploadOptions
     {
         /// <summary>
         /// Optional Blob Type to Upload. Defaults to upload Block Blobs.
