@@ -16,27 +16,27 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
     using System.Linq;
 
     /// <summary>
-    /// Available operations of the service
+    /// A list of REST API operations supported by an Azure Resource Provider.
+    /// It contains an URL link to get the next set of results.
     /// </summary>
-    public partial class AvailableOperations
+    public partial class OperationListResult
     {
         /// <summary>
-        /// Initializes a new instance of the AvailableOperations class.
+        /// Initializes a new instance of the OperationListResult class.
         /// </summary>
-        public AvailableOperations()
+        public OperationListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AvailableOperations class.
+        /// Initializes a new instance of the OperationListResult class.
         /// </summary>
-        /// <param name="value">Collection of available operation
-        /// details</param>
-        /// <param name="nextLink">URL client should use to fetch the next page
-        /// (per server side paging).
-        /// It's null for now, added for future use.</param>
-        public AvailableOperations(IList<OperationDetail> value = default(IList<OperationDetail>), string nextLink = default(string))
+        /// <param name="value">List of operations supported by the resource
+        /// provider</param>
+        /// <param name="nextLink">URL to get the next set of operation list
+        /// results (if there are any).</param>
+        public OperationListResult(IList<Operation> value = default(IList<Operation>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -49,18 +49,17 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets collection of available operation details
+        /// Gets list of operations supported by the resource provider
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<OperationDetail> Value { get; set; }
+        public IList<Operation> Value { get; private set; }
 
         /// <summary>
-        /// Gets or sets URL client should use to fetch the next page (per
-        /// server side paging).
-        /// It's null for now, added for future use.
+        /// Gets URL to get the next set of operation list results (if there
+        /// are any).
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
-        public string NextLink { get; set; }
+        public string NextLink { get; private set; }
 
     }
 }
