@@ -378,272 +378,40 @@ namespace Microsoft.Azure.Management.PolicyInsights
             }
 
             /// <summary>
-            /// Queries policy events for the resources under the management group.
+            /// Subsequent post calls to the next link
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='nextLink'>
+            /// Next link for list operation.
             /// </param>
-            public static IPage<PolicyEvent> ListQueryResultsForManagementGroupNext(this IPolicyEventsOperations operations, string nextPageLink)
+            /// <param name='queryOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static PolicyEventsQueryResults NextLink(this IPolicyEventsOperations operations, string nextLink, QueryOptions queryOptions = default(QueryOptions))
             {
-                return operations.ListQueryResultsForManagementGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.NextLinkAsync(nextLink, queryOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Queries policy events for the resources under the management group.
+            /// Subsequent post calls to the next link
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='nextLink'>
+            /// Next link for list operation.
+            /// </param>
+            /// <param name='queryOptions'>
+            /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyEvent>> ListQueryResultsForManagementGroupNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PolicyEventsQueryResults> NextLinkAsync(this IPolicyEventsOperations operations, string nextLink, QueryOptions queryOptions = default(QueryOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListQueryResultsForManagementGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Queries policy events for the resources under the subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PolicyEvent> ListQueryResultsForSubscriptionNext(this IPolicyEventsOperations operations, string nextPageLink)
-            {
-                return operations.ListQueryResultsForSubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Queries policy events for the resources under the subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<PolicyEvent>> ListQueryResultsForSubscriptionNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListQueryResultsForSubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Queries policy events for the resources under the resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PolicyEvent> ListQueryResultsForResourceGroupNext(this IPolicyEventsOperations operations, string nextPageLink)
-            {
-                return operations.ListQueryResultsForResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Queries policy events for the resources under the resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<PolicyEvent>> ListQueryResultsForResourceGroupNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListQueryResultsForResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Queries policy events for the resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PolicyEvent> ListQueryResultsForResourceNext(this IPolicyEventsOperations operations, string nextPageLink)
-            {
-                return operations.ListQueryResultsForResourceNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Queries policy events for the resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<PolicyEvent>> ListQueryResultsForResourceNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListQueryResultsForResourceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Queries policy events for the subscription level policy set definition.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PolicyEvent> ListQueryResultsForPolicySetDefinitionNext(this IPolicyEventsOperations operations, string nextPageLink)
-            {
-                return operations.ListQueryResultsForPolicySetDefinitionNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Queries policy events for the subscription level policy set definition.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<PolicyEvent>> ListQueryResultsForPolicySetDefinitionNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListQueryResultsForPolicySetDefinitionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Queries policy events for the subscription level policy definition.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PolicyEvent> ListQueryResultsForPolicyDefinitionNext(this IPolicyEventsOperations operations, string nextPageLink)
-            {
-                return operations.ListQueryResultsForPolicyDefinitionNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Queries policy events for the subscription level policy definition.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<PolicyEvent>> ListQueryResultsForPolicyDefinitionNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListQueryResultsForPolicyDefinitionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Queries policy events for the subscription level policy assignment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PolicyEvent> ListQueryResultsForSubscriptionLevelPolicyAssignmentNext(this IPolicyEventsOperations operations, string nextPageLink)
-            {
-                return operations.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Queries policy events for the subscription level policy assignment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<PolicyEvent>> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListQueryResultsForSubscriptionLevelPolicyAssignmentNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Queries policy events for the resource group level policy assignment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PolicyEvent> ListQueryResultsForResourceGroupLevelPolicyAssignmentNext(this IPolicyEventsOperations operations, string nextPageLink)
-            {
-                return operations.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Queries policy events for the resource group level policy assignment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<PolicyEvent>> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextAsync(this IPolicyEventsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.NextLinkWithHttpMessagesAsync(nextLink, queryOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
