@@ -13,8 +13,10 @@ namespace Azure.Security.KeyVault.Keys
         public CreateKeyOptions() { }
         public bool? Enabled { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
+        public bool? Exportable { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Keys.KeyOperation> KeyOperations { get { throw null; } }
         public System.DateTimeOffset? NotBefore { get { throw null; } set { } }
+        public Azure.Security.KeyVault.Keys.KeyReleasePolicy ReleasePolicy { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class CreateOctKeyOptions : Azure.Security.KeyVault.Keys.CreateKeyOptions
@@ -215,16 +217,24 @@ namespace Azure.Security.KeyVault.Keys
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? Enabled { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
+        public bool? Exportable { get { throw null; } set { } }
         public System.Uri Id { get { throw null; } }
         public bool Managed { get { throw null; } }
         public string Name { get { throw null; } }
         public System.DateTimeOffset? NotBefore { get { throw null; } set { } }
         public int? RecoverableDays { get { throw null; } }
         public string RecoveryLevel { get { throw null; } }
+        public Azure.Security.KeyVault.Keys.KeyReleasePolicy ReleasePolicy { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public System.Uri VaultUri { get { throw null; } }
         public string Version { get { throw null; } }
+    }
+    public partial class KeyReleasePolicy
+    {
+        public KeyReleasePolicy(byte[] data) { }
+        public string ContentType { get { throw null; } set { } }
+        public byte[] Data { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyType : System.IEquatable<Azure.Security.KeyVault.Keys.KeyType>
