@@ -45,7 +45,26 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         protected string GetPlatformSuffix()
         {
-            return $"-{RuntimeInformation.OSDescription}-{RuntimeInformation.FrameworkDescription}".Replace(" ", "").Replace(".", "").ToLower();
+            var os = FormatIdentifier(RuntimeInformation.OSDescription);
+            var dotnetVersion = FormatIdentifier(RuntimeInformation.FrameworkDescription);
+            return $"-{os}-{dotnetVersion}";
+        }
+
+        private string FormatIdentifier(string value)
+        {
+            List<string> invalidCharacters = new List<string> { " ", ".", "#", "~", ":", ";", "/", "\\" };
+            foreach (var invalid in invalidCharacters)
+            {
+                value = value.Replace(invalid, string.Empty);
+            }
+
+            int maxLength = 25;
+            if (value.Length > maxLength)
+            {
+                value = value.Substring(0, maxLength);
+            }
+
+            return value.ToLower();
         }
 
         public async Task ImportImageAsync(string registry, string repository, string tag, string targetRepository = default)
