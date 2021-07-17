@@ -103,34 +103,31 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             string registry = TestEnvironment.Registry;
-            string repository = $"library/hello-world" + GetPlatformSuffix();
-            
+            string sourceRepository = $"library/hello-world";
+            string targetRepository = $"hello-world{GetPlatformSuffix()}";
+
             List<string> tags = new List<string>()
             {
-                "latest",
-                "v1",
-                "v2",
-                "v3",
-                "v4",
+                "test-delete-repo"
             };
             var client = CreateClient();
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await ImportImageAsync(registry, repository, tags);
+                await ImportImageAsync(registry, sourceRepository, tags, targetRepository);
             }
 
             // Act
-            await client.DeleteRepositoryAsync(repository);
+            await client.DeleteRepositoryAsync(targetRepository);
 
             var repositories = client.GetRepositoryNamesAsync();
 
             // Assert
             await foreach (var item in repositories)
             {
-                if (item.Contains(repository))
+                if (item.Contains(targetRepository))
                 {
-                    Assert.Fail($"Repository {repository} was not deleted.");
+                    Assert.Fail($"Repository {targetRepository} was not deleted.");
                 }
             }
         }

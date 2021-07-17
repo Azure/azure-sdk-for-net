@@ -45,7 +45,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         protected string GetPlatformSuffix()
         {
-            return $"_{RuntimeInformation.OSDescription}_{RuntimeInformation.FrameworkDescription}";
+            return $"-{RuntimeInformation.OSDescription}-{RuntimeInformation.FrameworkDescription}".Replace(" ","").Replace(".", "").ToLower();
         }
 
         public async Task ImportImageAsync(string registry, string repository, string tag)
@@ -53,7 +53,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await ImportImageAsync(registry, repository, new List<string>() { tag });
         }
 
-        public async Task ImportImageAsync(string registry, string repository, List<string> tags)
+        public async Task ImportImageAsync(string registry, string repository, List<string> tags, string targetRepository = default)
         {
             var credential = new AzureCredentials(
                 new ServicePrincipalLoginInformation
@@ -73,7 +73,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 RegistryUri = "registry.hub.docker.com"
             };
 
-            var targetTags = tags.Select(tag => $"{repository}:{tag}");
+            var target = targetRepository ?? repository;
+            var targetTags = tags.Select(tag => $"{target}:{tag}");
 
             await managementClient.Registries.ImportImageAsync(
                 resourceGroupName: TestEnvironment.ResourceGroup,
