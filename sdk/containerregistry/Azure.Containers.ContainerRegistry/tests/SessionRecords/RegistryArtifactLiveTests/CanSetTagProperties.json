@@ -1,15 +1,25 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://localtestacr04.azurecr.io/acr/v1/library%2Fhello-world/_tags/latest",
-      "RequestMethod": "GET",
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/hello-world-5-microsoftwindows10019042-net508/_tags/test-set-tag-properties",
+      "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "Content-Length": "84",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
         "x-ms-client-request-id": "5e34df74440e4d0ab80895827407f5e0",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": null,
+      "RequestBody": {
+        "deleteEnabled": false,
+        "writeEnabled": false,
+        "listEnabled": false,
+        "readEnabled": false
+      },
       "StatusCode": 401,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": [
@@ -19,18 +29,18 @@
           "X-Ms-Correlation-Request-Id"
         ],
         "Connection": "keep-alive",
-        "Content-Length": "221",
+        "Content-Length": "248",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:36 GMT",
+        "Date": "Sat, 17 Jul 2021 21:24:33 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains",
           "max-age=31536000; includeSubDomains"
         ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr04.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr04.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022",
+        "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistry.azurecr.io\u0022,scope=\u0022repository:hello-world-5-microsoftwindows10019042-net508:metadata_write\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "3867a58a-8279-4ceb-850e-03356d92eb56"
+        "X-Ms-Correlation-Request-Id": "056b0508-68f1-4966-bbca-f67bc9d790d7"
       },
       "ResponseBody": {
         "errors": [
@@ -40,8 +50,8 @@
             "detail": [
               {
                 "Type": "repository",
-                "Name": "library/hello-world",
-                "Action": "metadata_read"
+                "Name": "hello-world-5-microsoftwindows10019042-net508",
+                "Action": "metadata_write"
               }
             ]
           }
@@ -49,203 +59,80 @@
       }
     },
     {
-      "RequestUri": "https://localtestacr04.azurecr.io/oauth2/exchange",
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/oauth2/exchange",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "80",
+        "Content-Length": "89",
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
         "x-ms-client-request-id": "ea2fb4f775982df0fe96f8e09b98af91",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "grant_type=access_token\u0026service=localtestacr04.azurecr.io\u0026access_token=Sanitized",
+      "RequestBody": "grant_type=access_token\u0026service=annelocontainerregistry.azurecr.io\u0026access_token=Sanitized",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:36 GMT",
+        "Date": "Sat, 17 Jul 2021 21:24:34 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "611f2c3b-659c-49df-a64d-0f0446cb7102",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.35"
+        "X-Ms-Correlation-Request-Id": "1389d18a-437f-453b-ad00-9f4c1bca790a",
+        "x-ms-ratelimit-remaining-calls-per-second": "165.6"
       },
       "ResponseBody": {
-        "refresh_token": "Sanitized.eyJleHAiOjI1NjY3NDExNzJ9.Sanitized"
+        "refresh_token": "Sanitized.eyJleHAiOjI1NzI2MzY5OTd9.Sanitized"
       }
     },
     {
-      "RequestUri": "https://localtestacr04.azurecr.io/oauth2/token",
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/oauth2/token",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "139",
+        "Content-Length": "173",
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
         "x-ms-client-request-id": "02bdbf162186f454e26d29025454c45b",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "service=localtestacr04.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3ametadata_read\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "RequestBody": "service=annelocontainerregistry.azurecr.io\u0026scope=repository%3ahello-world-5-microsoftwindows10019042-net508%3ametadata_write\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:36 GMT",
+        "Date": "Sat, 17 Jul 2021 21:24:34 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "2f65d655-70bc-4865-b7c5-43d250ec1744",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.333333"
+        "X-Ms-Correlation-Request-Id": "c2400bc2-3a72-435d-b212-029b8530c800",
+        "x-ms-ratelimit-remaining-calls-per-second": "165.583333"
       },
       "ResponseBody": {
-        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjQ1NlA6WjNCRjpCQ0tPOkpUN0w6MlNLSTpVQUpZOkRCSU46VU5KWTpHWUZHOjdMQTI6WUpNSzpWUkVaIn0.eyJqdGkiOiJiZjFjNjU3NC1lNzdlLTQ0MzktYTE4NS04ZjMwODdlYTIyZDMiLCJzdWIiOiI2NmZjYTY2Yy1iOTkwLTQzODEtYjM3Yi01ODhhMTc5OGNlNjUiLCJuYmYiOjE2MjA2NjAzMzYsImV4cCI6MTYyMDY2NDgzNiwiaWF0IjoxNjIwNjYwMzM2LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJsb2NhbHRlc3RhY3IwNC5henVyZWNyLmlvIiwidmVyc2lvbiI6IjIuMCIsInJpZCI6ImJmNmNlNzhlYzM2MjQ1OWQ4ODRmN2NlNjMxNGY1YWJmIiwiYWNjZXNzIjpbeyJ0eXBlIjoicmVwb3NpdG9yeSIsIm5hbWUiOiJsaWJyYXJ5L2hlbGxvLXdvcmxkIiwiYWN0aW9ucyI6WyJtZXRhZGF0YV9yZWFkIl19XSwicm9sZXMiOltdLCJncmFudF90eXBlIjoiYWNjZXNzX3Rva2VuIn0.XVBhFkWR8L1HQ5wQSmdVe--C6SZBTpRPNXnCbdYewbd20TO90pYvc1SUi-0JAmU_RVNplNvi2e8QbBcWbB_ZxEvyn36QT6cejh8IImVIn-85H6CLvm2GmP28FyOH0AMPPaEVPbnMQ60im6XnZ7K7HdpqntUUUhIiIZXVweZuc2v9rQWxx7FeynuLjftErA3MR9uHZxvQ3dhcJzIfJOPkiqQtQceqrbgsKzcuWEohki4obyfUorLKeBOvC9nnjnfW__iPBD0Zv7CUFMxbXNIRshCW_AvES7NHt0hqWZrxd6ArTAqFP8W1uPPRCINtAVGlc2QLH_N2J_JFAd-JAP5dPw"
+        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVERFE6SFVYWDpMQzQ3OlpCUk06T0k0WTpPUjY2OkFVWko6Qlk3RTo3N0pWOjU0UlI6UU1BSzpOTDI1In0.eyJqdGkiOiIzNjQxN2FlZi03MjBhLTQwNTAtOGQ2YS1lNGU4NTc0YjBhMjYiLCJzdWIiOiI3YTc4NjExNS0wNjViLTRiMWItYmEyMi1lOWY3NmU2MGE2NjkiLCJuYmYiOjE2MjY1NTYxNzQsImV4cCI6MTYyNjU2MDY3NCwiaWF0IjoxNjI2NTU2MTc0LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJhbm5lbG9jb250YWluZXJyZWdpc3RyeS5henVyZWNyLmlvIiwidmVyc2lvbiI6IjIuMCIsInJpZCI6ImM0ZjljYjU3N2Q2NzRkM2ZhZTk0MTI3MjI2NzY3N2E5IiwiYWNjZXNzIjpbeyJ0eXBlIjoicmVwb3NpdG9yeSIsIm5hbWUiOiJoZWxsby13b3JsZC01LW1pY3Jvc29mdHdpbmRvd3MxMDAxOTA0Mi1uZXQ1MDgiLCJhY3Rpb25zIjpbIm1ldGFkYXRhX3dyaXRlIl19XSwicm9sZXMiOltdLCJncmFudF90eXBlIjoiYWNjZXNzX3Rva2VuIiwiYXBwaWQiOiIwMThhYmU4Yy02Njg2LTQwZDgtOGZlMC02ZWZjNjQwOGQzYzgifQ.NVnAGu5rMWJT880u3Bv6w1a1g4--Yem_-UF-Pwf3NL00ChGxH908AIibylfSFeJzMqqUU-KeN6La-PjsrnmXbqR2ttqKnq0K6VuQucIQDg0przSlmEwcHHIuq9A1xwr79B8UtMBXUH7aAWsY5CIyxaNf5Ln-MISmrZxrdZqXXf-3Dm1a-oo5EzwYDNfIpdJDj6PK5pGxyMNI84DiBRyuYs1a_p_L-eYWxYT5dQ4TpWFTfsWPOrNTJwiMtiiwZpy2I-InT5lAFqhCZGDBoeYDcBRhStA2rq5xOYuUIkCAWVomUNsb03V8f3-wxWQZ9EwL0ofMd8yUFR7LS370CCew7A"
       }
     },
     {
-      "RequestUri": "https://localtestacr04.azurecr.io/acr/v1/library%2Fhello-world/_tags/latest",
-      "RequestMethod": "GET",
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/hello-world-5-microsoftwindows10019042-net508/_tags/test-set-tag-properties",
+      "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "Content-Length": "84",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
         "x-ms-client-request-id": "5e34df74440e4d0ab80895827407f5e0",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "393",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:36 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "3459ea48-bcb8-4b3b-b799-7a19d3d0d11f"
-      },
-      "ResponseBody": {
-        "registry": "localtestacr04.azurecr.io",
-        "imageName": "library/hello-world",
-        "tag": {
-          "name": "latest",
-          "digest": "sha256:f2266cbfc127c960fd30e76b7c792dc23b588c0db76233517e1891a4e357d519",
-          "createdTime": "2021-05-10T15:39:23.7063677Z",
-          "lastUpdateTime": "2021-05-10T15:39:23.7063677Z",
-          "signed": false,
-          "changeableAttributes": {
-            "deleteEnabled": true,
-            "writeEnabled": true,
-            "readEnabled": true,
-            "listEnabled": true
-          }
-        }
-      }
-    },
-    {
-      "RequestUri": "https://localtestacr04.azurecr.io/acr/v1/library%2Fhello-world/_tags/latest",
-      "RequestMethod": "PATCH",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "84",
-        "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "a783e95f2ce0fe1bef0760774c29b11f",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "deleteEnabled": false,
-        "writeEnabled": false,
-        "listEnabled": false,
-        "readEnabled": false
-      },
-      "StatusCode": 401,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "222",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:37 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr04.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr04.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_write\u0022",
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "ff50c8ac-4c7c-4fec-a848-ab64a866ed57"
-      },
-      "ResponseBody": {
-        "errors": [
-          {
-            "code": "UNAUTHORIZED",
-            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
-            "detail": [
-              {
-                "Type": "repository",
-                "Name": "library/hello-world",
-                "Action": "metadata_write"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://localtestacr04.azurecr.io/oauth2/token",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "140",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "b56c0459f34ad559603a072b4beed9a9",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "service=localtestacr04.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3ametadata_write\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Connection": "keep-alive",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:37 GMT",
-        "Server": "openresty",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "022ef321-0ffc-49ce-ad6d-5958e54b6720",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.316667"
-      },
-      "ResponseBody": {
-        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjQ1NlA6WjNCRjpCQ0tPOkpUN0w6MlNLSTpVQUpZOkRCSU46VU5KWTpHWUZHOjdMQTI6WUpNSzpWUkVaIn0.eyJqdGkiOiJjNDI1ODEwZi0xZjYxLTQ5M2ItYTgzNy0zNzI2NWQzMzA0ZmQiLCJzdWIiOiI2NmZjYTY2Yy1iOTkwLTQzODEtYjM3Yi01ODhhMTc5OGNlNjUiLCJuYmYiOjE2MjA2NjAzMzcsImV4cCI6MTYyMDY2NDgzNywiaWF0IjoxNjIwNjYwMzM3LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJsb2NhbHRlc3RhY3IwNC5henVyZWNyLmlvIiwidmVyc2lvbiI6IjIuMCIsInJpZCI6ImJmNmNlNzhlYzM2MjQ1OWQ4ODRmN2NlNjMxNGY1YWJmIiwiYWNjZXNzIjpbeyJ0eXBlIjoicmVwb3NpdG9yeSIsIm5hbWUiOiJsaWJyYXJ5L2hlbGxvLXdvcmxkIiwiYWN0aW9ucyI6WyJtZXRhZGF0YV93cml0ZSJdfV0sInJvbGVzIjpbXSwiZ3JhbnRfdHlwZSI6ImFjY2Vzc190b2tlbiJ9.m4X-S4GKnmR5nZOfvA4QgxM-ppae4w8oyDzf9oxS7_t3UiOCchL6_9ajksge9iIPwAH6ZahijDkFg1ed6bqEuclDbMJJtA1R2dGOEh_-WU8k6kW_rit7cV9DOSc0bvf64D0N2qcYrcSF9148WjfgzJGyZpAxKHy7TQPF0zPALs1AeTCwS8Y7pNcQu4PEdZadxkF4sicT8onP7OAA0RpirSLBS6AKZqAsNaPfVp0KOyGPvXKtkcpv66mNumpU0iA1jtFPZgihWnDY5-2gEJSIC3-ijeFOoueIBYGHf6tu4uc2DC6C1w7JWbrvV6eUv2uGqk9wzlpSkFuMraB2h2xY4g"
-      }
-    },
-    {
-      "RequestUri": "https://localtestacr04.azurecr.io/acr/v1/library%2Fhello-world/_tags/latest",
-      "RequestMethod": "PATCH",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "84",
-        "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "a783e95f2ce0fe1bef0760774c29b11f",
-        "x-ms-return-client-request-id": "true"
-      },
       "RequestBody": {
         "deleteEnabled": false,
         "writeEnabled": false,
@@ -261,9 +148,9 @@
           "X-Ms-Correlation-Request-Id"
         ],
         "Connection": "keep-alive",
-        "Content-Length": "397",
+        "Content-Length": "449",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:37 GMT",
+        "Date": "Sat, 17 Jul 2021 21:24:34 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -271,16 +158,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "70d00e1e-ced1-4aaf-b5e5-3504304e063b"
+        "X-Ms-Correlation-Request-Id": "fcbed306-c2b0-4c44-a79a-d7ecbfeafcfe"
       },
       "ResponseBody": {
-        "registry": "localtestacr04.azurecr.io",
-        "imageName": "library/hello-world",
+        "registry": "annelocontainerregistry.azurecr.io",
+        "imageName": "hello-world-5-microsoftwindows10019042-net508",
         "tag": {
-          "name": "latest",
-          "digest": "sha256:f2266cbfc127c960fd30e76b7c792dc23b588c0db76233517e1891a4e357d519",
-          "createdTime": "2021-05-10T15:39:23.7063677Z",
-          "lastUpdateTime": "2021-05-10T15:39:23.7063677Z",
+          "name": "test-set-tag-properties",
+          "digest": "sha256:df5f5184104426b65967e016ff2ac0bfcd44ad7899ca3bbcf8e44e4461491a9e",
+          "createdTime": "2021-07-17T21:24:27.1622481Z",
+          "lastUpdateTime": "2021-07-17T21:24:27.1622481Z",
           "signed": false,
           "changeableAttributes": {
             "deleteEnabled": false,
@@ -292,12 +179,15 @@
       }
     },
     {
-      "RequestUri": "https://localtestacr04.azurecr.io/acr/v1/library%2Fhello-world/_tags/latest",
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/hello-world-5-microsoftwindows10019042-net508/_tags/test-set-tag-properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "b1819cd20815e9b0a4be137fc1dda8b9",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "a783e95f2ce0fe1bef0760774c29b11f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -310,18 +200,18 @@
           "X-Ms-Correlation-Request-Id"
         ],
         "Connection": "keep-alive",
-        "Content-Length": "221",
+        "Content-Length": "247",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:37 GMT",
+        "Date": "Sat, 17 Jul 2021 21:24:34 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains",
           "max-age=31536000; includeSubDomains"
         ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr04.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr04.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022",
+        "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistry.azurecr.io\u0022,scope=\u0022repository:hello-world-5-microsoftwindows10019042-net508:metadata_read\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "5143812c-21f1-4437-8c37-687552b531bf"
+        "X-Ms-Correlation-Request-Id": "0bc5b75c-5716-414d-8536-4ae691fe9c8d"
       },
       "ResponseBody": {
         "errors": [
@@ -331,7 +221,7 @@
             "detail": [
               {
                 "Type": "repository",
-                "Name": "library/hello-world",
+                "Name": "hello-world-5-microsoftwindows10019042-net508",
                 "Action": "metadata_read"
               }
             ]
@@ -340,40 +230,46 @@
       }
     },
     {
-      "RequestUri": "https://localtestacr04.azurecr.io/oauth2/token",
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/oauth2/token",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "139",
+        "Content-Length": "172",
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "4fa80abb0fe86c1190ad47a525f0b200",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "b56c0459f34ad559603a072b4beed9a9",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "service=localtestacr04.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3ametadata_read\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "RequestBody": "service=annelocontainerregistry.azurecr.io\u0026scope=repository%3ahello-world-5-microsoftwindows10019042-net508%3ametadata_read\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:37 GMT",
+        "Date": "Sat, 17 Jul 2021 21:24:34 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "3adfbf29-062d-4a26-8a4c-183b23d5e14a",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.3"
+        "X-Ms-Correlation-Request-Id": "84919c1f-de7b-410c-8674-2e82425b3ffb",
+        "x-ms-ratelimit-remaining-calls-per-second": "165.566667"
       },
       "ResponseBody": {
-        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjQ1NlA6WjNCRjpCQ0tPOkpUN0w6MlNLSTpVQUpZOkRCSU46VU5KWTpHWUZHOjdMQTI6WUpNSzpWUkVaIn0.eyJqdGkiOiJmMWY2ZjVkYy1mZWQ0LTQxYTItODkxNC1jZmJkZWI0ZWE0Y2IiLCJzdWIiOiI2NmZjYTY2Yy1iOTkwLTQzODEtYjM3Yi01ODhhMTc5OGNlNjUiLCJuYmYiOjE2MjA2NjAzMzcsImV4cCI6MTYyMDY2NDgzNywiaWF0IjoxNjIwNjYwMzM3LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJsb2NhbHRlc3RhY3IwNC5henVyZWNyLmlvIiwidmVyc2lvbiI6IjIuMCIsInJpZCI6ImJmNmNlNzhlYzM2MjQ1OWQ4ODRmN2NlNjMxNGY1YWJmIiwiYWNjZXNzIjpbeyJ0eXBlIjoicmVwb3NpdG9yeSIsIm5hbWUiOiJsaWJyYXJ5L2hlbGxvLXdvcmxkIiwiYWN0aW9ucyI6WyJtZXRhZGF0YV9yZWFkIl19XSwicm9sZXMiOltdLCJncmFudF90eXBlIjoiYWNjZXNzX3Rva2VuIn0.jqvgjx2a1VTnfBYIZHZzV3Vz27PQrRI94NQK5Am-yiAtNu5WcHT8lFREtU1Nlva1TW0FILNbY1_iFion4Y995xx71NXXiqxyY_t6j5d86wzviC0B-aUOSqG4lhq-EON1VwrqmqlUOEvnkQClrOo2ttuNzaz5tvvMRmbMkm5lTRpxLyzWFrPH3up5aoiUMZYiIiWdrZ5dyQJuHAEvIe0UWI1_lxSRKY0Nbijcu3MDQLpGLKl4jQWlux_Q_OOECWKgSssonBvdxkoyv46982J8h_ANnHT8LhYZqTtdhdPJ8ia6dl4bk6beOXeM75DElJemzN-if8cv7iyR-TAl40F0ng"
+        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVERFE6SFVYWDpMQzQ3OlpCUk06T0k0WTpPUjY2OkFVWko6Qlk3RTo3N0pWOjU0UlI6UU1BSzpOTDI1In0.eyJqdGkiOiI2MmQ5NDI2ZS04OWI0LTQ5NjYtYWRjOC1hYjAzMmFkMDY0YTMiLCJzdWIiOiI3YTc4NjExNS0wNjViLTRiMWItYmEyMi1lOWY3NmU2MGE2NjkiLCJuYmYiOjE2MjY1NTYxNzQsImV4cCI6MTYyNjU2MDY3NCwiaWF0IjoxNjI2NTU2MTc0LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJhbm5lbG9jb250YWluZXJyZWdpc3RyeS5henVyZWNyLmlvIiwidmVyc2lvbiI6IjIuMCIsInJpZCI6ImM0ZjljYjU3N2Q2NzRkM2ZhZTk0MTI3MjI2NzY3N2E5IiwiYWNjZXNzIjpbeyJ0eXBlIjoicmVwb3NpdG9yeSIsIm5hbWUiOiJoZWxsby13b3JsZC01LW1pY3Jvc29mdHdpbmRvd3MxMDAxOTA0Mi1uZXQ1MDgiLCJhY3Rpb25zIjpbIm1ldGFkYXRhX3JlYWQiXX1dLCJyb2xlcyI6W10sImdyYW50X3R5cGUiOiJhY2Nlc3NfdG9rZW4iLCJhcHBpZCI6IjAxOGFiZThjLTY2ODYtNDBkOC04ZmUwLTZlZmM2NDA4ZDNjOCJ9.ucV2M6OdDnU1Wn2izS2B-bKVV7RUbjdVHk4uiUsTLBP7b6CxSN6KDnuyb8aTnHPmh9exXVJQoJF4p-6wA6Wb-Ytx04CTWz_y3Jz-iEUsmCM8siKa4DtEPSpzXVhOxW-9BU9uyUE0oBVdC2QEHsPwoJF8cS8PMq4sko8v2O8iCxcHAvxLkbfeh6_lIAIrrvW-8hyUgas5mkTq-I3tSW1SvxUTq7YFoU3dj_m_cuikV8EZ1WgAZwWIpiF-Qd1avTgq00sc6cmIfRQUSI445yUXz4HscXChpwrDP7gMMMru0t5gW67Of6kRw5ygNLEndI0RcAMrPAcQd_sNouxnPexwAg"
       }
     },
     {
-      "RequestUri": "https://localtestacr04.azurecr.io/acr/v1/library%2Fhello-world/_tags/latest",
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/hello-world-5-microsoftwindows10019042-net508/_tags/test-set-tag-properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "b1819cd20815e9b0a4be137fc1dda8b9",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "a783e95f2ce0fe1bef0760774c29b11f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -386,9 +282,9 @@
           "X-Ms-Correlation-Request-Id"
         ],
         "Connection": "keep-alive",
-        "Content-Length": "397",
+        "Content-Length": "449",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:37 GMT",
+        "Date": "Sat, 17 Jul 2021 21:24:34 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -396,16 +292,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "ab774f75-4efc-46e0-b737-343e45f5d602"
+        "X-Ms-Correlation-Request-Id": "2e668f40-7d0d-4597-8190-92af1fdd6cfc"
       },
       "ResponseBody": {
-        "registry": "localtestacr04.azurecr.io",
-        "imageName": "library/hello-world",
+        "registry": "annelocontainerregistry.azurecr.io",
+        "imageName": "hello-world-5-microsoftwindows10019042-net508",
         "tag": {
-          "name": "latest",
-          "digest": "sha256:f2266cbfc127c960fd30e76b7c792dc23b588c0db76233517e1891a4e357d519",
-          "createdTime": "2021-05-10T15:39:23.7063677Z",
-          "lastUpdateTime": "2021-05-10T15:39:23.7063677Z",
+          "name": "test-set-tag-properties",
+          "digest": "sha256:df5f5184104426b65967e016ff2ac0bfcd44ad7899ca3bbcf8e44e4461491a9e",
+          "createdTime": "2021-07-17T21:24:27.1622481Z",
+          "lastUpdateTime": "2021-07-17T21:24:27.1622481Z",
           "signed": false,
           "changeableAttributes": {
             "deleteEnabled": false,
@@ -417,14 +313,17 @@
       }
     },
     {
-      "RequestUri": "https://localtestacr04.azurecr.io/acr/v1/library%2Fhello-world/_tags/latest",
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/hello-world-5-microsoftwindows10019042-net508/_tags/test-set-tag-properties",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "80",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "afa5b62effa8500a5382108bdfda1483",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "b1819cd20815e9b0a4be137fc1dda8b9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -442,18 +341,18 @@
           "X-Ms-Correlation-Request-Id"
         ],
         "Connection": "keep-alive",
-        "Content-Length": "222",
+        "Content-Length": "248",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:37 GMT",
+        "Date": "Sat, 17 Jul 2021 21:24:34 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains",
           "max-age=31536000; includeSubDomains"
         ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr04.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr04.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_write\u0022",
+        "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistry.azurecr.io\u0022,scope=\u0022repository:hello-world-5-microsoftwindows10019042-net508:metadata_write\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "d97a05f5-9589-4aa2-a95b-1da4f5e66042"
+        "X-Ms-Correlation-Request-Id": "8f4a2a54-3a93-4cbf-adde-4f295b189c1b"
       },
       "ResponseBody": {
         "errors": [
@@ -463,7 +362,7 @@
             "detail": [
               {
                 "Type": "repository",
-                "Name": "library/hello-world",
+                "Name": "hello-world-5-microsoftwindows10019042-net508",
                 "Action": "metadata_write"
               }
             ]
@@ -472,42 +371,48 @@
       }
     },
     {
-      "RequestUri": "https://localtestacr04.azurecr.io/oauth2/token",
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/oauth2/token",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "140",
+        "Content-Length": "173",
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "416f4d928945c3c18b142167c10bc4b4",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "4fa80abb0fe86c1190ad47a525f0b200",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "service=localtestacr04.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3ametadata_write\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "RequestBody": "service=annelocontainerregistry.azurecr.io\u0026scope=repository%3ahello-world-5-microsoftwindows10019042-net508%3ametadata_write\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:37 GMT",
+        "Date": "Sat, 17 Jul 2021 21:24:34 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "a9c55922-4de0-414c-9798-343c7ca25edb",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.283333"
+        "X-Ms-Correlation-Request-Id": "b2ccd341-b089-4108-98b8-cf16de05da51",
+        "x-ms-ratelimit-remaining-calls-per-second": "165.55"
       },
       "ResponseBody": {
-        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjQ1NlA6WjNCRjpCQ0tPOkpUN0w6MlNLSTpVQUpZOkRCSU46VU5KWTpHWUZHOjdMQTI6WUpNSzpWUkVaIn0.eyJqdGkiOiIyYTFjNzFlZi1kMDk0LTRhOGEtOWY5ZS0zNDFjOWUzZTQzODgiLCJzdWIiOiI2NmZjYTY2Yy1iOTkwLTQzODEtYjM3Yi01ODhhMTc5OGNlNjUiLCJuYmYiOjE2MjA2NjAzMzcsImV4cCI6MTYyMDY2NDgzNywiaWF0IjoxNjIwNjYwMzM3LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJsb2NhbHRlc3RhY3IwNC5henVyZWNyLmlvIiwidmVyc2lvbiI6IjIuMCIsInJpZCI6ImJmNmNlNzhlYzM2MjQ1OWQ4ODRmN2NlNjMxNGY1YWJmIiwiYWNjZXNzIjpbeyJ0eXBlIjoicmVwb3NpdG9yeSIsIm5hbWUiOiJsaWJyYXJ5L2hlbGxvLXdvcmxkIiwiYWN0aW9ucyI6WyJtZXRhZGF0YV93cml0ZSJdfV0sInJvbGVzIjpbXSwiZ3JhbnRfdHlwZSI6ImFjY2Vzc190b2tlbiJ9.fv7buae1CIQToNfOlj8OXOl0BtK5M4i4HY_i9vBjLtJmQPk5hjwGPPL-7LYoEYjzncI69fG0KndLUH62O9Ey6678WUuF11BXJXVH2tEY0-blNfblXYy4NtSRuRKKPcajtz6yPCC2Nl5Z5PpSZymsh5H0TAl73CzuLBp4FNYfWsJS1zAW6curACWRseMjfGvIB8_ZII4D_1SUm67sOkSBOhZBvcde2SZ6BCF0TF-A4nuHMStXrG70JqF9qr62pRJUdiudf8zHN44txnkHICLKeij4RYv6tR2Qc-jU-5U_c7Eydh1z6xX5sEYkZj8pTT5ouK79UMtAjwsYegQ1kf2I8w"
+        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVERFE6SFVYWDpMQzQ3OlpCUk06T0k0WTpPUjY2OkFVWko6Qlk3RTo3N0pWOjU0UlI6UU1BSzpOTDI1In0.eyJqdGkiOiI1MDU2NTZlNy0zNDAzLTRkZGUtYTQ4Zi02OGZhNTczNDM1ODciLCJzdWIiOiI3YTc4NjExNS0wNjViLTRiMWItYmEyMi1lOWY3NmU2MGE2NjkiLCJuYmYiOjE2MjY1NTYxNzQsImV4cCI6MTYyNjU2MDY3NCwiaWF0IjoxNjI2NTU2MTc0LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJhbm5lbG9jb250YWluZXJyZWdpc3RyeS5henVyZWNyLmlvIiwidmVyc2lvbiI6IjIuMCIsInJpZCI6ImM0ZjljYjU3N2Q2NzRkM2ZhZTk0MTI3MjI2NzY3N2E5IiwiYWNjZXNzIjpbeyJ0eXBlIjoicmVwb3NpdG9yeSIsIm5hbWUiOiJoZWxsby13b3JsZC01LW1pY3Jvc29mdHdpbmRvd3MxMDAxOTA0Mi1uZXQ1MDgiLCJhY3Rpb25zIjpbIm1ldGFkYXRhX3dyaXRlIl19XSwicm9sZXMiOltdLCJncmFudF90eXBlIjoiYWNjZXNzX3Rva2VuIiwiYXBwaWQiOiIwMThhYmU4Yy02Njg2LTQwZDgtOGZlMC02ZWZjNjQwOGQzYzgifQ.dgQ0fPPRjRbEnMwl-4uawmhtWLtbQvaMPADOZkH9KaLzsRC3DlcuTc-yRSnjmLQ-EGmKtEbqOyy4ZQYQ7SY3S5_-gh3nZivKSuKZuZEInJOc9P_d7GOvTgl2kOqLfTQMi7mQrd87nPwl0KX6a34bpohFGaF-EAKWbveq_q53n67vZjfgMdIvgD0-nG701mFcx95itTwydSH591CF341IhMgid8CMOm6-ZLWC77ke1PJQLnQ-fTZzDt_U9hZdC36WwGpA90-UUfs7-vc56GE9tvO4oPb1H03BKOnoop4l3foVz0rSE1oltwGzWbBzJZSB8uZWh4eNVoKYqEpx1s6pPA"
       }
     },
     {
-      "RequestUri": "https://localtestacr04.azurecr.io/acr/v1/library%2Fhello-world/_tags/latest",
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/hello-world-5-microsoftwindows10019042-net508/_tags/test-set-tag-properties",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "80",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "afa5b62effa8500a5382108bdfda1483",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "b1819cd20815e9b0a4be137fc1dda8b9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -525,9 +430,9 @@
           "X-Ms-Correlation-Request-Id"
         ],
         "Connection": "keep-alive",
-        "Content-Length": "393",
+        "Content-Length": "445",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 10 May 2021 15:40:37 GMT",
+        "Date": "Sat, 17 Jul 2021 21:24:34 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -535,16 +440,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "e32dc3fd-91ed-4dae-b6ef-60d3862e43e4"
+        "X-Ms-Correlation-Request-Id": "2eddc29e-501d-48d3-a89b-44cc3518b0a9"
       },
       "ResponseBody": {
-        "registry": "localtestacr04.azurecr.io",
-        "imageName": "library/hello-world",
+        "registry": "annelocontainerregistry.azurecr.io",
+        "imageName": "hello-world-5-microsoftwindows10019042-net508",
         "tag": {
-          "name": "latest",
-          "digest": "sha256:f2266cbfc127c960fd30e76b7c792dc23b588c0db76233517e1891a4e357d519",
-          "createdTime": "2021-05-10T15:39:23.7063677Z",
-          "lastUpdateTime": "2021-05-10T15:39:23.7063677Z",
+          "name": "test-set-tag-properties",
+          "digest": "sha256:df5f5184104426b65967e016ff2ac0bfcd44ad7899ca3bbcf8e44e4461491a9e",
+          "createdTime": "2021-07-17T21:24:27.1622481Z",
+          "lastUpdateTime": "2021-07-17T21:24:27.1622481Z",
           "signed": false,
           "changeableAttributes": {
             "deleteEnabled": true,
@@ -553,11 +458,154 @@
             "listEnabled": true
           }
         }
+      }
+    },
+    {
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/hello-world-5-microsoftwindows10019042-net508",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "afa5b62effa8500a5382108bdfda1483",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "240",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 17 Jul 2021 21:24:34 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistry.azurecr.io\u0022,scope=\u0022repository:hello-world-5-microsoftwindows10019042-net508:delete\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Correlation-Request-Id": "a18c647b-1813-4400-9ef9-8f9047f3aac3"
+      },
+      "ResponseBody": {
+        "errors": [
+          {
+            "code": "UNAUTHORIZED",
+            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
+            "detail": [
+              {
+                "Type": "repository",
+                "Name": "hello-world-5-microsoftwindows10019042-net508",
+                "Action": "delete"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/oauth2/token",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "165",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "416f4d928945c3c18b142167c10bc4b4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "service=annelocontainerregistry.azurecr.io\u0026scope=repository%3ahello-world-5-microsoftwindows10019042-net508%3adelete\u0026refresh_token=Sanitized\u0026grant_type=refresh_token",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 17 Jul 2021 21:24:34 GMT",
+        "Server": "openresty",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Ms-Correlation-Request-Id": "d0c4f2a8-a31c-4100-88cd-812bb699d251",
+        "x-ms-ratelimit-remaining-calls-per-second": "165.533333"
+      },
+      "ResponseBody": {
+        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVERFE6SFVYWDpMQzQ3OlpCUk06T0k0WTpPUjY2OkFVWko6Qlk3RTo3N0pWOjU0UlI6UU1BSzpOTDI1In0.eyJqdGkiOiIwMDkzZGM1MS1hZGZhLTQ1NWYtODc0My05MTJmOGQ5ZmQ3NzEiLCJzdWIiOiI3YTc4NjExNS0wNjViLTRiMWItYmEyMi1lOWY3NmU2MGE2NjkiLCJuYmYiOjE2MjY1NTYxNzQsImV4cCI6MTYyNjU2MDY3NCwiaWF0IjoxNjI2NTU2MTc0LCJpc3MiOiJBenVyZSBDb250YWluZXIgUmVnaXN0cnkiLCJhdWQiOiJhbm5lbG9jb250YWluZXJyZWdpc3RyeS5henVyZWNyLmlvIiwidmVyc2lvbiI6IjEuMCIsInJpZCI6ImM0ZjljYjU3N2Q2NzRkM2ZhZTk0MTI3MjI2NzY3N2E5IiwiYWNjZXNzIjpbeyJ0eXBlIjoicmVwb3NpdG9yeSIsIm5hbWUiOiJoZWxsby13b3JsZC01LW1pY3Jvc29mdHdpbmRvd3MxMDAxOTA0Mi1uZXQ1MDgiLCJhY3Rpb25zIjpbImRlbGV0ZSJdfV0sInJvbGVzIjpbXSwiZ3JhbnRfdHlwZSI6ImFjY2Vzc190b2tlbiIsImFwcGlkIjoiMDE4YWJlOGMtNjY4Ni00MGQ4LThmZTAtNmVmYzY0MDhkM2M4In0.lRNt4sGifXasPeF9OOwBqFkQDpGD6OV1jk51WqgDGnDX7UjX6WaVr2tWqrj4yPWmBIoZ7hOzchLg1nyAe97OLdv4QquOwqYWNJU3lv-w3YfodrMHLaiXSbtiPyaijZwC8P7GlxtMuSu6bKEFlrG64epllCNqn3d3_GWKlICqHpwqZGwPbzTXI6gdpDsHd63dnlElAQeVuw6p_jJhBvAsygRzBX140gI0Ptu3r0NJl7dtfS8N1kubB3Nb4Re2qqB07xV-M76r5R5wBDTZKaK_u5fpHu52hqaccnqU8Pv9BCQbFjpT3-Ltr-r3RtFxXQTuLv-lgplKcWM79Drfby6QMQ"
+      }
+    },
+    {
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/hello-world-5-microsoftwindows10019042-net508",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210717.1",
+          "(.NET 5.0.8; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "afa5b62effa8500a5382108bdfda1483",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "878",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 17 Jul 2021 21:24:35 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Client-Request-Id": "afa5b62effa8500a5382108bdfda1483",
+        "X-Ms-Correlation-Request-Id": "d4bcbb1c-de4e-47b9-b65c-fe95d6ab0eac",
+        "X-Ms-Ratelimit-Remaining-Calls-Per-Second": "8.000000",
+        "X-Ms-Request-Id": "bd27a8e7-8055-47bf-afc8-d9b468ff6f38"
+      },
+      "ResponseBody": {
+        "manifestsDeleted": [
+          "sha256:1b26826f602946860c279fce658f31050cff2c596583af237d971f4629b57792",
+          "sha256:3e7d74d1c66c8f7dd5384f49bf0f8ab3e18e81e8d2a79218ed777c534b446552",
+          "sha256:58d91e6625a0ea837222f24da4ca00be9da3db45cee5b172135eaf271610f9eb",
+          "sha256:6d9fcdca25452c9a255f02c7d67eb28e8afbba2671f1e8f60b3b3585b7bdf172",
+          "sha256:88b2e00179bd6c4064612403c8d42a13de7ca809d61fee966ce9e129860a8a90",
+          "sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0",
+          "sha256:94b700b6ae5759e539e06fa6d483f5f0174067945f180cc1362cfda71c5fd722",
+          "sha256:a10c347f4cc2924af832d319635d6d027ca8820ff683b6bcc728d825a37a7f69",
+          "sha256:b89e28f1d57f44064e96c4525e514f6f0498a433b83413538f79f82566d72114",
+          "sha256:cb55d8f7347376e1ba38ca740904b43c9a52f66c7d2ae1ef1a0de1bc9f40df98",
+          "sha256:df5f5184104426b65967e016ff2ac0bfcd44ad7899ca3bbcf8e44e4461491a9e"
+        ],
+        "tagsDeleted": [
+          "test-set-tag-properties"
+        ]
       }
     }
   ],
   "Variables": {
-    "CONTAINERREGISTRY_ENDPOINT": "https://localtestacr04.azurecr.io",
-    "RandomSeed": "312710081"
+    "CLIENT_ID": "018abe8c-6686-40d8-8fe0-6efc6408d3c8",
+    "CONTAINERREGISTRY_ENDPOINT": "https://annelocontainerregistry.azurecr.io",
+    "CONTAINERREGISTRY_REGISTRY_NAME": "annelocontainerregistry",
+    "RandomSeed": "312710081",
+    "RESOURCE_GROUP": "rg-annelocontainerregistry",
+    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
+    "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
   }
 }

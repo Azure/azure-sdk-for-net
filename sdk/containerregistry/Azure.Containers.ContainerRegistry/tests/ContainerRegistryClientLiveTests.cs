@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRegistryClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -104,12 +104,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             string registry = TestEnvironment.Registry;
             string sourceRepository = $"library/hello-world";
-            string targetRepository = $"hello-world{GetPlatformSuffix()}";
-
+            string targetRepository = $"hello-world-1{GetPlatformSuffix()}";
             List<string> tags = new List<string>()
             {
                 "test-delete-repo"
             };
+
             var client = CreateClient();
 
             if (Mode != RecordedTestMode.Playback)
@@ -120,9 +120,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
             await client.DeleteRepositoryAsync(targetRepository);
 
-            var repositories = client.GetRepositoryNamesAsync();
-
             // Assert
+            var repositories = client.GetRepositoryNamesAsync();
             await foreach (var item in repositories)
             {
                 if (item.Contains(targetRepository))

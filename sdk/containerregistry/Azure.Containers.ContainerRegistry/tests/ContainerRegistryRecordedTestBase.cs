@@ -45,12 +45,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         protected string GetPlatformSuffix()
         {
-            return $"-{RuntimeInformation.OSDescription}-{RuntimeInformation.FrameworkDescription}".Replace(" ","").Replace(".", "").ToLower();
+            return $"-{RuntimeInformation.OSDescription}-{RuntimeInformation.FrameworkDescription}".Replace(" ", "").Replace(".", "").ToLower();
         }
 
-        public async Task ImportImageAsync(string registry, string repository, string tag)
+        public async Task ImportImageAsync(string registry, string repository, string tag, string targetRepository = default)
         {
-            await ImportImageAsync(registry, repository, new List<string>() { tag });
+            await ImportImageAsync(registry, repository, new List<string>() { tag }, targetRepository);
         }
 
         public async Task ImportImageAsync(string registry, string repository, List<string> tags, string targetRepository = default)
@@ -86,6 +86,41 @@ namespace Azure.Containers.ContainerRegistry.Tests
                         Source = importSource,
                         TargetTags = targetTags.ToList()
                     });
+        }
+
+        public async Task ImportImageByDigestAsync(string registry, string repository, string digest, string targetRepository, string targetTag)
+        {
+            var credential = new AzureCredentials(
+                new ServicePrincipalLoginInformation
+                {
+                    ClientId = TestEnvironment.ClientId,
+                    ClientSecret = TestEnvironment.ClientSecret,
+                },
+                TestEnvironment.TenantId,
+                AzureEnvironment.AzureGlobalCloud);
+
+            var managementClient = new ContainerRegistryManagementClient(credential.WithDefaultSubscription(TestEnvironment.SubscriptionId));
+            managementClient.SubscriptionId = TestEnvironment.SubscriptionId;
+
+            var importSource = new ImportSource
+            {
+                SourceImage = $"{repository}@{digest}",
+                RegistryUri = "registry.hub.docker.com"
+            };
+
+            var targetImage = $"{targetRepository}:{targetTag}";
+
+            await managementClient.Registries.ImportImageAsync(
+                resourceGroupName: TestEnvironment.ResourceGroup,
+                registryName: registry,
+                parameters:
+                    new ImportImageParameters
+                    {
+                        Mode = ImportMode.Force,
+                        Source = importSource,
+                        TargetTags = new List<string>() { targetImage }
+                    });
+            ;
         }
     }
 }
