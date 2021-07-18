@@ -39,5 +39,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             IBlobCommitedAction committedAction = new BlobCommittedAction(blob, blobWrittenWatcher);
             return await Task.FromResult(new NotifyingBlobStream(rawStream, committedAction)).ConfigureAwait(false);
         }
+
+        public static async Task<ICacheAwareWriteObject> BindStreamCacheAwareAsync(BlobWithContainer<BlobBaseClient> blob,
+            ValueBindingContext context, IBlobWrittenWatcher blobWrittenWatcher, IFunctionDataCache functionDataCache)
+        {
+            Stream blobStream = await BindStreamAsync(blob, context, blobWrittenWatcher).ConfigureAwait(false);
+            return new CacheableWriteBlob(blob, context.SharedMemoryMetadata, blobStream, functionDataCache);
+        }
     }
 }
