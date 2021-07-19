@@ -197,12 +197,18 @@ namespace Azure.Core.Pipeline
                 bool getTokenFromCredential;
                 TaskCompletionSource<HeaderValueInfo> headerValueTcs;
                 TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs;
+                HeaderValueInfo info;
                 int maxCancellationRetries = 3;
+
+                if (_credential.SupportsCaching)
+                {
+                    info = await GetHeaderValueFromCredentialAsync(context, async, message.CancellationToken).ConfigureAwait(false);
+                    return info.HeaderValue;
+                }
 
                 while (true)
                 {
                     (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context);
-                    HeaderValueInfo info;
                     if (getTokenFromCredential)
                     {
                         if (backgroundUpdateTcs != null)

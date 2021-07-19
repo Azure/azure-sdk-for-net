@@ -454,6 +454,7 @@ namespace Azure.Core
     public abstract partial class TokenCredential
     {
         protected TokenCredential() { }
+        public virtual bool SupportsCaching { get { throw null; } }
         public abstract Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
     }

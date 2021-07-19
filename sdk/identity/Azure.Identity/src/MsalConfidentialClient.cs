@@ -125,5 +125,25 @@ namespace Azure.Identity
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
         }
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenOnBehalfOf(
+            string[] scopes,
+            string tenantId,
+            UserAssertion userAssertionValue,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+
+            var builder = client.AcquireTokenOnBehalfOf(scopes, userAssertionValue);
+
+            if (!string.IsNullOrEmpty(tenantId))
+            {
+                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+            }
+            return await builder
+                .ExecuteAsync(async, cancellationToken)
+                .ConfigureAwait(false);
+        }
     }
 }
