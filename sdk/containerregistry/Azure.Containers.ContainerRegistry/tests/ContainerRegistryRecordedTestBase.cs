@@ -11,6 +11,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using NUnit.Framework;
 using System.Linq;
 using Task = System.Threading.Tasks.Task;
+using System.Runtime.InteropServices;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
@@ -42,12 +43,36 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 ));
         }
 
-        public async Task ImportImageAsync(string registry, string repository, string tag)
+        protected string GetPlatformSuffix()
         {
-            await ImportImageAsync(registry, repository, new List<string>() { tag });
+            var os = FormatIdentifier(RuntimeInformation.OSDescription);
+            var dotnetVersion = FormatIdentifier(RuntimeInformation.FrameworkDescription);
+            return $"-{os}-{dotnetVersion}";
         }
 
-        public async Task ImportImageAsync(string registry, string repository, List<string> tags)
+        private string FormatIdentifier(string value)
+        {
+            List<string> invalidCharacters = new List<string> { " ", ".", "#", "~", ":", ";", "/", "\\" };
+            foreach (var invalid in invalidCharacters)
+            {
+                value = value.Replace(invalid, string.Empty);
+            }
+
+            int maxLength = 25;
+            if (value.Length > maxLength)
+            {
+                value = value.Substring(0, maxLength);
+            }
+
+            return value.ToLower();
+        }
+
+        public async Task ImportImageAsync(string registry, string repository, string tag, string targetRepository = default)
+        {
+            await ImportImageAsync(registry, repository, new List<string>() { tag }, targetRepository);
+        }
+
+        public async Task ImportImageAsync(string registry, string repository, List<string> tags, string targetRepository = default)
         {
             var credential = new AzureCredentials(
                 new ServicePrincipalLoginInformation
@@ -67,7 +92,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 RegistryUri = "registry.hub.docker.com"
             };
 
-            var targetTags = tags.Select(tag => $"{repository}:{tag}");
+            var target = targetRepository ?? repository;
+            var targetTags = tags.Select(tag => $"{target}:{tag}");
 
             await managementClient.Registries.ImportImageAsync(
                 resourceGroupName: TestEnvironment.ResourceGroup,
@@ -79,6 +105,41 @@ namespace Azure.Containers.ContainerRegistry.Tests
                         Source = importSource,
                         TargetTags = targetTags.ToList()
                     });
+        }
+
+        public async Task ImportImageByDigestAsync(string registry, string repository, string digest, string targetRepository, string targetTag)
+        {
+            var credential = new AzureCredentials(
+                new ServicePrincipalLoginInformation
+                {
+                    ClientId = TestEnvironment.ClientId,
+                    ClientSecret = TestEnvironment.ClientSecret,
+                },
+                TestEnvironment.TenantId,
+                AzureEnvironment.AzureGlobalCloud);
+
+            var managementClient = new ContainerRegistryManagementClient(credential.WithDefaultSubscription(TestEnvironment.SubscriptionId));
+            managementClient.SubscriptionId = TestEnvironment.SubscriptionId;
+
+            var importSource = new ImportSource
+            {
+                SourceImage = $"{repository}@{digest}",
+                RegistryUri = "registry.hub.docker.com"
+            };
+
+            var targetImage = $"{targetRepository}:{targetTag}";
+
+            await managementClient.Registries.ImportImageAsync(
+                resourceGroupName: TestEnvironment.ResourceGroup,
+                registryName: registry,
+                parameters:
+                    new ImportImageParameters
+                    {
+                        Mode = ImportMode.Force,
+                        Source = importSource,
+                        TargetTags = new List<string>() { targetImage }
+                    });
+            ;
         }
     }
 }

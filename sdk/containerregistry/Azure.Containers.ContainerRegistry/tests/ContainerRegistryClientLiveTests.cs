@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
@@ -98,53 +99,40 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest, NonParallelizable]
-        public async Task CanDeleteRepostitory()
+        public async Task CanDeleteRepository()
         {
             // Arrange
             string registry = TestEnvironment.Registry;
-            string repository = $"library/hello-world";
+            string sourceRepository = $"library/hello-world";
+            string targetRepository = $"hello-world-1{GetPlatformSuffix()}";
             List<string> tags = new List<string>()
             {
-                "latest",
-                "v1",
-                "v2",
-                "v3",
-                "v4",
+                "test-delete-repo"
             };
+
             var client = CreateClient();
 
-            try
+            if (Mode != RecordedTestMode.Playback)
             {
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await ImportImageAsync(registry, repository, tags);
-                }
-
-                // Act
-                await client.DeleteRepositoryAsync(repository);
-
-                var repositories = client.GetRepositoryNamesAsync();
-
-                await foreach (var item in repositories)
-                {
-                    if (item.Contains(repository))
-                    {
-                        Assert.Fail($"Repository {repository} was not deleted.");
-                    }
-                }
+                await ImportImageAsync(registry, sourceRepository, tags, targetRepository);
             }
-            finally
+
+            // Act
+            await client.DeleteRepositoryAsync(targetRepository);
+
+            // Assert
+            var repositories = client.GetRepositoryNamesAsync();
+            await foreach (var item in repositories)
             {
-                // Clean up - put the repository with tags back.
-                if (Mode != RecordedTestMode.Playback)
+                if (item.Contains(targetRepository))
                 {
-                    await ImportImageAsync(registry, repository, tags);
+                    Assert.Fail($"Repository {targetRepository} was not deleted.");
                 }
             }
         }
 
         [RecordedTest, NonParallelizable]
-        public void CanDeleteRepostitory_Anonymous()
+        public void CanDeleteRepository_Anonymous()
         {
             // Arrange
             string repository = $"library/hello-world";
