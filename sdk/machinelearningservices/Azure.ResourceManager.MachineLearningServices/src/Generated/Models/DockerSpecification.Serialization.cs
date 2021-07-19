@@ -15,23 +15,47 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("dockerSpecificationType");
+            writer.WriteStringValue(DockerSpecificationType.ToString());
+            if (Optional.IsDefined(Platform))
+            {
+                writer.WritePropertyName("platform");
+                writer.WriteObjectValue(Platform);
+            }
             writer.WriteEndObject();
         }
 
         internal static DockerSpecification DeserializeDockerSpecification(JsonElement element)
         {
-            DockerSpecificationType type = default;
+            if (element.TryGetProperty("dockerSpecificationType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Build": return DockerBuild.DeserializeDockerBuild(element);
+                    case "Image": return DockerImage.DeserializeDockerImage(element);
+                }
+            }
+            DockerSpecificationType dockerSpecificationType = default;
+            Optional<DockerImagePlatform> platform = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("dockerSpecificationType"))
                 {
-                    type = new DockerSpecificationType(property.Value.GetString());
+                    dockerSpecificationType = new DockerSpecificationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("platform"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    platform = DockerImagePlatform.DeserializeDockerImagePlatform(property.Value);
                     continue;
                 }
             }
-            return new DockerSpecification(type);
+            return new DockerSpecification(dockerSpecificationType, platform.Value);
         }
     }
 }

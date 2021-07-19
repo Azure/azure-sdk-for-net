@@ -26,10 +26,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("agentCount");
                 writer.WriteNumberValue(AgentCount.Value);
             }
-            if (Optional.IsDefined(AgentVMSize))
+            if (Optional.IsDefined(AgentVmSize))
             {
-                writer.WritePropertyName("agentVMSize");
-                writer.WriteStringValue(AgentVMSize);
+                writer.WritePropertyName("agentVmSize");
+                writer.WriteStringValue(AgentVmSize);
+            }
+            if (Optional.IsDefined(ClusterPurpose))
+            {
+                writer.WritePropertyName("clusterPurpose");
+                writer.WriteStringValue(ClusterPurpose.Value.ToString());
             }
             if (Optional.IsDefined(SslConfiguration))
             {
@@ -41,6 +46,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("aksNetworkingConfiguration");
                 writer.WriteObjectValue(AksNetworkingConfiguration);
             }
+            if (Optional.IsDefined(LoadBalancerType))
+            {
+                writer.WritePropertyName("loadBalancerType");
+                writer.WriteStringValue(LoadBalancerType.Value.ToString());
+            }
+            if (Optional.IsDefined(LoadBalancerSubnet))
+            {
+                writer.WritePropertyName("loadBalancerSubnet");
+                writer.WriteStringValue(LoadBalancerSubnet);
+            }
             writer.WriteEndObject();
         }
 
@@ -49,9 +64,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<string> clusterFqdn = default;
             Optional<IReadOnlyList<SystemService>> systemServices = default;
             Optional<int> agentCount = default;
-            Optional<string> agentVMSize = default;
+            Optional<string> agentVmSize = default;
+            Optional<ClusterPurpose> clusterPurpose = default;
             Optional<SslConfiguration> sslConfiguration = default;
             Optional<AksNetworkingConfiguration> aksNetworkingConfiguration = default;
+            Optional<LoadBalancerType> loadBalancerType = default;
+            Optional<string> loadBalancerSubnet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterFqdn"))
@@ -84,9 +102,19 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     agentCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("agentVMSize"))
+                if (property.NameEquals("agentVmSize"))
                 {
-                    agentVMSize = property.Value.GetString();
+                    agentVmSize = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("clusterPurpose"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clusterPurpose = new ClusterPurpose(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sslConfiguration"))
@@ -109,8 +137,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     aksNetworkingConfiguration = AksNetworkingConfiguration.DeserializeAksNetworkingConfiguration(property.Value);
                     continue;
                 }
+                if (property.NameEquals("loadBalancerType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    loadBalancerType = new LoadBalancerType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("loadBalancerSubnet"))
+                {
+                    loadBalancerSubnet = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AKSProperties(clusterFqdn.Value, Optional.ToList(systemServices), Optional.ToNullable(agentCount), agentVMSize.Value, sslConfiguration.Value, aksNetworkingConfiguration.Value);
+            return new AKSProperties(clusterFqdn.Value, Optional.ToList(systemServices), Optional.ToNullable(agentCount), agentVmSize.Value, Optional.ToNullable(clusterPurpose), sslConfiguration.Value, aksNetworkingConfiguration.Value, Optional.ToNullable(loadBalancerType), loadBalancerSubnet.Value);
         }
     }
 }

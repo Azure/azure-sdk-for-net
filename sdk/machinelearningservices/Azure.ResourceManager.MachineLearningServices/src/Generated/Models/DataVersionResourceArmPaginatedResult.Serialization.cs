@@ -15,10 +15,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static DataVersionResourceArmPaginatedResult DeserializeDataVersionResourceArmPaginatedResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DataVersionResource>> value = default;
             Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DataVersionResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -26,21 +31,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataVersionResource> array = new List<DataVersionResource>();
+                    List<DataVersionResourceData> array = new List<DataVersionResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataVersionResource.DeserializeDataVersionResource(item));
+                        array.Add(DataVersionResourceData.DeserializeDataVersionResourceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new DataVersionResourceArmPaginatedResult(Optional.ToList(value), nextLink.Value);
+            return new DataVersionResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

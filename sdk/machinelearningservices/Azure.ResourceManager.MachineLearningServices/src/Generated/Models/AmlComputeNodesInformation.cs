@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Compute node information related to a AmlCompute. </summary>
-    public partial class AmlComputeNodesInformation : ComputeNodesInformation
+    internal partial class AmlComputeNodesInformation : ComputeNodesInformation
     {
         /// <summary> Initializes a new instance of AmlComputeNodesInformation. </summary>
         internal AmlComputeNodesInformation()
@@ -22,15 +22,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of AmlComputeNodesInformation. </summary>
         /// <param name="computeType"> The type of compute. </param>
-        /// <param name="nextLink"> The continuation token. </param>
         /// <param name="nodes"> The collection of returned AmlCompute nodes details. </param>
-        internal AmlComputeNodesInformation(ComputeType computeType, string nextLink, IReadOnlyList<AmlComputeNodeInformation> nodes) : base(computeType, nextLink)
+        /// <param name="nextLink"> The continuation token. </param>
+        internal AmlComputeNodesInformation(ComputeType computeType, IReadOnlyList<AmlComputeNodeInformation> nodes, string nextLink) : base(computeType)
         {
             Nodes = nodes;
+            NextLink = nextLink;
             ComputeType = computeType;
         }
 
         /// <summary> The collection of returned AmlCompute nodes details. </summary>
         public IReadOnlyList<AmlComputeNodeInformation> Nodes { get; }
+        /// <summary> The continuation token. </summary>
+        public string NextLink { get; }
     }
 }

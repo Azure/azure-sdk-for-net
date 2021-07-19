@@ -16,25 +16,44 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Stage))
-            {
-                writer.WritePropertyName("stage");
-                writer.WriteStringValue(Stage);
-            }
             if (Optional.IsDefined(DatastoreId))
             {
                 writer.WritePropertyName("datastoreId");
                 writer.WriteStringValue(DatastoreId);
             }
-            if (Optional.IsDefined(AssetPath))
-            {
-                writer.WritePropertyName("assetPath");
-                writer.WriteObjectValue(AssetPath);
-            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(Flavors))
+            {
+                writer.WritePropertyName("flavors");
+                writer.WriteStartObject();
+                foreach (var item in Flavors)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(IsAnonymous))
+            {
+                writer.WritePropertyName("isAnonymous");
+                writer.WriteBooleanValue(IsAnonymous.Value);
+            }
+            writer.WritePropertyName("path");
+            writer.WriteStringValue(Path);
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+                writer.WriteStartObject();
+                foreach (var item in Properties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,48 +66,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                writer.WritePropertyName("properties");
-                writer.WriteStartObject();
-                foreach (var item in Properties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WriteEndObject();
         }
 
         internal static ModelVersion DeserializeModelVersion(JsonElement element)
         {
-            Optional<string> stage = default;
             Optional<string> datastoreId = default;
-            Optional<AssetPath> assetPath = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, FlavorData>> flavors = default;
+            Optional<bool> isAnonymous = default;
+            string path = default;
             Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stage"))
-                {
-                    stage = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("datastoreId"))
                 {
                     datastoreId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("assetPath"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    assetPath = AssetPath.DeserializeAssetPath(property.Value);
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -96,19 +90,34 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("flavors"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    Dictionary<string, FlavorData> dictionary = new Dictionary<string, FlavorData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        dictionary.Add(property0.Name, FlavorData.DeserializeFlavorData(property0.Value));
                     }
-                    tags = dictionary;
+                    flavors = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("isAnonymous"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isAnonymous = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("path"))
+                {
+                    path = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -126,8 +135,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     properties = dictionary;
                     continue;
                 }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
             }
-            return new ModelVersion(stage.Value, datastoreId.Value, assetPath.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            return new ModelVersion(datastoreId.Value, description.Value, Optional.ToDictionary(flavors), Optional.ToNullable(isAnonymous), path, Optional.ToDictionary(properties), Optional.ToDictionary(tags));
         }
     }
 }

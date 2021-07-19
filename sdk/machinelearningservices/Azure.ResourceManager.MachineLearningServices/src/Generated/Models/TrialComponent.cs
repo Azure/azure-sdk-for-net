@@ -5,38 +5,75 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The TrialComponent. </summary>
+    /// <summary> Trial component definition. </summary>
     public partial class TrialComponent
     {
         /// <summary> Initializes a new instance of TrialComponent. </summary>
-        public TrialComponent()
+        /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="command"/> is null. </exception>
+        public TrialComponent(string command)
         {
-            DataBindings = new ChangeTrackingDictionary<string, DataBinding>();
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
+
+            Command = command;
+            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
+            InputDataBindings = new ChangeTrackingDictionary<string, InputDataBinding>();
+            OutputDataBindings = new ChangeTrackingDictionary<string, OutputDataBinding>();
         }
 
         /// <summary> Initializes a new instance of TrialComponent. </summary>
-        /// <param name="codeConfiguration"> . </param>
-        /// <param name="environmentId"> Environment id of the job. </param>
-        /// <param name="dataBindings"> Mapping of data bindings used in the job. </param>
-        /// <param name="distributionConfiguration"> . </param>
-        internal TrialComponent(CodeConfiguration codeConfiguration, string environmentId, IDictionary<string, DataBinding> dataBindings, DistributionConfiguration distributionConfiguration)
+        /// <param name="codeId"> ARM resource ID of the code asset. </param>
+        /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <param name="distribution"> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </param>
+        /// <param name="environmentId"> The ARM resource ID of the Environment specification for the job. </param>
+        /// <param name="environmentVariables"> Environment variables included in the job. </param>
+        /// <param name="inputDataBindings"> Mapping of input data bindings used in the job. </param>
+        /// <param name="outputDataBindings"> Mapping of output data bindings used in the job. </param>
+        /// <param name="timeout">
+        /// The max run duration in ISO 8601 format, after which the trial component will be cancelled.
+        /// 
+        /// Only supports duration with precision as low as Seconds.
+        /// </param>
+        internal TrialComponent(string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, InputDataBinding> inputDataBindings, IDictionary<string, OutputDataBinding> outputDataBindings, TimeSpan? timeout)
         {
-            CodeConfiguration = codeConfiguration;
+            CodeId = codeId;
+            Command = command;
+            Distribution = distribution;
             EnvironmentId = environmentId;
-            DataBindings = dataBindings;
-            DistributionConfiguration = distributionConfiguration;
+            EnvironmentVariables = environmentVariables;
+            InputDataBindings = inputDataBindings;
+            OutputDataBindings = outputDataBindings;
+            Timeout = timeout;
         }
 
-        public CodeConfiguration CodeConfiguration { get; set; }
-        /// <summary> Environment id of the job. </summary>
+        /// <summary> ARM resource ID of the code asset. </summary>
+        public string CodeId { get; set; }
+        /// <summary> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </summary>
+        public string Command { get; set; }
+        /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>
+        public DistributionConfiguration Distribution { get; set; }
+        /// <summary> The ARM resource ID of the Environment specification for the job. </summary>
         public string EnvironmentId { get; set; }
-        /// <summary> Mapping of data bindings used in the job. </summary>
-        public IDictionary<string, DataBinding> DataBindings { get; }
-        public DistributionConfiguration DistributionConfiguration { get; set; }
+        /// <summary> Environment variables included in the job. </summary>
+        public IDictionary<string, string> EnvironmentVariables { get; }
+        /// <summary> Mapping of input data bindings used in the job. </summary>
+        public IDictionary<string, InputDataBinding> InputDataBindings { get; }
+        /// <summary> Mapping of output data bindings used in the job. </summary>
+        public IDictionary<string, OutputDataBinding> OutputDataBindings { get; }
+        /// <summary>
+        /// The max run duration in ISO 8601 format, after which the trial component will be cancelled.
+        /// 
+        /// Only supports duration with precision as low as Seconds.
+        /// </summary>
+        public TimeSpan? Timeout { get; set; }
     }
 }

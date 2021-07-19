@@ -10,48 +10,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Job base definition. </summary>
+    /// <summary> Base definition for a job. </summary>
     public partial class JobBase
     {
         /// <summary> Initializes a new instance of JobBase. </summary>
         public JobBase()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            InteractionEndpoints = new ChangeTrackingDictionary<string, JobEndpoint>();
             Properties = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of JobBase. </summary>
-        /// <param name="jobType"> Specifies the type of job. </param>
-        /// <param name="interactionEndpoints">
-        /// Dictonary of endpoint URIs, keyed by enumerated job endpoints.
-        /// 
-        /// For local jobs, a job endpoint will have a value of FileStreamObject.
-        /// </param>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="interactionEndpoints">
+        /// List of JobEndpoints.
+        /// 
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
+        /// </param>
+        /// <param name="jobType"> Specifies the type of job. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        internal JobBase(JobType jobType, JobBaseInteractionEndpoints interactionEndpoints, string description, IDictionary<string, string> tags, IDictionary<string, string> properties)
+        /// <param name="provisioningState"> . </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        internal JobBase(string description, IReadOnlyDictionary<string, JobEndpoint> interactionEndpoints, JobType jobType, IDictionary<string, string> properties, JobProvisioningState? provisioningState, IDictionary<string, string> tags)
         {
-            JobType = jobType;
-            InteractionEndpoints = interactionEndpoints;
             Description = description;
-            Tags = tags;
+            InteractionEndpoints = interactionEndpoints;
+            JobType = jobType;
             Properties = properties;
+            ProvisioningState = provisioningState;
+            Tags = tags;
         }
 
-        /// <summary> Specifies the type of job. </summary>
-        internal JobType JobType { get; set; }
-        /// <summary>
-        /// Dictonary of endpoint URIs, keyed by enumerated job endpoints.
-        /// 
-        /// For local jobs, a job endpoint will have a value of FileStreamObject.
-        /// </summary>
-        public JobBaseInteractionEndpoints InteractionEndpoints { get; }
         /// <summary> The asset description text. </summary>
         public string Description { get; set; }
-        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary>
+        /// List of JobEndpoints.
+        /// 
+        /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
+        /// </summary>
+        public IReadOnlyDictionary<string, JobEndpoint> InteractionEndpoints { get; }
+        /// <summary> Specifies the type of job. </summary>
+        internal JobType JobType { get; set; }
         /// <summary> The asset property dictionary. </summary>
         public IDictionary<string, string> Properties { get; }
+        public JobProvisioningState? ProvisioningState { get; }
+        /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

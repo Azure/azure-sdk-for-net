@@ -16,31 +16,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LatestVersions))
-            {
-                writer.WritePropertyName("latestVersions");
-                writer.WriteStartArray();
-                foreach (var item in LatestVersions)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -53,50 +32,30 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
         }
 
         internal static ModelContainer DeserializeModelContainer(JsonElement element)
         {
-            Optional<IList<ModelVersionResource>> latestVersions = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> tags = default;
             Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("latestVersions"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ModelVersionResource> array = new List<ModelVersionResource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ModelVersionResource.DeserializeModelVersionResource(item));
-                    }
-                    latestVersions = array;
-                    continue;
-                }
                 if (property.NameEquals("description"))
                 {
                     description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -114,8 +73,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     properties = dictionary;
                     continue;
                 }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
             }
-            return new ModelContainer(Optional.ToList(latestVersions), description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            return new ModelContainer(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags));
         }
     }
 }

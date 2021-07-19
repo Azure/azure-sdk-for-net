@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The Format of dataset. </summary>
+    /// <summary> The DatasetType. </summary>
     public readonly partial struct DatasetType : IEquatable<DatasetType>
     {
         private readonly string _value;

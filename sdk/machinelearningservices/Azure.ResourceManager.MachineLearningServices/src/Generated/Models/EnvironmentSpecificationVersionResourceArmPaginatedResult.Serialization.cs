@@ -15,10 +15,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static EnvironmentSpecificationVersionResourceArmPaginatedResult DeserializeEnvironmentSpecificationVersionResourceArmPaginatedResult(JsonElement element)
         {
-            Optional<IReadOnlyList<EnvironmentSpecificationVersionResource>> value = default;
             Optional<string> nextLink = default;
+            Optional<IReadOnlyList<EnvironmentSpecificationVersionResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -26,21 +31,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EnvironmentSpecificationVersionResource> array = new List<EnvironmentSpecificationVersionResource>();
+                    List<EnvironmentSpecificationVersionResourceData> array = new List<EnvironmentSpecificationVersionResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentSpecificationVersionResource.DeserializeEnvironmentSpecificationVersionResource(item));
+                        array.Add(EnvironmentSpecificationVersionResourceData.DeserializeEnvironmentSpecificationVersionResourceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new EnvironmentSpecificationVersionResourceArmPaginatedResult(Optional.ToList(value), nextLink.Value);
+            return new EnvironmentSpecificationVersionResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

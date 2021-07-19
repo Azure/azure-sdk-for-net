@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of LabelingDatasetConfiguration. </summary>
         /// <param name="assetName"> Name of the data asset to perform labeling. </param>
-        /// <param name="incrementalDatasetRefreshEnabled"> Indicates whether to enable incremental dataset refresh. </param>
         /// <param name="datasetVersion"> AML dataset version. </param>
-        internal LabelingDatasetConfiguration(string assetName, bool? incrementalDatasetRefreshEnabled, string datasetVersion)
+        /// <param name="incrementalDatasetRefreshEnabled"> Indicates whether to enable incremental dataset refresh. </param>
+        internal LabelingDatasetConfiguration(string assetName, string datasetVersion, bool? incrementalDatasetRefreshEnabled)
         {
             AssetName = assetName;
-            IncrementalDatasetRefreshEnabled = incrementalDatasetRefreshEnabled;
             DatasetVersion = datasetVersion;
+            IncrementalDatasetRefreshEnabled = incrementalDatasetRefreshEnabled;
         }
 
         /// <summary> Name of the data asset to perform labeling. </summary>
         public string AssetName { get; set; }
-        /// <summary> Indicates whether to enable incremental dataset refresh. </summary>
-        public bool? IncrementalDatasetRefreshEnabled { get; set; }
         /// <summary> AML dataset version. </summary>
         public string DatasetVersion { get; set; }
+        /// <summary> Indicates whether to enable incremental dataset refresh. </summary>
+        public bool? IncrementalDatasetRefreshEnabled { get; set; }
     }
 }

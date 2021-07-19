@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,11 +28,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of QuotasRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> Azure subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
-        public QuotasRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2020-09-01-preview")
+        public QuotasRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-03-01-preview")
         {
             if (subscriptionId == null)
             {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateUpdateRequest(string location, QuotaUpdateParameters parameters)
+        internal HttpMessage CreateUpdateRequest(string location, IEnumerable<QuotaBaseProperties> value, string quotaUpdateParametersLocation)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,38 +67,47 @@ namespace Azure.ResourceManager.MachineLearningServices
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            QuotaUpdateParameters quotaUpdateParameters = new QuotaUpdateParameters()
+            {
+                Location = quotaUpdateParametersLocation
+            };
+            if (value != null)
+            {
+                foreach (var value0 in value)
+                {
+                    quotaUpdateParameters.Value.Add(value0);
+                }
+            }
+            var model = quotaUpdateParameters;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
         /// <summary> Update quota for each VM family in workspace. </summary>
         /// <param name="location"> The location for update quota is queried. </param>
-        /// <param name="parameters"> Quota update parameters. </param>
+        /// <param name="value"> The list for update quota. </param>
+        /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<UpdateWorkspaceQuotasResult>> UpdateAsync(string location, QuotaUpdateParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public async Task<Response<UpdateWorkspaceQuotasResult>> UpdateAsync(string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var message = CreateUpdateRequest(location, parameters);
+            using var message = CreateUpdateRequest(location, value, quotaUpdateParametersLocation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        UpdateWorkspaceQuotasResult value = default;
+                        UpdateWorkspaceQuotasResult value0 = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateWorkspaceQuotasResult.DeserializeUpdateWorkspaceQuotasResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
+                        value0 = UpdateWorkspaceQuotasResult.DeserializeUpdateWorkspaceQuotasResult(document.RootElement);
+                        return Response.FromValue(value0, message.Response);
                     }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -106,30 +116,27 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Update quota for each VM family in workspace. </summary>
         /// <param name="location"> The location for update quota is queried. </param>
-        /// <param name="parameters"> Quota update parameters. </param>
+        /// <param name="value"> The list for update quota. </param>
+        /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<UpdateWorkspaceQuotasResult> Update(string location, QuotaUpdateParameters parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public Response<UpdateWorkspaceQuotasResult> Update(string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var message = CreateUpdateRequest(location, parameters);
+            using var message = CreateUpdateRequest(location, value, quotaUpdateParametersLocation);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        UpdateWorkspaceQuotasResult value = default;
+                        UpdateWorkspaceQuotasResult value0 = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateWorkspaceQuotasResult.DeserializeUpdateWorkspaceQuotasResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
+                        value0 = UpdateWorkspaceQuotasResult.DeserializeUpdateWorkspaceQuotasResult(document.RootElement);
+                        return Response.FromValue(value0, message.Response);
                     }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -147,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/locations/", false);
             uri.AppendPath(location, true);
-            uri.AppendPath("/Quotas", false);
+            uri.AppendPath("/quotas", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

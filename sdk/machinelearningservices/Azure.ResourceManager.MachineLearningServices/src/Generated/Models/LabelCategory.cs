@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of LabelCategory. </summary>
-        /// <param name="displayName"> Display name of the label category. </param>
         /// <param name="allowMultiSelect"> Indicates whether it is allowed to select multiple classes in this category. </param>
         /// <param name="classes"> Dictionary of label classes in this category. </param>
-        internal LabelCategory(string displayName, bool? allowMultiSelect, IDictionary<string, LabelClass> classes)
+        /// <param name="displayName"> Display name of the label category. </param>
+        internal LabelCategory(bool? allowMultiSelect, IDictionary<string, LabelClass> classes, string displayName)
         {
-            DisplayName = displayName;
             AllowMultiSelect = allowMultiSelect;
             Classes = classes;
+            DisplayName = displayName;
         }
 
-        /// <summary> Display name of the label category. </summary>
-        public string DisplayName { get; set; }
         /// <summary> Indicates whether it is allowed to select multiple classes in this category. </summary>
         public bool? AllowMultiSelect { get; set; }
         /// <summary> Dictionary of label classes in this category. </summary>
         public IDictionary<string, LabelClass> Classes { get; }
+        /// <summary> Display name of the label category. </summary>
+        public string DisplayName { get; set; }
     }
 }

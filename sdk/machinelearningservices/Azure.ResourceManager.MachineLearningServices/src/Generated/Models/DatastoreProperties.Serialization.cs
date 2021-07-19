@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("contents");
             writer.WriteObjectValue(Contents);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
             if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault");
@@ -39,11 +44,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -61,17 +61,22 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal static DatastoreProperties DeserializeDatastoreProperties(JsonElement element)
         {
             DatastoreContents contents = default;
+            Optional<string> description = default;
             Optional<bool> hasBeenValidated = default;
             Optional<bool> isDefault = default;
             Optional<LinkedInfo> linkedInfo = default;
             Optional<IDictionary<string, string>> properties = default;
-            Optional<string> description = default;
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contents"))
                 {
                     contents = DatastoreContents.DeserializeDatastoreContents(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("description"))
+                {
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("hasBeenValidated"))
@@ -119,11 +124,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("tags"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new DatastoreProperties(contents, Optional.ToNullable(hasBeenValidated), Optional.ToNullable(isDefault), linkedInfo.Value, Optional.ToDictionary(properties), description.Value, Optional.ToDictionary(tags));
+            return new DatastoreProperties(contents, description.Value, Optional.ToNullable(hasBeenValidated), Optional.ToNullable(isDefault), linkedInfo.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags));
         }
     }
 }

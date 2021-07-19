@@ -15,10 +15,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static DatastorePropertiesResourceArmPaginatedResult DeserializeDatastorePropertiesResourceArmPaginatedResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DatastorePropertiesResource>> value = default;
             Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DatastorePropertiesResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -26,21 +31,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatastorePropertiesResource> array = new List<DatastorePropertiesResource>();
+                    List<DatastorePropertiesResourceData> array = new List<DatastorePropertiesResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatastorePropertiesResource.DeserializeDatastorePropertiesResource(item));
+                        array.Add(DatastorePropertiesResourceData.DeserializeDatastorePropertiesResourceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new DatastorePropertiesResourceArmPaginatedResult(Optional.ToList(value), nextLink.Value);
+            return new DatastorePropertiesResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

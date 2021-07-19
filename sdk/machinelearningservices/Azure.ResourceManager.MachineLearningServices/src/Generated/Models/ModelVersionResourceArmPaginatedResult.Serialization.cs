@@ -15,10 +15,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         internal static ModelVersionResourceArmPaginatedResult DeserializeModelVersionResourceArmPaginatedResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ModelVersionResource>> value = default;
             Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ModelVersionResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -26,21 +31,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ModelVersionResource> array = new List<ModelVersionResource>();
+                    List<ModelVersionResourceData> array = new List<ModelVersionResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelVersionResource.DeserializeModelVersionResource(item));
+                        array.Add(ModelVersionResourceData.DeserializeModelVersionResourceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ModelVersionResourceArmPaginatedResult(Optional.ToList(value), nextLink.Value);
+            return new ModelVersionResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

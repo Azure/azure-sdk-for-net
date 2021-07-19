@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName");
-                writer.WriteStringValue(DisplayName);
-            }
             if (Optional.IsDefined(AllowMultiSelect))
             {
                 writer.WritePropertyName("allowMultiSelect");
@@ -37,21 +32,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName");
+                writer.WriteStringValue(DisplayName);
+            }
             writer.WriteEndObject();
         }
 
         internal static LabelCategory DeserializeLabelCategory(JsonElement element)
         {
-            Optional<string> displayName = default;
             Optional<bool> allowMultiSelect = default;
             Optional<IDictionary<string, LabelClass>> classes = default;
+            Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
-                {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("allowMultiSelect"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -77,8 +72,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     classes = dictionary;
                     continue;
                 }
+                if (property.NameEquals("displayName"))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
             }
-            return new LabelCategory(displayName.Value, Optional.ToNullable(allowMultiSelect), Optional.ToDictionary(classes));
+            return new LabelCategory(Optional.ToNullable(allowMultiSelect), Optional.ToDictionary(classes), displayName.Value);
         }
     }
 }

@@ -11,40 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class StatusMessage : IUtf8JsonSerializable
+    public partial class StatusMessage
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static StatusMessage DeserializeStatusMessage(JsonElement element)
         {
-            Optional<StatusMessageLevel> level = default;
             Optional<string> code = default;
-            Optional<string> message = default;
             Optional<DateTimeOffset> createdTimeUtc = default;
+            Optional<StatusMessageLevel> level = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("level"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    level = new StatusMessageLevel(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("code"))
                 {
                     code = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("message"))
-                {
-                    message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("createdTimeUtc"))
@@ -57,8 +36,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     createdTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("level"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    level = new StatusMessageLevel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("message"))
+                {
+                    message = property.Value.GetString();
+                    continue;
+                }
             }
-            return new StatusMessage(Optional.ToNullable(level), code.Value, message.Value, Optional.ToNullable(createdTimeUtc));
+            return new StatusMessage(code.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(level), message.Value);
         }
     }
 }

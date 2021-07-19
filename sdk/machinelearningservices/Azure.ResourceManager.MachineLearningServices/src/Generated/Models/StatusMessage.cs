@@ -13,30 +13,30 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class StatusMessage
     {
         /// <summary> Initializes a new instance of StatusMessage. </summary>
-        public StatusMessage()
+        internal StatusMessage()
         {
         }
 
         /// <summary> Initializes a new instance of StatusMessage. </summary>
-        /// <param name="level"> Severity level of message. </param>
         /// <param name="code"> Service-defined message code. </param>
-        /// <param name="message"> A human-readable representation of the message code. </param>
         /// <param name="createdTimeUtc"> Time in UTC at which the message was created. </param>
-        internal StatusMessage(StatusMessageLevel? level, string code, string message, DateTimeOffset? createdTimeUtc)
+        /// <param name="level"> Severity level of message. </param>
+        /// <param name="message"> A human-readable representation of the message code. </param>
+        internal StatusMessage(string code, DateTimeOffset? createdTimeUtc, StatusMessageLevel? level, string message)
         {
-            Level = level;
             Code = code;
-            Message = message;
             CreatedTimeUtc = createdTimeUtc;
+            Level = level;
+            Message = message;
         }
 
-        /// <summary> Severity level of message. </summary>
-        public StatusMessageLevel? Level { get; }
         /// <summary> Service-defined message code. </summary>
         public string Code { get; }
-        /// <summary> A human-readable representation of the message code. </summary>
-        public string Message { get; }
         /// <summary> Time in UTC at which the message was created. </summary>
         public DateTimeOffset? CreatedTimeUtc { get; }
+        /// <summary> Severity level of message. </summary>
+        public StatusMessageLevel? Level { get; }
+        /// <summary> A human-readable representation of the message code. </summary>
+        public string Message { get; }
     }
 }

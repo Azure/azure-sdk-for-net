@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of LabelingJobResourceArmPaginatedResult. </summary>
         internal LabelingJobResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<LabelingJobResource>();
+            Value = new ChangeTrackingList<LabelingJobResourceData>();
         }
 
         /// <summary> Initializes a new instance of LabelingJobResourceArmPaginatedResult. </summary>
-        /// <param name="value"> An array of objects of type LabelingJob. </param>
         /// <param name="nextLink"> . </param>
-        internal LabelingJobResourceArmPaginatedResult(IReadOnlyList<LabelingJobResource> value, string nextLink)
+        /// <param name="value"> An array of objects of type LabelingJob. </param>
+        internal LabelingJobResourceArmPaginatedResult(string nextLink, IReadOnlyList<LabelingJobResourceData> value)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
         }
 
-        /// <summary> An array of objects of type LabelingJob. </summary>
-        public IReadOnlyList<LabelingJobResource> Value { get; }
         public string NextLink { get; }
+        /// <summary> An array of objects of type LabelingJob. </summary>
+        public IReadOnlyList<LabelingJobResourceData> Value { get; }
     }
 }

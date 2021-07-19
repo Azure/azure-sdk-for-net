@@ -17,6 +17,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(DatasetConfiguration))
+            {
+                writer.WritePropertyName("datasetConfiguration");
+                writer.WriteObjectValue(DatasetConfiguration);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(JobInstructions))
+            {
+                writer.WritePropertyName("jobInstructions");
+                writer.WriteObjectValue(JobInstructions);
+            }
+            writer.WritePropertyName("jobType");
+            writer.WriteStringValue(JobType.ToString());
             if (Optional.IsCollectionDefined(LabelCategories))
             {
                 writer.WritePropertyName("labelCategories");
@@ -28,73 +45,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(JobInstructions))
-            {
-                writer.WritePropertyName("jobInstructions");
-                writer.WriteObjectValue(JobInstructions);
-            }
-            if (Optional.IsDefined(DatasetConfiguration))
-            {
-                writer.WritePropertyName("datasetConfiguration");
-                writer.WriteObjectValue(DatasetConfiguration);
-            }
-            if (Optional.IsDefined(MlAssistConfiguration))
-            {
-                writer.WritePropertyName("mlAssistConfiguration");
-                writer.WriteObjectValue(MlAssistConfiguration);
-            }
             if (Optional.IsDefined(LabelingJobMediaProperties))
             {
                 writer.WritePropertyName("labelingJobMediaProperties");
                 writer.WriteObjectValue(LabelingJobMediaProperties);
             }
-            if (Optional.IsDefined(ProjectId))
+            if (Optional.IsDefined(MlAssistConfiguration))
             {
-                writer.WritePropertyName("projectId");
-                writer.WriteStringValue(ProjectId.Value);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (Optional.IsDefined(ProgressMetrics))
-            {
-                writer.WritePropertyName("progressMetrics");
-                writer.WriteObjectValue(ProgressMetrics);
-            }
-            if (Optional.IsCollectionDefined(StatusMessages))
-            {
-                writer.WritePropertyName("statusMessages");
-                writer.WriteStartArray();
-                foreach (var item in StatusMessages)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(CreatedTimeUtc))
-            {
-                writer.WritePropertyName("createdTimeUtc");
-                writer.WriteStringValue(CreatedTimeUtc.Value, "O");
-            }
-            writer.WritePropertyName("jobType");
-            writer.WriteStringValue(JobType.ToString());
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("mlAssistConfiguration");
+                writer.WriteObjectValue(MlAssistConfiguration);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -107,28 +66,95 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
         }
 
         internal static LabelingJob DeserializeLabelingJob(JsonElement element)
         {
-            Optional<IDictionary<string, LabelCategory>> labelCategories = default;
-            Optional<LabelingJobInstructions> jobInstructions = default;
-            Optional<LabelingDatasetConfiguration> datasetConfiguration = default;
-            Optional<MLAssistConfiguration> mlAssistConfiguration = default;
-            Optional<LabelingJobMediaProperties> labelingJobMediaProperties = default;
-            Optional<Guid> projectId = default;
-            Optional<JobStatus> status = default;
-            Optional<ProgressMetrics> progressMetrics = default;
-            Optional<IList<StatusMessage>> statusMessages = default;
             Optional<DateTimeOffset> createdTimeUtc = default;
-            JobType jobType = default;
-            Optional<JobBaseInteractionEndpoints> interactionEndpoints = default;
+            Optional<LabelingDatasetConfiguration> datasetConfiguration = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Optional<IReadOnlyDictionary<string, JobEndpoint>> interactionEndpoints = default;
+            Optional<LabelingJobInstructions> jobInstructions = default;
+            JobType jobType = default;
+            Optional<IDictionary<string, LabelCategory>> labelCategories = default;
+            Optional<LabelingJobMediaProperties> labelingJobMediaProperties = default;
+            Optional<MLAssistConfiguration> mlAssistConfiguration = default;
+            Optional<ProgressMetrics> progressMetrics = default;
+            Optional<Guid> projectId = default;
             Optional<IDictionary<string, string>> properties = default;
+            Optional<JobProvisioningState> provisioningState = default;
+            Optional<JobStatus> status = default;
+            Optional<IReadOnlyList<StatusMessage>> statusMessages = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("createdTimeUtc"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createdTimeUtc = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("datasetConfiguration"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    datasetConfiguration = LabelingDatasetConfiguration.DeserializeLabelingDatasetConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("description"))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("interactionEndpoints"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, JobEndpoint> dictionary = new Dictionary<string, JobEndpoint>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, JobEndpoint.DeserializeJobEndpoint(property0.Value));
+                    }
+                    interactionEndpoints = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("jobInstructions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    jobInstructions = LabelingJobInstructions.DeserializeLabelingJobInstructions(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("jobType"))
+                {
+                    jobType = new JobType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("labelCategories"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -144,24 +170,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     labelCategories = dictionary;
                     continue;
                 }
-                if (property.NameEquals("jobInstructions"))
+                if (property.NameEquals("labelingJobMediaProperties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jobInstructions = LabelingJobInstructions.DeserializeLabelingJobInstructions(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("datasetConfiguration"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    datasetConfiguration = LabelingDatasetConfiguration.DeserializeLabelingDatasetConfiguration(property.Value);
+                    labelingJobMediaProperties = LabelingJobMediaProperties.DeserializeLabelingJobMediaProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mlAssistConfiguration"))
@@ -174,36 +190,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     mlAssistConfiguration = MLAssistConfiguration.DeserializeMLAssistConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("labelingJobMediaProperties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    labelingJobMediaProperties = LabelingJobMediaProperties.DeserializeLabelingJobMediaProperties(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("projectId"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    projectId = property.Value.GetGuid();
-                    continue;
-                }
-                if (property.NameEquals("status"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    status = new JobStatus(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("progressMetrics"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -214,64 +200,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     progressMetrics = ProgressMetrics.DeserializeProgressMetrics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("statusMessages"))
+                if (property.NameEquals("projectId"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<StatusMessage> array = new List<StatusMessage>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(StatusMessage.DeserializeStatusMessage(item));
-                    }
-                    statusMessages = array;
-                    continue;
-                }
-                if (property.NameEquals("createdTimeUtc"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    createdTimeUtc = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("jobType"))
-                {
-                    jobType = new JobType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("interactionEndpoints"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    interactionEndpoints = JobBaseInteractionEndpoints.DeserializeJobBaseInteractionEndpoints(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
+                    projectId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -289,8 +225,58 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     properties = dictionary;
                     continue;
                 }
+                if (property.NameEquals("provisioningState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new JobProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("status"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    status = new JobStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("statusMessages"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<StatusMessage> array = new List<StatusMessage>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(StatusMessage.DeserializeStatusMessage(item));
+                    }
+                    statusMessages = array;
+                    continue;
+                }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
             }
-            return new LabelingJob(jobType, interactionEndpoints.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties), Optional.ToDictionary(labelCategories), jobInstructions.Value, datasetConfiguration.Value, mlAssistConfiguration.Value, labelingJobMediaProperties.Value, Optional.ToNullable(projectId), Optional.ToNullable(status), progressMetrics.Value, Optional.ToList(statusMessages), Optional.ToNullable(createdTimeUtc));
+            return new LabelingJob(Optional.ToNullable(createdTimeUtc), datasetConfiguration.Value, description.Value, Optional.ToDictionary(interactionEndpoints), jobInstructions.Value, jobType, Optional.ToDictionary(labelCategories), labelingJobMediaProperties.Value, mlAssistConfiguration.Value, progressMetrics.Value, Optional.ToNullable(projectId), Optional.ToDictionary(properties), Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToList(statusMessages), Optional.ToDictionary(tags));
         }
     }
 }

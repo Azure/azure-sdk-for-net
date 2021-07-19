@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of CodeVersionResourceArmPaginatedResult. </summary>
         internal CodeVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<CodeVersionResource>();
+            Value = new ChangeTrackingList<CodeVersionResourceData>();
         }
 
         /// <summary> Initializes a new instance of CodeVersionResourceArmPaginatedResult. </summary>
-        /// <param name="value"> An array of objects of type CodeVersion. </param>
         /// <param name="nextLink"> . </param>
-        internal CodeVersionResourceArmPaginatedResult(IReadOnlyList<CodeVersionResource> value, string nextLink)
+        /// <param name="value"> An array of objects of type CodeVersion. </param>
+        internal CodeVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<CodeVersionResourceData> value)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
         }
 
-        /// <summary> An array of objects of type CodeVersion. </summary>
-        public IReadOnlyList<CodeVersionResource> Value { get; }
         public string NextLink { get; }
+        /// <summary> An array of objects of type CodeVersion. </summary>
+        public IReadOnlyList<CodeVersionResourceData> Value { get; }
     }
 }

@@ -27,8 +27,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             KeyVaultProperties = keyVaultProperties;
         }
 
+        /// <summary> Initializes a new instance of EncryptionProperty. </summary>
+        /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
+        /// <param name="identity"> The identity that will be used to access the key vault for encryption at rest. </param>
+        /// <param name="keyVaultProperties"> Customer Key vault properties. </param>
+        internal EncryptionProperty(EncryptionStatus status, IdentityForCmk identity, KeyVaultProperties keyVaultProperties)
+        {
+            Status = status;
+            Identity = identity;
+            KeyVaultProperties = keyVaultProperties;
+        }
+
         /// <summary> Indicates whether or not the encryption is enabled for the workspace. </summary>
         public EncryptionStatus Status { get; set; }
+        /// <summary> The identity that will be used to access the key vault for encryption at rest. </summary>
+        public IdentityForCmk Identity { get; set; }
         /// <summary> Customer Key vault properties. </summary>
         public KeyVaultProperties KeyVaultProperties { get; set; }
     }

@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("databricksAccessToken");
                 writer.WriteStringValue(DatabricksAccessToken);
             }
+            if (Optional.IsDefined(WorkspaceUrl))
+            {
+                writer.WritePropertyName("workspaceUrl");
+                writer.WriteStringValue(WorkspaceUrl);
+            }
             writer.WriteEndObject();
         }
 
         internal static DatabricksProperties DeserializeDatabricksProperties(JsonElement element)
         {
             Optional<string> databricksAccessToken = default;
+            Optional<string> workspaceUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databricksAccessToken"))
@@ -33,8 +39,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     databricksAccessToken = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("workspaceUrl"))
+                {
+                    workspaceUrl = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DatabricksProperties(databricksAccessToken.Value);
+            return new DatabricksProperties(databricksAccessToken.Value, workspaceUrl.Value);
         }
     }
 }

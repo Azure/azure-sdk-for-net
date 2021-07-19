@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Storage type backing the datastore. </summary>
+    /// <summary> Enum to determine the datastore contents type. </summary>
     public readonly partial struct ContentsType : IEquatable<ContentsType>
     {
         private readonly string _value;
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         private const string AzureBlobValue = "AzureBlob";
-        private const string AzureDataLakeValue = "AzureDataLake";
+        private const string AzureDataLakeGen1Value = "AzureDataLakeGen1";
         private const string AzureDataLakeGen2Value = "AzureDataLakeGen2";
         private const string AzureFileValue = "AzureFile";
         private const string AzureMySqlValue = "AzureMySql";
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> AzureBlob. </summary>
         public static ContentsType AzureBlob { get; } = new ContentsType(AzureBlobValue);
-        /// <summary> AzureDataLake. </summary>
-        public static ContentsType AzureDataLake { get; } = new ContentsType(AzureDataLakeValue);
+        /// <summary> AzureDataLakeGen1. </summary>
+        public static ContentsType AzureDataLakeGen1 { get; } = new ContentsType(AzureDataLakeGen1Value);
         /// <summary> AzureDataLakeGen2. </summary>
         public static ContentsType AzureDataLakeGen2 { get; } = new ContentsType(AzureDataLakeGen2Value);
         /// <summary> AzureFile. </summary>

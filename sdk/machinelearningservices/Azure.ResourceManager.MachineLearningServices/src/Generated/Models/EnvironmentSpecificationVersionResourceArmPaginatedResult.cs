@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of EnvironmentSpecificationVersionResourceArmPaginatedResult. </summary>
         internal EnvironmentSpecificationVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<EnvironmentSpecificationVersionResource>();
+            Value = new ChangeTrackingList<EnvironmentSpecificationVersionResourceData>();
         }
 
         /// <summary> Initializes a new instance of EnvironmentSpecificationVersionResourceArmPaginatedResult. </summary>
-        /// <param name="value"> An array of objects of type EnvironmentSpecificationVersion. </param>
         /// <param name="nextLink"> . </param>
-        internal EnvironmentSpecificationVersionResourceArmPaginatedResult(IReadOnlyList<EnvironmentSpecificationVersionResource> value, string nextLink)
+        /// <param name="value"> An array of objects of type EnvironmentSpecificationVersion. </param>
+        internal EnvironmentSpecificationVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<EnvironmentSpecificationVersionResourceData> value)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
         }
 
-        /// <summary> An array of objects of type EnvironmentSpecificationVersion. </summary>
-        public IReadOnlyList<EnvironmentSpecificationVersionResource> Value { get; }
         public string NextLink { get; }
+        /// <summary> An array of objects of type EnvironmentSpecificationVersion. </summary>
+        public IReadOnlyList<EnvironmentSpecificationVersionResourceData> Value { get; }
     }
 }

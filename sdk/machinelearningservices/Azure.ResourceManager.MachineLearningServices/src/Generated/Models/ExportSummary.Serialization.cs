@@ -11,37 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class ExportSummary
+    public partial class ExportSummary : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("format");
+            writer.WriteStringValue(Format.ToString());
+            writer.WriteEndObject();
+        }
+
         internal static ExportSummary DeserializeExportSummary(JsonElement element)
         {
-            ExportFormatType format = default;
-            Optional<Guid> exportId = default;
-            Optional<string> labelingJobId = default;
-            Optional<long> exportedRowCount = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
+            if (element.TryGetProperty("format", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "CSV": return CsvExportSummary.DeserializeCsvExportSummary(element);
+                    case "Coco": return CocoExportSummary.DeserializeCocoExportSummary(element);
+                    case "Dataset": return DatasetExportSummary.DeserializeDatasetExportSummary(element);
+                }
+            }
             Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<LabelExportState> state = default;
+            Optional<long> exportedRowCount = default;
+            ExportFormatType format = default;
+            Optional<string> labelingJobId = default;
+            Optional<DateTimeOffset> startTimeUtc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("format"))
-                {
-                    format = new ExportFormatType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("exportId"))
+                if (property.NameEquals("endTimeUtc"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    exportId = property.Value.GetGuid();
-                    continue;
-                }
-                if (property.NameEquals("labelingJobId"))
-                {
-                    labelingJobId = property.Value.GetString();
+                    endTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("exportedRowCount"))
@@ -54,6 +59,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     exportedRowCount = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("format"))
+                {
+                    format = new ExportFormatType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("labelingJobId"))
+                {
+                    labelingJobId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("startTimeUtc"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -64,28 +79,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     startTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTimeUtc"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    endTimeUtc = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("state"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    state = new LabelExportState(property.Value.GetString());
-                    continue;
-                }
             }
-            return new ExportSummary(format, Optional.ToNullable(exportId), labelingJobId.Value, Optional.ToNullable(exportedRowCount), Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(state));
+            return new ExportSummary(Optional.ToNullable(endTimeUtc), Optional.ToNullable(exportedRowCount), format, labelingJobId.Value, Optional.ToNullable(startTimeUtc));
         }
     }
 }

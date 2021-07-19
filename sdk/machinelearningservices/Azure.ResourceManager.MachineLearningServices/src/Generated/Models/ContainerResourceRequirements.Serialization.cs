@@ -20,10 +20,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("cpu");
                 writer.WriteNumberValue(Cpu.Value);
             }
+            if (Optional.IsDefined(CpuLimit))
+            {
+                writer.WritePropertyName("cpuLimit");
+                writer.WriteNumberValue(CpuLimit.Value);
+            }
             if (Optional.IsDefined(MemoryInGB))
             {
                 writer.WritePropertyName("memoryInGB");
                 writer.WriteNumberValue(MemoryInGB.Value);
+            }
+            if (Optional.IsDefined(MemoryInGBLimit))
+            {
+                writer.WritePropertyName("memoryInGBLimit");
+                writer.WriteNumberValue(MemoryInGBLimit.Value);
             }
             if (Optional.IsDefined(Gpu))
             {
@@ -41,7 +51,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal static ContainerResourceRequirements DeserializeContainerResourceRequirements(JsonElement element)
         {
             Optional<double> cpu = default;
+            Optional<double> cpuLimit = default;
             Optional<double> memoryInGB = default;
+            Optional<double> memoryInGBLimit = default;
             Optional<int> gpu = default;
             Optional<int> fpga = default;
             foreach (var property in element.EnumerateObject())
@@ -56,6 +68,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     cpu = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("cpuLimit"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    cpuLimit = property.Value.GetDouble();
+                    continue;
+                }
                 if (property.NameEquals("memoryInGB"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -64,6 +86,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         continue;
                     }
                     memoryInGB = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("memoryInGBLimit"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    memoryInGBLimit = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("gpu"))
@@ -87,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new ContainerResourceRequirements(Optional.ToNullable(cpu), Optional.ToNullable(memoryInGB), Optional.ToNullable(gpu), Optional.ToNullable(fpga));
+            return new ContainerResourceRequirements(Optional.ToNullable(cpu), Optional.ToNullable(cpuLimit), Optional.ToNullable(memoryInGB), Optional.ToNullable(memoryInGBLimit), Optional.ToNullable(gpu), Optional.ToNullable(fpga));
         }
     }
 }

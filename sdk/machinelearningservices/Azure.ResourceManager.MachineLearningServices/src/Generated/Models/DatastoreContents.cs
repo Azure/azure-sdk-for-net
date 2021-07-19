@@ -7,42 +7,22 @@
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The DatastoreContents. </summary>
+    /// <summary> Base definition for datastore contents configuration. </summary>
     public partial class DatastoreContents
     {
         /// <summary> Initializes a new instance of DatastoreContents. </summary>
-        /// <param name="type"> Storage type backing the datastore. </param>
-        public DatastoreContents(ContentsType type)
+        public DatastoreContents()
         {
-            Type = type;
         }
 
         /// <summary> Initializes a new instance of DatastoreContents. </summary>
-        /// <param name="type"> Storage type backing the datastore. </param>
-        /// <param name="azureDataLake"> . </param>
-        /// <param name="azureMySql"> . </param>
-        /// <param name="azurePostgreSql"> . </param>
-        /// <param name="azureSqlDatabase"> . </param>
-        /// <param name="azureStorage"> . </param>
-        /// <param name="glusterFs"> . </param>
-        internal DatastoreContents(ContentsType type, AzureDataLakeSection azureDataLake, AzureMySqlSection azureMySql, AzurePostgreSqlSection azurePostgreSql, AzureSqlDatabaseSection azureSqlDatabase, AzureStorageSection azureStorage, GlusterFsSection glusterFs)
+        /// <param name="contentsType"> Storage type backing the datastore. </param>
+        internal DatastoreContents(ContentsType contentsType)
         {
-            Type = type;
-            AzureDataLake = azureDataLake;
-            AzureMySql = azureMySql;
-            AzurePostgreSql = azurePostgreSql;
-            AzureSqlDatabase = azureSqlDatabase;
-            AzureStorage = azureStorage;
-            GlusterFs = glusterFs;
+            ContentsType = contentsType;
         }
 
         /// <summary> Storage type backing the datastore. </summary>
-        public ContentsType Type { get; set; }
-        public AzureDataLakeSection AzureDataLake { get; set; }
-        public AzureMySqlSection AzureMySql { get; set; }
-        public AzurePostgreSqlSection AzurePostgreSql { get; set; }
-        public AzureSqlDatabaseSection AzureSqlDatabase { get; set; }
-        public AzureStorageSection AzureStorage { get; set; }
-        public GlusterFsSection GlusterFs { get; set; }
+        internal ContentsType ContentsType { get; set; }
     }
 }

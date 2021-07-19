@@ -15,119 +15,36 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(AzureDataLake))
-            {
-                writer.WritePropertyName("azureDataLake");
-                writer.WriteObjectValue(AzureDataLake);
-            }
-            if (Optional.IsDefined(AzureMySql))
-            {
-                writer.WritePropertyName("azureMySql");
-                writer.WriteObjectValue(AzureMySql);
-            }
-            if (Optional.IsDefined(AzurePostgreSql))
-            {
-                writer.WritePropertyName("azurePostgreSql");
-                writer.WriteObjectValue(AzurePostgreSql);
-            }
-            if (Optional.IsDefined(AzureSqlDatabase))
-            {
-                writer.WritePropertyName("azureSqlDatabase");
-                writer.WriteObjectValue(AzureSqlDatabase);
-            }
-            if (Optional.IsDefined(AzureStorage))
-            {
-                writer.WritePropertyName("azureStorage");
-                writer.WriteObjectValue(AzureStorage);
-            }
-            if (Optional.IsDefined(GlusterFs))
-            {
-                writer.WritePropertyName("glusterFs");
-                writer.WriteObjectValue(GlusterFs);
-            }
+            writer.WritePropertyName("contentsType");
+            writer.WriteStringValue(ContentsType.ToString());
             writer.WriteEndObject();
         }
 
         internal static DatastoreContents DeserializeDatastoreContents(JsonElement element)
         {
-            ContentsType type = default;
-            Optional<AzureDataLakeSection> azureDataLake = default;
-            Optional<AzureMySqlSection> azureMySql = default;
-            Optional<AzurePostgreSqlSection> azurePostgreSql = default;
-            Optional<AzureSqlDatabaseSection> azureSqlDatabase = default;
-            Optional<AzureStorageSection> azureStorage = default;
-            Optional<GlusterFsSection> glusterFs = default;
+            if (element.TryGetProperty("contentsType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureBlob": return AzureBlobContents.DeserializeAzureBlobContents(element);
+                    case "AzureDataLakeGen1": return AzureDataLakeGen1Contents.DeserializeAzureDataLakeGen1Contents(element);
+                    case "AzureDataLakeGen2": return AzureDataLakeGen2Contents.DeserializeAzureDataLakeGen2Contents(element);
+                    case "AzureFile": return AzureFileContents.DeserializeAzureFileContents(element);
+                    case "AzurePostgreSql": return AzurePostgreSqlContents.DeserializeAzurePostgreSqlContents(element);
+                    case "AzureSqlDatabase": return AzureSqlDatabaseContents.DeserializeAzureSqlDatabaseContents(element);
+                    case "GlusterFs": return GlusterFsContents.DeserializeGlusterFsContents(element);
+                }
+            }
+            ContentsType contentsType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("contentsType"))
                 {
-                    type = new ContentsType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("azureDataLake"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    azureDataLake = AzureDataLakeSection.DeserializeAzureDataLakeSection(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("azureMySql"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    azureMySql = AzureMySqlSection.DeserializeAzureMySqlSection(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("azurePostgreSql"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    azurePostgreSql = AzurePostgreSqlSection.DeserializeAzurePostgreSqlSection(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("azureSqlDatabase"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    azureSqlDatabase = AzureSqlDatabaseSection.DeserializeAzureSqlDatabaseSection(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("azureStorage"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    azureStorage = AzureStorageSection.DeserializeAzureStorageSection(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("glusterFs"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    glusterFs = GlusterFsSection.DeserializeGlusterFsSection(property.Value);
+                    contentsType = new ContentsType(property.Value.GetString());
                     continue;
                 }
             }
-            return new DatastoreContents(type, azureDataLake.Value, azureMySql.Value, azurePostgreSql.Value, azureSqlDatabase.Value, azureStorage.Value, glusterFs.Value);
+            return new DatastoreContents(contentsType);
         }
     }
 }

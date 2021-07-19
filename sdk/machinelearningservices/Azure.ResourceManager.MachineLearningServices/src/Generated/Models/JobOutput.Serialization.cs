@@ -10,14 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class JobOutput : IUtf8JsonSerializable
+    public partial class JobOutput
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static JobOutput DeserializeJobOutput(JsonElement element)
         {
             Optional<string> datastoreId = default;

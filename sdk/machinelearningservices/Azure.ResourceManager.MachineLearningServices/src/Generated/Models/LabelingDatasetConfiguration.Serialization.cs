@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("assetName");
                 writer.WriteStringValue(AssetName);
             }
-            if (Optional.IsDefined(IncrementalDatasetRefreshEnabled))
-            {
-                writer.WritePropertyName("incrementalDatasetRefreshEnabled");
-                writer.WriteBooleanValue(IncrementalDatasetRefreshEnabled.Value);
-            }
             if (Optional.IsDefined(DatasetVersion))
             {
                 writer.WritePropertyName("datasetVersion");
                 writer.WriteStringValue(DatasetVersion);
+            }
+            if (Optional.IsDefined(IncrementalDatasetRefreshEnabled))
+            {
+                writer.WritePropertyName("incrementalDatasetRefreshEnabled");
+                writer.WriteBooleanValue(IncrementalDatasetRefreshEnabled.Value);
             }
             writer.WriteEndObject();
         }
@@ -36,13 +36,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         internal static LabelingDatasetConfiguration DeserializeLabelingDatasetConfiguration(JsonElement element)
         {
             Optional<string> assetName = default;
-            Optional<bool> incrementalDatasetRefreshEnabled = default;
             Optional<string> datasetVersion = default;
+            Optional<bool> incrementalDatasetRefreshEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assetName"))
                 {
                     assetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("datasetVersion"))
+                {
+                    datasetVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("incrementalDatasetRefreshEnabled"))
@@ -55,13 +60,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     incrementalDatasetRefreshEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("datasetVersion"))
-                {
-                    datasetVersion = property.Value.GetString();
-                    continue;
-                }
             }
-            return new LabelingDatasetConfiguration(assetName.Value, Optional.ToNullable(incrementalDatasetRefreshEnabled), datasetVersion.Value);
+            return new LabelingDatasetConfiguration(assetName.Value, datasetVersion.Value, Optional.ToNullable(incrementalDatasetRefreshEnabled));
         }
     }
 }

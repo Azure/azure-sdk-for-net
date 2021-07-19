@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("inferencingComputeBinding");
                 writer.WriteObjectValue(InferencingComputeBinding);
             }
-            if (Optional.IsDefined(TrainingComputeBinding))
-            {
-                writer.WritePropertyName("trainingComputeBinding");
-                writer.WriteObjectValue(TrainingComputeBinding);
-            }
             if (Optional.IsDefined(MlAssistEnabled))
             {
                 writer.WritePropertyName("mlAssistEnabled");
                 writer.WriteBooleanValue(MlAssistEnabled.Value);
+            }
+            if (Optional.IsDefined(TrainingComputeBinding))
+            {
+                writer.WritePropertyName("trainingComputeBinding");
+                writer.WriteObjectValue(TrainingComputeBinding);
             }
             writer.WriteEndObject();
         }
 
         internal static MLAssistConfiguration DeserializeMLAssistConfiguration(JsonElement element)
         {
-            Optional<ComputeBinding> inferencingComputeBinding = default;
-            Optional<ComputeBinding> trainingComputeBinding = default;
+            Optional<ComputeConfiguration> inferencingComputeBinding = default;
             Optional<bool> mlAssistEnabled = default;
+            Optional<ComputeConfiguration> trainingComputeBinding = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inferencingComputeBinding"))
@@ -47,17 +47,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    inferencingComputeBinding = ComputeBinding.DeserializeComputeBinding(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("trainingComputeBinding"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    trainingComputeBinding = ComputeBinding.DeserializeComputeBinding(property.Value);
+                    inferencingComputeBinding = ComputeConfiguration.DeserializeComputeConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mlAssistEnabled"))
@@ -70,8 +60,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     mlAssistEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("trainingComputeBinding"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    trainingComputeBinding = ComputeConfiguration.DeserializeComputeConfiguration(property.Value);
+                    continue;
+                }
             }
-            return new MLAssistConfiguration(inferencingComputeBinding.Value, trainingComputeBinding.Value, Optional.ToNullable(mlAssistEnabled));
+            return new MLAssistConfiguration(inferencingComputeBinding.Value, Optional.ToNullable(mlAssistEnabled), trainingComputeBinding.Value);
         }
     }
 }

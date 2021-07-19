@@ -16,29 +16,29 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("jobType");
-            writer.WriteStringValue(JobType.ToString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            writer.WritePropertyName("jobType");
+            writer.WriteStringValue(JobType.ToString());
+            if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("properties");
                 writer.WriteStartObject();
-                foreach (var item in Tags)
+                foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("tags");
                 writer.WriteStartObject();
-                foreach (var item in Properties)
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
@@ -55,21 +55,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 switch (discriminator.GetString())
                 {
                     case "Command": return CommandJob.DeserializeCommandJob(element);
-                    case "ComputeJobBase": return ComputeJobBase.DeserializeComputeJobBase(element);
-                    case "Labeling": return LabelingJob.DeserializeLabelingJob(element);
                     case "Sweep": return SweepJob.DeserializeSweepJob(element);
                 }
             }
-            JobType jobType = default;
-            Optional<JobBaseInteractionEndpoints> interactionEndpoints = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Optional<IReadOnlyDictionary<string, JobEndpoint>> interactionEndpoints = default;
+            JobType jobType = default;
             Optional<IDictionary<string, string>> properties = default;
+            Optional<JobProvisioningState> provisioningState = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobType"))
+                if (property.NameEquals("description"))
                 {
-                    jobType = new JobType(property.Value.GetString());
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("interactionEndpoints"))
@@ -79,27 +78,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    interactionEndpoints = JobBaseInteractionEndpoints.DeserializeJobBaseInteractionEndpoints(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    Dictionary<string, JobEndpoint> dictionary = new Dictionary<string, JobEndpoint>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        dictionary.Add(property0.Name, JobEndpoint.DeserializeJobEndpoint(property0.Value));
                     }
-                    tags = dictionary;
+                    interactionEndpoints = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("jobType"))
+                {
+                    jobType = new JobType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -117,8 +106,33 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     properties = dictionary;
                     continue;
                 }
+                if (property.NameEquals("provisioningState"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new JobProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
             }
-            return new JobBase(jobType, interactionEndpoints.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            return new JobBase(description.Value, Optional.ToDictionary(interactionEndpoints), jobType, Optional.ToDictionary(properties), Optional.ToNullable(provisioningState), Optional.ToDictionary(tags));
         }
     }
 }

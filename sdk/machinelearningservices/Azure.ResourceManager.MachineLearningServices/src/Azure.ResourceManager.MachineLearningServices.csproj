@@ -12,11 +12,10 @@
 
     <PropertyGroup>
     <!-- Link to preapproved, registered namespaces: https://azure.github.io/azure-sdk/registered_namespaces.html  -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
+    <NoWarn>$(NoWarn);AZC0100;CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
+    <PackageReference Include="Azure.ResourceManager.Core" />
   </ItemGroup>
 </Project>

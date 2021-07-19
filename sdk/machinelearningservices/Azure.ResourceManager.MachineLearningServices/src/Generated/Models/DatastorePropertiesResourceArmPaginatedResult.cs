@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of DatastorePropertiesResourceArmPaginatedResult. </summary>
         internal DatastorePropertiesResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<DatastorePropertiesResource>();
+            Value = new ChangeTrackingList<DatastorePropertiesResourceData>();
         }
 
         /// <summary> Initializes a new instance of DatastorePropertiesResourceArmPaginatedResult. </summary>
-        /// <param name="value"> An array of objects of type DatastoreProperties. </param>
         /// <param name="nextLink"> . </param>
-        internal DatastorePropertiesResourceArmPaginatedResult(IReadOnlyList<DatastorePropertiesResource> value, string nextLink)
+        /// <param name="value"> An array of objects of type DatastoreProperties. </param>
+        internal DatastorePropertiesResourceArmPaginatedResult(string nextLink, IReadOnlyList<DatastorePropertiesResourceData> value)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
         }
 
-        /// <summary> An array of objects of type DatastoreProperties. </summary>
-        public IReadOnlyList<DatastorePropertiesResource> Value { get; }
         public string NextLink { get; }
+        /// <summary> An array of objects of type DatastoreProperties. </summary>
+        public IReadOnlyList<DatastorePropertiesResourceData> Value { get; }
     }
 }

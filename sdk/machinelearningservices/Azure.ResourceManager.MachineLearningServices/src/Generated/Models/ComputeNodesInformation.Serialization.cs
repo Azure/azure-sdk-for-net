@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class ComputeNodesInformation
+    internal partial class ComputeNodesInformation
     {
         internal static ComputeNodesInformation DeserializeComputeNodesInformation(JsonElement element)
         {
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
             }
             ComputeType computeType = default;
-            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"))
@@ -30,13 +29,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     computeType = new ComputeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ComputeNodesInformation(computeType, nextLink.Value);
+            return new ComputeNodesInformation(computeType);
         }
     }
 }

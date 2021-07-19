@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Class to represent configuration settings for Docker. </summary>
+    /// <summary> Configuration settings for Docker. </summary>
     public partial class DockerSpecification
     {
         /// <summary> Initializes a new instance of DockerSpecification. </summary>
@@ -16,13 +16,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of DockerSpecification. </summary>
-        /// <param name="type"> Docker specification must be either Build or Image. </param>
-        internal DockerSpecification(DockerSpecificationType type)
+        /// <param name="dockerSpecificationType"> Docker specification must be either Build or Image. </param>
+        /// <param name="platform"> The platform information of the docker image. </param>
+        internal DockerSpecification(DockerSpecificationType dockerSpecificationType, DockerImagePlatform platform)
         {
-            Type = type;
+            DockerSpecificationType = dockerSpecificationType;
+            Platform = platform;
         }
 
         /// <summary> Docker specification must be either Build or Image. </summary>
-        internal DockerSpecificationType Type { get; set; }
+        internal DockerSpecificationType DockerSpecificationType { get; set; }
+        /// <summary> The platform information of the docker image. </summary>
+        public DockerImagePlatform Platform { get; set; }
     }
 }

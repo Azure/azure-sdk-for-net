@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> AmlCompute update parameters. </summary>
-    public partial class ClusterUpdateParameters
+    internal partial class ClusterUpdateParameters
     {
         /// <summary> Initializes a new instance of ClusterUpdateParameters. </summary>
         public ClusterUpdateParameters()

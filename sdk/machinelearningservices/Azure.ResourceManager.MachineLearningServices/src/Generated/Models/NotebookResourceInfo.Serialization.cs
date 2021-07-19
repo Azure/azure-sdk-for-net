@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        notebookPreparationError = null;
                         continue;
                     }
                     notebookPreparationError = NotebookPreparationError.DeserializeNotebookPreparationError(property.Value);

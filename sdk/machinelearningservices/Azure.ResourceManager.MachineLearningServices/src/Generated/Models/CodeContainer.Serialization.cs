@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
             if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties");
@@ -38,21 +43,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
             writer.WriteEndObject();
         }
 
         internal static CodeContainer DeserializeCodeContainer(JsonElement element)
         {
+            Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("description"))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -83,13 +88,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
             }
-            return new CodeContainer(Optional.ToDictionary(properties), Optional.ToDictionary(tags), description.Value);
+            return new CodeContainer(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags));
         }
     }
 }

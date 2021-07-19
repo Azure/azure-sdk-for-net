@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of DataVersionResourceArmPaginatedResult. </summary>
         internal DataVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<DataVersionResource>();
+            Value = new ChangeTrackingList<DataVersionResourceData>();
         }
 
         /// <summary> Initializes a new instance of DataVersionResourceArmPaginatedResult. </summary>
-        /// <param name="value"> An array of objects of type DataVersion. </param>
         /// <param name="nextLink"> . </param>
-        internal DataVersionResourceArmPaginatedResult(IReadOnlyList<DataVersionResource> value, string nextLink)
+        /// <param name="value"> An array of objects of type DataVersion. </param>
+        internal DataVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<DataVersionResourceData> value)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
         }
 
-        /// <summary> An array of objects of type DataVersion. </summary>
-        public IReadOnlyList<DataVersionResource> Value { get; }
         public string NextLink { get; }
+        /// <summary> An array of objects of type DataVersion. </summary>
+        public IReadOnlyList<DataVersionResourceData> Value { get; }
     }
 }

@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static DistributionConfiguration DeserializeDistributionConfiguration(JsonElement element)
         {
+            if (element.TryGetProperty("distributionType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Mpi": return Mpi.DeserializeMpi(element);
+                    case "PyTorch": return PyTorch.DeserializePyTorch(element);
+                    case "TensorFlow": return TensorFlow.DeserializeTensorFlow(element);
+                }
+            }
             DistributionType distributionType = default;
             foreach (var property in element.EnumerateObject())
             {

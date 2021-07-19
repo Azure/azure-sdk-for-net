@@ -5,18 +5,18 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Core;
+
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The properties for Quota update or retrieval. </summary>
-    public partial class QuotaBaseProperties
+    public partial class QuotaBaseProperties : WritableSubResource<ResourceIdentifier>
     {
         /// <summary> Initializes a new instance of QuotaBaseProperties. </summary>
         public QuotaBaseProperties()
         {
         }
 
-        /// <summary> Specifies the resource ID. </summary>
-        public string Id { get; set; }
         /// <summary> Specifies the resource type. </summary>
         public string Type { get; set; }
         /// <summary> The maximum permitted quota of the resource. </summary>

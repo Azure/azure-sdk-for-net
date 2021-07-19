@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         private const string HDInsightValue = "HDInsight";
         private const string DatabricksValue = "Databricks";
         private const string DataLakeAnalyticsValue = "DataLakeAnalytics";
+        private const string SynapseSparkValue = "SynapseSpark";
 
         /// <summary> AKS. </summary>
         public static ComputeType AKS { get; } = new ComputeType(AKSValue);
@@ -47,6 +48,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static ComputeType Databricks { get; } = new ComputeType(DatabricksValue);
         /// <summary> DataLakeAnalytics. </summary>
         public static ComputeType DataLakeAnalytics { get; } = new ComputeType(DataLakeAnalyticsValue);
+        /// <summary> SynapseSpark. </summary>
+        public static ComputeType SynapseSpark { get; } = new ComputeType(SynapseSparkValue);
         /// <summary> Determines if two <see cref="ComputeType"/> values are the same. </summary>
         public static bool operator ==(ComputeType left, ComputeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeType"/> values are not the same. </summary>

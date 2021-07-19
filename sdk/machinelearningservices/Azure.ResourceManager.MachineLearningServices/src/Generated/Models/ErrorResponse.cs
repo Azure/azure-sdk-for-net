@@ -5,36 +5,24 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
-
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Error response information. </summary>
+    /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
     public partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         internal ErrorResponse()
         {
-            Details = new ChangeTrackingList<ErrorDetail>();
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="details"> An array of error detail objects. </param>
-        internal ErrorResponse(string code, string message, IReadOnlyList<ErrorDetail> details)
+        /// <param name="error"> The error object. </param>
+        internal ErrorResponse(ErrorDetail error)
         {
-            Code = code;
-            Message = message;
-            Details = details;
+            Error = error;
         }
 
-        /// <summary> Error code. </summary>
-        public string Code { get; }
-        /// <summary> Error message. </summary>
-        public string Message { get; }
-        /// <summary> An array of error detail objects. </summary>
-        public IReadOnlyList<ErrorDetail> Details { get; }
+        /// <summary> The error object. </summary>
+        public ErrorDetail Error { get; }
     }
 }

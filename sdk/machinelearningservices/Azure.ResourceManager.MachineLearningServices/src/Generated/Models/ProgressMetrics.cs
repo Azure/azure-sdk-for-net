@@ -13,30 +13,30 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class ProgressMetrics
     {
         /// <summary> Initializes a new instance of ProgressMetrics. </summary>
-        public ProgressMetrics()
+        internal ProgressMetrics()
         {
         }
 
         /// <summary> Initializes a new instance of ProgressMetrics. </summary>
-        /// <param name="totalDatapointCount"> The total datapoint count. </param>
         /// <param name="completedDatapointCount"> The completed datapoint count. </param>
-        /// <param name="skippedDatapointCount"> The skipped datapoint count. </param>
         /// <param name="incrementalDatasetLastRefreshTime"> The time of last successful incremental dataset refresh in UTC. </param>
-        internal ProgressMetrics(long? totalDatapointCount, long? completedDatapointCount, long? skippedDatapointCount, DateTimeOffset? incrementalDatasetLastRefreshTime)
+        /// <param name="skippedDatapointCount"> The skipped datapoint count. </param>
+        /// <param name="totalDatapointCount"> The total datapoint count. </param>
+        internal ProgressMetrics(long? completedDatapointCount, DateTimeOffset? incrementalDatasetLastRefreshTime, long? skippedDatapointCount, long? totalDatapointCount)
         {
-            TotalDatapointCount = totalDatapointCount;
             CompletedDatapointCount = completedDatapointCount;
-            SkippedDatapointCount = skippedDatapointCount;
             IncrementalDatasetLastRefreshTime = incrementalDatasetLastRefreshTime;
+            SkippedDatapointCount = skippedDatapointCount;
+            TotalDatapointCount = totalDatapointCount;
         }
 
-        /// <summary> The total datapoint count. </summary>
-        public long? TotalDatapointCount { get; }
         /// <summary> The completed datapoint count. </summary>
         public long? CompletedDatapointCount { get; }
-        /// <summary> The skipped datapoint count. </summary>
-        public long? SkippedDatapointCount { get; }
         /// <summary> The time of last successful incremental dataset refresh in UTC. </summary>
         public DateTimeOffset? IncrementalDatasetLastRefreshTime { get; }
+        /// <summary> The skipped datapoint count. </summary>
+        public long? SkippedDatapointCount { get; }
+        /// <summary> The total datapoint count. </summary>
+        public long? TotalDatapointCount { get; }
     }
 }

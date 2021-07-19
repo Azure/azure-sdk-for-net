@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The DatastoreProperties. </summary>
+    /// <summary> Datastore definition. </summary>
     public partial class DatastoreProperties
     {
         /// <summary> Initializes a new instance of DatastoreProperties. </summary>
-        /// <param name="contents"> . </param>
+        /// <param name="contents"> Reference to the datastore storage contents. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
         public DatastoreProperties(DatastoreContents contents)
         {
@@ -30,34 +30,36 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of DatastoreProperties. </summary>
-        /// <param name="contents"> . </param>
+        /// <param name="contents"> Reference to the datastore storage contents. </param>
+        /// <param name="description"> The asset description text. </param>
         /// <param name="hasBeenValidated"> Whether the service has validated access to the datastore with the provided credentials. </param>
         /// <param name="isDefault"> Whether this datastore is the default for the workspace. </param>
-        /// <param name="linkedInfo"> . </param>
-        /// <param name="properties"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="description"> The asset description text. </param>
+        /// <param name="linkedInfo"> Information about the datastore origin, if linked. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        internal DatastoreProperties(DatastoreContents contents, bool? hasBeenValidated, bool? isDefault, LinkedInfo linkedInfo, IDictionary<string, string> properties, string description, IDictionary<string, string> tags)
+        internal DatastoreProperties(DatastoreContents contents, string description, bool? hasBeenValidated, bool? isDefault, LinkedInfo linkedInfo, IDictionary<string, string> properties, IDictionary<string, string> tags)
         {
             Contents = contents;
+            Description = description;
             HasBeenValidated = hasBeenValidated;
             IsDefault = isDefault;
             LinkedInfo = linkedInfo;
             Properties = properties;
-            Description = description;
             Tags = tags;
         }
 
+        /// <summary> Reference to the datastore storage contents. </summary>
         public DatastoreContents Contents { get; set; }
+        /// <summary> The asset description text. </summary>
+        public string Description { get; set; }
         /// <summary> Whether the service has validated access to the datastore with the provided credentials. </summary>
         public bool? HasBeenValidated { get; }
         /// <summary> Whether this datastore is the default for the workspace. </summary>
         public bool? IsDefault { get; set; }
+        /// <summary> Information about the datastore origin, if linked. </summary>
         public LinkedInfo LinkedInfo { get; set; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary> The asset property dictionary. </summary>
         public IDictionary<string, string> Properties { get; }
-        /// <summary> The asset description text. </summary>
-        public string Description { get; set; }
         /// <summary> Tag dictionary. Tags can be added, removed, and updated. </summary>
         public IDictionary<string, string> Tags { get; }
     }

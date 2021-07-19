@@ -22,6 +22,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static LabelingJobMediaProperties DeserializeLabelingJobMediaProperties(JsonElement element)
         {
+            if (element.TryGetProperty("mediaType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Image": return LabelingJobImageProperties.DeserializeLabelingJobImageProperties(element);
+                    case "Text": return LabelingJobTextProperties.DeserializeLabelingJobTextProperties(element);
+                }
+            }
             MediaType mediaType = default;
             foreach (var property in element.EnumerateObject())
             {

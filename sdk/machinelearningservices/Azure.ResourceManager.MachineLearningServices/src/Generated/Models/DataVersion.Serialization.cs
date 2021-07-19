@@ -26,32 +26,34 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("datastoreId");
                 writer.WriteStringValue(DatastoreId);
             }
-            if (Optional.IsDefined(AssetPath))
-            {
-                writer.WritePropertyName("assetPath");
-                writer.WriteObjectValue(AssetPath);
-            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Optional.IsDefined(IsAnonymous))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("isAnonymous");
+                writer.WriteBooleanValue(IsAnonymous.Value);
+            }
+            writer.WritePropertyName("path");
+            writer.WriteStringValue(Path);
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
                 writer.WriteStartObject();
-                foreach (var item in Tags)
+                foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("tags");
                 writer.WriteStartObject();
-                foreach (var item in Properties)
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
@@ -65,10 +67,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             Optional<DatasetType> datasetType = default;
             Optional<string> datastoreId = default;
-            Optional<AssetPath> assetPath = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Optional<bool> isAnonymous = default;
+            string path = default;
             Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasetType"))
@@ -86,34 +89,24 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     datastoreId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assetPath"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    assetPath = AssetPath.DeserializeAssetPath(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("description"))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("isAnonymous"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
+                    isAnonymous = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("path"))
+                {
+                    path = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -131,8 +124,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     properties = dictionary;
                     continue;
                 }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
             }
-            return new DataVersion(Optional.ToNullable(datasetType), datastoreId.Value, assetPath.Value, description.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            return new DataVersion(Optional.ToNullable(datasetType), datastoreId.Value, description.Value, Optional.ToNullable(isAnonymous), path, Optional.ToDictionary(properties), Optional.ToDictionary(tags));
         }
     }
 }

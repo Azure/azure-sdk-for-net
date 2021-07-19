@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> The LinkedInfo. </summary>
+    /// <summary> Information about a datastore origin, if linked. </summary>
     public partial class LinkedInfo
     {
         /// <summary> Initializes a new instance of LinkedInfo. </summary>

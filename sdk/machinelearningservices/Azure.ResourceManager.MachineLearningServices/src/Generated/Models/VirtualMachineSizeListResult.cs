@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
         internal VirtualMachineSizeListResult()
         {
-            AmlCompute = new ChangeTrackingList<VirtualMachineSize>();
+            Value = new ChangeTrackingList<VirtualMachineSize>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
-        /// <param name="amlCompute"> The list of virtual machine sizes supported by AmlCompute. </param>
-        internal VirtualMachineSizeListResult(IReadOnlyList<VirtualMachineSize> amlCompute)
+        /// <param name="value"> The list of virtual machine sizes supported by AmlCompute. </param>
+        internal VirtualMachineSizeListResult(IReadOnlyList<VirtualMachineSize> value)
         {
-            AmlCompute = amlCompute;
+            Value = value;
         }
 
         /// <summary> The list of virtual machine sizes supported by AmlCompute. </summary>
-        public IReadOnlyList<VirtualMachineSize> AmlCompute { get; }
+        public IReadOnlyList<VirtualMachineSize> Value { get; }
     }
 }

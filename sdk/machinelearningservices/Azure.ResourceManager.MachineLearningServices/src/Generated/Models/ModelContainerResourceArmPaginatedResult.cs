@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of ModelContainerResourceArmPaginatedResult. </summary>
         internal ModelContainerResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<ModelContainerResource>();
+            Value = new ChangeTrackingList<ModelContainerResourceData>();
         }
 
         /// <summary> Initializes a new instance of ModelContainerResourceArmPaginatedResult. </summary>
-        /// <param name="value"> An array of objects of type ModelContainer. </param>
         /// <param name="nextLink"> . </param>
-        internal ModelContainerResourceArmPaginatedResult(IReadOnlyList<ModelContainerResource> value, string nextLink)
+        /// <param name="value"> An array of objects of type ModelContainer. </param>
+        internal ModelContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<ModelContainerResourceData> value)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
         }
 
-        /// <summary> An array of objects of type ModelContainer. </summary>
-        public IReadOnlyList<ModelContainerResource> Value { get; }
         public string NextLink { get; }
+        /// <summary> An array of objects of type ModelContainer. </summary>
+        public IReadOnlyList<ModelContainerResourceData> Value { get; }
     }
 }

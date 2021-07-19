@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<string> userStorageResourceId = default;
             Optional<string> appInsightsInstrumentationKey = default;
             Optional<RegistryListCredentialsResult> containerRegistryCredentials = default;
+            Optional<ListNotebookKeysResult> notebookAccessKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userStorageKey"))
@@ -45,8 +46,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     containerRegistryCredentials = RegistryListCredentialsResult.DeserializeRegistryListCredentialsResult(property.Value);
                     continue;
                 }
+                if (property.NameEquals("notebookAccessKeys"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    notebookAccessKeys = ListNotebookKeysResult.DeserializeListNotebookKeysResult(property.Value);
+                    continue;
+                }
             }
-            return new ListWorkspaceKeysResult(userStorageKey.Value, userStorageResourceId.Value, appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value);
+            return new ListWorkspaceKeysResult(userStorageKey.Value, userStorageResourceId.Value, appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value, notebookAccessKeys.Value);
         }
     }
 }

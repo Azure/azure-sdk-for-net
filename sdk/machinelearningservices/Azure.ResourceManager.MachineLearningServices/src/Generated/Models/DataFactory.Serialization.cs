@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("resourceId");
                 writer.WriteStringValue(ResourceId);
             }
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                writer.WritePropertyName("disableLocalAuth");
+                writer.WriteBooleanValue(DisableLocalAuth.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -46,8 +51,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> modifiedOn = default;
             Optional<string> resourceId = default;
-            Optional<IReadOnlyList<MachineLearningServiceError>> provisioningErrors = default;
+            Optional<IReadOnlyList<ErrorResponse>> provisioningErrors = default;
             Optional<bool> isAttachedCompute = default;
+            Optional<bool> disableLocalAuth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"))
@@ -107,10 +113,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MachineLearningServiceError> array = new List<MachineLearningServiceError>();
+                    List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningServiceError.DeserializeMachineLearningServiceError(item));
+                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
                     }
                     provisioningErrors = array;
                     continue;
@@ -125,8 +131,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     isAttachedCompute = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("disableLocalAuth"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    disableLocalAuth = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new DataFactory(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute));
+            return new DataFactory(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth));
         }
     }
 }

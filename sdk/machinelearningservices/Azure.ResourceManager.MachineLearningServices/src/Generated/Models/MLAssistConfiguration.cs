@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of MLAssistConfiguration. </summary>
-        /// <param name="inferencingComputeBinding"> Compute binding definition. </param>
-        /// <param name="trainingComputeBinding"> Compute binding definition. </param>
+        /// <param name="inferencingComputeBinding"> AML compute binding used in inferencing. </param>
         /// <param name="mlAssistEnabled"> Indicates whether MLAssist feature is enabled. </param>
-        internal MLAssistConfiguration(ComputeBinding inferencingComputeBinding, ComputeBinding trainingComputeBinding, bool? mlAssistEnabled)
+        /// <param name="trainingComputeBinding"> AML compute binding used in training. </param>
+        internal MLAssistConfiguration(ComputeConfiguration inferencingComputeBinding, bool? mlAssistEnabled, ComputeConfiguration trainingComputeBinding)
         {
             InferencingComputeBinding = inferencingComputeBinding;
-            TrainingComputeBinding = trainingComputeBinding;
             MlAssistEnabled = mlAssistEnabled;
+            TrainingComputeBinding = trainingComputeBinding;
         }
 
-        /// <summary> Compute binding definition. </summary>
-        public ComputeBinding InferencingComputeBinding { get; set; }
-        /// <summary> Compute binding definition. </summary>
-        public ComputeBinding TrainingComputeBinding { get; set; }
+        /// <summary> AML compute binding used in inferencing. </summary>
+        public ComputeConfiguration InferencingComputeBinding { get; set; }
         /// <summary> Indicates whether MLAssist feature is enabled. </summary>
         public bool? MlAssistEnabled { get; set; }
+        /// <summary> AML compute binding used in training. </summary>
+        public ComputeConfiguration TrainingComputeBinding { get; set; }
     }
 }
