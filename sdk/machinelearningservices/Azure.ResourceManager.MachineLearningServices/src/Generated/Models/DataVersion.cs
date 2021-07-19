@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Data asset version details. </summary>
     public partial class DataVersion

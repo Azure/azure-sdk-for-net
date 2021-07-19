@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Defines all connectivity endpoints and properties for an ComputeInstance. </summary>
     public partial class ComputeInstanceConnectivityEndpoints

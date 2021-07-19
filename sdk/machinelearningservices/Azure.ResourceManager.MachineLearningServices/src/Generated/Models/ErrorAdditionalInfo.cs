@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The resource management error additional info. </summary>
     public partial class ErrorAdditionalInfo

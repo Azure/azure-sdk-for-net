@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Defines values for a ResourceIdentity&apos;s type. </summary>
     public readonly partial struct ResourceIdentityAssignment : IEquatable<ResourceIdentityAssignment>

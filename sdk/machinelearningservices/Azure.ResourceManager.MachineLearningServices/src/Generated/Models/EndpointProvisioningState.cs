@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> State of endpoint provisioning. </summary>
     public readonly partial struct EndpointProvisioningState : IEquatable<EndpointProvisioningState>

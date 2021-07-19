@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The Components1D3SwueSchemasComputeresourceAllof1. </summary>
     public partial class Components1D3SwueSchemasComputeresourceAllof1

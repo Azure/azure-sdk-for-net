@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Reference to an asset via its path in a datastore. </summary>
     public partial class DataPathAssetReference : AssetReferenceBase

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> SAS datastore credentials configuration. </summary>
     public partial class SasDatastoreCredentials : DatastoreCredentials

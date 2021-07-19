@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Initializes a new instance of OnlineEndpointTrackedResourceContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal OnlineEndpointTrackedResourceContainer(ResourceOperationsBase parent) : base(parent)
+        internal OnlineEndpointTrackedResourceContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -44,26 +45,28 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         // Container level operations.
 
-        /// <summary> The operation to create or update a OnlineEndpointTrackedResource. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update Online Endpoint (asynchronous). </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="body"> Online Endpoint entity to apply during operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<OnlineEndpointTrackedResource> CreateOrUpdate(string workspaceName, OnlineEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="body"/> is null. </exception>
+        public virtual Response<OnlineEndpointTrackedResource> CreateOrUpdate(string workspaceName, OnlineEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
         {
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (workspaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(workspaceName));
-                }
-                if (body == null)
-                {
-                    throw new ArgumentNullException(nameof(body));
-                }
-
-                return StartCreateOrUpdate(workspaceName, body, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartCreateOrUpdate(workspaceName, body, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -72,26 +75,27 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> The operation to create or update a OnlineEndpointTrackedResource. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update Online Endpoint (asynchronous). </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="body"> Online Endpoint entity to apply during operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<OnlineEndpointTrackedResource>> CreateOrUpdateAsync(string workspaceName, OnlineEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="body"/> is null. </exception>
+        public async virtual Task<Response<OnlineEndpointTrackedResource>> CreateOrUpdateAsync(string workspaceName, OnlineEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
         {
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (workspaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(workspaceName));
-                }
-                if (body == null)
-                {
-                    throw new ArgumentNullException(nameof(body));
-                }
-
-                var operation = await StartCreateOrUpdateAsync(workspaceName, body, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(workspaceName, body, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -101,27 +105,28 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> The operation to create or update a OnlineEndpointTrackedResource. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update Online Endpoint (asynchronous). </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="body"> Online Endpoint entity to apply during operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public OnlineEndpointsCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, OnlineEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="body"/> is null. </exception>
+        public virtual OnlineEndpointsCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, OnlineEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
         {
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (workspaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(workspaceName));
-                }
-                if (body == null)
-                {
-                    throw new ArgumentNullException(nameof(body));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.Name, Id.ResourceGroupName, workspaceName, body, cancellationToken: cancellationToken);
-                return new OnlineEndpointsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.Name, Id.ResourceGroupName, workspaceName, body).Request, originalResponse);
+                var response = _restClient.CreateOrUpdate(Id.Name, Id.ResourceGroupName, workspaceName, body, cancellationToken);
+                return new OnlineEndpointsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.Name, Id.ResourceGroupName, workspaceName, body).Request, response);
             }
             catch (Exception e)
             {
@@ -130,27 +135,28 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> The operation to create or update a OnlineEndpointTrackedResource. Please note some properties can be set only during creation. </summary>
+        /// <summary> Create or update Online Endpoint (asynchronous). </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="body"> Online Endpoint entity to apply during operation. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<OnlineEndpointsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, OnlineEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="body"/> is null. </exception>
+        public async virtual Task<OnlineEndpointsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, OnlineEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
         {
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (workspaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(workspaceName));
-                }
-                if (body == null)
-                {
-                    throw new ArgumentNullException(nameof(body));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.Name, Id.ResourceGroupName, workspaceName, body, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new OnlineEndpointsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.Name, Id.ResourceGroupName, workspaceName, body).Request, originalResponse);
+                var response = await _restClient.CreateOrUpdateAsync(Id.Name, Id.ResourceGroupName, workspaceName, body, cancellationToken).ConfigureAwait(false);
+                return new OnlineEndpointsCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.Name, Id.ResourceGroupName, workspaceName, body).Request, response);
             }
             catch (Exception e)
             {
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<OnlineEndpointTrackedResource> Get(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<OnlineEndpointTrackedResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.Get");
             scope.Start();
@@ -186,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<OnlineEndpointTrackedResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<OnlineEndpointTrackedResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.Get");
             scope.Start();
@@ -199,6 +205,106 @@ namespace Azure.ResourceManager.MachineLearningServices
 
                 var response = await _restClient.GetAsync(Id.Name, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new OnlineEndpointTrackedResource(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual OnlineEndpointTrackedResource TryGet(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (workspaceName == null)
+                {
+                    throw new ArgumentNullException(nameof(workspaceName));
+                }
+
+                return Get(workspaceName, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<OnlineEndpointTrackedResource> TryGetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (workspaceName == null)
+                {
+                    throw new ArgumentNullException(nameof(workspaceName));
+                }
+
+                return await GetAsync(workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual bool DoesExist(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (workspaceName == null)
+                {
+                    throw new ArgumentNullException(nameof(workspaceName));
+                }
+
+                return TryGet(workspaceName, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<bool> DoesExistAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (workspaceName == null)
+                {
+                    throw new ArgumentNullException(nameof(workspaceName));
+                }
+
+                return await TryGetAsync(workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

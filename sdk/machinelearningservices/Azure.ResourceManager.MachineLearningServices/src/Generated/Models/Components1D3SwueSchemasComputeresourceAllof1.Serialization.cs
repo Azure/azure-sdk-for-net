@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     public partial class Components1D3SwueSchemasComputeresourceAllof1 : IUtf8JsonSerializable
     {

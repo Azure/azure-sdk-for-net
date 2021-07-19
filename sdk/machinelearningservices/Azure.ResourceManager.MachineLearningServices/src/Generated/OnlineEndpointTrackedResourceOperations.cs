@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -30,13 +30,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref="OnlineEndpointTrackedResourceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal OnlineEndpointTrackedResourceOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal OnlineEndpointTrackedResourceOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new OnlineEndpointsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
+        /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/onlineEndpoints";
+        /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
         /// <inheritdoc />
@@ -76,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<LocationData> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -127,14 +129,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete Online Endpoint (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Operation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<OnlineEndpointsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartDelete");
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new OnlineEndpointsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _restClient.DeleteAsync(Id.Parent.Name, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new OnlineEndpointsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Parent.Name, Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -145,14 +147,14 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete Online Endpoint (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Operation StartDelete(CancellationToken cancellationToken = default)
+        public OnlineEndpointsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartDelete");
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new OnlineEndpointsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _restClient.Delete(Id.Parent.Name, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new OnlineEndpointsDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.Parent.Name, Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -168,12 +170,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <returns> The updated resource with the tag added. </returns>
         public async Task<Response<OnlineEndpointTrackedResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.AddTag");
             scope.Start();
             try
             {
-                var operation = await StartAddTagAsync(key, value, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new OnlineEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,74 +199,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <returns> The updated resource with the tag added. </returns>
         public Response<OnlineEndpointTrackedResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.AddTag");
             scope.Start();
             try
             {
-                var operation = StartAddTag(key, value, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks> <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>. </remarks>
-        public async Task<OnlineEndpointsUpdateOperation> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartAddTag");
-            scope.Start();
-            try
-            {
-                var resource = GetResource();
-                var patchable = new PartialOnlineEndpointPartialTrackedResource();
-                patchable.Tags.ReplaceWith(resource.Data.Tags);
-                patchable.Tags[key] = value;
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, patchable, cancellationToken).ConfigureAwait(false);
-                return new OnlineEndpointsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, patchable).Request, response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        /// <remarks> <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>. </remarks>
-        public OnlineEndpointsUpdateOperation StartAddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartAddTag");
-            scope.Start();
-            try
-            {
-                var resource = GetResource();
-                var patchable = new PartialOnlineEndpointPartialTrackedResource();
-                patchable.Tags.ReplaceWith(resource.Data.Tags);
-                patchable.Tags[key] = value;
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, patchable, cancellationToken);
-                return new OnlineEndpointsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, patchable).Request, response);
+                var originalTags = TagResourceOperations.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue[key] = value;
+                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken);
+                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new OnlineEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -271,12 +227,21 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <returns> The updated resource with the tags replaced. </returns>
         public async Task<Response<OnlineEndpointTrackedResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            if (tags == null)
+            {
+                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.SetTags");
             scope.Start();
             try
             {
-                var operation = await StartSetTagsAsync(tags, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                await TagResourceOperations.DeleteAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new OnlineEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -291,68 +256,21 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <returns> The updated resource with the tags replaced. </returns>
         public Response<OnlineEndpointTrackedResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            if (tags == null)
+            {
+                throw new ArgumentNullException($"{nameof(tags)} provided cannot be null.", nameof(tags));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.SetTags");
             scope.Start();
             try
             {
-                var operation = StartSetTags(tags, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        /// <remarks> <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>. </remarks>
-        public async Task<OnlineEndpointsUpdateOperation> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartSetTags");
-            scope.Start();
-            try
-            {
-                var patchable = new PartialOnlineEndpointPartialTrackedResource();
-                patchable.Tags.ReplaceWith(tags);
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, patchable, cancellationToken).ConfigureAwait(false);
-                return new OnlineEndpointsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, patchable).Request, response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        /// <remarks> <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>. </remarks>
-        public OnlineEndpointsUpdateOperation StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartSetTags");
-            scope.Start();
-            try
-            {
-                var patchable = new PartialOnlineEndpointPartialTrackedResource();
-                patchable.Tags.ReplaceWith(tags);
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, patchable, cancellationToken);
-                return new OnlineEndpointsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, patchable).Request, response);
+                TagResourceOperations.Delete(cancellationToken);
+                var originalTags = TagResourceOperations.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
+                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken);
+                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new OnlineEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -367,12 +285,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <returns> The updated resource with the tag removed. </returns>
         public async Task<Response<OnlineEndpointTrackedResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.RemoveTag");
             scope.Start();
             try
             {
-                var operation = await StartRemoveTagAsync(key, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagResourceOperations.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                await TagContainer.CreateOrUpdateAsync(originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new OnlineEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -387,72 +313,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <returns> The updated resource with the tag removed. </returns>
         public Response<OnlineEndpointTrackedResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.RemoveTag");
             scope.Start();
             try
             {
-                var operation = StartRemoveTag(key, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        /// <remarks> <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>. </remarks>
-        public async Task<OnlineEndpointsUpdateOperation> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartRemoveTag");
-            scope.Start();
-            try
-            {
-                var resource = GetResource();
-                var patchable = new PartialOnlineEndpointPartialTrackedResource();
-                patchable.Tags.ReplaceWith(resource.Data.Tags);
-                patchable.Tags.Remove(key);
-                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, patchable, cancellationToken).ConfigureAwait(false);
-                return new OnlineEndpointsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, patchable).Request, response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        /// <remarks> <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>. </remarks>
-        public OnlineEndpointsUpdateOperation StartRemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartRemoveTag");
-            scope.Start();
-            try
-            {
-                var resource = GetResource();
-                var patchable = new PartialOnlineEndpointPartialTrackedResource();
-                patchable.Tags.ReplaceWith(resource.Data.Tags);
-                patchable.Tags.Remove(key);
-                var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, patchable, cancellationToken);
-                return new OnlineEndpointsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, patchable).Request, response);
+                var originalTags = TagResourceOperations.Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagsValue.Remove(key);
+                TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken);
+                var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new OnlineEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -497,16 +371,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous). </summary>
-        /// <param name="keyType"> Specification for which type of key to generate. Primary or Secondary. </param>
         /// <param name="keyValue"> The value the key is set to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> RegenerateKeysAsync(KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
+        public async Task<Response> RegenerateKeysAsync(string keyValue = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.RegenerateKeys");
             scope.Start();
             try
             {
-                var operation = await StartRegenerateKeysAsync(keyType, keyValue, cancellationToken).ConfigureAwait(false);
+                var operation = await StartRegenerateKeysAsync(keyValue, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -517,16 +390,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous). </summary>
-        /// <param name="keyType"> Specification for which type of key to generate. Primary or Secondary. </param>
         /// <param name="keyValue"> The value the key is set to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response RegenerateKeys(KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
+        public Response RegenerateKeys(string keyValue = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.RegenerateKeys");
             scope.Start();
             try
             {
-                var operation = StartRegenerateKeys(keyType, keyValue, cancellationToken);
+                var operation = StartRegenerateKeys(keyValue, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -537,17 +409,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous). </summary>
-        /// <param name="keyType"> Specification for which type of key to generate. Primary or Secondary. </param>
         /// <param name="keyValue"> The value the key is set to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Operation> StartRegenerateKeysAsync(KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
+        public async Task<OnlineEndpointsRegenerateKeysOperation> StartRegenerateKeysAsync(string keyValue = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartRegenerateKeys");
             scope.Start();
             try
             {
-                var response = await _restClient.RegenerateKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue, cancellationToken).ConfigureAwait(false);
-                return new OnlineEndpointsRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response);
+                var response = await _restClient.RegenerateKeysAsync(Id.Parent.Parent.Name, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyValue, cancellationToken).ConfigureAwait(false);
+                return new OnlineEndpointsRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.Parent.Parent.Name, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyValue).Request, response);
             }
             catch (Exception e)
             {
@@ -557,17 +428,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous). </summary>
-        /// <param name="keyType"> Specification for which type of key to generate. Primary or Secondary. </param>
         /// <param name="keyValue"> The value the key is set to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Operation StartRegenerateKeys(KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
+        public OnlineEndpointsRegenerateKeysOperation StartRegenerateKeys(string keyValue = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartRegenerateKeys");
             scope.Start();
             try
             {
-                var response = _restClient.RegenerateKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue, cancellationToken);
-                return new OnlineEndpointsRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response);
+                var response = _restClient.RegenerateKeys(Id.Parent.Parent.Name, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyValue, cancellationToken);
+                return new OnlineEndpointsRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.Parent.Parent.Name, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyValue).Request, response);
             }
             catch (Exception e)
             {

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Enum to determine the datastore secrets type. </summary>
     public readonly partial struct SecretsType : IEquatable<SecretsType>

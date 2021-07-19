@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The schedule status. </summary>
     public readonly partial struct ScheduleStatus : IEquatable<ScheduleStatus>

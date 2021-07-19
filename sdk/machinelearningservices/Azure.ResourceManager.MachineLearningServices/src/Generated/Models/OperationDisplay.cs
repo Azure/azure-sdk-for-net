@@ -5,22 +5,22 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Display name of operation. </summary>
-    public partial class RestApiDisplay
+    public partial class OperationDisplay
     {
-        /// <summary> Initializes a new instance of RestApiDisplay. </summary>
-        internal RestApiDisplay()
+        /// <summary> Initializes a new instance of OperationDisplay. </summary>
+        internal OperationDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of RestApiDisplay. </summary>
+        /// <summary> Initializes a new instance of OperationDisplay. </summary>
         /// <param name="provider"> The resource provider name: Microsoft.MachineLearningExperimentation. </param>
         /// <param name="resource"> The resource on which the operation is performed. </param>
         /// <param name="operation"> The operation that users can perform. </param>
         /// <param name="description"> The description for the operation. </param>
-        internal RestApiDisplay(string provider, string resource, string operation, string description)
+        internal OperationDisplay(string provider, string resource, string operation, string description)
         {
             Provider = provider;
             Resource = resource;

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
         }
 
-        internal ModelContainersCreateOrUpdateOperation(ResourceOperationsBase operationsBase, Response<ModelContainerResourceData> response)
+        internal ModelContainersCreateOrUpdateOperation(OperationsBase operationsBase, Response<ModelContainerResourceData> response)
         {
             _operation = new OperationOrResponseInternals<ModelContainerResource>(Response.FromValue(new ModelContainerResource(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The quota assigned to a resource. </summary>
     public partial class ResourceQuota : SubResource<ResourceIdentifier>

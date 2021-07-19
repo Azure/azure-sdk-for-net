@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal PrivateEndpointConnectionContainer(ResourceOperationsBase parent) : base(parent)
+        internal PrivateEndpointConnectionContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -44,26 +45,28 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         // Container level operations.
 
-        /// <summary> The operation to create or update a PrivateEndpointConnection. Please note some properties can be set only during creation. </summary>
+        /// <summary> Update the state of specified private endpoint connection associated with the workspace. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<PrivateEndpointConnection> CreateOrUpdate(string privateEndpointConnectionName, PrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="properties"/> is null. </exception>
+        public virtual Response<PrivateEndpointConnection> CreateOrUpdate(string privateEndpointConnectionName, PrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
         {
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (privateEndpointConnectionName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-                }
-                if (properties == null)
-                {
-                    throw new ArgumentNullException(nameof(properties));
-                }
-
-                return StartCreateOrUpdate(privateEndpointConnectionName, properties, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartCreateOrUpdate(privateEndpointConnectionName, properties, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -72,26 +75,27 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> The operation to create or update a PrivateEndpointConnection. Please note some properties can be set only during creation. </summary>
+        /// <summary> Update the state of specified private endpoint connection associated with the workspace. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<PrivateEndpointConnection>> CreateOrUpdateAsync(string privateEndpointConnectionName, PrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="properties"/> is null. </exception>
+        public async virtual Task<Response<PrivateEndpointConnection>> CreateOrUpdateAsync(string privateEndpointConnectionName, PrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
         {
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (privateEndpointConnectionName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-                }
-                if (properties == null)
-                {
-                    throw new ArgumentNullException(nameof(properties));
-                }
-
-                var operation = await StartCreateOrUpdateAsync(privateEndpointConnectionName, properties, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(privateEndpointConnectionName, properties, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -101,27 +105,28 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> The operation to create or update a PrivateEndpointConnection. Please note some properties can be set only during creation. </summary>
+        /// <summary> Update the state of specified private endpoint connection associated with the workspace. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public PrivateEndpointConnectionsCreateOrUpdateOperation StartCreateOrUpdate(string privateEndpointConnectionName, PrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="properties"/> is null. </exception>
+        public virtual PrivateEndpointConnectionsCreateOrUpdateOperation StartCreateOrUpdate(string privateEndpointConnectionName, PrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
         {
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (privateEndpointConnectionName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-                }
-                if (properties == null)
-                {
-                    throw new ArgumentNullException(nameof(properties));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, properties, cancellationToken: cancellationToken);
-                return new PrivateEndpointConnectionsCreateOrUpdateOperation(Parent, originalResponse);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, properties, cancellationToken);
+                return new PrivateEndpointConnectionsCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
             {
@@ -130,27 +135,28 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> The operation to create or update a PrivateEndpointConnection. Please note some properties can be set only during creation. </summary>
+        /// <summary> Update the state of specified private endpoint connection associated with the workspace. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<PrivateEndpointConnectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string privateEndpointConnectionName, PrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="properties"/> is null. </exception>
+        public async virtual Task<PrivateEndpointConnectionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string privateEndpointConnectionName, PrivateEndpointConnectionData properties, CancellationToken cancellationToken = default)
         {
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (privateEndpointConnectionName == null)
-                {
-                    throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-                }
-                if (properties == null)
-                {
-                    throw new ArgumentNullException(nameof(properties));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, properties, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new PrivateEndpointConnectionsCreateOrUpdateOperation(Parent, originalResponse);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, properties, cancellationToken).ConfigureAwait(false);
+                return new PrivateEndpointConnectionsCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
             {
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<PrivateEndpointConnection> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateEndpointConnection> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.Get");
             scope.Start();
@@ -186,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<PrivateEndpointConnection>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<PrivateEndpointConnection>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.Get");
             scope.Start();
@@ -199,6 +205,106 @@ namespace Azure.ResourceManager.MachineLearningServices
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PrivateEndpointConnection(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual PrivateEndpointConnection TryGet(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (privateEndpointConnectionName == null)
+                {
+                    throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                }
+
+                return Get(privateEndpointConnectionName, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<PrivateEndpointConnection> TryGetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (privateEndpointConnectionName == null)
+                {
+                    throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                }
+
+                return await GetAsync(privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual bool DoesExist(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (privateEndpointConnectionName == null)
+                {
+                    throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                }
+
+                return TryGet(privateEndpointConnectionName, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<bool> DoesExistAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (privateEndpointConnectionName == null)
+                {
+                    throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+                }
+
+                return await TryGetAsync(privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

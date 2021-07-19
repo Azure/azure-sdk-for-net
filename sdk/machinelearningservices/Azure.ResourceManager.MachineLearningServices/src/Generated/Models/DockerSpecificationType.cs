@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Enum to determine docker specification type. Must be either Build or Image. </summary>
     public readonly partial struct DockerSpecificationType : IEquatable<DockerSpecificationType>

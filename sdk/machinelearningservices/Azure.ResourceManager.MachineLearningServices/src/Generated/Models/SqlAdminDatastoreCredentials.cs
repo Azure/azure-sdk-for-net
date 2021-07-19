@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> SQL Admin datastore credentials configuration. </summary>
     public partial class SqlAdminDatastoreCredentials : DatastoreCredentials

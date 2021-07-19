@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The JobProvisioningState. </summary>
     public readonly partial struct JobProvisioningState : IEquatable<JobProvisioningState>

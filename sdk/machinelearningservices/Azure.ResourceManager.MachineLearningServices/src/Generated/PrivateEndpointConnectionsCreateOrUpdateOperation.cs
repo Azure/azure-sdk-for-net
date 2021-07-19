@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
         }
 
-        internal PrivateEndpointConnectionsCreateOrUpdateOperation(ResourceOperationsBase operationsBase, Response<PrivateEndpointConnectionData> response)
+        internal PrivateEndpointConnectionsCreateOrUpdateOperation(OperationsBase operationsBase, Response<PrivateEndpointConnectionData> response)
         {
             _operation = new OperationOrResponseInternals<PrivateEndpointConnection>(Response.FromValue(new PrivateEndpointConnection(operationsBase, response.Value), response.GetRawResponse()));
         }

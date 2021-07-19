@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Datastore certificate secrets. </summary>
     public partial class CertificateDatastoreSecrets : DatastoreSecrets

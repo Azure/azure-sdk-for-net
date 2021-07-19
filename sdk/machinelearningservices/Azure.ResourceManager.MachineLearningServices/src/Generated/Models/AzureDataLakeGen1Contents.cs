@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Azure Data Lake Gen1 datastore configuration. </summary>
     public partial class AzureDataLakeGen1Contents : DatastoreContents

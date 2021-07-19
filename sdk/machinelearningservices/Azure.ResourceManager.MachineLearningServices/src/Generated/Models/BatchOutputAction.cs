@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Enum to determine how batch inferencing will handle output. </summary>
     public readonly partial struct BatchOutputAction : IEquatable<BatchOutputAction>

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
         }
 
-        internal BatchEndpointsUpdateOperation(ResourceOperationsBase operationsBase, Response<BatchEndpointTrackedResourceData> response)
+        internal BatchEndpointsUpdateOperation(OperationsBase operationsBase, Response<BatchEndpointTrackedResourceData> response)
         {
             _operation = new OperationOrResponseInternals<BatchEndpointTrackedResource>(Response.FromValue(new BatchEndpointTrackedResource(operationsBase, response.Value), response.GetRawResponse()));
         }

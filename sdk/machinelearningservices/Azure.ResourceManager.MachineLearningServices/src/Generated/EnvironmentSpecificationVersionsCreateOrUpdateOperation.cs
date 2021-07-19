@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
         }
 
-        internal EnvironmentSpecificationVersionsCreateOrUpdateOperation(ResourceOperationsBase operationsBase, Response<EnvironmentSpecificationVersionResourceData> response)
+        internal EnvironmentSpecificationVersionsCreateOrUpdateOperation(OperationsBase operationsBase, Response<EnvironmentSpecificationVersionResourceData> response)
         {
             _operation = new OperationOrResponseInternals<EnvironmentSpecificationVersionResource>(Response.FromValue(new EnvironmentSpecificationVersionResource(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -5,9 +5,8 @@
 
 #nullable disable
 
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -17,24 +16,12 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref = "JobBaseResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal JobBaseResource(ResourceOperationsBase options, JobBaseResourceData resource) : base(options, resource.Id)
+        internal JobBaseResource(OperationsBase options, JobBaseResourceData resource) : base(options, resource.Id)
         {
             Data = resource;
         }
 
         /// <summary> Gets or sets the JobBaseResourceData. </summary>
         public JobBaseResourceData Data { get; private set; }
-
-        /// <inheritdoc />
-        protected override JobBaseResource GetResource(CancellationToken cancellation = default)
-        {
-            return this;
-        }
-
-        /// <inheritdoc />
-        protected override Task<JobBaseResource> GetResourceAsync(CancellationToken cancellation = default)
-        {
-            return Task.FromResult(this);
-        }
     }
 }

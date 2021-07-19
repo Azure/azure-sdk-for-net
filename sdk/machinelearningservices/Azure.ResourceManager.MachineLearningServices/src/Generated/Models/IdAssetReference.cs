@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Reference to an asset via its ARM resource ID. </summary>
     public partial class IdAssetReference : AssetReferenceBase

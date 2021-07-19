@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class RestApiDisplay
+    public partial class OperationDisplay
     {
-        internal static RestApiDisplay DeserializeRestApiDisplay(JsonElement element)
+        internal static OperationDisplay DeserializeOperationDisplay(JsonElement element)
         {
             Optional<string> provider = default;
             Optional<string> resource = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     continue;
                 }
             }
-            return new RestApiDisplay(provider.Value, resource.Value, operation.Value, description.Value);
+            return new OperationDisplay(provider.Value, resource.Value, operation.Value, description.Value);
         }
     }
 }

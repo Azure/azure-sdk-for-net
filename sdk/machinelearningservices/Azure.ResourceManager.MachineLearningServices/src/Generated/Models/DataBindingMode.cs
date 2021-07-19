@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Describes how the data should be attached to the container. </summary>
     public readonly partial struct DataBindingMode : IEquatable<DataBindingMode>

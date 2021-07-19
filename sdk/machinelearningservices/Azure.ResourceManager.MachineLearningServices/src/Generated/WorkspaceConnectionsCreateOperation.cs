@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
         }
 
-        internal WorkspaceConnectionsCreateOperation(ResourceOperationsBase operationsBase, Response<WorkspaceConnectionData> response)
+        internal WorkspaceConnectionsCreateOperation(OperationsBase operationsBase, Response<WorkspaceConnectionData> response)
         {
             _operation = new OperationOrResponseInternals<WorkspaceConnection>(Response.FromValue(new WorkspaceConnection(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A class representing the WorkspaceConnection data model. </summary>
     public partial class WorkspaceConnectionData : Resource<ResourceGroupResourceIdentifier>

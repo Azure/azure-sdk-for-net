@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     public partial class OnlineDeploymentTrackedResourceData : IUtf8JsonSerializable
     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             OnlineDeployment properties = default;
             Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
-            LocationData location = default;
+            Location location = default;
             ResourceGroupResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

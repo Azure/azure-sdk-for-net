@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Defines an early termination policy based on running averages of the primary metric of all runs. </summary>
     public partial class MedianStoppingPolicy : EarlyTerminationPolicy

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Settings for user account that gets created on each on the nodes of a compute. </summary>
     public partial class UserAccountCredentials

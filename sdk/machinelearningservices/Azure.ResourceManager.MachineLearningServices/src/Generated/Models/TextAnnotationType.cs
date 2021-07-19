@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Annotation type of text data. </summary>
     public readonly partial struct TextAnnotationType : IEquatable<TextAnnotationType>

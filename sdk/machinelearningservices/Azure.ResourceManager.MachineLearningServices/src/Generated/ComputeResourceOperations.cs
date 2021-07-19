@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -30,13 +30,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref="ComputeResourceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ComputeResourceOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal ComputeResourceOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ComputeRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
         }
 
+        /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/computes";
+        /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
         /// <inheritdoc />
@@ -76,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -84,21 +86,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<LocationData> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary> Deletes specified Machine Learning compute. </summary>
-        /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteAsync(UnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Delete");
             scope.Start();
             try
             {
-                var operation = await StartDeleteAsync(underlyingResourceAction, cancellationToken).ConfigureAwait(false);
+                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -109,15 +110,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes specified Machine Learning compute. </summary>
-        /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(UnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
+        public Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Delete");
             scope.Start();
             try
             {
-                var operation = StartDelete(underlyingResourceAction, cancellationToken);
+                var operation = StartDelete(cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -128,16 +128,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes specified Machine Learning compute. </summary>
-        /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Operation> StartDeleteAsync(UnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
+        public async Task<ComputeDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartDelete");
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction, cancellationToken).ConfigureAwait(false);
-                return new ComputeDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction).Request, response);
+                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new ComputeDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -147,16 +146,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes specified Machine Learning compute. </summary>
-        /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Operation StartDelete(UnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
+        public ComputeDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartDelete");
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction, cancellationToken);
-                return new ComputeDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, underlyingResourceAction).Request, response);
+                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                return new ComputeDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -352,7 +350,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Posts a start action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Operation> StartStartAsync(CancellationToken cancellationToken = default)
+        public async Task<ComputeStartOperation> StartStartAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartStart");
             scope.Start();
@@ -370,7 +368,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Posts a start action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Operation StartStart(CancellationToken cancellationToken = default)
+        public ComputeStartOperation StartStart(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartStart");
             scope.Start();
@@ -424,7 +422,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Posts a stop action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Operation> StartStopAsync(CancellationToken cancellationToken = default)
+        public async Task<ComputeStopOperation> StartStopAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartStop");
             scope.Start();
@@ -442,7 +440,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Posts a stop action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Operation StartStop(CancellationToken cancellationToken = default)
+        public ComputeStopOperation StartStop(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartStop");
             scope.Start();

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Properties specific to Synapse Spark pools. </summary>
     public partial class SynapseSparkPoolProperties

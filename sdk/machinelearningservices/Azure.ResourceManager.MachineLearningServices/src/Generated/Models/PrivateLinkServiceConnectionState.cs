@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
     public partial class PrivateLinkServiceConnectionState

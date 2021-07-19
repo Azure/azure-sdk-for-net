@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Compute start stop schedule properties. </summary>
     public partial class ComputeStartStopSchedule : SubResource<ResourceIdentifier>

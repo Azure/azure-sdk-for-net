@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Environment specification is either user created or curated by Azure ML service. </summary>
     public readonly partial struct EnvironmentSpecificationType : IEquatable<EnvironmentSpecificationType>

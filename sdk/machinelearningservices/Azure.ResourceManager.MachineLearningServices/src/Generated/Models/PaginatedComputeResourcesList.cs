@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Paginated list of Machine Learning compute objects wrapped in ARM resource envelope. </summary>
     internal partial class PaginatedComputeResourcesList

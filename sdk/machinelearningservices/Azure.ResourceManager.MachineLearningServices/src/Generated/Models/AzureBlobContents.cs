@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Azure Blob datastore configuration. </summary>
     public partial class AzureBlobContents : DatastoreContents

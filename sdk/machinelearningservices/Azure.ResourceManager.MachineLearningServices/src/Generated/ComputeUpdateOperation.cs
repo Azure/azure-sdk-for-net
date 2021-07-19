@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -21,14 +22,14 @@ namespace Azure.ResourceManager.MachineLearningServices
     {
         private readonly OperationInternals<ComputeResource> _operation;
 
-        private readonly ResourceOperationsBase _operationBase;
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ComputeUpdateOperation for mocking. </summary>
         protected ComputeUpdateOperation()
         {
         }
 
-        internal ComputeUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ComputeUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ComputeResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ComputeUpdateOperation");
             _operationBase = operationsBase;

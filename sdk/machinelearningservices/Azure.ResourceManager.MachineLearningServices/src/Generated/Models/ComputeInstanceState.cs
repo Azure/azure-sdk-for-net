@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Current state of an ComputeInstance. </summary>
     public readonly partial struct ComputeInstanceState : IEquatable<ComputeInstanceState>

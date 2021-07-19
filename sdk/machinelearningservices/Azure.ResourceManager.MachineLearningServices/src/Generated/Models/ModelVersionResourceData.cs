@@ -8,7 +8,7 @@
 using System;
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A class representing the ModelVersionResource data model. </summary>
     public partial class ModelVersionResourceData : Resource<ResourceGroupResourceIdentifier>

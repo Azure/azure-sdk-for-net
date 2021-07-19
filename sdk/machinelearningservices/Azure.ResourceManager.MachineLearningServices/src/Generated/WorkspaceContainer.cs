@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Initializes a new instance of WorkspaceContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal WorkspaceContainer(ResourceOperationsBase parent) : base(parent)
+        internal WorkspaceContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -44,26 +45,28 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         // Container level operations.
 
-        /// <summary> The operation to create or update a Workspace. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a workspace with the specified parameters. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="parameters"> The parameters for creating or updating a machine learning workspace. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<Workspace> CreateOrUpdate(string workspaceName, WorkspaceData parameters, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual Response<Workspace> CreateOrUpdate(string workspaceName, WorkspaceData parameters, CancellationToken cancellationToken = default)
         {
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (workspaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(workspaceName));
-                }
-                if (parameters == null)
-                {
-                    throw new ArgumentNullException(nameof(parameters));
-                }
-
-                return StartCreateOrUpdate(workspaceName, parameters, cancellationToken: cancellationToken).WaitForCompletion(cancellationToken);
+                var operation = StartCreateOrUpdate(workspaceName, parameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -72,26 +75,27 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> The operation to create or update a Workspace. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a workspace with the specified parameters. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="parameters"> The parameters for creating or updating a machine learning workspace. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<Workspace>> CreateOrUpdateAsync(string workspaceName, WorkspaceData parameters, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<Response<Workspace>> CreateOrUpdateAsync(string workspaceName, WorkspaceData parameters, CancellationToken cancellationToken = default)
         {
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.CreateOrUpdate");
             scope.Start();
             try
             {
-                if (workspaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(workspaceName));
-                }
-                if (parameters == null)
-                {
-                    throw new ArgumentNullException(nameof(parameters));
-                }
-
-                var operation = await StartCreateOrUpdateAsync(workspaceName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(workspaceName, parameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -101,27 +105,28 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> The operation to create or update a Workspace. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a workspace with the specified parameters. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="parameters"> The parameters for creating or updating a machine learning workspace. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public WorkspacesCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, WorkspaceData parameters, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual WorkspacesCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, WorkspaceData parameters, CancellationToken cancellationToken = default)
         {
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (workspaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(workspaceName));
-                }
-                if (parameters == null)
-                {
-                    throw new ArgumentNullException(nameof(parameters));
-                }
-
-                var originalResponse = _restClient.CreateOrUpdate(Id.ResourceGroupName, workspaceName, parameters, cancellationToken: cancellationToken);
-                return new WorkspacesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, workspaceName, parameters).Request, originalResponse);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, workspaceName, parameters, cancellationToken);
+                return new WorkspacesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, workspaceName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -130,27 +135,28 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> The operation to create or update a Workspace. Please note some properties can be set only during creation. </summary>
+        /// <summary> Creates or updates a workspace with the specified parameters. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="parameters"> The parameters for creating or updating a machine learning workspace. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<WorkspacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, WorkspaceData parameters, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="parameters"/> is null. </exception>
+        public async virtual Task<WorkspacesCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, WorkspaceData parameters, CancellationToken cancellationToken = default)
         {
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.StartCreateOrUpdate");
             scope.Start();
             try
             {
-                if (workspaceName == null)
-                {
-                    throw new ArgumentNullException(nameof(workspaceName));
-                }
-                if (parameters == null)
-                {
-                    throw new ArgumentNullException(nameof(parameters));
-                }
-
-                var originalResponse = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, workspaceName, parameters, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new WorkspacesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, workspaceName, parameters).Request, originalResponse);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, workspaceName, parameters, cancellationToken).ConfigureAwait(false);
+                return new WorkspacesCreateOrUpdateOperation(Parent, _clientDiagnostics, Pipeline, _restClient.CreateCreateOrUpdateRequest(Id.ResourceGroupName, workspaceName, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<Workspace> Get(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<Workspace> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.Get");
             scope.Start();
@@ -186,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<Workspace>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Workspace>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.Get");
             scope.Start();
@@ -199,6 +205,106 @@ namespace Azure.ResourceManager.MachineLearningServices
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new Workspace(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual Workspace TryGet(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (workspaceName == null)
+                {
+                    throw new ArgumentNullException(nameof(workspaceName));
+                }
+
+                return Get(workspaceName, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<Workspace> TryGetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (workspaceName == null)
+                {
+                    throw new ArgumentNullException(nameof(workspaceName));
+                }
+
+                return await GetAsync(workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual bool DoesExist(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (workspaceName == null)
+                {
+                    throw new ArgumentNullException(nameof(workspaceName));
+                }
+
+                return TryGet(workspaceName, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<bool> DoesExistAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (workspaceName == null)
+                {
+                    throw new ArgumentNullException(nameof(workspaceName));
+                }
+
+                return await TryGetAsync(workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {

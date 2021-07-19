@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The properties for update Quota response. </summary>
     public partial class UpdateWorkspaceQuotas : SubResource<ResourceIdentifier>

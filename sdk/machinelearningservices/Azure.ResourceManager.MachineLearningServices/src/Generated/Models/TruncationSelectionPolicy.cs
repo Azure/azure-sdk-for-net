@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Defines an early termination policy that cancels a given percentage of runs at each evaluation interval. </summary>
     public partial class TruncationSelectionPolicy : EarlyTerminationPolicy

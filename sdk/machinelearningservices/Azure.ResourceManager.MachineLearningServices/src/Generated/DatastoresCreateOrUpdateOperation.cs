@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
         }
 
-        internal DatastoresCreateOrUpdateOperation(ResourceOperationsBase operationsBase, Response<DatastorePropertiesResourceData> response)
+        internal DatastoresCreateOrUpdateOperation(OperationsBase operationsBase, Response<DatastorePropertiesResourceData> response)
         {
             _operation = new OperationOrResponseInternals<DatastorePropertiesResource>(Response.FromValue(new DatastorePropertiesResource(operationsBase, response.Value), response.GetRawResponse()));
         }

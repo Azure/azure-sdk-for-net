@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The Private Endpoint resource. </summary>
     public partial class PrivateEndpoint : SubResource<ResourceIdentifier>

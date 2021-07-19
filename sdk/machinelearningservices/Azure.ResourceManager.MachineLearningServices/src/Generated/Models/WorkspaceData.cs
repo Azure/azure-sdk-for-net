@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A class representing the Workspace data model. </summary>
     public partial class WorkspaceData : Resource<ResourceGroupResourceIdentifier>

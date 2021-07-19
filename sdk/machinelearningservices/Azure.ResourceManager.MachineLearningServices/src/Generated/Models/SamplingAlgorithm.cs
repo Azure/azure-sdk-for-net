@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The SamplingAlgorithm. </summary>
     public readonly partial struct SamplingAlgorithm : IEquatable<SamplingAlgorithm>

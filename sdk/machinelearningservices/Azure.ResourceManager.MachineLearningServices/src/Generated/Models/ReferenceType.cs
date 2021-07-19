@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Enum to determine which reference method to use for an asset. </summary>
     public readonly partial struct ReferenceType : IEquatable<ReferenceType>

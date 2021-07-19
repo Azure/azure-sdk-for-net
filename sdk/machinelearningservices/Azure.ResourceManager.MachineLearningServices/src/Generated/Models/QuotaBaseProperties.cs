@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The properties for Quota update or retrieval. </summary>
     public partial class QuotaBaseProperties : WritableSubResource<ResourceIdentifier>

@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -21,14 +22,14 @@ namespace Azure.ResourceManager.MachineLearningServices
     {
         private readonly OperationInternals<Workspace> _operation;
 
-        private readonly ResourceOperationsBase _operationBase;
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of WorkspacesCreateOrUpdateOperation for mocking. </summary>
         protected WorkspacesCreateOrUpdateOperation()
         {
         }
 
-        internal WorkspacesCreateOrUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal WorkspacesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<Workspace>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "WorkspacesCreateOrUpdateOperation");
             _operationBase = operationsBase;

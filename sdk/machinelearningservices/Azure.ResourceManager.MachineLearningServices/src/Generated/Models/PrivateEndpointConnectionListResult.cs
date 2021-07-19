@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> List of private endpoint connection associated with the specified workspace. </summary>
     internal partial class PrivateEndpointConnectionListResult

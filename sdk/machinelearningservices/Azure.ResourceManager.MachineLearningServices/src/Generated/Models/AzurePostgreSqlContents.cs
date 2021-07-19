@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Azure Postgre SQL datastore configuration. </summary>
     public partial class AzurePostgreSqlContents : DatastoreContents

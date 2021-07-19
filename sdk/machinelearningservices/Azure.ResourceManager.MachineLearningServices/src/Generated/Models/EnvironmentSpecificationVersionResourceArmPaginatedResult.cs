@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A paginated list of EnvironmentSpecificationVersion entities. </summary>
     internal partial class EnvironmentSpecificationVersionResourceArmPaginatedResult

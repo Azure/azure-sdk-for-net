@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Class to represent configuration settings for Docker Build. </summary>
     public partial class DockerBuild : DockerSpecification

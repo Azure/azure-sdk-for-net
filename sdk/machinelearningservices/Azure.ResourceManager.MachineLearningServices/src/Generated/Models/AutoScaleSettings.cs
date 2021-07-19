@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The AutoScaleSettings. </summary>
     public partial class AutoScaleSettings : OnlineScaleSettings

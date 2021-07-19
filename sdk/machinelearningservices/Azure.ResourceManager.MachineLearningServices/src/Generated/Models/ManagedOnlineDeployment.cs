@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The ManagedOnlineDeployment. </summary>
     public partial class ManagedOnlineDeployment : OnlineDeployment

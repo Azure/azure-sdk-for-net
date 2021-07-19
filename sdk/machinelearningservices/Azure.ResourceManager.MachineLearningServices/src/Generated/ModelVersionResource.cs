@@ -5,9 +5,8 @@
 
 #nullable disable
 
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -17,24 +16,12 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref = "ModelVersionResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ModelVersionResource(ResourceOperationsBase options, ModelVersionResourceData resource) : base(options, resource.Id)
+        internal ModelVersionResource(OperationsBase options, ModelVersionResourceData resource) : base(options, resource.Id)
         {
             Data = resource;
         }
 
         /// <summary> Gets or sets the ModelVersionResourceData. </summary>
         public ModelVersionResourceData Data { get; private set; }
-
-        /// <inheritdoc />
-        protected override ModelVersionResource GetResource(CancellationToken cancellation = default)
-        {
-            return this;
-        }
-
-        /// <inheritdoc />
-        protected override Task<ModelVersionResource> GetResourceAsync(CancellationToken cancellation = default)
-        {
-            return Task.FromResult(this);
-        }
     }
 }

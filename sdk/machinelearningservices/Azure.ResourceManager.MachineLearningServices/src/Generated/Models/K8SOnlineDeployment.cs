@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The K8SOnlineDeployment. </summary>
     public partial class K8SOnlineDeployment : OnlineDeployment

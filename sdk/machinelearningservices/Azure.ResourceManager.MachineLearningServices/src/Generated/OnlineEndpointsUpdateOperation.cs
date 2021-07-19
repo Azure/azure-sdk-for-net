@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -21,14 +22,14 @@ namespace Azure.ResourceManager.MachineLearningServices
     {
         private readonly OperationInternals<OnlineEndpointTrackedResource> _operation;
 
-        private readonly ResourceOperationsBase _operationBase;
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of OnlineEndpointsUpdateOperation for mocking. </summary>
         protected OnlineEndpointsUpdateOperation()
         {
         }
 
-        internal OnlineEndpointsUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal OnlineEndpointsUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<OnlineEndpointTrackedResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "OnlineEndpointsUpdateOperation");
             _operationBase = operationsBase;

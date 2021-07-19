@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
         }
 
-        internal JobsCreateOrUpdateOperation(ResourceOperationsBase operationsBase, Response<JobBaseResourceData> response)
+        internal JobsCreateOrUpdateOperation(OperationsBase operationsBase, Response<JobBaseResourceData> response)
         {
             _operation = new OperationOrResponseInternals<JobBaseResource>(Response.FromValue(new JobBaseResource(operationsBase, response.Value), response.GetRawResponse()));
         }

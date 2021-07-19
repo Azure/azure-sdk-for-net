@@ -7,7 +7,7 @@
 
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Features enabled for a workspace. </summary>
     public partial class AmlUserFeature : SubResource<ResourceIdentifier>

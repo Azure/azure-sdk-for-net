@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Secrets related to a Machine Learning compute based on AKS. </summary>
     public partial class VirtualMachineSecrets : ComputeSecrets

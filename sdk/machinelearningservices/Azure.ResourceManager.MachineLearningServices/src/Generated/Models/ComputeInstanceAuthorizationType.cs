@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The Compute Instance Authorization type. Available values are personal (default). </summary>
     public readonly partial struct ComputeInstanceAuthorizationType : IEquatable<ComputeInstanceAuthorizationType>

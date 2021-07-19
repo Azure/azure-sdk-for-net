@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The RegenerateEndpointKeysRequest. </summary>
     internal partial class RegenerateEndpointKeysRequest

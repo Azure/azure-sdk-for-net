@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Account key datastore credentials configuration. </summary>
     public partial class AccountKeyDatastoreCredentials : DatastoreCredentials

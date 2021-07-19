@@ -8,7 +8,7 @@
 using System;
 using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A class representing the JobBaseResource data model. </summary>
     public partial class JobBaseResourceData : Resource<ResourceGroupResourceIdentifier>

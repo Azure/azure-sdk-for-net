@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Indicates whether or not the encryption is enabled for the workspace. </summary>
     public readonly partial struct EncryptionStatus : IEquatable<EncryptionStatus>

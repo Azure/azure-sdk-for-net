@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Enable or disable ssl for scoring. </summary>
     public readonly partial struct SslConfigurationStatus : IEquatable<SslConfigurationStatus>
