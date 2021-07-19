@@ -12,5 +12,5 @@ param (
     [string] $TestApplicationSecret
 )
 
-Write-Verbose "Sleeping for 60 seconds to let RBAC replicate"
-Start-Sleep -s 60
+Write-Verbose "Sleeping for 120 seconds to let RBAC replicate"
+Start-Sleep -s 120
