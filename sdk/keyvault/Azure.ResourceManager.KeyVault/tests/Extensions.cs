@@ -40,6 +40,35 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return true;
         }
 
+        public static bool DictionaryEqual<TKey, TValue>(this IDictionary<TKey, TValue> first, IDictionary<TKey, TValue> second)
+        {
+            return first.DictionaryEqual(second, null);
+        }
+
+        public static bool DictionaryEqual<TKey, TValue>(
+            this IDictionary<TKey, TValue> first, IDictionary<TKey, TValue> second,
+            IEqualityComparer<TValue> valueComparer)
+        {
+            if (first == second)
+                return true;
+            if ((first == null) || (second == null))
+                return false;
+            if (first.Count != second.Count)
+                return false;
+
+            valueComparer = valueComparer ?? EqualityComparer<TValue>.Default;
+
+            foreach (var kvp in first)
+            {
+                TValue secondValue;
+                if (!second.TryGetValue(kvp.Key, out secondValue))
+                    return false;
+                if (!valueComparer.Equals(kvp.Value, secondValue))
+                    return false;
+            }
+            return true;
+        }
+
         public static bool IsEqual(this DeletedVault deletedVault, VaultData createdVault)
         {
             Assert.AreEqual(createdVault.Location, deletedVault.Data.Properties.Location);
@@ -60,14 +89,20 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.AreEqual(vault2.Id, vault1.Id);
             Assert.True(vault2.Tags.DictionaryEqual(vault1.Tags));
 
-            Assert.AreEqual(vault2.Properties.VaultUri.TrimEnd('/'), vault1.Properties.VaultUri.TrimEnd('/'));
+            Assert.AreEqual(vault2.Properties.HsmUri.TrimEnd('/'), vault1.Properties.HsmUri.TrimEnd('/'));
             Assert.AreEqual(vault2.Properties.TenantId, vault1.Properties.TenantId);
-            Assert.AreEqual(vault2.Properties.Sku.Name, vault1.Properties.Sku.Name);
+            Assert.AreEqual(vault2.Sku.Name, vault1.Sku.Name);
+            Assert.AreEqual(vault2.Sku.Family, vault1.Sku.Family);
             Assert.AreEqual(vault2.Properties.EnableSoftDelete, vault1.Properties.EnableSoftDelete);
-            Assert.AreEqual(vault2.Properties.EnabledForTemplateDeployment, vault1.Properties.EnabledForTemplateDeployment);
-            Assert.AreEqual(vault2.Properties.EnabledForDiskEncryption, vault1.Properties.EnabledForDiskEncryption);
-            Assert.AreEqual(vault2.Properties.EnabledForDeployment, vault1.Properties.EnabledForDeployment);
-            Assert.True(vault2.Properties.AccessPolicies.IsEqual(vault1.Properties.AccessPolicies));
+            Assert.AreEqual(vault2.Properties.CreateMode, vault1.Properties.CreateMode);
+            Assert.AreEqual(vault2.Properties.EnablePurgeProtection, vault1.Properties.EnablePurgeProtection);
+            Assert.AreEqual(vault2.Properties.InitialAdminObjectIds, vault1.Properties.InitialAdminObjectIds);
+            Assert.AreEqual(vault2.Properties.PrivateEndpointConnections, vault1.Properties.PrivateEndpointConnections);
+            Assert.AreEqual(vault2.Properties.PublicNetworkAccess, vault1.Properties.PublicNetworkAccess);
+            Assert.AreEqual(vault2.Properties.ScheduledPurgeDate, vault1.Properties.ScheduledPurgeDate);
+            Assert.AreEqual(vault2.Properties.SoftDeleteRetentionInDays, vault1.Properties.SoftDeleteRetentionInDays);
+            Assert.AreEqual(vault2.Properties.TenantId, vault1.Properties.TenantId);
+            //Assert.True(vault2.Properties.NetworkAcls.IsEqual(vault1.Properties.NetworkAcls));
             return true;
         }
 

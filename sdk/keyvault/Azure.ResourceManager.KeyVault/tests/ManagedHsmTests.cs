@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 Initialize().ConfigureAwait(false).GetAwaiter().GetResult();
+                Location = "eastus2";
             }
         }
 
@@ -126,8 +127,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             // Delete
-            ManagedHsmOperations = new ManagedHsmOperations(retrievedVault.Value, retrievedVault.Value.Id);
-            await ManagedHsmOperations.DeleteAsync();
+            await retrievedVault.Value.DeleteAsync();
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
@@ -208,27 +208,23 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.True(recoveredVault.Value.Data.IsEqual(managedHsm.Value.Data));
 
             // Get recovered vault
-            var getResult = await VaultContainer.GetAsync(VaultName);
+            var getResult = await ManagedHsmContainer.GetAsync(VaultName);
 
             // Delete
-            VaultOperations = new VaultOperations(getResult.Value, getResult.Value.Id);
-            await VaultOperations.DeleteAsync();
+            await getResult.Value.DeleteAsync();
 
-            VaultProperties.CreateMode = CreateMode.Recover;
-            parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
+            parameters.Properties.CreateMode = CreateMode.Recover;
 
             // Recover in recover mode
-            var recoveredRawVault2 = await VaultContainer.StartCreateOrUpdateAsync(VaultName, parameters);
-            var recoveredVault2 = await WaitForCompletionAsync(recoveredRawVault);
+            var recoveredVault2 = await ManagedHsmContainer.CreateOrUpdateAsync(VaultName, parameters).ConfigureAwait(false);
 
-            Assert.True(recoveredVault2.Value.Data.IsEqual(vaultValue.Value.Data));
+            Assert.True(recoveredVault2.Value.Data.IsEqual(managedHsm.Value.Data));
 
             // Get recovered vault
-            getResult = await VaultContainer.GetAsync(VaultName);
+            getResult = await ManagedHsmContainer.GetAsync(VaultName);
 
             // Delete
-            VaultOperations = new VaultOperations(getResult.Value, getResult.Value.Id);
-            await VaultOperations.DeleteAsync();
+            await getResult.Value.DeleteAsync();
         }
 
         private void ValidateVault(
