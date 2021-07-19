@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Tests
 {
-    public class DocumentTranslationClientLiveTests : DocumentTranslationLiveTestBase
+    public partial class DocumentTranslationClientLiveTests : DocumentTranslationLiveTestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DocumentTranslationClientLiveTests"/> class.
