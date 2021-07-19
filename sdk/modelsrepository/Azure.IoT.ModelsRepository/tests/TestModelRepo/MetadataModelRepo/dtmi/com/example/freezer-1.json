@@ -1,0 +1,12 @@
+{
+  "@id": "dtmi:com:example:Freezer;1",
+  "@type": "Interface",
+  "contents": [
+    {
+      "@type": "Component",
+      "name": "deviceInfo",
+      "schema": "dtmi:com:example:Thermostat;1"
+    }
+  ],
+  "@context": "dtmi:dtdl:context;2"
+}

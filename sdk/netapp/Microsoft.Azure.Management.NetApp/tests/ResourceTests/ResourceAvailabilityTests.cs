@@ -27,6 +27,7 @@ namespace NetApp.Tests.ResourceTests
                 Assert.True(checkQuotaAvailabilityResponse.IsAvailable);
             }
         }
+
         private static string GetSessionsDirectoryPath()
         {
             string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.SnapshotTests).GetTypeInfo().Assembly.Location;

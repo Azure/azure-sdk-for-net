@@ -39,13 +39,22 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// relationship</param>
         /// <param name="errorMessage">Displays error message if the backup is
         /// in an error state</param>
-        public BackupStatus(bool? healthy = default(bool?), string relationshipStatus = default(string), string mirrorState = default(string), string unhealthyReason = default(string), string errorMessage = default(string))
+        /// <param name="lastTransferSize">Displays the last transfer
+        /// size</param>
+        /// <param name="lastTransferType">Displays the last transfer
+        /// type</param>
+        /// <param name="totalTransferBytes">Displays the total bytes
+        /// transferred</param>
+        public BackupStatus(bool? healthy = default(bool?), string relationshipStatus = default(string), string mirrorState = default(string), string unhealthyReason = default(string), string errorMessage = default(string), long? lastTransferSize = default(long?), string lastTransferType = default(string), long? totalTransferBytes = default(long?))
         {
             Healthy = healthy;
             RelationshipStatus = relationshipStatus;
             MirrorState = mirrorState;
             UnhealthyReason = unhealthyReason;
             ErrorMessage = errorMessage;
+            LastTransferSize = lastTransferSize;
+            LastTransferType = lastTransferType;
+            TotalTransferBytes = totalTransferBytes;
             CustomInit();
         }
 
@@ -85,6 +94,24 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "errorMessage")]
         public string ErrorMessage { get; private set; }
+
+        /// <summary>
+        /// Gets displays the last transfer size
+        /// </summary>
+        [JsonProperty(PropertyName = "lastTransferSize")]
+        public long? LastTransferSize { get; private set; }
+
+        /// <summary>
+        /// Gets displays the last transfer type
+        /// </summary>
+        [JsonProperty(PropertyName = "lastTransferType")]
+        public string LastTransferType { get; private set; }
+
+        /// <summary>
+        /// Gets displays the total bytes transferred
+        /// </summary>
+        [JsonProperty(PropertyName = "totalTransferBytes")]
+        public long? TotalTransferBytes { get; private set; }
 
     }
 }

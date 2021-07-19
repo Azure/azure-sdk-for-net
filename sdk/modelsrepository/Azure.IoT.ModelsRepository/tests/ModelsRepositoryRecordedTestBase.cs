@@ -26,23 +26,47 @@ namespace Azure.IoT.ModelsRepository.Tests
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
-        protected ModelsRepositoryClient GetClient(ModelsRepositoryTestBase.ClientType clientType, ModelsRepositoryClientOptions options = default)
+        protected ModelsRepositoryClient GetClient(
+            ModelsRepositoryTestBase.ClientType clientType,
+            bool hasMetadata,
+            ModelsRepositoryClientOptions options = default)
+        {
+            string targetLocation;
+
+            if (clientType == ModelsRepositoryTestBase.ClientType.Local)
+            {
+                targetLocation = hasMetadata
+                    ? ModelsRepositoryTestBase.TestLocalModelsRepositoryWithMetadata
+                    : ModelsRepositoryTestBase.TestLocalModelsRepository;
+            }
+            else
+            {
+                targetLocation = hasMetadata
+                    ? ModelsRepositoryTestBase.ProdRemoteModelsRepositoryCDN
+                    : ModelsRepositoryTestBase.ProdRemoteModelsRepositoryGithub;
+            }
+
+            return GetClient(repositoryLocation: targetLocation, options: options);
+        }
+
+        protected ModelsRepositoryClient GetClient(
+            ModelsRepositoryTestBase.ClientType clientType = ModelsRepositoryTestBase.ClientType.Local,
+            string repositoryLocation = null,
+            ModelsRepositoryClientOptions options = default)
         {
             if (options == null)
             {
                 options = new ModelsRepositoryClientOptions();
             }
 
-            return
-                clientType == ModelsRepositoryTestBase.ClientType.Local
-                    ? InstrumentClient(
-                        new ModelsRepositoryClient(
-                            new Uri(ModelsRepositoryTestBase.TestLocalModelRepository),
-                            InstrumentClientOptions(options)))
-                    : InstrumentClient(
-                        new ModelsRepositoryClient(
-                            new Uri(ModelsRepositoryTestBase.TestRemoteModelRepository),
-                            InstrumentClientOptions(options)));
+            if (string.IsNullOrEmpty(repositoryLocation))
+            {
+                repositoryLocation = clientType == ModelsRepositoryTestBase.ClientType.Local
+                    ? ModelsRepositoryTestBase.TestLocalModelsRepository
+                    : ModelsRepositoryTestBase.ProdRemoteModelsRepositoryCDN;
+            }
+
+            return InstrumentClient(new ModelsRepositoryClient(new Uri(repositoryLocation), InstrumentClientOptions(options)));
         }
     }
 }

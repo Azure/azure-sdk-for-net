@@ -14,7 +14,12 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Messaging.EventHubs" />
+
+    <!-- TEMP :: Change back to package reference before releasing -->
+    <!-- <PackageReference Include="Azure.Messaging.EventHubs" /> -->
+    <ProjectReference Include="../../Azure.Messaging.EventHubs/src/Azure.Messaging.EventHubs.csproj" />
+    <!-- TEMP :: Remove project reference before releasing-->
+
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />

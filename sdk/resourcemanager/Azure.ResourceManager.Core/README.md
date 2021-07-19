@@ -23,7 +23,7 @@ Set up a way to authenticate to Azure with Azure Identity.
 Some options are:
 - Through the [Azure CLI Login](https://docs.microsoft.com/cli/azure/authenticate-azure-cli).
 - Via [Visual Studio](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
-- Setting [Environment Variables](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/docs/AuthUsingEnvironmentVariables.md).
+- Setting [Environment Variables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager.Core/docs/AuthUsingEnvironmentVariables.md).
 
 More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
@@ -33,13 +33,14 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 
 To authenticate to Azure and create an `ArmClient`, do the following:
 
-```csharp
+```C# Snippet:Readme_AuthClient
 using Azure.Identity;
 using Azure.ResourceManager.Core;
 using System;
-    
-// code omitted for brevity
-    
+using System.Threading.Tasks;
+
+// Code omitted for brevity
+
 var armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
@@ -70,7 +71,133 @@ This represents a full resource object which contains a **Data** property exposi
 It also has access to all of the operations and like the **[Resource]Operations** object is already scoped
 to a specific resource in Azure.
 
+### Structured Resource Identifier
+Instead of implementing your own parsing logic, you can implicitly cast a resource identifier string into an object which will do the parsing for you.
+
+There are 3 types of ResourceIdentifiers and they correspond to which level the resource lives at:
+- A resource that lives on a tenant will have a `TenantResourceIdentifier`.
+- A resource that lives under a subscription will have a `SubscriptionResourceIdentifer`.  
+- A resource that lives under a resource group will have a `ResourceGroupResourceIdentifier`.
+
+You can usually tell by the id string itself which type it is, but if you are unsure you can always cast it onto a `ResourceIdentifier` and use the Try methods to retrieve the values.
+
+#### Casting to a specific type
+```C# Snippet:Readme_CastToSpecificType
+string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
+// We know the subnet is a resource group level identifier since it has a resource group name in its string
+ResourceGroupResourceIdentifier id = resourceId;
+Console.WriteLine($"Subscription: {id.SubscriptionId}");
+Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
+Console.WriteLine($"Vnet: {id.Parent.Name}");
+Console.WriteLine($"Subnet: {id.Name}");
+```
+
+#### Casting to the base resource identifier
+```C# Snippet:Readme_CastToBaseResourceIdentifier
+string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
+// Assume we don't know what type of resource id we have we can cast to the base type
+ResourceIdentifier id = resourceId;
+string property;
+if (id.TryGetSubscriptionId(out property))
+    Console.WriteLine($"Subscription: {property}");
+if (id.TryGetResourceGroupName(out property))
+    Console.WriteLine($"ResourceGroup: {property}");
+Console.WriteLine($"Vnet: {id.Parent.Name}");
+Console.WriteLine($"Subnet: {id.Name}");
+```
+
+### Managing Existing Resources By Id
+Performing operations on resources that already exist is a common use case when using the management SDK. In this scenario you usually have the identifier of the resource you want to work on as a string. Although the new object hierarchy is great for provisioning and working within the scope of a given parent, it is a tad awkward when it comes to this specific scenario.  
+
+Here is an example how you to access an `AvailabilitySet` object and manage it directly with its id: 
+```csharp
+using Azure.Identity;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Compute;
+using System;
+using System.Threading.Tasks;
+
+// Code omitted for brevity
+
+string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet";
+// We know the availability set is a resource group level identifier since it has a resource group name in its string
+ResourceGroupResourceIdentifier id = resourceId;
+// We then construct a new armClient to work with
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+// Next we get the specific subscription this resource belongs to
+Subscription subscription = await armClient.GetSubscriptions().GetAsync(id.SubscriptionId);
+// Next we get the specific resource group this resource belongs to
+ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(id.ResourceGroupName);
+// Finally we get the resource itself
+// Note: for this last stept in this example, Azure.ResourceManager.Compute is needed
+AvailabilitySet availabilitySet = await resourceGroup.GetAvailabilitySets().GetAsync(id.Name);
+```
+However, this approach required a lot of code and 3 API calls to Azure. The same can be done with less code and without any API calls by using extension methods that we have provided on the client itself. These extension methods allow you to pass in a resource identifier and retrieve a scoped client. The object returned is a *[Resource]Operations* mentioned above, since it has not reached out to Azure to retrieve the data yet.
+
+So, the previous example would end up looking like this:
+
+```csharp
+string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet";
+// We construct a new armClient to work with
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+// Next we get the AvailabilitySetOperations object from the client
+// The method takes in a ResourceIdentifier but we can use the implicit cast from string
+AvailabilitySetOperations availabilitySetOperations = armClient.GetAvailabilitySetOperations(resourceId);
+// Now if we want to retrieve the objects data we can simply call get
+AvailabilitySet availabilitySet = await availabilitySetOperations.GetAsync();
+```
+
 ## Examples
+
+### Create a resource group
+```C# Snippet:Managing_Resource_Groups_CreateAResourceGroup
+// First, initialize the ArmClient and get the default subscription
+var armClient = new ArmClient(new DefaultAzureCredential());
+// Now we get a ResourceGroup container for that subscription
+Subscription subscription = armClient.DefaultSubscription;
+ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+
+// With the container, we can create a new resource group with an specific name
+string rgName = "myRgName";
+Location location = Location.WestUS2;
+ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
+```
+
+### List all resource groups
+```C# Snippet:Managing_Resource_Groups_ListAllResourceGroup
+// First, initialize the ArmClient and get the default subscription
+var armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+// Now we get a ResourceGroup container for that subscription
+ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+// With ListAsync(), we can get a list of the resources in the container
+AsyncPageable<ResourceGroup> response = rgContainer.ListAsync();
+await foreach (ResourceGroup rg in response)
+{
+    Console.WriteLine(rg.Data.Name);
+}
+```
+
+### Update a resource group
+
+```C# Snippet:Managing_Resource_Groups_UpdateAResourceGroup
+// Note: Resource group named 'myRgName' should exist for this example to work.
+var armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+string rgName = "myRgName";
+ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+resourceGroup = await resourceGroup.AddTagAsync("key", "value");
+```
+
+### Delete a resource group
+
+```C# Snippet:Managing_Resource_Groups_DeleteResourceGroup
+var armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+string rgName = "myRgName";
+ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+await resourceGroup.DeleteAsync();
+```
 ### Add a tag to a virtual machine
 Imagine that our company requires all virtual machines to be tagged with the owner. We're tasked with writing a program to add the tag to any missing virtual machines in a given resource group.
 
@@ -99,37 +226,7 @@ await foreach(VirtualMachine vm in vmContainer.ListAsync())
 }
  ```
 
-### Create a resource group
-```csharp
-// First, initialize the ArmClient and get the default subscription
-var armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
-// Now we get a ResourceGroup container for that subscription
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-
-// With the container, we can create a new resource group with an specific name
-string rgName = "myRgName";
-ResourceGroup resourceGroup = await rgContainer.CreateAsync(rgName);
-```
-
-### List all resource groups
-```csharp
-// First, initialize the ArmClient and get the default subscription
-var armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.DefaultSubscription;
-
-// Now we get a ResourceGroup container for that subscription
-ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-
-// With ListAsync(), we can get a list of the resources in the container
-AsyncPageable<ResourceGroup> response = rgContainer.ListAsync();
-await foreach (ResourceGroup rg in response)
-{
-    Console.WriteLine(rg.Data.Name);
-}
-```
-
-For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/samples) we have available.
+For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager.Core/samples) we have available.
 
 ## Troubleshooting
 
@@ -141,8 +238,8 @@ For more detailed examples, take a look at [samples](https://github.com/Azure/az
 ## Next steps
 ### More sample code
 
-- [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/samples/Sample2_ManagingResourceGroups.md)
-- [Creating a Virtual Network](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/samples/Sample3_CreatingAVirtualNetwork.md)
+- [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager.Core/samples/Sample2_ManagingResourceGroups.md)
+- [Creating a Virtual Network](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager.Core/samples/Sample3_CreatingAVirtualNetwork.md)
 - [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ### Additional Documentation
@@ -151,7 +248,7 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 ## Contributing
 
 For details on contributing to this repository, see the [contributing
-guide](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/docs/CONTRIBUTING.md).
+guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager.Core/docs/CONTRIBUTING.md).
 
 This project welcomes contributions and suggestions. Most contributions
 require you to agree to a Contributor License Agreement (CLA) declaring

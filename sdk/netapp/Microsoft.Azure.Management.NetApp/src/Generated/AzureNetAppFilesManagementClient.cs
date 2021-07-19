@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.NetApp
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.NetApp
             BackupPolicies = new BackupPoliciesOperations(this);
             Vaults = new VaultsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-02-01";
+            ApiVersion = "2021-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

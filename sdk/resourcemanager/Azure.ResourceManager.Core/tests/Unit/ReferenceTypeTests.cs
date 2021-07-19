@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Core.Tests
                 var initializationCtor = refType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(c => HasAttribute(c.GetCustomAttributes<Attribute>(false), InitializationConstructor)).FirstOrDefault();
                 Assert.IsNotNull(initializationCtor);
-                Assert.IsTrue(refType.IsAbstract == initializationCtor.IsFamily, $"If {refType.Name} is abstract then its initialization ctor should be protected");
-                Assert.IsTrue(refType.IsAbstract != initializationCtor.IsPublic, $"If {refType.Name} is abstract then its initialization ctor should be public");
+                Assert.IsTrue((refType.IsAbstract || AllNonSetterProperties(refType)) == initializationCtor.IsFamily, $"If {refType.Name} is abstract then its initialization ctor should be protected");
+                Assert.IsTrue((refType.IsAbstract || AllNonSetterProperties(refType)) != initializationCtor.IsPublic, $"If {refType.Name} is abstract then its initialization ctor should not be public");
                 Assert.IsFalse(initializationCtor.IsAssembly, $"Initialization ctor for {refType.Name} should not be internal");
             }
         }
@@ -43,6 +43,19 @@ namespace Azure.ResourceManager.Core.Tests
         public bool HasAttribute(IEnumerable<Attribute> list, Type attributeType)
         {
             return list.FirstOrDefault(a => a.GetType() == attributeType) is not null;
+        }
+
+        public bool AllNonSetterProperties(Type referenceType)
+        {
+            List<PropertyInfo> properties = referenceType.GetProperties(BindingFlags.Public | BindingFlags.Instance).ToList();
+            foreach (var property in properties)
+            {
+                if (property.CanWrite)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
