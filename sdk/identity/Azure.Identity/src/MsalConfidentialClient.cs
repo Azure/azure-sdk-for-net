@@ -19,26 +19,25 @@ namespace Azure.Identity
         /// </summary>
         protected MsalConfidentialClient()
             : base()
-        { }
+        {
+        }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority)
             : base(pipeline, tenantId, clientId, cacheOptions)
         {
             _clientSecret = clientSecret;
+            RegionalAuthority = regionalAuthority;
         }
 
-        public MsalConfidentialClient(
-            CredentialPipeline pipeline,
-            string tenantId,
-            string clientId,
-            ClientCertificateCredential.IX509Certificate2Provider certificateProvider,
-            bool includeX5CClaimHeader,
-            ITokenCacheOptions cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, ClientCertificateCredential.IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority)
             : base(pipeline, tenantId, clientId, cacheOptions)
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
             _certificateProvider = certificateProvider;
+            RegionalAuthority = regionalAuthority;
         }
+
+        internal RegionalAuthority? RegionalAuthority { get; }
 
         protected override async ValueTask<IConfidentialClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
         {
@@ -55,6 +54,11 @@ namespace Azure.Identity
             {
                 X509Certificate2 clientCertificate = await _certificateProvider.GetCertificateAsync(async, cancellationToken).ConfigureAwait(false);
                 confClientBuilder.WithCertificate(clientCertificate);
+            }
+
+            if (RegionalAuthority.HasValue)
+            {
+                confClientBuilder.WithAzureRegion(RegionalAuthority.Value.ToString());
             }
 
             return confClientBuilder.Build();

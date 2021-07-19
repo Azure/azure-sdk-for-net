@@ -368,7 +368,7 @@ namespace Azure.Storage.Blobs
             => new ServiceRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uri.ToString(),
+                url: uri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 

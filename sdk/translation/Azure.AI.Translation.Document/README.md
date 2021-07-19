@@ -231,8 +231,8 @@ int docsFailed = 0;
 
 await foreach (TranslationStatus translationStatus in client.GetAllTranslationStatusesAsync())
 {
-    if (translationStatus.Status != DocumentTranslationStatus.Failed &&
-          translationStatus.Status != DocumentTranslationStatus.Succeeded)
+    if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
+        translationStatus.Status == DocumentTranslationStatus.Running)
     {
         DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
         await operation.WaitForCompletionAsync();
@@ -450,7 +450,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
 [documenttranslation_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Document/src/DocumentTranslationClient.cs
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
+[register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
@@ -462,7 +466,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [using_storage_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_StartTranslationWithAzureBlob.cs
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com
 [moq]: https://github.com/Moq/moq4/

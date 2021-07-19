@@ -96,7 +96,7 @@ namespace Azure.Security.KeyVault.Secrets
         public Uri KeyId
         {
             get => _keyId is null ? null : new Uri(_keyId);
-            internal set => _keyId = value?.ToString();
+            internal set => _keyId = value?.AbsoluteUri;
         }
 
         /// <summary>

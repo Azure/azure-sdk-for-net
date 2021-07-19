@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
 {
@@ -48,6 +47,22 @@ namespace Azure.Messaging.EventGrid
             _uriBuilder.Reset(endpoint);
             _uriBuilder.AppendQuery("api-version", options.Version.GetVersionString(), true);
             _pipeline = HttpPipelineBuilder.Build(options, new EventGridKeyCredentialPolicy(credential));
+            _clientDiagnostics = new ClientDiagnostics(options);
+        }
+
+        /// <summary>Initalizes a new instance of the <see cref="EventGridPublisherClient"/> class.</summary>
+        /// <param name="endpoint">The topic endpoint. For example, "https://TOPIC-NAME.REGION-NAME-1.eventgrid.azure.net/api/events".</param>
+        /// <param name="credential">The token credential used to authenticate with the service.</param>
+        /// <param name="options">The set of options to use for configuring the client.</param>
+        public EventGridPublisherClient(Uri endpoint, TokenCredential credential, EventGridPublisherClientOptions options = default)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new EventGridPublisherClientOptions();
+            _uriBuilder = new RequestUriBuilder();
+            _uriBuilder.Reset(endpoint);
+            _uriBuilder.AppendQuery("api-version", options.Version.GetVersionString(), true);
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://eventgrid.azure.net/.default"));
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -160,26 +175,9 @@ namespace Azure.Messaging.EventGrid
 
                 using HttpMessage message = _pipeline.CreateMessage();
                 Request request = CreateEventRequest(message, "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStartArray();
-                foreach (EventGridEvent egEvent in events)
-                {
-                    JsonDocument data = JsonDocument.Parse(egEvent.Data.ToStream());
-                    EventGridEventInternal newEGEvent = new EventGridEventInternal(
-                        egEvent.Id,
-                        egEvent.Subject,
-                        data.RootElement,
-                        egEvent.EventType,
-                        egEvent.EventTime,
-                        egEvent.DataVersion)
-                    {
-                        Topic = egEvent.Topic
-                    };
-                    content.JsonWriter.WriteObjectValue(newEGEvent);
-                }
 
-                content.JsonWriter.WriteEndArray();
-                request.Content = content;
+                // leverage custom converter for EventGridEvent
+                request.Content = RequestContent.Create(JsonSerializer.Serialize(events));
 
                 if (async)
                 {

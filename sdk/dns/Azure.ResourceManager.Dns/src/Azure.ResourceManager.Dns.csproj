@@ -17,7 +17,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->
-    <NoWarn>$(NoWarn);AZC0001;CS0618</NoWarn>
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
+    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
   </PropertyGroup>
 
   <ItemGroup>
