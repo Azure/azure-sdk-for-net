@@ -2,54 +2,54 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// BlobDirectoryUploadOptions for
+    /// Optional parameters for uploading to a Blob directory.
     /// </summary>
     public class BlobDirectoryUploadOptions
     {
         /// <summary>
+        /// Optional Blob Type to Upload. Defaults to upload Block Blobs.
+        /// </summary>
+        /// TODO: uncomment or replace when uploading page and append blobs
+        /// public BlobType blobType { get; set; }
+
+        /// <summary>
         /// Optional standard HTTP header properties that can be set for the
-        /// new append blob.
+        /// each blob that is uploaded.
+        ///
+        /// TODO: remove and replace with onl ythe headers that can apply
+        /// to all blows iwthin the directory
         /// </summary>
         public BlobHttpHeaders HttpHeaders { get; set; }
 
         /// <summary>
-        /// Optional custom metadata to set for this append blob.
+        /// Optional custom metadata to set for each blob uploaded.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata Metadata { get; set; }
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
-        /// Options tags to set for this block blob.
+        /// Options tags to set for each blob uploaded.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Tags Tags { get; set; }
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on the upload of this Block Blob.
-        /// </summary>
-        public BlobRequestConditions Conditions { get; set; }
-
-        /// <summary>
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
+        /// TODO: replace long value with appropriate model similar to BlobUploadDirectoryResponse
         /// </summary>
-        public IProgress<StorageTransferStatus> ProgressHandler { get; set; }
+        public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
-        /// Optional <see cref="AccessTier"/> to set on the
-        /// Block Blob.
+        /// Optional <see cref="AccessTier"/> to set on each blob uploaded.
         /// </summary>
         public AccessTier? AccessTier { get; set; }
 
@@ -58,12 +58,5 @@ namespace Azure.Storage.Blobs.Models
         /// parallel transfer behavior.
         /// </summary>
         public StorageTransferOptions TransferOptions { get; set; }
-        /// <summary>
-        /// Optional. If set to false, the operation will terminate quickly on encountering user failures. If true, the operation will ignore
-        /// user failures and proceed with the operation on other sub-entities of the directory.
-        ///
-        /// This is after retry attempts fail.
-        /// </summary>
-        public bool? ContinueOnFailure { get; set; }
     }
 }
