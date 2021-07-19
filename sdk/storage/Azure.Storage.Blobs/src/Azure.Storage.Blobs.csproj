@@ -86,5 +86,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroConstants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroReader.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\StreamWithPosition.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)TaskThrottler.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

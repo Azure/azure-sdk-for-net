@@ -78,15 +78,17 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken = default)
         {
+            string fullPath = Path.GetFullPath(localPath);
+
             PathScannerFactory scannerFactory = new PathScannerFactory(localPath);
             PathScanner scanner = scannerFactory.BuildPathScanner();
             IEnumerable<FileSystemInfo> fileList = scanner.Scan();
 
-            TransferScheduler fileScheduler = new TransferScheduler((int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1));
-            List<Task> tasks = new List<Task>();
+            int concurrency = (int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1);
+            TaskThrottler throttler = new TaskThrottler(concurrency);
+
             List<Response<ShareFileUploadInfo>> responses = new List<Response<ShareFileUploadInfo>>();
 
-            string fullPath = Path.GetFullPath(localPath);
             Queue<FileSystemInfo> files = new();
 
             foreach (FileSystemInfo file in fileList)
@@ -96,13 +98,12 @@ namespace Azure.Storage.Files.Shares
 
                 if (file.GetType() == typeof(DirectoryInfo))
                 {
-                    Task folderTask = Task.Factory.StartNew(() =>
+                    throttler.AddTask(async () =>
                     {
-                        GetDirectoryClient(file.FullName.Substring(fullPath.Length + 1))
-                            .CreateIfNotExists(cancellationToken: cancellationToken);
-                    }, cancellationToken, default, fileScheduler);
-
-                    tasks.Add(folderTask);
+                        await GetDirectoryClient(file.FullName.Substring(fullPath.Length + 1))
+                            .CreateIfNotExistsAsync(cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    });
                 }
                 else
                 {
@@ -112,37 +113,35 @@ namespace Azure.Storage.Files.Shares
 
             if (async)
             {
-                await Task.WhenAll(tasks).ConfigureAwait(false);
+                await throttler.WaitAsync().ConfigureAwait(false);
             }
             else
             {
-                Task.WaitAll(tasks.ToArray(), cancellationToken);
+                throttler.Wait();
             }
 
             while (files.Count > 0)
             {
                 FileSystemInfo file = files.Dequeue();
 
-                Task task = Task.Factory.StartNew(() =>
+                throttler.AddTask(async () =>
                 {
                     using (FileStream stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read))
                     {
                         ShareFileClient client = GetFileClient(file.FullName.Substring(fullPath.Length + 1));
-                        client.Create(stream.Length);
-                        responses.Add(client.Upload(stream));
+                        await client.CreateAsync(stream.Length).ConfigureAwait(false);
+                        responses.Add(await client.UploadAsync(stream).ConfigureAwait(false));
                     }
-                }, cancellationToken, default, fileScheduler);
-
-                tasks.Add(task);
+                });
             }
 
             if (async)
             {
-                await Task.WhenAll(tasks).ConfigureAwait(false);
+                await throttler.WaitAsync().ConfigureAwait(false);
             }
             else
             {
-                Task.WaitAll(tasks.ToArray(), cancellationToken);
+                throttler.Wait();
             }
 
             return responses;

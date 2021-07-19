@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.Shares.Tests
     public class SchedulerTests : FileTestBase
     {
         public SchedulerTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -48,20 +48,14 @@ namespace Azure.Storage.Files.Shares.Tests
             File.WriteAllBytes(openSubchild, data());
             File.WriteAllBytes(lockedSubchild, data());
 
-            StorageTransferOptions transferOptions = default;
-            transferOptions.MaximumConcurrency = 2;
-
             ShareDirectoryUploadOptions options = new ShareDirectoryUploadOptions();
 
             // Act
-            await client.UploadAsync(folder, transferOptions, options);
+            await client.UploadAsync(folder, default, options);
 
             List<string> paths = new();
 
             await RecurseShareDirectory(paths, client, "");
-
-            foreach (string path in paths)
-                Console.WriteLine(path);
 
             // Assert
             Assert.Multiple(() =>
@@ -106,21 +100,15 @@ namespace Azure.Storage.Files.Shares.Tests
             File.WriteAllBytes(openSubchild, data());
             File.WriteAllBytes(lockedSubchild, data());
 
-            StorageTransferOptions transferOptions = default;
-            transferOptions.MaximumConcurrency = 2;
-
             ShareDirectoryUploadOptions options = new ShareDirectoryUploadOptions();
             options.UploadToSubdirectory = true;
 
             // Act
-            await client.UploadAsync(folder, transferOptions, options);
+            await client.UploadAsync(folder, default, options);
 
             List<string> paths = new();
 
             await RecurseShareDirectory(paths, client, "");
-
-            foreach (string path in paths)
-                Console.WriteLine(path);
 
             // Assert
             Assert.Multiple(() =>
@@ -164,20 +152,14 @@ namespace Azure.Storage.Files.Shares.Tests
             File.WriteAllBytes(openSubchild, data());
             File.WriteAllBytes(lockedSubchild, data());
 
-            StorageTransferOptions transferOptions = default;
-            transferOptions.MaximumConcurrency = 2;
-
             ShareDirectoryUploadOptions options = new ShareDirectoryUploadOptions();
 
             // Act
-            await client.UploadAsync(folder, remoteTargetDir, transferOptions, options);
+            await client.UploadAsync(folder, remoteTargetDir, default, options);
 
             List<string> paths = new();
 
             await RecurseShareDirectory(paths, client, "");
-
-            foreach (string path in paths)
-                Console.WriteLine(path);
 
             // Assert
             Assert.Multiple(() =>
@@ -223,21 +205,15 @@ namespace Azure.Storage.Files.Shares.Tests
             File.WriteAllBytes(openSubchild, data());
             File.WriteAllBytes(lockedSubchild, data());
 
-            StorageTransferOptions transferOptions = default;
-            transferOptions.MaximumConcurrency = 2;
-
             ShareDirectoryUploadOptions options = new ShareDirectoryUploadOptions();
             options.UploadToSubdirectory = true;
 
             // Act
-            await client.UploadAsync(folder, remoteTargetDir, transferOptions, options);
+            await client.UploadAsync(folder, remoteTargetDir, default, options);
 
             List<string> paths = new();
 
             await RecurseShareDirectory(paths, client, "");
-
-            foreach (string path in paths)
-                Console.WriteLine(path);
 
             // Assert
             Assert.Multiple(() =>
@@ -250,19 +226,6 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Cleanup
             Directory.Delete(folder, true);
-        }
-
-        private static string CreateRandomDirectory(string parentPath)
-        {
-            return Directory.CreateDirectory(Path.Combine(parentPath, Path.GetRandomFileName())).FullName;
-        }
-
-        private static string CreateRandomFile(string parentPath)
-        {
-            using (FileStream fs = File.Create(Path.Combine(parentPath, Path.GetRandomFileName())))
-            {
-                return fs.Name;
-            }
         }
 
         private static async Task RecurseShareDirectory(List<string> output, ShareDirectoryClient parent, string currentTree)

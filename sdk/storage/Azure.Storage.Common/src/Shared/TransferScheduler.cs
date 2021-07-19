@@ -22,7 +22,7 @@ namespace Azure.Storage
         private readonly int _maxDegreeOfParallelism;
 
         // Indicates whether the scheduler is currently processing work items.
-        private int _activeTheadCount;
+        private int _activeThreadCount;
 
         // Gets the maximum concurrency level supported by this scheduler.
         /// <inheritdoc/>
@@ -49,9 +49,9 @@ namespace Azure.Storage
             lock (_tasks)
             {
                 _tasks.AddLast(task);
-                if (_activeTheadCount < _maxDegreeOfParallelism)
+                if (_activeThreadCount < _maxDegreeOfParallelism)
                 {
-                    ++_activeTheadCount;
+                    ++_activeThreadCount;
                     NotifyThreadPoolOfPendingWork();
                 }
             }
@@ -77,7 +77,7 @@ namespace Azure.Storage
                             // note that we're done processing, and get out.
                             if (_tasks.Count == 0)
                             {
-                                --_activeTheadCount;
+                                --_activeThreadCount;
                                 break;
                             }
 

@@ -213,6 +213,19 @@ namespace Azure.Storage.Test.Shared
             return IPAddress.Parse(ipString);
         }
 
+        public string CreateRandomDirectory(string parentPath)
+        {
+            return Directory.CreateDirectory(Path.Combine(parentPath, Recording.Random.NewGuid().ToString())).FullName;
+        }
+
+        public string CreateRandomFile(string parentPath)
+        {
+            using (FileStream fs = File.Create(Path.Combine(parentPath, Recording.Random.NewGuid().ToString())))
+            {
+                return fs.Name;
+            }
+        }
+
         public TokenCredential GetOAuthCredential() =>
             GetOAuthCredential(TestConfigOAuth);
 

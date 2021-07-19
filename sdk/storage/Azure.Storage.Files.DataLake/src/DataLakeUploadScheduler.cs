@@ -42,27 +42,20 @@ namespace Azure.Storage.Files.DataLake
             StorageTransferOptions transferOptions,
 #pragma warning disable CA1801 // Review unused parameters
             DataLakeDirectoryUploadOptions options,
-#pragma warning restore CA1801 // Review unused parameters
             bool async,
             CancellationToken cancellationToken = default)
+#pragma warning restore CA1801 // Review unused parameters
         {
-            PathScannerFactory scannerFactory = new PathScannerFactory(localPath);
+            string fullPath = System.IO.Path.GetFullPath(localPath);
+
+            PathScannerFactory scannerFactory = new PathScannerFactory(fullPath);
             PathScanner scanner = scannerFactory.BuildPathScanner();
             IEnumerable<System.IO.FileSystemInfo> fileList = scanner.Scan();
 
-            TransferScheduler fileScheduler = new TransferScheduler((int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1));
-            List<Task> tasks = new List<Task>();
+            int concurrency = (int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1);
+            TaskThrottler throttler = new TaskThrottler(concurrency);
+
             List<Response<PathInfo>> responses = new List<Response<PathInfo>>();
-
-            string fullPath = System.IO.Path.GetFullPath(localPath);
-
-            string permissions = "0777";
-            string umask = "0057";
-            DataLakeFileUploadOptions fileOptions = new DataLakeFileUploadOptions
-            {
-                Permissions = permissions,
-                Umask = umask
-            };
 
             foreach (System.IO.FileSystemInfo file in fileList)
             {
@@ -71,24 +64,21 @@ namespace Azure.Storage.Files.DataLake
                     continue;
                 }
 
-                Task task = Task.Factory.StartNew(() =>
+                throttler.AddTask(async () =>
                 {
-                    responses.Add(GetFileClient(file.FullName.Substring(fullPath.Length + 1))
-                       .Upload(
-                           file.FullName,
-                           fileOptions));
-                }, cancellationToken, default, fileScheduler);
-
-                tasks.Add(task);
+                    responses.Add(await GetFileClient(file.FullName.Substring(fullPath.Length + 1))
+                        .UploadAsync(file.FullName)
+                        .ConfigureAwait(false));
+                });
             }
 
             if (async)
             {
-                await Task.WhenAll(tasks).ConfigureAwait(false);
+                await throttler.WaitAsync().ConfigureAwait(false);
             }
             else
             {
-                Task.WaitAll(tasks.ToArray(), cancellationToken);
+                throttler.Wait();
             }
 
             return responses;

@@ -121,7 +121,7 @@ namespace Azure.Storage.DataMovement
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             string sourceLocalPath,
             BlobDirectoryClient destinationClient,
-            BlobUploadDirectoryOptions uploadOptions = default,
+            BlobDirectoryUploadOptions uploadOptions = default,
             CancellationToken token = default)
         {
             //TODO: if check the local path exists and not a directory
@@ -175,7 +175,9 @@ namespace Azure.Storage.DataMovement
         /// TODO: Fix below errors and rmeove suppressions
 #pragma warning disable CA1822 // Mark members as static
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+#pragma warning disable CA1801 // Review unused parameters
         public async Task StartTransferAsync(CancellationToken token = default)
+#pragma warning restore CA1801 // Review unused parameters
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 #pragma warning restore CA1822 // Mark members as static
         {

@@ -66,15 +66,16 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken = default)
         {
-            PathScannerFactory scannerFactory = new PathScannerFactory(localPath);
+            string fullPath = Path.GetFullPath(localPath);
+
+            PathScannerFactory scannerFactory = new PathScannerFactory(fullPath);
             PathScanner scanner = scannerFactory.BuildPathScanner();
             IEnumerable<FileSystemInfo> fileList = scanner.Scan();
 
-            TransferScheduler fileScheduler = new TransferScheduler((int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1));
-            List<Task> tasks = new List<Task>();
-            List<Response<BlobContentInfo>> responses = new List<Response<BlobContentInfo>>();
+            int concurrency = (int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1);
+            TaskThrottler throttler = new TaskThrottler(concurrency);
 
-            string fullPath = Path.GetFullPath(localPath);
+            List<Response<BlobContentInfo>> responses = new List<Response<BlobContentInfo>>();
 
             foreach (FileSystemInfo file in fileList)
             {
@@ -83,24 +84,23 @@ namespace Azure.Storage.Blobs
                     continue;
                 }
 
-                Task task = Task.Factory.StartNew(() =>
+                throttler.AddTask(async () =>
                 {
-                    responses.Add(GetBlobClient(file.FullName.Substring(fullPath.Length + 1))
-                       .Upload(
+                    responses.Add(await GetBlobClient(file.FullName.Substring(fullPath.Length + 1))
+                       .UploadAsync(
                            file.FullName,
-                           cancellationToken));
-                }, cancellationToken, default, fileScheduler);
-
-                tasks.Add(task);
+                           cancellationToken)
+                       .ConfigureAwait(false));
+                });
             }
 
             if (async)
             {
-                await Task.WhenAll(tasks).ConfigureAwait(false);
+                await throttler.WaitAsync().ConfigureAwait(false);
             }
             else
             {
-                Task.WaitAll(tasks.ToArray(), cancellationToken);
+                throttler.Wait();
             }
 
             return responses;

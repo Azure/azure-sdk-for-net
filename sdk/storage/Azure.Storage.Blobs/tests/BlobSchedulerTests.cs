@@ -18,9 +18,13 @@ namespace Azure.Storage.Blobs.Tests
     public class BlobSchedulerTests : BlobTestBase
     {
         public BlobSchedulerTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
+
+        // TODO: Resolve issues with threading causing failures in test playback
+        //      (maybe should be resolved in base TransferSchduler, with tests for
+        //      threading behavior in its own tests)
 
         [RecordedTest]
         public async Task UploadDirectoryAsync_RemoteUnspecifiedNoSubfolder()
@@ -29,7 +33,7 @@ namespace Azure.Storage.Blobs.Tests
             await using DisposingContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            BlobDirectoryClient client = InstrumentClient(test.Container.GetBlobDirectoryClient(dirName));
+            BlobDirectoryClient client = test.Container.GetBlobDirectoryClient(dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
             string openChild = CreateRandomFile(folder);
@@ -41,13 +45,10 @@ namespace Azure.Storage.Blobs.Tests
             string lockedSubfolder = CreateRandomDirectory(folder);
             string lockedSubchild = CreateRandomFile(lockedSubfolder);
 
-            StorageTransferOptions transferOptions = default;
-            transferOptions.MaximumConcurrency = 2;
-
             BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
 
             // Act
-            await client.UploadAsync(folder, transferOptions, options);
+            await client.UploadAsync(folder, default, options);
 
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
@@ -72,7 +73,7 @@ namespace Azure.Storage.Blobs.Tests
             await using DisposingContainer test = await GetTestContainerAsync();
 
             string dirName = GetNewBlobName();
-            BlobDirectoryClient client = InstrumentClient(test.Container.GetBlobDirectoryClient(dirName));
+            BlobDirectoryClient client = test.Container.GetBlobDirectoryClient(dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
             string openChild = CreateRandomFile(folder);
@@ -86,14 +87,11 @@ namespace Azure.Storage.Blobs.Tests
 
             string localDirName = folder.Split('\\').Last();
 
-            StorageTransferOptions transferOptions = default;
-            transferOptions.MaximumConcurrency = 2;
-
             BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
             options.UploadToSubdirectory = true;
 
             // Act
-            await client.UploadAsync(folder, transferOptions, options);
+            await client.UploadAsync(folder, default, options);
 
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
@@ -119,7 +117,7 @@ namespace Azure.Storage.Blobs.Tests
 
             string dirName = GetNewBlobName();
             string remoteTargetDir = GetNewBlobName();
-            BlobDirectoryClient client = InstrumentClient(test.Container.GetBlobDirectoryClient(dirName));
+            BlobDirectoryClient client = test.Container.GetBlobDirectoryClient(dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
             string openChild = CreateRandomFile(folder);
@@ -131,13 +129,10 @@ namespace Azure.Storage.Blobs.Tests
             string lockedSubfolder = CreateRandomDirectory(folder);
             string lockedSubchild = CreateRandomFile(lockedSubfolder);
 
-            StorageTransferOptions transferOptions = default;
-            transferOptions.MaximumConcurrency = 2;
-
             BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
 
             // Act
-            await client.UploadAsync(folder, remoteTargetDir, transferOptions, options);
+            await client.UploadAsync(folder, remoteTargetDir, default, options);
 
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
@@ -163,7 +158,7 @@ namespace Azure.Storage.Blobs.Tests
 
             string dirName = GetNewBlobName();
             string remoteTargetDir = GetNewBlobName();
-            BlobDirectoryClient client = InstrumentClient(test.Container.GetBlobDirectoryClient(dirName));
+            BlobDirectoryClient client = test.Container.GetBlobDirectoryClient(dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
             string openChild = CreateRandomFile(folder);
@@ -177,14 +172,11 @@ namespace Azure.Storage.Blobs.Tests
 
             string localDirName = folder.Split('\\').Last();
 
-            StorageTransferOptions transferOptions = default;
-            transferOptions.MaximumConcurrency = 2;
-
             BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
             options.UploadToSubdirectory = true;
 
             // Act
-            await client.UploadAsync(folder, remoteTargetDir, transferOptions, options);
+            await client.UploadAsync(folder, remoteTargetDir, default, options);
 
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
@@ -200,19 +192,6 @@ namespace Azure.Storage.Blobs.Tests
 
             // Cleanup
             Directory.Delete(folder, true);
-        }
-
-        private static string CreateRandomDirectory(string parentPath)
-        {
-            return Directory.CreateDirectory(Path.Combine(parentPath, Path.GetRandomFileName())).FullName;
-        }
-
-        private static string CreateRandomFile(string parentPath)
-        {
-            using (FileStream fs = File.Create(Path.Combine(parentPath, Path.GetRandomFileName())))
-            {
-                return fs.Name;
-            }
         }
     }
 }
