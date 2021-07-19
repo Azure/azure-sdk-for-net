@@ -75,7 +75,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         }
 
         #region Snippet:TrainMultivariateModel
-        private async Task<Guid?> trainAsync(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
+        private async Task<Guid?> trainAsync(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time)
         {
             try
             {
@@ -92,27 +92,24 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
                 // Wait until the model is ready. It usually takes several minutes
                 Response<Model> get_response = await client.GetMultivariateModelAsync(trained_model_id).ConfigureAwait(false);
-                ModelStatus? model_status = null;
-                int tryout_count = 0;
-                while (tryout_count < max_tryout & model_status != ModelStatus.Ready)
+                while (get_response.Value.ModelInfo.Status != ModelStatus.Ready & get_response.Value.ModelInfo.Status != ModelStatus.Failed)
                 {
                     System.Threading.Thread.Sleep(10000);
                     get_response = await client.GetMultivariateModelAsync(trained_model_id).ConfigureAwait(false);
-                    ModelInfo model_info = get_response.Value.ModelInfo;
-                    Console.WriteLine(String.Format("model_id: {0}, createdTime: {1}, lastUpdateTime: {2}, status: {3}.", get_response.Value.ModelId, get_response.Value.CreatedTime, get_response.Value.LastUpdatedTime, model_info.Status));
-
-                    if (model_info != null)
-                    {
-                        model_status = model_info.Status;
-                    }
-                    tryout_count += 1;
+                    Console.WriteLine(String.Format("model_id: {0}, createdTime: {1}, lastUpdateTime: {2}, status: {3}.", get_response.Value.ModelId, get_response.Value.CreatedTime, get_response.Value.LastUpdatedTime, get_response.Value.ModelInfo.Status));
                 };
-                get_response = await client.GetMultivariateModelAsync(trained_model_id).ConfigureAwait(false);
 
-                if (model_status != ModelStatus.Ready)
+                if (get_response.Value.ModelInfo.Status != ModelStatus.Ready)
                 {
-                    Console.WriteLine(String.Format("Request timeout after {0} tryouts", max_tryout));
-                }
+                    Console.WriteLine(String.Format("Trainig failed."));
+                    IReadOnlyList<ErrorResponse> errors = get_response.Value.ModelInfo.Errors;
+                    foreach (ErrorResponse error in errors)
+                    {
+                        Console.WriteLine(String.Format("Error code: {0}.", error.Code));
+                        Console.WriteLine(String.Format("Error message: {0}.", error.Message));
+                    };
+                    throw new Exception("Training failed.");
+                };
 
                 model_number = await getModelNumberAsync(client).ConfigureAwait(false);
                 Console.WriteLine(String.Format("{0} available models after training.", model_number));
@@ -127,7 +124,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         #endregion
 
         #region Snippet:DetectMultivariateAnomaly
-        private async Task<DetectionResult> detectAsync(AnomalyDetectorClient client, string datasource, Guid model_id,DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
+        private async Task<DetectionResult> detectAsync(AnomalyDetectorClient client, string datasource, Guid model_id,DateTimeOffset start_time, DateTimeOffset end_time)
         {
             try
             {
@@ -140,19 +137,23 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 Guid result_id = Guid.Parse(result_id_path.Split('/').LastOrDefault());
                 // get detection result
                 Response<DetectionResult> result = await client.GetDetectionResultAsync(result_id).ConfigureAwait(false);
-                int tryout_count = 0;
-                while (result.Value.Summary.Status != DetectionStatus.Ready & tryout_count < max_tryout)
+                while (result.Value.Summary.Status != DetectionStatus.Ready & result.Value.Summary.Status != DetectionStatus.Failed)
                 {
                     System.Threading.Thread.Sleep(2000);
                     result = await client.GetDetectionResultAsync(result_id).ConfigureAwait(false);
-                    tryout_count += 1;
                 }
 
                 if (result.Value.Summary.Status != DetectionStatus.Ready)
                 {
-                    Console.WriteLine(String.Format("Request timeout after {0} tryouts", max_tryout));
+                    Console.WriteLine(String.Format("Inference failed."));
+                    IReadOnlyList<ErrorResponse> errors = result.Value.Summary.Errors;
+                    foreach (ErrorResponse error in errors)
+                    {
+                        Console.WriteLine(String.Format("Error code: {0}.", error.Code));
+                        Console.WriteLine(String.Format("Error message: {0}.", error.Message));
+                    };
                     return null;
-                }
+                };
 
                 return result.Value;
             }
