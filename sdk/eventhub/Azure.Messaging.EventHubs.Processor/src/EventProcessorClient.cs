@@ -888,6 +888,16 @@ namespace Azure.Messaging.EventHubs
 
                 foreach (var eventData in events)
                 {
+                    // If cancellation was requested, then either partition ownership was lost or the processor is
+                    // shutting down.  In either case, dispatching of events to be handled should cease.  Since this
+                    // flow is entirely internal, there's no benefit to throwing a cancellation exception; instead,
+                    // just exit the loop.
+
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
+
                     emptyBatch = false;
 
                     try

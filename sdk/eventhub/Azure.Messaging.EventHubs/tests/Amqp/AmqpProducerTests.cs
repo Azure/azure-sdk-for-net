@@ -246,7 +246,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());
 
-            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null);
+            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null, TimeSpan.FromSeconds(30));
             scope.Dispose();
 
             var producer = new AmqpProducer(eventHub, partition, identifier, scope, Mock.Of<AmqpMessageConverter>(), retryPolicy);
@@ -724,7 +724,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());
 
-            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null);
+            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null, TimeSpan.FromSeconds(30));
             scope.Dispose();
 
             var producer = new AmqpProducer(eventHub, partition, identifier, scope, Mock.Of<AmqpMessageConverter>(), retryPolicy);
@@ -1131,7 +1131,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());
 
-            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null);
+            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null, TimeSpan.FromSeconds(30));
             var producer = new AmqpProducer(eventHub, partition, identifier, scope, Mock.Of<AmqpMessageConverter>(), retryPolicy);
 
             scope.Dispose();
@@ -1490,7 +1490,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());
 
-            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null);
+            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null, TimeSpan.FromSeconds(30));
             var producer = new AmqpProducer(eventHub, partition, identifier, scope, Mock.Of<AmqpMessageConverter>(), retryPolicy);
 
             scope.Dispose();
