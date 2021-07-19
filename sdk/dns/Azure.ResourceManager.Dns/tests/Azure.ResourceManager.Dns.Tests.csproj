@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TestHelperProjects>;</TestHelperProjects>
+    <UseNewMgmtFramework>false</UseNewMgmtFramework>
     <NoWarn>$(NoWarn);SA1649</NoWarn>
     <FileUpgradeFlags>
     </FileUpgradeFlags>

@@ -15,8 +15,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
     [NonParallelizable]
     public class AccessControlClientLiveTests : AccessControlTestBase
     {
-        public AccessControlClientLiveTests(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public AccessControlClientLiveTests(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [RecordedTest]

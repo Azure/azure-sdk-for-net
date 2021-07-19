@@ -1975,7 +1975,7 @@ namespace Azure.Storage.Files.Shares
             if (async)
             {
                 response = await FileRestClient.DownloadAsync(
-                    range: pageRange.ToString(),
+                    range: pageRange == default ? null : pageRange.ToString(),
                     rangeGetContentMD5: range == default ? null : rangeGetContentHash,
                     leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken)
@@ -1984,7 +1984,7 @@ namespace Azure.Storage.Files.Shares
             else
             {
                 response = FileRestClient.Download(
-                    range: pageRange.ToString(),
+                    range: pageRange == default ? null : pageRange.ToString(),
                     rangeGetContentMD5: range == default ? null : rangeGetContentHash,
                     leaseAccessConditions: conditions,
                     cancellationToken: cancellationToken);

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Tests;
@@ -16,7 +15,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     [ClientTestFixture(
         CertificateClientOptions.ServiceVersion.V7_0,
         CertificateClientOptions.ServiceVersion.V7_1,
-        CertificateClientOptions.ServiceVersion.V7_2)]
+        CertificateClientOptions.ServiceVersion.V7_2,
+        CertificateClientOptions.ServiceVersion.V7_3_Preview)]
     [NonParallelizable]
     public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
