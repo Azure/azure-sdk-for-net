@@ -8,10 +8,6 @@
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-    
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <!--We would prefer to use the meta package "Microsoft.AspNetCore.App" here.
     But this package targets NetCoreApp3.1, while all the dependent packages target NetStandard2.0.
