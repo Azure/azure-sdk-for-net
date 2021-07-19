@@ -29,6 +29,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='apiVersion'>
         /// The API version to use for this operation.
         /// </param>
+        /// <param name='providerNamespace'>
+        /// The provider namespace.
+        /// </param>
         /// <param name='featureName'>
         /// The feature name.
         /// </param>
@@ -47,12 +50,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SubscriptionFeatureRegistration>> GetWithHttpMessagesAsync(string apiVersion, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionFeatureRegistration>> GetWithHttpMessagesAsync(string apiVersion, string providerNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update a feature registration.
         /// </summary>
         /// <param name='apiVersion'>
         /// The API version to use for this operation.
+        /// </param>
+        /// <param name='providerNamespace'>
+        /// The provider namespace.
         /// </param>
         /// <param name='featureName'>
         /// The feature name.
@@ -75,12 +81,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SubscriptionFeatureRegistration>> CreateOrUpdateWithHttpMessagesAsync(string apiVersion, string featureName, SubscriptionFeatureRegistration subscriptionFeatureRegistrationType = default(SubscriptionFeatureRegistration), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionFeatureRegistration>> CreateOrUpdateWithHttpMessagesAsync(string apiVersion, string providerNamespace, string featureName, SubscriptionFeatureRegistration subscriptionFeatureRegistrationType = default(SubscriptionFeatureRegistration), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a feature registration
         /// </summary>
         /// <param name='apiVersion'>
         /// The API version to use for this operation.
+        /// </param>
+        /// <param name='providerNamespace'>
+        /// The provider namespace.
         /// </param>
         /// <param name='featureName'>
         /// The feature name.
@@ -97,13 +106,16 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string apiVersion, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string apiVersion, string providerNamespace, string featureName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns subscription feature registrations for given subscription
         /// and provider namespace.
         /// </summary>
         /// <param name='apiVersion'>
         /// The API version to use for this operation.
+        /// </param>
+        /// <param name='providerNamespace'>
+        /// The provider namespace.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -120,7 +132,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SubscriptionFeatureRegistration>>> ListBySubscriptionWithHttpMessagesAsync(string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SubscriptionFeatureRegistration>>> ListBySubscriptionWithHttpMessagesAsync(string apiVersion, string providerNamespace, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns subscription feature registrations for given subscription.
         /// </summary>

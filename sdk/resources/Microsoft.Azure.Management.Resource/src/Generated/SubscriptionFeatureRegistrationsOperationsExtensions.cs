@@ -30,12 +30,15 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
+            /// <param name='providerNamespace'>
+            /// The provider namespace.
+            /// </param>
             /// <param name='featureName'>
             /// The feature name.
             /// </param>
-            public static SubscriptionFeatureRegistration Get(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string featureName)
+            public static SubscriptionFeatureRegistration Get(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string providerNamespace, string featureName)
             {
-                return operations.GetAsync(apiVersion, featureName).GetAwaiter().GetResult();
+                return operations.GetAsync(apiVersion, providerNamespace, featureName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -47,15 +50,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
+            /// <param name='providerNamespace'>
+            /// The provider namespace.
+            /// </param>
             /// <param name='featureName'>
             /// The feature name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionFeatureRegistration> GetAsync(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string featureName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionFeatureRegistration> GetAsync(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string providerNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(apiVersion, featureName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(apiVersion, providerNamespace, featureName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -70,15 +76,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
+            /// <param name='providerNamespace'>
+            /// The provider namespace.
+            /// </param>
             /// <param name='featureName'>
             /// The feature name.
             /// </param>
             /// <param name='subscriptionFeatureRegistrationType'>
             /// Subscription Feature Registration Type details.
             /// </param>
-            public static SubscriptionFeatureRegistration CreateOrUpdate(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string featureName, SubscriptionFeatureRegistration subscriptionFeatureRegistrationType = default(SubscriptionFeatureRegistration))
+            public static SubscriptionFeatureRegistration CreateOrUpdate(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string providerNamespace, string featureName, SubscriptionFeatureRegistration subscriptionFeatureRegistrationType = default(SubscriptionFeatureRegistration))
             {
-                return operations.CreateOrUpdateAsync(apiVersion, featureName, subscriptionFeatureRegistrationType).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(apiVersion, providerNamespace, featureName, subscriptionFeatureRegistrationType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -90,6 +99,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
+            /// <param name='providerNamespace'>
+            /// The provider namespace.
+            /// </param>
             /// <param name='featureName'>
             /// The feature name.
             /// </param>
@@ -99,9 +111,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionFeatureRegistration> CreateOrUpdateAsync(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string featureName, SubscriptionFeatureRegistration subscriptionFeatureRegistrationType = default(SubscriptionFeatureRegistration), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionFeatureRegistration> CreateOrUpdateAsync(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string providerNamespace, string featureName, SubscriptionFeatureRegistration subscriptionFeatureRegistrationType = default(SubscriptionFeatureRegistration), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(apiVersion, featureName, subscriptionFeatureRegistrationType, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(apiVersion, providerNamespace, featureName, subscriptionFeatureRegistrationType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -116,12 +128,15 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
+            /// <param name='providerNamespace'>
+            /// The provider namespace.
+            /// </param>
             /// <param name='featureName'>
             /// The feature name.
             /// </param>
-            public static void Delete(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string featureName)
+            public static void Delete(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string providerNamespace, string featureName)
             {
-                operations.DeleteAsync(apiVersion, featureName).GetAwaiter().GetResult();
+                operations.DeleteAsync(apiVersion, providerNamespace, featureName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -133,15 +148,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
+            /// <param name='providerNamespace'>
+            /// The provider namespace.
+            /// </param>
             /// <param name='featureName'>
             /// The feature name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string featureName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string providerNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(apiVersion, featureName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(apiVersion, providerNamespace, featureName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -154,9 +172,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
-            public static IPage<SubscriptionFeatureRegistration> ListBySubscription(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion)
+            /// <param name='providerNamespace'>
+            /// The provider namespace.
+            /// </param>
+            public static IPage<SubscriptionFeatureRegistration> ListBySubscription(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string providerNamespace)
             {
-                return operations.ListBySubscriptionAsync(apiVersion).GetAwaiter().GetResult();
+                return operations.ListBySubscriptionAsync(apiVersion, providerNamespace).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -168,13 +189,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
+            /// </param>
+            /// <param name='providerNamespace'>
+            /// The provider namespace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SubscriptionFeatureRegistration>> ListBySubscriptionAsync(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SubscriptionFeatureRegistration>> ListBySubscriptionAsync(this ISubscriptionFeatureRegistrationsOperations operations, string apiVersion, string providerNamespace, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(apiVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(apiVersion, providerNamespace, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

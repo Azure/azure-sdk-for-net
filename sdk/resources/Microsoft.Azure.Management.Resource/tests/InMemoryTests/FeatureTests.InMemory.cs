@@ -146,14 +146,10 @@ namespace ResourceGroups.Tests
             var client = GetFeatureClient(handler);
             
             string resourceProviderNamespace = "Providers.Test";
-
-            client.ProviderNamespace = resourceProviderNamespace;
-
             string featureName = "DONOTDELETEBETA";
-
             string apiVersion = "2021-07-01";
 
-            var registerResult = client.SubscriptionFeatureRegistrations.CreateOrUpdate(featureName: featureName, apiVersion: apiVersion);
+            var registerResult = client.SubscriptionFeatureRegistrations.CreateOrUpdate(providerNamespace: resourceProviderNamespace, featureName: featureName, apiVersion: apiVersion);
 
             // Validate headers 
             Assert.Equal(HttpMethod.Put, handler.Method);
@@ -187,14 +183,10 @@ namespace ResourceGroups.Tests
             var client = GetFeatureClient(handler);
 
             string resourceProviderNamespace = "Providers.Test";
-
-            client.ProviderNamespace = resourceProviderNamespace;
-
             string featureName = "DONOTDELETEBETA";
-
             string apiVersion = "2021-07-01";
 
-            client.SubscriptionFeatureRegistrations.Delete(featureName: featureName, apiVersion: apiVersion);
+            client.SubscriptionFeatureRegistrations.Delete(providerNamespace: resourceProviderNamespace, featureName: featureName, apiVersion: apiVersion);
 
             // Validate headers 
             Assert.Equal(HttpMethod.Delete, handler.Method);

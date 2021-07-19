@@ -51,11 +51,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The provider namespace.
-        /// </summary>
-        public string ProviderNamespace { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
