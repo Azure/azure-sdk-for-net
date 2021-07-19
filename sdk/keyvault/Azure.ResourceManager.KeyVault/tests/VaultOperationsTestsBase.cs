@@ -32,10 +32,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public Guid TenantIdGuid { get; internal set; }
         public string VaultName { get; internal set; }
         public VaultProperties VaultProperties { get; internal set; }
+        public ManagedHsmProperties ManagedHsmProperties { get; internal set; }
 
         public VaultOperations VaultOperations { get; set; }
         public VaultContainer VaultContainer { get; set; }
         public DeletedVaultContainer DeletedVaultContainer { get; set; }
+        public ManagedHsmContainer ManagedHsmContainer { get; set; }
+        public ManagedHsmOperations ManagedHsmOperations { get; set; }
         public ResourceGroup ResourceGroup { get; set; }
         public ProvidersOperations ResourceProvidersClient { get; set; }
 
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 }
             }
             var provider = (await ResourceProvidersClient.GetAsync("Microsoft.KeyVault")).Value;
-            this.Location = provider.ResourceTypes.Where(
+            Location = provider.ResourceTypes.Where(
                 (resType) =>
                 {
                     if (resType.ResourceType == "vaults")
@@ -112,6 +115,26 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 }
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);
+
+            ManagedHsmContainer = ResourceGroup.GetManagedHsms();
+            ManagedHsmProperties = new ManagedHsmProperties();
+            ManagedHsmProperties.InitialAdminObjectIds.Add(ObjectId);
+            ManagedHsmProperties.CreateMode = CreateMode.Default;
+            ManagedHsmProperties.EnablePurgeProtection = true;
+            ManagedHsmProperties.EnableSoftDelete = true;
+            ManagedHsmProperties.NetworkAcls = new MhsmNetworkRuleSet()
+            {
+                Bypass = "AzureServices",
+                DefaultAction = "Allow",
+                IpRules =
+                {
+                    new MhsmipRule("1.2.3.4/32"),
+                    new MhsmipRule("1.0.0.0/25")
+                }
+            };
+            ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Disabled;
+            ManagedHsmProperties.SoftDeleteRetentionInDays = 10;
+            ManagedHsmProperties.TenantId = TenantIdGuid;
         }
     }
 }

@@ -52,6 +52,25 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.NotNull(deletedVault.Id);
             return true;
         }
+
+        public static bool IsEqual(this ManagedHsmData vault1, ManagedHsmData vault2)
+        {
+            Assert.AreEqual(vault2.Location, vault1.Location);
+            Assert.AreEqual(vault2.Name, vault1.Name);
+            Assert.AreEqual(vault2.Id, vault1.Id);
+            Assert.True(vault2.Tags.DictionaryEqual(vault1.Tags));
+
+            Assert.AreEqual(vault2.Properties.VaultUri.TrimEnd('/'), vault1.Properties.VaultUri.TrimEnd('/'));
+            Assert.AreEqual(vault2.Properties.TenantId, vault1.Properties.TenantId);
+            Assert.AreEqual(vault2.Properties.Sku.Name, vault1.Properties.Sku.Name);
+            Assert.AreEqual(vault2.Properties.EnableSoftDelete, vault1.Properties.EnableSoftDelete);
+            Assert.AreEqual(vault2.Properties.EnabledForTemplateDeployment, vault1.Properties.EnabledForTemplateDeployment);
+            Assert.AreEqual(vault2.Properties.EnabledForDiskEncryption, vault1.Properties.EnabledForDiskEncryption);
+            Assert.AreEqual(vault2.Properties.EnabledForDeployment, vault1.Properties.EnabledForDeployment);
+            Assert.True(vault2.Properties.AccessPolicies.IsEqual(vault1.Properties.AccessPolicies));
+            return true;
+        }
+
         public static bool IsEqual(this VaultData vault1, VaultData vault2)
         {
             Assert.AreEqual(vault2.Location, vault1.Location);
