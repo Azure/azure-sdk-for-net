@@ -4,19 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using Xunit;
-
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
-using OpenTelemetry;
-using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
 {
     public class TelemetryPartATests
     {
-        private const string ResourcePropertyName = "OTel.Resource";
         private const string ActivitySourceName = "TelemetryPartATests";
         private const string ActivityName = "TestActivity";
 
