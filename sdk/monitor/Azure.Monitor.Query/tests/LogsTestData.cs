@@ -44,6 +44,7 @@ namespace Azure.Monitor.Query.Tests
 
         private readonly MonitorQueryClientTestEnvironment _testEnvironment;
         private static Task _initialization;
+        private static object _initializationLock = new object();
 
         public LogsTestData(RecordedTestBase<MonitorQueryClientTestEnvironment> test)
         {
@@ -89,7 +90,7 @@ namespace Azure.Monitor.Query.Tests
                 return;
             }
 
-            lock (this)
+            lock (_initializationLock)
             {
                 _initialization ??= Task.WhenAll(
                     InitializeData(_testEnvironment.WorkspaceId, _testEnvironment.WorkspaceKey),
