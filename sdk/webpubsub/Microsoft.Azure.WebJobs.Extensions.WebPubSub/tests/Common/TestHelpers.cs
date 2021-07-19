@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
     internal static class TestHelpers
     {
-        public static IHost NewHost(Type type, WebPubSubConfigProvider ext = null, Dictionary<string, string> configuration = null, ILoggerProvider loggerProvider = null)
+        public static IHost NewHost(Type type, WebPubSubConfigProvider ext = null, Dictionary<string, string> configuration = null)
         {
             var builder = new HostBuilder()
                 .ConfigureServices(services =>
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
-                    logging.AddProvider(loggerProvider);
+                    logging.AddProvider(new TestLoggerProvider());
                 });
 
             if (configuration != null)
@@ -46,7 +46,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     b.AddInMemoryCollection(configuration);
                 });
             }
-
             return builder.Build();
         }
 

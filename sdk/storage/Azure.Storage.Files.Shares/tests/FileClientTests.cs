@@ -1665,6 +1665,25 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public async Task DownloadAsync_ZeroFile()
+        {
+            // Arrange
+            await using DisposingFile test = await GetTestFileAsync();
+            var fileName = GetNewFileName();
+            var file = test.Directory.GetFileClient(fileName);
+            await file.CreateAsync(0);
+
+            // Act
+            Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync();
+            using var targetStream = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(targetStream);
+
+            // Assert
+            Assert.AreEqual(0, downloadResponse.Value.ContentLength);
+            Assert.AreEqual(0, targetStream.Length);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task DownloadAsync_NoLease()
         {

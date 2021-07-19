@@ -4,7 +4,6 @@
 using FluentAssertions;
 using NUnit.Framework;
 using System;
-using System.Runtime.InteropServices;
 
 namespace Azure.IoT.ModelsRepository.Tests
 {
@@ -30,7 +29,7 @@ namespace Azure.IoT.ModelsRepository.Tests
         [TestCase("dtmi:com:example:Thermostat;1", "\\\\server\\repository", "file://server/repository/dtmi/com/example/thermostat-1.json")]
         public void GetModelUri(string dtmi, string repository, string expectedUri)
         {
-            Uri repositoryUri = new Uri(repository);
+            var repositoryUri = new Uri(repository);
             if (string.IsNullOrEmpty(expectedUri))
             {
                 Action act = () => DtmiConventions.GetModelUri(dtmi, repositoryUri);
@@ -55,9 +54,18 @@ namespace Azure.IoT.ModelsRepository.Tests
         [TestCase("com:example:Thermostat;1", false)]
         [TestCase("", false)]
         [TestCase(null, false)]
-        public void ClientIsValidDtmi(string dtmi, bool expected)
+        public void IsValidDtmi(string dtmi, bool expected)
         {
             DtmiConventions.IsValidDtmi(dtmi).Should().Be(expected);
+        }
+
+        [TestCase("https://localhost/repository/", "https://localhost/repository/metadata.json")]
+        [TestCase("C:\\path\\to\\repository\\", "file:///C:/path/to/repository/metadata.json")]
+        [TestCase("file:///path/to/repository/", "file:///path/to/repository/metadata.json")]
+        public void GetMetadataUri(string repository, string expectedUri)
+        {
+            Uri metadataUri = DtmiConventions.GetMetadataUri(new Uri(repository));
+            metadataUri.AbsoluteUri.Should().Be(expectedUri);
         }
     }
 }

@@ -50,8 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdConfig.Description, Is.Empty);
             Assert.That(createdConfig.CrossMetricsOperator, Is.Null);
             Assert.That(createdConfig.IdsOfHooksToAlert, Is.Not.Null.And.Empty);
-            // https://github.com/Azure/azure-sdk-for-net/issues/22433
-            //Assert.That(createdConfig.DimensionsToSplitAlert.Single(), Is.EqualTo(TempDataFeedDimensionNameA));
+            Assert.That(createdConfig.DimensionsToSplitAlert.Single(), Is.EqualTo(TempDataFeedDimensionNameA));
             Assert.That(createdConfig.MetricAlertConfigurations, Is.Not.Null);
 
             MetricAlertConfiguration createdMetricAlertConfig = createdConfig.MetricAlertConfigurations.Single();

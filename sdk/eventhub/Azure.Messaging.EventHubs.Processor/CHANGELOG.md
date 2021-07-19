@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where partition processing would ignore cancellation when the processor was shutting down or partition ownership changed and continue dispatching events to the handler until the entire batch was complete.  Cancellation will now be properly respected.
+
 ### Other Changes
 
 ## 5.5.0 (2021-07-07)
