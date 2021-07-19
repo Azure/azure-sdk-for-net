@@ -21,7 +21,7 @@ namespace Azure.Monitor.Query.Tests
         {
         }
 
-        [SetUp]
+        [OneTimeSetUp]
         public async Task SetUp()
         {
             _logsTestData = new LogsTestData(this);
