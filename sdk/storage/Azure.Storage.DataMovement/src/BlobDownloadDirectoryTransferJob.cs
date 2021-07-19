@@ -12,17 +12,27 @@ namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Blob Directory Download Transfer Job
+    ///
+    /// TODO: better description
     /// </summary>
     internal class BlobDownloadDirectoryTransferJob : StorageTransferJob
     {
-        private string _localPath;
-
-        // if the upload path is local or will be the destination of the download
-        public string localPath => _localPath;
-
+        /// <summary>
+        /// The source blob where it's contents will be downloaded when the job is performed.
+        /// </summary>
         private BlobDirectoryClient _sourceBlobClient;
 
         public BlobDirectoryClient sourceBlobClient => _sourceBlobClient;
+
+        /// <summary>
+        /// Local Path to store the downloaded contents from the source blob
+        /// </summary>
+        private string _destinationLocalPath;
+
+        /// <summary>
+        /// Gets the local Path to store the downloaded contents from the source blob
+        /// </summary>
+        public string DestinationLocalPath => _destinationLocalPath;
 
         /// <summary>
         /// The <see cref="StorageTransferOptions"/>.
@@ -53,7 +63,7 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
         {
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
-            _localPath = destinationPath;
+            _destinationLocalPath = destinationPath;
             _sourceBlobClient = sourceClient;
             _transferOptions = transferOptions;
             CancellationToken = cancellationToken;
@@ -66,7 +76,7 @@ namespace Azure.Storage.DataMovement
         public override Task CreateTransferTaskAsync()
         {
             // Do only blockblob upload for now for now
-            return _sourceBlobClient.DownloadAsync(_localPath, transferOptions:TransferOptions, cancellationToken:CancellationToken);
+            return _sourceBlobClient.DownloadAsync(_destinationLocalPath, transferOptions:TransferOptions, cancellationToken:CancellationToken);
         }
     }
 }
