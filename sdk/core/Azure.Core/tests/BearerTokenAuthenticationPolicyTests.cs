@@ -19,7 +19,7 @@ namespace Azure.Core.Tests
         public BearerTokenAuthenticationPolicyTests(bool isAsync) : base(isAsync) { }
 
         [Test]
-        public async Task BearerTokenAuthenticationPolicy_UsesTokenProvidedByCredentials ()
+        public async Task BearerTokenAuthenticationPolicy_UsesTokenProvidedByCredentials()
         {
             var credential = new TokenCredentialStub(
                 (r, c) => r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default,
