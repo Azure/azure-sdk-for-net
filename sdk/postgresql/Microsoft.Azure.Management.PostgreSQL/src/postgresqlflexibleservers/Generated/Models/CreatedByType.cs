@@ -12,13 +12,13 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
 {
 
     /// <summary>
-    /// Defines values for CreateMode.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class CreateMode
+    public static class CreatedByType
     {
-        public const string Default = "Default";
-        public const string Create = "Create";
-        public const string Update = "Update";
-        public const string PointInTimeRestore = "PointInTimeRestore";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }
