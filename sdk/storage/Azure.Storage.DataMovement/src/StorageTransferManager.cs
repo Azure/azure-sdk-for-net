@@ -15,7 +15,13 @@ using System.IO;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// TransferManager class
+    /// The <see cref="StorageTransferManager"/> allows you to manipulate
+    /// Azure Storage Block Blobs by queueing up upload and download transfer
+    /// items, manage those operations, track progress and pause and resume
+    /// transfer processes.
+    ///
+    /// TODO: update description to include page blobs, append blobs, SMB Files
+    /// and DataLake Files once added.
     /// </summary>
     public class StorageTransferManager
     {
@@ -33,8 +39,9 @@ namespace Azure.Storage.DataMovement
         // we will have the information on where to continue from.
         private string _transferStateDirectoryPath;
 
-        /// <summary>
-        /// Constructor.
+        ///<summary>
+        /// Initializes a new instance of the <see cref="StorageTransferManager"/>
+        /// class.
         /// </summary>
         /// <param name="transferStateDirectoryPath">Directory path where transfer state is kept.</param>
         public StorageTransferManager(string transferStateDirectoryPath = default)
@@ -45,7 +52,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Add Upload Job to perform
+        /// Add Blob Upload Job to perform
         ///
         /// TODO: Better description and param comments.
         /// </summary>
@@ -74,7 +81,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Add Download Job to perform
+        /// Add Blob Download Job to perform
         ///
         /// TODO: Better description and param comments.
         /// </summary>
@@ -106,7 +113,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Add Upload Directory Job to perform
+        /// Add Upload Blob Directory Job to perform
         ///
         /// TODO: Better description and param comments.
         /// </summary>
@@ -135,7 +142,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Add Download Directory Job to perform
+        /// Add Download Blob Directory Job to perform
         ///
         /// TODO: Better description and param comments.
         /// </summary>
@@ -168,6 +175,9 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// TODO: Replace generated docs
+        ///
+        /// Pauses transfers that are currently being processed.
+        /// Does not allow any other transfer start.
         /// </summary>
         /// <param name="token"></param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -202,17 +212,19 @@ namespace Azure.Storage.DataMovement
             return;
         }
 
-            /// <summary>
-            /// Pause transfers.
-            /// </summary>
-            /// TODO: Returns actual object, or at least in a designated log
-            /// file we have a place where people can continue transfers
-            public static void PauseTransfers()
+        /// <summary>
+        /// Pause transfers.
+        /// </summary>
+        /// TODO: Returns actual object, or at least in a designated log
+        /// file we have a place where people can continue transfers
+        public static void PauseTransfers()
         {
         }
 
         /// <summary>
-        /// Cancel Transfers
+        /// Cancel Transfers that are currently being processed.
+        /// Removes all transfers that are being processed and waiting
+        /// to be performed.
         /// </summary>
         public static void CancelTransfers()
         {
