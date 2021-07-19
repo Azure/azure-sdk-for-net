@@ -127,7 +127,8 @@
           }
         },
         "consumes": [
-          "application/vnd.docker.distribution.manifest.v2+json"
+          "application/vnd.docker.distribution.manifest.v2+json",
+          "application/vnd.oci.image.manifest.v1+json"
         ],
         "operationId": "ContainerRegistry_CreateManifest",
         "parameters": [

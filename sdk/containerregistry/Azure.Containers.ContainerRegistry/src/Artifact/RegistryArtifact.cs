@@ -546,7 +546,8 @@ namespace Azure.Containers.ContainerRegistry
             using (var fs = File.OpenRead(manifestFilePath))
             {
                 string digest = ContentDescriptor.ComputeDigest(fs);
-                response = await _restClient.CreateManifestAsync(_repositoryName, digest, fs, cancellationToken).ConfigureAwait(false);
+                // TODO: take ContentType from Options here
+                response = await _restClient.CreateManifestAsync(_repositoryName, digest, Specialized.ManifestMediaType.DockerManifestV2, fs, cancellationToken).ConfigureAwait(false);
             }
 
             throw new NotImplementedException();

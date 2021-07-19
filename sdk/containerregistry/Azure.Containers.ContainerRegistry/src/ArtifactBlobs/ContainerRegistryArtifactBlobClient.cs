@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 {
     /// <summary>
     /// </summary>
-    public class ContainerRegistryArtifactDataClient
+    public class ContainerRegistryArtifactBlobClient
     {
         private readonly Uri _endpoint;
         private readonly string _registryName;
@@ -35,8 +35,9 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
+        /// <param name="repositoryName"></param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContainerRegistryArtifactDataClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContainerRegistryClientOptions())
+        public ContainerRegistryArtifactBlobClient(Uri endpoint, TokenCredential credential, string repositoryName) : this(endpoint, credential, repositoryName, new ContainerRegistryClientOptions())
         {
         }
 
@@ -47,9 +48,10 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
+        /// <param name="repositoryName"></param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ContainerRegistryArtifactDataClient(Uri endpoint, TokenCredential credential, ContainerRegistryClientOptions options)
+        public ContainerRegistryArtifactBlobClient(Uri endpoint, TokenCredential credential, string repositoryName, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -57,6 +59,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
 
             _endpoint = endpoint;
             _registryName = endpoint.Host.Split('.')[0];
+            _repositoryName = repositoryName;
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
@@ -68,7 +71,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
-        protected ContainerRegistryArtifactDataClient()
+        protected ContainerRegistryArtifactBlobClient()
         {
         }
 
@@ -96,7 +99,7 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             options ??= new UploadManifestOptions();
 
             string digest = ContentDescriptor.ComputeDigest(stream);
-            ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, digest, stream, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ContainerRegistryCreateManifestHeaders> response = await _restClient.CreateManifestAsync(_repositoryName, digest, options.MediaType, stream, cancellationToken).ConfigureAwait(false);
 
             return Response.FromValue(new UploadManifestResult(), response.GetRawResponse());
         }
@@ -174,7 +177,8 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             // TODO: Implement for each of the manifest schemas
             // TODO: internal extensible enum for possible media types?
             // DO we always have media type, or will we need to get this from Content-Type header?
-            if (mediaType == "application/vnd.docker.distribution.manifest.v2+json")
+            if (mediaType == "application/vnd.docker.distribution.manifest.v2+json" ||
+                mediaType == "application/vnd.oci.image.manifest.v1+json")
             {
                 // If has config, add config
                 if (manifest.Config != null)

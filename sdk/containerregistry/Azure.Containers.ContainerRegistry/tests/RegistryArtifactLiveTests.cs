@@ -1,20 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Linq;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
-using Azure.Containers.ContainerRegistry.Specialized;
-using Azure.Identity;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class RegistryArtifactLiveTests : ContainerRegistryRecordedTestBase
     {
         private readonly string _repositoryName = "library/hello-world";
-        //private readonly string _repositoryName = "hello-artifact";
 
         public RegistryArtifactLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
@@ -565,7 +565,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateClient();
             var artifact = client.GetArtifact(repository, digest);
 
-            var uploadClient = new ContainerRegistryArtifactDataClient(new System.Uri("example.azurecr.io"), new DefaultAzureCredential());
+            var uploadClient = new ContainerRegistryArtifactBlobClient(new System.Uri("example.azurecr.io"), new DefaultAzureCredential(), repository);
 
             // Act
             var manifestFilePath = Path.Combine(path, "manifest.json");
@@ -615,7 +615,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var artifact = client.GetArtifact(repository, digest);
             string path = @"C:\temp\acr\test-pull";
 
-            var downloadClient = new ContainerRegistryArtifactDataClient(new System.Uri("example.azurecr.io"), new DefaultAzureCredential());
+            var downloadClient = new ContainerRegistryArtifactBlobClient(new System.Uri("example.azurecr.io"), new DefaultAzureCredential(), repository);
 
             // Act
 
@@ -658,6 +658,79 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             return digest;
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task PushArtifactSample_OciManifest_ByDigest()
+        {
+            // Arrange
+            var repository = "hello-artifact";
+            string path = @"C:\temp\acr\test-oci-push";
+            var uploadClient = new ContainerRegistryArtifactBlobClient(new System.Uri("https://localtestacr1.azurecr.io"), new DefaultAzureCredential(), repository);
+
+            // Act
+            var manifestFilePath = Path.Combine(path, "manifest.json");
+            foreach (var file in Directory.GetFiles(path))
+            {
+                using (var fs = File.OpenRead(file))
+                {
+                    if (file == manifestFilePath)
+                    {
+                        await uploadClient.UploadManifestAsync(fs,
+                            new UploadManifestOptions(ManifestMediaType.OciManifestV1)
+                        );
+                    }
+                    else
+                    {
+                        await uploadClient.UploadBlobAsync(fs);
+                    }
+                }
+            }
+
+            // Assert
+            // TODO
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task PullArtifactSample_OciManifest_ByDigest()
+        {
+            // Arrange
+            var repository = "hello-artifact";
+            var digest = "sha256:93e3c343e7349896ef530398fbd8df49f359c6a479960b35aad2c7377790121d";
+            string path = @"C:\temp\acr\test-oci-pull";
+
+            var downloadClient = new ContainerRegistryArtifactBlobClient(
+                new Uri("https://localtestacr1.azurecr.io"),
+                new DefaultAzureCredential(),
+                repository);
+
+            // Act
+
+            // Get Manifest
+            var manifestResult = await downloadClient.DownloadManifestAsync(digest);
+            DownloadManifestResult manifest = manifestResult.Value;
+
+            // Write manifest to file
+            Directory.CreateDirectory(path);
+            string manifestFile = Path.Combine(path, "manifest.json");
+            using (FileStream fs = File.Create(manifestFile))
+            {
+                Stream stream = manifestResult.Value.Content;
+                await stream.CopyToAsync(fs).ConfigureAwait(false);
+            }
+
+            // Write Config and Layers
+            foreach (var artifactFile in manifestResult.Value.ArtifactFiles)
+            {
+                string fileName = Path.Combine(path, artifactFile.FileName ?? TrimSha(artifactFile.Digest));
+
+                using (FileStream fs = File.Create(fileName))
+                {
+                    var layerResult = await downloadClient.DownloadBlobAsync(artifactFile.Digest);
+                    Stream stream = layerResult.Value.Content;
+                    await stream.CopyToAsync(fs).ConfigureAwait(false);
+                }
+            }
         }
 
         #endregion
