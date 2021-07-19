@@ -20,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of AcrManifests. </summary>
-        /// <param name="registryLoginServer"> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </param>
+        /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="manifests"> List of manifests. </param>
         /// <param name="link"> . </param>
@@ -32,7 +32,7 @@ namespace Azure.Containers.ContainerRegistry
             Link = link;
         }
 
-        /// <summary> Registry login server name.  This is likely to be similar to {registry-name}.azurecr.io. </summary>
+        /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>
         public string RegistryLoginServer { get; }
         /// <summary> Image name. </summary>
         public string Repository { get; }

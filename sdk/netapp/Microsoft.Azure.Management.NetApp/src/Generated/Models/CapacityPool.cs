@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="utilizedThroughputMibps">Utilized throughput of pool
         /// in Mibps</param>
         /// <param name="qosType">qosType</param>
-        public CapacityPool(string location, long size, string serviceLevel, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string poolId = default(string), string provisioningState = default(string), double? totalThroughputMibps = default(double?), double? utilizedThroughputMibps = default(double?), string qosType = default(string))
+        /// <param name="coolAccess">If enabled (true) the pool can contain
+        /// cool Access enabled volumes.</param>
+        public CapacityPool(string location, long size, string serviceLevel, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string poolId = default(string), string provisioningState = default(string), double? totalThroughputMibps = default(double?), double? utilizedThroughputMibps = default(double?), string qosType = default(string), bool? coolAccess = default(bool?))
         {
             Location = location;
             Id = id;
@@ -63,6 +65,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             TotalThroughputMibps = totalThroughputMibps;
             UtilizedThroughputMibps = utilizedThroughputMibps;
             QosType = qosType;
+            CoolAccess = coolAccess;
             CustomInit();
         }
 
@@ -156,6 +159,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.qosType")]
         public string QosType { get; set; }
+
+        /// <summary>
+        /// Gets or sets if enabled (true) the pool can contain cool Access
+        /// enabled volumes.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.coolAccess")]
+        public bool? CoolAccess { get; set; }
 
         /// <summary>
         /// Validate the object.
