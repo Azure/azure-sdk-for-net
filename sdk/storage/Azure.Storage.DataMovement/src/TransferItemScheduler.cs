@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement
                 // Create Task from given job type
                 // TODO: remove this and call the according job type to create the task
                 // Add Task
-                runningTasks.Add(currentJob.CreateTransferTaskAsync());
+                runningTasks.Add(currentJob.StartTransferTaskAsync());
 
                 // If we run out of workers
                 if (runningTasks.Count >= _maxWorkerCount)

@@ -37,11 +37,11 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The <see cref="StorageTransferOptions"/>.
         /// </summary>
-        internal StorageTransferOptions _transferOptions;
+        internal BlobDirectoryDownloadOptions _options;
         /// <summary>
         /// Gets the <see cref="StorageTransferOptions"/>.
         /// </summary>
-        public StorageTransferOptions TransferOptions => _transferOptions;
+        public BlobDirectoryDownloadOptions options => _options;
 
         // this is if we decide to prescan everything instead of
         // scanning right before upload/downloading
@@ -52,20 +52,18 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="sourceClient"></param>
         /// <param name="destinationPath"></param>
-        /// <param name="transferOptions"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         public BlobDownloadDirectoryTransferJob(
             BlobDirectoryClient sourceClient,
             string destinationPath,
-            StorageTransferOptions transferOptions,
-            //TODO: make options bag to include progress tracker
-            //IProgress<StorageTransferStatus> progressTracker,
+            BlobDirectoryDownloadOptions options,
             CancellationToken cancellationToken)
         {
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
             _destinationLocalPath = destinationPath;
             _sourceBlobClient = sourceClient;
-            _transferOptions = transferOptions;
+            _options = options;
             CancellationToken = cancellationToken;
         }
 
@@ -73,10 +71,10 @@ namespace Azure.Storage.DataMovement
         /// Create next TransferItem/Task to be processed.
         /// </summary>
         /// <returns>The Task to perform the Upload operation.</returns>
-        public override Task CreateTransferTaskAsync()
+        public override Task StartTransferTaskAsync()
         {
             // Do only blockblob upload for now for now
-            return _sourceBlobClient.DownloadAsync(_destinationLocalPath, transferOptions:TransferOptions, cancellationToken:CancellationToken);
+            return _sourceBlobClient.DownloadAsync(_destinationLocalPath, options:options, cancellationToken:CancellationToken);
         }
     }
 }
