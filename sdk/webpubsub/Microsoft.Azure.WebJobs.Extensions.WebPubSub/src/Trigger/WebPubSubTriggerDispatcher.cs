@@ -10,7 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             CancellationToken token = default)
         {
             // Handle service abuse check.
-            if (RespondToServiceAbuseCheck(req, allowedHosts, out var abuseResponse))
+            if (Utilities.RespondToServiceAbuseCheck(req, allowedHosts, out var abuseResponse))
             {
                 return abuseResponse;
             }
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
 
-            if (!ValidateSignature(context.ConnectionId, context.Signature, accessKeys))
+            if (!Utilities.ValidateSignature(context.ConnectionId, context.Signature, accessKeys))
             {
                 return new HttpResponseMessage(HttpStatusCode.Unauthorized);
             }
@@ -86,16 +86,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             certificates = request.ClientCertificates;
                             break;
                         }
-                    case RequestType.Disconnect:
+                    case RequestType.Disconnected:
                         {
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            var request = JsonConvert.DeserializeObject<DisconnectEventRequest>(content);
+                            var request = JsonConvert.DeserializeObject<DisconnectedEventRequest>(content);
                             reason = request.Reason;
                             break;
                         }
                     case RequestType.User:
                         {
-                            if (!ValidateContentType(req.Content.Headers.ContentType.MediaType, out dataType))
+                            if (!Utilities.ValidateMediaType(req.Content.Headers.ContentType.MediaType, out dataType))
                             {
                                 return new HttpResponseMessage(HttpStatusCode.BadRequest)
                                 {
@@ -197,71 +197,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return true;
         }
 
-        private static bool ValidateSignature(string connectionId, string signature, HashSet<string> accessKeys)
-        {
-            foreach (var accessKey in accessKeys)
-            {
-                var signatures = Utilities.GetSignatureList(signature);
-                if (signatures == null)
-                {
-                    continue;
-                }
-                using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
-                var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionId));
-                var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
-                if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            return false;
-        }
-
-        private static bool ValidateContentType(string mediaType, out MessageDataType dataType)
-        {
-            try
-            {
-                dataType = Utilities.GetDataType(mediaType);
-                return true;
-            }
-            catch (Exception)
-            {
-                dataType = MessageDataType.Binary;
-                return false;
-            }
-        }
-
         private static string GetFunctionName(ConnectionContext context)
         {
             return $"{context.Hub}.{context.EventType}.{context.EventName}";
-        }
-
-        private static bool RespondToServiceAbuseCheck(HttpRequestMessage req, HashSet<string> allowedHosts, out HttpResponseMessage response)
-        {
-            response = new HttpResponseMessage();
-            // TODO: remove Get when function core is fully supported and AWPS service is updated.
-            if (req.Method == HttpMethod.Options || req.Method == HttpMethod.Get)
-            {
-                var hosts = req.Headers.GetValues(Constants.Headers.WebHookRequestOrigin);
-                if (hosts != null && hosts.Any())
-                {
-                    foreach (var item in allowedHosts)
-                    {
-                        if (hosts.Contains(item))
-                        {
-                            response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, hosts);
-                            return true;
-                        }
-                    }
-                    response.StatusCode = HttpStatusCode.BadRequest;
-                }
-                return true;
-            }
-            return false;
         }
 
         private static bool TryConvertResponse<T>(JObject item, out T response)

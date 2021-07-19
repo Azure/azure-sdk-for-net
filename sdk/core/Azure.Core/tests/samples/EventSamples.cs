@@ -2,46 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using NUnit.Framework;
 
 namespace Azure.Core.Samples
 {
     public class EventSamples
     {
-        public class AlarmClientOptions : ClientOptions { }
-
-        public class AlarmClient
-        {
-            private ClientDiagnostics _clientDiagnostics = new ClientDiagnostics(new AlarmClientOptions());
-
-            public event SyncAsyncEventHandler<SyncAsyncEventArgs> Ring;
-
-            public void Snooze(CancellationToken cancellationToken = default) =>
-                SnoozeInternal(true, cancellationToken).GetAwaiter().GetResult();
-
-            public async Task SnoozeAsync(CancellationToken cancellationToken = default) =>
-                await SnoozeInternal(false, cancellationToken).ConfigureAwait(false);
-
-            protected virtual async Task SnoozeInternal(bool isRunningSynchronously, CancellationToken cancellationToken)
-            {
-                // Why does snoozing an alarm always wait 9 minutes?
-                TimeSpan delay = TimeSpan.FromMilliseconds(900);
-                if (isRunningSynchronously)
-                {
-                    cancellationToken.WaitHandle.WaitOne(delay);
-                }
-                else
-                {
-                    await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
-                }
-                SyncAsyncEventArgs e = new SyncAsyncEventArgs(isRunningSynchronously, cancellationToken);
-                await Ring.RaiseAsync(e, nameof(AlarmClient), nameof(Ring), _clientDiagnostics).ConfigureAwait(false);
-            }
-        }
-
         [Test]
         public void SyncHandler()
         {

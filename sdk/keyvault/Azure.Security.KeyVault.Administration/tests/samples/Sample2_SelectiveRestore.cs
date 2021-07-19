@@ -11,8 +11,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
 {
     public class Sample2_SelectiveRestore : BackupRestoreTestBase
     {
-        public Sample2_SelectiveRestore(bool isAsync)
-            : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
+        public Sample2_SelectiveRestore(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [RecordedTest]

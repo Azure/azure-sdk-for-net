@@ -113,6 +113,10 @@
 # ServiceLabel: %Cloud Shell %Service Attention
 #/<NotInRepo>/            @maertendMSFT
 
+# PRLabel: %Cognitive - Language
+# ServiceLabel: %Cognitive - Language %Service Attention
+/sdk/cognitivelanguage/                         @heaths @rokulka
+
 # ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
 /sdk/cognitiveservices/AnomalyDetector/            @yingqunpku @bowgong
 
@@ -270,11 +274,11 @@
 
 # PRLabel: %Digital Twins
 # ServiceLabel: %Digital Twins %Service Attention
-/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
+/sdk/digitaltwins/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @barustum @jamdavi
 
 # PRLabel: %IoT Models Repository
 # ServiceLabel: %IoT Models Repository %Service Attention
-/sdk/modelsrepository/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi @digimaun
+/sdk/modelsrepository/                              @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @barustum @jamdavi @digimaun
 
 # PRLabel: %TimeSeriesInsights
 # ServiceLabel: %TimeSeriesInsights %Service Attention
@@ -321,7 +325,7 @@
 #/<NotInRepo>/            @madhurinms
 
 # PRLabel: %Iot
-/sdk/iot/                               @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
+/sdk/iot/                               @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @barustum @jamdavi
 
 # ServiceLabel: %IotCentral %Service Attention
 /sdk/iotcentral/Microsoft.Azure.Management.IotCentral/           @iluican @jlian
@@ -331,7 +335,7 @@
 
 # PRLabel: %IotHub
 # ServiceLabel: %IotHub %Service Attention
-/sdk/iothub/                            @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @bikamani @barustum @jamdavi
+/sdk/iothub/                            @drwill-ms @timtay-microsoft @abhipsaMisra @vinagesh @azabbasi @barustum @jamdavi
 
 # ServiceLabel: %IotHub %Service Attention
 /sdk/iothub/Microsoft.Azure.Management.IotHub/            @rkmanda @chieftn
@@ -648,7 +652,10 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 
 # ######## Eng Sys ######## 
-/eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
+/eng/           @weshaggard @chidozieononiwu @danieljurek
 /eng/mgmt/      @allenjzhang @m-nash @markcowl
 /**/tests.yml   @benbp
-/**/ci.yml      @mitchdenny
+/**/ci.yml      @chidozieononiwu
+
+# Add owners for notifications for specific pipelines
+/eng/pipelines/aggregate-reports.yml            @AlexGhiondea @maririos

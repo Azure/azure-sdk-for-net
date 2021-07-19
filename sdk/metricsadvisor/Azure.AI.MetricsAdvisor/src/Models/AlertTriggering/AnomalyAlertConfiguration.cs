@@ -10,8 +10,18 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Defines the set of rules that must be satisfied by an anomaly before it can trigger an alert.
+    /// Detected anomalies won't trigger alerts by default, so an <see cref="AnomalyAlertConfiguration"/> must be
+    /// created if you want to be notified when an anomaly is detected. This configuration is applied to every set
+    /// of anomalies detected after a <see cref="DataFeed"/> ingestion, applying rules that select which of them
+    /// to include in the final alert.
     /// </summary>
+    /// <remarks>
+    /// In order to create an anomaly alert configuration, you must set up the property <see cref="Name"/> and
+    /// have at least one element in <see cref="MetricAlertConfigurations"/>, and pass this instance to the method
+    /// <see cref="MetricsAdvisorAdministrationClient.CreateAlertConfigurationAsync"/>. Note that, even if alerts are
+    /// triggered, you won't be notified about them unless you create a <see cref="NotificationHook"/> and pass its ID
+    /// to <see cref="IdsOfHooksToAlert"/>.
+    /// </remarks>
     [CodeGenModel("AnomalyAlertingConfiguration")]
     [CodeGenSuppress(nameof(AnomalyAlertConfiguration), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<MetricAlertConfiguration>))]
     public partial class AnomalyAlertConfiguration
@@ -23,48 +33,65 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             IdsOfHooksToAlert = new ChangeTrackingList<string>();
             MetricAlertConfigurations = new ChangeTrackingList<MetricAlertConfiguration>();
-            SplitAlertByDimensions = new ChangeTrackingList<string>();
+            DimensionsToSplitAlert = new ChangeTrackingList<string>();
         }
 
         /// <summary>
-        /// The unique identifier of this <see cref="AnomalyAlertConfiguration"/>. Set by the service.
+        /// The unique identifier of this <see cref="AnomalyAlertConfiguration"/>.
         /// </summary>
+        /// <remarks>
+        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. This property
+        /// will be set by the service after creation.
+        /// </remarks>
         [CodeGenMember("AnomalyAlertingConfigurationId")]
         public string Id { get; }
 
         /// <summary>
         /// A custom name for this <see cref="AnomalyAlertConfiguration"/> to be displayed on fired alerts.
+        /// Alert configuration names must be unique for the same data feed.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// The unique identifiers of the <see cref="NotificationHook"/>s that must be notified when an alert is
-        /// detected by this configuration.
+        /// The unique identifiers of the <see cref="NotificationHook"/>s to be notified when an alert is
+        /// fired by this configuration.
         /// </summary>
         [CodeGenMember("HookIds")]
         public IList<string> IdsOfHooksToAlert { get; }
 
         /// <summary>
-        /// The configurations that define which anomalies are eligible for triggering an alert.
+        /// The configurations that specify a set of rules a detected anomaly must satisfy to be included in
+        /// an alert.
         /// </summary>
+        /// <remarks>
+        /// If you're using at least two metric alert configurations, you need to set the property
+        /// <see cref="CrossMetricsOperator"/>.
+        /// </remarks>
         [CodeGenMember("MetricAlertingConfigurations")]
         public IList<MetricAlertConfiguration> MetricAlertConfigurations { get; }
 
         /// <summary>
-        /// The operator to be applied between <see cref="MetricAlertConfiguration"/>s in this
-        /// <see cref="AnomalyAlertConfiguration"/> instance. This property must be set if more than one
-        /// configuration is defined in <see cref="MetricAlertConfigurations"/>.
+        /// The operator to be applied between <see cref="MetricAlertConfiguration"/>s in this instance.
+        /// This property must be set if at least two configurations are defined in <see cref="MetricAlertConfigurations"/>.
         /// </summary>
-        [CodeGenMember("CrossMetricsOperator")]
-        public DetectionConditionOperator? ConditionOperator { get; set; }
+        public MetricAlertConfigurationsOperator? CrossMetricsOperator { get; set; }
 
         /// <summary>
-        /// A description of the <see cref="AnomalyAlertConfiguration"/>.
+        /// A description of this <see cref="AnomalyAlertConfiguration"/>. Defaults to an empty string.
         /// </summary>
+        /// <remarks>
+        /// If set to null during an update operation, this property is set to its default value.
+        /// </remarks>
         public string Description { get; set; }
 
-        // TODO: expose it as part of 1.0.0-beta.4
-        internal IList<string> SplitAlertByDimensions { get; }
+        /// <summary>
+        /// By default, a set of ingested data points can only trigger a single alert, regardless of
+        /// how many anomalies it contains. This property allows this alert to be split into multiple ones.
+        /// Each element in this list must hold a dimension name, and a separate alert is fired for every
+        /// specified dimension. The dimensions not specified in this list will be grouped in a single alert.
+        /// </summary>
+        [CodeGenMember("SplitAlertByDimensions")]
+        public IList<string> DimensionsToSplitAlert { get; }
 
         /// <summary>
         /// Create a patch model from the current <see cref="AnomalyAlertConfiguration"/>
@@ -74,11 +101,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             return new AnomalyAlertingConfigurationPatch()
             {
-                CrossMetricsOperator = ConditionOperator,
+                CrossMetricsOperator = CrossMetricsOperator,
                 Description = Description,
                 Name = Name,
                 HookIds = IdsOfHooksToAlert.Select(h => new Guid(h)).ToList(),
-                MetricAlertingConfigurations = MetricAlertConfigurations
+                MetricAlertingConfigurations = MetricAlertConfigurations,
+                SplitAlertByDimensions = DimensionsToSplitAlert
             };
         }
     }

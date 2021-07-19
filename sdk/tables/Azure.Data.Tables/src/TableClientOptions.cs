@@ -44,7 +44,7 @@ namespace Azure.Data.Tables
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The Tables API version 20019-02-02
+            /// The Tables API version 2019-02-02
             /// </summary>
             V2019_02_02 = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
