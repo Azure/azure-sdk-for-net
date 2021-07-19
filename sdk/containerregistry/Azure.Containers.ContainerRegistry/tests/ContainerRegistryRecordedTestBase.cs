@@ -27,18 +27,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
 
-        private readonly Dictionary<string, string> _nationalCloudIgnoreTests = new()
-        {
-            { "GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints." },
-            { "GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints." },
-            { "GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints." },
-            { "ValidateSasCredentialsWithRowKeyAndPartitionKeyRanges", "Shared access signature with PartitionKey or RowKey are not supported" },
-            { "ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported" },
-            { "ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported" },
-            { "ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported" },
-            { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" }
-        };
-
         public ContainerRegistryClient CreateClient(bool anonymousAccess = false)
         {
             return anonymousAccess ? CreateAnonymousClient() : CreateAuthenticatedClient();
@@ -130,13 +118,21 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public void ContainerRegistryTestSetup()
         {
             string endpoint = TestEnvironment.Endpoint;
-            if (GetAuthorityHost(endpoint) != AzureAuthorityHosts.AzurePublicCloud /*&& anonymous*/)
+            if (GetAuthorityHost(endpoint) != AzureAuthorityHosts.AzurePublicCloud && UsingAnonymousClient())
             {
-                TestContext context = TestContext.CurrentContext;
-                //bool anonymous = TestContext.CurrentContext.Test.Arguments?.Where(arg => arg.ToString() == "anonymous").FirstOrDefault();
-
                 Assert.Ignore("Anonymous client is not enabled in national clouds.");
             }
+        }
+
+        private bool UsingAnonymousClient()
+        {
+            var args = TestContext.CurrentContext.Test.Arguments;
+            if (args != null && args.Length > 0 && args[0].GetType() == typeof(bool))
+            {
+                return (bool)args[0];
+            }
+
+            return false;
         }
 
         #region Methods using Track 1 Management Plane library
