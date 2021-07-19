@@ -118,7 +118,7 @@ namespace Azure.Identity
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScopeGroup("DefaultAzureCredential.GetToken", requestContext);
-
+            TokenCredential credential = null;
             try
             {
                 using var asyncLock = await _credentialLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
@@ -126,11 +126,11 @@ namespace Azure.Identity
                 AccessToken token;
                 if (asyncLock.HasValue)
                 {
-                    token = await GetTokenFromCredentialAsync(asyncLock.Value, requestContext, async, cancellationToken).ConfigureAwait(false);
+                    credential = asyncLock.Value;
+                    token = await GetTokenFromCredentialAsync(credential, requestContext, async, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    TokenCredential credential;
                     (token, credential) = await GetTokenFromSourcesAsync(_sources, requestContext, async, cancellationToken).ConfigureAwait(false);
                     _sources = default;
                     asyncLock.SetValue(credential);
@@ -140,7 +140,11 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-               throw scope.FailWrapAndThrow(e);
+                if (credential != null)
+                {
+                    e.Data.Add("SelectedCredential", credential.GetType().FullName);
+                }
+                throw scope.FailWrapAndThrow(e);
             }
         }
 
@@ -175,6 +179,11 @@ namespace Azure.Identity
                 catch (CredentialUnavailableException e)
                 {
                     exceptions.Add(e);
+                }
+                catch (Exception e)
+                {
+                    e.Data.Add("SelectedCredential", sources[i].GetType().FullName);
+                    throw;
                 }
             }
 
