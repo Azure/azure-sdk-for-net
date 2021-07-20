@@ -72,6 +72,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IBackupResourceStorageConfigsNonCRROperations.
+        /// </summary>
+        public virtual IBackupResourceStorageConfigsNonCRROperations BackupResourceStorageConfigsNonCRR { get; private set; }
+
+        /// <summary>
         /// Gets the IProtectionIntentOperations.
         /// </summary>
         public virtual IProtectionIntentOperations ProtectionIntent { get; private set; }
@@ -572,6 +577,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         private void Initialize()
         {
+            BackupResourceStorageConfigsNonCRR = new BackupResourceStorageConfigsNonCRROperations(this);
             ProtectionIntent = new ProtectionIntentOperations(this);
             BackupStatus = new BackupStatusOperations(this);
             FeatureSupport = new FeatureSupportOperations(this);
@@ -749,7 +755,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1035,7 +1041,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 parameters.Validate();
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1222,7 +1228,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 parameters.Validate();
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1429,7 +1435,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

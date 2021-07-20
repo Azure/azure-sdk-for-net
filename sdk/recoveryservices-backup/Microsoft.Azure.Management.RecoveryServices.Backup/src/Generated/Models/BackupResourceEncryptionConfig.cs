@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="subscriptionId">Key Vault Subscription Id</param>
         /// <param name="lastUpdateStatus">Possible values include: 'Invalid',
         /// 'NotEnabled', 'PartiallySucceeded', 'PartiallyFailed', 'Failed',
-        /// 'Succeeded'</param>
+        /// 'Succeeded', 'Initialized', 'FirstInitialization'</param>
         /// <param name="infrastructureEncryptionState">Possible values
         /// include: 'Invalid', 'Disabled', 'Enabled'</param>
         public BackupResourceEncryptionConfig(string encryptionAtRestType = default(string), string keyUri = default(string), string subscriptionId = default(string), string lastUpdateStatus = default(string), string infrastructureEncryptionState = default(string))
@@ -74,7 +74,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets possible values include: 'Invalid', 'NotEnabled',
-        /// 'PartiallySucceeded', 'PartiallyFailed', 'Failed', 'Succeeded'
+        /// 'PartiallySucceeded', 'PartiallyFailed', 'Failed', 'Succeeded',
+        /// 'Initialized', 'FirstInitialization'
         /// </summary>
         [JsonProperty(PropertyName = "lastUpdateStatus")]
         public string LastUpdateStatus { get; set; }
