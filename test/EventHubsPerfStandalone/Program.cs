@@ -4,6 +4,7 @@ using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -40,25 +41,50 @@ namespace EventHubsPerfStandalone
 
             var printStatusThread = new Thread(() =>
             {
+                var lastResults = new Dictionary<string, int>();
+                var lastElapsedSeconds = (double) 0;
+                var lastTotalEvents = 0;
+
                 while (true)
                 {
                     var elapsedSeconds = sw.Elapsed.TotalSeconds;
+                    var recentElapsedSeconds = elapsedSeconds - lastElapsedSeconds;
                     var totalEvents = 0;
 
                     foreach (var kvp in _eventsProcessed.OrderBy(kvp => int.Parse(kvp.Key)))
                     {
+                        if (!lastResults.TryGetValue(kvp.Key, out var lastEvents))
+                        {
+                            lastEvents = 0;
+                            lastResults[kvp.Key] = lastEvents;
+                        }
+
                         var events = kvp.Value.Value;
                         totalEvents += events;
 
-                        var eventsPerSecond = kvp.Value.Value / elapsedSeconds;
+                        var recentEvents = events - lastEvents;
 
-                        Console.WriteLine($"{kvp.Key}: {events} ({eventsPerSecond:N2} events/sec)");
+                        var eventsPerSecond = kvp.Value.Value / elapsedSeconds;
+                        var recentEventsPerSecond = recentEvents / recentElapsedSeconds;
+
+                        Console.WriteLine($"[{kvp.Key}] Recent: {recentEvents} ({recentEventsPerSecond:N2} events/sec), " +
+                            $"Total: {events} ({eventsPerSecond:N2} events/sec)");
+
+                        lastResults[kvp.Key] = events;
                     }
 
+                    var recentTotalEvents = totalEvents - lastTotalEvents;
+
+                    var recentTotalEventsPerSecond = recentTotalEvents / recentElapsedSeconds;
                     var totalEventsPerSecond = totalEvents / elapsedSeconds;
 
-                    Console.WriteLine($"Total: {totalEvents} ({totalEventsPerSecond:N2} events/sec)");
+                    Console.WriteLine($"Recent: {recentTotalEvents} ({recentTotalEventsPerSecond:N2} events/sec), " +
+                        $"Total: {totalEvents} ({totalEventsPerSecond:N2} events/sec)");
                     Console.WriteLine();
+
+                    lastElapsedSeconds = elapsedSeconds;
+                    lastTotalEvents = totalEvents;
+
                     Thread.Sleep(1000);
                 }
             });
@@ -87,7 +113,7 @@ namespace EventHubsPerfStandalone
         {
             // Console.WriteLine($"[{arg.Partition.PartitionId}] {arg.Data}");
             Interlocked.Increment(ref _eventsProcessed[arg.Partition.PartitionId].Value);
-            // await Task.Delay(TimeSpan.FromSeconds(1));
+            await Task.Delay(TimeSpan.FromSeconds(1));
         }
     }
 }
