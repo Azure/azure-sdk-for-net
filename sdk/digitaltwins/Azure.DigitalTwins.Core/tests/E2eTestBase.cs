@@ -107,5 +107,17 @@ namespace Azure.DigitalTwins.Core.Tests
                 Console.WriteLine($"{model.Id}");
             }
         }
+
+        /// <summary>
+        /// Injects delay in the process when the test mode is live.
+        /// </summary>
+        /// <param name="delayDuration">Delay duration.</param>
+        protected async Task WaitIfLiveAsync(TimeSpan delayDuration)
+        {
+            if (TestEnvironment.Mode == RecordedTestMode.Live)
+            {
+                await Task.Delay(delayDuration);
+            }
+        }
     }
 }
