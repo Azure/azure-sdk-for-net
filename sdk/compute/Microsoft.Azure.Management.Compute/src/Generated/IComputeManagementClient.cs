@@ -152,6 +152,16 @@ namespace Microsoft.Azure.Management.Compute
         IRestorePointsOperations RestorePoints { get; }
 
         /// <summary>
+        /// Gets the ICapacityReservationGroupsOperations.
+        /// </summary>
+        ICapacityReservationGroupsOperations CapacityReservationGroups { get; }
+
+        /// <summary>
+        /// Gets the ICapacityReservationsOperations.
+        /// </summary>
+        ICapacityReservationsOperations CapacityReservations { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachineScaleSetExtensionsOperations.
         /// </summary>
         IVirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get; }

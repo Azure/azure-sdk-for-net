@@ -53,19 +53,19 @@ To reduce both the number of clients needed to perform common tasks and the amou
 
 To accomplish this, we're introducing 4 standard types for all resources in Azure:
 
-#### **[Resource]Data**
+#### [Resource]Data
 This represents the data that makes up a given resource. Typically, this is the response data from a service call such as HTTP GET and provides details about the underlying resource. Previously, this was represented by a **Model** class.
 
-#### **[Resource]Operations**
+#### [Resource]Operations
 
 This represents a service client that's scoped to a particular resource. You can directly execute all operations on that client without needing to pass in scope parameters such as subscription ID or resource name.
 
-#### **[Resource]Container**
+#### [Resource]Container
 
 This represents the operations you can perform on a collection of resources belonging to a specific parent resource.
 This mainly consists of List or Create operations. For most things, the parent will be a **ResourceGroup**. However, each parent / child relationship is represented this way. For example, a **Subnet** is a child of a **VirtualNetwork** and a **ResourceGroup** is a child of a **Subscription**.
 
-#### **[Resource]**
+#### [Resource]
 
 This represents a full resource object which contains a **Data** property exposing the details as a **[Resource]Data** type.
 It also has access to all of the operations and like the **[Resource]Operations** object is already scoped
@@ -147,6 +147,13 @@ AvailabilitySetOperations availabilitySetOperations = armClient.GetAvailabilityS
 AvailabilitySet availabilitySet = await availabilitySetOperations.GetAsync();
 ```
 
+### `tryGet` and `doesExists` convenience methods
+If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `tryGet()` or `doesExists()` methods, which can be invoque from any [Resource]Container class.
+
+`tryGet()` and `tryGetAsync()` are going to return a null object if the specified resource name or id does not exists. On the other hand, `doesExists()` and `doesExistsAsync()` is going to return a boolean, depending if the specified resource exists.
+
+You can find an example for these methods [below](#check-if-resource-group-exists).
+
 ## Examples
 
 ### Create a resource group
@@ -179,7 +186,6 @@ await foreach (ResourceGroup rg in response)
 ```
 
 ### Update a resource group
-
 ```C# Snippet:Managing_Resource_Groups_UpdateAResourceGroup
 // Note: Resource group named 'myRgName' should exist for this example to work.
 var armClient = new ArmClient(new DefaultAzureCredential());
@@ -190,7 +196,6 @@ resourceGroup = await resourceGroup.AddTagAsync("key", "value");
 ```
 
 ### Delete a resource group
-
 ```C# Snippet:Managing_Resource_Groups_DeleteResourceGroup
 var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
@@ -198,6 +203,47 @@ string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
 await resourceGroup.DeleteAsync();
 ```
+
+### Check if Resource Group exists
+```C# Snippet:Readme_DoesExistsRG
+var armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+string rgName = "myRgName";
+
+var exists = await subscription.GetResourceGroups().DoesExistAsync(rgName);
+
+if (exists)
+{
+    Console.WriteLine($"Resource Group {rgName} exists.");
+
+    // We can get the resource group now that we are sure it exists.
+    var myRG = await subscription.GetResourceGroups().GetAsync(rgName);
+}
+else
+{
+    Console.WriteLine($"Resource Group {rgName} does not exist.");
+}
+```
+
+Another way to do this is by using `tryGet()`:
+
+```C# Snippet:Readme_TryGetRG
+var armClient = new ArmClient(new DefaultAzureCredential());
+Subscription subscription = armClient.DefaultSubscription;
+string rgName = "myRgName";
+
+var myRG = await subscription.GetResourceGroups().TryGetAsync(rgName);
+
+if (myRG == null)
+{
+    Console.WriteLine($"Resource Group {rgName} does not exist.");
+    return;
+}
+
+// At this point, we are sure that myRG is a not null Resource Group, so we can use this object to perform any operations we want.
+```
+
+
 ### Add a tag to a virtual machine
 Imagine that our company requires all virtual machines to be tagged with the owner. We're tasked with writing a program to add the tag to any missing virtual machines in a given resource group.
 
