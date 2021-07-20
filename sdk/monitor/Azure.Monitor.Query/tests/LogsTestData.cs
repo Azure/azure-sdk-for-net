@@ -43,7 +43,8 @@ namespace Azure.Monitor.Query.Tests
         public DateTimeRange DataTimeRange => new DateTimeRange(RetentionWindowStart, TimeSpan.FromDays(7));
 
         private readonly MonitorQueryClientTestEnvironment _testEnvironment;
-        private static bool _initialized;
+        private static Task _initialization;
+        private static object _initializationLock = new object();
 
         public LogsTestData(RecordedTestBase<MonitorQueryClientTestEnvironment> test)
         {
@@ -84,16 +85,19 @@ namespace Azure.Monitor.Query.Tests
 
         public async Task InitializeAsync()
         {
-            if (_testEnvironment.Mode == RecordedTestMode.Playback || _initialized)
+            if (_testEnvironment.Mode == RecordedTestMode.Playback)
             {
                 return;
             }
 
-            _initialized = true;
+            lock (_initializationLock)
+            {
+                _initialization ??= Task.WhenAll(
+                    InitializeData(_testEnvironment.WorkspaceId, _testEnvironment.WorkspaceKey),
+                    InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey));
+            }
 
-            await Task.WhenAll(
-                InitializeData(_testEnvironment.WorkspaceId, _testEnvironment.WorkspaceKey),
-                InitializeData(_testEnvironment.SecondaryWorkspaceId, _testEnvironment.SecondaryWorkspaceKey));
+            await _initialization;
         }
 
         private async Task InitializeData(string workspaceId, string workspaceKey)
