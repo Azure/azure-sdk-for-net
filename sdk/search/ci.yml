@@ -31,9 +31,13 @@ extends:
       safeName: AzureSearchDocuments
     - name: Microsoft.Azure.Search
       safeName: MicrosoftAzureSearch
+      skipPublishPackage: true
     - name: Microsoft.Azure.Search.Common
       safeName: MicrosoftAzureSearchCommon
+      skipPublishPackage: true
     - name: Microsoft.Azure.Search.Data
       safeName: MicrosoftAzureSearchData
+      skipPublishPackage: true
     - name: Microsoft.Azure.Search.Service
       safeName: MicrosoftAzureSearchService
+      skipPublishPackage: true
