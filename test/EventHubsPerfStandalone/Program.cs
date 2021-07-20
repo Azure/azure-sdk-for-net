@@ -113,7 +113,7 @@ namespace EventHubsPerfStandalone
         {
             // Console.WriteLine($"[{arg.Partition.PartitionId}] {arg.Data}");
             Interlocked.Increment(ref _eventsProcessed[arg.Partition.PartitionId].Value);
-            await Task.Delay(TimeSpan.FromSeconds(1));
+            // await Task.Delay(TimeSpan.FromSeconds(1));
         }
     }
 }
