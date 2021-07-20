@@ -4,7 +4,7 @@ using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -36,19 +36,35 @@ namespace EventHubsPerfStandalone
             processor.ProcessEventAsync += ProcessEventAsync;
             processor.ProcessErrorAsync += ProcessErrorAsync;
 
+            var sw = new Stopwatch();
+
             var printStatusThread = new Thread(() =>
             {
                 while (true)
                 {
+                    var elapsedSeconds = sw.Elapsed.TotalSeconds;
+                    var totalEvents = 0;
+
                     foreach (var kvp in _eventsProcessed.OrderBy(kvp => int.Parse(kvp.Key)))
                     {
-                        Console.WriteLine($"{kvp.Key}: {kvp.Value.Value}");
+                        var events = kvp.Value.Value;
+                        totalEvents += events;
+
+                        var eventsPerSecond = kvp.Value.Value / elapsedSeconds;
+
+                        Console.WriteLine($"{kvp.Key}: {events} ({eventsPerSecond:N2} events/sec)");
                     }
+
+                    var totalEventsPerSecond = totalEvents / elapsedSeconds;
+
+                    Console.WriteLine($"Total: {totalEvents} ({totalEventsPerSecond:N2} events/sec)");
                     Console.WriteLine();
                     Thread.Sleep(1000);
                 }
             });
             printStatusThread.Start();
+
+            sw.Start();
 
             await processor.StartProcessingAsync();
 
