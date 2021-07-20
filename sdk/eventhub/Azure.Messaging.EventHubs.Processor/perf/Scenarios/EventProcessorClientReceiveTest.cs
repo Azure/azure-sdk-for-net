@@ -8,12 +8,9 @@ using Azure.Messaging.EventHubs.Processor.Perf.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
 {
-    public class EventProcessorClientSemaphoreTest : EventProcessorClientTest<EventProcessorClientPerfOptions>
+    public class EventProcessorClientReceiveTest : EventProcessorClientTest<EventProcessorClientPerfOptions>
     {
-        private readonly SemaphoreSlim _eventProcessed = new SemaphoreSlim(0);
-        private readonly SemaphoreSlim _processNextEvent = new SemaphoreSlim(0);
-
-        public EventProcessorClientSemaphoreTest(EventProcessorClientPerfOptions options) : base(options)
+        public EventProcessorClientReceiveTest(EventProcessorClientPerfOptions options) : base(options)
         {
             EventProcessorClient.ProcessEventAsync += ProcessEventAsync;
             EventProcessorClient.ProcessErrorAsync += ProcessErrorAsync;
@@ -24,10 +21,9 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
             throw arg.Exception;
         }
 
-        private async Task ProcessEventAsync(ProcessEventArgs arg)
+        private Task ProcessEventAsync(ProcessEventArgs arg)
         {
-            _eventProcessed.Release();
-            await _processNextEvent.WaitAsync();
+            return EventRaised();
         }
 
         public override async Task SetupAsync()
@@ -38,19 +34,14 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
 
         public override async Task CleanupAsync()
         {
-            await EventProcessorClient.StopProcessingAsync();
+            // StopProcessingAsync() can be slow and seems unnecessary
+            // await EventProcessorClient.StopProcessingAsync();
             await base.CleanupAsync();
-        }
-
-        public override void Run(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await _eventProcessed.WaitAsync(cancellationToken);
-            _processNextEvent.Release();
+            await base.RunAsync(cancellationToken);
 
             if (Options.DelayMilliseconds > 0)
             {
