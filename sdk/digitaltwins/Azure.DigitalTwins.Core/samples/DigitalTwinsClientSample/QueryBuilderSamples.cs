@@ -212,14 +212,14 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Build();
             #endregion
 
-            AdtQuery test = new AdtQuery()
+            DigitalTwinsQueryBuilder test = new DigitalTwinsQueryBuilder()
                 .Select("Temperature", "Humidity")
                 .From(AdtCollection.DigitalTwins)
                 .WhereIsDefined("Occupants")
                 .And()
                 .WhereCustom("IS_BOOL(is_occupied)");         
             
-            AdtQuery test2 = new AdtQuery()
+            DigitalTwinsQueryBuilder test2 = new DigitalTwinsQueryBuilder()
                 .And()
                 .Select("Temperature", "Humidity")
                 .From(AdtCollection.DigitalTwins)
@@ -227,7 +227,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 .And()
                 .WhereCustom("IS_BOOL(is_occupied)");
             
-            AdtQuery test3 = new AdtQuery()
+            DigitalTwinsQueryBuilder test3 = new DigitalTwinsQueryBuilder()
                 .From(AdtCollection.DigitalTwins)
                 .From(AdtCollection.Relationships)
                 .Select("Temperature", "Humidity")
@@ -236,7 +236,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 .And()
                 .WhereCustom("IS_BOOL(is_occupied)");
                         
-            AdtQuery test4 = new AdtQuery()
+            DigitalTwinsQueryBuilder test4 = new DigitalTwinsQueryBuilder()
                 .From(AdtCollection.DigitalTwins)
                 .From(AdtCollection.Relationships)
                 .Select("Temperature", "Humidity")
@@ -245,7 +245,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 .And()
                 .WhereCustom("IS_BOOL(is_occupied)");             
             
-            AdtQuery test5 = new AdtQuery()
+            DigitalTwinsQueryBuilder test5 = new DigitalTwinsQueryBuilder()
                 .Select("Temperature", "Humidity")
                 .From(AdtCollection.DigitalTwins)
                 .WhereIsDefined("Occupants")
@@ -257,7 +257,7 @@ namespace Azure.DigitalTwins.Core.Samples
                     .And()
                     .WhereCustom("Humidity < 20"));
 
-            AdtQuery statement = new AdtQuery();
+            DigitalTwinsQueryBuilder statement = new DigitalTwinsQueryBuilder();
             statement.Select("Temperature", "Humidity");
             statement.From(AdtCollection.DigitalTwins);
             statement.WhereIsDefined("Occupants");
@@ -272,7 +272,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 return q;
             });
                         
-            AdtQuery test6 = new AdtQuery()
+            DigitalTwinsQueryBuilder test6 = new DigitalTwinsQueryBuilder()
                 .And()
                 .Select("Temperature", "Humidity")
                 .From(AdtCollection.DigitalTwins)
@@ -289,7 +289,7 @@ namespace Azure.DigitalTwins.Core.Samples
                     .WhereCustom("Humidity < 20"));
 
 
-            AdtQuery azadTest = new AdtQuery()
+            DigitalTwinsQueryBuilder azadTest = new DigitalTwinsQueryBuilder()
                 .Select("Temp")
                 .From(AdtCollection.DigitalTwins)
                 .WhereCustom("")
