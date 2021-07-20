@@ -132,6 +132,40 @@ namespace Azure.Search.Documents
         /// <param name="indexName">
         /// Required.  The name of the Search Index.
         /// </param>
+        /// <param name="tokenCredential">
+        /// Required.  The token credential used to authenticate requests against the Search service.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-rbac">Use role-based authorization in Azure Cognitive Search</see> for
+        /// more information about role-based authorization in Azure Cognitive Search.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="endpoint"/>,
+        /// <paramref name="indexName"/>, or <paramref name="tokenCredential"/> is
+        /// null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the <paramref name="endpoint"/> is not using HTTPS or
+        /// the <paramref name="indexName"/> is empty.
+        /// </exception>
+        public SearchClient(
+            Uri endpoint,
+            string indexName,
+            TokenCredential tokenCredential) :
+            this(endpoint, indexName, tokenCredential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SearchClient class for
+        /// querying an index and uploading, merging, or deleting documents.
+        /// </summary>
+        /// <param name="endpoint">
+        /// Required.  The URI endpoint of the Search Service.  This is likely
+        /// to be similar to "https://{search_service}.search.windows.net".
+        /// The URI must use HTTPS.
+        /// </param>
+        /// <param name="indexName">
+        /// Required.  The name of the Search Index.
+        /// </param>
         /// <param name="credential">
         /// Required.  The API key credential used to authenticate requests
         /// against the search service.  You need to use an admin key to
@@ -192,7 +226,7 @@ namespace Azure.Search.Documents
         /// <param name="indexName">
         /// Required.  The name of the Search Index.
         /// </param>
-        /// <param name="credential">
+        /// <param name="tokenCredential">
         /// Required.  The token credential used to authenticate requests against the Search service.
         /// See <see href="https://docs.microsoft.com/azure/search/search-security-rbac">Use role-based authorization in Azure Cognitive Search</see> for
         /// more information about role-based authorization in Azure Cognitive Search.
@@ -203,7 +237,7 @@ namespace Azure.Search.Documents
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// Thrown when the <paramref name="endpoint"/>,
-        /// <paramref name="indexName"/>, or <paramref name="credential"/> is
+        /// <paramref name="indexName"/>, or <paramref name="tokenCredential"/> is
         /// null.
         /// </exception>
         /// <exception cref="ArgumentException">
@@ -214,20 +248,20 @@ namespace Azure.Search.Documents
         public SearchClient(
             Uri endpoint,
             string indexName,
-            TokenCredential credential,
+            TokenCredential tokenCredential,
             SearchClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             endpoint.AssertHttpsScheme(nameof(endpoint));
             Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
-            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
 
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
             IndexName = indexName;
             Serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = options.Build(credential);
+            Pipeline = options.Build(tokenCredential);
             Version = options.Version;
 
             Protocol = new DocumentsRestClient(
