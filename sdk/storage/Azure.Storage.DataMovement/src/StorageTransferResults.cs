@@ -2,13 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Azure.Storage.Blobs.DataMovement
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// BlobTransferResults
+    /// StorageTransferResults.
     /// </summary>
-    public class BlobTransferResults
+    public class StorageTransferResults
     {
     }
 }

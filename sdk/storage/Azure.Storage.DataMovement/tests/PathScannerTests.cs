@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Storage.Common.DataMovement;
 using NUnit.Framework;
 using System.Reflection;
 using System.Security.Principal;
@@ -17,7 +16,7 @@ using System.Runtime.InteropServices;
 using Mono.Unix.Native;
 #endif
 
-namespace Azure.Storage.Tests
+namespace Azure.Storage.DataMovement.Tests
 {
     public class PathScannerTests
     {

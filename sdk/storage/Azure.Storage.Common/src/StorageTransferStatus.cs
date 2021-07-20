@@ -15,13 +15,21 @@ namespace Azure.Storage
         /// <summary>
         /// Bytes transferred.
         /// </summary>
-        public long bytesTransferred { get; set; }
+        public long BytesTransferred { get; internal set;  }
 
         /// <summary>
         /// Number of Files or Blobs tranferred.
         /// </summary>
-        public long successfulTransfers { get; internal set; }
+        public long SuccessfulTransfers { get; internal set; }
 
-        // TODO: failures and skips
+        /// <summary>
+        /// Number of files that failed/
+        /// </summary>
+        public long FailedTransfers { get; internal set; }
+
+        /// <summary>
+        /// Number of files that were skipped.
+        /// </summary>
+        public long SkippedTransfers { get; internal set; }
     }
 }
