@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,10 +13,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public class AdtQuery
     {
-        private List<SelectClause> _selectClauses;
-        private List<FromClause> _fromClauses;
+        // TODO -- do we need SelectClause? Can we just use a string??
+        private List<SelectClause> _selectClauses;  // rename to regularSelectClauses or someth
+        private List<string> _selectAsClauses;
+
+        private FromClause _fromClause;
         private List<WhereClause> _whereClauses;
-        private string queryString;
+        // private string queryString;
 
         /// <summary>
         /// TODO.
@@ -23,7 +27,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public AdtQuery()
         {
             _selectClauses = new List<SelectClause>();
-            _fromClauses = new List<FromClause>();
+            _selectAsClauses = new List<string>();
+            //_fromClauses = new FromClause();
             _whereClauses = new List<WhereClause>();
         }
 
@@ -34,8 +39,17 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns></returns>
         public AdtQuery Select(params string[] args)
         {
-            // append something into clauses
-            Console.WriteLine(args);
+            _selectClauses.Add(new SelectClause(args));
+            return this;
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <returns></returns>
+        public AdtQuery SelectAll()
+        {
+            _selectClauses.Add(new SelectClause(new string[] { "*" }));
             return this;
         }
 
@@ -52,8 +66,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
             // append optional arguments separated by commas
             topArg.Append(string.Join(", ", args));
+            _selectClauses.Add(new SelectClause(new string[] { topArg.ToString() }));
 
-            //_clause = new SelectClause(new string[] { topArg.ToString() });
             return this;
         }
 
@@ -66,9 +80,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public AdtQuery SelectTopAll(int count)
         {
             // turn into correct format -- eg. SELECT TOP(3)
-            var topArg = new StringBuilder().Append($"{QueryConstants.Top}({count})").Append(' ');
+            var topArg = new StringBuilder().Append($"{QueryConstants.Top}({count})");
+            _selectClauses.Add(new SelectClause(new string[] { topArg.ToString() }));
 
-            //_clause = new SelectClause(new string[] { topArg.ToString() });
             return this;
         }
 
@@ -80,7 +94,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         {
             string countArg = $"{QueryConstants.Count}() ";
 
-            //_clause = new SelectClause(new string[] { countArg });
+            _selectClauses.Add(new SelectClause(new string[] { countArg }));
             return this;
         }
 
@@ -91,8 +105,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public AdtQuery SelectCustom(string customQuery)
         {
-            Console.WriteLine(customQuery);
-            //_clause = new SelectClause(new string[] { customQuery });
+            _selectClauses.Add(new SelectClause(new string[] { customQuery }));
             return this;
         }
 
@@ -104,7 +117,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains an aliased select clause. </returns>
         public AdtQuery SelectAs(string field, string alias)
         {
-            _selectClauses.Add(new SelectClause(new string[] { $"{field} {QueryConstants.As} {alias}" }));
+            _selectAsClauses.Add($"{field} {QueryConstants.As} {alias}");
             return this;
         }
 
@@ -115,7 +128,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns></returns>
         public AdtQuery From(AdtCollection collection)
         {
-            Console.WriteLine(collection);
+            _fromClause = new FromClause(collection);
             return this;
         }
 
@@ -127,9 +140,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> ADT query with select from clauses. </returns>
         public AdtQuery From(AdtCollection collection, string alias)
         {
-            Console.WriteLine(collection);
-            Console.WriteLine(alias);
-            //_clause = new FromClause(collection, alias);
+            _fromClause = new FromClause(collection, alias);
             return this;
         }
 
@@ -141,8 +152,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> ADT query with select and from clauses. </returns>
         public AdtQuery FromCustom(string collection)
         {
-            Console.WriteLine(collection);
-            //_clause = new FromClause(collection);
+            _fromClause = new FromClause(collection);
             return this;
         }
 
@@ -193,7 +203,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns></returns>
         public AdtQuery WhereCustom(string condition)
         {
-            Console.WriteLine(condition);
+            _whereClauses.Add(new WhereClause(condition));
             return this;
         }
 
@@ -204,7 +214,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>TODO.</returns>
         public AdtQuery WhereIsDefined(string property)
         {
-            Console.WriteLine(property);
+            _whereClauses.Add(new WhereClause($"{QueryConstants.IsDefined}({property})"));
             return this;
         }
 
@@ -312,6 +322,19 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns></returns>
         public AdtQuery And()
         {
+            // TODO -- make this less messy
+            _whereClauses.Add(new WhereClause(QueryConstants.And));
+            return this;
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <returns></returns>
+        public AdtQuery Or()
+        {
+            // TODO -- make this less messy
+            _whereClauses.Add(new WhereClause(QueryConstants.Or));
             return this;
         }
 
@@ -321,8 +344,54 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns></returns>
         public string GetQueryText()
         {
-            queryString = string.Empty;
-            return queryString;
+            var queryString = new StringBuilder();
+
+            // determine basic layout of select clause for spacing and comma purposes
+            bool nonAliasedSelectStatements = _selectClauses.Any();
+            bool aliasedSelectStatements = _selectAsClauses.Any();
+
+            // Add select clauses
+            queryString.Append(QueryConstants.Select).Append(' ');
+            foreach (SelectClause clause in _selectClauses)
+            {
+                string selectClauseString;
+                if (clause?.ClauseArgs == null)
+                {
+                    selectClauseString = string.Empty;
+                }
+                else
+                {
+                    selectClauseString = string.Join(", ", clause?.ClauseArgs);
+                }
+
+                queryString.Append(selectClauseString);
+            }
+
+            if (aliasedSelectStatements)
+            {
+                if (nonAliasedSelectStatements)
+                {
+                    queryString.Append(", ");
+                }
+
+                queryString.Append(string.Join(", ", _selectAsClauses));
+            }
+
+            // add from clause
+            queryString.Append(' ').Append(QueryConstants.From).Append(' ');
+            queryString.Append(_fromClause.Collection).Append(' ');
+
+            if (_whereClauses.Any())
+            {
+                // Add where clauses
+                queryString.Append(QueryConstants.Where).Append(' ');
+                foreach (WhereClause clause in _whereClauses)
+                {
+                    queryString.Append(clause.Condition).Append(' ');
+                }
+            }
+
+            return queryString.ToString().Trim();
         }
     }
 }
