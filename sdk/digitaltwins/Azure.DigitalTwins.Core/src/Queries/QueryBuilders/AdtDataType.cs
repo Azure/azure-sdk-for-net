@@ -26,7 +26,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Primative type (string, numeric, boolean, or null) in the ADT query language.
         /// </summary>
-        AdtPrimative,
+        AdtPrimitive,
 
         /// <summary>
         /// Object in the ADT query language.

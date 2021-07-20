@@ -250,12 +250,12 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                     .Parenthetical(q => q
                         .IsOfType("Humidity", AdtDataType.AdtNumber)
                         .Or()
-                        .IsOfType("Humidity", AdtDataType.AdtPrimative))
+                        .IsOfType("Humidity", AdtDataType.AdtPrimitive))
                     .Or()
                     .Parenthetical(q => q
                         .IsOfType("Temperature", AdtDataType.AdtNumber)
                         .Or()
-                        .IsOfType("Temperature", AdtDataType.AdtPrimative)))
+                        .IsOfType("Temperature", AdtDataType.AdtPrimitive)))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))");

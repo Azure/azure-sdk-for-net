@@ -32,7 +32,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             { AdtDataType.AdtBool, "IS_BOOL" },
             { AdtDataType.AdtNumber, "IS_NUMBER" },
             { AdtDataType.AdtString, "IS_STRING" },
-            { AdtDataType.AdtPrimative, "IS_PRIMATIVE" },
+            { AdtDataType.AdtPrimitive, "IS_PRIMITIVE" },
             { AdtDataType.AdtObject, "IS_OBJECT" }
         };
 
