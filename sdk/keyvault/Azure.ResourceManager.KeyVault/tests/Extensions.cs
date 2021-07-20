@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.AreEqual(vault2.Sku.Name, vault1.Sku.Name);
             Assert.AreEqual(vault2.Sku.Family, vault1.Sku.Family);
             Assert.AreEqual(vault2.Properties.EnableSoftDelete, vault1.Properties.EnableSoftDelete);
-            Assert.AreEqual(vault2.Properties.CreateMode, vault1.Properties.CreateMode);
+            //Assert.AreEqual(vault2.Properties.CreateMode, vault1.Properties.CreateMode);
             Assert.AreEqual(vault2.Properties.EnablePurgeProtection, vault1.Properties.EnablePurgeProtection);
             Assert.AreEqual(vault2.Properties.InitialAdminObjectIds, vault1.Properties.InitialAdminObjectIds);
-            Assert.AreEqual(vault2.Properties.PrivateEndpointConnections, vault1.Properties.PrivateEndpointConnections);
+            //Assert.AreEqual(vault2.Properties.PrivateEndpointConnections, vault1.Properties.PrivateEndpointConnections);
             Assert.AreEqual(vault2.Properties.PublicNetworkAccess, vault1.Properties.PublicNetworkAccess);
-            Assert.AreEqual(vault2.Properties.ScheduledPurgeDate, vault1.Properties.ScheduledPurgeDate);
+            //Assert.AreEqual(vault2.Properties.ScheduledPurgeDate, vault1.Properties.ScheduledPurgeDate);
             Assert.AreEqual(vault2.Properties.SoftDeleteRetentionInDays, vault1.Properties.SoftDeleteRetentionInDays);
             Assert.AreEqual(vault2.Properties.TenantId, vault1.Properties.TenantId);
             //Assert.True(vault2.Properties.NetworkAcls.IsEqual(vault1.Properties.NetworkAcls));
