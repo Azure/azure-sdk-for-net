@@ -84,7 +84,7 @@ keywords: Azure, $Language, SDK, API, $($PackageInfo.Name), $service
 author: maggiepint
 ms.author: magpint
 ms.date: $date
-ms.topic: article
+ms.topic: reference
 ms.prod: azure
 ms.technology: azure
 ms.devlang: $Language
