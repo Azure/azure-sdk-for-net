@@ -15,6 +15,7 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
     {
         private readonly SemaphoreSlim _eventProcessed = new SemaphoreSlim(0);
         private readonly SemaphoreSlim _processNextEvent = new SemaphoreSlim(0);
+        private CancellationToken _cancellationToken;
 
         public EventBasedPerfTest(TOptions options) : base(options)
         {
@@ -23,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
         protected async Task EventRaised()
         {
             _eventProcessed.Release();
-            await _processNextEvent.WaitAsync();
+            await _processNextEvent.WaitAsync(_cancellationToken);
         }
 
         public override void Run(CancellationToken cancellationToken)
@@ -33,7 +34,10 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
+            _cancellationToken = cancellationToken;
+
             await _eventProcessed.WaitAsync(cancellationToken);
+
             _processNextEvent.Release();
         }
     }

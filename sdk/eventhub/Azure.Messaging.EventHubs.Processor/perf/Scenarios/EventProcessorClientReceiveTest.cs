@@ -34,8 +34,7 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
 
         public override async Task CleanupAsync()
         {
-            // StopProcessingAsync() can be slow and seems unnecessary
-            // await EventProcessorClient.StopProcessingAsync();
+            await EventProcessorClient.StopProcessingAsync();
             await base.CleanupAsync();
         }
 
