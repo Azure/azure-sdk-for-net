@@ -70,7 +70,7 @@ namespace EventHubsPerfStandalone
                         //Console.WriteLine($"[{kvp.Key}] Recent: {recentEvents} ({recentEventsPerSecond:N2} events/sec), " +
                         //    $"Total: {events} ({eventsPerSecond:N2} events/sec)");
 
-                        Console.Write(recentEvents + ",");
+                        Console.Write(events + ",");
 
                         lastResults[kvp.Key] = events;
                     }
