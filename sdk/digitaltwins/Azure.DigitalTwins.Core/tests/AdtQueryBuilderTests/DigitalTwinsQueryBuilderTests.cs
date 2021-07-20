@@ -239,25 +239,57 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Be("SELECT Temperature FROM DigitalTwins WHERE IS_DEFINED(Humidity) AND Occupants < 10");
         }
 
-        //[Test]
-        //public void DigitalTwinsQueryBuilder_MultipleNested()
-        //{
-        //    new AdtQuery()
-        //        .SelectAll()
-        //        .From(AdtCollection.DigitalTwins)
-        //        .Parenthetical(q => q
-        //            .WhereIsOfType("Humidity", AdtDataType.AdtNumber)
-        //            .Or()
-        //            .WhereIsOfType("Humidity", AdtDataType.AdtPrimative))
-        //        .Or()
-        //        .Parenthetical(q => q
-        //            .WhereIsOfType("Temperature", AdtDataType.AdtNumber)
-        //            .Or()
-        //            .WhereIsOfType("Temperature", AdtDataType.AdtPrimative))
-        //        .GetQueryText()
-        //        .Should()
-        //        .Be("SELECT * FROM DigitalTwins WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))");
-        //}
+        [Test]
+        public void DigitalTwinsQueryBuilder_MultipleNested()
+        {
+            new DigitalTwinsQueryBuilder()
+                .SelectAll()
+                .From(AdtCollection.DigitalTwins)
+                .Parenthetical(q => q
+                    .WhereIsOfType("Humidity", AdtDataType.AdtNumber)
+                    .Or()
+                    .WhereIsOfType("Humidity", AdtDataType.AdtPrimative))
+                .Or()
+                .Parenthetical(q => q
+                    .WhereIsOfType("Temperature", AdtDataType.AdtNumber)
+                    .Or()
+                    .WhereIsOfType("Temperature", AdtDataType.AdtPrimative))
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))");
+        }
+
+        [Test]
+        public void DigitalTwinsQueryBuilder_NestedAnd()
+        {
+            new DigitalTwinsQueryBuilder()
+                .SelectAll()
+                .From(AdtCollection.DigitalTwins)
+                .WhereIsOfModel("dtmi:example:room;1")
+                .And(q => q
+                    .WhereIsDefined("Temperature")
+                    .And()
+                    .Compare("Temperature", QueryComparisonOperator.Equal, 30))
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE IS_OF_MODEL('dtmi:example:room;1') AND (IS_DEFINED(Temperature) AND Temperature = 30)");
+        }
+
+        [Test]
+        public void DigitalTwinsQueryBuilder_NestedOr()
+        {
+            new DigitalTwinsQueryBuilder()
+                .SelectCount()
+                .From(AdtCollection.DigitalTwins)
+                .WhereCustom("Humidity < 10")
+                .Or(q => q
+                    .Compare("Temperature", QueryComparisonOperator.LessThan, 40)
+                    .And()
+                    .WhereIsOfType("Temperature", AdtDataType.AdtNumber))
+                .GetQueryText()
+                .Should()
+                .Be("SELECT COUNT() FROM DigitalTwins WHERE Humidity < 10 OR (Temperature < 40 AND IS_NUMBER(Temperature))");
+        }
 
         [Test]
         public void DigitalTwinsQueryBuilder_Select_Null()

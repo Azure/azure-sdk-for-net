@@ -107,7 +107,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Query that contains a select clause. </returns>
         public DigitalTwinsQueryBuilder SelectCount()
         {
-            string countArg = $"{QueryConstants.Count}() ";
+            string countArg = $"{QueryConstants.Count}()";
 
             _selectClauses.Add(new SelectClause(new string[] { countArg }));
             return this;
@@ -310,10 +310,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Logical operator to combine different WHERE functions or conditions.</returns>
         public DigitalTwinsQueryBuilder Parenthetical(Func<DigitalTwinsQueryBuilder, DigitalTwinsQueryBuilder> nested)
         {
-            // RENAME?
             var nestedLogic = new DigitalTwinsQueryBuilder();
             nested.Invoke(nestedLogic);
 
+            _whereClauses.Add(new WhereClause($"({nestedLogic.GetQueryText()})"));
             return this;
         }
 
@@ -324,10 +324,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Logical operator to combine different WHERE functions or conditions.</returns>
         public DigitalTwinsQueryBuilder And(Func<DigitalTwinsQueryBuilder, DigitalTwinsQueryBuilder> nested)
         {
-            // RENAME?
             var nestedLogic = new DigitalTwinsQueryBuilder();
             nested.Invoke(nestedLogic);
 
+            And();
+            _whereClauses.Add(new WhereClause($"({nestedLogic.GetQueryText()})"));
             return this;
         }
 
@@ -349,10 +350,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns> Logical operator to combine different WHERE functions or conditions.</returns>
         public DigitalTwinsQueryBuilder Or(Func<DigitalTwinsQueryBuilder, DigitalTwinsQueryBuilder> nested)
         {
-            // RENAME?
             var nestedLogic = new DigitalTwinsQueryBuilder();
             nested.Invoke(nestedLogic);
 
+            Or();
+            _whereClauses.Add(new WhereClause($"({nestedLogic.GetQueryText()})"));
             return this;
         }
 
@@ -388,9 +390,14 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
             // Determine basic layout of select clause for spacing and comma purposes
             bool aliasedSelectStatements = _selectAsClauses.Any();
+            bool nestedQuery = !(aliasedSelectStatements || nonAliasedSelectStatements);
 
             // Add select clauses
-            queryString.Append(QueryConstants.Select).Append(' ');
+            if (!nestedQuery)
+            {
+                queryString.Append(QueryConstants.Select).Append(' ');
+            }
+
             foreach (SelectClause clause in _selectClauses)
             {
                 string selectClauseString;
@@ -417,8 +424,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             }
 
             // add from clause
-            queryString.Append(' ').Append(QueryConstants.From).Append(' ');
-            queryString.Append(_fromClause.Collection).Append(' ');
+            if (!nestedQuery)
+            {
+                queryString.Append(' ').Append(QueryConstants.From).Append(' ');
+                queryString.Append(_fromClause?.Collection).Append(' ');
+            }
 
             if (aliasedCollection)
             {
@@ -428,7 +438,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
             if (_whereClauses.Any())
             {
                 // Add where clauses
-                queryString.Append(QueryConstants.Where).Append(' ');
+                if (!nestedQuery)
+                {
+                    queryString.Append(QueryConstants.Where).Append(' ');
+                }
+
                 foreach (WhereClause clause in _whereClauses)
                 {
                     queryString.Append(clause.Condition).Append(' ');
