@@ -1,6 +1,6 @@
 # Release History
 
-## 2.8.0-preview.1 (Unreleased)
+## 2.8.0-preview.1 (2021-07-21)
 
 - Add support for the Person Directory feature
 - Note that this version points to the face/v1.0-preview (public preview) endpoints.
