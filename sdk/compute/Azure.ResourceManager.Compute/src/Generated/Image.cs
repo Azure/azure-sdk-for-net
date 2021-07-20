@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a Image along with the instance operations that can be performed on it. </summary>
     public class Image : ImageOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "Image"/> class for mocking. </summary>
+        internal Image() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "Image"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>

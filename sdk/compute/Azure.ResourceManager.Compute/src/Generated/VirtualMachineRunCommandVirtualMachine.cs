@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a VirtualMachineRunCommandVirtualMachine along with the instance operations that can be performed on it. </summary>
     public class VirtualMachineRunCommandVirtualMachine : VirtualMachineRunCommandVirtualMachineOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "VirtualMachineRunCommandVirtualMachine"/> class for mocking. </summary>
+        internal VirtualMachineRunCommandVirtualMachine() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "VirtualMachineRunCommandVirtualMachine"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>

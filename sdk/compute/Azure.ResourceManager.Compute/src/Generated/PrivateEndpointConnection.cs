@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a PrivateEndpointConnection along with the instance operations that can be performed on it. </summary>
     public class PrivateEndpointConnection : PrivateEndpointConnectionOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "PrivateEndpointConnection"/> class for mocking. </summary>
+        internal PrivateEndpointConnection() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "PrivateEndpointConnection"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
