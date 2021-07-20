@@ -68,9 +68,7 @@ namespace EventHubsPerfStandalone
 
             await processor.StartProcessingAsync();
 
-            await Task.Delay(TimeSpan.FromSeconds(30));
-
-            await processor.StopProcessingAsync();
+            await Task.Delay(Timeout.Infinite);
         }
 
         private static async Task PartitionInitializingAsync(PartitionInitializingEventArgs arg)
