@@ -12,26 +12,36 @@ namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Blob Directory Download Transfer Job
+    ///
+    /// TODO: better description
     /// </summary>
     internal class BlobDownloadDirectoryTransferJob : StorageTransferJob
     {
-        private string _localPath;
-
-        // if the upload path is local or will be the destination of the download
-        public string localPath => _localPath;
-
+        /// <summary>
+        /// The source blob where it's contents will be downloaded when the job is performed.
+        /// </summary>
         private BlobDirectoryClient _sourceBlobClient;
 
         public BlobDirectoryClient sourceBlobClient => _sourceBlobClient;
 
         /// <summary>
+        /// Local Path to store the downloaded contents from the source blob
+        /// </summary>
+        private string _destinationLocalPath;
+
+        /// <summary>
+        /// Gets the local Path to store the downloaded contents from the source blob
+        /// </summary>
+        public string DestinationLocalPath => _destinationLocalPath;
+
+        /// <summary>
         /// The <see cref="StorageTransferOptions"/>.
         /// </summary>
-        internal StorageTransferOptions _transferOptions;
+        internal BlobDirectoryDownloadOptions _options;
         /// <summary>
         /// Gets the <see cref="StorageTransferOptions"/>.
         /// </summary>
-        public StorageTransferOptions TransferOptions => _transferOptions;
+        public BlobDirectoryDownloadOptions options => _options;
 
         // this is if we decide to prescan everything instead of
         // scanning right before upload/downloading
@@ -42,20 +52,18 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="sourceClient"></param>
         /// <param name="destinationPath"></param>
-        /// <param name="transferOptions"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         public BlobDownloadDirectoryTransferJob(
             BlobDirectoryClient sourceClient,
             string destinationPath,
-            StorageTransferOptions transferOptions,
-            //TODO: make options bag to include progress tracker
-            //IProgress<StorageTransferStatus> progressTracker,
+            BlobDirectoryDownloadOptions options,
             CancellationToken cancellationToken)
         {
             // Should we worry about concurrency issue and people using the client they pass elsewhere?
-            _localPath = destinationPath;
+            _destinationLocalPath = destinationPath;
             _sourceBlobClient = sourceClient;
-            _transferOptions = transferOptions;
+            _options = options;
             CancellationToken = cancellationToken;
         }
 
@@ -63,10 +71,10 @@ namespace Azure.Storage.DataMovement
         /// Create next TransferItem/Task to be processed.
         /// </summary>
         /// <returns>The Task to perform the Upload operation.</returns>
-        public override Task CreateTransferTaskAsync()
+        public override Task StartTransferTaskAsync()
         {
             // Do only blockblob upload for now for now
-            return _sourceBlobClient.DownloadAsync(_localPath, transferOptions:TransferOptions, cancellationToken:CancellationToken);
+            return _sourceBlobClient.DownloadAsync(_destinationLocalPath, options:options, cancellationToken:CancellationToken);
         }
     }
 }

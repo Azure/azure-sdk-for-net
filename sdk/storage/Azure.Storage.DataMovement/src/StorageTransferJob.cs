@@ -35,7 +35,7 @@ namespace Azure.Storage.DataMovement
         /// Create next TransferItem/Task to be processed.
         /// </summary>
         /// <returns></returns>
-        public virtual Task CreateTransferTaskAsync()
+        public virtual Task StartTransferTaskAsync()
         {
             return Task.CompletedTask;
         }

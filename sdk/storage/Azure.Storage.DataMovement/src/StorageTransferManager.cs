@@ -148,7 +148,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="sourceClient"></param>
         /// <param name="destinationLocalPath"></param>
-        /// <param name="transferOptions"></param>
+        /// <param name="options"></param>
         /// <param name="token"></param>
         /// <returns></returns>
         /// TODO: remove suppression
@@ -157,16 +157,13 @@ namespace Azure.Storage.DataMovement
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             BlobDirectoryClient sourceClient,
             string destinationLocalPath,
-            StorageTransferOptions transferOptions = default,
-            //TODO: make options bag to include progress tracker
-            //IProgress<StorageTransferStatus> progressTracker,
-            //IProgress<StorageTransferStatus> progressTracker = default,
+            BlobDirectoryDownloadOptions options = default,
             CancellationToken token = default)
         {
             //TODO: if check the local path exists and not a directory
             // or we can go and check at the start of the job, to prevent
             // having to check the existence of the path twice.
-            BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(sourceClient, destinationLocalPath, transferOptions, token);
+            BlobDownloadDirectoryTransferJob transferJob = new BlobDownloadDirectoryTransferJob(sourceClient, destinationLocalPath, options, token);
             _toScanQueue.Enqueue(transferJob);
 
             // TODO; remove stub

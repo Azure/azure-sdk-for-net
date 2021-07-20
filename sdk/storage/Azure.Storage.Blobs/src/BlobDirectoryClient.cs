@@ -593,7 +593,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
         /// </param>
         /// <param name="options">
-        /// Optional Parameters <see cref="BlobDirectoryUploadOptions"/>
+        /// Optional Parameters <see cref="BlobDirectoryUploadOptions"/>.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -730,7 +730,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken) =>
             Download(
                 targetPath,
-                conditions: default, // Pass anything else so we don't recurse on this overload
+                options: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
 
         /// <summary>
@@ -758,25 +758,20 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken) =>
             await DownloadAsync(
                 targetPath,
-                conditions: default, // Pass anything else so we don't recurse on this overload
+                options: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="Download(string, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="Download(string, BlobDirectoryDownloadOptions, CancellationToken)"/>
         /// downloads all the blobs within a blob directory using parallel requests,
         /// and writes the content to the local <paramref name="targetPath"/>.
         /// </summary>
         /// <param name="targetPath">
         /// A file path to write the downloaded content to.
         /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="StorageTransferOptions"/> to configure
-        /// parallel transfer behavior.
+        /// <param name="options">
+        /// Optional Parameters <see cref="BlobDirectoryDownloadOptions"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -792,40 +787,27 @@ namespace Azure.Storage.Blobs.Specialized
         [ForwardsClientCalls]
         public virtual IEnumerable<Response> Download(
             string targetPath,
-            BlobRequestConditions conditions = default,
-            ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{Long}"/> to provide
-            ///// progress updates about data transfers.
-            ///// </param>
-            //IProgress<long> progressHandler = default,
-            StorageTransferOptions transferOptions = default,
+            BlobDirectoryDownloadOptions options = default,
             CancellationToken cancellationToken = default)
         {
             return StagedDownloadAsync(
                 targetPath,
-                conditions,
-                //progressHandler, // TODO: #8506
-                transferOptions: transferOptions,
+                options: options,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="DownloadAsync(string, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="DownloadAsync(string, BlobDirectoryDownloadOptions, CancellationToken)"/>
         /// downloads all the blobs within a blob directory using parallel requests,
         /// and writes the content to the local <paramref name="targetPath"/>.
         /// </summary>
         /// <param name="targetPath">
         /// A file path to write the downloaded content to.
         /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="StorageTransferOptions"/> to configure
-        /// parallel transfer behavior.
+        /// <param name="options">
+        /// Optional Parameters <see cref="BlobDirectoryDownloadOptions"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -841,20 +823,12 @@ namespace Azure.Storage.Blobs.Specialized
         [ForwardsClientCalls]
         public virtual async Task<IEnumerable<Response>> DownloadAsync(
             string targetPath,
-            BlobRequestConditions conditions = default,
-            ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{Long}"/> to provide
-            ///// progress updates about data transfers.
-            ///// </param>
-            //IProgress<long> progressHandler = default,
-            StorageTransferOptions transferOptions = default,
+            BlobDirectoryDownloadOptions options = default,
             CancellationToken cancellationToken = default)
         {
             return await StagedDownloadAsync(
                 targetPath,
-                conditions,
-                //progressHandler, // TODO: #8506
-                transferOptions: transferOptions,
+                options: options,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -863,18 +837,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// This operation will download a blob of arbitrary size by downloading it as individually staged
         /// partitions if it's larger than the
-        /// <paramref name="transferOptions"/> MaximumTransferLength.
+        /// <paramref name="options"/> MaximumTransferLength.
         /// </summary>
         /// <param name="targetPath">
         /// A file path to write the downloaded content to.
         /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="StorageTransferOptions"/> to configure
-        /// parallel transfer behavior.
+        /// <param name="options">
+        /// Optional Parameters <see cref="BlobDirectoryDownloadOptions"/>.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -893,13 +862,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// TODO: remove static
         internal async Task<IEnumerable<Response>> StagedDownloadAsync(
             string targetPath,
-            BlobRequestConditions conditions = default,
-            ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{Long}"/> to provide
-            ///// progress updates about data transfers.
-            ///// </param>
-            //IProgress<long> progressHandler, // TODO: #8506
-            StorageTransferOptions transferOptions = default,
+            BlobDirectoryDownloadOptions options = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {

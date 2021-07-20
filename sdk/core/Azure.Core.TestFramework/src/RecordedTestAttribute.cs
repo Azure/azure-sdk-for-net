@@ -63,7 +63,6 @@ namespace Azure.Core.TestFramework
                             "The [RecordedTest] attribute attempted to re-record, but failed: " + Environment.NewLine +
                             context.CurrentResult.Message + Environment.NewLine);
                     }
-
                     // revert RecordTestMode to Playback
                     SetRecordMode(context.TestObject as RecordedTestBase, RecordedTestMode.Playback);
                 }

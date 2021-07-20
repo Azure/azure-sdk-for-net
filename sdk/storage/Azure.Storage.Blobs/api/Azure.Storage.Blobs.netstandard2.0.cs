@@ -424,11 +424,28 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.RehydratePriority? RehydratePriority { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobDirectoryRequestConditions SourceConditions { get { throw null; } set { } }
     }
+    public partial class BlobDirectoryDownloadOptions
+    {
+        public BlobDirectoryDownloadOptions() { }
+        public Azure.Storage.Blobs.Models.BlobDirectoryRequestConditions DirectoryRequestConditions { get { throw null; } set { } }
+        public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public Azure.Storage.StorageTransferOptions transferOptions { get { throw null; } set { } }
+    }
     public partial class BlobDirectoryRequestConditions
     {
         public BlobDirectoryRequestConditions() { }
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
+    }
+    public partial class BlobDirectoryUploadOptions
+    {
+        public BlobDirectoryUploadOptions() { }
+        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
     }
     public partial class BlobDownloadDetails
     {
@@ -1029,16 +1046,6 @@ namespace Azure.Storage.Blobs.Models
         Page = 1,
         Append = 2,
     }
-    public partial class BlobUploadDirectoryOptions
-    {
-        public BlobUploadDirectoryOptions() { }
-        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
-        public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
-        public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
-    }
     public partial class BlobUploadOptions
     {
         public BlobUploadOptions() { }
@@ -1442,15 +1449,15 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobDirectoryClient(System.Uri blobDirectoryUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }
         public virtual System.Uri Uri { get { throw null; } }
         public virtual Azure.Response Download(string targetPath) { throw null; }
-        public virtual Azure.Response Download(string targetPath, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, Azure.Storage.StorageTransferOptions transferOptions = default(Azure.Storage.StorageTransferOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Download(string targetPath, Azure.Storage.Blobs.Models.BlobDirectoryDownloadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Download(string targetPath, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DownloadAsync(string targetPath) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadAsync(string targetPath, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, Azure.Storage.StorageTransferOptions transferOptions = default(Azure.Storage.StorageTransferOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DownloadAsync(string targetPath, Azure.Storage.Blobs.Models.BlobDirectoryDownloadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DownloadAsync(string targetPath, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Storage.Blobs.Models.CopyFromUriOperation StartCopyFromUri(System.Uri sourceDirectoryUri, Azure.Storage.Blobs.Models.BlobDirectoryCopyFromUriOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Storage.Blobs.Models.CopyFromUriOperation> StartCopyFromUriAsync(System.Uri sourceDirectoryUri, Azure.Storage.Blobs.Models.BlobDirectoryCopyFromUriOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(string directoryPath, Azure.Storage.Blobs.Models.BlobUploadDirectoryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(string directoryPath, Azure.Storage.Blobs.Models.BlobUploadDirectoryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> Upload(string directoryPath, Azure.Storage.Blobs.Models.BlobDirectoryUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadAsync(string directoryPath, Azure.Storage.Blobs.Models.BlobDirectoryUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BlobLeaseClient
     {

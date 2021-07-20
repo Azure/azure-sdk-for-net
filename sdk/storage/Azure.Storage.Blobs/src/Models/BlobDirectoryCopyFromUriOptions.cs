@@ -31,13 +31,13 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on the copying of data from this source blob.
+        /// conditions on the copying of data from this source directory blob.
         /// </summary>
         public BlobDirectoryRequestConditions SourceConditions { get; set; }
 
         /// <summary>
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// the copying of data to this blob.
+        /// the copying of data to this destination blob directory.
         /// </summary>
         public BlobDirectoryRequestConditions DestinationConditions { get; set; }
 

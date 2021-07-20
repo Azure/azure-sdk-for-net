@@ -47,10 +47,10 @@ namespace Azure.Storage
     public partial class StorageTransferStatus
     {
         public StorageTransferStatus() { }
-        public long bytesTransferred { get { throw null; } }
-        public long failedTransfers { get { throw null; } }
-        public long skippedTransfers { get { throw null; } }
-        public long successfulTransfers { get { throw null; } }
+        public long BytesTransferred { get { throw null; } }
+        public long FailedTransfers { get { throw null; } }
+        public long SkippedTransfers { get { throw null; } }
+        public long SuccessfulTransfers { get { throw null; } }
     }
 }
 namespace Azure.Storage.Sas
