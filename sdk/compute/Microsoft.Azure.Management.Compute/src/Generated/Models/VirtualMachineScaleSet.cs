@@ -91,6 +91,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="orchestrationMode">Specifies the orchestration mode
         /// for the virtual machine scale set. Possible values include:
         /// 'Uniform', 'Flexible'</param>
+        /// <param name="spotRestorePolicy">Specifies the Spot Restore
+        /// properties for the virtual machine scale set.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
         /// <param name="zones">The virtual machine scale set zones. NOTE:
@@ -98,7 +100,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// set</param>
         /// <param name="extendedLocation">The extended location of the Virtual
         /// Machine Scale Set.</param>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), SubResource hostGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), string orchestrationMode = default(string), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation))
+        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), SubResource hostGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), string orchestrationMode = default(string), SpotRestorePolicy spotRestorePolicy = default(SpotRestorePolicy), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -118,6 +120,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             AdditionalCapabilities = additionalCapabilities;
             ScaleInPolicy = scaleInPolicy;
             OrchestrationMode = orchestrationMode;
+            SpotRestorePolicy = spotRestorePolicy;
             Identity = identity;
             Zones = zones;
             ExtendedLocation = extendedLocation;
@@ -258,6 +261,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.orchestrationMode")]
         public string OrchestrationMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Spot Restore properties for the virtual
+        /// machine scale set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.spotRestorePolicy")]
+        public SpotRestorePolicy SpotRestorePolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine scale set, if
