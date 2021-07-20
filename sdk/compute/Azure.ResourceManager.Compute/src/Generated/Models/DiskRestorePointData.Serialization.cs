@@ -12,11 +12,11 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskRestorePoint
+    public partial class DiskRestorePointData
     {
-        internal static DiskRestorePoint DeserializeDiskRestorePoint(JsonElement element)
+        internal static DiskRestorePointData DeserializeDiskRestorePointData(JsonElement element)
         {
-            TenantResourceIdentifier id = default;
+            ResourceGroupResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<DateTimeOffset> timeCreated = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DiskRestorePoint(id, name, type, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation));
+            return new DiskRestorePointData(id, name, type, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation));
         }
     }
 }

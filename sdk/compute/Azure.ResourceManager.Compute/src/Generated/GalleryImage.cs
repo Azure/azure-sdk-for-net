@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a GalleryImage along with the instance operations that can be performed on it. </summary>
     public class GalleryImage : GalleryImageOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "GalleryImage"/> class for mocking. </summary>
+        internal GalleryImage() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "GalleryImage"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>

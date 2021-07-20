@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a CloudService along with the instance operations that can be performed on it. </summary>
     public class CloudService : CloudServiceOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "CloudService"/> class for mocking. </summary>
+        internal CloudService() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "CloudService"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>

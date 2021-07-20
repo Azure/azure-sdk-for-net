@@ -1209,7 +1209,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a virtual machine extension image. </summary>
@@ -1293,7 +1293,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a list of virtual machine extension image types. </summary>
@@ -1375,7 +1375,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a list of virtual machine extension image versions. </summary>
@@ -1480,7 +1480,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a virtual machine image. </summary>
@@ -1582,7 +1582,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a list of all virtual machine image versions for the specified location, publisher, offer, and SKU. </summary>
@@ -1669,7 +1669,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a list of virtual machine image offers for the specified location and publisher. </summary>
@@ -1738,7 +1738,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a list of virtual machine image publishers for the specified Azure location. </summary>
@@ -1812,7 +1812,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a list of virtual machine image SKUs for the specified location, publisher, and offer. </summary>
@@ -1919,7 +1919,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a virtual machine image in an edge zone. </summary>
@@ -2031,7 +2031,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a list of all virtual machine image versions for the specified location, edge zone, publisher, offer, and SKU. </summary>
@@ -2128,7 +2128,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a list of virtual machine image offers for the specified location, edge zone and publisher. </summary>
@@ -2207,7 +2207,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a list of virtual machine image publishers for the specified Azure location and edge zone. </summary>
@@ -2291,7 +2291,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets a list of virtual machine image SKUs for the specified location, edge zone, publisher, and offer. </summary>
@@ -2689,7 +2689,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets specific run command for a subscription in a location. </summary>
@@ -3079,7 +3079,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
@@ -3153,7 +3153,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            );
+            ).ConfigureAwait(false);
         }
 
         /// <summary> Gets properties of a guest operating system family that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>

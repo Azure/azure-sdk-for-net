@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskRestorePointList. </summary>
         /// <param name="value"> A list of disk restore points. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DiskRestorePointList(IEnumerable<DiskRestorePoint> value)
+        internal DiskRestorePointList(IEnumerable<DiskRestorePointData> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskRestorePointList. </summary>
         /// <param name="value"> A list of disk restore points. </param>
         /// <param name="nextLink"> The uri to fetch the next page of disk restore points. Call ListNext() with this to fetch the next page of disk restore points. </param>
-        internal DiskRestorePointList(IReadOnlyList<DiskRestorePoint> value, string nextLink)
+        internal DiskRestorePointList(IReadOnlyList<DiskRestorePointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of disk restore points. </summary>
-        public IReadOnlyList<DiskRestorePoint> Value { get; }
+        public IReadOnlyList<DiskRestorePointData> Value { get; }
         /// <summary> The uri to fetch the next page of disk restore points. Call ListNext() with this to fetch the next page of disk restore points. </summary>
         public string NextLink { get; }
     }

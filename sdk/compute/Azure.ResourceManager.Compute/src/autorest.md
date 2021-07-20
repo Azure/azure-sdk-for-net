@@ -43,7 +43,7 @@ operation-group-to-resource:
   VirtualMachineScaleSetRollingUpgrades: VirtualMachineScaleSetRollingUpgrade
   LogAnalytics: NonResource
   Locations: NonResource
-  DiskRestorePoint: NonResource
+  DiskRestorePoint: DiskRestorePoint
   GallerySharingProfile: NonResource
   SharedGalleries: SharedGallery
   SharedGalleryImages: SharedGalleryImage
@@ -70,6 +70,7 @@ operation-group-to-parent:
   SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries
   SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images
   Locations: subscriptions ## this operation group comes from directive
+operation-group-is-tuple: DiskRestorePoint # after we fixed the parameter mappings, we can remove this.
 operation-group-is-extension: VirtualMachineRunCommands;VirtualMachineScaleSetVMRunCommands;VirtualMachineScaleSetVMExtensions;VirtualMachineExtensions
 directive:
   - from: compute.json

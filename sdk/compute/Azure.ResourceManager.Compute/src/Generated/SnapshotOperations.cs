@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -86,14 +86,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary> Deletes a snapshot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SnapshotOperations.Delete");
             scope.Start();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Deletes a snapshot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SnapshotOperations.Delete");
             scope.Start();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Deletes a snapshot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<SnapshotsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SnapshotOperations.StartDelete");
             scope.Start();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Deletes a snapshot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public SnapshotsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual SnapshotsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SnapshotOperations.StartDelete");
             scope.Start();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public async Task<Response<Snapshot>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Snapshot>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public Response<Snapshot> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<Snapshot> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public async Task<Response<Snapshot>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Snapshot>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public Response<Snapshot> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<Snapshot> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public async Task<Response<Snapshot>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Snapshot>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public Response<Snapshot> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<Snapshot> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public async Task<Response<AccessUri>> GrantAccessAsync(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<AccessUri>> GrantAccessAsync(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public Response<AccessUri> GrantAccess(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public virtual Response<AccessUri> GrantAccess(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public async Task<SnapshotsGrantAccessOperation> StartGrantAccessAsync(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotsGrantAccessOperation> StartGrantAccessAsync(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="grantAccessData"/> is null. </exception>
-        public SnapshotsGrantAccessOperation StartGrantAccess(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public virtual SnapshotsGrantAccessOperation StartGrantAccess(GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
         {
             if (grantAccessData == null)
             {
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Revokes access to a snapshot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> RevokeAccessAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> RevokeAccessAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SnapshotOperations.RevokeAccess");
             scope.Start();
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Revokes access to a snapshot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response RevokeAccess(CancellationToken cancellationToken = default)
+        public virtual Response RevokeAccess(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SnapshotOperations.RevokeAccess");
             scope.Start();
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Revokes access to a snapshot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<SnapshotsRevokeAccessOperation> StartRevokeAccessAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<SnapshotsRevokeAccessOperation> StartRevokeAccessAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SnapshotOperations.StartRevokeAccess");
             scope.Start();
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Revokes access to a snapshot. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public SnapshotsRevokeAccessOperation StartRevokeAccess(CancellationToken cancellationToken = default)
+        public virtual SnapshotsRevokeAccessOperation StartRevokeAccess(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SnapshotOperations.StartRevokeAccess");
             scope.Start();
