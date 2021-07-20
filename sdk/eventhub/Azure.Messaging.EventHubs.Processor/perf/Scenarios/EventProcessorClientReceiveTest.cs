@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
 
         private Task ProcessEventAsync(ProcessEventArgs arg)
         {
-            return EventRaised();
+            return EventRaisedAsync();
         }
 
         private Task ProcessErrorAsync(ProcessErrorEventArgs arg)

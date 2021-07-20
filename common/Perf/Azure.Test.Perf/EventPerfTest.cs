@@ -17,21 +17,20 @@ namespace Azure.Test.Perf
         {
         }
 
-        protected async Task EventRaised()
+        protected Task EventRaisedAsync()
         {
             _eventProcessed.Release();
-
-            await _processNextEvent.WaitAsync(_cancellationToken);
+            return _processNextEvent.WaitAsync(_cancellationToken);
         }
 
         public override void Run(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException("Event-based perf tests only support async");
+            throw new NotImplementedException("EventPerfTest only supports async");
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            // Share cancellation token with EventRaised() method
+            // Share cancellation token with EventRaisedAsync() method
             _cancellationToken = cancellationToken;
 
             await _eventProcessed.WaitAsync(cancellationToken);
