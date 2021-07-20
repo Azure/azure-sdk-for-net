@@ -21,52 +21,52 @@ namespace Azure.Communication.Pipeline
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            ProcessAsync(message, pipeline, false).EnsureCompleted();
+        }
+
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            return ProcessAsync(message, pipeline, true);
+        }
+
+        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        {
             var redirectCount = 0;
 
             while (true)
             {
-                ProcessNext(message, pipeline);
+                if (async)
+                {
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNext(message, pipeline);
+                }
+
+                if (!IsRedirectResponse(message))
+                {
+                    // Request does not require a redirect, continue
+                    // up the policy pipeline.
+                    return;
+                }
 
                 if (!TryGetRedirect(message, out Uri location))
                 {
-                    break;
+                    throw new MissingFieldException("Location header was not retrieved from the redirect response, or URL was invalid.");
                 }
 
                 if (++redirectCount > maxRedirects)
                 {
-                    break;
+                    throw new RequestFailedException("Maximum number of redirections exceeded.");
                 }
 
                 message.Request.Uri.Reset(location);
             }
         }
 
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        private static bool IsRedirectResponse(HttpMessage message)
         {
-            var redirectCount = 0;
-
-            while (true)
-            {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-
-                if (!TryGetRedirect(message, out Uri location))
-                {
-                    break;
-                }
-
-                if (++redirectCount > maxRedirects)
-                {
-                    break;
-                }
-
-                message.Request.Uri.Reset(location);
-            }
-        }
-
-        private static bool TryGetRedirect(HttpMessage message, out Uri location)
-        {
-            location = default;
-
             if (message is null || !message.HasResponse)
             {
                 return false;
@@ -76,10 +76,15 @@ namespace Azure.Communication.Pipeline
             {
                 case HttpStatusCode.Moved:
                 case HttpStatusCode.Found:
-                    break;
+                    return true;
                 default:
                     return false;
             }
+        }
+
+        private static bool TryGetRedirect(HttpMessage message, out Uri location)
+        {
+            location = default;
 
             if (!message.Response.Headers.TryGetValue(LOCATION_HEADER_STRING, out string locationHeader))
             {

@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Enable auto redirect
         /// </summary>
-        public bool AllowAutoRedirect { get; internal set; }
+        internal bool AllowAutoRedirect { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CallingServerClientOptions"/>.
