@@ -235,7 +235,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobDirectoryClient(Uri blobDirectoryUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobDirectoryUri, credential.AsPolicy(), options, null)
+            : this(blobDirectoryUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(blobDirectoryUri);
         }
