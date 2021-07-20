@@ -2,38 +2,36 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Test.Perf;
 
-namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
+namespace Azure.Test.Perf
 {
-    public abstract class EventBasedPerfTest<TOptions> : PerfTest<TOptions> where TOptions : PerfOptions
+    public abstract class EventPerfTest<TOptions> : PerfTest<TOptions> where TOptions : PerfOptions
     {
         private readonly SemaphoreSlim _eventProcessed = new SemaphoreSlim(0);
         private readonly SemaphoreSlim _processNextEvent = new SemaphoreSlim(0);
         private CancellationToken _cancellationToken;
 
-        public EventBasedPerfTest(TOptions options) : base(options)
+        public EventPerfTest(TOptions options) : base(options)
         {
         }
 
         protected async Task EventRaised()
         {
             _eventProcessed.Release();
+
             await _processNextEvent.WaitAsync(_cancellationToken);
         }
 
         public override void Run(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Event-based perf tests only support async");
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
+            // Share cancellation token with EventRaised() method
             _cancellationToken = cancellationToken;
 
             await _eventProcessed.WaitAsync(cancellationToken);

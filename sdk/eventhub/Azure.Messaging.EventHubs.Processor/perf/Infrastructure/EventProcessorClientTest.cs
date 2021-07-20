@@ -10,7 +10,7 @@ using Azure.Test.Perf;
 
 namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
 {
-    public abstract class EventProcessorClientTest<TOptions> : EventBasedPerfTest<TOptions> where TOptions : EventProcessorClientPerfOptions
+    public abstract class EventProcessorClientTest<TOptions> : EventPerfTest<TOptions> where TOptions : EventProcessorClientPerfOptions
     {
         private readonly BlobContainerClient _checkpointStore;
 
