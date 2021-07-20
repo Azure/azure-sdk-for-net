@@ -258,7 +258,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                         .IsOfType("Temperature", AdtDataType.AdtPrimitive)))
                 .GetQueryText()
                 .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))");
+                .Be("SELECT * FROM DigitalTwins WHERE (IS_NUMBER(Humidity) OR IS_PRIMITIVE(Humidity)) OR (IS_NUMBER(Temperature) OR IS_PRIMITIVE(Temperature))");
         }
 
         [Test]
