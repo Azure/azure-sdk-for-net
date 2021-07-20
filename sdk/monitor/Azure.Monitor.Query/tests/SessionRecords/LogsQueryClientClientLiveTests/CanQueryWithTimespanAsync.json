@@ -1,24 +1,24 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/ba97a8e8-b16d-418c-b1ad-1fdfe06d2d89/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "85",
+        "Content-Length": "98",
         "Content-Type": "application/json",
-        "traceparent": "00-8019eb03febf7a4d894d2e568cd156f3-560b4507d7eac54c-00",
+        "traceparent": "00-3cd3d502920a774da913306355edcf89-9bb2aa1b03e58444-00",
         "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210720.1",
+          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "78a3791e3c716b70d3bb26a4aa909da5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA1_123_CL | project TimeGenerated",
-        "timespan": "P9DT21H58M18.2888583S"
+        "query": "TableA1_193_CL | distinct * | project TimeGenerated",
+        "timespan": "P7DT18H30M24.8923326S"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -27,10 +27,10 @@
         "Connection": "keep-alive",
         "Content-Length": "151",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:58:18 GMT",
+        "Date": "Tue, 20 Jul 2021 18:30:25 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6b5d48d5bb-r7fwk",
+        "Via": "1.1 draft-oms-fdbf6c888-tkp9t",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -45,10 +45,10 @@
             ],
             "rows": [
               [
-                "2021-05-05T00:00:00Z"
+                "2021-07-14T00:00:00Z"
               ],
               [
-                "2021-05-08T00:00:00Z"
+                "2021-07-17T00:00:00Z"
               ]
             ]
           }
@@ -57,9 +57,9 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-05-13T14:58:18.2888583-07:00",
+    "DateTimeOffsetNow": "2021-07-20T11:30:24.8923326-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
     "RandomSeed": "388550729",
-    "WORKSPACE_ID": "50e32c19-2b4b-4152-b97e-0e02441cae60"
+    "WORKSPACE_ID": "ba97a8e8-b16d-418c-b1ad-1fdfe06d2d89"
   }
 }
