@@ -12,8 +12,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added new APIs for CRR support 
-- Added getBackupUsageSummaries support in passive stamp
+- Updated restore APIs for adding managed identity support for Azure VMs
        ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
