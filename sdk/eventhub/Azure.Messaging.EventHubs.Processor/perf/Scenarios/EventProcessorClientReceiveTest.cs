@@ -16,14 +16,14 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
             EventProcessorClient.ProcessErrorAsync += ProcessErrorAsync;
         }
 
-        private Task ProcessErrorAsync(ProcessErrorEventArgs arg)
-        {
-            throw arg.Exception;
-        }
-
         private Task ProcessEventAsync(ProcessEventArgs arg)
         {
             return EventRaised();
+        }
+
+        private Task ProcessErrorAsync(ProcessErrorEventArgs arg)
+        {
+            throw arg.Exception;
         }
 
         public override async Task SetupAsync()
