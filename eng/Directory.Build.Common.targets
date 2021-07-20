@@ -39,7 +39,7 @@
   </Target>
 
   <!--Run Aggregate Updates to Source -->
-  <Target Name="UpdateSourceOnBuild" AfterTargets="Build" Condition="'$(UpdateSourceOnBuild)' == 'true' and '$(IsShippingClientLibrary)' == 'true'" >
+  <Target Name="UpdateSourceOnBuild" AfterTargets="Build" Condition="'$(UpdateSourceOnBuild)' == 'true' and '$(IsShippingClientLibrary)' == 'true' and $(MSBuildProjectDirectory.Contains($(ServiceDirectory)))" >
     <PropertyGroup>
       <CodeChecksScriptPath Condition=" '$(CodeChecksScriptPath)'=='' ">$(MSBuildThisFileDirectory)scripts/CodeChecks.ps1</CodeChecksScriptPath>
     </PropertyGroup>
