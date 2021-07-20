@@ -67,20 +67,24 @@ namespace EventHubsPerfStandalone
                         var eventsPerSecond = kvp.Value.Value / elapsedSeconds;
                         var recentEventsPerSecond = recentEvents / recentElapsedSeconds;
 
-                        Console.WriteLine($"[{kvp.Key}] Recent: {recentEvents} ({recentEventsPerSecond:N2} events/sec), " +
-                            $"Total: {events} ({eventsPerSecond:N2} events/sec)");
+                        //Console.WriteLine($"[{kvp.Key}] Recent: {recentEvents} ({recentEventsPerSecond:N2} events/sec), " +
+                        //    $"Total: {events} ({eventsPerSecond:N2} events/sec)");
+
+                        Console.Write(recentEvents + ",");
 
                         lastResults[kvp.Key] = events;
                     }
+
+                    Console.WriteLine();
 
                     var recentTotalEvents = totalEvents - lastTotalEvents;
 
                     var recentTotalEventsPerSecond = recentTotalEvents / recentElapsedSeconds;
                     var totalEventsPerSecond = totalEvents / elapsedSeconds;
 
-                    Console.WriteLine($"Recent: {recentTotalEvents} ({recentTotalEventsPerSecond:N2} events/sec), " +
-                        $"Total: {totalEvents} ({totalEventsPerSecond:N2} events/sec)");
-                    Console.WriteLine();
+                    //Console.WriteLine($"Recent: {recentTotalEvents} ({recentTotalEventsPerSecond:N2} events/sec), " +
+                    //    $"Total: {totalEvents} ({totalEventsPerSecond:N2} events/sec)");
+                    //Console.WriteLine();
 
                     lastElapsedSeconds = elapsedSeconds;
                     lastTotalEvents = totalEvents;
@@ -99,7 +103,7 @@ namespace EventHubsPerfStandalone
 
         private static async Task PartitionInitializingAsync(PartitionInitializingEventArgs arg)
         {
-            Console.WriteLine($"[{arg.PartitionId}] {arg.DefaultStartingPosition}");
+            // Console.WriteLine($"[{arg.PartitionId}] {arg.DefaultStartingPosition}");
             _eventsProcessed[arg.PartitionId] = new StrongBox<int>();
         }
 
