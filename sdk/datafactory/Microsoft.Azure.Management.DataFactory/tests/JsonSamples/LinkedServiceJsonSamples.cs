@@ -31,6 +31,38 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+        [JsonSample]
+        public const string AzureBlobFSLinkedServiceUAMI = @"
+{
+    name: ""Test-Windows-Azure-storage-account-linkedService"",
+    properties:
+    {
+        type: ""AzureBlobFS"",
+        typeProperties:
+        {
+          url: ""https://testblobfs.dfs.core.windows.net"",
+          servicePrincipalId: ""9c8b1ab1-a894-4639-8fb9-75f98a36e9ab"",
+          servicePrincipalKey: {
+             type: ""SecureString"",
+             value: ""mykey""
+          },
+          tenant: ""72f988bf-86f1-41af-91ab-2d7cd011db47"",
+          azureCloudType: ""AzurePublic"",
+          credential: {
+             type: ""CredentialReference"",
+             name: ""uami82501"",
+             properties: 
+             {
+                type: ""ManagedIdentity"",
+                typeProperties: {
+                   resourceId: ""dummy"",
+                   principalId: ""9c8b1ab1-a894-4639-8fb9-75f98a36e9ab""
+                 }
+             }
+          }
+        }
+    }
+}";
 
         [JsonSample]
         public const string AzureDatabricksDeltaLakeLinkedService = @"
