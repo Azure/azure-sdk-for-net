@@ -33,8 +33,9 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(serviceName, service.ServiceName);
 
             Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(null, new AzureKeyCredential("fake")));
-            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, null));
-            Assert.Throws<ArgumentException>(() => new SearchIndexClient(new Uri("http://bing.com"), null));
+            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, credential: null));
+            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, tokenCredential: null));
+            Assert.Throws<ArgumentException>(() => new SearchIndexClient(new Uri("http://bing.com"), credential: null));
         }
 
         [Test]

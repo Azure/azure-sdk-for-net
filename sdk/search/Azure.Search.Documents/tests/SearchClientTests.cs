@@ -29,8 +29,10 @@ namespace Azure.Search.Documents.Tests
             Assert.Throws<ArgumentNullException>(() => new SearchClient(null, indexName, new AzureKeyCredential("fake")));
             Assert.Throws<ArgumentNullException>(() => new SearchClient(endpoint, null, new AzureKeyCredential("fake")));
             Assert.Throws<ArgumentException>(() => new SearchClient(endpoint, string.Empty, new AzureKeyCredential("fake")));
-            Assert.Throws<ArgumentNullException>(() => new SearchClient(endpoint, indexName, null));
-            Assert.Throws<ArgumentException>(() => new SearchClient(new Uri("http://bing.com"), indexName, null));
+            Assert.Throws<ArgumentNullException>(() => new SearchClient(endpoint, indexName, credential: null));
+            Assert.Throws<ArgumentException>(() => new SearchClient(new Uri("http://bing.com"), indexName, credential: null));
+
+            Assert.Throws<ArgumentNullException>(() => new SearchClient(endpoint, indexName, tokenCredential: null));
         }
 
         [Test]
