@@ -88,7 +88,6 @@ namespace Azure.Core.Samples
         [Test]
         public static void DisablingLogging()
         {
-            #region Snippet:DisablingLogging
             SecretClientOptions options = new SecretClientOptions()
             {
                 Diagnostics =
@@ -96,16 +95,13 @@ namespace Azure.Core.Samples
                     IsLoggingEnabled = false
                 }
             };
-            #endregion
         }
 
         [Test]
         public void TraceLogging()
         {
-            #region Snippet:TraceLogging
             // Setup a listener to monitor logged events.
             using AzureEventSourceListener listener = AzureEventSourceListener.CreateTraceLogger();
-            #endregion
         }
 
         [Test]

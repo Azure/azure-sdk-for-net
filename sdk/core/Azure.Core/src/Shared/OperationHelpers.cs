@@ -13,7 +13,7 @@ namespace Azure.Core
     {
         public static TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromSeconds(1);
 
-        public static T GetValue<T>(ref T? value) where T: class
+        public static T GetValue<T>(ref T? value) where T : class
         {
             if (value is null)
             {
@@ -23,7 +23,7 @@ namespace Azure.Core
             return value;
         }
 
-        public static T GetValue<T>(ref T? value) where T: struct
+        public static T GetValue<T>(ref T? value) where T : struct
         {
             if (value == null)
             {
@@ -51,6 +51,73 @@ namespace Azure.Core
                 }
 
                 await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        public static Response<TResult> DefaultWaitForCompletion<TResult>(this Operation<TResult> operation, CancellationToken cancellationToken)
+            where TResult : notnull
+        {
+            return operation.DefaultWaitForCompletion(DefaultPollingInterval, cancellationToken);
+        }
+
+        public static Response<TResult> DefaultWaitForCompletion<TResult>(
+            this Operation<TResult> operation,
+            TimeSpan pollingInterval,
+            CancellationToken cancellationToken)
+            where TResult : notnull
+        {
+            while (true)
+            {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                operation.UpdateStatusAsync(cancellationToken).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                if (operation.HasCompleted)
+                {
+                    return Response.FromValue(operation.Value, operation.GetRawResponse());
+                }
+
+                Thread.Sleep(pollingInterval);
+            }
+        }
+
+        public static ValueTask<Response> DefaultWaitForCompletionResponseAsync(this Operation operation, CancellationToken cancellationToken)
+        {
+            return operation.WaitForCompletionResponseAsync(DefaultPollingInterval, cancellationToken);
+        }
+
+        public static async ValueTask<Response> DefaultWaitForCompletionResponseAsync(
+            this Operation operation,
+            TimeSpan pollingInterval,
+            CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+                if (operation.HasCompleted)
+                {
+                    return operation.GetRawResponse();
+                }
+
+                await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        public static Response DefaultWaitForCompletionResponse(this Operation operation, CancellationToken cancellationToken) =>
+            operation.DefaultWaitForCompletionResponse(DefaultPollingInterval, cancellationToken);
+
+        public static Response DefaultWaitForCompletionResponse(this Operation operation, TimeSpan pollingInterval, CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                operation.UpdateStatusAsync(cancellationToken).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                if (operation.HasCompleted)
+                {
+                    return operation.GetRawResponse();
+                }
+
+                Thread.Sleep(pollingInterval);
             }
         }
     }

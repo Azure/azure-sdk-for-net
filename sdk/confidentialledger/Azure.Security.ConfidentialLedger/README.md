@@ -104,11 +104,11 @@ var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedg
 Every write to Confidential Ledger generates an immutable ledger entry in the service. Writes are uniquely identified by transaction ids that increment with each write.
 
 ```C# Snippet:AppendToLedger
-Response postResponse = ledgerClient.PostLedgerEntry(
+PostLedgerEntryOperation postOperation = ledgerClient.PostLedgerEntry(
     RequestContent.Create(
-        new { contents = "Hello world!" }));
+        new { contents = "Hello world!" }), waitForCompletion: true);
 
-postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
+string transactionId = postOperation.Id;
 Console.WriteLine($"Appended transaction with Id: {transactionId}");
 ```
 
@@ -155,11 +155,11 @@ While most use cases will involve one ledger, we provide the sub-ledger feature 
 ```C# Snippet:SubLedger
 ledgerClient.PostLedgerEntry(
     RequestContent.Create(
-        new { contents = "Hello from Chris!", subLedgerId = "Chris' messages" }));
+        new { contents = "Hello from Chris!", subLedgerId = "Chris' messages" }), waitForCompletion: true);
 
 ledgerClient.PostLedgerEntry(
     RequestContent.Create(
-        new { contents = "Hello from Allison!", subLedgerId = "Allison's messages" }));
+        new { contents = "Hello from Allison!", subLedgerId = "Allison's messages" }), waitForCompletion: true);
 ```
 
 When no sub-ledger id is specified on method calls, the Confidential Ledger service will assume a constant, service-determined sub-ledger id.
@@ -167,12 +167,9 @@ When no sub-ledger id is specified on method calls, the Confidential Ledger serv
 ```C# Snippet:NoSubLedgerId
 Response postResponse = ledgerClient.PostLedgerEntry(
     RequestContent.Create(
-        new { contents = "Hello world!" }));
-postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.TransactionId, out string transactionId);
-string subLedgerId = JsonDocument.Parse(postResponse.Content)
-    .RootElement
-    .GetProperty("subLedgerId")
-    .GetString();
+        new { contents = "Hello world!" }), waitForCompletion: true);
+string transactionId = postOperation.Id;
+string subLedgerId = "subledger:0";
 
 // Wait for the entry to be available.
 status = "Pending";
@@ -226,18 +223,18 @@ Console.WriteLine($"{subLedgerId} == {subLedgerId2}");
 Ledger entries are retrieved from sub-ledgers. When a transaction id is specified, the returned value is the value contained in the specified sub-ledger at the point in time identified by the transaction id. If no transaction id is specified, the latest available value is returned.
 
 ```C# Snippet:GetEnteryWithNoTransactionId
-Response firstPostResponse = ledgerClient.PostLedgerEntry(
-    RequestContent.Create(new { contents = "Hello world 0" }));
+PostLedgerEntryOperation firstPostOperation = ledgerClient.PostLedgerEntry(
+    RequestContent.Create(new { contents = "Hello world 0" }), waitForCompletion: true);
 ledgerClient.PostLedgerEntry(
-    RequestContent.Create(new { contents = "Hello world 1" }));
-Response subLedgerPostResponse = ledgerClient.PostLedgerEntry(
+    RequestContent.Create(new { contents = "Hello world 1" }), waitForCompletion: true);
+PostLedgerEntryOperation subLedgerPostOperation = ledgerClient.PostLedgerEntry(
     RequestContent.Create(new { contents = "Hello world sub-ledger 0" }),
-    "my sub-ledger");
+    "my sub-ledger", waitForCompletion: true);
 ledgerClient.PostLedgerEntry(
     RequestContent.Create(new { contents = "Hello world sub-ledger 1" }),
-    "my sub-ledger");
+    "my sub-ledger", waitForCompletion: true);
 
-firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.TransactionId, out string transactionId);
+string transactionId = firstPostOperation.Id;
 
 // Wait for the entry to be committed
 status = "Pending";
@@ -305,7 +302,7 @@ while (!loaded)
 Console.WriteLine($"The latest ledger entry from the default sub-ledger is {latestDefaultSubLedger}"); //"Hello world 1"
 
 // The ledger entry written at subLedgerTransactionId is retrieved from the sub-ledger 'sub-ledger'.
-subLedgerPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string subLedgerTransactionId);
+string subLedgerTransactionId = subLedgerPostOperation.Id;
 
 // Wait for the entry to be committed
 status = "Pending";

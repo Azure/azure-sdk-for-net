@@ -78,17 +78,20 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             // Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
             var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
+#if SNIPPET
             var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, new DefaultAzureCredential(), options);
-
+#else
+            var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, TestEnvironment.Credential, options);
+#endif
             #endregion
 
             #region Snippet:AppendToLedger
 
-            Response postResponse = ledgerClient.PostLedgerEntry(
+            PostLedgerEntryOperation postOperation = ledgerClient.PostLedgerEntry(
                 RequestContent.Create(
-                    new { contents = "Hello world!" }));
+                    new { contents = "Hello world!" }), waitForCompletion: true);
 
-            postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
+            string transactionId = postOperation.Id;
             Console.WriteLine($"Appended transaction with Id: {transactionId}");
 
             #endregion
@@ -131,11 +134,11 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             ledgerClient.PostLedgerEntry(
                 RequestContent.Create(
-                    new { contents = "Hello from Chris!", subLedgerId = "Chris' messages" }));
+                    new { contents = "Hello from Chris!", subLedgerId = "Chris' messages" }), waitForCompletion: true);
 
             ledgerClient.PostLedgerEntry(
                 RequestContent.Create(
-                    new { contents = "Hello from Allison!", subLedgerId = "Allison's messages" }));
+                    new { contents = "Hello from Allison!", subLedgerId = "Allison's messages" }), waitForCompletion: true);
 
             #endregion
 
@@ -144,19 +147,16 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 #if SNIPPET
             Response postResponse = ledgerClient.PostLedgerEntry(
 #else
-            postResponse = ledgerClient.PostLedgerEntry(
+            postOperation = ledgerClient.PostLedgerEntry(
 #endif
                 RequestContent.Create(
-                    new { contents = "Hello world!" }));
+                    new { contents = "Hello world!" }), waitForCompletion: true);
 #if SNIPPET
-            postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.TransactionId, out string transactionId);
+            string transactionId = postOperation.Id;
 #else
-            postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out transactionId);
+            transactionId = postOperation.Id;
 #endif
-            string subLedgerId = JsonDocument.Parse(postResponse.Content)
-                .RootElement
-                .GetProperty("subLedgerId")
-                .GetString();
+            string subLedgerId = "subledger:0";
 
             // Wait for the entry to be available.
             status = "Pending";
@@ -210,21 +210,21 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #region Snippet:GetEnteryWithNoTransactionId
 
-            Response firstPostResponse = ledgerClient.PostLedgerEntry(
-                RequestContent.Create(new { contents = "Hello world 0" }));
+            PostLedgerEntryOperation firstPostOperation = ledgerClient.PostLedgerEntry(
+                RequestContent.Create(new { contents = "Hello world 0" }), waitForCompletion: true);
             ledgerClient.PostLedgerEntry(
-                RequestContent.Create(new { contents = "Hello world 1" }));
-            Response subLedgerPostResponse = ledgerClient.PostLedgerEntry(
+                RequestContent.Create(new { contents = "Hello world 1" }), waitForCompletion: true);
+            PostLedgerEntryOperation subLedgerPostOperation = ledgerClient.PostLedgerEntry(
                 RequestContent.Create(new { contents = "Hello world sub-ledger 0" }),
-                "my sub-ledger");
+                "my sub-ledger", waitForCompletion: true);
             ledgerClient.PostLedgerEntry(
                 RequestContent.Create(new { contents = "Hello world sub-ledger 1" }),
-                "my sub-ledger");
+                "my sub-ledger", waitForCompletion: true);
 
 #if SNIPPET
-            firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.TransactionId, out string transactionId);
+            string transactionId = firstPostOperation.Id;
 #else
-            firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out transactionId);
+            transactionId = firstPostOperation.Id;
 #endif
 
             // Wait for the entry to be committed
@@ -293,7 +293,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             Console.WriteLine($"The latest ledger entry from the default sub-ledger is {latestDefaultSubLedger}"); //"Hello world 1"
 
             // The ledger entry written at subLedgerTransactionId is retrieved from the sub-ledger 'sub-ledger'.
-            subLedgerPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string subLedgerTransactionId);
+            string subLedgerTransactionId = subLedgerPostOperation.Id;
 
             // Wait for the entry to be committed
             status = "Pending";
