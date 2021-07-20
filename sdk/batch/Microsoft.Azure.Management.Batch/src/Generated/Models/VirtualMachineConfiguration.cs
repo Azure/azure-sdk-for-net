@@ -54,7 +54,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// configuration for the pool.</param>
         /// <param name="extensions">The virtual machine extension for the
         /// pool.</param>
-        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration), DiskEncryptionConfiguration diskEncryptionConfiguration = default(DiskEncryptionConfiguration), NodePlacementConfiguration nodePlacementConfiguration = default(NodePlacementConfiguration), IList<VMExtension> extensions = default(IList<VMExtension>))
+        /// <param name="osDisk">Settings for the operating system disk of the
+        /// Virtual Machine.</param>
+        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration), DiskEncryptionConfiguration diskEncryptionConfiguration = default(DiskEncryptionConfiguration), NodePlacementConfiguration nodePlacementConfiguration = default(NodePlacementConfiguration), IList<VMExtension> extensions = default(IList<VMExtension>), OSDisk osDisk = default(OSDisk))
         {
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
@@ -65,6 +67,7 @@ namespace Microsoft.Azure.Management.Batch.Models
             DiskEncryptionConfiguration = diskEncryptionConfiguration;
             NodePlacementConfiguration = nodePlacementConfiguration;
             Extensions = extensions;
+            OsDisk = osDisk;
             CustomInit();
         }
 
@@ -177,6 +180,16 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </remarks>
         [JsonProperty(PropertyName = "extensions")]
         public IList<VMExtension> Extensions { get; set; }
+
+        /// <summary>
+        /// Gets or sets settings for the operating system disk of the Virtual
+        /// Machine.
+        /// </summary>
+        /// <remarks>
+        /// Contains configuration for ephemeral OSDisk settings.
+        /// </remarks>
+        [JsonProperty(PropertyName = "osDisk")]
+        public OSDisk OsDisk { get; set; }
 
         /// <summary>
         /// Validate the object.

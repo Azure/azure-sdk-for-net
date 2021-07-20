@@ -273,7 +273,7 @@ namespace Microsoft.Azure.Management.Batch
 
             /// <summary>
             /// Synchronizes access keys for the auto-storage account configured for the
-            /// specified Batch account.
+            /// specified Batch account, only if storage key authentication is being used.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.Batch
 
             /// <summary>
             /// Synchronizes access keys for the auto-storage account configured for the
-            /// specified Batch account.
+            /// specified Batch account, only if storage key authentication is being used.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -313,6 +313,14 @@ namespace Microsoft.Azure.Management.Batch
             /// <summary>
             /// Regenerates the specified account key for the Batch account.
             /// </summary>
+            /// <remarks>
+            /// This operation applies only to Batch accounts with
+            /// allowedAuthenticationModes containing 'SharedKey'. If the Batch account
+            /// doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients
+            /// cannot use shared keys to authenticate, and must use another
+            /// allowedAuthenticationModes instead. In this case, regenerating the keys
+            /// will fail.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -334,6 +342,14 @@ namespace Microsoft.Azure.Management.Batch
             /// <summary>
             /// Regenerates the specified account key for the Batch account.
             /// </summary>
+            /// <remarks>
+            /// This operation applies only to Batch accounts with
+            /// allowedAuthenticationModes containing 'SharedKey'. If the Batch account
+            /// doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients
+            /// cannot use shared keys to authenticate, and must use another
+            /// allowedAuthenticationModes instead. In this case, regenerating the keys
+            /// will fail.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -362,11 +378,12 @@ namespace Microsoft.Azure.Management.Batch
             /// Gets the account keys for the specified Batch account.
             /// </summary>
             /// <remarks>
-            /// This operation applies only to Batch accounts created with a
-            /// poolAllocationMode of 'BatchService'. If the Batch account was created with
-            /// a poolAllocationMode of 'UserSubscription', clients cannot use access to
-            /// keys to authenticate, and must use Azure Active Directory instead. In this
-            /// case, getting the keys will fail.
+            /// This operation applies only to Batch accounts with
+            /// allowedAuthenticationModes containing 'SharedKey'. If the Batch account
+            /// doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients
+            /// cannot use shared keys to authenticate, and must use another
+            /// allowedAuthenticationModes instead. In this case, getting the keys will
+            /// fail.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -386,11 +403,12 @@ namespace Microsoft.Azure.Management.Batch
             /// Gets the account keys for the specified Batch account.
             /// </summary>
             /// <remarks>
-            /// This operation applies only to Batch accounts created with a
-            /// poolAllocationMode of 'BatchService'. If the Batch account was created with
-            /// a poolAllocationMode of 'UserSubscription', clients cannot use access to
-            /// keys to authenticate, and must use Azure Active Directory instead. In this
-            /// case, getting the keys will fail.
+            /// This operation applies only to Batch accounts with
+            /// allowedAuthenticationModes containing 'SharedKey'. If the Batch account
+            /// doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients
+            /// cannot use shared keys to authenticate, and must use another
+            /// allowedAuthenticationModes instead. In this case, getting the keys will
+            /// fail.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -407,6 +425,58 @@ namespace Microsoft.Azure.Management.Batch
             public static async Task<BatchAccountKeys> GetKeysAsync(this IBatchAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetKeysWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the endpoints that a Batch Compute Node under this Batch Account may
+            /// call as part of Batch service administration. If you are deploying a Pool
+            /// inside of a virtual network that you specify, you must make sure your
+            /// network allows outbound access to these endpoints. Failure to allow access
+            /// to these endpoints may cause Batch to mark the affected nodes as unusable.
+            /// For more information about creating a pool inside of a virtual network, see
+            /// https://docs.microsoft.com/en-us/azure/batch/batch-virtual-network.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the Batch account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Batch account.
+            /// </param>
+            public static IPage<OutboundEnvironmentEndpoint> ListOutboundNetworkDependenciesEndpoints(this IBatchAccountOperations operations, string resourceGroupName, string accountName)
+            {
+                return operations.ListOutboundNetworkDependenciesEndpointsAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the endpoints that a Batch Compute Node under this Batch Account may
+            /// call as part of Batch service administration. If you are deploying a Pool
+            /// inside of a virtual network that you specify, you must make sure your
+            /// network allows outbound access to these endpoints. Failure to allow access
+            /// to these endpoints may cause Batch to mark the affected nodes as unusable.
+            /// For more information about creating a pool inside of a virtual network, see
+            /// https://docs.microsoft.com/en-us/azure/batch/batch-virtual-network.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the Batch account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Batch account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<OutboundEnvironmentEndpoint>> ListOutboundNetworkDependenciesEndpointsAsync(this IBatchAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListOutboundNetworkDependenciesEndpointsWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -577,6 +647,52 @@ namespace Microsoft.Azure.Management.Batch
             public static async Task<IPage<BatchAccount>> ListByResourceGroupNextAsync(this IBatchAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the endpoints that a Batch Compute Node under this Batch Account may
+            /// call as part of Batch service administration. If you are deploying a Pool
+            /// inside of a virtual network that you specify, you must make sure your
+            /// network allows outbound access to these endpoints. Failure to allow access
+            /// to these endpoints may cause Batch to mark the affected nodes as unusable.
+            /// For more information about creating a pool inside of a virtual network, see
+            /// https://docs.microsoft.com/en-us/azure/batch/batch-virtual-network.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<OutboundEnvironmentEndpoint> ListOutboundNetworkDependenciesEndpointsNext(this IBatchAccountOperations operations, string nextPageLink)
+            {
+                return operations.ListOutboundNetworkDependenciesEndpointsNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the endpoints that a Batch Compute Node under this Batch Account may
+            /// call as part of Batch service administration. If you are deploying a Pool
+            /// inside of a virtual network that you specify, you must make sure your
+            /// network allows outbound access to these endpoints. Failure to allow access
+            /// to these endpoints may cause Batch to mark the affected nodes as unusable.
+            /// For more information about creating a pool inside of a virtual network, see
+            /// https://docs.microsoft.com/en-us/azure/batch/batch-virtual-network.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<OutboundEnvironmentEndpoint>> ListOutboundNetworkDependenciesEndpointsNextAsync(this IBatchAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListOutboundNetworkDependenciesEndpointsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

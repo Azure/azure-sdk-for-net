@@ -102,6 +102,7 @@ namespace Microsoft.Azure.Batch.Tests
             acceptedResponse.Headers.Add("x-ms-request-id", "1");
             acceptedResponse.Headers.Add("Location", @"http://someLocationURL");
             var utcNow = DateTime.UtcNow;
+            string resourceId = "abc123";
 
             var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -116,6 +117,8 @@ namespace Microsoft.Azure.Batch.Tests
                                     'autoStorage' :{
                                         'storageAccountId' : '//storageAccount1',
                                         'lastKeySync': '" + utcNow.ToString("o") + @"',
+                                        'authenticationMode': 'BatchAccountManagedIdentity',
+                                        'NodeIdentityReference': { 'resourceId': '" + resourceId + @"' }
                                     }
                                 },
                             }")
@@ -130,12 +133,16 @@ namespace Microsoft.Azure.Batch.Tests
                 Location = "South Central US",
                 AutoStorage = new AutoStorageBaseProperties()
                 {
-                    StorageAccountId = "//storageAccount1"
+                    StorageAccountId = "//storageAccount1",
+                    AuthenticationMode = AutoStorageAuthenticationMode.BatchAccountManagedIdentity,
+                    NodeIdentityReference = new ComputeNodeIdentityReference(resourceId)
                 }
-            });
+            });;
 
             // Validate result
             Assert.Equal("//storageAccount1", result.AutoStorage.StorageAccountId);
+            Assert.Equal(AutoStorageAuthenticationMode.BatchAccountManagedIdentity, result.AutoStorage.AuthenticationMode);
+            Assert.Equal(resourceId, result.AutoStorage.NodeIdentityReference.ResourceId);
             Assert.Equal(utcNow, result.AutoStorage.LastKeySync);
         }
 
@@ -834,6 +841,66 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Throws<ValidationException>(() => client.BatchAccount.RegenerateKey(null, "bar", AccountKeyType.Primary));
             Assert.Throws<ValidationException>(() => client.BatchAccount.RegenerateKey("foo", null, AccountKeyType.Primary));
             Assert.Throws<ValidationException>(() => client.BatchAccount.RegenerateKey("rg", "invalid%", AccountKeyType.Primary));
+        }
+
+        [Fact]
+        public void ListOutboundNetworkDependenciesEndpointsValidateResponse()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                    'value': [
+                    {
+                      'category': 'Azure Batch',
+                      'endpoints': [
+                        {
+                          'domainName': 'japaneast.batch.azure.com',
+                          'description': 'Applicable to all Azure Batch pools.',
+                          'endpointDetails': [
+                            {
+                              'port': 443
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      'category': 'Azure Storage',
+                      'endpoints': [
+                        {
+                          'domainName': 'sampleautostorageaccountname.blob.core.windows.net',
+                          'description': 'AutoStorage endpoint for this Batch account. Applicable to all Azure Batch pools under this account.',
+                          'endpointDetails': [
+                            {
+                              'port': 443
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }")
+            };
+
+            response.Headers.Add("x-ms-request-id", "1");
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+            var client = BatchTestHelper.GetBatchManagementClient(handler);
+
+            IPage<OutboundEnvironmentEndpoint> result = client.BatchAccount.ListOutboundNetworkDependenciesEndpoints("default-azurebatch-japaneast", "sampleacct");
+
+            Assert.Equal(2, result.Count());
+
+            OutboundEnvironmentEndpoint endpoint = result.ElementAt(0);
+            Assert.Equal("Azure Batch", endpoint.Category);
+            Assert.Equal("japaneast.batch.azure.com", endpoint.Endpoints[0].DomainName);
+            Assert.Equal("Applicable to all Azure Batch pools.", endpoint.Endpoints[0].Description);
+            Assert.Equal(443, endpoint.Endpoints[0].EndpointDetails[0].Port);
+
+            endpoint = result.ElementAt(1);
+            Assert.Equal("Azure Storage", endpoint.Category);
+            Assert.Equal("sampleautostorageaccountname.blob.core.windows.net", endpoint.Endpoints[0].DomainName);
+            Assert.Equal("AutoStorage endpoint for this Batch account. Applicable to all Azure Batch pools under this account.", endpoint.Endpoints[0].Description);
+            Assert.Equal(443, endpoint.Endpoints[0].EndpointDetails[0].Port);
         }
     }
 }

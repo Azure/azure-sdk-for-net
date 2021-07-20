@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Batch.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -30,16 +29,20 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Initializes a new instance of the ContainerRegistry class.
         /// </summary>
+        /// <param name="registryServer">The registry URL.</param>
         /// <param name="userName">The user name to log into the registry
         /// server.</param>
         /// <param name="password">The password to log into the registry
         /// server.</param>
-        /// <param name="registryServer">The registry URL.</param>
-        public ContainerRegistry(string userName, string password, string registryServer = default(string))
+        /// <param name="identityReference">The reference to the user assigned
+        /// identity to use to access an Azure Container Registry instead of
+        /// username and password.</param>
+        public ContainerRegistry(string registryServer = default(string), string userName = default(string), string password = default(string), ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference))
         {
             RegistryServer = registryServer;
             UserName = userName;
             Password = password;
+            IdentityReference = identityReference;
             CustomInit();
         }
 
@@ -70,21 +73,12 @@ namespace Microsoft.Azure.Management.Batch.Models
         public string Password { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the reference to the user assigned identity to use to
+        /// access an Azure Container Registry instead of username and
+        /// password.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (UserName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "UserName");
-            }
-            if (Password == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Password");
-            }
-        }
+        [JsonProperty(PropertyName = "identityReference")]
+        public ComputeNodeIdentityReference IdentityReference { get; set; }
+
     }
 }

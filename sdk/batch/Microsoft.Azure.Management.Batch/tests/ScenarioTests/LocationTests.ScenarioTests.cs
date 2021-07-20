@@ -3,6 +3,7 @@
 
 using Microsoft.Azure.Management.Batch;
 using Microsoft.Azure.Management.Batch.Models;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,66 @@ namespace Batch.Tests.ScenarioTests
 
                 Assert.NotNull(quotas.AccountQuota);
                 Assert.True(quotas.AccountQuota.Value > 0);
+            }
+        }
+
+        [Fact]
+        public async Task ListSupportedCloudServiceSkusAsync()
+        {
+            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
+            {
+                IPage<SupportedSku> result;
+
+                List<SupportedSku> skus = new List<SupportedSku>();
+                string nextPageLink = null;
+                do
+                {
+                    result = await this.BatchManagementClient.Location.ListSupportedCloudServiceSkusAsync(Location);
+                    skus.AddRange(result.ToList());
+                    nextPageLink = result.NextPageLink;
+                }
+                while (nextPageLink != null);
+
+                Assert.True(skus.Count() > 0);
+            }
+        }
+
+        [Fact]
+        public async Task ListSupportedCloudServiceSkusMaxResultsAsync()
+        {
+            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
+            {
+                int maxresult = 5;
+                IPage<SupportedSku> result = await this.BatchManagementClient.Location.ListSupportedCloudServiceSkusAsync(Location, maxresults: maxresult);
+
+                int count = result.Count();
+                Assert.True(count == maxresult);
+            }
+        }
+
+        [Fact]
+        public async Task ListSupportedCloudServiceSkusFilterFamilyNameAsync()
+        {
+            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
+            {
+                string filterValue = "basic";
+                string filterExpression = $"startswith(familyName,'{filterValue}')"; // Select family names beginning with 'basic'.
+                IPage<SupportedSku> result;
+
+                List<SupportedSku> skus = new List<SupportedSku>();
+                string nextPageLink = null;
+                do
+                {
+                    result = await this.BatchManagementClient.Location.ListSupportedCloudServiceSkusAsync(this.Location, filter: filterExpression);
+                    skus.AddRange(result.ToList());
+                    nextPageLink = result.NextPageLink;
+                }
+                while (nextPageLink != null);
+
+                var matched = skus.Where(s => s.FamilyName.StartsWith(filterValue));
+                var unmatched = skus.Where(s => s.FamilyName.StartsWith(filterValue) == false);
+                Assert.True(matched.Count() > 0);
+                Assert.True(unmatched.Count() == 0);
             }
         }
     }

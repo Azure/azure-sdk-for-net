@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Batch.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Base certificate properties.
+    /// </summary>
     public partial class CertificateBaseProperties
     {
         /// <summary>

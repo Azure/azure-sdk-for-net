@@ -178,7 +178,8 @@ namespace Microsoft.Azure.Management.Batch
         Task<AzureOperationResponse<IPage<BatchAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Synchronizes access keys for the auto-storage account configured
-        /// for the specified Batch account.
+        /// for the specified Batch account, only if storage key authentication
+        /// is being used.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
@@ -202,6 +203,14 @@ namespace Microsoft.Azure.Management.Batch
         /// <summary>
         /// Regenerates the specified account key for the Batch account.
         /// </summary>
+        /// <remarks>
+        /// This operation applies only to Batch accounts with
+        /// allowedAuthenticationModes containing 'SharedKey'. If the Batch
+        /// account doesn't contain 'SharedKey' in its
+        /// allowedAuthenticationMode, clients cannot use shared keys to
+        /// authenticate, and must use another allowedAuthenticationModes
+        /// instead. In this case, regenerating the keys will fail.
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
         /// </param>
@@ -232,11 +241,12 @@ namespace Microsoft.Azure.Management.Batch
         /// Gets the account keys for the specified Batch account.
         /// </summary>
         /// <remarks>
-        /// This operation applies only to Batch accounts created with a
-        /// poolAllocationMode of 'BatchService'. If the Batch account was
-        /// created with a poolAllocationMode of 'UserSubscription', clients
-        /// cannot use access to keys to authenticate, and must use Azure
-        /// Active Directory instead. In this case, getting the keys will fail.
+        /// This operation applies only to Batch accounts with
+        /// allowedAuthenticationModes containing 'SharedKey'. If the Batch
+        /// account doesn't contain 'SharedKey' in its
+        /// allowedAuthenticationMode, clients cannot use shared keys to
+        /// authenticate, and must use another allowedAuthenticationModes
+        /// instead. In this case, getting the keys will fail.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
@@ -260,6 +270,38 @@ namespace Microsoft.Azure.Management.Batch
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<BatchAccountKeys>> GetKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the endpoints that a Batch Compute Node under this Batch
+        /// Account may call as part of Batch service administration. If you
+        /// are deploying a Pool inside of a virtual network that you specify,
+        /// you must make sure your network allows outbound access to these
+        /// endpoints. Failure to allow access to these endpoints may cause
+        /// Batch to mark the affected nodes as unusable. For more information
+        /// about creating a pool inside of a virtual network, see
+        /// https://docs.microsoft.com/en-us/azure/batch/batch-virtual-network.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the Batch account.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Batch account.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<OutboundEnvironmentEndpoint>>> ListOutboundNetworkDependenciesEndpointsWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new Batch account with the specified parameters. Existing
         /// accounts cannot be updated with this API and should instead be
@@ -363,5 +405,34 @@ namespace Microsoft.Azure.Management.Batch
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<BatchAccount>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the endpoints that a Batch Compute Node under this Batch
+        /// Account may call as part of Batch service administration. If you
+        /// are deploying a Pool inside of a virtual network that you specify,
+        /// you must make sure your network allows outbound access to these
+        /// endpoints. Failure to allow access to these endpoints may cause
+        /// Batch to mark the affected nodes as unusable. For more information
+        /// about creating a pool inside of a virtual network, see
+        /// https://docs.microsoft.com/en-us/azure/batch/batch-virtual-network.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<OutboundEnvironmentEndpoint>>> ListOutboundNetworkDependenciesEndpointsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

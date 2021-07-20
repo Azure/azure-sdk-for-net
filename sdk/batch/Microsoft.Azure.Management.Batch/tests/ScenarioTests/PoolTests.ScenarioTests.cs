@@ -44,6 +44,7 @@ namespace Batch.Tests.ScenarioTests
                             OsFamily = "5"
                         }
                     };
+                    
                     var resources = new List<ResourceFile>();
                     resources.Add(new ResourceFile(httpUrl: "https://blobsource.com", filePath: "filename.txt"));
                     var environments = new List<EnvironmentSetting>();
@@ -94,7 +95,8 @@ namespace Batch.Tests.ScenarioTests
                                 Sku = "2016-Datacenter-smalldisk"
                             },
                             NodeAgentSkuId = "batch.node.windows amd64",
-                            WindowsConfiguration = new WindowsConfiguration(true)
+                            WindowsConfiguration = new WindowsConfiguration(true),
+                            OsDisk = new OSDisk(new DiffDiskSettings(DiffDiskPlacement.CacheDisk))
                         }
                     };
                     iaasPool.ScaleSettings = new ScaleSettings()
@@ -122,6 +124,8 @@ namespace Batch.Tests.ScenarioTests
                     Assert.Equal(displayName, pool.DisplayName);
                     Assert.Equal(AllocationState.Resizing, pool.AllocationState);
                     Assert.Equal("batch.node.windows amd64", pool.DeploymentConfiguration.VirtualMachineConfiguration.NodeAgentSkuId);
+                    Assert.NotNull(pool.DeploymentConfiguration.VirtualMachineConfiguration.OsDisk);
+                    Assert.Equal(DiffDiskPlacement.CacheDisk, pool.DeploymentConfiguration.VirtualMachineConfiguration.OsDisk.EphemeralOSDiskSettings.Placement);
 
                     // Verify stop resize operation
                     await this.BatchManagementClient.Pool.StopResizeAsync(resourceGroupName, batchAccountName, iaasPoolName);

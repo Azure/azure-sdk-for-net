@@ -34,8 +34,15 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// account to be used for auto-storage account.</param>
         /// <param name="lastKeySync">The UTC time at which storage keys were
         /// last synchronized with the Batch account.</param>
-        public AutoStorageProperties(string storageAccountId, System.DateTime lastKeySync)
-            : base(storageAccountId)
+        /// <param name="authenticationMode">The authentication mode which the
+        /// Batch service will use to manage the auto-storage account. Possible
+        /// values include: 'StorageKeys',
+        /// 'BatchAccountManagedIdentity'</param>
+        /// <param name="nodeIdentityReference">The reference to the user
+        /// assigned identity which compute nodes will use to access
+        /// auto-storage.</param>
+        public AutoStorageProperties(string storageAccountId, System.DateTime lastKeySync, AutoStorageAuthenticationMode? authenticationMode = default(AutoStorageAuthenticationMode?), ComputeNodeIdentityReference nodeIdentityReference = default(ComputeNodeIdentityReference))
+            : base(storageAccountId, authenticationMode, nodeIdentityReference)
         {
             LastKeySync = lastKeySync;
             CustomInit();
