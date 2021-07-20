@@ -155,23 +155,10 @@ namespace Azure.AI.Translation.Document
         public string Format { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> FormatVersions { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageInputType : System.IEquatable<Azure.AI.Translation.Document.StorageInputType>
+    public enum StorageInputType
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageInputType(string value) { throw null; }
-        public static Azure.AI.Translation.Document.StorageInputType File { get { throw null; } }
-        public static Azure.AI.Translation.Document.StorageInputType Folder { get { throw null; } }
-        public bool Equals(Azure.AI.Translation.Document.StorageInputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Translation.Document.StorageInputType left, Azure.AI.Translation.Document.StorageInputType right) { throw null; }
-        public static implicit operator Azure.AI.Translation.Document.StorageInputType (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Translation.Document.StorageInputType left, Azure.AI.Translation.Document.StorageInputType right) { throw null; }
-        public override string ToString() { throw null; }
+        File = 0,
+        Folder = 1,
     }
     public partial class TranslationGlossary
     {
