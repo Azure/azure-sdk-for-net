@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Tests
     public class BlobSchedulerTests : BlobTestBase
     {
         public BlobSchedulerTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -188,6 +188,51 @@ namespace Azure.Storage.Blobs.Tests
                 CollectionAssert.Contains(blobs, dirName + "/" + remoteTargetDir + "/" + localDirName + "/" + lockedChild.Substring(folder.Length + 1).Replace('\\', '/'));
                 CollectionAssert.Contains(blobs, dirName + "/" + remoteTargetDir + "/" + localDirName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
                 CollectionAssert.Contains(blobs, dirName + "/" + remoteTargetDir + "/" + localDirName + "/" + lockedSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
+            });
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
+        public async Task DownloadDirectoryAsync()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobName();
+            BlobDirectoryClient client = test.Container.GetBlobDirectoryClient(dirName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+            string openChild = CreateRandomFile(folder);
+            string lockedChild = CreateRandomFile(folder);
+
+            string openSubfolder = CreateRandomDirectory(folder);
+            string openSubchild = CreateRandomFile(openSubfolder);
+
+            string lockedSubfolder = CreateRandomDirectory(folder);
+            string lockedSubchild = CreateRandomFile(lockedSubfolder);
+
+            string localDirName = folder.Split('\\').Last();
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+
+            // Act
+            await client.UploadAsync(folder, default, options);
+
+            Directory.Delete(folder, true);
+
+            await client.DownloadAsync(folder);
+
+            List<string> localItemsAfterDownload = Directory.GetFiles(folder, "*", SearchOption.AllDirectories).ToList();
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                CollectionAssert.Contains(localItemsAfterDownload, openChild);
+                CollectionAssert.Contains(localItemsAfterDownload, lockedChild);
+                CollectionAssert.Contains(localItemsAfterDownload, openSubchild);
+                CollectionAssert.Contains(localItemsAfterDownload, lockedSubchild);
             });
 
             // Cleanup

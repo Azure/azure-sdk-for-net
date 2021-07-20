@@ -2570,6 +2570,169 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion
 
+        #region Download
+        /// <summary>
+        /// The <see cref="Download(string, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob directory, creating a new blob
+        /// if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="targetPath">
+        /// A string pointing to the local directory whose contents should be uploaded.
+        /// </param>
+        /// <param name="conditions">
+        /// A <see cref="DataLakeRequestConditions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual IEnumerable<Response> Download(
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            string targetPath,
+            DataLakeRequestConditions conditions = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            return DownloadInternal(
+                targetPath,
+                conditions,
+                transferOptions,
+                async: false,
+                cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadAsync(string, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        /// </summary>
+        /// <param name="targetPath">
+        /// The path of the local directory to upload.
+        /// </param>
+        /// <param name="conditions">
+        /// A <see cref="DataLakeRequestConditions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<IEnumerable<Response>> DownloadAsync(
+#pragma warning disable AZC0015 // Unexpected client method return type.
+            string targetPath,
+            DataLakeRequestConditions conditions = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await DownloadInternal(
+                targetPath,
+                conditions,
+                transferOptions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadInternal"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        /// </summary>
+        /// <param name="targetPath">
+        /// The path of the local directory to upload.
+        /// </param>
+        /// <param name="conditions">
+        /// A <see cref="DataLakeRequestConditions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="transferOptions">
+        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// TODO: remove pragma warning after adding await operators
+        internal virtual async Task<IEnumerable<Response>> DownloadInternal(
+            string targetPath,
+            DataLakeRequestConditions conditions,
+            StorageTransferOptions transferOptions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeDirectoryClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(DataLakeDirectoryClient),
+                    message:
+                    $"{nameof(targetPath)}: {targetPath}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(Download)}");
+
+                try
+                {
+                    scope.Start();
+
+                    DataLakeDownloadScheduler scheduler = new DataLakeDownloadScheduler(Uri, ClientConfiguration);
+                    return await scheduler.StartTransfer(targetPath, conditions, transferOptions, async, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobDirectoryClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
         #region Get Paths
         /// <summary>
         /// The <see cref="GetPaths"/> operation returns an async sequence

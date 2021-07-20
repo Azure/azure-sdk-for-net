@@ -682,7 +682,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response Download(string targetPath) =>
+        [ForwardsClientCalls]
+        public virtual IEnumerable<Response> Download(string targetPath) =>
             Download(targetPath, CancellationToken.None);
 
         /// <summary>
@@ -700,7 +701,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DownloadAsync(string targetPath) =>
+        [ForwardsClientCalls]
+        public virtual async Task<IEnumerable<Response>> DownloadAsync(string targetPath) =>
             await DownloadAsync(targetPath, CancellationToken.None).ConfigureAwait(false);
 
         /// <summary>
@@ -722,7 +724,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response Download(
+        [ForwardsClientCalls]
+        public virtual IEnumerable<Response> Download(
             string targetPath,
             CancellationToken cancellationToken) =>
             Download(
@@ -749,7 +752,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DownloadAsync(
+        [ForwardsClientCalls]
+        public virtual async Task<IEnumerable<Response>> DownloadAsync(
             string targetPath,
             CancellationToken cancellationToken) =>
             await DownloadAsync(
@@ -785,7 +789,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response Download(
+        [ForwardsClientCalls]
+        public virtual IEnumerable<Response> Download(
             string targetPath,
             BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
@@ -796,7 +801,6 @@ namespace Azure.Storage.Blobs.Specialized
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            using Stream destination = File.Create(targetPath);
             return StagedDownloadAsync(
                 targetPath,
                 conditions,
@@ -834,7 +838,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DownloadAsync(
+        [ForwardsClientCalls]
+        public virtual async Task<IEnumerable<Response>> DownloadAsync(
             string targetPath,
             BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
@@ -886,7 +891,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         /// TODO: remove static
-        internal static async Task<Response> StagedDownloadAsync(
+        internal async Task<IEnumerable<Response>> StagedDownloadAsync(
             string targetPath,
             BlobRequestConditions conditions = default,
             ///// <param name="progressHandler">
@@ -898,21 +903,155 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            //TODO: implement directory download
-            BlobBaseClient client = new BlobBaseClient(new Uri("fakeUri"));
-            using Stream destination = File.Create(targetPath);
-            PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions);
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobDirectoryClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobDirectoryClient),
+                    message:
+                    $"{nameof(targetPath)}: {targetPath}\n" +
+                    $"{nameof(conditions)}: {conditions}");
 
-            if (async)
-            {
-                return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                return downloader.DownloadTo(destination, conditions, cancellationToken);
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobDirectoryClient)}.{nameof(Download)}");
+
+                try
+                {
+                    scope.Start();
+
+                    BlobDownloadScheduler scheduler = new BlobDownloadScheduler(Uri, ClientConfiguration, ClientSideEncryption);
+                    return await scheduler.StartTransfer(targetPath, transferOptions, conditions, async, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobDirectoryClient));
+                    scope.Dispose();
+                }
             }
         }
         #endregion Download
+
+        #region GetBlobs
+        /// <summary>
+        /// The <see cref="GetBlobs"/> operation returns an async sequence
+        /// of blobs in this container.  Enumerating the blobs may make
+        /// multiple requests to the service while fetching all the values.
+        /// Blobs are ordered lexicographically by name.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
+        /// List Blobs</see>.
+        /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the blobs.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for filtering the blobs.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only blobs
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{T}"/> of <see cref="BlobItem"/>
+        /// describing the blobs in the container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<BlobItem> GetBlobs(
+            BlobTraits traits = BlobTraits.None,
+            BlobStates states = BlobStates.None,
+            string prefix = default,
+            CancellationToken cancellationToken = default)
+        {
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                // erase parameters unrelated to container
+                VersionId = null,
+                Snapshot = null,
+            };
+
+            string directoryName = blobUriBuilder.BlobName;
+            blobUriBuilder.BlobName = null;
+
+            BlobContainerClient containerClient = new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                ClientConfiguration,
+                ClientSideEncryption);
+
+            prefix = prefix != null ? $"{directoryName}/{prefix}" : directoryName;
+
+            return containerClient.GetBlobs(traits, states, prefix, cancellationToken);
+        }
+
+        /// <summary>
+        /// The <see cref="GetBlobsAsync"/> operation returns an async
+        /// sequence of blobs in this container.  Enumerating the blobs may
+        /// make multiple requests to the service while fetching all the
+        /// values.  Blobs are ordered lexicographically by name.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
+        /// List Blobs</see>.
+        /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the blobs.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for filtering the blobs.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only blobs
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the
+        /// blobs in the container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<BlobItem> GetBlobsAsync(
+            BlobTraits traits = BlobTraits.None,
+            BlobStates states = BlobStates.None,
+            string prefix = default,
+            CancellationToken cancellationToken = default)
+        {
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                // erase parameters unrelated to container
+                VersionId = null,
+                Snapshot = null,
+            };
+
+            string directoryName = blobUriBuilder.BlobName;
+            blobUriBuilder.BlobName = null;
+
+            BlobContainerClient containerClient = new BlobContainerClient(
+                blobUriBuilder.ToUri(),
+                ClientConfiguration,
+                ClientSideEncryption);
+
+            prefix = prefix != null ? $"{directoryName}/{prefix}" : directoryName;
+
+            return containerClient.GetBlobsAsync(traits, states, prefix, cancellationToken);
+        }
+        #endregion GetBlobs
 
         #region StartCopyFromUri
         /// <summary>
