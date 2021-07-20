@@ -161,5 +161,12 @@ namespace Azure.ResourceManager.Compute
                 throw;
             }
         }
+
+        /// <summary> Gets a list of DiskRestorePoints in the RestorePoint. </summary>
+        /// <returns> An object representing collection of DiskRestorePoints and their operations over a RestorePoint. </returns>
+        public DiskRestorePointContainer GetDiskRestorePoints()
+        {
+            return new DiskRestorePointContainer(this);
+        }
     }
 }
