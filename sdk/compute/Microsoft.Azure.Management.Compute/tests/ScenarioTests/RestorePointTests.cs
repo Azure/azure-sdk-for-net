@@ -28,6 +28,7 @@ namespace Compute.Tests
         /// Delete restore point collection
         /// </summary>
         [Fact]
+        [Trait("Name", "CreateRpcAndRestorePoints")]
         public void CreateRpcAndRestorePoints()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
