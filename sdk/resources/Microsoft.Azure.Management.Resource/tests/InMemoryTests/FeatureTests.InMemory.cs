@@ -54,7 +54,9 @@ namespace ResourceGroups.Tests
 
             string featureName = "DONOTDELETEBETA";
 
-            var registerResult = client.Features.Register(resourceProviderNamespace, featureName);
+            string apiVersion = "2015-12-01";
+
+            var registerResult = client.Features.Register(resourceProviderNamespace, featureName, apiVersion);
 
             // Validate headers 
             Assert.Equal(HttpMethod.Post, handler.Method);
@@ -108,7 +110,9 @@ namespace ResourceGroups.Tests
 
             string featureName = "DONOTDELETEBETA";
 
-            var registerResult = client.Features.Unregister(resourceProviderNamespace, featureName);
+            string apiVersion = "2015-12-01";
+
+            var registerResult = client.Features.Unregister(resourceProviderNamespace, featureName, apiVersion);
 
             // Validate headers 
             Assert.Equal(HttpMethod.Post, handler.Method);
@@ -118,6 +122,80 @@ namespace ResourceGroups.Tests
             //Construct expected URL
             string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.SubscriptionId) + "/providers/Microsoft.Features/providers/" + Uri.EscapeDataString(resourceProviderNamespace) + "/features/" + Uri.EscapeDataString(featureName) + "/unregister?";
             expectedUrl = expectedUrl + "api-version=2015-12-01";
+            string baseUrl = client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (expectedUrl[0] == '/')
+            {
+                expectedUrl = expectedUrl.Substring(1);
+            }
+            expectedUrl = baseUrl + "/" + expectedUrl;
+            expectedUrl = expectedUrl.Replace(" ", "%20");
+
+            Assert.Equal(expectedUrl, handler.Uri.ToString());
+        }
+
+        [Fact]
+        public void CreateFeatureRegistration()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            var client = GetFeatureClient(handler);
+            
+            string resourceProviderNamespace = "Providers.Test";
+            string featureName = "DONOTDELETEBETA";
+            string apiVersion = "2021-07-01";
+
+            var registerResult = client.SubscriptionFeatureRegistrations.CreateOrUpdate(providerNamespace: resourceProviderNamespace, featureName: featureName, apiVersion: apiVersion);
+
+            // Validate headers 
+            Assert.Equal(HttpMethod.Put, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+            //Valid payload
+            //Construct expected URL
+            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.SubscriptionId) + "/providers/Microsoft.Features/featureProviders/" + Uri.EscapeDataString(resourceProviderNamespace) + "/subscriptionFeatureRegistrations/" + Uri.EscapeDataString(featureName) + "?";
+            expectedUrl = expectedUrl + $"api-version={apiVersion}";
+            string baseUrl = client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (expectedUrl[0] == '/')
+            {
+                expectedUrl = expectedUrl.Substring(1);
+            }
+            expectedUrl = baseUrl + "/" + expectedUrl;
+            expectedUrl = expectedUrl.Replace(" ", "%20");
+
+            Assert.Equal(expectedUrl, handler.Uri.ToString());
+        }
+
+        [Fact]
+        public void DeleteFeatureRegistration()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            var client = GetFeatureClient(handler);
+
+            string resourceProviderNamespace = "Providers.Test";
+            string featureName = "DONOTDELETEBETA";
+            string apiVersion = "2021-07-01";
+
+            client.SubscriptionFeatureRegistrations.Delete(providerNamespace: resourceProviderNamespace, featureName: featureName, apiVersion: apiVersion);
+
+            // Validate headers 
+            Assert.Equal(HttpMethod.Delete, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+            //Valid payload
+            //Construct expected URL
+            string expectedUrl = "/subscriptions/" + Uri.EscapeDataString(client.SubscriptionId) + "/providers/Microsoft.Features/featureProviders/" + Uri.EscapeDataString(resourceProviderNamespace) + "/subscriptionFeatureRegistrations/" + Uri.EscapeDataString(featureName) + "?";
+            expectedUrl = expectedUrl + $"api-version={apiVersion}";
             string baseUrl = client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -165,8 +243,10 @@ namespace ResourceGroups.Tests
 
             string featureName = "DONOTDELETEBETA";
 
+            string apiVersion = "2015-12-01";
+
             // ----Verify API calls for get all features under current subid----
-            var getResult = client.Features.Get( resourceProviderNamespace,featureName);
+            var getResult = client.Features.Get( resourceProviderNamespace, featureName, apiVersion);
 
             // Validate headers 
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -223,10 +303,11 @@ namespace ResourceGroups.Tests
             var client = GetFeatureClient(handler);
 
             string resourceProviderNamespace = "Providers.Test";
-         
+
+            string apiVersion = "2015-12-01";
 
             //-------------Verify get all features within a resource provider
-            var getResult = client.Features.List(resourceProviderNamespace);
+            var getResult = client.Features.List(resourceProviderNamespace, apiVersion);
 
             // Validate headers 
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -282,7 +363,8 @@ namespace ResourceGroups.Tests
             var client = GetFeatureClient(handler);
 
             //-------------Verify get all features within a resource provider
-            var getResult = client.Features.ListAll();
+            string apiVersion = "2015-12-01";
+            var getResult = client.Features.ListAll(apiVersion);
 
             // Validate headers 
             Assert.Equal(HttpMethod.Get, handler.Method);
