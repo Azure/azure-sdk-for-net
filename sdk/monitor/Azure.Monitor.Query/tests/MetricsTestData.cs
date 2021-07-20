@@ -12,7 +12,9 @@ namespace Azure.Monitor.Query.Tests
 {
     public class MetricsTestData
     {
-        private static bool _initialized;
+        private static Task _initialization;
+        private static readonly object _initializationLock = new object();
+
         private readonly MonitorQueryClientTestEnvironment _testEnvironment;
         public string Name1 { get; } = "Guinness";
         public string Name2 { get; } = "Bessie";
@@ -36,20 +38,17 @@ namespace Azure.Monitor.Query.Tests
 
         public async Task InitializeAsync()
         {
-            if (_testEnvironment.Mode == RecordedTestMode.Playback || _initialized)
+            if (_testEnvironment.Mode == RecordedTestMode.Playback)
             {
                 return;
             }
 
-            _initialized = true;
-            var metricClient = new MetricsQueryClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
-
-            await SendData();
-
-            while (!await MetricsPropagated(metricClient))
+            lock (_initializationLock)
             {
-                await Task.Delay(TimeSpan.FromSeconds(5));
+                _initialization ??= SendData();
             }
+
+            await _initialization;
         }
 
         private async Task SendData()
@@ -80,6 +79,13 @@ namespace Azure.Monitor.Query.Tests
                         }))));
                 }
             }
+
+            var metricClient = new MetricsQueryClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
+
+            while (!await MetricsPropagated(metricClient))
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
         }
 
         private async Task<bool> MetricsPropagated(MetricsQueryClient metricQueryClient)
@@ -109,12 +115,9 @@ namespace Azure.Monitor.Query.Tests
                 return false;
             }
 
-            foreach (var data in timeSeries.Data)
+            if (timeSeries.Data.All(d => d.Count == null))
             {
-                if (data.Count == null)
-                {
-                    return false;
-                }
+                return false;
             }
 
             return true;

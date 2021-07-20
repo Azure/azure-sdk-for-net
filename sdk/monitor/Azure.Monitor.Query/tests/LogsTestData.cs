@@ -16,6 +16,8 @@ namespace Azure.Monitor.Query.Tests
     public class LogsTestData
     {
         private static readonly string DataVersion = "1";
+        private static Task _initialization;
+        private static readonly object _initializationLock = new object();
         // The data retention time is 31 day by-default so we need to make sure the data we posted is still
         // being retained.
         // Make the windows start the monday of a previous week.
@@ -43,14 +45,11 @@ namespace Azure.Monitor.Query.Tests
         public DateTimeRange DataTimeRange => new DateTimeRange(RetentionWindowStart, TimeSpan.FromDays(7));
 
         private readonly MonitorQueryClientTestEnvironment _testEnvironment;
-        private static Task _initialization;
-        private static object _initializationLock = new object();
 
         public LogsTestData(RecordedTestBase<MonitorQueryClientTestEnvironment> test)
         {
             _testEnvironment = test.TestEnvironment;
 
-            // Make sure we don't need to re-record every week
             var recordingUtcNow = DateTime.SpecifyKind(test.Recording.UtcNow.Date, DateTimeKind.Utc);
             RetentionWindowStart = recordingUtcNow.AddDays(DayOfWeek.Monday - recordingUtcNow.DayOfWeek - 7);
 
