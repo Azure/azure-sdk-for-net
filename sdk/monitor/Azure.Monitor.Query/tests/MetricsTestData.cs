@@ -69,7 +69,7 @@ namespace Azure.Monitor.Query.Tests
             do
             {
                 // Stop sending when we are past the allowed threshold
-                if (DateTimeOffset.UtcNow - StartTime > AllowedMetricAge)
+                if (DateTimeOffset.UtcNow - StartTime < AllowedMetricAge)
                 {
                     await SendData(senderClient);
                 }
