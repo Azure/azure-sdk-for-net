@@ -2000,7 +2000,7 @@ namespace Azure.Storage.Files.Shares
 
         #region Parallel Download
         /// <summary>
-        /// The <see cref="DownloadTo(Stream)"/> operation downloads a blob using parallel requests,
+        /// The <see cref="DownloadTo(Stream)"/> operation downloads a file using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -2017,7 +2017,7 @@ namespace Azure.Storage.Files.Shares
             DownloadTo(destination, CancellationToken.None);
 
         /// <summary>
-        /// The <see cref="DownloadTo(string)"/> operation downloads a blob using parallel requests,
+        /// The <see cref="DownloadTo(string)"/> operation downloads a file using parallel requests,
         /// and writes the content to <paramref name="path"/>.
         /// </summary>
         /// <param name="path">
@@ -2034,7 +2034,7 @@ namespace Azure.Storage.Files.Shares
             DownloadTo(path, CancellationToken.None);
 
         /// <summary>
-        /// The <see cref="DownloadToAsync(Stream)"/> downloads a blob using parallel requests,
+        /// The <see cref="DownloadToAsync(Stream)"/> downloads a file using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -2051,7 +2051,7 @@ namespace Azure.Storage.Files.Shares
             await DownloadToAsync(destination, CancellationToken.None).ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="DownloadToAsync(string)"/> downloads a blob using parallel requests,
+        /// The <see cref="DownloadToAsync(string)"/> downloads a file using parallel requests,
         /// and writes the content to <paramref name="path"/>.
         /// </summary>
         /// <param name="path">
@@ -2069,7 +2069,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// The <see cref="DownloadTo(Stream, CancellationToken)"/> operation
-        /// downloads a blob using parallel requests,
+        /// downloads a file using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -2096,7 +2096,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// The <see cref="DownloadTo(string, CancellationToken)"/> operation
-        /// downloads a blob using parallel requests,
+        /// downloads a file using parallel requests,
         /// and writes the content to <paramref name="path"/>.
         /// </summary>
         /// <param name="path">
@@ -2123,7 +2123,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// The <see cref="DownloadToAsync(Stream, CancellationToken)"/> operation
-        /// downloads a blob using parallel requests,
+        /// downloads a file using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -2151,7 +2151,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// The <see cref="DownloadToAsync(string, CancellationToken)"/> operation
-        /// downloads a blob using parallel requests,
+        /// downloads a file using parallel requests,
         /// and writes the content to <paramref name="path"/>.
         /// </summary>
         /// <param name="path">
@@ -2179,7 +2179,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// The <see cref="DownloadTo(Stream, ShareFileRequestConditions, StorageTransferOptions, CancellationToken)"/>
-        /// operation downloads a blob using parallel requests,
+        /// operation downloads a file using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -2187,7 +2187,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
+        /// the retrieval of this file.
         /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
@@ -2225,7 +2225,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// The <see cref="DownloadTo(string, ShareFileRequestConditions, StorageTransferOptions, CancellationToken)"/>
-        /// operation downloads a blob using parallel requests,
+        /// operation downloads a file using parallel requests,
         /// and writes the content to <paramref name="path"/>.
         /// </summary>
         /// <param name="path">
@@ -2233,7 +2233,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
+        /// the retrieval of this file.
         /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
@@ -2274,7 +2274,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// The <see cref="DownloadToAsync(Stream, ShareFileRequestConditions, StorageTransferOptions, CancellationToken)"/>
-        /// operation downloads a blob using parallel requests,
+        /// operation downloads a file using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
         /// <param name="destination">
@@ -2282,7 +2282,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
+        /// the retrieval of this file.
         /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
@@ -2320,7 +2320,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// The <see cref="DownloadToAsync(string, ShareFileRequestConditions, StorageTransferOptions, CancellationToken)"/>
-        /// operation downloads a blob using parallel requests,
+        /// operation downloads a file using parallel requests,
         /// and writes the content to <paramref name="path"/>.
         /// </summary>
         /// <param name="path">
@@ -2328,7 +2328,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
+        /// the retrieval of this file.
         /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
@@ -2368,7 +2368,7 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// This operation will download a blob of arbitrary size by downloading it as individually staged
+        /// This operation will download a file of arbitrary size by downloading it as individually staged
         /// partitions if it's larger than the
         /// <paramref name="transferOptions"/> MaximumTransferLength.
         /// </summary>
@@ -2377,7 +2377,7 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
+        /// the retrieval of this file.
         /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure

@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.Shares
     internal class PartitionedDownloader
     {
         /// <summary>
-        /// The client used to download the blob.
+        /// The client used to download the file.
         /// </summary>
         private readonly ShareFileClient _client;
 
@@ -89,8 +89,8 @@ namespace Azure.Storage.Files.Shares
                 scope.Start();
 
                 // Just start downloading using an initial range.  If it's a
-                // small blob, we'll get the whole thing in one shot.  If it's
-                // a large blob, we'll get its full size in Content-Range and
+                // small file, we'll get the whole thing in one shot.  If it's
+                // a large file, we'll get its full size in Content-Range and
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
                 Task<Response<ShareFileDownloadInfo>> initialResponseTask =
@@ -122,7 +122,7 @@ namespace Azure.Storage.Files.Shares
                     return initialResponse.GetRawResponse();
                 }
 
-                // If the first segment was the entire blob, we'll copy that to
+                // If the first segment was the entire file, we'll copy that to
                 // the output stream and finish now
                 long initialLength = initialResponse.Value.ContentLength;
                 long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
@@ -136,13 +136,13 @@ namespace Azure.Storage.Files.Shares
                     return initialResponse.GetRawResponse();
                 }
 
-                // Capture the etag from the first segment and construct
-                // conditions to ensure the blob doesn't change while we're
+                // Capture the etag from the first segment and use it
+                // later to ensure the file doesn't change while we're
                 // downloading the remaining segments
                 ETag etag = initialResponse.GetRawResponse().Headers.ETag.GetValueOrDefault();
 
                 // Create a queue of tasks that will each download one segment
-                // of the blob.  The queue maintains the order of the segments
+                // of the file.  The queue maintains the order of the segments
                 // so we can keep appending to the end of the destination
                 // stream when each segment finishes.
                 var runningTasks = new Queue<Task<Response<ShareFileDownloadInfo>>>();
@@ -154,7 +154,7 @@ namespace Azure.Storage.Files.Shares
                 }
 
                 // Fill the queue with tasks to download each of the remaining
-                // ranges in the blob
+                // ranges in the file
                 foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
                 {
                     // Add the next Task (which will start the download but
@@ -193,10 +193,11 @@ namespace Azure.Storage.Files.Shares
                     // Don't need to worry about 304s here because the ETag
                     // condition will turn into a 412 and throw a proper
                     // RequestFailedException
-
                     Response<ShareFileDownloadInfo> result =
                         await runningTasks.Dequeue().ConfigureAwait(false);
 
+                    // Make sure the ETag for this chunk matches the originally
+                    // recorded one
                     if (etag != result.GetRawResponse().Headers.ETag)
                     {
                         throw new ShareFileModifiedException(
@@ -241,8 +242,8 @@ namespace Azure.Storage.Files.Shares
                 scope.Start();
 
                 // Just start downloading using an initial range.  If it's a
-                // small blob, we'll get the whole thing in one shot.  If it's
-                // a large blob, we'll get its full size in Content-Range and
+                // small file, we'll get the whole thing in one shot.  If it's
+                // a large file, we'll get its full size in Content-Range and
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
                 Response<ShareFileDownloadInfo> initialResponse;
@@ -274,7 +275,7 @@ namespace Azure.Storage.Files.Shares
                 // Copy the first segment to the destination stream
                 CopyTo(initialResponse, destination, cancellationToken);
 
-                // If the first segment was the entire blob, we're finished now
+                // If the first segment was the entire file, we're finished now
                 long initialLength = initialResponse.Value.ContentLength;
                 long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
                 if (initialLength == totalLength)
@@ -282,12 +283,12 @@ namespace Azure.Storage.Files.Shares
                     return initialResponse.GetRawResponse();
                 }
 
-                // Capture the etag from the first segment and construct
-                // conditions to ensure the blob doesn't change while we're
+                // Capture the etag from the first segment and use it
+                // later to ensure the file doesn't change while we're
                 // downloading the remaining segments
                 ETag etag = initialResponse.Value.Details.ETag;
 
-                // Download each of the remaining ranges in the blob
+                // Download each of the remaining ranges in the file
                 foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
                 {
                     // Don't need to worry about 304s here because the ETag
@@ -299,6 +300,8 @@ namespace Azure.Storage.Files.Shares
                         conditions,
                         cancellationToken);
 
+                    // Make sure the ETag for this chunk matches the originally
+                    // recorded one
                     if (etag != result.GetRawResponse().Headers.ETag)
                     {
                         throw new ShareFileModifiedException(
