@@ -14,10 +14,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class AnomalyDetectionConfigurationLiveTests : MetricsAdvisorLiveTestBase
     {
-        private const string MetricName = "metric";
-        private const string DimensionNameA = "dimensionA";
-        private const string DimensionNameB = "dimensionB";
-
         public AnomalyDetectionConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -28,10 +24,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task CreateAndGetDetectionConfigurationWithHardCondition(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
-            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
-            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
             var description = "This configuration was created to test the .NET client.";
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
@@ -65,7 +61,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricWholeSeriesDetectionCondition createdWholeConditions = createdConfig.WholeSeriesDetectionConditions;
 
             Assert.That(createdWholeConditions, Is.Not.Null);
-            Assert.That(createdWholeConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(createdWholeConditions.ConditionOperator, Is.Null);
             Assert.That(createdWholeConditions.ChangeThresholdCondition, Is.Null);
             Assert.That(createdWholeConditions.SmartDetectionCondition, Is.Null);
 
@@ -76,14 +72,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task CreateAndGetDetectionConfigurationWithChangeAndSmartConditions()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
-            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
-                CrossConditionsOperator = DetectionConditionsOperator.And,
+                ConditionOperator = DetectionConditionOperator.And,
                 ChangeThresholdCondition = new(90.0, 5, true, AnomalyDetectorDirection.Both, new(1, 2.0)),
                 SmartDetectionCondition = new(23.0, AnomalyDetectorDirection.Down, new(3, 4.0))
             };
@@ -109,7 +105,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricWholeSeriesDetectionCondition createdWholeConditions = createdConfig.WholeSeriesDetectionConditions;
 
             Assert.That(createdWholeConditions, Is.Not.Null);
-            Assert.That(createdWholeConditions.CrossConditionsOperator, Is.EqualTo(DetectionConditionsOperator.And));
+            Assert.That(createdWholeConditions.ConditionOperator, Is.EqualTo(DetectionConditionOperator.And));
             Assert.That(createdWholeConditions.HardThresholdCondition, Is.Null);
 
             ValidateChangeThresholdCondition(createdWholeConditions.ChangeThresholdCondition, 90.0, 5, true, AnomalyDetectorDirection.Both, 1, 2.0);
@@ -122,10 +118,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Set required parameters of the configuration to be created.
 
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
-            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
@@ -144,19 +140,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series group conditions and create the configuration.
 
-            var groupConditions0 = new MetricSeriesGroupDetectionCondition()
+            var dimensions = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" } };
+            var groupConditions0 = new MetricSeriesGroupDetectionCondition(new DimensionKey(dimensions))
             {
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
 
-            groupConditions0.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Delhi");
-
-            var groupConditions1 = new MetricSeriesGroupDetectionCondition()
+            dimensions = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Kolkata" } };
+            var groupConditions1 = new MetricSeriesGroupDetectionCondition(new DimensionKey(dimensions))
             {
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
-
-            groupConditions1.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions0);
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions1);
@@ -178,7 +172,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricWholeSeriesDetectionCondition createdWholeConditions = createdConfig.WholeSeriesDetectionConditions;
 
             Assert.That(createdWholeConditions, Is.Not.Null);
-            Assert.That(createdWholeConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(createdWholeConditions.ConditionOperator, Is.Null);
             Assert.That(createdWholeConditions.ChangeThresholdCondition, Is.Null);
             Assert.That(createdWholeConditions.SmartDetectionCondition, Is.Null);
 
@@ -195,9 +189,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdGroupConditions0, Is.Not.Null);
 
-            ValidateDimensionKey(createdGroupConditions0.SeriesGroupKey, "Delhi");
+            ValidateTempDataFeedDimensionKey(createdGroupConditions0.SeriesGroupKey, "Delhi");
 
-            Assert.That(createdGroupConditions0.CrossConditionsOperator, Is.Null);
+            Assert.That(createdGroupConditions0.ConditionOperator, Is.Null);
             Assert.That(createdGroupConditions0.HardThresholdCondition, Is.Null);
             Assert.That(createdGroupConditions0.ChangeThresholdCondition, Is.Null);
 
@@ -209,9 +203,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdGroupConditions1, Is.Not.Null);
 
-            ValidateDimensionKey(createdGroupConditions1.SeriesGroupKey, "Koltaka");
+            ValidateTempDataFeedDimensionKey(createdGroupConditions1.SeriesGroupKey, "Kolkata");
 
-            Assert.That(createdGroupConditions1.CrossConditionsOperator, Is.Null);
+            Assert.That(createdGroupConditions1.ConditionOperator, Is.Null);
             Assert.That(createdGroupConditions1.HardThresholdCondition, Is.Null);
             Assert.That(createdGroupConditions1.SmartDetectionCondition, Is.Null);
 
@@ -224,10 +218,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // Set required parameters of the configuration to be created.
 
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
-            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
@@ -247,21 +241,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series conditions and create the configuration.
 
-            var seriesConditions0 = new MetricSingleSeriesDetectionCondition()
+            var dimensions = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" }, { TempDataFeedDimensionNameB, "Handmade" } };
+            var seriesConditions0 = new MetricSingleSeriesDetectionCondition(new DimensionKey(dimensions))
             {
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
 
-            seriesConditions0.SeriesKey.AddDimensionColumn(DimensionNameA, "Delhi");
-            seriesConditions0.SeriesKey.AddDimensionColumn(DimensionNameB, "Handmade");
-
-            var seriesConditions1 = new MetricSingleSeriesDetectionCondition()
+            dimensions = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Kolkata" }, { TempDataFeedDimensionNameB, "Grocery & Gourmet Food" } };
+            var seriesConditions1 = new MetricSingleSeriesDetectionCondition(new DimensionKey(dimensions))
             {
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
-
-            seriesConditions1.SeriesKey.AddDimensionColumn(DimensionNameA, "Koltaka");
-            seriesConditions1.SeriesKey.AddDimensionColumn(DimensionNameB, "Grocery & Gourmet Food");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions0);
             configToCreate.SeriesDetectionConditions.Add(seriesConditions1);
@@ -283,7 +273,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricWholeSeriesDetectionCondition createdWholeConditions = createdConfig.WholeSeriesDetectionConditions;
 
             Assert.That(createdWholeConditions, Is.Not.Null);
-            Assert.That(createdWholeConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(createdWholeConditions.ConditionOperator, Is.Null);
             Assert.That(createdWholeConditions.ChangeThresholdCondition, Is.Null);
             Assert.That(createdWholeConditions.SmartDetectionCondition, Is.Null);
 
@@ -300,9 +290,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdSeriesConditions0, Is.Not.Null);
 
-            ValidateDimensionKey(createdSeriesConditions0.SeriesKey, "Delhi", "Handmade");
+            ValidateTempDataFeedDimensionKey(createdSeriesConditions0.SeriesKey, "Delhi", "Handmade");
 
-            Assert.That(createdSeriesConditions0.CrossConditionsOperator, Is.Null);
+            Assert.That(createdSeriesConditions0.ConditionOperator, Is.Null);
             Assert.That(createdSeriesConditions0.HardThresholdCondition, Is.Null);
             Assert.That(createdSeriesConditions0.ChangeThresholdCondition, Is.Null);
 
@@ -314,9 +304,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(createdSeriesConditions1, Is.Not.Null);
 
-            ValidateDimensionKey(createdSeriesConditions1.SeriesKey, "Koltaka", "Grocery & Gourmet Food");
+            ValidateTempDataFeedDimensionKey(createdSeriesConditions1.SeriesKey, "Kolkata", "Grocery & Gourmet Food");
 
-            Assert.That(createdSeriesConditions1.CrossConditionsOperator, Is.Null);
+            Assert.That(createdSeriesConditions1.ConditionOperator, Is.Null);
             Assert.That(createdSeriesConditions1.HardThresholdCondition, Is.Null);
             Assert.That(createdSeriesConditions1.SmartDetectionCondition, Is.Null);
 
@@ -326,19 +316,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task UpdateDetectionConfigurationWithMinimumSetupAndGetInstance(bool useTokenCredential)
+        public async Task UpdateDetectionConfigurationWithMinimumSetup(bool useTokenCredential)
         {
             // Set required parameters of the configuration to be created.
 
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
-            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
-                CrossConditionsOperator = DetectionConditionsOperator.Or,
+                ConditionOperator = DetectionConditionOperator.Or,
                 HardThresholdCondition = new(AnomalyDetectorDirection.Down, new(1, 2.0))
                 {
                     LowerBound = 10.0
@@ -355,24 +345,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series group conditions.
 
-            var groupConditions = new MetricSeriesGroupDetectionCondition()
+            var dimensions = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Kolkata" } };
+            var groupConditions = new MetricSeriesGroupDetectionCondition(new DimensionKey(dimensions))
             {
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
-
-            groupConditions.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
 
             // Set the series conditions and create the configuration.
 
-            var seriesConditions = new MetricSingleSeriesDetectionCondition()
+            dimensions = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" }, { TempDataFeedDimensionNameB, "Handmade" } };
+            var seriesConditions = new MetricSingleSeriesDetectionCondition(new DimensionKey(dimensions))
             {
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
-
-            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameA, "Delhi");
-            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameB, "Handmade");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
@@ -398,7 +385,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricWholeSeriesDetectionCondition updatedWholeConditions = updatedConfig.WholeSeriesDetectionConditions;
 
             Assert.That(updatedWholeConditions, Is.Not.Null);
-            Assert.That(updatedWholeConditions.CrossConditionsOperator, Is.EqualTo(DetectionConditionsOperator.Or));
+            Assert.That(updatedWholeConditions.ConditionOperator, Is.EqualTo(DetectionConditionOperator.Or));
             Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
 
             ValidateHardThresholdCondition(updatedWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Down, null, 12.0, 1, 2.0);
@@ -412,9 +399,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedGroupConditions, Is.Not.Null);
 
-            ValidateDimensionKey(updatedGroupConditions.SeriesGroupKey, "Koltaka");
+            ValidateTempDataFeedDimensionKey(updatedGroupConditions.SeriesGroupKey, "Kolkata");
 
-            Assert.That(updatedGroupConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedGroupConditions.ConditionOperator, Is.Null);
             Assert.That(updatedGroupConditions.HardThresholdCondition, Is.Null);
             Assert.That(updatedGroupConditions.SmartDetectionCondition, Is.Null);
 
@@ -426,122 +413,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var updatedSeriesConditions = updatedConfig.SeriesDetectionConditions.Single();
 
-            ValidateDimensionKey(updatedSeriesConditions.SeriesKey, "Delhi", "Handmade");
+            ValidateTempDataFeedDimensionKey(updatedSeriesConditions.SeriesKey, "Delhi", "Handmade");
 
             Assert.That(updatedSeriesConditions, Is.Not.Null);
-            Assert.That(updatedSeriesConditions.CrossConditionsOperator, Is.Null);
-            Assert.That(updatedSeriesConditions.HardThresholdCondition, Is.Null);
-            Assert.That(updatedSeriesConditions.ChangeThresholdCondition, Is.Null);
-
-            ValidateSmartDetectionCondition(updatedSeriesConditions.SmartDetectionCondition, 30.0, AnomalyDetectorDirection.Both, 3, 4.0);
-        }
-
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateDetectionConfigurationWithMinimumSetupAndNewInstance()
-        {
-            // Set required parameters of the configuration to be created.
-
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
-
-            string configName = Recording.GenerateAlphaNumericId("config");
-            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
-
-            var wholeConditions = new MetricWholeSeriesDetectionCondition()
-            {
-                CrossConditionsOperator = DetectionConditionsOperator.Or,
-                HardThresholdCondition = new(AnomalyDetectorDirection.Down, new(1, 2.0))
-                {
-                    LowerBound = 10.0
-                },
-                SmartDetectionCondition = new(60.0, AnomalyDetectorDirection.Up, new(5, 6.0))
-            };
-
-            var configToCreate = new AnomalyDetectionConfiguration()
-            {
-                MetricId = metricId,
-                Name = configName,
-                WholeSeriesDetectionConditions = wholeConditions
-            };
-
-            // Set the series group conditions.
-
-            var groupConditions = new MetricSeriesGroupDetectionCondition()
-            {
-                ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
-            };
-
-            groupConditions.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Koltaka");
-
-            configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
-
-            // Set the series conditions and create the configuration.
-
-            var seriesConditions = new MetricSingleSeriesDetectionCondition()
-            {
-                SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
-            };
-
-            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameA, "Delhi");
-            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameB, "Handmade");
-
-            configToCreate.SeriesDetectionConditions.Add(seriesConditions);
-
-            await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
-
-            // Update the created configuration.
-
-            var configToUpdate = new AnomalyDetectionConfiguration() { WholeSeriesDetectionConditions = wholeConditions };
-
-            configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition.LowerBound = 12.0;
-
-            AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
-
-            // Validate top-level members.
-
-            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
-            Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
-            Assert.That(updatedConfig.Name, Is.EqualTo(configName));
-            Assert.That(updatedConfig.Description, Is.Empty);
-
-            // Validate whole series detection conditions.
-
-            MetricWholeSeriesDetectionCondition updatedWholeConditions = updatedConfig.WholeSeriesDetectionConditions;
-
-            Assert.That(updatedWholeConditions, Is.Not.Null);
-            Assert.That(updatedWholeConditions.CrossConditionsOperator, Is.EqualTo(DetectionConditionsOperator.Or));
-            Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
-
-            ValidateHardThresholdCondition(updatedWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Down, null, 12.0, 1, 2.0);
-            ValidateSmartDetectionCondition(updatedWholeConditions.SmartDetectionCondition, 60.0, AnomalyDetectorDirection.Up, 5, 6.0);
-
-            // Validate series group conditions.
-
-            Assert.That(updatedConfig.SeriesGroupDetectionConditions, Is.Not.Null);
-
-            var updatedGroupConditions = updatedConfig.SeriesGroupDetectionConditions.Single();
-
-            Assert.That(updatedGroupConditions, Is.Not.Null);
-
-            ValidateDimensionKey(updatedGroupConditions.SeriesGroupKey, "Koltaka");
-
-            Assert.That(updatedGroupConditions.CrossConditionsOperator, Is.Null);
-            Assert.That(updatedGroupConditions.HardThresholdCondition, Is.Null);
-            Assert.That(updatedGroupConditions.SmartDetectionCondition, Is.Null);
-
-            ValidateChangeThresholdCondition(updatedGroupConditions.ChangeThresholdCondition, 40.0, 12, false, AnomalyDetectorDirection.Up, 5, 6.0);
-
-            // Validates series conditions.
-
-            Assert.That(updatedConfig.SeriesDetectionConditions, Is.Not.Null);
-
-            var updatedSeriesConditions = updatedConfig.SeriesDetectionConditions.Single();
-
-            ValidateDimensionKey(updatedSeriesConditions.SeriesKey, "Delhi", "Handmade");
-
-            Assert.That(updatedSeriesConditions, Is.Not.Null);
-            Assert.That(updatedSeriesConditions.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedSeriesConditions.ConditionOperator, Is.Null);
             Assert.That(updatedSeriesConditions.HardThresholdCondition, Is.Null);
             Assert.That(updatedSeriesConditions.ChangeThresholdCondition, Is.Null);
 
@@ -550,20 +425,20 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21509")]
-        public async Task UpdateDetectionConfigurationWithEveryMemberAndGetInstance()
+        public async Task UpdateDetectionConfigurationWithEveryMember()
         {
             // Set parameters of the configuration to be created.
 
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
-            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
             var description = "This configuration was created to test the .NET client.";
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
-                CrossConditionsOperator = DetectionConditionsOperator.Or,
+                ConditionOperator = DetectionConditionOperator.Or,
                 HardThresholdCondition = new(AnomalyDetectorDirection.Down, new(1, 2.0))
                 {
                     LowerBound = 10.0
@@ -581,24 +456,21 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             // Set the series group conditions.
 
-            var groupConditions = new MetricSeriesGroupDetectionCondition()
+            var dimensions = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Kolkata" } };
+            var groupConditions = new MetricSeriesGroupDetectionCondition(new DimensionKey(dimensions))
             {
                 ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
             };
-
-            groupConditions.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Koltaka");
 
             configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
 
             // Set the series conditions and create the configuration.
 
-            var seriesConditions = new MetricSingleSeriesDetectionCondition()
+            dimensions = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" }, { TempDataFeedDimensionNameB, "Handmade" } };
+            var seriesConditions = new MetricSingleSeriesDetectionCondition(new DimensionKey(dimensions))
             {
                 SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
             };
-
-            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameA, "Delhi");
-            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameB, "Handmade");
 
             configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
@@ -610,17 +482,16 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             configToUpdate.Description = description;
 
-            configToUpdate.WholeSeriesDetectionConditions.CrossConditionsOperator = DetectionConditionsOperator.And;
+            configToUpdate.WholeSeriesDetectionConditions.ConditionOperator = DetectionConditionOperator.And;
             configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition = new(AnomalyDetectorDirection.Up, new(11, 12.0)) { UpperBound = 9.0 };
             configToUpdate.WholeSeriesDetectionConditions.ChangeThresholdCondition = null;
             configToUpdate.WholeSeriesDetectionConditions.SmartDetectionCondition = new(75.0, AnomalyDetectorDirection.Both, new(15, 16.0));
 
-            var newGroupConditions = new MetricSeriesGroupDetectionCondition()
+            dimensions = new Dictionary<string, string>() { { TempDataFeedDimensionNameA, "Delhi" } };
+            var newGroupConditions = new MetricSeriesGroupDetectionCondition(new DimensionKey(dimensions))
             {
                 SmartDetectionCondition = new(95.0, AnomalyDetectorDirection.Both, new(25, 26.0))
             };
-
-            newGroupConditions.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Delhi");
 
             configToUpdate.SeriesGroupDetectionConditions.Add(newGroupConditions);
 
@@ -641,7 +512,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricWholeSeriesDetectionCondition updatedWholeConditions = updatedConfig.WholeSeriesDetectionConditions;
 
             Assert.That(updatedWholeConditions, Is.Not.Null);
-            Assert.That(updatedWholeConditions.CrossConditionsOperator, Is.EqualTo(DetectionConditionsOperator.And));
+            Assert.That(updatedWholeConditions.ConditionOperator, Is.EqualTo(DetectionConditionOperator.And));
             Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
 
             ValidateHardThresholdCondition(updatedWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Up, 9.0, null, 11, 12.0);
@@ -658,9 +529,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedGroupConditions0, Is.Not.Null);
 
-            ValidateDimensionKey(updatedGroupConditions0.SeriesGroupKey, "Koltaka");
+            ValidateTempDataFeedDimensionKey(updatedGroupConditions0.SeriesGroupKey, "Kolkata");
 
-            Assert.That(updatedGroupConditions0.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedGroupConditions0.ConditionOperator, Is.Null);
             Assert.That(updatedGroupConditions0.HardThresholdCondition, Is.Null);
             Assert.That(updatedGroupConditions0.SmartDetectionCondition, Is.Null);
 
@@ -672,9 +543,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             Assert.That(updatedGroupConditions1, Is.Not.Null);
 
-            ValidateDimensionKey(updatedGroupConditions1.SeriesGroupKey, "Delhi");
+            ValidateTempDataFeedDimensionKey(updatedGroupConditions1.SeriesGroupKey, "Delhi");
 
-            Assert.That(updatedGroupConditions1.CrossConditionsOperator, Is.Null);
+            Assert.That(updatedGroupConditions1.ConditionOperator, Is.Null);
             Assert.That(updatedGroupConditions1.HardThresholdCondition, Is.Null);
             Assert.That(updatedGroupConditions1.ChangeThresholdCondition, Is.Null);
 
@@ -682,145 +553,148 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21177")]
-        public async Task UpdateDetectionConfigurationWithEveryMemberAndNewInstance()
+        public async Task UpdateRootLevelMembersWithNullSetsToDefault()
         {
-            // Set parameters of the configuration to be created.
-
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
-            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
-            var description = "This configuration was created to test the .NET client.";
-
-            var wholeConditions = new MetricWholeSeriesDetectionCondition()
-            {
-                CrossConditionsOperator = DetectionConditionsOperator.Or,
-                HardThresholdCondition = new(AnomalyDetectorDirection.Down, new(1, 2.0))
-                {
-                    LowerBound = 10.0
-                },
-                ChangeThresholdCondition = new(50.0, 15, true, AnomalyDetectorDirection.Both, new(7, 8.0)),
-                SmartDetectionCondition = new(60.0, AnomalyDetectorDirection.Up, new(5, 6.0))
-            };
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
 
             var configToCreate = new AnomalyDetectionConfiguration()
             {
                 MetricId = metricId,
                 Name = configName,
-                WholeSeriesDetectionConditions = wholeConditions
+                WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+                {
+                    SmartDetectionCondition = new SmartDetectionCondition(1.0, AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0))
+                },
+                Description = "description"
             };
-
-            // Set the series group conditions.
-
-            var groupConditions = new MetricSeriesGroupDetectionCondition()
-            {
-                ChangeThresholdCondition = new(40.0, 12, false, AnomalyDetectorDirection.Up, new(5, 6.0))
-            };
-
-            groupConditions.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Koltaka");
-
-            configToCreate.SeriesGroupDetectionConditions.Add(groupConditions);
-
-            // Set the series conditions and create the configuration.
-
-            var seriesConditions = new MetricSingleSeriesDetectionCondition()
-            {
-                SmartDetectionCondition = new(30.0, AnomalyDetectorDirection.Both, new(3, 4.0))
-            };
-
-            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameA, "Delhi");
-            seriesConditions.SeriesKey.AddDimensionColumn(DimensionNameB, "Handmade");
-
-            configToCreate.SeriesDetectionConditions.Add(seriesConditions);
 
             await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
 
-            // Update the created configuration.
+            AnomalyDetectionConfiguration configToUpdate = disposableConfig.Configuration;
 
-            var configToUpdate = new AnomalyDetectionConfiguration();
-
-            configToUpdate.Description = description;
-
-            configToUpdate.WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
-            {
-                CrossConditionsOperator = DetectionConditionsOperator.And,
-                HardThresholdCondition = new(AnomalyDetectorDirection.Up, new(11, 12.0)) { UpperBound = 9.0 },
-                SmartDetectionCondition = new(75.0, AnomalyDetectorDirection.Both, new(15, 16.0))
-            };
-
-            var newGroupConditions = new MetricSeriesGroupDetectionCondition()
-            {
-                SmartDetectionCondition = new(95.0, AnomalyDetectorDirection.Both, new(25, 26.0))
-            };
-
-            newGroupConditions.SeriesGroupKey.AddDimensionColumn(DimensionNameA, "Delhi");
-
-            configToUpdate.SeriesGroupDetectionConditions.Add(groupConditions);
-            configToUpdate.SeriesGroupDetectionConditions.Add(newGroupConditions);
-
-            configToUpdate.SeriesDetectionConditions.Clear();
+            configToUpdate.Description = null;
 
             AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
-            // Validate top-level members.
+            Assert.That(updatedConfig.Description, Is.Empty);
+        }
 
-            Assert.That(updatedConfig.Id, Is.EqualTo(configToUpdate.Id));
-            Assert.That(updatedConfig.MetricId, Is.EqualTo(metricId));
-            Assert.That(updatedConfig.Name, Is.EqualTo(configName));
-            Assert.That(updatedConfig.Description, Is.EqualTo(description));
-            Assert.That(updatedConfig.SeriesDetectionConditions, Is.Not.Null.And.Empty);
+        [RecordedTest]
+        public async Task UpdateSmartDetectionConditionWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
 
-            // Validate whole series detection conditions.
+            string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
 
-            MetricWholeSeriesDetectionCondition updatedWholeConditions = updatedConfig.WholeSeriesDetectionConditions;
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = metricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+                {
+                    SmartDetectionCondition = new SmartDetectionCondition(1.0, AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0)),
+                    HardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0))
+                    {
+                        LowerBound = 1.0
+                    },
+                    ConditionOperator = DetectionConditionOperator.And
+                }
+            };
 
-            Assert.That(updatedWholeConditions, Is.Not.Null);
-            Assert.That(updatedWholeConditions.CrossConditionsOperator, Is.EqualTo(DetectionConditionsOperator.And));
-            Assert.That(updatedWholeConditions.ChangeThresholdCondition, Is.Null);
+            await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
 
-            ValidateHardThresholdCondition(updatedWholeConditions.HardThresholdCondition, AnomalyDetectorDirection.Up, 9.0, null, 11, 12.0);
-            ValidateSmartDetectionCondition(updatedWholeConditions.SmartDetectionCondition, 75.0, AnomalyDetectorDirection.Both, 15, 16.0);
+            AnomalyDetectionConfiguration configToUpdate = disposableConfig.Configuration;
 
-            // Start series group conditions validation.
+            configToUpdate.WholeSeriesDetectionConditions.SmartDetectionCondition = null;
 
-            Assert.That(updatedConfig.SeriesGroupDetectionConditions, Is.Not.Null);
-            Assert.That(updatedConfig.SeriesGroupDetectionConditions.Count, Is.EqualTo(2));
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
-            // Validate first series group conditions.
+            Assert.That(updatedConfig.WholeSeriesDetectionConditions.SmartDetectionCondition, Is.Null);
+        }
 
-            var updatedGroupConditions0 = updatedConfig.SeriesGroupDetectionConditions[0];
+        [RecordedTest]
+        public async Task UpdateHardThresholdConditionWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
 
-            Assert.That(updatedGroupConditions0, Is.Not.Null);
+            string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
 
-            ValidateDimensionKey(updatedGroupConditions0.SeriesGroupKey, "Koltaka");
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = metricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+                {
+                    SmartDetectionCondition = new SmartDetectionCondition(1.0, AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0)),
+                    HardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0))
+                    {
+                        LowerBound = 1.0
+                    },
+                    ConditionOperator = DetectionConditionOperator.And
+                }
+            };
 
-            Assert.That(updatedGroupConditions0.CrossConditionsOperator, Is.Null);
-            Assert.That(updatedGroupConditions0.HardThresholdCondition, Is.Null);
-            Assert.That(updatedGroupConditions0.SmartDetectionCondition, Is.Null);
+            await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
 
-            ValidateChangeThresholdCondition(updatedGroupConditions0.ChangeThresholdCondition, 40.0, 12, false, AnomalyDetectorDirection.Up, 5, 6.0);
+            AnomalyDetectionConfiguration configToUpdate = disposableConfig.Configuration;
 
-            // Validate last series group conditions.
+            configToUpdate.WholeSeriesDetectionConditions.HardThresholdCondition = null;
 
-            var updatedGroupConditions1 = updatedConfig.SeriesGroupDetectionConditions[1];
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
 
-            Assert.That(updatedGroupConditions1, Is.Not.Null);
+            Assert.That(updatedConfig.WholeSeriesDetectionConditions.HardThresholdCondition, Is.Null);
+        }
 
-            ValidateDimensionKey(updatedGroupConditions1.SeriesGroupKey, "Delhi");
+        [RecordedTest]
+        public async Task UpdateChangeThresholdConditionWithNullSetsToDefault()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
 
-            Assert.That(updatedGroupConditions1.CrossConditionsOperator, Is.Null);
-            Assert.That(updatedGroupConditions1.HardThresholdCondition, Is.Null);
-            Assert.That(updatedGroupConditions1.ChangeThresholdCondition, Is.Null);
+            string configName = Recording.GenerateAlphaNumericId("config");
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
 
-            ValidateSmartDetectionCondition(updatedGroupConditions1.SmartDetectionCondition, 95.0, AnomalyDetectorDirection.Both, 25, 26.0);
+            var configToCreate = new AnomalyDetectionConfiguration()
+            {
+                MetricId = metricId,
+                Name = configName,
+                WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+                {
+                    SmartDetectionCondition = new SmartDetectionCondition(1.0, AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0)),
+                    ChangeThresholdCondition = new ChangeThresholdCondition(1.0, 1, false, AnomalyDetectorDirection.Down,
+                        new SuppressCondition(1, 1.0)),
+                    ConditionOperator = DetectionConditionOperator.And
+                }
+            };
+
+            await using var disposableConfig = await DisposableDetectionConfiguration.CreateDetectionConfigurationAsync(adminClient, configToCreate);
+
+            AnomalyDetectionConfiguration configToUpdate = disposableConfig.Configuration;
+
+            configToUpdate.WholeSeriesDetectionConditions.ChangeThresholdCondition = null;
+
+            AnomalyDetectionConfiguration updatedConfig = await adminClient.UpdateDetectionConfigurationAsync(configToUpdate);
+
+            Assert.That(updatedConfig.WholeSeriesDetectionConditions.ChangeThresholdCondition, Is.Null);
         }
 
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18004")]
         public async Task GetDetectionConfigurations(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
@@ -865,10 +739,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public async Task DeleteDetectionConfiguration(bool useTokenCredential)
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-            await using DisposableDataFeed disposableDataFeed = await CreateDisposableDataFeedAsync(adminClient);
+            await using DisposableDataFeed disposableDataFeed = await CreateTempDataFeedAsync(adminClient);
 
             string configName = Recording.GenerateAlphaNumericId("config");
-            string metricId = disposableDataFeed.DataFeed.MetricIds[MetricName];
+            string metricId = disposableDataFeed.DataFeed.MetricIds[TempDataFeedMetricName];
 
             var wholeConditions = new MetricWholeSeriesDetectionCondition()
             {
@@ -906,30 +780,6 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
         }
 
-        private void ValidateDimensionKey(DimensionKey dimensionKey, string expectedDimensionA)
-        {
-            Assert.That(dimensionKey, Is.Not.Null);
-
-            Dictionary<string, string> dimensionColumns = dimensionKey.AsDictionary();
-
-            Assert.That(dimensionColumns.Count, Is.EqualTo(1));
-            Assert.That(dimensionColumns.ContainsKey(DimensionNameA));
-            Assert.That(dimensionColumns[DimensionNameA], Is.EqualTo(expectedDimensionA));
-        }
-
-        private void ValidateDimensionKey(DimensionKey dimensionKey, string expectedDimensionA, string expectedDimensionB)
-        {
-            Assert.That(dimensionKey, Is.Not.Null);
-
-            Dictionary<string, string> dimensionDictionary = dimensionKey.AsDictionary();
-
-            Assert.That(dimensionDictionary.Count, Is.EqualTo(2));
-            Assert.That(dimensionDictionary.ContainsKey(DimensionNameA));
-            Assert.That(dimensionDictionary.ContainsKey(DimensionNameB));
-            Assert.That(dimensionDictionary[DimensionNameA], Is.EqualTo(expectedDimensionA));
-            Assert.That(dimensionDictionary[DimensionNameB], Is.EqualTo(expectedDimensionB));
-        }
-
         private void ValidateHardThresholdCondition(HardThresholdCondition condition, AnomalyDetectorDirection direction, double? upperBound, double? lowerBound, int minimumNumber, double minimumRatio)
         {
             Assert.That(condition, Is.Not.Null);
@@ -941,11 +791,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(condition.SuppressCondition.MinimumRatio, Is.EqualTo(minimumRatio));
         }
 
-        private void ValidateChangeThresholdCondition(ChangeThresholdCondition condition, double changePercentage, int shiftPoint, bool isWithinRange, AnomalyDetectorDirection direction, int minimumNumber, double minimumRatio)
+        private void ValidateChangeThresholdCondition(ChangeThresholdCondition condition, double changePercentage, int shiftPoint, bool withinRange, AnomalyDetectorDirection direction, int minimumNumber, double minimumRatio)
         {
             Assert.That(condition, Is.Not.Null);
             Assert.That(condition.AnomalyDetectorDirection, Is.EqualTo(direction));
-            Assert.That(condition.IsWithinRange, Is.EqualTo(isWithinRange));
+            Assert.That(condition.WithinRange, Is.EqualTo(withinRange));
             Assert.That(condition.ChangePercentage, Is.EqualTo(changePercentage));
             Assert.That(condition.ShiftPoint, Is.EqualTo(shiftPoint));
             Assert.That(condition.SuppressCondition, Is.Not.Null);
@@ -1019,30 +869,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             if (conditionsCount > 1)
             {
-                Assert.That(conditions.CrossConditionsOperator, Is.Not.Null);
+                Assert.That(conditions.ConditionOperator, Is.Not.Null);
             }
             else
             {
-                Assert.That(conditions.CrossConditionsOperator, Is.Null);
+                Assert.That(conditions.ConditionOperator, Is.Null);
             }
-        }
-
-        private async Task<DisposableDataFeed> CreateDisposableDataFeedAsync(MetricsAdvisorAdministrationClient adminClient)
-        {
-            var dataFeed = new DataFeed()
-            {
-                Name = Recording.GenerateAlphaNumericId("dataFeed"),
-                DataSource = new SqlServerDataFeedSource("connString", "query"),
-                Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
-                Schema = new DataFeedSchema()
-                {
-                    MetricColumns = { new DataFeedMetric(MetricName) },
-                    DimensionColumns = { new DataFeedDimension(DimensionNameA), new DataFeedDimension(DimensionNameB) }
-                },
-                IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = SamplingStartTime }
-            };
-
-            return await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeed);
         }
     }
 }

@@ -164,7 +164,7 @@ namespace Azure.IoT.ModelsRepository.Tests
         [Test]
         public void ListToDict()
         {
-            string testRepoPath = TestLocalModelRepository;
+            string testRepoPath = TestLocalModelsRepository;
             string expandedContent = File.ReadAllText(
                 $"{testRepoPath}/dtmi/com/example/temperaturecontroller-1.expanded.json", Encoding.UTF8);
             ModelQuery query = new ModelQuery(expandedContent);

@@ -315,8 +315,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='partnerNamespaceName'>
         /// Name of the partner namespace.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the partner namespace.
+        /// <param name='partnerNamespaceUpdateParameters'>
+        /// Partner namespace update information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -324,10 +324,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PartnerNamespace>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerNamespaceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PartnerNamespace>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerNamespaceName, PartnerNamespaceUpdateParameters partnerNamespaceUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<PartnerNamespace> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, partnerNamespaceName, tags, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<PartnerNamespace> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, partnerNamespaceName, partnerNamespaceUpdateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1575,8 +1575,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='partnerNamespaceName'>
         /// Name of the partner namespace.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the partner namespace.
+        /// <param name='partnerNamespaceUpdateParameters'>
+        /// Partner namespace update information.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1599,7 +1599,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PartnerNamespace>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerNamespaceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PartnerNamespace>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerNamespaceName, PartnerNamespaceUpdateParameters partnerNamespaceUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1613,14 +1613,13 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "partnerNamespaceName");
             }
+            if (partnerNamespaceUpdateParameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "partnerNamespaceUpdateParameters");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            PartnerNamespaceUpdateParameters partnerNamespaceUpdateParameters = new PartnerNamespaceUpdateParameters();
-            if (tags != null)
-            {
-                partnerNamespaceUpdateParameters.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

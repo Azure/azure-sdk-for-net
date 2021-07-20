@@ -3,12 +3,14 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid
 {
     /// <summary> Properties of an event published to an Event Grid topic using the EventGrid Schema. </summary>
+    [JsonConverter(typeof(EventGridEventConverter))]
     public class EventGridEvent
     {
         /// <summary> Initializes a new instance of <see cref="EventGridEvent"/>. </summary>
