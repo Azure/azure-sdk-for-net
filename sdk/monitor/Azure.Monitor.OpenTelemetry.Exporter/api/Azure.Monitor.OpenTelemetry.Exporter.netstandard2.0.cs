@@ -1,5 +1,10 @@
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
+    public partial class ApplicationInsightsSampler : OpenTelemetry.Trace.Sampler
+    {
+        public ApplicationInsightsSampler(float samplingRatio) { }
+        public override OpenTelemetry.Trace.SamplingResult ShouldSample(in OpenTelemetry.Trace.SamplingParameters samplingParameters) { throw null; }
+    }
     public static partial class AzureMonitorExporterHelperExtensions
     {
         public static OpenTelemetry.Trace.TracerProviderBuilder AddAzureMonitorTraceExporter(this OpenTelemetry.Trace.TracerProviderBuilder builder, System.Action<Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions> configure = null) { throw null; }

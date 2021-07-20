@@ -1,7 +1,7 @@
 # Release History
 
 ## 1.0.0-beta.3 (Unreleased)
-
+* ApplicationInsightsSampler introduced for compatibility with Application Insights SDKs, as it implements the same hash algorithm to decide to sample. (#22288)
 
 ## 1.0.0-beta.2 (2021-03-04)
 
