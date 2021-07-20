@@ -1,4 +1,4 @@
-﻿### ADT Query Builder Instructions for Use
+### ADT Query Builder Instructions for Use
 
 The ADT query builder allows for fast and intelligent query building in the [Azure Digital Twins Query Language](https://docs.microsoft.com/azure/digital-twins/concepts-query-language) a SQL-like query language used to get information about digital twins and relationships that they may contain. When building a query, the place to start is with an `AdtQueryBuilder()` object. From this point, the induvidual components of the query (called clauses) are added one by one using fluent-style syntax. An example query resembles the following:
 
@@ -123,10 +123,9 @@ When building a query that contains multiple `WhereLogic` components, [logical o
 After calling `Build()` on a query to signify that the query is complete, it can be converted into a string by calling `GetQueryText()`:
 
 ```C# Snippet:DigitalTwinsQueryBuilderToString
-string basicQueryStringFormat = new AdtQueryBuilder()
+string basicQueryStringFormat = new DigitalTwinsQueryBuilder()
     .SelectAll()
     .From(AdtCollection.DigitalTwins)
-    .Build()
     .GetQueryText();
 ```
 
@@ -134,72 +133,68 @@ string basicQueryStringFormat = new AdtQueryBuilder()
 
 ```C# Snippet:DigitalTwinsQueryBuilder
 // SELECT * FROM DIGITALTWINS
-AdtQueryBuilder simplestQuery = new AdtQueryBuilder().Select("*").From(AdtCollection.DigitalTwins).Build();
+DigitalTwinsQueryBuilder simplestQuery = new DigitalTwinsQueryBuilder().Select("*").From(AdtCollection.DigitalTwins);
 
 // SELECT * FROM DIGITALTWINS
 // Note that the this is the same as the previous query, just with the prebuilt SelectAll() method that can be used
 // interchangeably with Select("*")
-AdtQueryBuilder simplestQuerySelectAll = new AdtQueryBuilder().SelectAll().From(AdtCollection.DigitalTwins).Build();
+DigitalTwinsQueryBuilder simplestQuerySelectAll = new DigitalTwinsQueryBuilder().SelectAll().From(AdtCollection.DigitalTwins);
 
 // SELECT TOP(3) FROM DIGITALTWINS
 // Note that if no property is specfied, the SelectTopAll() method can be used instead of SelectTop()
-AdtQueryBuilder queryWithSelectTop = new AdtQueryBuilder()
+DigitalTwinsQueryBuilder queryWithSelectTop = new DigitalTwinsQueryBuilder()
     .SelectTopAll(3)
-    .From(AdtCollection.DigitalTwins)
-    .Build();
+    .From(AdtCollection.DigitalTwins);
+
 
 // SELECT TOP(3) Temperature, Humidity FROM DIGITALTWINS
-AdtQueryBuilder queryWithSelectTopProperty = new AdtQueryBuilder()
+DigitalTwinsQueryBuilder queryWithSelectTopProperty = new DigitalTwinsQueryBuilder()
     .SelectTop(3, "Temperature", "Humidity")
-    .From(AdtCollection.DigitalTwins)
-    .Build();
+    .From(AdtCollection.DigitalTwins);
+
 
 // SELECT COUNT() FROM RELATIONSHIPS
-AdtQueryBuilder queryWithSelectRelationships = new AdtQueryBuilder()
+DigitalTwinsQueryBuilder queryWithSelectRelationships = new DigitalTwinsQueryBuilder()
     .SelectCount()
-    .From(AdtCollection.Relationships)
-    .Build();
+    .From(AdtCollection.Relationships);
+
 
 // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("dtmi:example:room;1")
-AdtQueryBuilder queryWithIsOfModel = new AdtQueryBuilder()
+DigitalTwinsQueryBuilder queryWithIsOfModel = new DigitalTwinsQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins)
-    .Where()
-    .IsOfModel("dtmi:example:room;1")
-    .Build();
+    .Where(q => q.IsOfModel("dtmi:example:room;1"));
 ```
 
 Clauses can also be manually overridden with strings:
 
 ```C# Snippet:DigitalTwinsQueryBuilderOverride
 // SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
-new AdtQueryBuilder()
+new DigitalTwinsQueryBuilder()
 .SelectCustom("TOP(3) Room, Temperature")
-.From(AdtCollection.DigitalTwins)
-.Build();
+.From(AdtCollection.DigitalTwins);
 ```
 
 Examples of `Parenthetical` and `Logical Operators`:
 
 ```C# Snippet:DigitalTwinsQueryBuilder_ComplexConditions
 // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
-AdtQueryBuilder logicalOps_MultipleOr = new AdtQueryBuilder()
+DigitalTwinsQueryBuilder logicalOps_MultipleOr = new DigitalTwinsQueryBuilder()
     .SelectAll()
     .From(AdtCollection.DigitalTwins)
-    .Where()
-    .Compare("Temperature", QueryComparisonOperator.Equal, 50)
-    .Or()
-    .IsOfModel("dtmi:example:room;1", true)
-    .Or()
-    .IsOfType("Temperature", AdtDataType.AdtNumber)
-    .Build();
+    .Where(q => q
+        .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+        .Or()
+        .IsOfModel("dtmi:example:room;1", true)
+        .Or()
+        .IsOfType("Temperature", AdtDataType.AdtNumber));
 
 // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
 // OR (IS_OF_MODEL("dtmi:example:hvac;1") AND IS_NULL(Occupants))
-AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
+DigitalTwinsQueryBuilder logicalOpsNested = new DigitalTwinsQueryBuilder()
     .SelectAll()
     .From(AdtCollection.DigitalTwins)
-    .Where()
+    .Where(q => q
     .Parenthetical(q => q
         .IsOfType("Humidity", AdtDataType.AdtNumber)
         .Or()
@@ -208,8 +203,7 @@ AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
     .Parenthetical(q => q
         .IsOfModel("dtmi:example:hvac;1")
         .And()
-        .IsNull("Occupants"))
-    .Build();
+        .IsNull("Occupants")));
 ```
 
 ### Ambiguities

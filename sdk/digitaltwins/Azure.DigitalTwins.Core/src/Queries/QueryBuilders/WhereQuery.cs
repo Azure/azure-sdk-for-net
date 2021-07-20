@@ -87,7 +87,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="expression">The expression being checked for null.</param>
         /// <returns>Query that already contains a SELECT and FROM clause.</returns>
-        public WhereQuery WhereIsNull(string expression)
+        public WhereQuery IsNull(string expression)
         {
             _whereClauses.Add(new WhereClause($"{QueryConstants.IsNull}({expression})"));
             return this;

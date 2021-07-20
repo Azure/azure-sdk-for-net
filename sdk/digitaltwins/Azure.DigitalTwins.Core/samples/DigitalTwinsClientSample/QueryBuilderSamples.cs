@@ -18,113 +18,102 @@ namespace Azure.DigitalTwins.Core.Samples
             #region Snippet:DigitalTwinsQueryBuilder
 
             // SELECT * FROM DIGITALTWINS
-            AdtQueryBuilder simplestQuery = new AdtQueryBuilder().Select("*").From(AdtCollection.DigitalTwins).Build();
+            DigitalTwinsQueryBuilder simplestQuery = new DigitalTwinsQueryBuilder().Select("*").From(AdtCollection.DigitalTwins);
 
             // SELECT * FROM DIGITALTWINS
             // Note that the this is the same as the previous query, just with the prebuilt SelectAll() method that can be used
             // interchangeably with Select("*")
-            AdtQueryBuilder simplestQuerySelectAll = new AdtQueryBuilder().SelectAll().From(AdtCollection.DigitalTwins).Build();
+            DigitalTwinsQueryBuilder simplestQuerySelectAll = new DigitalTwinsQueryBuilder().SelectAll().From(AdtCollection.DigitalTwins);
 
             // SELECT TOP(3) FROM DIGITALTWINS
             // Note that if no property is specfied, the SelectTopAll() method can be used instead of SelectTop()
-            AdtQueryBuilder queryWithSelectTop = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder queryWithSelectTop = new DigitalTwinsQueryBuilder()
                 .SelectTopAll(3)
-                .From(AdtCollection.DigitalTwins)
-                .Build();
+                .From(AdtCollection.DigitalTwins);
+
 
             // SELECT TOP(3) Temperature, Humidity FROM DIGITALTWINS
-            AdtQueryBuilder queryWithSelectTopProperty = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder queryWithSelectTopProperty = new DigitalTwinsQueryBuilder()
                 .SelectTop(3, "Temperature", "Humidity")
-                .From(AdtCollection.DigitalTwins)
-                .Build();
+                .From(AdtCollection.DigitalTwins);
+
 
             // SELECT COUNT() FROM RELATIONSHIPS
-            AdtQueryBuilder queryWithSelectRelationships = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder queryWithSelectRelationships = new DigitalTwinsQueryBuilder()
                 .SelectCount()
-                .From(AdtCollection.Relationships)
-                .Build();
+                .From(AdtCollection.Relationships);
+
 
             // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("dtmi:example:room;1")
-            AdtQueryBuilder queryWithIsOfModel = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder queryWithIsOfModel = new DigitalTwinsQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .IsOfModel("dtmi:example:room;1")
-                .Build();
+                .Where(q => q.IsOfModel("dtmi:example:room;1"));
 
             #endregion Snippet:DigitalTwinsQueryBuilder
 
             #region Snippet:DigitalTwinsQueryBuilderToString
 
-            string basicQueryStringFormat = new AdtQueryBuilder()
+            string basicQueryStringFormat = new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Build()
                 .GetQueryText();
 
             #endregion Snippet:DigitalTwinsQueryBuilderToString
 
             // SELECT Room, Temperature From DIGTIALTWINS
-            AdtQueryBuilder queryWithMultipleProperties = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder queryWithMultipleProperties = new DigitalTwinsQueryBuilder()
                 .Select("Room", "Temperature")
-                .From(AdtCollection.DigitalTwins)
-                .Build();
+                .From(AdtCollection.DigitalTwins);
 
             // SELECT * FROM DIGITALTWINS WHERE TEMPERATURE < 5
-            AdtQueryBuilder queryWithComparisonWhereClause = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder queryWithComparisonWhereClause = new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .Compare("Temperature", QueryComparisonOperator.LessThan, 5)
-                .Build();
+                .Where(q => q.Compare("Temperature", QueryComparisonOperator.LessThan, 5));
 
             // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL('dtmi:example:room;1', exact)
-            AdtQueryBuilder queryWithIsOfModelExact = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder queryWithIsOfModelExact = new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .IsOfModel("dtmi:example:room;1", true)
-                .Build();
-            
+                .Where(q => q.IsOfModel("dtmi:example:room;1", true));
+
             // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 AND IS_OF_MODEL("dtmi..", exact)
-            AdtQueryBuilder logicalOps_SingleAnd = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder logicalOps_SingleAnd = new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .Compare("Temperature", QueryComparisonOperator.Equal, 50)
-                .And()
-                .IsOfModel("dtmi:example:room;1", true)
-                .Build();
+                .Where(q => q
+                    .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                    .And()
+                    .IsOfModel("dtmi:example:room;1", true));
 
             // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact)
-            AdtQueryBuilder logicalOps_SingleOr = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder logicalOps_SingleOr = new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .Compare("Temperature", QueryComparisonOperator.Equal, 50)
-                .Or()
-                .IsOfModel("dtmi:example:room;1", true)
-                .Build();
+                .Where(q => q
+                    .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                    .Or()
+                    .IsOfModel("dtmi:example:room;1", true));
 
             #region Snippet:DigitalTwinsQueryBuilder_ComplexConditions
             // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
-            AdtQueryBuilder logicalOps_MultipleOr = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder logicalOps_MultipleOr = new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .Compare("Temperature", QueryComparisonOperator.Equal, 50)
-                .Or()
-                .IsOfModel("dtmi:example:room;1", true)
-                .Or()
-                .IsOfType("Temperature", AdtDataType.AdtNumber)
-                .Build();
+                .Where(q => q
+                    .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                    .Or()
+                    .IsOfModel("dtmi:example:room;1", true)
+                    .Or()
+                    .IsOfType("Temperature", AdtDataType.AdtNumber));
 
             // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
             // OR (IS_OF_MODEL("dtmi:example:hvac;1") AND IS_NULL(Occupants))
-            AdtQueryBuilder logicalOpsNested = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder logicalOpsNested = new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
+                .Where(q => q
                 .Parenthetical(q => q
                     .IsOfType("Humidity", AdtDataType.AdtNumber)
                     .Or()
@@ -133,172 +122,82 @@ namespace Azure.DigitalTwins.Core.Samples
                 .Parenthetical(q => q
                     .IsOfModel("dtmi:example:hvac;1")
                     .And()
-                    .IsNull("Occupants"))
-                .Build();
+                    .IsNull("Occupants")));
 
             #endregion
 
             #region Snippet:DigitalTwinsQueryBuilderOverride
             // SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
             .SelectCustom("TOP(3) Room, Temperature")
-            .From(AdtCollection.DigitalTwins)
-            .Build();
+            .From(AdtCollection.DigitalTwins);
+
             #endregion
 
             #region Snippet:DigitalTwinsQueryBuilder_SubjectiveConditionsWorkaround
             // SELECT * FROM DIGITALTWINS WHERE (Temperature = 50 OR IS_OF_MODEL("dtmi..", exact)) AND IS_NUMBER(Temperature)
-            AdtQueryBuilder subjectiveLogicalOps = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder subjectiveLogicalOps = new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .Compare("Temperature", QueryComparisonOperator.Equal, 50)
-                .Or()
-                .IsOfModel("dtmi:example:room;1", true)
-                .And()
-                .IsOfType("Temperature", AdtDataType.AdtNumber)
-                .Build();
+                .Where(q => q
+                    .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                    .Or()
+                    .IsOfModel("dtmi:example:room;1", true)
+                    .And()
+                    .IsOfType("Temperature", AdtDataType.AdtNumber));
 
-            AdtQueryBuilder objectiveLogicalOps = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder objectiveLogicalOps = new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .Parenthetical(q => q
+                .Where(q => q
+                 .Parenthetical(q => q
                     .Compare("Temperature", QueryComparisonOperator.Equal, 50)
                     .Or()
                     .IsOfModel("dtmi:example:room;1", true))
                 .And()
-                .IsOfType("Temperature", AdtDataType.AdtNumber)
-                .Build();
+                .IsOfType("Temperature", AdtDataType.AdtNumber));
+
             #endregion
 
             #region Snippet:DigitalTwinsQueryBuilder_Aliasing
             // SELECT Temperature AS Temp, Humidity AS HUM FROM DigitalTwins
-            AdtQueryBuilder selectAsSample = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder selectAsSample = new DigitalTwinsQueryBuilder()
                 .SelectAs("Temperature", "Temp")
                 .SelectAs("Humidity", "Hum")
-                .From(AdtCollection.DigitalTwins)
-                .Build();
+                .From(AdtCollection.DigitalTwins);
+
 
             // SELECT Temperature, Humidity AS Hum FROM DigitalTwins
-            AdtQueryBuilder selectAndSelectAs = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder selectAndSelectAs = new DigitalTwinsQueryBuilder()
                 .Select("Temperature")
                 .SelectAs("Humidity", "Hum")
-                .From(AdtCollection.DigitalTwins)
-                .Build();
+                .From(AdtCollection.DigitalTwins);
+
 
             // SELECT T FROM DigitalTwins T
-            AdtQueryBuilder anotherSelectAsSample = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder anotherSelectAsSample = new DigitalTwinsQueryBuilder()
                 .Select("T")
-                .From(AdtCollection.DigitalTwins, "T")
-                .Build();
+                .From(AdtCollection.DigitalTwins, "T");
+
 
             // SELECT T.Temperature, T.Humdity FROM DigitalTwins T
-            AdtQueryBuilder collectionAliasing = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder collectionAliasing = new DigitalTwinsQueryBuilder()
                 .Select("T.Temperature", "T.Humidity")
-                .From(AdtCollection.DigitalTwins)
-                .Build();
+                .From(AdtCollection.DigitalTwins);
+
 
             // SELECT T.Temperature AS Temp, T.Humidity AS Hum FROM DigitalTwins T
             // WHERE T.Temerpature = 50 AND T.Humidity = 30
-            AdtQueryBuilder bothAliasingTypes = new AdtQueryBuilder()
+            DigitalTwinsQueryBuilder bothAliasingTypes = new DigitalTwinsQueryBuilder()
                 .SelectAs("T.Temperature", "Temp")
                 .SelectAs("T.Humidity", "Hum")
                 .From(AdtCollection.DigitalTwins, "T")
-                .Where()
-                .Compare("T.Temperature", QueryComparisonOperator.Equal, 50)
-                .And()
-                .Compare("T.Humidity", QueryComparisonOperator.Equal, 30)
-                .Build();
+                .Where(q => q
+                  .Compare("T.Temperature", QueryComparisonOperator.Equal, 50)
+                    .And()
+                    .Compare("T.Humidity", QueryComparisonOperator.Equal, 30));
+                
             #endregion
-
-            DigitalTwinsQueryBuilder test = new DigitalTwinsQueryBuilder()
-                .Select("Temperature", "Humidity")
-                .From(AdtCollection.DigitalTwins)
-                .WhereIsDefined("Occupants")
-                .And()
-                .WhereCustom("IS_BOOL(is_occupied)");         
-            
-            DigitalTwinsQueryBuilder test2 = new DigitalTwinsQueryBuilder()
-                .And()
-                .Select("Temperature", "Humidity")
-                .From(AdtCollection.DigitalTwins)
-                .WhereIsDefined("Occupants")
-                .And()
-                .WhereCustom("IS_BOOL(is_occupied)");
-            
-            DigitalTwinsQueryBuilder test3 = new DigitalTwinsQueryBuilder()
-                .From(AdtCollection.DigitalTwins)
-                .From(AdtCollection.Relationships)
-                .Select("Temperature", "Humidity")
-                .From(AdtCollection.DigitalTwins)
-                .WhereIsDefined("Occupants")
-                .And()
-                .WhereCustom("IS_BOOL(is_occupied)");
-                        
-            DigitalTwinsQueryBuilder test4 = new DigitalTwinsQueryBuilder()
-                .From(AdtCollection.DigitalTwins)
-                .From(AdtCollection.Relationships)
-                .Select("Temperature", "Humidity")
-                .From(AdtCollection.DigitalTwins)
-                .WhereIsDefined("Occupants")
-                .And()
-                .WhereCustom("IS_BOOL(is_occupied)");             
-            
-            DigitalTwinsQueryBuilder test5 = new DigitalTwinsQueryBuilder()
-                .Select("Temperature", "Humidity")
-                .From(AdtCollection.DigitalTwins)
-                .WhereIsDefined("Occupants")
-                .And()
-                .WhereCustom("IS_BOOL(is_occupied)")
-                .And()
-                .Parenthetical(q => q
-                    .WhereCustom("Temperature > 30")
-                    .And()
-                    .WhereCustom("Humidity < 20"));
-
-            DigitalTwinsQueryBuilder statement = new DigitalTwinsQueryBuilder();
-            statement.Select("Temperature", "Humidity");
-            statement.From(AdtCollection.DigitalTwins);
-            statement.WhereIsDefined("Occupants");
-            statement.And();
-            statement.WhereCustom("IS_BOOL(occupied)");
-            statement.And();
-            statement.Parenthetical(q =>
-            {
-                q.WhereCustom("Temperature > 30");
-                q.And();
-                q.WhereCustom("humidity > 20");
-                return q;
-            });
-                        
-            DigitalTwinsQueryBuilder test6 = new DigitalTwinsQueryBuilder()
-                .And()
-                .Select("Temperature", "Humidity")
-                .From(AdtCollection.DigitalTwins)
-                .WhereIsDefined("Occupants")
-                .And()
-                .WhereCustom("IS_BOOL(is_occupied)")
-                .And()
-                .Parenthetical(q => q
-                    .WhereCustom("Temperature > 30")
-                    .And()
-                    .Select("someProperty")
-                    .And()
-                    .From(AdtCollection.Relationships)
-                    .WhereCustom("Humidity < 20"));
-
-
-            DigitalTwinsQueryBuilder azadTest = new DigitalTwinsQueryBuilder()
-                .Select("Temp")
-                .From(AdtCollection.DigitalTwins)
-                .WhereCustom("")
-                .And(q => 
-                    q.Select("*")
-                    .From(AdtCollection.DigitalTwins)
-                    .WhereCustom("")
-                    .And(q => q.WhereCustom(""))
-                .And(q => q.WhereCustom("")));
         }
     }
 }
