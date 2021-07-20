@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     /// <summary> Grants access to a disk. </summary>
     public partial class DisksGrantAccessOperation : Operation<AccessUri>, IOperationSource<AccessUri>
     {
-        private readonly ArmOperationHelpers<AccessUri> _operation;
+        private readonly OperationInternals<AccessUri> _operation;
 
         /// <summary> Initializes a new instance of DisksGrantAccessOperation for mocking. </summary>
         protected DisksGrantAccessOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Compute
 
         internal DisksGrantAccessOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<AccessUri>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DisksGrantAccessOperation");
+            _operation = new OperationInternals<AccessUri>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DisksGrantAccessOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

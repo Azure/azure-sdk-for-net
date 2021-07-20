@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> This is the gallery Image Definition identifier. </summary>
+    /// <summary> This is the gallery image definition identifier. </summary>
     public partial class GalleryImageIdentifier
     {
         /// <summary> Initializes a new instance of GalleryImageIdentifier. </summary>
-        /// <param name="publisher"> The name of the gallery Image Definition publisher. </param>
-        /// <param name="offer"> The name of the gallery Image Definition offer. </param>
-        /// <param name="sku"> The name of the gallery Image Definition SKU. </param>
+        /// <param name="publisher"> The name of the gallery image definition publisher. </param>
+        /// <param name="offer"> The name of the gallery image definition offer. </param>
+        /// <param name="sku"> The name of the gallery image definition SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="offer"/>, or <paramref name="sku"/> is null. </exception>
         public GalleryImageIdentifier(string publisher, string offer, string sku)
         {
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Compute.Models
             Sku = sku;
         }
 
-        /// <summary> The name of the gallery Image Definition publisher. </summary>
+        /// <summary> The name of the gallery image definition publisher. </summary>
         public string Publisher { get; set; }
-        /// <summary> The name of the gallery Image Definition offer. </summary>
+        /// <summary> The name of the gallery image definition offer. </summary>
         public string Offer { get; set; }
-        /// <summary> The name of the gallery Image Definition SKU. </summary>
+        /// <summary> The name of the gallery image definition SKU. </summary>
         public string Sku { get; set; }
     }
 }

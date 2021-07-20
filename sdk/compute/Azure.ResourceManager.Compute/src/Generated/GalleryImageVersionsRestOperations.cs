@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersion galleryImageVersion)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionData galleryImageVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryImageName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryImageVersionName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        /// <summary> Create or update a gallery Image Version. </summary>
+        /// <summary> Create or update a gallery image version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version is to be created. </param>
-        /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
-        /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery Image Version operation. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition in which the Image Version is to be created. </param>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery image version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, <paramref name="galleryImageVersionName"/>, or <paramref name="galleryImageVersion"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersion galleryImageVersion, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionData galleryImageVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Create or update a gallery Image Version. </summary>
+        /// <summary> Create or update a gallery image version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version is to be created. </param>
-        /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
-        /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery Image Version operation. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition in which the Image Version is to be created. </param>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="galleryImageVersion"> Parameters supplied to the create or update gallery image version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, <paramref name="galleryImageVersionName"/>, or <paramref name="galleryImageVersion"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersion galleryImageVersion, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionData galleryImageVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryImageName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryImageVersionName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        /// <summary> Update a gallery Image Version. </summary>
+        /// <summary> Update a gallery image version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version is to be updated. </param>
-        /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
-        /// <param name="galleryImageVersion"> Parameters supplied to the update gallery Image Version operation. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition in which the Image Version is to be updated. </param>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="galleryImageVersion"> Parameters supplied to the update gallery image version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, <paramref name="galleryImageVersionName"/>, or <paramref name="galleryImageVersion"/> is null. </exception>
         public async Task<Response> UpdateAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionUpdate galleryImageVersion, CancellationToken cancellationToken = default)
@@ -227,12 +227,12 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Update a gallery Image Version. </summary>
+        /// <summary> Update a gallery image version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version is to be updated. </param>
-        /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
-        /// <param name="galleryImageVersion"> Parameters supplied to the update gallery Image Version operation. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition in which the Image Version is to be updated. </param>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be updated. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="galleryImageVersion"> Parameters supplied to the update gallery image version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, <paramref name="galleryImageVersionName"/>, or <paramref name="galleryImageVersion"/> is null. </exception>
         public Response Update(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionUpdate galleryImageVersion, CancellationToken cancellationToken = default)
@@ -290,21 +290,21 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$expand", expand.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Retrieves information about a gallery Image Version. </summary>
+        /// <summary> Retrieves information about a gallery image version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version resides. </param>
-        /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be retrieved. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition in which the Image Version resides. </param>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImageVersionName"/> is null. </exception>
-        public async Task<Response<GalleryImageVersion>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryImageVersionData>> GetAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -329,9 +329,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        GalleryImageVersion value = default;
+                        GalleryImageVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GalleryImageVersion.DeserializeGalleryImageVersion(document.RootElement);
+                        value = GalleryImageVersionData.DeserializeGalleryImageVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -339,15 +339,15 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Retrieves information about a gallery Image Version. </summary>
+        /// <summary> Retrieves information about a gallery image version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version resides. </param>
-        /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be retrieved. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition in which the Image Version resides. </param>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImageVersionName"/> is null. </exception>
-        public Response<GalleryImageVersion> Get(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public Response<GalleryImageVersionData> Get(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -372,9 +372,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        GalleryImageVersion value = default;
+                        GalleryImageVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GalleryImageVersion.DeserializeGalleryImageVersion(document.RootElement);
+                        value = GalleryImageVersionData.DeserializeGalleryImageVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -399,17 +399,17 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryImageName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(galleryImageVersionName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Delete a gallery Image Version. </summary>
+        /// <summary> Delete a gallery image version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version resides. </param>
-        /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be deleted. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition in which the Image Version resides. </param>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImageVersionName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
@@ -444,11 +444,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Delete a gallery Image Version. </summary>
+        /// <summary> Delete a gallery image version. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
-        /// <param name="galleryImageName"> The name of the gallery Image Definition in which the Image Version resides. </param>
-        /// <param name="galleryImageVersionName"> The name of the gallery Image Version to be deleted. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition in which the Image Version resides. </param>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryImageName"/>, or <paramref name="galleryImageVersionName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
@@ -499,13 +499,13 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/images/", false);
             uri.AppendPath(galleryImageName, true);
             uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List gallery Image Versions in a gallery Image Definition. </summary>
+        /// <summary> List gallery image versions in a gallery image definition. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
         /// <param name="galleryImageName"> The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed. </param>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> List gallery Image Versions in a gallery Image Definition. </summary>
+        /// <summary> List gallery image versions in a gallery image definition. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
         /// <param name="galleryImageName"> The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed. </param>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        /// <summary> List gallery Image Versions in a gallery Image Definition. </summary>
+        /// <summary> List gallery image versions in a gallery image definition. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> List gallery Image Versions in a gallery Image Definition. </summary>
+        /// <summary> List gallery image versions in a gallery image definition. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery in which the Image Definition resides. </param>

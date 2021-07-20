@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskList. </summary>
         /// <param name="value"> A list of disks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DiskList(IEnumerable<Disk> value)
+        internal DiskList(IEnumerable<DiskData> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskList. </summary>
         /// <param name="value"> A list of disks. </param>
         /// <param name="nextLink"> The uri to fetch the next page of disks. Call ListNext() with this to fetch the next page of disks. </param>
-        internal DiskList(IReadOnlyList<Disk> value, string nextLink)
+        internal DiskList(IReadOnlyList<DiskData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of disks. </summary>
-        public IReadOnlyList<Disk> Value { get; }
+        public IReadOnlyList<DiskData> Value { get; }
         /// <summary> The uri to fetch the next page of disks. Call ListNext() with this to fetch the next page of disks. </summary>
         public string NextLink { get; }
     }

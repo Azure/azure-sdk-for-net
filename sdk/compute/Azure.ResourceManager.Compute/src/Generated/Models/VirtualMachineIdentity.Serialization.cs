@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> principalId = default;
             Optional<string> tenantId = default;
             Optional<ResourceIdentityType> type = default;
-            Optional<IDictionary<string, Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties>> userAssignedIdentities = default;
+            Optional<IDictionary<string, UserAssignedIdentitiesValue>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties> dictionary = new Dictionary<string, Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties>();
+                    Dictionary<string, UserAssignedIdentitiesValue> dictionary = new Dictionary<string, UserAssignedIdentitiesValue>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, Components1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties.DeserializeComponents1H8M3EpSchemasVirtualmachineidentityPropertiesUserassignedidentitiesAdditionalproperties(property0.Value));
+                        dictionary.Add(property0.Name, UserAssignedIdentitiesValue.DeserializeUserAssignedIdentitiesValue(property0.Value));
                     }
                     userAssignedIdentities = dictionary;
                     continue;

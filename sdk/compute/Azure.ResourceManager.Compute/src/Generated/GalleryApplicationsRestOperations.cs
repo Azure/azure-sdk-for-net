@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplication galleryApplication)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationData galleryApplication)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryName, true);
             uri.AppendPath("/applications/", false);
             uri.AppendPath(galleryApplicationName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplication"> Parameters supplied to the create or update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplication"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplication galleryApplication, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplication"> Parameters supplied to the create or update gallery Application operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/>, or <paramref name="galleryApplication"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplication galleryApplication, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationData galleryApplication, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryName, true);
             uri.AppendPath("/applications/", false);
             uri.AppendPath(galleryApplicationName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryName, true);
             uri.AppendPath("/applications/", false);
             uri.AppendPath(galleryApplicationName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
-        public async Task<Response<GalleryApplication>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryApplicationData>> GetAsync(string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -293,9 +293,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        GalleryApplication value = default;
+                        GalleryApplicationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GalleryApplication.DeserializeGalleryApplication(document.RootElement);
+                        value = GalleryApplicationData.DeserializeGalleryApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, or <paramref name="galleryApplicationName"/> is null. </exception>
-        public Response<GalleryApplication> Get(string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
+        public Response<GalleryApplicationData> Get(string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -330,9 +330,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        GalleryApplication value = default;
+                        GalleryApplicationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GalleryApplication.DeserializeGalleryApplication(document.RootElement);
+                        value = GalleryApplicationData.DeserializeGalleryApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryName, true);
             uri.AppendPath("/applications/", false);
             uri.AppendPath(galleryApplicationName, true);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
             uri.AppendPath(galleryName, true);
             uri.AppendPath("/applications", false);
-            uri.AppendQuery("api-version", "2019-12-01", true);
+            uri.AppendQuery("api-version", "2020-09-30", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

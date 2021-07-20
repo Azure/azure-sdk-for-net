@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static DiskList DeserializeDiskList(JsonElement element)
         {
-            IReadOnlyList<Disk> value = default;
+            IReadOnlyList<DiskData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<Disk> array = new List<Disk>();
+                    List<DiskData> array = new List<DiskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Disk.DeserializeDisk(item));
+                        array.Add(DiskData.DeserializeDiskData(item));
                     }
                     value = array;
                     continue;

@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("plan");
                 writer.WriteObjectValue(Plan);
             }
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(ResourceIdentity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, ResourceIdentity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
