@@ -23,7 +23,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
             this.factory = factory;
         }
 
-#if !NET5_0  // "https://github.com/Azure/azure-sdk-for-net/issues/16961")]
         [Theory]
         [InlineData(HttpStatusCode.OK)]
         [InlineData(HttpStatusCode.BadRequest)]
@@ -39,6 +38,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
             // Assert
             Assert.Equal(httpStatusCode, response.StatusCode);
         }
-#endif
     }
 }

@@ -377,6 +377,7 @@ namespace Azure.Analytics.Purview.Scanning
                     switch (message.Response.Status)
                     {
                         case 200:
+                            return message.Response;
                         case 204:
                             return message.Response;
                         default:
@@ -418,6 +419,7 @@ namespace Azure.Analytics.Purview.Scanning
                     switch (message.Response.Status)
                     {
                         case 200:
+                            return message.Response;
                         case 204:
                             return message.Response;
                         default:
@@ -1150,6 +1152,7 @@ namespace Azure.Analytics.Purview.Scanning
                     switch (message.Response.Status)
                     {
                         case 200:
+                            return message.Response;
                         case 204:
                             return message.Response;
                         default:
@@ -1191,6 +1194,7 @@ namespace Azure.Analytics.Purview.Scanning
                     switch (message.Response.Status)
                     {
                         case 200:
+                            return message.Response;
                         case 204:
                             return message.Response;
                         default:

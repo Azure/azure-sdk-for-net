@@ -18,7 +18,10 @@ param(
   [string]$VsoQueuedPipelines,
 
   [Parameter(Mandatory = $true)]
-  [string]$Base64EncodedAuthToken
+  [string]$Base64EncodedAuthToken,
+
+  [Parameter(Mandatory = $false)]
+  [string]$BuildParametersJson
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -46,7 +49,13 @@ if ($CancelPreviousBuilds)
 }
 
 try {
-  $resp = Start-DevOpsBuild -SourceBranch $SourceBranch -DefinitionId $DefinitionId -Base64EncodedAuthToken $Base64EncodedAuthToken
+  $resp = Start-DevOpsBuild `
+    -Organization $Organization `
+    -Project $Project `
+    -SourceBranch $SourceBranch `
+    -DefinitionId $DefinitionId `
+    -Base64EncodedAuthToken $Base64EncodedAuthToken `
+    -BuildParametersJson $BuildParametersJson
 }
 catch {
   LogError "Start-DevOpsBuild failed with exception:`n$_"

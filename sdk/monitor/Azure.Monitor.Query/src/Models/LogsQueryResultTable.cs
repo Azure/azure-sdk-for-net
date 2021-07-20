@@ -39,5 +39,20 @@ namespace Azure.Monitor.Query.Models
 
             return rows;
         }
+
+        /// <summary>
+        /// Maps table rows to a model of type <typeparamref name="T"/>.
+        /// </summary>
+        /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
+        public IReadOnlyList<T> Deserialize<T>()
+        {
+            return RowBinder.Shared.BindResults<T>(new[] { this });
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return $"{Name}: {Rows.Count} rows, {Columns.Count} columns";
+        }
     }
 }

@@ -149,7 +149,7 @@ namespace Azure.Storage.Queues
         /// <para>The handler is potentially invoked by both synchronous and asynchronous receive and peek APIs. Therefore implementation of the handler should align with
         /// <see cref="QueueClient"/> APIs that are being used.
         /// See <see cref="SyncAsyncEventHandler{T}"/> about how to implement handler correctly. The example below shows a handler with all possible cases explored.
-        /// <code snippet="Snippet:Azure_Storage_Queues_Samples_Sample03_MessageEncoding_MessageDecodingFailedHandlerAsync">
+        /// <code snippet="Snippet:Azure_Storage_Queues_Samples_Sample03_MessageEncoding_MessageDecodingFailedHandlerAsync" language="csharp">
         /// QueueClientOptions queueClientOptions = new QueueClientOptions()
         /// {
         ///     MessageEncoding = QueueMessageEncoding.Base64

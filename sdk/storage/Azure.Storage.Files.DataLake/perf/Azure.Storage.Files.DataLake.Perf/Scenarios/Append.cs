@@ -1,4 +1,4 @@
-﻿//Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -121,7 +121,7 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         public override void Run(CancellationToken cancellationToken)
         {
             Payload.Position = 0;
-            FileClient.Append(Payload, 0, cancellationToken:cancellationToken);
+            FileClient.Append(Payload, 0, cancellationToken: cancellationToken);
         }
 
         /// <summary>

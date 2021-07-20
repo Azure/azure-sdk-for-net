@@ -69,6 +69,12 @@ namespace Azure.Messaging.EventHubs.Amqp
         private string PartitionId { get; }
 
         /// <summary>
+        ///   A unique name used to identify this consumer.
+        /// </summary>
+        ///
+        public string Identifier { get; }
+
+        /// <summary>
         ///   The current position for the consumer, updated as events are received from the
         ///   partition.
         /// </summary>
@@ -132,6 +138,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="eventHubName">The name of the Event Hub from which events will be consumed.</param>
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="consumerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="eventPosition">The position of the event in the partition where the consumer should begin reading.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
@@ -154,6 +161,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public AmqpConsumer(string eventHubName,
                             string consumerGroup,
                             string partitionId,
+                            string consumerIdentifier,
                             EventPosition eventPosition,
                             bool trackLastEnqueuedEventProperties,
                             bool invalidateConsumerWhenPartitionStolen,
@@ -171,9 +179,15 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotNull(messageConverter, nameof(messageConverter));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
+            if (string.IsNullOrEmpty(consumerIdentifier))
+            {
+                consumerIdentifier = Guid.NewGuid().ToString();
+            }
+
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
+            Identifier = consumerIdentifier;
             CurrentEventPosition = eventPosition;
             TrackLastEnqueuedEventProperties = trackLastEnqueuedEventProperties;
             InvalidateConsumerWhenPartitionStolen = invalidateConsumerWhenPartitionStolen;
@@ -186,6 +200,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                    CreateConsumerLinkAsync(
                         consumerGroup,
                         partitionId,
+                        consumerIdentifier,
                         CurrentEventPosition,
                         prefetchCount ?? DefaultPrefetchCount,
                         prefetchSizeInBytes,
@@ -439,6 +454,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="consumerGroup">The consumer group of the Event Hub to which the link is bound.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition to which the link is bound.</param>
+        /// <param name="consumerIdentifier">The identifier associated with the consumer.</param>
         /// <param name="eventStartingPosition">The place within the partition's event stream to begin consuming events.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
@@ -451,6 +467,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         protected async Task<ReceivingAmqpLink> CreateConsumerLinkAsync(string consumerGroup,
                                                                         string partitionId,
+                                                                        string consumerIdentifier,
                                                                         EventPosition eventStartingPosition,
                                                                         uint prefetchCount,
                                                                         long? prefetchSizeInBytes,
@@ -498,6 +515,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     prefetchSizeInBytes,
                     ownerLevel,
                     trackLastEnqueuedEventProperties,
+                    consumerIdentifier,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
