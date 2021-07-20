@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// <summary>
         /// Initializes a new instance of the Configuration class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="value">Value of the configuration.</param>
         /// <param name="description">Description of the configuration.</param>
         /// <param name="defaultValue">Default value of the
@@ -48,7 +48,9 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// <param name="allowedValues">Allowed values of the
         /// configuration.</param>
         /// <param name="source">Source of the configuration.</param>
-        public Configuration(string id = default(string), string name = default(string), string type = default(string), string value = default(string), string description = default(string), string defaultValue = default(string), string dataType = default(string), string allowedValues = default(string), string source = default(string))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public Configuration(string id = default(string), string name = default(string), string type = default(string), string value = default(string), string description = default(string), string defaultValue = default(string), string dataType = default(string), string allowedValues = default(string), string source = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Value = value;
@@ -57,6 +59,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
             DataType = dataType;
             AllowedValues = allowedValues;
             Source = source;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -101,6 +104,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.source")]
         public string Source { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

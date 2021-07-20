@@ -16,27 +16,35 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
     using System.Linq;
 
     /// <summary>
-    /// Server edition capabilities.
+    /// Flexible server edition capabilities.
     /// </summary>
-    public partial class ServerEditionCapability
+    public partial class FlexibleServerEditionCapability
     {
         /// <summary>
-        /// Initializes a new instance of the ServerEditionCapability class.
+        /// Initializes a new instance of the FlexibleServerEditionCapability
+        /// class.
         /// </summary>
-        public ServerEditionCapability()
+        public FlexibleServerEditionCapability()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServerEditionCapability class.
+        /// Initializes a new instance of the FlexibleServerEditionCapability
+        /// class.
         /// </summary>
         /// <param name="name">Server edition name</param>
-        public ServerEditionCapability(string name = default(string), IList<StorageEditionCapability> supportedStorageEditions = default(IList<StorageEditionCapability>), IList<ServerVersionCapability> supportedServerVersions = default(IList<ServerVersionCapability>))
+        /// <param name="supportedStorageEditions">The list of editions
+        /// supported by this server edition.</param>
+        /// <param name="supportedServerVersions">The list of server versions
+        /// supported by this server edition.</param>
+        /// <param name="status">The status</param>
+        public FlexibleServerEditionCapability(string name = default(string), IList<StorageEditionCapability> supportedStorageEditions = default(IList<StorageEditionCapability>), IList<ServerVersionCapability> supportedServerVersions = default(IList<ServerVersionCapability>), string status = default(string))
         {
             Name = name;
             SupportedStorageEditions = supportedStorageEditions;
             SupportedServerVersions = supportedServerVersions;
+            Status = status;
             CustomInit();
         }
 
@@ -52,14 +60,22 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         public string Name { get; private set; }
 
         /// <summary>
+        /// Gets the list of editions supported by this server edition.
         /// </summary>
         [JsonProperty(PropertyName = "supportedStorageEditions")]
         public IList<StorageEditionCapability> SupportedStorageEditions { get; private set; }
 
         /// <summary>
+        /// Gets the list of server versions supported by this server edition.
         /// </summary>
         [JsonProperty(PropertyName = "supportedServerVersions")]
         public IList<ServerVersionCapability> SupportedServerVersions { get; private set; }
+
+        /// <summary>
+        /// Gets the status
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
 
     }
 }

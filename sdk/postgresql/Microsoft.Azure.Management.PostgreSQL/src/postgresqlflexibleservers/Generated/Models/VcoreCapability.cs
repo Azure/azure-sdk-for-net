@@ -34,12 +34,14 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// <param name="supportedIops">supported IOPS</param>
         /// <param name="supportedMemoryPerVcoreMB">supported memory per vCore
         /// in MB</param>
-        public VcoreCapability(string name = default(string), long? vCores = default(long?), long? supportedIops = default(long?), long? supportedMemoryPerVcoreMB = default(long?))
+        /// <param name="status">The status</param>
+        public VcoreCapability(string name = default(string), long? vCores = default(long?), long? supportedIops = default(long?), long? supportedMemoryPerVcoreMB = default(long?), string status = default(string))
         {
             Name = name;
             VCores = vCores;
             SupportedIops = supportedIops;
             SupportedMemoryPerVcoreMB = supportedMemoryPerVcoreMB;
+            Status = status;
             CustomInit();
         }
 
@@ -71,6 +73,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "supportedMemoryPerVcoreMB")]
         public long? SupportedMemoryPerVcoreMB { get; private set; }
+
+        /// <summary>
+        /// Gets the status
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
 
     }
 }

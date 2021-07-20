@@ -177,6 +177,9 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
+        /// <param name='parameters'>
+        /// The parameters for restarting a server.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -189,7 +192,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> RestartWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> RestartWithHttpMessagesAsync(string resourceGroupName, string serverName, RestartParameter parameters = default(RestartParameter), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Starts a server.
         /// </summary>
@@ -322,6 +325,9 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
+        /// <param name='parameters'>
+        /// The parameters for restarting a server.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -334,7 +340,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginRestartWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginRestartWithHttpMessagesAsync(string resourceGroupName, string serverName, RestartParameter parameters = default(RestartParameter), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Starts a server.
         /// </summary>

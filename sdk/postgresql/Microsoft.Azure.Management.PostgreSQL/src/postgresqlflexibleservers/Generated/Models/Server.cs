@@ -36,12 +36,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="identity">The Azure Active Directory identity of the
         /// server.</param>
@@ -52,40 +52,36 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// <param name="administratorLoginPassword">The administrator login
         /// password (required for server creation).</param>
         /// <param name="version">PostgreSQL Server version. Possible values
-        /// include: '12', '11'</param>
+        /// include: '13', '12', '11'</param>
+        /// <param name="minorVersion">The minor version of the server.</param>
         /// <param name="state">A state of a server that is visible to user.
         /// Possible values include: 'Ready', 'Dropping', 'Disabled',
         /// 'Starting', 'Stopping', 'Stopped', 'Updating'</param>
-        /// <param name="haState">A state of a HA server that is visible to
-        /// user. Possible values include: 'NotEnabled', 'CreatingStandby',
-        /// 'ReplicatingData', 'FailingOver', 'Healthy',
-        /// 'RemovingStandby'</param>
         /// <param name="fullyQualifiedDomainName">The fully qualified domain
         /// name of a server.</param>
-        /// <param name="displayName">The display name of a server.</param>
-        /// <param name="storageProfile">Storage profile of a server.</param>
-        /// <param name="publicNetworkAccess">public network access is enabled
-        /// or not. Possible values include: 'Enabled', 'Disabled'</param>
-        /// <param name="maintenanceWindow">Maintenance window of a
+        /// <param name="storage">Storage properties of a server.</param>
+        /// <param name="backup">Backup properties of a server.</param>
+        /// <param name="network">Network properties of a server.</param>
+        /// <param name="highAvailability">High availability properties of a
         /// server.</param>
-        /// <param name="haEnabled">stand by count value can be either enabled
-        /// or disabled. Possible values include: 'Enabled', 'Disabled'</param>
-        /// <param name="sourceServerName">The source PostgreSQL server name to
-        /// restore from.</param>
+        /// <param name="maintenanceWindow">Maintenance window properties of a
+        /// server.</param>
+        /// <param name="sourceServerResourceId">The source server resource ID
+        /// to restore from. It's required when 'createMode' is
+        /// 'PointInTimeRestore'.</param>
         /// <param name="pointInTimeUTC">Restore point creation time (ISO8601
-        /// format), specifying the time to restore from.</param>
-        /// <param name="availabilityZone">availability Zone information of the
+        /// format), specifying the time to restore from. It's required when
+        /// 'createMode' is 'PointInTimeRestore'.</param>
+        /// <param name="availabilityZone">availability zone information of the
         /// server.</param>
-        /// <param name="standbyAvailabilityZone">availability Zone information
-        /// of the server.</param>
-        /// <param name="byokEnforcement">Status showing whether the data
-        /// encryption is enabled with customer-managed keys.</param>
         /// <param name="createMode">The mode to create a new PostgreSQL
-        /// server. Possible values include: 'Default',
+        /// server. Possible values include: 'Default', 'Create', 'Update',
         /// 'PointInTimeRestore'</param>
         /// <param name="serverTags">Application-specific metadata in the form
         /// of key-value pairs.</param>
-        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), Sku sku = default(Sku), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string haState = default(string), string fullyQualifiedDomainName = default(string), string displayName = default(string), StorageProfile storageProfile = default(StorageProfile), string publicNetworkAccess = default(string), MaintenanceWindow maintenanceWindow = default(MaintenanceWindow), HAEnabledEnum? haEnabled = default(HAEnabledEnum?), string sourceServerName = default(string), System.DateTime? pointInTimeUTC = default(System.DateTime?), string availabilityZone = default(string), string standbyAvailabilityZone = default(string), string byokEnforcement = default(string), ServerPropertiesDelegatedSubnetArguments delegatedSubnetArguments = default(ServerPropertiesDelegatedSubnetArguments), string createMode = default(string), IDictionary<string, string> serverTags = default(IDictionary<string, string>))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), Sku sku = default(Sku), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string minorVersion = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), Storage storage = default(Storage), Backup backup = default(Backup), Network network = default(Network), HighAvailability highAvailability = default(HighAvailability), MaintenanceWindow maintenanceWindow = default(MaintenanceWindow), string sourceServerResourceId = default(string), System.DateTime? pointInTimeUTC = default(System.DateTime?), string availabilityZone = default(string), string createMode = default(string), IDictionary<string, string> serverTags = default(IDictionary<string, string>), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -93,22 +89,20 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             Version = version;
+            MinorVersion = minorVersion;
             State = state;
-            HaState = haState;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
-            DisplayName = displayName;
-            StorageProfile = storageProfile;
-            PublicNetworkAccess = publicNetworkAccess;
+            Storage = storage;
+            Backup = backup;
+            Network = network;
+            HighAvailability = highAvailability;
             MaintenanceWindow = maintenanceWindow;
-            HaEnabled = haEnabled;
-            SourceServerName = sourceServerName;
+            SourceServerResourceId = sourceServerResourceId;
             PointInTimeUTC = pointInTimeUTC;
             AvailabilityZone = availabilityZone;
-            StandbyAvailabilityZone = standbyAvailabilityZone;
-            ByokEnforcement = byokEnforcement;
-            DelegatedSubnetArguments = delegatedSubnetArguments;
             CreateMode = createMode;
             ServerTags = serverTags;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -146,10 +140,16 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
 
         /// <summary>
         /// Gets or sets postgreSQL Server version. Possible values include:
-        /// '12', '11'
+        /// '13', '12', '11'
         /// </summary>
         [JsonProperty(PropertyName = "properties.version")]
         public string Version { get; set; }
+
+        /// <summary>
+        /// Gets the minor version of the server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minorVersion")]
+        public string MinorVersion { get; private set; }
 
         /// <summary>
         /// Gets a state of a server that is visible to user. Possible values
@@ -160,91 +160,65 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         public string State { get; private set; }
 
         /// <summary>
-        /// Gets a state of a HA server that is visible to user. Possible
-        /// values include: 'NotEnabled', 'CreatingStandby', 'ReplicatingData',
-        /// 'FailingOver', 'Healthy', 'RemovingStandby'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.haState")]
-        public string HaState { get; private set; }
-
-        /// <summary>
         /// Gets the fully qualified domain name of a server.
         /// </summary>
         [JsonProperty(PropertyName = "properties.fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the display name of a server.
+        /// Gets or sets storage properties of a server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.displayName")]
-        public string DisplayName { get; set; }
+        [JsonProperty(PropertyName = "properties.storage")]
+        public Storage Storage { get; set; }
 
         /// <summary>
-        /// Gets or sets storage profile of a server.
+        /// Gets or sets backup properties of a server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.storageProfile")]
-        public StorageProfile StorageProfile { get; set; }
+        [JsonProperty(PropertyName = "properties.backup")]
+        public Backup Backup { get; set; }
 
         /// <summary>
-        /// Gets public network access is enabled or not. Possible values
-        /// include: 'Enabled', 'Disabled'
+        /// Gets or sets network properties of a server.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
-        public string PublicNetworkAccess { get; private set; }
+        [JsonProperty(PropertyName = "properties.network")]
+        public Network Network { get; set; }
 
         /// <summary>
-        /// Gets or sets maintenance window of a server.
+        /// Gets or sets high availability properties of a server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.highAvailability")]
+        public HighAvailability HighAvailability { get; set; }
+
+        /// <summary>
+        /// Gets or sets maintenance window properties of a server.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maintenanceWindow")]
         public MaintenanceWindow MaintenanceWindow { get; set; }
 
         /// <summary>
-        /// Gets or sets stand by count value can be either enabled or
-        /// disabled. Possible values include: 'Enabled', 'Disabled'
+        /// Gets or sets the source server resource ID to restore from. It's
+        /// required when 'createMode' is 'PointInTimeRestore'.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.haEnabled")]
-        public HAEnabledEnum? HaEnabled { get; set; }
-
-        /// <summary>
-        /// Gets or sets the source PostgreSQL server name to restore from.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.sourceServerName")]
-        public string SourceServerName { get; set; }
+        [JsonProperty(PropertyName = "properties.sourceServerResourceId")]
+        public string SourceServerResourceId { get; set; }
 
         /// <summary>
         /// Gets or sets restore point creation time (ISO8601 format),
-        /// specifying the time to restore from.
+        /// specifying the time to restore from. It's required when
+        /// 'createMode' is 'PointInTimeRestore'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.pointInTimeUTC")]
         public System.DateTime? PointInTimeUTC { get; set; }
 
         /// <summary>
-        /// Gets or sets availability Zone information of the server.
+        /// Gets or sets availability zone information of the server.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilityZone")]
         public string AvailabilityZone { get; set; }
 
         /// <summary>
-        /// Gets availability Zone information of the server.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.standbyAvailabilityZone")]
-        public string StandbyAvailabilityZone { get; private set; }
-
-        /// <summary>
-        /// Gets status showing whether the data encryption is enabled with
-        /// customer-managed keys.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.byokEnforcement")]
-        public string ByokEnforcement { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.delegatedSubnetArguments")]
-        public ServerPropertiesDelegatedSubnetArguments DelegatedSubnetArguments { get; set; }
-
-        /// <summary>
         /// Gets or sets the mode to create a new PostgreSQL server. Possible
-        /// values include: 'Default', 'PointInTimeRestore'
+        /// values include: 'Default', 'Create', 'Update', 'PointInTimeRestore'
         /// </summary>
         [JsonProperty(PropertyName = "properties.createMode")]
         public string CreateMode { get; set; }
@@ -255,6 +229,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.tags")]
         public IDictionary<string, string> ServerTags { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

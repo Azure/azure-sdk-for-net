@@ -88,11 +88,6 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         IConfigurationsOperations Configurations { get; }
 
         /// <summary>
-        /// Gets the IServerKeysOperations.
-        /// </summary>
-        IServerKeysOperations ServerKeys { get; }
-
-        /// <summary>
         /// Gets the ICheckNameAvailabilityOperations.
         /// </summary>
         ICheckNameAvailabilityOperations CheckNameAvailability { get; }
@@ -111,6 +106,16 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IDatabasesOperations.
+        /// </summary>
+        IDatabasesOperations Databases { get; }
+
+        /// <summary>
+        /// Gets the IGetPrivateDnsZoneSuffixOperations.
+        /// </summary>
+        IGetPrivateDnsZoneSuffixOperations GetPrivateDnsZoneSuffix { get; }
 
     }
 }

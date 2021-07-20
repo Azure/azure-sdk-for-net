@@ -32,10 +32,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// Initializes a new instance of the StorageEditionCapability class.
         /// </summary>
         /// <param name="name">storage edition name</param>
-        public StorageEditionCapability(string name = default(string), IList<StorageMBCapability> supportedStorageMB = default(IList<StorageMBCapability>))
+        /// <param name="status">The status</param>
+        public StorageEditionCapability(string name = default(string), IList<StorageMBCapability> supportedStorageMB = default(IList<StorageMBCapability>), string status = default(string))
         {
             Name = name;
             SupportedStorageMB = supportedStorageMB;
+            Status = status;
             CustomInit();
         }
 
@@ -54,6 +56,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// </summary>
         [JsonProperty(PropertyName = "supportedStorageMB")]
         public IList<StorageMBCapability> SupportedStorageMB { get; private set; }
+
+        /// <summary>
+        /// Gets the status
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
 
     }
 }

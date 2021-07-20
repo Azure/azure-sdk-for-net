@@ -266,9 +266,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static void Restart(this IServersOperations operations, string resourceGroupName, string serverName)
+            /// <param name='parameters'>
+            /// The parameters for restarting a server.
+            /// </param>
+            public static void Restart(this IServersOperations operations, string resourceGroupName, string serverName, RestartParameter parameters = default(RestartParameter))
             {
-                operations.RestartAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                operations.RestartAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -283,12 +286,15 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
+            /// <param name='parameters'>
+            /// The parameters for restarting a server.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RestartAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RestartAsync(this IServersOperations operations, string resourceGroupName, string serverName, RestartParameter parameters = default(RestartParameter), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RestartWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.RestartWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -508,9 +514,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static void BeginRestart(this IServersOperations operations, string resourceGroupName, string serverName)
+            /// <param name='parameters'>
+            /// The parameters for restarting a server.
+            /// </param>
+            public static void BeginRestart(this IServersOperations operations, string resourceGroupName, string serverName, RestartParameter parameters = default(RestartParameter))
             {
-                operations.BeginRestartAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                operations.BeginRestartAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -525,12 +534,15 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
+            /// <param name='parameters'>
+            /// The parameters for restarting a server.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginRestartAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRestartAsync(this IServersOperations operations, string resourceGroupName, string serverName, RestartParameter parameters = default(RestartParameter), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
