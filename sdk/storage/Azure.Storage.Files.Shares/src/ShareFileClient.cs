@@ -1998,6 +1998,430 @@ namespace Azure.Storage.Files.Shares
         }
         #endregion Download
 
+        #region Parallel Download
+        /// <summary>
+        /// The <see cref="DownloadTo(Stream)"/> operation downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DownloadTo(Stream destination) =>
+            DownloadTo(destination, CancellationToken.None);
+
+        /// <summary>
+        /// The <see cref="DownloadTo(string)"/> operation downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">
+        /// A file path to write the downloaded content to.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DownloadTo(string path) =>
+            DownloadTo(path, CancellationToken.None);
+
+        /// <summary>
+        /// The <see cref="DownloadToAsync(Stream)"/> downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DownloadToAsync(Stream destination) =>
+            await DownloadToAsync(destination, CancellationToken.None).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DownloadToAsync(string)"/> downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">
+        /// A file path to write the downloaded content to.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DownloadToAsync(string path) =>
+            await DownloadToAsync(path, CancellationToken.None).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DownloadTo(Stream, CancellationToken)"/> operation
+        /// downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DownloadTo(
+            Stream destination,
+            CancellationToken cancellationToken) =>
+            DownloadTo(
+                destination,
+                conditions: default, // Pass anything else so we don't recurse on this overload
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// The <see cref="DownloadTo(string, CancellationToken)"/> operation
+        /// downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">
+        /// A file path to write the downloaded content to.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DownloadTo(
+            string path,
+            CancellationToken cancellationToken) =>
+            DownloadTo(
+                path,
+                conditions: default, // Pass anything else so we don't recurse on this overload
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// The <see cref="DownloadToAsync(Stream, CancellationToken)"/> operation
+        /// downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DownloadToAsync(
+            Stream destination,
+            CancellationToken cancellationToken) =>
+            await DownloadToAsync(
+                destination,
+                conditions: default, // Pass anything else so we don't recurse on this overload
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DownloadToAsync(string, CancellationToken)"/> operation
+        /// downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">
+        /// A file path to write the downloaded content to.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DownloadToAsync(
+            string path,
+            CancellationToken cancellationToken) =>
+            await DownloadToAsync(
+                path,
+                conditions: default, // Pass anything else so we don't recurse on this overload
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DownloadTo(Stream, ShareFileRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DownloadTo(
+            Stream destination,
+            ShareFileRequestConditions conditions = default,
+            ///// <param name="progressHandler">
+            ///// Optional <see cref="IProgress{Long}"/> to provide
+            ///// progress updates about data transfers.
+            ///// </param>
+            //IProgress<long> progressHandler = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default) =>
+            StagedDownloadAsync(
+                destination,
+                conditions,
+                //progressHandler, // TODO: #8506
+                transferOptions: transferOptions,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DownloadTo(string, ShareFileRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">
+        /// A file path to write the downloaded content to.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DownloadTo(
+            string path,
+            ShareFileRequestConditions conditions = default,
+            ///// <param name="progressHandler">
+            ///// Optional <see cref="IProgress{Long}"/> to provide
+            ///// progress updates about data transfers.
+            ///// </param>
+            //IProgress<long> progressHandler = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            using Stream destination = File.Create(path);
+            return StagedDownloadAsync(
+                destination,
+                conditions,
+                //progressHandler, // TODO: #8506
+                transferOptions: transferOptions,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadToAsync(Stream, ShareFileRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DownloadToAsync(
+            Stream destination,
+            ShareFileRequestConditions conditions = default,
+            ///// <param name="progressHandler">
+            ///// Optional <see cref="IProgress{Long}"/> to provide
+            ///// progress updates about data transfers.
+            ///// </param>
+            //IProgress<long> progressHandler = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default) =>
+            await StagedDownloadAsync(
+                destination,
+                conditions,
+                //progressHandler, // TODO: #8506
+                transferOptions: transferOptions,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DownloadToAsync(string, ShareFileRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">
+        /// A file path to write the downloaded content to.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DownloadToAsync(
+            string path,
+            ShareFileRequestConditions conditions = default,
+            ///// <param name="progressHandler">
+            ///// Optional <see cref="IProgress{Long}"/> to provide
+            ///// progress updates about data transfers.
+            ///// </param>
+            //IProgress<long> progressHandler = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            using Stream destination = File.Create(path);
+            return await StagedDownloadAsync(
+                destination,
+                conditions,
+                //progressHandler, // TODO: #8506
+                transferOptions: transferOptions,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation will download a blob of arbitrary size by downloading it as individually staged
+        /// partitions if it's larger than the
+        /// <paramref name="transferOptions"/> MaximumTransferLength.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions on
+        /// the creation of this new block blob.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response> StagedDownloadAsync(
+            Stream destination,
+            ShareFileRequestConditions conditions = default,
+            ///// <param name="progressHandler">
+            ///// Optional <see cref="IProgress{Long}"/> to provide
+            ///// progress updates about data transfers.
+            ///// </param>
+            //IProgress<long> progressHandler, // TODO: #8506
+            StorageTransferOptions transferOptions = default,
+            bool async = true,
+            CancellationToken cancellationToken = default)
+        {
+            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions);
+
+            if (async)
+            {
+                return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                return downloader.DownloadTo(destination, conditions, cancellationToken);
+            }
+        }
+        #endregion Parallel Download
+
         #region OpenRead
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
