@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.KeyVault.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> The StoragePermissions. </summary>
     public readonly partial struct StoragePermissions : IEquatable<StoragePermissions>

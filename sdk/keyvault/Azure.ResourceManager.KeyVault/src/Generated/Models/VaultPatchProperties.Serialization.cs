@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.KeyVault.Models
+namespace Azure.ResourceManager.KeyVault
 {
     public partial class VaultPatchProperties : IUtf8JsonSerializable
     {
@@ -54,6 +54,16 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 writer.WritePropertyName("enableSoftDelete");
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
+            }
+            if (Optional.IsDefined(EnableRbacAuthorization))
+            {
+                writer.WritePropertyName("enableRbacAuthorization");
+                writer.WriteBooleanValue(EnableRbacAuthorization.Value);
+            }
+            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            {
+                writer.WritePropertyName("softDeleteRetentionInDays");
+                writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
             if (Optional.IsDefined(CreateMode))
             {

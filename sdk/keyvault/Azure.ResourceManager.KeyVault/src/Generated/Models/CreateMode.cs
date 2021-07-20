@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.KeyVault.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> The vault&apos;s create mode to indicate whether the vault need to be recovered or not. </summary>
     public enum CreateMode

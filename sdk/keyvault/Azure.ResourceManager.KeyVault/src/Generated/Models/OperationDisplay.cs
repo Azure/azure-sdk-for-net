@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.KeyVault.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Display metadata associated with the operation. </summary>
     public partial class OperationDisplay

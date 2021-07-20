@@ -12,24 +12,28 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Create or update a key vault in the specified subscription. </summary>
     public partial class VaultsCreateOrUpdateOperation : Operation<Vault>, IOperationSource<Vault>
     {
-        private readonly ArmOperationHelpers<Vault> _operation;
+        private readonly OperationInternals<Vault> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VaultsCreateOrUpdateOperation for mocking. </summary>
         protected VaultsCreateOrUpdateOperation()
         {
         }
 
-        internal VaultsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VaultsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Vault>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VaultsCreateOrUpdateOperation");
+            _operation = new OperationInternals<Vault>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VaultsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +64,13 @@ namespace Azure.ResourceManager.KeyVault
         Vault IOperationSource<Vault>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return Vault.DeserializeVault(document.RootElement);
+            return new Vault(_operationBase, VaultData.DeserializeVaultData(document.RootElement));
         }
 
         async ValueTask<Vault> IOperationSource<Vault>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return Vault.DeserializeVault(document.RootElement);
+            return new Vault(_operationBase, VaultData.DeserializeVaultData(document.RootElement));
         }
     }
 }

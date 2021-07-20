@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.KeyVault.Models
+namespace Azure.ResourceManager.KeyVault
 {
     internal partial class VaultListResult
     {
         internal static VaultListResult DeserializeVaultListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Vault>> value = default;
+            Optional<IReadOnlyList<VaultData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Vault> array = new List<Vault>();
+                    List<VaultData> array = new List<VaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Vault.DeserializeVault(item));
+                        array.Add(VaultData.DeserializeVaultData(item));
                     }
                     value = array;
                     continue;

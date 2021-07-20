@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> Deletes the specified private endpoint connection associated with the key vault. </summary>
-    public partial class PrivateEndpointConnectionsDeleteOperation : Operation<PrivateEndpointConnection>, IOperationSource<PrivateEndpointConnection>
+    public partial class PrivateEndpointConnectionsDeleteOperation : Operation<PrivateEndpointConnectionData>, IOperationSource<PrivateEndpointConnectionData>
     {
-        private readonly ArmOperationHelpers<PrivateEndpointConnection> _operation;
+        private readonly OperationInternals<PrivateEndpointConnectionData> _operation;
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionsDeleteOperation for mocking. </summary>
         protected PrivateEndpointConnectionsDeleteOperation()
@@ -28,13 +27,14 @@ namespace Azure.ResourceManager.KeyVault
 
         internal PrivateEndpointConnectionsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<PrivateEndpointConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateEndpointConnectionsDeleteOperation");
+            _operation = new OperationInternals<PrivateEndpointConnectionData>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateEndpointConnectionsDeleteOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override PrivateEndpointConnection Value => _operation.Value;
+        public override PrivateEndpointConnectionData Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,21 +52,21 @@ namespace Azure.ResourceManager.KeyVault
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<PrivateEndpointConnection>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<PrivateEndpointConnectionData>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<PrivateEndpointConnection>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<PrivateEndpointConnectionData>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        PrivateEndpointConnection IOperationSource<PrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
+        PrivateEndpointConnectionData IOperationSource<PrivateEndpointConnectionData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
+            return PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
         }
 
-        async ValueTask<PrivateEndpointConnection> IOperationSource<PrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PrivateEndpointConnectionData> IOperationSource<PrivateEndpointConnectionData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return PrivateEndpointConnection.DeserializePrivateEndpointConnection(document.RootElement);
+            return PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
         }
     }
 }

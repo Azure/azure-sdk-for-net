@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using System;
 using System.Linq;
@@ -76,6 +77,17 @@ namespace Azure.ResourceManager.TestFramework
             if (Mode == RecordedTestMode.Playback)
                 return;
             Thread.Sleep(milliSeconds);
+        }
+
+        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default)
+        {
+            var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
+            options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
+
+            return CreateClient<ArmClient>(
+                TestEnvironment.SubscriptionId,
+                TestEnvironment.Credential,
+                options);
         }
     }
 }

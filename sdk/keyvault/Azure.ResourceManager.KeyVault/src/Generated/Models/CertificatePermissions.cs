@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.KeyVault.Models
+namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> The CertificatePermissions. </summary>
     public readonly partial struct CertificatePermissions : IEquatable<CertificatePermissions>
