@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- https://docs.microsoft.com/aspnet/core/test/integration-tests -->
   
   <PropertyGroup>
@@ -6,13 +6,11 @@
     
     <!-- Azure SDK pipeline tries to pack test projects. This warning will be treated as an error and fail the whole build. -->
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-    
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+  <ItemGroup>
     <!--We would prefer to use the meta package "Microsoft.AspNetCore.App" here.
     But this package targets NetCoreApp2.1, while all the dependent packages target NetStandard2.0.
     To support net461 so we must reference the dependent packages.-->
