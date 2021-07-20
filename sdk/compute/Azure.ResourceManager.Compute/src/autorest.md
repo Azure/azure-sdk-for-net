@@ -65,12 +65,12 @@ operation-group-to-parent:
   VirtualMachineScaleSetVMRunCommands: Microsoft.Compute/virtualMachineScaleSets/virtualMachines ## there is a casing inconsistency !!!
   GallerySharingProfile: Microsoft.Compute/galleries
   ResourceSkus: subscriptions
-  DiskRestorePoint: resourceGroups
+  DiskRestorePoint: Microsoft.Compute/restorePointCollections/restorePoints
   SharedGalleries: subscriptions
   SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries
   SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images
+  # TODO -- temporary solution, should be removed after Shivangi's PR merges
   Locations: subscriptions ## this operation group comes from directive
-operation-group-is-tuple: DiskRestorePoint # after we fixed the parameter mappings, we can remove this.
 operation-group-is-extension: VirtualMachineRunCommands;VirtualMachineScaleSetVMRunCommands;VirtualMachineScaleSetVMExtensions;VirtualMachineExtensions
 directive:
   - from: compute.json
@@ -101,16 +101,16 @@ directive:
               delete $[key]
           }
       }
-  - from: swagger-document
+  - from: swagger-document # TODO -- temporary solution, should be removed after Shivangi's PR merges
     where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands/{commandId}'].get.operationId
     transform: return "Locations_GetVirtualMachineRunCommand";
-  - from: swagger-document
+  - from: swagger-document # TODO -- temporary solution, should be removed after Shivangi's PR merges
     where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands'].get.operationId
     transform: return "VirtualMachineRunCommands_ListBySubscription";
   - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands'].get.operationId
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands'].get.operationId # TODO -- temporary solution, should be removed after Shivangi's PR merges
     transform: return "VirtualMachineRunCommands_List";
-  - from: swagger-document
+  - from: swagger-document # TODO -- temporary solution, should be removed after Shivangi's PR merges
     where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands'].get.operationId
     transform: return "Locations_ListVirtualMachineRunCommands"
   - from: swagger-document
