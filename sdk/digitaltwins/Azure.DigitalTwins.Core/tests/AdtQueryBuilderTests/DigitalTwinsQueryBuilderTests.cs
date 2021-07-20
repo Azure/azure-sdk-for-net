@@ -34,7 +34,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         [Test]
         public void DigitalTwinsQueryBuilder_Select_AliasedConstructor()
         {
-            new DigitalTwinsQueryBuilder("T", AdtCollection.DigitalTwins)
+            new DigitalTwinsQueryBuilder(AdtCollection.DigitalTwins, "T")
                 .GetQueryText()
                 .Should()
                 .Be("SELECT T FROM DigitalTwins T");
@@ -43,7 +43,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         [Test]
         public void DigitalTwinsQueryBuilder_Select_AliasedConstructorWithSelectArgs()
         {
-            new DigitalTwinsQueryBuilder("T", AdtCollection.DigitalTwins)
+            new DigitalTwinsQueryBuilder(AdtCollection.DigitalTwins, "T")
                 .Select("T.Temperature", "T.Humidity")
                 .GetQueryText()
                 .Should()
@@ -147,7 +147,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Select("T.Temperature")
                 .SelectAs("T.Humidity", "Hum")
                 .From(AdtCollection.DigitalTwins, "T")
-                .Compare("T.Temperature", QueryComparisonOperator.GreaterOrEqual, 50)
+                .Where(q => q.Compare("T.Temperature", QueryComparisonOperator.GreaterOrEqual, 50))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT T.Temperature, T.Humidity AS Hum FROM DigitalTwins T WHERE T.Temperature >= 50");
@@ -171,7 +171,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .Compare("Temperature", QueryComparisonOperator.GreaterOrEqual, 50)
+                .Where(q => q.Compare("Temperature", QueryComparisonOperator.GreaterOrEqual, 50))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE Temperature >= 50");
@@ -183,7 +183,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .NotContains("Location", new string[] { "Paris", "Tokyo", "Madrid", "Prague" })
+                .Where(q => q.NotContains("Location", new string[] { "Paris", "Tokyo", "Madrid", "Prague" }))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE Location NIN ['Paris', 'Tokyo', 'Madrid', 'Prague']");
@@ -195,7 +195,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .WhereCustom("IS_OF_MODEL('dtmi:example:room;1', exact)")
+                .Where(q => q.Custom("IS_OF_MODEL('dtmi:example:room;1', exact)"))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE IS_OF_MODEL('dtmi:example:room;1', exact)");
@@ -207,7 +207,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .WhereIsOfModel("dtmi:example:room;1", true)
+                .Where(q => q.IsOfModel("dtmi:example:room;1", true))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE IS_OF_MODEL('dtmi:example:room;1', exact)");
@@ -219,7 +219,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.Relationships)
-                .WhereIsOfType("isOccupied", AdtDataType.AdtBool)
+                .Where(q => q.IsOfType("isOccupied", AdtDataType.AdtBool))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM Relationships WHERE IS_BOOL(isOccupied)");
@@ -231,9 +231,10 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .Select("Temperature")
                 .From(AdtCollection.DigitalTwins)
-                .WhereIsDefined("Humidity")
-                .And()
-                .WhereCustom("Occupants < 10")
+                .Where(q => q
+                    .IsDefined("Humidity")
+                    .And()
+                    .Custom("Occupants < 10"))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT Temperature FROM DigitalTwins WHERE IS_DEFINED(Humidity) AND Occupants < 10");
@@ -245,15 +246,16 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Parenthetical(q => q
-                    .WhereIsOfType("Humidity", AdtDataType.AdtNumber)
+                .Where(q => q
+                    .Parenthetical(q => q
+                        .IsOfType("Humidity", AdtDataType.AdtNumber)
+                        .Or()
+                        .IsOfType("Humidity", AdtDataType.AdtPrimative))
                     .Or()
-                    .WhereIsOfType("Humidity", AdtDataType.AdtPrimative))
-                .Or()
-                .Parenthetical(q => q
-                    .WhereIsOfType("Temperature", AdtDataType.AdtNumber)
-                    .Or()
-                    .WhereIsOfType("Temperature", AdtDataType.AdtPrimative))
+                    .Parenthetical(q => q
+                        .IsOfType("Temperature", AdtDataType.AdtNumber)
+                        .Or()
+                        .IsOfType("Temperature", AdtDataType.AdtPrimative)))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))");
@@ -265,11 +267,12 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .WhereIsOfModel("dtmi:example:room;1")
-                .And(q => q
-                    .WhereIsDefined("Temperature")
-                    .And()
-                    .Compare("Temperature", QueryComparisonOperator.Equal, 30))
+                .Where(q => q
+                    .IsOfModel("dtmi:example:room;1")
+                    .And(q => q
+                        .IsDefined("Temperature")
+                        .And()
+                        .Compare("Temperature", QueryComparisonOperator.Equal, 30)))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE IS_OF_MODEL('dtmi:example:room;1') AND (IS_DEFINED(Temperature) AND Temperature = 30)");
@@ -281,11 +284,12 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .SelectCount()
                 .From(AdtCollection.DigitalTwins)
-                .WhereCustom("Humidity < 10")
-                .Or(q => q
-                    .Compare("Temperature", QueryComparisonOperator.LessThan, 40)
-                    .And()
-                    .WhereIsOfType("Temperature", AdtDataType.AdtNumber))
+                .Where(q => q
+                    .Custom("Humidity < 10")
+                    .Or(q => q
+                        .Compare("Temperature", QueryComparisonOperator.LessThan, 40)
+                        .And()
+                        .IsOfType("Temperature", AdtDataType.AdtNumber)))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT COUNT() FROM DigitalTwins WHERE Humidity < 10 OR (Temperature < 40 AND IS_NUMBER(Temperature))");
@@ -341,7 +345,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .WhereIsOfModel(null)
+                .Where(q => q.IsOfModel(null))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE IS_OF_MODEL('')");
@@ -353,7 +357,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .WhereIsOfType(null, AdtDataType.AdtBool)
+                .Where(q => q.IsOfType(null, AdtDataType.AdtBool))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE IS_BOOL()");
@@ -365,7 +369,7 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .WhereStartsWith(null, null)
+                .Where(q => q.StartsWith(null, null))
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins WHERE STARTSWITH(, '')");
@@ -377,10 +381,10 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Contains(null, null)
+                .Where(q => q.Contains(null, null))
                 .GetQueryText()
                 .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE  IN []");
+                .Be("SELECT * FROM DigitalTwins WHERE IN []");
         }
 
         [Test]
@@ -389,10 +393,10 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
             new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Compare(null, QueryComparisonOperator.Equal, 10)
+                .Where(q => q.Compare(null, QueryComparisonOperator.Equal, 10))
                 .GetQueryText()
                 .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE  = 10");
+                .Be("SELECT * FROM DigitalTwins WHERE = 10");
         }
     }
 }
