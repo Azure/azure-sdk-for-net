@@ -19,9 +19,9 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task GetLocationQuotasAsync()
         {
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
+            using (MockContext context = StartMockContextAndInitializeClients(GetType()))
             {
-                BatchLocationQuota quotas = await this.BatchManagementClient.Location.GetQuotasAsync(this.Location);
+                BatchLocationQuota quotas = await BatchManagementClient.Location.GetQuotasAsync(Location);
 
                 Assert.NotNull(quotas.AccountQuota);
                 Assert.True(quotas.AccountQuota.Value > 0);
@@ -31,7 +31,7 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task ListSupportedCloudServiceSkusAsync()
         {
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
+            using (MockContext context = StartMockContextAndInitializeClients(GetType()))
             {
                 IPage<SupportedSku> result;
 
@@ -39,7 +39,7 @@ namespace Batch.Tests.ScenarioTests
                 string nextPageLink = null;
                 do
                 {
-                    result = await this.BatchManagementClient.Location.ListSupportedCloudServiceSkusAsync(Location);
+                    result = await BatchManagementClient.Location.ListSupportedCloudServiceSkusAsync(Location);
                     skus.AddRange(result.ToList());
                     nextPageLink = result.NextPageLink;
                 }
@@ -52,10 +52,10 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task ListSupportedCloudServiceSkusMaxResultsAsync()
         {
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
+            using (MockContext context = StartMockContextAndInitializeClients(GetType()))
             {
                 int maxresult = 5;
-                IPage<SupportedSku> result = await this.BatchManagementClient.Location.ListSupportedCloudServiceSkusAsync(Location, maxresults: maxresult);
+                IPage<SupportedSku> result = await BatchManagementClient.Location.ListSupportedCloudServiceSkusAsync(Location, maxresults: maxresult);
 
                 int count = result.Count();
                 Assert.True(count == maxresult);
@@ -65,7 +65,7 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task ListSupportedCloudServiceSkusFilterFamilyNameAsync()
         {
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
+            using (MockContext context = StartMockContextAndInitializeClients(GetType()))
             {
                 string filterValue = "basic";
                 string filterExpression = $"startswith(familyName,'{filterValue}')"; // Select family names beginning with 'basic'.
@@ -75,7 +75,7 @@ namespace Batch.Tests.ScenarioTests
                 string nextPageLink = null;
                 do
                 {
-                    result = await this.BatchManagementClient.Location.ListSupportedCloudServiceSkusAsync(this.Location, filter: filterExpression);
+                    result = await BatchManagementClient.Location.ListSupportedCloudServiceSkusAsync(Location, filter: filterExpression);
                     skus.AddRange(result.ToList());
                     nextPageLink = result.NextPageLink;
                 }

@@ -28,10 +28,10 @@ namespace Batch.Tests.ScenarioTests
             string methodName = "")
         {
             MockContext context = MockContext.Start(type, methodName);
-            this.Location = FindLocation(context);
+            Location = FindLocation(context);
 
-            this.ResourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
-            this.BatchManagementClient = context.GetServiceClient<BatchManagementClient>();
+            ResourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
+            BatchManagementClient = context.GetServiceClient<BatchManagementClient>();
             return context;
         }
 

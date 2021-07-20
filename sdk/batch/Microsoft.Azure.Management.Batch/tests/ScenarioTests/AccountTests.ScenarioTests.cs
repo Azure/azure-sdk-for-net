@@ -21,51 +21,51 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task BatchAccountEndToEndAsync()
         {
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
+            using (MockContext context = StartMockContextAndInitializeClients(GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName();
                 string batchAccountName = TestUtilities.GenerateName();
-                ResourceGroup group = new ResourceGroup(this.Location);
-                await this.ResourceManagementClient.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, group);
+                ResourceGroup group = new ResourceGroup(Location);
+                await ResourceManagementClient.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, group);
 
                 try
                 {
                     // Check if the account exists
-                    var checkAvailabilityResult = await this.BatchManagementClient.Location.CheckNameAvailabilityAsync(this.Location, batchAccountName);
+                    var checkAvailabilityResult = await BatchManagementClient.Location.CheckNameAvailabilityAsync(Location, batchAccountName);
                     Assert.True(checkAvailabilityResult.NameAvailable);
 
                     // Create an account
-                    BatchAccountCreateParameters createParams = new BatchAccountCreateParameters(this.Location);
+                    BatchAccountCreateParameters createParams = new BatchAccountCreateParameters(Location);
                     AuthenticationMode authMode = AuthenticationMode.SharedKey;
                     createParams.AllowedAuthenticationModes = new List<AuthenticationMode?> { authMode };
-                    await this.BatchManagementClient.BatchAccount.CreateAsync(resourceGroupName, batchAccountName, createParams);
+                    await BatchManagementClient.BatchAccount.CreateAsync(resourceGroupName, batchAccountName, createParams);
 
                     // Check if the account exists now
-                    checkAvailabilityResult = await this.BatchManagementClient.Location.CheckNameAvailabilityAsync(this.Location, batchAccountName);
+                    checkAvailabilityResult = await BatchManagementClient.Location.CheckNameAvailabilityAsync(Location, batchAccountName);
                     Assert.False(checkAvailabilityResult.NameAvailable);
                     Assert.NotNull(checkAvailabilityResult.Message);
                     Assert.NotNull(checkAvailabilityResult.Reason);
 
                     // Get the account and verify some properties
-                    BatchAccount batchAccount = await this.BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);
+                    BatchAccount batchAccount = await BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);
                     Assert.Equal(batchAccountName, batchAccount.Name);
                     Assert.True(batchAccount.DedicatedCoreQuota > 0);
                     Assert.True(batchAccount.LowPriorityCoreQuota > 0);
                     Assert.True(batchAccount.AllowedAuthenticationModes.Single() == authMode);
 
                     // Rotate a key
-                    BatchAccountKeys originalKeys = await this.BatchManagementClient.BatchAccount.GetKeysAsync(resourceGroupName, batchAccountName);
-                    BatchAccountKeys newKeys = await this.BatchManagementClient.BatchAccount.RegenerateKeyAsync(resourceGroupName, batchAccountName, AccountKeyType.Primary);
+                    BatchAccountKeys originalKeys = await BatchManagementClient.BatchAccount.GetKeysAsync(resourceGroupName, batchAccountName);
+                    BatchAccountKeys newKeys = await BatchManagementClient.BatchAccount.RegenerateKeyAsync(resourceGroupName, batchAccountName, AccountKeyType.Primary);
                     Assert.NotEqual(originalKeys.Primary, newKeys.Primary);
                     Assert.Equal(originalKeys.Secondary, newKeys.Secondary);
 
                     // List accounts under the resource group
-                    IPage<BatchAccount> listResponse = await this.BatchManagementClient.BatchAccount.ListByResourceGroupAsync(resourceGroupName);
+                    IPage<BatchAccount> listResponse = await BatchManagementClient.BatchAccount.ListByResourceGroupAsync(resourceGroupName);
                     List<BatchAccount> accounts = new List<BatchAccount>(listResponse);
                     string nextLink = listResponse.NextPageLink;
                     while (nextLink != null)
                     {
-                        listResponse = await this.BatchManagementClient.BatchAccount.ListByResourceGroupNextAsync(nextLink);
+                        listResponse = await BatchManagementClient.BatchAccount.ListByResourceGroupNextAsync(nextLink);
                         accounts.AddRange(listResponse);
                         nextLink = listResponse.NextPageLink;
                     }
@@ -73,12 +73,12 @@ namespace Batch.Tests.ScenarioTests
                     Assert.Single(accounts);
                     Assert.Equal(batchAccountName, accounts.First().Name);
 
-                    IPage<OutboundEnvironmentEndpoint> endpointsResponse = await this.BatchManagementClient.BatchAccount.ListOutboundNetworkDependenciesEndpointsAsync(resourceGroupName, batchAccount.Name);
+                    IPage<OutboundEnvironmentEndpoint> endpointsResponse = await BatchManagementClient.BatchAccount.ListOutboundNetworkDependenciesEndpointsAsync(resourceGroupName, batchAccount.Name);
                     List<OutboundEnvironmentEndpoint> endpoints = new List<OutboundEnvironmentEndpoint>();
 
                     do
                     {
-                        endpointsResponse = await this.BatchManagementClient.BatchAccount.ListOutboundNetworkDependenciesEndpointsAsync(resourceGroupName, batchAccount.Name);
+                        endpointsResponse = await BatchManagementClient.BatchAccount.ListOutboundNetworkDependenciesEndpointsAsync(resourceGroupName, batchAccount.Name);
                         endpoints.AddRange(endpointsResponse);
                         nextLink = endpointsResponse.NextPageLink;
                     }
@@ -90,7 +90,7 @@ namespace Batch.Tests.ScenarioTests
                     // Delete the account
                     try
                     {
-                        await this.BatchManagementClient.BatchAccount.DeleteAsync(resourceGroupName, batchAccountName);
+                        await BatchManagementClient.BatchAccount.DeleteAsync(resourceGroupName, batchAccountName);
                     }
                     catch (CloudException ex)
                     {
@@ -107,7 +107,7 @@ namespace Batch.Tests.ScenarioTests
                     // Verify account was deleted. A GET operation will return a 404 error and result in an exception
                     try
                     {
-                        await this.BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);
+                        await BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);
                     }
                     catch (CloudException ex)
                     {
@@ -116,7 +116,7 @@ namespace Batch.Tests.ScenarioTests
                 }
                 finally
                 {
-                    await this.ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupName);
+                    await ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupName);
                 }
             }
         }
@@ -124,20 +124,20 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task BatchAccountCanCreateWithBYOSEnabled()
         {
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
+            using (MockContext context = StartMockContextAndInitializeClients(GetType()))
             {
                 string resourceGroupName = TestUtilities.GenerateName();
                 string batchAccountName = TestUtilities.GenerateName();
                 string keyvaultName = TestUtilities.GenerateName();
-                ResourceGroup group = new ResourceGroup(this.Location);
-                await this.ResourceManagementClient.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, group);
+                ResourceGroup group = new ResourceGroup(Location);
+                await ResourceManagementClient.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, group);
 
                 try
                 {
                     //Register with keyvault just in case we haven't already
-                    await this.ResourceManagementClient.Providers.RegisterWithHttpMessagesAsync("Microsoft.KeyVault");
+                    await ResourceManagementClient.Providers.RegisterWithHttpMessagesAsync("Microsoft.KeyVault");
 
-                    var result = await this.ResourceManagementClient.Resources.CreateOrUpdateWithHttpMessagesAsync(
+                    var result = await ResourceManagementClient.Resources.CreateOrUpdateWithHttpMessagesAsync(
                         resourceGroupName: resourceGroupName,
                         resourceProviderNamespace: "Microsoft.KeyVault",
                         parentResourcePath: "",
@@ -146,7 +146,7 @@ namespace Batch.Tests.ScenarioTests
                         apiVersion: "2016-10-01",
                         parameters: new GenericResource()
                         {
-                            Location = this.Location,
+                            Location = Location,
                             Properties = new Dictionary<string, object>
                             {
                                 {"tenantId", "72f988bf-86f1-41af-91ab-2d7cd011db47"},
@@ -173,20 +173,20 @@ namespace Batch.Tests.ScenarioTests
                         });
 
                     var keyVaultReferenceId =
-                        $"/subscriptions/{this.BatchManagementClient.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{keyvaultName}";
+                        $"/subscriptions/{BatchManagementClient.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{keyvaultName}";
                     var keyVaultReferenceUrl = ((Newtonsoft.Json.Linq.JObject)result.Body.Properties)["vaultUri"].ToString();
                     // Create an account
                     BatchAccountCreateParameters createParams = new BatchAccountCreateParameters(
-                        this.Location,
+                        Location,
                         poolAllocationMode: PoolAllocationMode.UserSubscription,
                         keyVaultReference: new KeyVaultReference(
                             keyVaultReferenceId,
                             keyVaultReferenceUrl));
 
-                    await this.BatchManagementClient.BatchAccount.CreateAsync(resourceGroupName, batchAccountName, createParams);
+                    await BatchManagementClient.BatchAccount.CreateAsync(resourceGroupName, batchAccountName, createParams);
 
                     // Get the account and verify some properties
-                    BatchAccount batchAccount = await this.BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);
+                    BatchAccount batchAccount = await BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);
                     Assert.Equal(batchAccountName, batchAccount.Name);
                     Assert.Null(batchAccount.DedicatedCoreQuota);
                     Assert.Null(batchAccount.DedicatedCoreQuotaPerVMFamily);
@@ -198,7 +198,7 @@ namespace Batch.Tests.ScenarioTests
                 }
                 finally
                 {
-                    await this.ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupName);
+                    await ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupName);
                 }
             }
         }
