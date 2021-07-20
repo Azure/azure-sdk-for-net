@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.KeyVault.Tests
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             var parameters = new ManagedHsmData(Location)
             {
-                Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.CustomB32),
+                Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.StandardB1),
                 Properties = ManagedHsmProperties
             };
             parameters.Tags.InitializeFrom(Tags);
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 ManagedHsmSkuFamily.B,
-                ManagedHsmSkuName.CustomB32,
+                ManagedHsmSkuName.StandardB1,
                 CreateMode.Default,
                 true,
                 true,
@@ -250,11 +251,11 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.NotNull(managedHsmData);
             Assert.NotNull(managedHsmData.Properties);
 
-            string resourceIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/vaults/{2}";
+            string resourceIdFormat = "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/managedHSMs/{2}";
             string expectedResourceId = string.Format(resourceIdFormat, expectedSubId, expectedResourceGroupName, expectedVaultName);
 
             Assert.AreEqual(expectedResourceId, managedHsmData.Id.ToString());
-            Assert.AreEqual(expectedLocation, managedHsmData.Location);
+            Assert.AreEqual(expectedLocation, managedHsmData.Location.ToString());
             Assert.AreEqual(expectedTenantId, managedHsmData.Properties.TenantId);
             Assert.AreEqual(expectedVaultName, managedHsmData.Name);
             Assert.AreEqual(expectedSkuFamily, managedHsmData.Sku.Family);

@@ -125,12 +125,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ManagedHsmProperties.NetworkAcls = new MhsmNetworkRuleSet()
             {
                 Bypass = "AzureServices",
-                DefaultAction = "Allow",
-                IpRules =
-                {
-                    new MhsmipRule("1.2.3.4/32"),
-                    new MhsmipRule("1.0.0.0/25")
-                }
+                DefaultAction = "Deny" //Property properties.networkAcls.ipRules is not supported currently and must be set to null.
             };
             ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Disabled;
             ManagedHsmProperties.SoftDeleteRetentionInDays = 10;
