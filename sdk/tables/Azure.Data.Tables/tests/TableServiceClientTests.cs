@@ -71,6 +71,16 @@ namespace Azure.Data.Tables.Tests
                 () => new TableServiceClient(_urlHttp, new TableSharedKeyCredential(_accountName, string.Empty)),
                 Throws.Nothing,
                 "The constructor should accept an http url.");
+
+            Assert.That(
+                () => new TableServiceClient((string)null),
+                Throws.InstanceOf<ArgumentNullException>(),
+                "The constructor should validate the connectionString");
+
+            Assert.That(
+                () => new TableServiceClient("UseDevelopmentStorage=true"),
+                Throws.Nothing,
+                "The constructor should accept a valid connection string");
         }
 
         /// <summary>
@@ -86,6 +96,18 @@ namespace Azure.Data.Tables.Tests
             Assert.That(async () => await service.CreateTableAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the table name.");
 
             Assert.That(async () => await service.DeleteTableAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the table name.");
+        }
+
+        [Test]
+        public void AccountNameCorrectlyReturned()
+        {
+            Assert.That(
+                () => new TableServiceClient(_url, new TableSharedKeyCredential(_accountName, string.Empty)).AccountName,
+                Is.EqualTo(_accountName));
+
+            Assert.That(
+                () => new TableServiceClient("UseDevelopmentStorage=true").AccountName,
+                Is.EqualTo("devstoreaccount1"));
         }
 
         [Test]
