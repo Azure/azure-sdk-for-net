@@ -28,7 +28,6 @@ namespace Azure.Search.Documents.Tests
             Assert.NotNull(expectedText);
             Assert.NotNull(expectedQueryPlusText);
 
-            // TODO: #16824 - investigate autocompletions across SKUs
             CollectionAssert.IsSubsetOf(completions.Results.Select(c => c.Text), expectedText);
             CollectionAssert.IsSubsetOf(completions.Results.Select(c => c.QueryPlusText), expectedQueryPlusText);
         }
