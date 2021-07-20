@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
 
             if (Options.DelayMilliseconds > 0)
             {
-                await Task.Delay(TimeSpan.FromMilliseconds(Options.DelayMilliseconds));
+                await Task.Delay(TimeSpan.FromMilliseconds(Options.DelayMilliseconds), cancellationToken);
             }
         }
     }
