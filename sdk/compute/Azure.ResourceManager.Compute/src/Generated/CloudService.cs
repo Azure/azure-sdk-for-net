@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class CloudService : CloudServiceOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "CloudService"/> class for mocking. </summary>
-        internal CloudService() : base()
+        protected CloudService() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the CloudServiceData. </summary>
-        public CloudServiceData Data { get; private set; }
+        public virtual CloudServiceData Data { get; private set; }
     }
 }

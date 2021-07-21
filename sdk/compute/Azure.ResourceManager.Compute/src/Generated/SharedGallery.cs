@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class SharedGallery : SharedGalleryOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "SharedGallery"/> class for mocking. </summary>
-        internal SharedGallery()
+        protected SharedGallery()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the SharedGalleryData. </summary>
-        public SharedGalleryData Data { get; private set; }
+        public virtual SharedGalleryData Data { get; private set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class VirtualMachineRunCommandVirtualMachine : VirtualMachineRunCommandVirtualMachineOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "VirtualMachineRunCommandVirtualMachine"/> class for mocking. </summary>
-        internal VirtualMachineRunCommandVirtualMachine() : base()
+        protected VirtualMachineRunCommandVirtualMachine() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the VirtualMachineRunCommandData. </summary>
-        public VirtualMachineRunCommandData Data { get; private set; }
+        public virtual VirtualMachineRunCommandData Data { get; private set; }
     }
 }

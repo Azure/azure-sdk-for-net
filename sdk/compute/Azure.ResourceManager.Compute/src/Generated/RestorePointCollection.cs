@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class RestorePointCollection : RestorePointCollectionOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "RestorePointCollection"/> class for mocking. </summary>
-        internal RestorePointCollection() : base()
+        protected RestorePointCollection() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the RestorePointCollectionData. </summary>
-        public RestorePointCollectionData Data { get; private set; }
+        public virtual RestorePointCollectionData Data { get; private set; }
     }
 }

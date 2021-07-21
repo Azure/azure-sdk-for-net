@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class VirtualMachineExtensionVirtualMachine : VirtualMachineExtensionVirtualMachineOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "VirtualMachineExtensionVirtualMachine"/> class for mocking. </summary>
-        internal VirtualMachineExtensionVirtualMachine() : base()
+        protected VirtualMachineExtensionVirtualMachine() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the VirtualMachineExtensionData. </summary>
-        public VirtualMachineExtensionData Data { get; private set; }
+        public virtual VirtualMachineExtensionData Data { get; private set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class SharedGalleryImageVersion : SharedGalleryImageVersionOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "SharedGalleryImageVersion"/> class for mocking. </summary>
-        internal SharedGalleryImageVersion()
+        protected SharedGalleryImageVersion()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the SharedGalleryImageVersionData. </summary>
-        public SharedGalleryImageVersionData Data { get; private set; }
+        public virtual SharedGalleryImageVersionData Data { get; private set; }
     }
 }

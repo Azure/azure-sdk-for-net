@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class Snapshot : SnapshotOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "Snapshot"/> class for mocking. </summary>
-        internal Snapshot() : base()
+        protected Snapshot() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the SnapshotData. </summary>
-        public SnapshotData Data { get; private set; }
+        public virtual SnapshotData Data { get; private set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class ProximityPlacementGroup : ProximityPlacementGroupOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "ProximityPlacementGroup"/> class for mocking. </summary>
-        internal ProximityPlacementGroup() : base()
+        protected ProximityPlacementGroup() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the ProximityPlacementGroupData. </summary>
-        public ProximityPlacementGroupData Data { get; private set; }
+        public virtual ProximityPlacementGroupData Data { get; private set; }
     }
 }

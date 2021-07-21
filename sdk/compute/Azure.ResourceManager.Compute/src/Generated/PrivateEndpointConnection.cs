@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class PrivateEndpointConnection : PrivateEndpointConnectionOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "PrivateEndpointConnection"/> class for mocking. </summary>
-        internal PrivateEndpointConnection() : base()
+        protected PrivateEndpointConnection() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the PrivateEndpointConnectionData. </summary>
-        public PrivateEndpointConnectionData Data { get; private set; }
+        public virtual PrivateEndpointConnectionData Data { get; private set; }
     }
 }

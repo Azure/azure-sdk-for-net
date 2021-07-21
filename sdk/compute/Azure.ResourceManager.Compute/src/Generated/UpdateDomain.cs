@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class UpdateDomain : UpdateDomainOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "UpdateDomain"/> class for mocking. </summary>
-        internal UpdateDomain() : base()
+        protected UpdateDomain() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the UpdateDomainData. </summary>
-        public UpdateDomainData Data { get; private set; }
+        public virtual UpdateDomainData Data { get; private set; }
     }
 }

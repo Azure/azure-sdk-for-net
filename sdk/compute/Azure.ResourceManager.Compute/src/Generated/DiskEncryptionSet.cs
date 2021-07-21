@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class DiskEncryptionSet : DiskEncryptionSetOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "DiskEncryptionSet"/> class for mocking. </summary>
-        internal DiskEncryptionSet() : base()
+        protected DiskEncryptionSet() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the DiskEncryptionSetData. </summary>
-        public DiskEncryptionSetData Data { get; private set; }
+        public virtual DiskEncryptionSetData Data { get; private set; }
     }
 }

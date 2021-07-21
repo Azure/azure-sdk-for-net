@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class Image : ImageOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "Image"/> class for mocking. </summary>
-        internal Image() : base()
+        protected Image() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the ImageData. </summary>
-        public ImageData Data { get; private set; }
+        public virtual ImageData Data { get; private set; }
     }
 }

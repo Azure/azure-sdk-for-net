@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class GalleryImageVersion : GalleryImageVersionOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "GalleryImageVersion"/> class for mocking. </summary>
-        internal GalleryImageVersion() : base()
+        protected GalleryImageVersion() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the GalleryImageVersionData. </summary>
-        public GalleryImageVersionData Data { get; private set; }
+        public virtual GalleryImageVersionData Data { get; private set; }
     }
 }

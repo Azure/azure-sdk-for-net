@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class Gallery : GalleryOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "Gallery"/> class for mocking. </summary>
-        internal Gallery() : base()
+        protected Gallery() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the GalleryData. </summary>
-        public GalleryData Data { get; private set; }
+        public virtual GalleryData Data { get; private set; }
     }
 }

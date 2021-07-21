@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class DiskRestorePoint : DiskRestorePointOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "DiskRestorePoint"/> class for mocking. </summary>
-        internal DiskRestorePoint() : base()
+        protected DiskRestorePoint() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the DiskRestorePointData. </summary>
-        public DiskRestorePointData Data { get; private set; }
+        public virtual DiskRestorePointData Data { get; private set; }
     }
 }

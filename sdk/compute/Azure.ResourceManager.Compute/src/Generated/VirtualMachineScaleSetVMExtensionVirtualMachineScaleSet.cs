@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet : VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet"/> class for mocking. </summary>
-        internal VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet() : base()
+        protected VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the VirtualMachineScaleSetVMExtensionData. </summary>
-        public VirtualMachineScaleSetVMExtensionData Data { get; private set; }
+        public virtual VirtualMachineScaleSetVMExtensionData Data { get; private set; }
     }
 }

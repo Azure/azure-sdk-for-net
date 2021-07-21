@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
     public class DiskAccess : DiskAccessOperations
     {
         /// <summary> Initializes a new instance of the <see cref = "DiskAccess"/> class for mocking. </summary>
-        internal DiskAccess() : base()
+        protected DiskAccess() : base()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the DiskAccessData. </summary>
-        public DiskAccessData Data { get; private set; }
+        public virtual DiskAccessData Data { get; private set; }
     }
 }
