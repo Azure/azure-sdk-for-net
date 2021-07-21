@@ -45,10 +45,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
-        public AzureKeyVaultLinkedService(object baseUrl, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>))
+        /// <param name="credential">The credential reference containing
+        /// authentication information.</param>
+        public AzureKeyVaultLinkedService(object baseUrl, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), CredentialReference credential = default(CredentialReference))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             BaseUrl = baseUrl;
+            Credential = credential;
             CustomInit();
         }
 
@@ -66,6 +69,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object BaseUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the credential reference containing authentication
+        /// information.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.credential")]
+        public CredentialReference Credential { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -77,6 +87,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (BaseUrl == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "BaseUrl");
+            }
+            if (Credential != null)
+            {
+                Credential.Validate();
             }
         }
     }
