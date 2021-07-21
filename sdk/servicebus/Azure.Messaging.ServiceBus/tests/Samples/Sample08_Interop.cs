@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
-    public class Sample08_InteropBrokeredMessage : ServiceBusLiveTestBase
+    public class Sample08_Interop : ServiceBusLiveTestBase
     {
         [Test]
         public async Task TestInterop()
