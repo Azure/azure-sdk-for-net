@@ -3,6 +3,7 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 
@@ -10,7 +11,32 @@ namespace Azure.Core.Diagnostics
 {
     internal abstract class AzureEventSource: EventSource
     {
-        private static string[] MainEventSourceTraits =
+        private const string SharedDataKey = "_AzureEventSourceNamesInUse";
+        private static readonly HashSet<string> NamesInUse;
+
+#pragma warning disable CA1810 // Use static initializer
+        static AzureEventSource()
+#pragma warning restore CA1810
+        {
+            // It's important for this code to run in a static constructor because runtime guarantees that
+            // a single instance is executed at a time
+            // This gives us a chance to store a shared hashset in the global dictionary without a race
+            var namesInUse = AppDomain.CurrentDomain.GetData(SharedDataKey) as HashSet<string>;
+            if (namesInUse == null)
+            {
+                namesInUse = new HashSet<string>();
+                foreach (var source in GetSources())
+                {
+                    namesInUse.Add(source.Name);
+                }
+
+                AppDomain.CurrentDomain.SetData(SharedDataKey, namesInUse);
+            }
+
+            NamesInUse = namesInUse;
+        }
+
+        private static readonly string[] MainEventSourceTraits =
         {
             AzureEventSourceListener.TraitName,
             AzureEventSourceListener.TraitValue
@@ -24,28 +50,29 @@ namespace Azure.Core.Diagnostics
         {
         }
 
+        // The name de-duplication is required for the case where multiple versions of the same assembly are loaded
+        // in different assembly load contexts
         private static string DeduplicateName(string eventSourceName)
         {
-            HashSet<string> namesInUse = new();
-            foreach (var source in GetSources())
+            lock (NamesInUse)
             {
-                namesInUse.Add(source.Name);
-            }
-
-            if (!namesInUse.Contains(eventSourceName))
-            {
-                return eventSourceName;
-            }
-
-            int i = 1;
-            while (true)
-            {
-                var candidate = $"{eventSourceName}-{i}";
-                if (!namesInUse.Contains(candidate))
+                if (!NamesInUse.Contains(eventSourceName))
                 {
-                    return candidate;
+                    NamesInUse.Add(eventSourceName);
+                    return eventSourceName;
                 }
-                i++;
+
+                int i = 1;
+                while (true)
+                {
+                    var candidate = $"{eventSourceName}-{i}";
+                    if (!NamesInUse.Contains(candidate))
+                    {
+                        NamesInUse.Add(candidate);
+                        return candidate;
+                    }
+                    i++;
+                }
             }
         }
     }

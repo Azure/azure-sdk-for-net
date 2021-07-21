@@ -30,16 +30,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   use for logging.
         /// </summary>
         ///
-        public static EventHubsEventSource Log { get; } = new EventHubsEventSource(EventSourceName);
+        public static EventHubsEventSource Log { get; } = new EventHubsEventSource();
 
         /// <summary>
         ///   Prevents an instance of the <see cref="EventHubsEventSource"/> class from being created
         ///   outside the scope of the <see cref="Log" /> instance.
         /// </summary>
         ///
-        /// <param name="eventSourceName">The name to assign to the event source.</param>
-        ///
-        private EventHubsEventSource(string eventSourceName) : base(eventSourceName)
+        protected EventHubsEventSource() : base(EventSourceName)
         {
         }
 

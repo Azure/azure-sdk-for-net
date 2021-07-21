@@ -89,10 +89,10 @@ namespace Azure.Core.Tests
             {
             }
 
-            [Event(0)]
+            [Event(1)]
             public void LogSomething()
             {
-                WriteEvent(0);
+                WriteEvent(1);
             }
         }
     }

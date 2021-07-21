@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   outside the scope of this library.
         /// </summary>
         ///
-        internal PartitionLoadBalancerEventSource() : base(EventSourceName)
+        protected PartitionLoadBalancerEventSource() : base(EventSourceName)
         {
         }
 

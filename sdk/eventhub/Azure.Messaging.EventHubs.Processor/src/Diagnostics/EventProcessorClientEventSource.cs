@@ -27,16 +27,14 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   use for logging.
         /// </summary>
         ///
-        public static EventProcessorClientEventSource Log { get; } = new EventProcessorClientEventSource(EventSourceName);
+        public static EventProcessorClientEventSource Log { get; } = new EventProcessorClientEventSource();
 
         /// <summary>
         ///   Prevents an instance of the <see cref="EventProcessorClientEventSource" /> class from being created
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
-        /// <param name="eventSourceName">The name to assign the event source.</param>
-        ///
-        private EventProcessorClientEventSource(string eventSourceName) : base(eventSourceName)
+        protected EventProcessorClientEventSource() : base(EventSourceName)
         {
         }
 
