@@ -14,6 +14,11 @@
 ### Install Bicep
 
 - Install using the instructions in [bicep](https://github.com/Azure/bicep/blob/main/docs/installing.md)
+- Note that to deploy Bicep files, use Bicep CLI version 0.3.1 or later. To check your Bicep CLI version, run:
+
+```bash
+bicep --version
+```
 
 ### Run the setup script
 

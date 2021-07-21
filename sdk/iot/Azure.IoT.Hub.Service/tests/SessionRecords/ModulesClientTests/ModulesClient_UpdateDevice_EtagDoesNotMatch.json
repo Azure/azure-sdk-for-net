@@ -10,8 +10,8 @@
         "Content-Type": "application/json",
         "If-Match": "\u0022\u0022",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200901.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20210707.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "6d36642580ec9c1daf5998c016fa2252",
         "x-ms-return-client-request-id": "true"
@@ -21,18 +21,18 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "555",
+        "Content-Length": "537",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 01 Sep 2020 20:58:37 GMT",
-        "ETag": "\u0022MTc1Mjc1MjMz\u0022",
+        "Date": "Wed, 07 Jul 2021 20:47:20 GMT",
+        "ETag": "\u0022OTg2OTAxMDY3\u0022",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "fddb2219-b2d8-45d2-89bb-a23de506c33a"
+        "x-ms-request-id": "7ef164d1-ca0c-472a-8d8f-c517c99a89c9"
       },
       "ResponseBody": {
         "deviceId": "UpdateWithETag405634285",
-        "generationId": "637345907182339761",
-        "etag": "MTc1Mjc1MjMz",
+        "generationId": "637612876407091670",
+        "etag": "OTg2OTAxMDY3",
         "connectionState": "Disconnected",
         "status": "enabled",
         "statusReason": null,
@@ -53,8 +53,7 @@
         },
         "capabilities": {
           "iotEdge": false
-        },
-        "parentScopes": []
+        }
       }
     },
     {
@@ -67,8 +66,8 @@
         "Content-Type": "application/json",
         "If-Match": "\u0022\u0022",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200901.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20210707.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "8d28d984ee74aa6a7c67a7a1138ba11a",
         "x-ms-return-client-request-id": "true"
@@ -81,17 +80,17 @@
       "ResponseHeaders": {
         "Content-Length": "478",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 01 Sep 2020 20:58:37 GMT",
+        "Date": "Wed, 07 Jul 2021 20:47:20 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "90ad5ead-ba1e-40e6-b276-00b5059ced1b"
+        "x-ms-request-id": "414b4623-45eb-4ccb-b772-85c908fd484e"
       },
       "ResponseBody": {
         "moduleId": "UpdateWithETag1986225016",
         "managedBy": null,
         "deviceId": "UpdateWithETag405634285",
-        "generationId": "637345907182689805",
-        "etag": "NzcwMTE3MjE2",
+        "generationId": "637612876407541108",
+        "etag": "NTA4MDAxMjI2",
         "connectionState": "Disconnected",
         "connectionStateUpdatedTime": "0001-01-01T00:00:00",
         "lastActivityTime": "0001-01-01T00:00:00",
@@ -117,10 +116,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "443",
         "Content-Type": "application/json",
-        "If-Match": "\u0022NzcwMTE3MjE2\u0022",
+        "If-Match": "\u0022NTA4MDAxMjI2\u0022",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200901.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20210707.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "eb6fce14c9a5ffb86a34da1495346967",
         "x-ms-return-client-request-id": "true"
@@ -129,8 +128,8 @@
         "moduleId": "UpdateWithETag1986225016",
         "managedBy": "SomeChangedValue",
         "deviceId": "UpdateWithETag405634285",
-        "generationId": "637345907182689805",
-        "etag": "NzcwMTE3MjE2",
+        "generationId": "637612876407541108",
+        "etag": "NTA4MDAxMjI2",
         "connectionState": "Disconnected",
         "connectionStateUpdatedTime": "0001-01-01T00:00:00Z",
         "lastActivityTime": "0001-01-01T00:00:00Z",
@@ -148,17 +147,17 @@
       "ResponseHeaders": {
         "Content-Length": "494",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 01 Sep 2020 20:58:37 GMT",
+        "Date": "Wed, 07 Jul 2021 20:47:20 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "6f27194d-efd2-4df9-b08d-62fe551f9401"
+        "x-ms-request-id": "26415129-3297-470a-af84-bbb1a0e914ef"
       },
       "ResponseBody": {
         "moduleId": "UpdateWithETag1986225016",
         "managedBy": "SomeChangedValue",
         "deviceId": "UpdateWithETag405634285",
-        "generationId": "637345907182689805",
-        "etag": "NzcwMTE3MjE3",
+        "generationId": "637612876407541108",
+        "etag": "NTA4MDAxMjI3",
         "connectionState": "Disconnected",
         "connectionStateUpdatedTime": "0001-01-01T00:00:00Z",
         "lastActivityTime": "0001-01-01T00:00:00Z",
@@ -184,10 +183,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "448",
         "Content-Type": "application/json",
-        "If-Match": "\u0022NzcwMTE3MjE2\u0022",
+        "If-Match": "\u0022NTA4MDAxMjI2\u0022",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200901.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20210707.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "020059535ffc3704fa8cf184d87b8823",
         "x-ms-return-client-request-id": "true"
@@ -196,8 +195,8 @@
         "moduleId": "UpdateWithETag1986225016",
         "managedBy": "SomeOtherChangedValue",
         "deviceId": "UpdateWithETag405634285",
-        "generationId": "637345907182689805",
-        "etag": "NzcwMTE3MjE2",
+        "generationId": "637612876407541108",
+        "etag": "NTA4MDAxMjI2",
         "connectionState": "Disconnected",
         "connectionStateUpdatedTime": "0001-01-01T00:00:00Z",
         "lastActivityTime": "0001-01-01T00:00:00Z",
@@ -213,17 +212,17 @@
       },
       "StatusCode": 412,
       "ResponseHeaders": {
-        "Content-Length": "162",
+        "Content-Length": "241",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 01 Sep 2020 20:58:37 GMT",
+        "Date": "Wed, 07 Jul 2021 20:47:22 GMT",
         "iothub-errorcode": "PreconditionFailed",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "30a59f82-46e1-4d54-a46a-e077667ac443"
+        "x-ms-request-id": "64eae60c-ceb2-4d63-8204-2f6eb2a83084"
       },
       "ResponseBody": {
-        "Message": "ErrorCode:PreconditionFailed;PreconditionFailed",
-        "ExceptionMessage": "Tracking ID:30a59f8246e14d54a46ae077667ac443-G:14-TimeStamp:09/01/2020 20:58:38"
+        "Message": "ErrorCode:PreconditionFailed;Precondition failed: Device version did not match, existingVersion:508001227 newVersion:508001226",
+        "ExceptionMessage": "Tracking ID:64eae60cceb24d6382042f6eb2a83084-G:18-TimeStamp:07/07/2021 20:47:23"
       }
     },
     {
@@ -236,8 +235,8 @@
         "Content-Type": "application/json",
         "If-Match": "*",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200901.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20210707.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "47ab7db7378bbbac2128223f13551448",
         "x-ms-return-client-request-id": "true"
@@ -246,8 +245,8 @@
         "moduleId": "UpdateWithETag1986225016",
         "managedBy": "SomeOtherChangedValue",
         "deviceId": "UpdateWithETag405634285",
-        "generationId": "637345907182689805",
-        "etag": "NzcwMTE3MjE2",
+        "generationId": "637612876407541108",
+        "etag": "NTA4MDAxMjI2",
         "connectionState": "Disconnected",
         "connectionStateUpdatedTime": "0001-01-01T00:00:00Z",
         "lastActivityTime": "0001-01-01T00:00:00Z",
@@ -265,17 +264,17 @@
       "ResponseHeaders": {
         "Content-Length": "499",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 01 Sep 2020 20:58:37 GMT",
+        "Date": "Wed, 07 Jul 2021 20:47:23 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "9351f4e2-644b-406d-87b3-85d0211a5d01"
+        "x-ms-request-id": "5c777d11-f9fd-4266-b771-0c62ff8afbf0"
       },
       "ResponseBody": {
         "moduleId": "UpdateWithETag1986225016",
         "managedBy": "SomeOtherChangedValue",
         "deviceId": "UpdateWithETag405634285",
-        "generationId": "637345907182689805",
-        "etag": "NzcwMTE3MjE4",
+        "generationId": "637612876407541108",
+        "etag": "NTA4MDAxMjI4",
         "connectionState": "Disconnected",
         "connectionStateUpdatedTime": "0001-01-01T00:00:00Z",
         "lastActivityTime": "0001-01-01T00:00:00Z",
@@ -300,8 +299,8 @@
         "Authorization": "Sanitized",
         "If-Match": "*",
         "User-Agent": [
-          "azsdk-net-Iot.Hub.Service/1.0.0-dev.20200901.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-IoT.Hub.Service/1.0.0-alpha.20210707.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "ba4d3ffd9e8ab41eca37f119d83327ee",
         "x-ms-return-client-request-id": "true"
@@ -310,10 +309,10 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 01 Sep 2020 20:58:37 GMT",
+        "Date": "Wed, 07 Jul 2021 20:47:23 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Vary": "Origin",
-        "x-ms-request-id": "162a51a4-c2cb-418c-90bd-73bd2f98e6e8"
+        "x-ms-request-id": "e92f2463-b624-4503-b407-99b3abdede4a"
       },
       "ResponseBody": []
     }

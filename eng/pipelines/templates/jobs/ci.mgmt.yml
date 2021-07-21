@@ -5,7 +5,6 @@ jobs:
       vmImage: windows-2019
     steps:
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - script: |
           if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
           dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:SkipTests=%SkipTests% /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
@@ -45,7 +44,7 @@ jobs:
       matrix:
         Linux:
           Pool: Azure Pipelines
-          OSVmImage: "ubuntu-18.04"
+          OSVmImage: "ubuntu-20.04"
         Windows:
           Pool: Azure Pipelines
           OSVmImage: "windows-2019"
@@ -60,9 +59,6 @@ jobs:
         parameters:
           AgentImage: $(OSVmImage)
       - script: "echo $(system.pullrequest.pullrequestnumber), http://github.com/$(build.repository.id), http://github.com/$(build.repository.ID)"
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-        parameters:
-          NuGetCacheKey: Test
       - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp $(RPScopeArgs)"
         displayName: "Build & Run Tests"
       - task: PublishTestResults@2

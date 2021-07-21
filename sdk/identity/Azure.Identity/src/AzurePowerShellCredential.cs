@@ -253,7 +253,7 @@ return $x.Objects.FirstChild.OuterXml
                         break;
 
                     case "ExpiresOn":
-                        expiresOn = DateTimeOffset.Parse(e.Value, CultureInfo.InvariantCulture).ToUniversalTime();
+                        expiresOn = DateTimeOffset.Parse(e.Value, CultureInfo.CurrentCulture).ToUniversalTime();
                         break;
                 }
 

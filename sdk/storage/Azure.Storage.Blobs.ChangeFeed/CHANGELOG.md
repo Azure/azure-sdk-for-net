@@ -1,11 +1,9 @@
 # Release History
 
 ## 12.0.0-preview.14 (Unreleased)
-
 - TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
     - A new property is now available on the ClientOptions called `EnableTenantDiscovery`. If set to true, the client will attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.
-
-- This release contains bug fixes to improve quality.
+- Fixed bug where "Segment doesn't have any more events" exception was throw when attempting to resume from a cusor pointed at a segment that had no more events, and newer segments exist in the Change Feed.
 
 ## 12.0.0-preview.13 (2021-06-08)
 - This release contains bug fixes to improve quality.
