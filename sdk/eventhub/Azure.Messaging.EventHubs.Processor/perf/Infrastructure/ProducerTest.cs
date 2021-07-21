@@ -23,9 +23,8 @@ namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
             _eventBody = RandomByteArray.Create((int)options.Size);
             _propertyValue = new string('a', options.PropertySize);
 
-            EventHubProducerClient = new EventHubProducerClient(
-                EventHubsTestEnvironment.Instance.EventHubsConnectionString,
-                EventHubsTestEnvironment.Instance.EventHubsNamespace);
+            EventHubProducerClient = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString,
+                EventHubsTestEnvironment.Instance.EventHubNameOverride);
         }
 
         protected IEnumerable<EventData> CreateEvents()
