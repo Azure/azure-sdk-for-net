@@ -11,42 +11,44 @@
 namespace Microsoft.Azure.Management.Maps.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Parameters used to create a new Maps Account.
+    /// Parameters used to update an existing Creator resource.
     /// </summary>
-    public partial class MapsAccountCreateParameters
+    [Rest.Serialization.JsonTransformation]
+    public partial class CreatorUpdateParameters
     {
         /// <summary>
-        /// Initializes a new instance of the MapsAccountCreateParameters
-        /// class.
+        /// Initializes a new instance of the CreatorUpdateParameters class.
         /// </summary>
-        public MapsAccountCreateParameters()
+        public CreatorUpdateParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MapsAccountCreateParameters
-        /// class.
+        /// Initializes a new instance of the CreatorUpdateParameters class.
         /// </summary>
-        /// <param name="location">The location of the resource.</param>
-        /// <param name="sku">The SKU of this account.</param>
+        /// <param name="storageUnits">The storage units to be allocated.
+        /// Integer values from 1 to 100, inclusive.</param>
         /// <param name="tags">Gets or sets a list of key value pairs that
         /// describe the resource. These tags can be used in viewing and
         /// grouping this resource (across resource groups). A maximum of 15
         /// tags can be provided for a resource. Each tag must have a key no
         /// greater than 128 characters and value no greater than 256
         /// characters.</param>
-        public MapsAccountCreateParameters(string location, Sku sku, IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="provisioningState">The state of the resource
+        /// provisioning, terminal states: Succeeded, Failed, Canceled</param>
+        public CreatorUpdateParameters(int storageUnits, IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string))
         {
-            Location = location;
             Tags = tags;
-            Sku = sku;
+            ProvisioningState = provisioningState;
+            StorageUnits = storageUnits;
             CustomInit();
         }
 
@@ -54,12 +56,6 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets a list of key value pairs that describe the resource.
@@ -72,10 +68,18 @@ namespace Microsoft.Azure.Management.Maps.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the SKU of this account.
+        /// Gets the state of the resource provisioning, terminal states:
+        /// Succeeded, Failed, Canceled
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; set; }
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the storage units to be allocated. Integer values from
+        /// 1 to 100, inclusive.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.storageUnits")]
+        public int StorageUnits { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -85,17 +89,13 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Location == null)
+            if (StorageUnits > 100)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "StorageUnits", 100);
             }
-            if (Sku == null)
+            if (StorageUnits < 1)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
-            }
-            if (Sku != null)
-            {
-                Sku.Validate();
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "StorageUnits", 1);
             }
         }
     }

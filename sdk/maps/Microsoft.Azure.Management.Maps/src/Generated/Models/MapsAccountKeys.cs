@@ -30,17 +30,20 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// <summary>
         /// Initializes a new instance of the MapsAccountKeys class.
         /// </summary>
-        /// <param name="id">The full Azure resource identifier of the Maps
-        /// Account.</param>
+        /// <param name="primaryKeyLastUpdated">The last updated date and time
+        /// of the primary key.</param>
         /// <param name="primaryKey">The primary key for accessing the Maps
         /// REST APIs.</param>
         /// <param name="secondaryKey">The secondary key for accessing the Maps
         /// REST APIs.</param>
-        public MapsAccountKeys(string id = default(string), string primaryKey = default(string), string secondaryKey = default(string))
+        /// <param name="secondaryKeyLastUpdated">The last updated date and
+        /// time of the secondary key.</param>
+        public MapsAccountKeys(string primaryKeyLastUpdated = default(string), string primaryKey = default(string), string secondaryKey = default(string), string secondaryKeyLastUpdated = default(string))
         {
-            Id = id;
+            PrimaryKeyLastUpdated = primaryKeyLastUpdated;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
+            SecondaryKeyLastUpdated = secondaryKeyLastUpdated;
             CustomInit();
         }
 
@@ -50,10 +53,10 @@ namespace Microsoft.Azure.Management.Maps.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the full Azure resource identifier of the Maps Account.
+        /// Gets the last updated date and time of the primary key.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        [JsonProperty(PropertyName = "primaryKeyLastUpdated")]
+        public string PrimaryKeyLastUpdated { get; private set; }
 
         /// <summary>
         /// Gets the primary key for accessing the Maps REST APIs.
@@ -66,6 +69,12 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// </summary>
         [JsonProperty(PropertyName = "secondaryKey")]
         public string SecondaryKey { get; private set; }
+
+        /// <summary>
+        /// Gets the last updated date and time of the secondary key.
+        /// </summary>
+        [JsonProperty(PropertyName = "secondaryKeyLastUpdated")]
+        public string SecondaryKeyLastUpdated { get; private set; }
 
     }
 }

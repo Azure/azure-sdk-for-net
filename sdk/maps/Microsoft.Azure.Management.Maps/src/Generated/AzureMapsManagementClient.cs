@@ -22,9 +22,9 @@ namespace Microsoft.Azure.Management.Maps
     using System.Net.Http;
 
     /// <summary>
-    /// Resource Provider
+    /// Azure Maps
     /// </summary>
-    public partial class MapsManagementClient : ServiceClient<MapsManagementClient>, IMapsManagementClient, IAzureClient
+    public partial class AzureMapsManagementClient : ServiceClient<AzureMapsManagementClient>, IAzureMapsManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -47,14 +47,12 @@ namespace Microsoft.Azure.Management.Maps
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -82,31 +80,41 @@ namespace Microsoft.Azure.Management.Maps
         public virtual IAccountsOperations Accounts { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the MapsManagementClient class.
+        /// Gets the IMapsOperationsOperations.
+        /// </summary>
+        public virtual IMapsOperationsOperations Maps { get; private set; }
+
+        /// <summary>
+        /// Gets the ICreatorsOperations.
+        /// </summary>
+        public virtual ICreatorsOperations Creators { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the AzureMapsManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling MapsManagementClient.Dispose(). False: will not dispose provided httpClient</param>
-        protected MapsManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        /// True: will dispose the provided httpClient on calling AzureMapsManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected AzureMapsManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MapsManagementClient class.
+        /// Initializes a new instance of the AzureMapsManagementClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected MapsManagementClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected AzureMapsManagementClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MapsManagementClient class.
+        /// Initializes a new instance of the AzureMapsManagementClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -114,13 +122,13 @@ namespace Microsoft.Azure.Management.Maps
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected MapsManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected AzureMapsManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MapsManagementClient class.
+        /// Initializes a new instance of the AzureMapsManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -131,7 +139,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected MapsManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected AzureMapsManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -141,7 +149,7 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Initializes a new instance of the MapsManagementClient class.
+        /// Initializes a new instance of the AzureMapsManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -155,7 +163,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected MapsManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected AzureMapsManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -165,7 +173,7 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Initializes a new instance of the MapsManagementClient class.
+        /// Initializes a new instance of the AzureMapsManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -176,7 +184,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public MapsManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public AzureMapsManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -190,7 +198,7 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Initializes a new instance of the MapsManagementClient class.
+        /// Initializes a new instance of the AzureMapsManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -199,11 +207,11 @@ namespace Microsoft.Azure.Management.Maps
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling MapsManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// True: will dispose the provided httpClient on calling AzureMapsManagementClient.Dispose(). False: will not dispose provided httpClient</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public MapsManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        public AzureMapsManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -217,7 +225,7 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Initializes a new instance of the MapsManagementClient class.
+        /// Initializes a new instance of the AzureMapsManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -231,7 +239,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public MapsManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public AzureMapsManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -245,7 +253,7 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Initializes a new instance of the MapsManagementClient class.
+        /// Initializes a new instance of the AzureMapsManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -259,7 +267,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public MapsManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public AzureMapsManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -278,7 +286,7 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Initializes a new instance of the MapsManagementClient class.
+        /// Initializes a new instance of the AzureMapsManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -295,7 +303,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public MapsManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public AzureMapsManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -323,8 +331,10 @@ namespace Microsoft.Azure.Management.Maps
         private void Initialize()
         {
             Accounts = new AccountsOperations(this);
+            Maps = new MapsOperationsOperations(this);
+            Creators = new CreatorsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-05-01";
+            ApiVersion = "2021-07-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -341,6 +351,7 @@ namespace Microsoft.Azure.Management.Maps
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -354,6 +365,7 @@ namespace Microsoft.Azure.Management.Maps
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }

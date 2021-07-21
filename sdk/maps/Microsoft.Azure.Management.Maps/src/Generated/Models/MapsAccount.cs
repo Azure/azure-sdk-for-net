@@ -10,15 +10,15 @@
 
 namespace Microsoft.Azure.Management.Maps.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// An Azure resource which represents access to a suite of Maps REST APIs.
     /// </summary>
-    public partial class MapsAccount : Resource
+    public partial class MapsAccount : IResource
     {
         /// <summary>
         /// Initializes a new instance of the MapsAccount class.
@@ -31,25 +31,20 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// <summary>
         /// Initializes a new instance of the MapsAccount class.
         /// </summary>
-        /// <param name="id">The fully qualified Maps Account resource
-        /// identifier.</param>
-        /// <param name="name">The name of the Maps Account, which is unique
-        /// within a Resource Group.</param>
-        /// <param name="type">Azure resource type.</param>
-        /// <param name="location">The location of the resource.</param>
-        /// <param name="tags">Gets a list of key value pairs that describe the
-        /// resource. These tags can be used in viewing and grouping this
-        /// resource (across resource groups). A maximum of 15 tags can be
-        /// provided for a resource. Each tag must have a key no greater than
-        /// 128 characters and value no greater than 256 characters.</param>
         /// <param name="sku">The SKU of this account.</param>
+        /// <param name="kind">Get or Set Kind property. Possible values
+        /// include: 'Gen1', 'Gen2'</param>
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        /// <param name="identity">Sets the identity property for maps
+        /// account.</param>
         /// <param name="properties">The map account properties.</param>
-        public MapsAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), MapsAccountProperties properties = default(MapsAccountProperties))
-            : base(id, name, type)
+        public MapsAccount(Sku sku, string kind = default(string), SystemData systemData = default(SystemData), ManagedServiceIdentity identity = default(ManagedServiceIdentity), MapsAccountProperties properties = default(MapsAccountProperties))
         {
-            Location = location;
-            Tags = tags;
             Sku = sku;
+            Kind = kind;
+            SystemData = systemData;
+            Identity = identity;
             Properties = properties;
             CustomInit();
         }
@@ -60,41 +55,48 @@ namespace Microsoft.Azure.Management.Maps.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; private set; }
-
-        /// <summary>
-        /// Gets a list of key value pairs that describe the resource. These
-        /// tags can be used in viewing and grouping this resource (across
-        /// resource groups). A maximum of 15 tags can be provided for a
-        /// resource. Each tag must have a key no greater than 128 characters
-        /// and value no greater than 256 characters.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; private set; }
-
-        /// <summary>
-        /// Gets the SKU of this account.
+        /// Gets or sets the SKU of this account.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; private set; }
+        public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets the map account properties.
+        /// Gets or sets get or Set Kind property. Possible values include:
+        /// 'Gen1', 'Gen2'
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Gets or sets sets the identity property for maps account.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the map account properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public MapsAccountProperties Properties { get; private set; }
+        public MapsAccountProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Sku == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
             if (Sku != null)
             {
                 Sku.Validate();

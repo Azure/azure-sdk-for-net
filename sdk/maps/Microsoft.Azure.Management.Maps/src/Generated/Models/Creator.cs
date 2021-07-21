@@ -11,33 +11,31 @@
 namespace Microsoft.Azure.Management.Maps.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The SKU of the Maps Account.
+    /// An Azure resource which represents Maps Creator product and provides
+    /// ability to manage private location data.
     /// </summary>
-    public partial class Sku
+    public partial class Creator : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the Creator class.
         /// </summary>
-        public Sku()
+        public Creator()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the Creator class.
         /// </summary>
-        /// <param name="name">The name of the SKU, in standard format (such as
-        /// S0). Possible values include: 'S0', 'S1', 'G2'</param>
-        /// <param name="tier">Gets the sku tier. This is based on the SKU
-        /// name.</param>
-        public Sku(string name, string tier = default(string))
+        /// <param name="properties">The Creator resource properties.</param>
+        public Creator(CreatorProperties properties)
         {
-            Name = name;
-            Tier = tier;
+            Properties = properties;
             CustomInit();
         }
 
@@ -47,17 +45,10 @@ namespace Microsoft.Azure.Management.Maps.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the SKU, in standard format (such as S0).
-        /// Possible values include: 'S0', 'S1', 'G2'
+        /// Gets or sets the Creator resource properties.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets the sku tier. This is based on the SKU name.
-        /// </summary>
-        [JsonProperty(PropertyName = "tier")]
-        public string Tier { get; private set; }
+        [JsonProperty(PropertyName = "properties")]
+        public CreatorProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -67,9 +58,13 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
+            if (Properties == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (Properties != null)
+            {
+                Properties.Validate();
             }
         }
     }

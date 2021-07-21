@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Maps.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,11 +31,22 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// <summary>
         /// Initializes a new instance of the MapsAccountProperties class.
         /// </summary>
-        /// <param name="xMsClientId">A unique identifier for the maps
+        /// <param name="uniqueId">A unique identifier for the maps
         /// account</param>
-        public MapsAccountProperties(string xMsClientId = default(string))
+        /// <param name="disableLocalAuth">Allows toggle functionality on Azure
+        /// Policy to disable Azure Maps local authentication support. This
+        /// will disable Shared Keys authentication from any usage.</param>
+        /// <param name="provisioningState">The provisioning state of the Map
+        /// account resource.</param>
+        /// <param name="linkedResources">Sets the resources to be used for
+        /// Managed Identities based operations for the Map account
+        /// resource.</param>
+        public MapsAccountProperties(string uniqueId = default(string), bool? disableLocalAuth = default(bool?), string provisioningState = default(string), IList<LinkedResource> linkedResources = default(IList<LinkedResource>))
         {
-            XMsClientId = xMsClientId;
+            UniqueId = uniqueId;
+            DisableLocalAuth = disableLocalAuth;
+            ProvisioningState = provisioningState;
+            LinkedResources = linkedResources;
             CustomInit();
         }
 
@@ -43,10 +56,31 @@ namespace Microsoft.Azure.Management.Maps.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a unique identifier for the maps account
+        /// Gets a unique identifier for the maps account
         /// </summary>
-        [JsonProperty(PropertyName = "x-ms-client-id")]
-        public string XMsClientId { get; set; }
+        [JsonProperty(PropertyName = "uniqueId")]
+        public string UniqueId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets allows toggle functionality on Azure Policy to disable
+        /// Azure Maps local authentication support. This will disable Shared
+        /// Keys authentication from any usage.
+        /// </summary>
+        [JsonProperty(PropertyName = "disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets the provisioning state of the Map account resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets sets the resources to be used for Managed Identities
+        /// based operations for the Map account resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "linkedResources")]
+        public IList<LinkedResource> LinkedResources { get; set; }
 
     }
 }

@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.Maps.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.Maps.Models
     /// <summary>
     /// Parameters used to update an existing Maps Account.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class MapsAccountUpdateParameters
     {
         /// <summary>
@@ -39,11 +42,31 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// tags can be provided for a resource. Each tag must have a key no
         /// greater than 128 characters and value no greater than 256
         /// characters.</param>
+        /// <param name="kind">Get or Set Kind property. Possible values
+        /// include: 'Gen1', 'Gen2'</param>
         /// <param name="sku">The SKU of this account.</param>
-        public MapsAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku))
+        /// <param name="identity">Sets the identity property for maps
+        /// account.</param>
+        /// <param name="uniqueId">A unique identifier for the maps
+        /// account</param>
+        /// <param name="disableLocalAuth">Allows toggle functionality on Azure
+        /// Policy to disable Azure Maps local authentication support. This
+        /// will disable Shared Keys authentication from any usage.</param>
+        /// <param name="provisioningState">The provisioning state of the Map
+        /// account resource.</param>
+        /// <param name="linkedResources">Sets the resources to be used for
+        /// Managed Identities based operations for the Map account
+        /// resource.</param>
+        public MapsAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), Sku sku = default(Sku), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string uniqueId = default(string), bool? disableLocalAuth = default(bool?), string provisioningState = default(string), IList<LinkedResource> linkedResources = default(IList<LinkedResource>))
         {
             Tags = tags;
+            Kind = kind;
             Sku = sku;
+            Identity = identity;
+            UniqueId = uniqueId;
+            DisableLocalAuth = disableLocalAuth;
+            ProvisioningState = provisioningState;
+            LinkedResources = linkedResources;
             CustomInit();
         }
 
@@ -63,15 +86,55 @@ namespace Microsoft.Azure.Management.Maps.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
+        /// Gets or sets get or Set Kind property. Possible values include:
+        /// 'Gen1', 'Gen2'
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
+
+        /// <summary>
         /// Gets or sets the SKU of this account.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
 
         /// <summary>
+        /// Gets or sets sets the identity property for maps account.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary>
+        /// Gets a unique identifier for the maps account
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uniqueId")]
+        public string UniqueId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets allows toggle functionality on Azure Policy to disable
+        /// Azure Maps local authentication support. This will disable Shared
+        /// Keys authentication from any usage.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets the provisioning state of the Map account resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets sets the resources to be used for Managed Identities
+        /// based operations for the Map account resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.linkedResources")]
+        public IList<LinkedResource> LinkedResources { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
@@ -79,6 +142,16 @@ namespace Microsoft.Azure.Management.Maps.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (LinkedResources != null)
+            {
+                foreach (var element in LinkedResources)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

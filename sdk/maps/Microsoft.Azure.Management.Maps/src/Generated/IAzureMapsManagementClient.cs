@@ -16,9 +16,9 @@ namespace Microsoft.Azure.Management.Maps
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Resource Provider
+    /// Azure Maps
     /// </summary>
-    public partial interface IMapsManagementClient : System.IDisposable
+    public partial interface IAzureMapsManagementClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -41,14 +41,12 @@ namespace Microsoft.Azure.Management.Maps
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every
-        /// service call.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
@@ -75,6 +73,16 @@ namespace Microsoft.Azure.Management.Maps
         /// Gets the IAccountsOperations.
         /// </summary>
         IAccountsOperations Accounts { get; }
+
+        /// <summary>
+        /// Gets the IMapsOperationsOperations.
+        /// </summary>
+        IMapsOperationsOperations Maps { get; }
+
+        /// <summary>
+        /// Gets the ICreatorsOperations.
+        /// </summary>
+        ICreatorsOperations Creators { get; }
 
     }
 }
