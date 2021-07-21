@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> A class representing the ResourceGroup data model. </summary>
     public partial class ResourceGroupData : TrackedResource<ResourceGroupResourceIdentifier>

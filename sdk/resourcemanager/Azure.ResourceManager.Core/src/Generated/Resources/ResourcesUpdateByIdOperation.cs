@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Updates a resource by ID. </summary>
     public partial class ResourcesUpdateByIdOperation : Operation<GenericResource>, IOperationSource<GenericResource>

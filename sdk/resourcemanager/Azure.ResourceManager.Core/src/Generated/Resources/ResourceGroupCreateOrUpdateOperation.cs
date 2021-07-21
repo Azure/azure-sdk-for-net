@@ -9,8 +9,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Create or update a resource group. </summary>
     public class ResourceGroupCreateOrUpdateOperation : Operation<ResourceGroup>

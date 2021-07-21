@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     [JsonConverter(typeof(ResourceIdentityConverter))]
     public partial class ResourceIdentity : IUtf8JsonSerializable

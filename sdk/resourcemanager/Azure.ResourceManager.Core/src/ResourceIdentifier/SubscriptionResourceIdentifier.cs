@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// The identifier of a resource that is contained in a subscription.

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Managment.Models
 {
     /// <summary> Management group creation parameters. </summary>
     public partial class CreateManagementGroupRequest

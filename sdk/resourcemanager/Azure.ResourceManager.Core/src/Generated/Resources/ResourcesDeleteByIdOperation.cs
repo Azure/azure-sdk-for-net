@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Deletes a resource by ID. </summary>
     public partial class ResourcesDeleteByIdOperation : Operation

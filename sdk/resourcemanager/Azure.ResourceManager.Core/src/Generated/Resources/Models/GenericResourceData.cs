@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Resource information. </summary>
     public partial class GenericResourceData : TrackedResource<TenantResourceIdentifier>

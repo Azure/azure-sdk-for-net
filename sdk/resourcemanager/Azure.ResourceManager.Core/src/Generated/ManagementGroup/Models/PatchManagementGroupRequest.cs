@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Managment.Models
 {
     /// <summary> Management group patch parameters. </summary>
     public partial class PatchManagementGroupRequest

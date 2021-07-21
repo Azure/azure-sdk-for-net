@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Managment.Models
 {
     /// <summary> The management group details. </summary>
     public partial class ManagementGroupData : Resource<TenantResourceIdentifier>

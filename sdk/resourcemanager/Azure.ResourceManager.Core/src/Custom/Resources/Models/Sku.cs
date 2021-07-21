@@ -5,7 +5,7 @@ using System;
 using System.Globalization;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary>
     /// A class representing SKU for resource.

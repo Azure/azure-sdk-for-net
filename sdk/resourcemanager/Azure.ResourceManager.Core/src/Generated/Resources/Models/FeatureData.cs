@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Previewed feature information. </summary>
     public partial class FeatureData : Resource<SubscriptionProviderIdentifier>

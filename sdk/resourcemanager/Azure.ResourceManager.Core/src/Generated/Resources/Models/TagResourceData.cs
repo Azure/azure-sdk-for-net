@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Wrapper resource for tags API requests and responses. </summary>
     public partial class TagResourceData : Resource<TenantResourceIdentifier>

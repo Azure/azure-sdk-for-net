@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> A dictionary of name and value pairs. </summary>
     public partial class Tag : Resource<TenantResourceIdentifier>

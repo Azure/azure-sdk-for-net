@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The category of the region. </summary>
     public readonly partial struct RegionCategory : IEquatable<RegionCategory>

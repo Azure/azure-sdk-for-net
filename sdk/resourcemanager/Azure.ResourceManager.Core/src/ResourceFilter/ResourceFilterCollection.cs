@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// A class representing a collection of arm filters.

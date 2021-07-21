@@ -6,7 +6,7 @@ using System.Collections.Concurrent;
 using System.ComponentModel;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// A class representing Azure resource manager client options.

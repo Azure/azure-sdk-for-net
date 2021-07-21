@@ -8,9 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> The Providers service client. </summary>
     public partial class ProviderOperations : ResourceOperationsBase<SubscriptionProviderIdentifier, Provider>

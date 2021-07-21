@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// The identifier for a resource contained in a resource group.
