@@ -1,5 +1,16 @@
 # Release History
 
+## 2.8.0-preview.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+
 ## 2.8.0-preview.1 (2021-07-21)
 
 - Add support for the Person Directory feature
