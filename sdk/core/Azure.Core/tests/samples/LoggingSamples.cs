@@ -86,25 +86,6 @@ namespace Azure.Core.Samples
         }
 
         [Test]
-        public static void DisablingLogging()
-        {
-            SecretClientOptions options = new SecretClientOptions()
-            {
-                Diagnostics =
-                {
-                    IsLoggingEnabled = false
-                }
-            };
-        }
-
-        [Test]
-        public void TraceLogging()
-        {
-            // Setup a listener to monitor logged events.
-            using AzureEventSourceListener listener = AzureEventSourceListener.CreateTraceLogger();
-        }
-
-        [Test]
         [Ignore("Only verifying that the sample builds")]
         public void ClientRequestId()
         {
