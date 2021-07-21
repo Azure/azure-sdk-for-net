@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="func"> The method to pass the internal properties to. </param>
         /// <returns>  A collection of resources. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Pageable<T> ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, Pageable<T>> func)
         {
             return func(BaseUri, Credential, ClientOptions, Pipeline);
@@ -66,6 +67,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="func"> The method to pass the internal properties to. </param>
         /// <returns>  A collection of resources. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual AsyncPageable<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, AsyncPageable<T>> func)
         {
             return func(BaseUri, Credential, ClientOptions, Pipeline);

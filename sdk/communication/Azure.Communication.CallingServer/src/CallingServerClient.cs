@@ -290,7 +290,7 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>
         /// A <see cref="Response{Stream}"/> containing the
@@ -325,7 +325,7 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>
         /// A <see cref="Response{Stream}"/> containing the
@@ -363,7 +363,7 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> describing the operation.
@@ -393,7 +393,7 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> describing the operation.
@@ -422,7 +422,7 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> describing the operation.
@@ -456,7 +456,7 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>
         /// A <see cref="Response"/> describing the operation.

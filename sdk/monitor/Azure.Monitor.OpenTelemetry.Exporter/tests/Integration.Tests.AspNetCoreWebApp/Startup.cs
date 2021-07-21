@@ -23,9 +23,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebAp
         {
             services.AddMvc(options =>
             {
-#if NET5_0
-                options.EnableEndpointRouting = false;
-#endif
 #pragma warning disable 618
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 #pragma warning restore 618
