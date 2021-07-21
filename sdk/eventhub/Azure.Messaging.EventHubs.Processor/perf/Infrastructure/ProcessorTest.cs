@@ -10,13 +10,13 @@ using Azure.Test.Perf;
 
 namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
 {
-    public abstract class EventProcessorClientTest<TOptions> : EventPerfTest<TOptions> where TOptions : EventProcessorClientPerfOptions
+    public abstract class ProcessorTest<TOptions> : EventPerfTest<TOptions> where TOptions : ProcessorOptions
     {
         private readonly BlobContainerClient _checkpointStore;
 
         protected EventProcessorClient EventProcessorClient { get; }
 
-        public EventProcessorClientTest(TOptions options) : base(options)
+        public ProcessorTest(TOptions options) : base(options)
         {
             _checkpointStore = new BlobContainerClient(GetEnvironmentVariable("STORAGE_CONNECTION_STRING"),
                 $"CheckpointStore-{Guid.NewGuid()}".ToLowerInvariant());

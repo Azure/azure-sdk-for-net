@@ -6,12 +6,12 @@ using CommandLine;
 
 namespace Azure.Messaging.EventHubs.Processor.Perf.Infrastructure
 {
-    public class EventProcessorClientPerfOptions : PerfOptions
+    public class ProcessorOptions : PerfOptions
     {
         [Option("loadBalancingStrategy")]
         public LoadBalancingStrategy LoadBalancingStrategy { get; set; } = LoadBalancingStrategy.Greedy;
 
-        [Option("delayMilliseconds")]
+        [Option("delayMilliseconds", HelpText = "Adds delay after each message received (for debugging)")]
         public int DelayMilliseconds { get; set; }
     }
 }

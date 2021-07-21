@@ -8,9 +8,9 @@ using Azure.Messaging.EventHubs.Processor.Perf.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Processor.Perf.Scenarios
 {
-    public class EventProcessorClientReceiveTest : EventProcessorClientTest<EventProcessorClientPerfOptions>
+    public class ProcessorReceiveTest : ProcessorTest<ProcessorOptions>
     {
-        public EventProcessorClientReceiveTest(EventProcessorClientPerfOptions options) : base(options)
+        public ProcessorReceiveTest(ProcessorOptions options) : base(options)
         {
             EventProcessorClient.ProcessEventAsync += ProcessEventAsync;
             EventProcessorClient.ProcessErrorAsync += ProcessErrorAsync;
