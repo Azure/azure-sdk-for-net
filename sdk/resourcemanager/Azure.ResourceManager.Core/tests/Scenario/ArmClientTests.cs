@@ -54,10 +54,20 @@ namespace Azure.ResourceManager.Core.Tests
 
             var genericResourceOperationsList = Client.GetGenericResourceOperations(ids);
 
+            int index = 0;
             foreach (GenericResourceOperations operations in genericResourceOperationsList)
             {
-                Assert.AreEqual(ids[0], operations.Id.StringValue);
-                ids.RemoveAt(0);
+                Assert.AreEqual(ids[index], operations.Id.StringValue);
+                index++;
+            }
+
+            genericResourceOperationsList = Client.GetGenericResourceOperations(ids[0], ids[1], ids[2], ids[3]);
+
+            index = 0;
+            foreach (GenericResourceOperations operations in genericResourceOperationsList)
+            {
+                Assert.AreEqual(ids[index], operations.Id.StringValue);
+                index++;
             }
         }
 

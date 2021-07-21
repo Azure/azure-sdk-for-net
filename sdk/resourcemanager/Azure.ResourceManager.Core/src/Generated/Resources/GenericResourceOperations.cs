@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        protected override void Validate(ResourceIdentifier identifier)
+        protected override void ValidateResourceType(ResourceIdentifier identifier)
         {
             if (identifier is null)
                 throw new ArgumentNullException(nameof(identifier));

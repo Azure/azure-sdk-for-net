@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="identifier"> The input resource Id to check. </param>
         /// <exception cref="InvalidOperationException"> Resource identifier is not a valid type for this container. </exception>
-        protected override void Validate(ResourceIdentifier identifier)
+        protected override void ValidateResourceType(ResourceIdentifier identifier)
         {
             if (identifier.ResourceType != ValidResourceType)
                 throw new InvalidOperationException($"{identifier.ResourceType} is not a valid container for {Id.ResourceType}");
