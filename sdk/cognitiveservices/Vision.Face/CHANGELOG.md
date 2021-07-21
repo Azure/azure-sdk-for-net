@@ -5,9 +5,6 @@
 - Add support for the Person Directory feature
 - Note that this version points to the face/v1.0-preview (public preview) endpoints.
 
-## 2.7.0-preview.2 (Unreleased)
-
-
 ## 2.7.0-preview.1 (2021-03-25)
 
 - Add support for new detection model `detection_03`, new recognition model `recognition_04`, and new mask attribute model
