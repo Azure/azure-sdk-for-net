@@ -25,11 +25,6 @@ namespace Azure.Core.Diagnostics
             if (namesInUse == null)
             {
                 namesInUse = new HashSet<string>();
-                foreach (var source in GetSources())
-                {
-                    namesInUse.Add(source.Name);
-                }
-
                 AppDomain.CurrentDomain.SetData(SharedDataKey, namesInUse);
             }
 
@@ -56,6 +51,12 @@ namespace Azure.Core.Diagnostics
         {
             lock (NamesInUse)
             {
+                // pick up existing EventSources that might not participate in this logic
+                foreach (var source in GetSources())
+                {
+                    NamesInUse.Add(source.Name);
+                }
+
                 if (!NamesInUse.Contains(eventSourceName))
                 {
                     NamesInUse.Add(eventSourceName);
