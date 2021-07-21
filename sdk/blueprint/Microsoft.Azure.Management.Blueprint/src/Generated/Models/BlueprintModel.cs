@@ -119,11 +119,10 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         public object Versions { get; set; }
 
         /// <summary>
-        /// Gets or sets layout view of the blueprint definition for UI
-        /// reference.
+        /// Gets layout view of the blueprint definition for UI reference.
         /// </summary>
         [JsonProperty(PropertyName = "properties.layout")]
-        public object Layout { get; set; }
+        public object Layout { get; private set; }
 
         /// <summary>
         /// Validate the object.
