@@ -11,9 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Managment.Models;
+using Azure.ResourceManager.Management.Models;
 
-namespace Azure.ResourceManager.Managment
+namespace Azure.ResourceManager.Management
 {
     internal partial class ManagementGroupsRestOperations
     {

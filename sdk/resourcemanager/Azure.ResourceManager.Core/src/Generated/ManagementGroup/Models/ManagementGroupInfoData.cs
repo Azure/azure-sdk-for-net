@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Managment.Models
+namespace Azure.ResourceManager.Management.Models
 {
     /// <summary> The management group resource. </summary>
     public partial class ManagementGroupInfoData

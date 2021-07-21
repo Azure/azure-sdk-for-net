@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Managment.Models
+namespace Azure.ResourceManager.Management.Models
 {
     /// <summary> The ID of the parent management group. </summary>
     public partial class DescendantParentGroupInfo

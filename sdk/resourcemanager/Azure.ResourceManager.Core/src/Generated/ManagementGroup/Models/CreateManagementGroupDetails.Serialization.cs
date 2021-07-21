@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Managment.Models
+namespace Azure.ResourceManager.Management.Models
 {
     public partial class CreateManagementGroupDetails : IUtf8JsonSerializable
     {

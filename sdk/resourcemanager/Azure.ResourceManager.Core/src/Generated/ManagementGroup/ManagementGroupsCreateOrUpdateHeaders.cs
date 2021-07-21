@@ -8,7 +8,7 @@
 using Azure;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Managment
+namespace Azure.ResourceManager.Management
 {
     internal partial class ManagementGroupsCreateOrUpdateHeaders
     {

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Managment.Models
+namespace Azure.ResourceManager.Management.Models
 {
     internal static partial class ReasonExtensions
     {

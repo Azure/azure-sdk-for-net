@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Managment
+namespace Azure.ResourceManager.Management
 {
     /// <summary>
     /// Delete management group.

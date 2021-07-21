@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Managment.Models;
+using Azure.ResourceManager.Management.Models;
 
-namespace Azure.ResourceManager.Managment
+namespace Azure.ResourceManager.Management
 {
     /// <summary>
     /// A class representing a ManagementGroup along with the instance operations that can be performed on it.
