@@ -781,6 +781,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="func"> The method to pass the internal properties to. </param>
         /// <returns> Whatever the delegate returns. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
             return func(BaseUri, Credential, ClientOptions, Pipeline);
