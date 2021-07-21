@@ -26,8 +26,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubConsumerClientOptions
             {
                 RetryOptions = new EventHubsRetryOptions { Mode = EventHubsRetryMode.Fixed },
-                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
-                Identifier = "Test"
+                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
             };
 
             EventHubConsumerClientOptions clone = options.Clone();
@@ -37,7 +36,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");
             Assert.That(clone.RetryOptions.IsEquivalentTo(options.RetryOptions), Is.True, "The retry options of the clone should be considered equal.");
             Assert.That(clone.RetryOptions, Is.Not.SameAs(options.RetryOptions), "The retry options of the clone should be a copy, not the same instance.");
-            Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
         }
 
         /// <summary>

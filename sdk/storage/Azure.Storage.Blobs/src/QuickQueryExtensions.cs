@@ -24,11 +24,15 @@ namespace Azure.Storage.Blobs
                 return default;
             }
 
-            QuerySerialization serialization;
+            QuerySerialization serialization = new QuerySerialization(new QueryFormat());
+
+            serialization.Format.DelimitedTextConfiguration = default;
+            serialization.Format.JsonTextConfiguration = default;
+            serialization.Format.ArrowConfiguration = default;
 
             if (textConfiguration is BlobQueryCsvTextOptions cvsTextConfiguration)
             {
-                serialization = new QuerySerialization(new QueryFormat(QueryFormatType.Delimited));
+                serialization.Format.Type = QueryFormatType.Delimited;
                 serialization.Format.DelimitedTextConfiguration = new DelimitedTextConfigurationInternal
                 {
                     ColumnSeparator = cvsTextConfiguration.ColumnSeparator?.ToString(CultureInfo.InvariantCulture),
@@ -40,7 +44,7 @@ namespace Azure.Storage.Blobs
             }
             else if (textConfiguration is BlobQueryJsonTextOptions jsonTextConfiguration)
             {
-                serialization = new QuerySerialization(new QueryFormat(QueryFormatType.Json));
+                serialization.Format.Type = QueryFormatType.Json;
                 serialization.Format.JsonTextConfiguration = new JsonTextConfigurationInternal
                 {
                     RecordSeparator = jsonTextConfiguration.RecordSeparator?.ToString(CultureInfo.InvariantCulture)
@@ -53,7 +57,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException($"{nameof(BlobQueryArrowOptions)} can only be used for output serialization.");
                 }
 
-                serialization = new QuerySerialization(new QueryFormat(QueryFormatType.Arrow));
+                serialization.Format.Type = QueryFormatType.Arrow;
                 serialization.Format.ArrowConfiguration = new ArrowTextConfigurationInternal(
                     arrowConfiguration.Schema?.Select(ToArrowFieldInternal).ToList());
             }
@@ -64,7 +68,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException($"{nameof(BlobQueryParquetTextOptions)} can only be used for input serialization.");
                 }
 
-                serialization = new QuerySerialization(new QueryFormat(QueryFormatType.Parquet));
+                serialization.Format.Type = QueryFormatType.Parquet;
             }
             else
             {

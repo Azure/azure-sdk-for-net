@@ -150,7 +150,7 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public string ClientSecret => GetVariable("CLIENT_SECRET");
 
-        public virtual TokenCredential Credential
+        public TokenCredential Credential
         {
             get
             {
@@ -312,11 +312,6 @@ namespace Azure.Core.TestFramework
             if (value == null)
             {
                 value = Environment.GetEnvironmentVariable(name);
-            }
-
-            if (value == null)
-            {
-                value = Environment.GetEnvironmentVariable($"AZURE_{name}");
             }
 
             if (value == null)

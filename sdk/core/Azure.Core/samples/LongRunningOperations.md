@@ -50,18 +50,20 @@ The `GetValuesAsync` method will contain the `AsyncPageable<T>` results.
 
 ```C# Snippet:PageableOperationGetValuesAsync
 // create a client
-var client = new MyStoreClient();
+var client = new TextAnalyticsClient(new Uri("http://example.com"), new DefaultAzureCredential());
+var document = new List<string>() { "document with information" };
 
 // Start the operation
-GetProductsOperation operation = client.StartGetProducts();
+AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(document);
 
-await operation.WaitForCompletionAsync();
+await healthOperation.WaitForCompletionAsync();
 
-await foreach (Product product in operation.GetValuesAsync())
+await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValuesAsync())
 {
-    Console.WriteLine($"Name: {product.Name}");
-    Console.WriteLine($"Quantity: {product.Quantity}");
-    Console.WriteLine($"Price: {product.Price}");
+    foreach (HealthcareEntity entity in documentsInPage[0].Entities)
+    {
+        Console.WriteLine($"    Entity: {entity.Text}");
+    }
 }
 ```
 
@@ -70,17 +72,19 @@ The `GetValues` method will contain the `Pageable<T>` results.
 
 ```C# Snippet:PageableOperationGetValues
 // create a client
-var client = new MyStoreClient();
+var client = new TextAnalyticsClient(new Uri("http://example.com"), new DefaultAzureCredential());
+var document = new List<string>() { "document with information" };
 
 // Start the operation
-GetProductsOperation operation = client.StartGetProducts();
+AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(document);
 
-await operation.WaitForCompletionAsync();
+await healthOperation.WaitForCompletionAsync();
 
-foreach (Product product in operation.GetValues())
+foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
 {
-    Console.WriteLine($"Name: {product.Name}");
-    Console.WriteLine($"Quantity: {product.Quantity}");
-    Console.WriteLine($"Price: {product.Price}");
+    foreach (HealthcareEntity entity in documentsInPage[0].Entities)
+    {
+        Console.WriteLine($"    Entity: {entity.Text}");
+    }
 }
 ```

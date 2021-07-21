@@ -25,7 +25,6 @@ namespace Azure.IoT.ModelsRepository.Samples
             await ModelResolutionSamples.GetModelsFromGlobalRepoAsync();
             await ModelResolutionSamples.GetModelsFromLocalRepoAsync();
             await ModelResolutionSamples.GetMultipleModelsFromGlobalRepoAsync();
-            await ModelResolutionSamples.GetModelsDisabledDependencyResolution();
             await ModelResolutionSamples.TryGetModelsFromGlobalRepoButNotFoundAsync();
             await ModelResolutionSamples.TryGetModelsFromLocalRepoButNotFoundAsync();
             await ModelResolutionSamples.TryGetModelsWithInvalidDtmiAsync();

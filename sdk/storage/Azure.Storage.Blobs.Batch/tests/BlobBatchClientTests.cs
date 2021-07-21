@@ -261,28 +261,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task Delete_SpecialCharacters()
-        {
-            await using TestScenario scenario = Scenario();
-            BlobClient[] blobs = await scenario.CreateBlobsAsync(3, prefix: "blob ąęó");
-
-            BlobBatchClient client = scenario.GetBlobBatchClient();
-
-            using BlobBatch batch = client.CreateBatch();
-            Response[] responses = new Response[]
-            {
-                batch.DeleteBlob(blobs[0].Uri),
-                batch.DeleteBlob(blobs[1].Uri),
-                batch.DeleteBlob(blobs[2].Uri)
-            };
-            Response response = await client.SubmitBatchAsync(batch);
-
-            scenario.AssertStatus(202, response);
-            scenario.AssertStatus(202, responses);
-            await scenario.AssertDeleted(blobs);
-        }
-
-        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task Delete_Basic_AccountSas()
         {
@@ -591,27 +569,6 @@ namespace Azure.Storage.Blobs.Test
         {
             await using TestScenario scenario = Scenario();
             BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
-
-            BlobBatchClient client = scenario.GetBlobBatchClient();
-            using BlobBatch batch = client.CreateBatch();
-            Response[] responses = new Response[]
-            {
-                batch.SetBlobAccessTier(blobs[0].Uri, AccessTier.Cool),
-                batch.SetBlobAccessTier(blobs[1].Uri, AccessTier.Cool),
-                batch.SetBlobAccessTier(blobs[2].Uri, AccessTier.Cool)
-            };
-            Response response = await client.SubmitBatchAsync(batch);
-
-            scenario.AssertStatus(202, response);
-            scenario.AssertStatus(200, responses);
-            await scenario.AssertTiers(AccessTier.Cool, blobs);
-        }
-
-        [RecordedTest]
-        public async Task SetBlobAccessTier_SpecialCharacters()
-        {
-            await using TestScenario scenario = Scenario();
-            BlobClient[] blobs = await scenario.CreateBlobsAsync(3, prefix: "blob ąęó");
 
             BlobBatchClient client = scenario.GetBlobBatchClient();
             using BlobBatch batch = client.CreateBatch();
@@ -1050,12 +1007,12 @@ namespace Azure.Storage.Blobs.Test
                 return test.Container;
             }
 
-            public async Task<BlobClient[]> CreateBlobsAsync(BlobContainerClient container, int count, string prefix="blob")
+            public async Task<BlobClient[]> CreateBlobsAsync(BlobContainerClient container, int count)
             {
                 BlobClient[] blobs = new BlobClient[count];
                 for (int i = 0; i < count; i++)
                 {
-                    blobs[i] = _test.InstrumentClient(container.GetBlobClient(prefix + (++_blobId)));
+                    blobs[i] = _test.InstrumentClient(container.GetBlobClient("blob" + (++_blobId)));
                     await blobs[i].UploadAsync(BinaryData.FromBytes(_test.GetRandomBuffer(Constants.KB)));
                 }
                 return blobs;
@@ -1072,8 +1029,8 @@ namespace Azure.Storage.Blobs.Test
                 return blobs;
             }
 
-            public async Task<BlobClient[]> CreateBlobsAsync(int count, string prefix="blob") =>
-                await CreateBlobsAsync(await CreateContainerAsync(), count, prefix);
+            public async Task<BlobClient[]> CreateBlobsAsync(int count) =>
+                await CreateBlobsAsync(await CreateContainerAsync(), count);
 
             public async Task<BlockBlobClient[]> CreateBlockBlobsAsync(int count) =>
                 await CreateBlockBlobsAsync(await CreateContainerAsync(), count);

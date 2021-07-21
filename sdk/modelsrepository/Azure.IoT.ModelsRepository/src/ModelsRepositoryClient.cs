@@ -22,18 +22,19 @@ namespace Azure.IoT.ModelsRepository
 
         /// <summary>
         /// Initializes the ModelsRepositoryClient to point to the
-        /// <see href="https://devicemodels.azure.com">Azure IoT Models Repository</see> service global endpoint.
+        /// <see href="https://devicemodels.azure.com">Azure IoT Models Repository</see> service
+        /// with the model dependency resolution option of TryFromExpanded.
         /// </summary>
         public ModelsRepositoryClient() : this(new Uri(ModelsRepositoryConstants.DefaultModelsRepository),
-            new ModelsRepositoryClientOptions())
+            new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.TryFromExpanded))
         { }
 
         /// <summary>
         /// Initializes the ModelsRepositoryClient with custom client <paramref name="options"/> while pointing to
-        /// the <see href="https://devicemodels.azure.com">Azure IoT Models Repository</see> service global endpoint.
+        /// the <see href="https://devicemodels.azure.com">Azure IoT Models Repository</see> service.
         /// </summary>
         /// <param name="options">
-        /// ModelsRepositoryClientOptions to configure client behavior.
+        /// ModelsRepositoryClientOptions to configure model dependency resolution and client behavior.
         /// </param>
         public ModelsRepositoryClient(ModelsRepositoryClientOptions options) :
             this(new Uri(ModelsRepositoryConstants.DefaultModelsRepository), options)
@@ -47,7 +48,7 @@ namespace Azure.IoT.ModelsRepository
         /// The models repository Uri. This can be a remote endpoint or local directory.
         /// </param>
         /// <param name="options">
-        /// ModelsRepositoryClientOptions to configure client behavior.
+        /// ModelsRepositoryClientOptions to configure model dependency resolution and client behavior.
         /// </param>
         public ModelsRepositoryClient(Uri repositoryUri, ModelsRepositoryClientOptions options = default)
         {
@@ -71,20 +72,20 @@ namespace Azure.IoT.ModelsRepository
         /// </returns>
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmi">A well-formed DTDL model Id. For example 'dtmi:com:example:Thermostat;1'.</param>
-        /// <param name="dependencyResolution">A ModelDependencyResolution value to control model resolution behavior.</param>
+        /// <param name="dependencyResolution">A ModelDependencyResolution value to force model resolution behavior.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         [SuppressMessage(
             "Usage",
             "AZC0015:Unexpected client method return type.",
             Justification = "Item lookup is optimized with a dictionary type, we do not expect any more than ~20 items to be returned.")]
         public virtual async Task<IDictionary<string, string>> GetModelsAsync(
-            string dtmi, ModelDependencyResolution dependencyResolution = ModelDependencyResolution.Enabled, CancellationToken cancellationToken = default)
+            string dtmi, ModelDependencyResolution? dependencyResolution = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(GetModels)}");
             scope.Start();
             try
             {
-                return await _repositoryHandler.ProcessAsync(dtmi, dependencyResolution, cancellationToken).ConfigureAwait(false);
+                return await _repositoryHandler.ProcessAsync(dtmi, dependencyResolution ?? _clientOptions.DependencyResolution, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -102,21 +103,21 @@ namespace Azure.IoT.ModelsRepository
         /// </returns>
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmi">A well-formed DTDL model Id. For example 'dtmi:com:example:Thermostat;1'.</param>
-        /// <param name="dependencyResolution">A ModelDependencyResolution value to control model resolution behavior.</param>
+        /// <param name="dependencyResolution">A ModelDependencyResolution value to force model resolution behavior.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         [SuppressMessage(
             "Usage",
             "AZC0015:Unexpected client method return type.",
             Justification = "Item lookup is optimized with a dictionary type, we do not expect any more than ~20 items to be returned.")]
         public virtual IDictionary<string, string> GetModels(
-            string dtmi, ModelDependencyResolution dependencyResolution = ModelDependencyResolution.Enabled, CancellationToken cancellationToken = default)
+            string dtmi, ModelDependencyResolution? dependencyResolution = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(GetModels)}");
             scope.Start();
 
             try
             {
-                return _repositoryHandler.Process(dtmi, dependencyResolution, cancellationToken);
+                return _repositoryHandler.Process(dtmi, dependencyResolution ?? _clientOptions.DependencyResolution, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -134,21 +135,21 @@ namespace Azure.IoT.ModelsRepository
         /// </returns>
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmis">A collection of well-formed DTDL model Ids.</param>
-        /// <param name="dependencyResolution">A ModelDependencyResolution value to control model resolution behavior.</param>
+        /// <param name="dependencyResolution">A ModelDependencyResolution value to force model resolution behavior.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         [SuppressMessage(
             "Usage",
             "AZC0015:Unexpected client method return type.",
             Justification = "Item lookup is optimized with a dictionary type, we do not expect any more than ~20 items to be returned.")]
         public virtual async Task<IDictionary<string, string>> GetModelsAsync(
-            IEnumerable<string> dtmis, ModelDependencyResolution dependencyResolution = ModelDependencyResolution.Enabled, CancellationToken cancellationToken = default)
+            IEnumerable<string> dtmis, ModelDependencyResolution? dependencyResolution = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(GetModels)}");
             scope.Start();
 
             try
             {
-                return await _repositoryHandler.ProcessAsync(dtmis, dependencyResolution, cancellationToken).ConfigureAwait(false);
+                return await _repositoryHandler.ProcessAsync(dtmis, dependencyResolution ?? _clientOptions.DependencyResolution, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -166,21 +167,21 @@ namespace Azure.IoT.ModelsRepository
         /// </returns>
         /// <exception cref="RequestFailedException">Thrown when a resolution failure occurs.</exception>
         /// <param name="dtmis">A collection of well-formed DTDL model Ids.</param>
-        /// <param name="dependencyResolution">A ModelDependencyResolution value to control model resolution behavior.</param>
+        /// <param name="dependencyResolution">A ModelDependencyResolution value to force model resolution behavior.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
         [SuppressMessage(
             "Usage",
             "AZC0015:Unexpected client method return type.",
             Justification = "Item lookup is optimized with a dictionary type, we do not expect any more than ~20 items to be returned.")]
         public virtual IDictionary<string, string> GetModels(
-            IEnumerable<string> dtmis, ModelDependencyResolution dependencyResolution = ModelDependencyResolution.Enabled, CancellationToken cancellationToken = default)
+            IEnumerable<string> dtmis, ModelDependencyResolution? dependencyResolution = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ModelsRepositoryClient)}.{nameof(GetModels)}");
             scope.Start();
 
             try
             {
-                return _repositoryHandler.Process(dtmis, dependencyResolution, cancellationToken);
+                return _repositoryHandler.Process(dtmis, dependencyResolution ?? _clientOptions.DependencyResolution, cancellationToken);
             }
             catch (Exception ex)
             {

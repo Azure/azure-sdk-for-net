@@ -244,8 +244,7 @@ namespace Compute.Tests
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
             string dedicatedHostName = null,
-            string userData = null,
-            string capacityReservationGroupReferenceId = null)
+            string userData = null)
         {
             try
             {
@@ -297,19 +296,6 @@ namespace Compute.Tests
                     inputVM.AvailabilitySet = null;
                 }
 
-                if (!string.IsNullOrEmpty(capacityReservationGroupReferenceId))
-                {
-                    inputVM.CapacityReservation = new CapacityReservationProfile
-                    {
-                        CapacityReservationGroup = new CM.SubResource
-                        {
-                            Id = capacityReservationGroupReferenceId
-                        }
-                    };
-
-                    inputVM.AvailabilitySet = null;
-                }
-
                 if (encryptionAtHostEnabled != null)
                 {
                     inputVM.SecurityProfile = new SecurityProfile
@@ -341,6 +327,7 @@ namespace Compute.Tests
                             }
                         };
                     }
+
                 }
 
                 if (zones != null)
@@ -1062,43 +1049,6 @@ namespace Compute.Tests
                     Location = m_location,
                     Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } },
                     Sku = new CM.Sku() { Name = dedicatedHostSku }
-                });
-        }
-
-        protected CapacityReservationGroup CreateCapacityReservationGroup(string rgName, string capacityReservationGroupName, List<string> availabilityZones = null)
-        {
-            m_ResourcesClient.ResourceGroups.CreateOrUpdate(
-                   rgName,
-                   new ResourceGroup
-                   {
-                       Location = m_location,
-                       Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
-                   });
-
-            CapacityReservationGroup capacityReservationGroup = new CapacityReservationGroup()
-            {
-                Location = m_location,
-                Zones = availabilityZones
-            };
-            return m_CrpClient.CapacityReservationGroups.CreateOrUpdate(rgName, capacityReservationGroupName, capacityReservationGroup);
-        }
-
-        protected CapacityReservation CreateCapacityReservation(string rgName, string capacityReservationGroupName, string capacityReservationName, string vmSize,
-            string availabilityZone = null, int reservedCount = 1)
-        {
-            //Check if CapacityReservationGroup already exist and if does not exist, create one.
-            CapacityReservationGroup existingCRG = m_CrpClient.CapacityReservationGroups.Get(rgName, capacityReservationGroupName);
-            if (existingCRG == null)
-            {
-                existingCRG = CreateCapacityReservationGroup(rgName, capacityReservationGroupName);
-            }
-            return m_CrpClient.CapacityReservations.CreateOrUpdate(rgName, capacityReservationGroupName, capacityReservationName,
-                new CapacityReservation()
-                {
-                    Location = m_location,
-                    Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } },
-                    Sku = new CM.Sku() { Name = vmSize, Capacity = reservedCount },
-                    Zones = string.IsNullOrEmpty(availabilityZone) ? null : new List<string> { availabilityZone },
                 });
         }
 

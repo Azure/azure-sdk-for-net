@@ -19,9 +19,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// The model definition that conforms to Digital Twins Definition Language (DTDL) v2.
         /// </summary>
-        /// <remarks>
-        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models">Understand twin models in Azure Digital Twins</see>.
-        /// </remarks>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models"/>
         [CodeGenMember("Model")]
         public string DtdlModel { get; }
 

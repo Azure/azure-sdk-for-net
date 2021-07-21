@@ -72,11 +72,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IBackupResourceStorageConfigsNonCRROperations.
-        /// </summary>
-        public virtual IBackupResourceStorageConfigsNonCRROperations BackupResourceStorageConfigsNonCRR { get; private set; }
-
-        /// <summary>
         /// Gets the IProtectionIntentOperations.
         /// </summary>
         public virtual IProtectionIntentOperations ProtectionIntent { get; private set; }
@@ -577,7 +572,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         private void Initialize()
         {
-            BackupResourceStorageConfigsNonCRR = new BackupResourceStorageConfigsNonCRROperations(this);
             ProtectionIntent = new ProtectionIntentOperations(this);
             BackupStatus = new BackupStatusOperations(this);
             FeatureSupport = new FeatureSupportOperations(this);

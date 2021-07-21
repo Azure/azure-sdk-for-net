@@ -29,14 +29,14 @@ namespace Azure.IoT.ModelsRepository.Fetchers
             _clientDiagnostics = clientDiagnostics;
         }
 
-        public FetchModelResult FetchModel(
-            string dtmi, Uri repositoryUri, bool tryFromExpanded, CancellationToken cancellationToken = default)
+        public FetchResult Fetch(
+            string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(HttpModelFetcher)}.{nameof(FetchModel)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(HttpModelFetcher)}.{nameof(Fetch)}");
             scope.Start();
             try
             {
-                Queue<string> work = PrepareWork(dtmi, repositoryUri, tryFromExpanded);
+                Queue<string> work = PrepareWork(dtmi, repositoryUri, dependencyResolution == ModelDependencyResolution.TryFromExpanded);
 
                 string remoteFetchError = string.Empty;
 
@@ -50,7 +50,7 @@ namespace Azure.IoT.ModelsRepository.Fetchers
                     try
                     {
                         string content = EvaluatePath(tryContentPath, cancellationToken);
-                        return new FetchModelResult
+                        return new FetchResult
                         {
                             Definition = content,
                             Path = tryContentPath
@@ -73,14 +73,14 @@ namespace Azure.IoT.ModelsRepository.Fetchers
             }
         }
 
-        public async Task<FetchModelResult> FetchModelAsync(
-            string dtmi, Uri repositoryUri, bool tryFromExpanded, CancellationToken cancellationToken = default)
+        public async Task<FetchResult> FetchAsync(
+            string dtmi, Uri repositoryUri, ModelDependencyResolution dependencyResolution, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(HttpModelFetcher)}.{nameof(FetchModel)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(HttpModelFetcher)}.{nameof(Fetch)}");
             scope.Start();
             try
             {
-                Queue<string> work = PrepareWork(dtmi, repositoryUri, tryFromExpanded);
+                Queue<string> work = PrepareWork(dtmi, repositoryUri, dependencyResolution == ModelDependencyResolution.TryFromExpanded);
 
                 string remoteFetchError = string.Empty;
                 RequestFailedException requestFailedExceptionThrown = null;
@@ -96,7 +96,7 @@ namespace Azure.IoT.ModelsRepository.Fetchers
                     try
                     {
                         string content = await EvaluatePathAsync(tryContentPath, cancellationToken).ConfigureAwait(false);
-                        return new FetchModelResult()
+                        return new FetchResult()
                         {
                             Definition = content,
                             Path = tryContentPath
@@ -145,7 +145,7 @@ namespace Azure.IoT.ModelsRepository.Fetchers
 
         private static Queue<string> PrepareWork(string dtmi, Uri repositoryUri, bool tryExpanded)
         {
-            var work = new Queue<string>();
+            Queue<string> work = new Queue<string>();
 
             if (tryExpanded)
             {
@@ -243,63 +243,6 @@ namespace Azure.IoT.ModelsRepository.Fetchers
         private static HttpPipeline CreatePipeline(ModelsRepositoryClientOptions options)
         {
             return HttpPipelineBuilder.Build(options);
-        }
-
-        public ModelsRepositoryMetadata FetchMetadata(Uri repositoryUri, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(HttpModelFetcher)}.{nameof(FetchMetadata)}");
-            scope.Start();
-
-            string metadataPath = DtmiConventions.GetMetadataUri(repositoryUri).AbsoluteUri;
-
-            try
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                string content = EvaluatePath(metadataPath, cancellationToken);
-                return JsonSerializer.Deserialize<ModelsRepositoryMetadata>(content);
-            }
-            catch (OperationCanceledException ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                // Exceptions thrown from fetching Repository Metadata should not be terminal.
-                ModelsRepositoryEventSource.Instance.FailureProcessingRepositoryMetadata(metadataPath);
-                scope.Failed(ex);
-            }
-
-            ModelsRepositoryEventSource.Instance.FailureProcessingRepositoryMetadata(metadataPath);
-            return null;
-        }
-
-        public async Task<ModelsRepositoryMetadata> FetchMetadataAsync(Uri repositoryUri, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(HttpModelFetcher)}.{nameof(FetchMetadata)}");
-            scope.Start();
-
-            string metadataPath = DtmiConventions.GetMetadataUri(repositoryUri).AbsoluteUri;
-
-            try
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                string content = await EvaluatePathAsync(metadataPath, cancellationToken).ConfigureAwait(false);
-                return JsonSerializer.Deserialize<ModelsRepositoryMetadata>(content);
-            }
-            catch (OperationCanceledException ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                // Exceptions thrown from fetching Repository Metadata should not be terminal.
-                scope.Failed(ex);
-            }
-
-            ModelsRepositoryEventSource.Instance.FailureProcessingRepositoryMetadata(metadataPath);
-            return null;
         }
     }
 }

@@ -9,9 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-    [ClientTestFixture(
-        KeyClientOptions.ServiceVersion.V7_2,
-        KeyClientOptions.ServiceVersion.V7_3_Preview)]
+    [ClientTestFixture(KeyClientOptions.ServiceVersion.V7_2)]
     public class ManagedHsmLiveTests : KeyClientLiveTests
     {
         public ManagedHsmLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
@@ -26,8 +24,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 // due to limitations: https://github.com/Azure/azure-sdk-for-net/issues/16531
                 // To provision Managed HSM: New-TestResources.ps1 -AdditionalParameters @{enableHsm=$true}
                 : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
-
-        protected override bool IsManagedHSM => true;
 
         [Test]
         public async Task CreateRsaWithPublicExponent()
@@ -75,15 +71,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKey keyReturned = await Client.GetKeyAsync(keyNoHsm.Name);
 
             AssertKeyVaultKeysEqual(keyNoHsm, keyReturned);
-        }
-
-        [TestCase(16)]
-        [TestCase(32)]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
-        public async Task GetRandomBytes(int count)
-        {
-            byte[] iv = await Client.GetRandomBytesAsync(count);
-            Assert.AreEqual(count, iv.Length);
         }
     }
 }

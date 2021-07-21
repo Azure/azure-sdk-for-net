@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
-  <PropertyGroup>
-    <UseNewMgmtFramework>false</UseNewMgmtFramework>
+    <PropertyGroup>
+    <TestHelperProjects>;</TestHelperProjects>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Network.csproj" />

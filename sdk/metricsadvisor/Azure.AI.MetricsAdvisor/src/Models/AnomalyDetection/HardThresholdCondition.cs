@@ -7,21 +7,17 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Sets fixed upper and/or lower bounds to specify the range in which data points are expected to be.
-    /// Values outside of upper or lower bounds will be considered to be anomalous.
+    /// A condition used for anomaly detection. Sets fixed upper and/or lower bounds to specify
+    /// the range in which data points are expected to be. Points with unexpected values will be
+    /// considered an anomaly according to the rules set by the <see cref="SuppressCondition"/>.
     /// </summary>
     public partial class HardThresholdCondition
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HardThresholdCondition"/> class.
         /// </summary>
-        /// <param name="anomalyDetectorDirection">
-        /// Sets the boundaries that delimit the expected value range. Data points out of this range are considered anomalous.
-        /// If <see cref="AnomalyDetectorDirection.Down"/> or <see cref="AnomalyDetectorDirection.Both"/>, <see cref="LowerBound"/>
-        /// is required. If <see cref="AnomalyDetectorDirection.Up"/> or <see cref="AnomalyDetectorDirection.Both"/>,
-        /// <see cref="UpperBound"/> is required.
-        /// </param>
-        /// <param name="suppressCondition">The <see cref="Models.SuppressCondition"/> to be applied to every anomalous data point.</param>
+        /// <param name="anomalyDetectorDirection">The direction of the specified boundaries. Depending on its value, <see cref="LowerBound"/> and/or <see cref="UpperBound"/> may be required.</param>
+        /// <param name="suppressCondition">The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.</param>
         /// <exception cref="ArgumentNullException"><paramref name="suppressCondition"/> is null.</exception>
         public HardThresholdCondition(AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition)
         {
@@ -32,15 +28,13 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// Sets the boundaries that delimit the expected value range. Data points out of this range are considered anomalous.
-        /// If <see cref="AnomalyDetectorDirection.Down"/> or <see cref="AnomalyDetectorDirection.Both"/>, <see cref="LowerBound"/>
-        /// is required. If <see cref="AnomalyDetectorDirection.Up"/> or <see cref="AnomalyDetectorDirection.Both"/>,
-        /// <see cref="UpperBound"/> is required.
+        /// The direction of the specified boundaries. Depending on its value, <see cref="LowerBound"/>
+        /// and/or <see cref="UpperBound"/> may be required.
         /// </summary>
         public AnomalyDetectorDirection AnomalyDetectorDirection { get; set; }
 
         /// <summary>
-        /// The <see cref="Models.SuppressCondition"/> to be applied to every anomalous data point.
+        /// The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.
         /// </summary>
         public SuppressCondition SuppressCondition { get; set; }
 

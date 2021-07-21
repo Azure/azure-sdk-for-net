@@ -41,9 +41,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// your own license scenario.</param>
         /// <param name="vmId">Gets the virtual machine unique id.</param>
         /// <param name="securityProfile">Gets the security profile.</param>
-        /// <param name="location">Location of the VM from which the restore
-        /// point was created.</param>
-        public RestorePointSourceMetadata(HardwareProfile hardwareProfile = default(HardwareProfile), RestorePointSourceVMStorageProfile storageProfile = default(RestorePointSourceVMStorageProfile), OSProfile osProfile = default(OSProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), string licenseType = default(string), string vmId = default(string), SecurityProfile securityProfile = default(SecurityProfile), string location = default(string))
+        public RestorePointSourceMetadata(HardwareProfile hardwareProfile = default(HardwareProfile), RestorePointSourceVMStorageProfile storageProfile = default(RestorePointSourceVMStorageProfile), OSProfile osProfile = default(OSProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), string licenseType = default(string), string vmId = default(string), SecurityProfile securityProfile = default(SecurityProfile))
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
@@ -52,7 +50,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             LicenseType = licenseType;
             VmId = vmId;
             SecurityProfile = securityProfile;
-            Location = location;
             CustomInit();
         }
 
@@ -103,13 +100,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "securityProfile")]
         public SecurityProfile SecurityProfile { get; set; }
-
-        /// <summary>
-        /// Gets or sets location of the VM from which the restore point was
-        /// created.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -10,7 +10,6 @@
 
 ### Fixed
 
-- Fixed `NotSupportedException` when running in Unity.
 
 ## 1.16.0 (2021-06-30)
 

@@ -1332,7 +1332,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="boundaryId"> ID of the boundary to be deleted. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(string jobId, string farmerId, string boundaryId, RequestOptions options = null)
+        public virtual async Task<Response> CreateCascadeDeleteJobAsync(string jobId, string farmerId, string boundaryId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -1351,14 +1351,14 @@ namespace Azure.Verticals.AgriFood.Farming
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "BoundariesClient.CreateCascadeDeleteJob");
+                            return message.Response;
                         default:
                             throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "BoundariesClient.CreateCascadeDeleteJob");
+                    return message.Response;
                 }
             }
             catch (Exception e)
@@ -1374,7 +1374,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="boundaryId"> ID of the boundary to be deleted. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(string jobId, string farmerId, string boundaryId, RequestOptions options = null)
+        public virtual Response CreateCascadeDeleteJob(string jobId, string farmerId, string boundaryId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -1393,14 +1393,14 @@ namespace Azure.Verticals.AgriFood.Farming
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "BoundariesClient.CreateCascadeDeleteJob");
+                            return message.Response;
                         default:
                             throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
                 {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "BoundariesClient.CreateCascadeDeleteJob");
+                    return message.Response;
                 }
             }
             catch (Exception e)

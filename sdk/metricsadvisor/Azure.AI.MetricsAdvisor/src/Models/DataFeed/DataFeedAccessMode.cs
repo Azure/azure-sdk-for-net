@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// The access mode of the <see cref="DataFeed"/>.
+    /// The view mode of the <see cref="DataFeed"/>.
     /// </summary>
     [CodeGenModel("ViewMode")]
     public readonly partial struct DataFeedAccessMode

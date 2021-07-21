@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// A categorical value that characterizes the metrics of a <see cref="DataFeed"/>. The combination of multiple dimensions
-    /// identify a particular univariate time series.
+    /// A <see cref="DataFeedDimension"/>  is one or more categorical values. The combination of those values identify a particular univariate time series.
+    /// For example: country, language, tenant, and so on.
     /// </summary>
     [CodeGenModel("Dimension")]
     public partial class DataFeedDimension
@@ -17,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="DataFeedDimension"/> class.
         /// </summary>
-        /// <param name="name">The name of the dimension as it appears in its corresponding <see cref="DataFeedSource"/> column.</param>
+        /// <param name="name">The name of the data source's column to be used as a dimension. Values of this dimension will be read only from the specified column.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
         public DataFeedDimension(string name)
@@ -28,17 +27,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The name of the dimension as it appears in its corresponding <see cref="DataFeedSource"/> column.
+        /// The name of the data source's column to be used as a dimension. Values of
+        /// this dimension will be read only from the specified column.
         /// </summary>
         [CodeGenMember("DimensionName")]
         public string Name { get; }
 
         /// <summary>
-        /// The dimension name to be displayed on the web portal. Defaults to the original column name, <see cref="Name"/>.
+        /// The name to be displayed on the web portal instead of the original column name.
         /// </summary>
-        /// <remarks>
-        /// Once the <see cref="DataFeed"/> containing this dimension is created, this property cannot be changed anymore.
-        /// </remarks>
         [CodeGenMember("DimensionDisplayName")]
         public string DisplayName { get; set; }
     }

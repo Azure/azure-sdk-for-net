@@ -2,11 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
-using Azure.Messaging.WebPubSub;
 using Moq;
 using NUnit.Framework;
 
@@ -17,9 +13,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase]
         public async Task AddAsync_WebPubSubEvent_SendAll()
         {
-            var mockClient = new Mock<WebPubSubServiceClient>();
-            var service = new WebPubSubService(mockClient.Object);
-            var collector = new WebPubSubAsyncCollector(service);
+            var serviceMock = new Mock<IWebPubSubService>();
+            var collector = new WebPubSubAsyncCollector(serviceMock.Object);
 
             var message = "new message";
             await collector.AddAsync(new SendToAll
@@ -28,10 +23,40 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 DataType = MessageDataType.Text
             });
 
-            mockClient.Verify(c => c.SendToAllAsync(It.IsAny<RequestContent>(), It.IsAny<string>(), null, It.IsAny<CancellationToken>()), Times.Once);
-            mockClient.VerifyNoOtherCalls();
+            serviceMock.Verify(c => c.SendToAll(It.IsAny<SendToAll>()), Times.Once);
+            serviceMock.VerifyNoOtherCalls();
 
-            mockClient.VerifyAll();
+            var actualData = (SendToAll)serviceMock.Invocations[0].Arguments[0];
+            Assert.AreEqual(MessageDataType.Text, actualData.DataType);
+            Assert.AreEqual(message, actualData.Message.ToString());
         }
+
+        //[Fact]
+        //public async Task AddAsync_WebPubSubEvent_SendAll()
+        //{
+        //    var serviceMock = new Mock<IWebPubSubService>();
+        //    var collector = new WebPubSubAsyncCollector(serviceMock.Object, "testhub");
+        //
+        //    var payload = Encoding.UTF8.GetBytes("new message");
+        //    await collector.AddAsync(new WebPubSubEvent
+        //    {
+        //        Operation = WebPubSubOperation.SendToAll,
+        //        Message = new MemoryStream(payload),
+        //        DataType = MessageDataType.Text
+        //    });
+        //
+        //    serviceMock.Verify(c => c.SendToAll(It.IsAny<WebPubSubEvent>()), Times.Once);
+        //    serviceMock.VerifyNoOtherCalls();
+        //
+        //    var actualData = (WebPubSubEvent)serviceMock.Invocations[0].Arguments[0];
+        //    Assert.Equal(MessageDataType.Text, actualData.DataType);
+        //    byte[] message = null;
+        //    using (var memoryStream = new MemoryStream())
+        //    {
+        //        actualData.Message.CopyTo(memoryStream);
+        //        message = memoryStream.ToArray();
+        //    }
+        //    Assert.Equal(payload, message);
+        //}
     }
 }

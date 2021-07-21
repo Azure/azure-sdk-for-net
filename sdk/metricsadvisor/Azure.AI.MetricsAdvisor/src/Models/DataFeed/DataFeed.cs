@@ -10,16 +10,9 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// A data feed is the entry point of data for the Metrics Advisor service and, therefore, the first
-    /// entity to be created when setting up your resource. It periodically ingests data from a
-    /// <see cref="DataFeedSource"/> and monitors it in search of anomalies.
+    /// Periodically ingests data from a data source in order to build time series
+    /// to be monitored for anomaly detection.
     /// </summary>
-    /// <remarks>
-    /// In order to create a data feed, you must set up at least the properties <see cref="Name"/>,
-    /// <see cref="DataSource"/>, <see cref="Granularity"/>, <see cref="IngestionSettings"/>, and
-    /// <see cref="Schema"/>, and pass this instance to the method
-    /// <see cref="MetricsAdvisorAdministrationClient.CreateDataFeedAsync"/>.
-    /// </remarks>
     public class DataFeed
     {
         /// <summary>
@@ -27,16 +20,16 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public DataFeed()
         {
-            Administrators = new ChangeTrackingList<string>();
-            Viewers = new ChangeTrackingList<string>();
+            AdministratorEmails = new ChangeTrackingList<string>();
+            ViewerEmails = new ChangeTrackingList<string>();
         }
 
         internal DataFeed(DataFeedDetail dataFeedDetail)
         {
             Id = dataFeedDetail.DataFeedId;
             Status = dataFeedDetail.Status;
-            CreatedOn = dataFeedDetail.CreatedTime;
-            Creator = dataFeedDetail.Creator;
+            CreatedTime = dataFeedDetail.CreatedTime;
+            CreatorEmail = dataFeedDetail.Creator;
             IsAdministrator = dataFeedDetail.IsAdmin;
             MetricIds = dataFeedDetail.Metrics.ToDictionary(metric => metric.Name, metric => metric.Id);
             Name = dataFeedDetail.DataFeedName;
@@ -49,177 +42,113 @@ namespace Azure.AI.MetricsAdvisor.Models
             AccessMode = dataFeedDetail.ViewMode;
             RollupSettings = new DataFeedRollupSettings(dataFeedDetail);
             MissingDataPointFillSettings = new DataFeedMissingDataPointFillSettings(dataFeedDetail);
-            Administrators = dataFeedDetail.Admins;
-            Viewers = dataFeedDetail.Viewers;
+            AdministratorEmails = dataFeedDetail.Admins;
+            ViewerEmails = dataFeedDetail.Viewers;
         }
 
         /// <summary>
-        /// The unique identifier of this <see cref="DataFeed"/>.
+        /// The unique identifier of this <see cref="DataFeed"/>. Set by the service.
         /// </summary>
-        /// <remarks>
-        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. This property
-        /// will be set by the service after creation.
-        /// </remarks>
         public string Id { get; internal set; }
 
         /// <summary>
-        /// The current ingestion status of this <see cref="DataFeed"/>. Only <see cref="DataFeedStatus.Active"/>
-        /// and <see cref="DataFeedStatus.Paused"/> are supported.
+        /// The current ingestion status of this <see cref="DataFeed"/>.
         /// </summary>
-        /// <remarks>
-        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. Once created,
-        /// the status is initialized as <see cref="DataFeedStatus.Active"/>.
-        /// </remarks>
         public DataFeedStatus? Status { get; }
 
         /// <summary>
-        /// The date and time, in UTC, when this <see cref="DataFeed"/> was created.
+        /// Date and time, in UTC, when this <see cref="DataFeed"/> was created.
         /// </summary>
-        /// <remarks>
-        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. This property
-        /// will be set by the service after creation.
-        /// </remarks>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedTime { get; }
 
         /// <summary>
-        /// The user who created this <see cref="DataFeed"/>. If <see cref="MetricsAdvisorKeyCredential"/>
-        /// authentication was used when creating the data feed, this property contains the email address of the
-        /// creator. If AAD authentication was used instead, the value of this property uniquely identifies the
-        /// creator's user principal, but its value depends on the type of credential used. For instance, if a
-        /// <c>ClientSecretCredential</c> is used, it will contain the client ID.
+        /// The e-mail address of creator of this <see cref="DataFeed"/>.
         /// </summary>
-        /// <remarks>
-        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. This property
-        /// will be set by the service after creation.
-        /// </remarks>
-        public string Creator { get; }
+        public string CreatorEmail { get; }
 
         /// <summary>
         /// Whether or not the user who queried the information about this <see cref="DataFeed"/>
-        /// is one of its administrators. The complete list of administrators can be consulted in
-        /// <see cref="Administrators"/>.
+        /// is one of its administrators.
         /// </summary>
-        /// <remarks>
-        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet.
-        /// </remarks>
         public bool? IsAdministrator { get; }
 
         /// <summary>
-        /// The unique identifiers of the metrics of this <see cref="DataFeed"/>. Keys are the metric
-        /// names, and values are their corresponding IDs.
+        /// The unique identifiers of the metrics defined in this feed's <see cref="DataFeedSchema"/>.
+        /// Set by the service.
         /// </summary>
-        /// <remarks>
-        /// If empty, it means this instance has not been sent to the service to be created yet.
-        /// </remarks>
         public IReadOnlyDictionary<string, string> MetricIds { get; }
 
         /// <summary>
-        /// A custom name for this <see cref="DataFeed"/> to be displayed on the web portal. Data feed names
-        /// must be unique across the same Metris Advisor resource.
+        /// A custom name for this <see cref="DataFeed"/> to be displayed on the web portal.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// The source that periodically provides data to this <see cref="DataFeed"/>.
+        /// The source from which data is consumed.
         /// </summary>
-        /// <remarks>
-        /// Once the data feed is created, the kind of <see cref="DataFeedSource"/> cannot be changed anymore.
-        /// You can, however, update its properties.
-        /// </remarks>
         public DataFeedSource DataSource { get; set; }
 
         /// <summary>
-        /// Specifies which values, such as metrics and dimensions, will be ingested from the <see cref="DataFeedSource"/>.
+        /// Defines how this <see cref="DataFeed"/> structures the data ingested from the data source
+        /// in terms of metrics and dimensions.
         /// </summary>
-        /// <remarks>
-        /// Once the data feed is created, the metrics and dimensions defined in the schema cannot be changed
-        /// anymore. You can still update the property <see cref="DataFeedSchema.TimestampColumn"/>.
-        /// </remarks>
         public DataFeedSchema Schema { get; set; }
 
         /// <summary>
-        /// The frequency with which ingestion from the <see cref="DataSource"/> will happen.
+        /// The frequency with which ingestion from the data source will happen.
         /// </summary>
-        /// <remarks>
-        /// Once the data feed is created, this property cannot be changed anymore.
-        /// </remarks>
         public DataFeedGranularity Granularity { get; set; }
 
         /// <summary>
-        /// Configures how a <see cref="DataFeed"/> should ingest data from its <see cref="DataSource"/>.
+        /// Configures how a <see cref="DataFeed"/> behaves during data ingestion from its data source.
         /// </summary>
         public DataFeedIngestionSettings IngestionSettings { get; set; }
 
         /// <summary>
-        /// A description of this <see cref="DataFeed"/>. Defaults to an empty string.
+        /// A description of this <see cref="DataFeed"/>.
         /// </summary>
-        /// <remarks>
-        /// If set to null during an update operation, this property is set to its default value.
-        /// </remarks>
         public string Description { get; set; }
 
         /// <summary>
         /// Defines actionable HTTP URLs, which consist of the placeholders %datafeed, %metric, %timestamp, %detect_config, and %tagset.
         /// You can use the template to redirect from an anomaly or an incident to a specific URL to drill down.
-        /// See the <see href="https://aka.ms/metricsadvisor/actionlinktemplate">documentation</see> for details.
-        /// Defaults to an empty string.
+        /// See the <see href="https://docs.microsoft.com/azure/cognitive-services/metrics-advisor/how-tos/manage-data-feeds#action-link-template">documentation</see> for details.
         /// </summary>
-        /// <remarks>
-        /// If set to null during an update operation, this property is set to its default value.
-        /// </remarks>
         public string ActionLinkTemplate { get; set; }
 
         /// <summary>
-        /// The access mode for this <see cref="DataFeed"/>. Only <see cref="DataFeedAccessMode.Private"/>
-        /// and <see cref="DataFeedAccessMode.Public"/> are supported. Defaults to <see cref="DataFeedAccessMode.Private"/>.
+        /// The access mode for this <see cref="DataFeed"/>.
         /// </summary>
-        /// <remarks>
-        /// If set to null during an update operation, this property is set to its default value.
-        /// </remarks>
         public DataFeedAccessMode? AccessMode { get; set; }
 
         /// <summary>
-        /// Configures the behavior of this <see cref="DataFeed"/> when handling rolled-up ingested data
+        /// Configures the behavior of this <see cref="DataFeed"/> for rolling-up the ingested data
         /// before detecting anomalies.
         /// </summary>
         public DataFeedRollupSettings RollupSettings { get; set; }
 
         /// <summary>
-        /// Configures the behavior of this <see cref="DataFeed"/> when handling missing points in the
-        /// data ingested from the <see cref="DataSource"/>. Defaults to settings with
-        /// <see cref="DataFeedMissingDataPointFillType.SmartFilling"/> set.
+        /// Configures the behavior of this <see cref="DataFeed"/> when dealing with missing points
+        /// in the data ingested from the data source.
         /// </summary>
-        /// <remarks>
-        /// If set to null during an update operation, this property is set to its default value.
-        /// </remarks>
         public DataFeedMissingDataPointFillSettings MissingDataPointFillSettings { get; set; }
 
         /// <summary>
-        /// The administrators of this <see cref="DataFeed"/>. Administrators have total control over a data feed, being allowed
-        /// to update, delete, or pause them. Each element in this list represents a user with administrator access, but the value
-        /// of each <c>string</c> element depends on the type of authentication to be used by this administrator when communicating
-        /// with the service. If <see cref="MetricsAdvisorKeyCredential"/> authentication will be used, the <c>string</c> must be the
-        /// user's email address. If AAD authentication will be used instead, the <c>string</c> must uniquely identify the user's
-        /// principal. For instance, for a <c>ClientSecretCredential</c>, the <c>string</c> must be the client ID.
+        /// The emails of this data feed's administrators. Administrators have total control over a
+        /// data feed, being allowed to update, delete or pause them. They also have access to the
+        /// credentials used to authenticate to the data source.
         /// </summary>
-        /// <remarks>
-        /// Upon data feed creation, the <see cref="Creator"/> is automatically assigned as an administrator by the service.
-        /// </remarks>
-        public IList<string> Administrators { get; }
+        public IList<string> AdministratorEmails { get; }
 
         /// <summary>
-        /// The viewers of this <see cref="DataFeed"/>. Viewers have read-only access to a data feed. Each element in this list
-        /// represents a user with viewer access, but the value of each <c>string</c> element depends on the type of authentication
-        /// to be used by this viewer when communicating with the service. If <see cref="MetricsAdvisorKeyCredential"/> authentication
-        /// will be used, the <c>string</c> must be the user's email address. If AAD authentication will be used instead, the
-        /// <c>string</c> must uniquely identify the user's principal. For instance, for a <c>ClientSecretCredential</c>, the
-        /// <c>string</c> must be the client ID.
+        /// The emails of this data feed's viewers. Viewers have read-only access to a data feed, and
+        /// do not have access to the credentials used to authenticate to the data source.
         /// </summary>
-        public IList<string> Viewers { get; }
+        public IList<string> ViewerEmails { get; }
 
         internal DataFeedDetail GetDataFeedDetail()
         {
-            DataFeedDetail detail = DataSource.InstantiateDataFeedDetail(Name, Granularity.GranularityType, Schema.MetricColumns, IngestionSettings.IngestionStartsOn);
+            DataFeedDetail detail = DataSource.InstantiateDataFeedDetail(Name, Granularity.GranularityType, Schema.MetricColumns, IngestionSettings.IngestionStartTime);
 
             foreach (var column in Schema.DimensionColumns)
             {
@@ -240,7 +169,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             if (RollupSettings != null)
             {
-                detail.AllUpIdentification = RollupSettings.RollupIdentificationValue;
+                detail.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
                 detail.NeedRollup = RollupSettings.RollupType;
                 detail.RollUpMethod = RollupSettings.AutoRollupMethod;
                 foreach (string columnName in RollupSettings.AutoRollupGroupByColumnNames)
@@ -255,12 +184,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                 detail.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 
-            foreach (var admin in Administrators)
+            foreach (var admin in AdministratorEmails)
             {
                 detail.Admins.Add(admin);
             }
 
-            foreach (var viewer in Viewers)
+            foreach (var viewer in ViewerEmails)
             {
                 detail.Viewers.Add(viewer);
             }
@@ -288,7 +217,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             if (IngestionSettings != null)
             {
-                patch.DataStartFrom = ClientCommon.NormalizeDateTimeOffset(IngestionSettings.IngestionStartsOn);
+                patch.DataStartFrom = ClientCommon.NormalizeDateTimeOffset(IngestionSettings.IngestionStartTime);
                 patch.MaxConcurrency = IngestionSettings.DataSourceRequestConcurrency;
                 patch.MinRetryIntervalInSeconds = (long?)IngestionSettings.IngestionRetryDelay?.TotalSeconds;
                 patch.StartOffsetInSeconds = (long?)IngestionSettings.IngestionStartOffset?.TotalSeconds;
@@ -301,7 +230,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             if (RollupSettings != null)
             {
-                patch.AllUpIdentification = RollupSettings.RollupIdentificationValue;
+                patch.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
                 patch.NeedRollup = RollupSettings.RollupType;
                 patch.RollUpMethod = RollupSettings.AutoRollupMethod;
                 patch.RollUpColumns = RollupSettings.AutoRollupGroupByColumnNames;
@@ -313,8 +242,8 @@ namespace Azure.AI.MetricsAdvisor.Models
                 patch.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 
-            patch.Admins = Administrators;
-            patch.Viewers = Viewers;
+            patch.Admins = AdministratorEmails;
+            patch.Viewers = ViewerEmails;
 
             SetAuthenticationProperties(patch, DataSource);
 
@@ -323,27 +252,21 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private static void SetAuthenticationProperties(DataFeedDetail detail, DataFeedSource dataSource)
         {
-            string authentication;
-
             switch (dataSource)
             {
                 case AzureBlobDataFeedSource s:
-                    authentication = s.Authentication?.ToString();
-                    detail.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
+                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
                     break;
                 case AzureDataExplorerDataFeedSource s:
-                    authentication = s.Authentication?.ToString();
-                    detail.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
+                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
                 case AzureDataLakeStorageDataFeedSource s:
-                    authentication = s.Authentication?.ToString();
-                    detail.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
+                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
                 case SqlServerDataFeedSource s:
-                    authentication = s.Authentication?.ToString();
-                    detail.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
+                    detail.AuthenticationType = s.GetAuthenticationTypeEnum();
                     detail.CredentialId = s.DataSourceCredentialId;
                     break;
             }
@@ -351,27 +274,21 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private static void SetAuthenticationProperties(DataFeedDetailPatch patch, DataFeedSource dataSource)
         {
-            string authentication;
-
             switch (dataSource)
             {
                 case AzureBlobDataFeedSource s:
-                    authentication = s.Authentication?.ToString();
-                    patch.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
+                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
                     break;
                 case AzureDataExplorerDataFeedSource s:
-                    authentication = s.Authentication?.ToString();
-                    patch.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
+                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;
                 case AzureDataLakeStorageDataFeedSource s:
-                    authentication = s.Authentication?.ToString();
-                    patch.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
+                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;
                 case SqlServerDataFeedSource s:
-                    authentication = s.Authentication?.ToString();
-                    patch.AuthenticationType = (authentication == null) ? default(AuthenticationTypeEnum?) : new AuthenticationTypeEnum(authentication);
+                    patch.AuthenticationType = s.GetAuthenticationTypeEnum();
                     patch.CredentialId = s.DataSourceCredentialId;
                     break;
             }

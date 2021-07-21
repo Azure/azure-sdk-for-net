@@ -10026,7 +10026,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+        public virtual async Task<Response> ImportGlossaryTermsViaCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -10045,14 +10045,14 @@ namespace Azure.Analytics.Purview.Catalog
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsv");
+                            return message.Response;
                         default:
                             throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsv");
+                    return message.Response;
                 }
             }
             catch (Exception e)
@@ -10068,7 +10068,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+        public virtual Response ImportGlossaryTermsViaCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -10087,14 +10087,14 @@ namespace Azure.Analytics.Purview.Catalog
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsv");
+                            return message.Response;
                         default:
                             throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
                 {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsv");
+                    return message.Response;
                 }
             }
             catch (Exception e)
@@ -10138,7 +10138,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+        public virtual async Task<Response> ImportGlossaryTermsViaCsvByGlossaryNameAsync(string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -10157,14 +10157,14 @@ namespace Azure.Analytics.Purview.Catalog
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
+                            return message.Response;
                         default:
                             throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
+                    return message.Response;
                 }
             }
             catch (Exception e)
@@ -10180,7 +10180,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
+        public virtual Response ImportGlossaryTermsViaCsvByGlossaryName(string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -10199,14 +10199,14 @@ namespace Azure.Analytics.Purview.Catalog
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
+                            return message.Response;
                         default:
                             throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
                 {
-                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.AzureAsyncOperation, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
+                    return message.Response;
                 }
             }
             catch (Exception e)

@@ -17,24 +17,24 @@ namespace Azure.AI.MetricsAdvisor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartsOn))
+            if (Optional.IsDefined(StartTime))
             {
-                if (StartsOn != null)
+                if (StartTime != null)
                 {
                     writer.WritePropertyName("startTime");
-                    writer.WriteStringValue(StartsOn.Value, "O");
+                    writer.WriteStringValue(StartTime.Value, "O");
                 }
                 else
                 {
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(EndsOn))
+            if (Optional.IsDefined(EndTime))
             {
-                if (EndsOn != null)
+                if (EndTime != null)
                 {
                     writer.WritePropertyName("endTime");
-                    writer.WriteStringValue(EndsOn.Value, "O");
+                    writer.WriteStringValue(EndTime.Value, "O");
                 }
                 else
                 {
@@ -44,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor
             writer.WritePropertyName("value");
             writer.WriteObjectValue(ValueInternal);
             writer.WritePropertyName("feedbackType");
-            writer.WriteStringValue(FeedbackKind.ToString());
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("metricId");
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter");
@@ -62,7 +62,7 @@ namespace Azure.AI.MetricsAdvisor
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> userPrincipal = default;
             string metricId = default;
-            FeedbackFilter dimensionFilter = default;
+            FeedbackDimensionFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"))
@@ -122,7 +122,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
                 if (property.NameEquals("dimensionFilter"))
                 {
-                    dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
+                    dimensionFilter = FeedbackDimensionFilter.DeserializeFeedbackDimensionFilter(property.Value);
                     continue;
                 }
             }

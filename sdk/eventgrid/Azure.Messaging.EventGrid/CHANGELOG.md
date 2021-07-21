@@ -1,21 +1,15 @@
 # Release History
 
-## 4.6.0-beta.1 (Unreleased)
+## 4.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-### Bugs Fixed
+### Key Bugs Fixed
 
-### Other Changes
+### Fixed
 
-## 4.5.0 (2021-07-19)
-
-### Features Added
-- Added constructor for `EventGridPublisherClient` that takes a `TokenCredential` to enable Azure Active Directory authentication.
-- Added `Metadata` property to `AcsChatMessageEditedEventData`, `AcsChatMessageEditedInThreadEventData`, `AcsChatMessageReceivedEventData`, and `AcsChatMessageReceivedInThreadEventData`.
-- Added custom converter for `EventGridEvent` that allows this type to be serialized and deserialized using `System.Text.Json` APIs.
 
 ## 4.4.0 (2021-06-21)
 

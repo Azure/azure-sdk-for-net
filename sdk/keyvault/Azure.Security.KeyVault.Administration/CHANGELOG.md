@@ -10,7 +10,6 @@
 
 ### Fixed
 
-- The default service version is now "7.3-preview".
 
 ## 4.0.0 (2021-06-15)
 

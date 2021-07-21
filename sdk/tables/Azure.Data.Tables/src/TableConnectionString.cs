@@ -412,7 +412,6 @@ namespace Azure.Data.Tables
                 account.Settings.Add(TableConstants.ConnectionStrings.DevelopmentProxyUriSetting, proxyUri.ToString());
             }
 
-            account._accountName = credentials.AccountName;
             account.IsDevStoreAccount = true;
 
             return account;

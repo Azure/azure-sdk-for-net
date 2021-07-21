@@ -32,25 +32,15 @@ namespace Azure.Core.TestFramework
                 // Generated ARM clients will have a property containing the sub-client that ends with Operations.
                 (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations")))
             {
-                if (IsNullResult(invocation))
+                invocation.Proceed();
+
+                var result = invocation.ReturnValue;
+                if (result == null)
+                {
                     return;
+                }
 
-                invocation.ReturnValue = _testBase.InstrumentClient(type, invocation.ReturnValue, Array.Empty<IInterceptor>());
-                return;
-            }
-
-            if (
-                // Generated ARM clients will have a property containing the sub-client that ends with Operations.
-                (invocation.Method.Name.StartsWith("get_") && (type.Name.EndsWith("Operations") || (type.BaseType != null && type.BaseType.Name.EndsWith("Operations")))) ||
-                // Instrument the container construction methods inside Operations objects
-                (invocation.Method.Name.StartsWith("Get") && type.Name.EndsWith("Container")) ||
-                // Instrument the operations construction methods inside Operations objects
-                (invocation.Method.Name.StartsWith("Get") && type.Name.EndsWith("Operations")))
-            {
-                if (IsNullResult(invocation))
-                    return;
-
-                invocation.ReturnValue = _testBase.InstrumentClient(type, invocation.ReturnValue, new IInterceptor[] { new ManagementInterceptor(_testBase) });
+                invocation.ReturnValue = _testBase.InstrumentClient(type, result, Array.Empty<IInterceptor>());
                 return;
             }
 
@@ -68,12 +58,6 @@ namespace Azure.Core.TestFramework
         internal async ValueTask<T> InstrumentOperationInterceptor<T>(IInvocation invocation, Func<ValueTask<T>> innerTask)
         {
             return (T) _testBase.InstrumentOperation(typeof(T), await innerTask());
-        }
-
-        private bool IsNullResult(IInvocation invocation)
-        {
-            invocation.Proceed();
-            return invocation.ReturnValue == null;
         }
     }
 }

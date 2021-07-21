@@ -15,30 +15,29 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAnomalyDimensionValuesOptions"/> class.
         /// </summary>
-        /// <param name="startsOn">Filters the result. Only dimension values for anomalies created from this point in time, in UTC, will be returned.</param>
-        /// <param name="endsOn">Filters the result. Only dimension values for anomalies created up to this point in time, in UTC, will be returned.</param>
-        public GetAnomalyDimensionValuesOptions(DateTimeOffset startsOn, DateTimeOffset endsOn)
+        /// <param name="startTime">Filters the result. Only dimension values for anomalies created from this point in time, in UTC, will be returned.</param>
+        /// <param name="endTime">Filters the result. Only dimension values for anomalies created up to this point in time, in UTC, will be returned.</param>
+        public GetAnomalyDimensionValuesOptions(DateTimeOffset startTime, DateTimeOffset endTime)
         {
-            StartsOn = startsOn;
-            EndsOn = endsOn;
+            StartTime = startTime;
+            EndTime = endTime;
         }
 
         /// <summary>
         /// Filters the result. Only dimension values for anomalies created from this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset StartsOn { get; }
+        public DateTimeOffset StartTime { get; }
 
         /// <summary>
         /// Filters the result. Only dimension values for anomalies created up to this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset EndsOn { get; }
+        public DateTimeOffset EndTime { get; }
 
         /// <summary>
-        /// Filters the result by time series. Only dimension values for anomalies detected in the time series
-        /// group specified will be returned. This key represents a group of time series for the corresponding
-        /// metric, so only a subset of dimensions must be set.
+        /// Filters the result by series. Only anomalies detected in the time series group specified will
+        /// be returned.
         /// </summary>
-        public DimensionKey SeriesGroupKey { get; set; }
+        public DimensionKey DimensionToFilter { get; set; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to

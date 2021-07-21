@@ -57,19 +57,9 @@ namespace Azure.Messaging.WebPubSub
             _clientDiagnostics = new ClientDiagnostics(options);
             apiVersion = options.Version;
 
-            HttpPipelinePolicy[] perCallPolicies;
-            if (options.ReverseProxyEndpoint != null)
-            {
-                perCallPolicies = new HttpPipelinePolicy[] { new ApimPolicy(options.ReverseProxyEndpoint), new LowLevelCallbackPolicy() };
-            }
-            else
-            {
-                perCallPolicies = new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() };
-            }
-
             Pipeline = HttpPipelineBuilder.Build(
                 options,
-                perCallPolicies: perCallPolicies,
+                perCallPolicies: new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() },
                 perRetryPolicies: new HttpPipelinePolicy[] { new WebPubSubAuthenticationPolicy(credential) },
                 new ResponseClassifier()
             );

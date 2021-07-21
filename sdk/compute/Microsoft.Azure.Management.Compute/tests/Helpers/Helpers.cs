@@ -28,11 +28,6 @@ namespace Compute.Tests
             return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.HostGroups, dedicatedHostGroupName);
         }
 
-        public static string GetCapacityReservationGroupRef(string subId, string resourceGrpName, string capacityReservationGroupName)
-        {
-            return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.CapacityReservationGroups, capacityReservationGroupName);
-        }
-
         public static string GetDedicatedHostRef(string subId, string resourceGrpName, string dedicatedHostGroupName, string dedicatedHostName)
         {
             return GetSubEntityReferenceId(subId, resourceGrpName, ApiConstants.HostGroups, dedicatedHostGroupName, ApiConstants.Hosts, dedicatedHostName);
@@ -46,11 +41,6 @@ namespace Compute.Tests
         public static string GetVMScaleSetReferenceId(string subId, string resourceGrpName, string vmssName)
         {
             return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.VMScaleSets, vmssName);
-        }
-
-        public static string GetVMScaleSetVMReferenceId(string subId, string resourceGrpName, string vmssName, string instanceId)
-        {
-            return GetSubEntityReferenceId(subId, resourceGrpName, ApiConstants.VMScaleSets, vmssName, ApiConstants.VirtualMachines, instanceId);
         }
 
         public static string GetCloudServiceReferenceId(string subId, string resourceGrpName, string cloudServiceName)

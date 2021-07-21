@@ -8,9 +8,6 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary>
-    /// The artifact platform's operating system.
-    /// </summary>
     public readonly partial struct ArtifactOperatingSystem : IEquatable<ArtifactOperatingSystem>
     {
         /// <summary> iOS. </summary>

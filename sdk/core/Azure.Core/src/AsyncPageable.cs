@@ -145,7 +145,7 @@ namespace Azure
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
-        private class StaticPageable : AsyncPageable<T>
+        private class StaticPageable: AsyncPageable<T>
         {
             private readonly IEnumerable<Page<T>> _pages;
 
@@ -158,21 +158,9 @@ namespace Azure
             public override async IAsyncEnumerable<Page<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
 #pragma warning restore 1998
             {
-                var shouldReturnPages = continuationToken == null;
-
                 foreach (var page in _pages)
                 {
-                    if (shouldReturnPages)
-                    {
-                        yield return page;
-                    }
-                    else
-                    {
-                        if (continuationToken == page.ContinuationToken)
-                        {
-                            shouldReturnPages = true;
-                        }
-                    }
+                    yield return page;
                 }
             }
         }

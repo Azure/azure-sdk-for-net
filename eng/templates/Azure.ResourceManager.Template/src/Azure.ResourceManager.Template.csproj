@@ -5,7 +5,9 @@
     <Description>Azure Resource Manager client SDK for Azure resource provider ProviderFullName</Description>
     <PackageTags>azure;management;arm;resource manager;ProviderNameLowercase</PackageTags>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Core"/>
-  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->
+    <NoWarn>$(NoWarn);AZC0001</NoWarn>
+  </PropertyGroup>
 </Project>

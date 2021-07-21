@@ -8,7 +8,6 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Batch;
 using Azure.Storage.Blobs.Batch.Models;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -196,7 +195,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             HttpMessage message = BlobRestClient.CreateDeleteRequest(
                 containerName: blobContainerName,
-                blob: blobName.EscapePath(),
+                blob: blobName,
                 timeout: null,
                 leaseId: conditions?.LeaseId,
                 deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOptionType?)snapshotsOption,
@@ -311,7 +310,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             HttpMessage message = BlobRestClient.CreateSetAccessTierRequest(
                 containerName: blobContainerName,
-                blob: blobName.EscapePath(),
+                blob: blobName,
                 accessTier.ToBatchAccessTier(),
                 timeout: null,
                 rehydratePriority: rehydratePriority.ToBatchRehydratePriority(),

@@ -6,9 +6,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary>
-    /// The <see cref="MetricFeedbackKind"/>. See each specific kind for a description of each.
-    /// </summary>
+    /// <summary> The <see cref="MetricFeedbackKind"/>. See each specific kind for a description of each. </summary>
     [CodeGenModel("FeedbackType")]
     public readonly partial struct MetricFeedbackKind : IEquatable<MetricFeedbackKind>
     {

@@ -7,21 +7,19 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// A detection condition powered by machine learning that learns patterns from historical data, and uses them for future detection.
+    /// Anomaly detection using multiple machine learning algorithms.
     /// </summary>
     public partial class SmartDetectionCondition
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SmartDetectionCondition"/> class.
+        /// Initializes a new instance of the <see cref="HardThresholdCondition"/> class.
         /// </summary>
         /// <param name="sensitivity">
         /// A numerical value to adjust the tolerance of the anomaly detection with a range of (0, 100].
-        /// It affects the width of the expected value range of each point. When increased, the expected
-        /// value range will be tighter, and more anomalies will be reported. When turned down, the expected
-        /// value range will be wider, and fewer anomalies will be reported.
+        /// Visually, the higher the value, the narrower the upper and lower boundaries around the time series.
         /// </param>
-        /// <param name="anomalyDetectorDirection">Sets the boundaries that delimit the expected value range. Data points out of this range are considered anomalous.</param>
-        /// <param name="suppressCondition">The <see cref="Models.SuppressCondition"/> to be applied to every anomalous data point.</param>
+        /// <param name="anomalyDetectorDirection"> detection direction. </param>
+        /// <param name="suppressCondition">The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.</param>
         /// <exception cref="ArgumentNullException"><paramref name="suppressCondition"/> is null.</exception>
         public SmartDetectionCondition(double sensitivity, AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition)
         {
@@ -34,19 +32,17 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// A numerical value to adjust the tolerance of the anomaly detection with a range of (0, 100].
-        /// It affects the width of the expected value range of each point. When increased, the expected
-        /// value range will be tighter, and more anomalies will be reported. When turned down, the expected
-        /// value range will be wider, and fewer anomalies will be reported.
+        /// Visually, the higher the value, the narrower the upper and lower boundaries around the time series.
         /// </summary>
         public double Sensitivity { get; set; }
 
         /// <summary>
-        /// Sets the boundaries that delimit the expected value range. Data points out of this range are considered anomalous.
+        /// A point is an anomaly only when the deviation occurs in the specified direction.
         /// </summary>
         public AnomalyDetectorDirection AnomalyDetectorDirection { get; set; }
 
         /// <summary>
-        /// The <see cref="Models.SuppressCondition"/> to be applied to every anomalous data point.
+        /// The <see cref="Models.SuppressCondition"/> to be applied to every unexpected data point.
         /// </summary>
         public SuppressCondition SuppressCondition { get; set; }
 

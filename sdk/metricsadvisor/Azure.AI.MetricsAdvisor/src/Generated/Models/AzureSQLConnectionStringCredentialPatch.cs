@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of AzureSQLConnectionStringCredentialPatch. </summary>
         public AzureSQLConnectionStringCredentialPatch()
         {
-            DataSourceCredentialType = DataSourceCredentialKind.SqlConnectionString;
+            DataSourceCredentialType = DataSourceCredentialType.AzureSQLConnectionString;
         }
 
         public AzureSQLConnectionStringParamPatch Parameters { get; set; }

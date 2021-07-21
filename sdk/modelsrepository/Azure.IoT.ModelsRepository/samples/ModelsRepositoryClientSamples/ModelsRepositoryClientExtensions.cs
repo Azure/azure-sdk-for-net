@@ -18,8 +18,7 @@ namespace Azure.IoT.ModelsRepository.Samples
         public static async Task<IEnumerable<string>> ParserDtmiResolver(this ModelsRepositoryClient client, IReadOnlyCollection<Dtmi> dtmis)
         {
             IEnumerable<string> dtmiStrings = dtmis.Select(s => s.AbsoluteUri);
-
-            IDictionary<string, string> result = await client.GetModelsAsync(dtmiStrings, ModelDependencyResolution.Disabled);
+            IDictionary<string, string> result = await client.GetModelsAsync(dtmiStrings);
             return result.Values.ToList();
         }
     }

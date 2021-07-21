@@ -394,7 +394,6 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
-        /// <param name="producerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="requestedFeatures">The flags specifying the set of special transport features that should be opted-into.</param>
         /// <param name="partitionOptions">The set of options, if any, that should be considered when initializing the producer.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
@@ -402,13 +401,12 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
         ///
         internal virtual TransportProducer CreateTransportProducer(string partitionId,
-                                                                   string producerIdentifier,
                                                                    TransportProducerFeatures requestedFeatures,
                                                                    PartitionPublishingOptions partitionOptions,
                                                                    EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-            return InnerClient.CreateProducer(partitionId, producerIdentifier, requestedFeatures, partitionOptions, retryPolicy);
+            return InnerClient.CreateProducer(partitionId, requestedFeatures, partitionOptions, retryPolicy);
         }
 
         /// <summary>
@@ -430,7 +428,6 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
-        /// <param name="consumerIdentifier">The identifier to associate with the consumer; if <c>null</c> or <see cref="string.Empty" />, a random identifier will be generated.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
@@ -443,7 +440,6 @@ namespace Azure.Messaging.EventHubs
         ///
         internal virtual TransportConsumer CreateTransportConsumer(string consumerGroup,
                                                                    string partitionId,
-                                                                   string consumerIdentifier,
                                                                    EventPosition eventPosition,
                                                                    EventHubsRetryPolicy retryPolicy,
                                                                    bool trackLastEnqueuedEventProperties = true,
@@ -456,7 +452,7 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            return InnerClient.CreateConsumer(consumerGroup, partitionId, consumerIdentifier, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, invalidateConsumerWhenPartitionStolen, ownerLevel, prefetchCount, prefetchSizeInBytes);
+            return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, invalidateConsumerWhenPartitionStolen, ownerLevel, prefetchCount, prefetchSizeInBytes);
         }
 
         /// <summary>

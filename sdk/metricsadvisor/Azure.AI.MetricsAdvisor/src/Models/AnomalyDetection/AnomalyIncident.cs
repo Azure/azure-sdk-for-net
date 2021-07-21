@@ -17,15 +17,15 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenSuppress("Property")]
     public partial class AnomalyIncident
     {
-        internal AnomalyIncident(string dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startedOn, DateTimeOffset lastDetectedOn, SeriesIdentity rootNode, IncidentProperty property)
+        internal AnomalyIncident(string dataFeedId, string metricId, string detectionConfigurationId, string id, DateTimeOffset startTime, DateTimeOffset endTime, SeriesIdentity rootNode, IncidentProperty property)
         {
             DataFeedId = dataFeedId;
             MetricId = metricId;
             DetectionConfigurationId = detectionConfigurationId;
             Id = id;
-            StartedOn = startedOn;
-            LastDetectedOn = lastDetectedOn;
-            RootSeriesKey = new DimensionKey(rootNode.Dimension);
+            StartTime = startTime;
+            LastTime = endTime;
+            RootDimensionKey = new DimensionKey(rootNode.Dimension);
             Severity = property.MaxSeverity;
             Status = property.IncidentStatus;
             ValueOfRootNode = property.ValueOfRootNode;
@@ -67,21 +67,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The key that, within a metric, uniquely identifies the time series in which the data point
         /// at the root of this <see cref="AnomalyIncident"/> has been detected. The root node is defined
         /// as the data point at the root of this incident's root-cause analysis tree. In this key, a value
-        /// is assigned to every possible dimension.
+        /// is assigned to every dimension column contained in the associated <see cref="DataFeed"/>.
         /// </summary>
-        public DimensionKey RootSeriesKey { get; }
+        public DimensionKey RootDimensionKey { get; }
 
         /// <summary>
         /// Corresponds to the time, in UTC, when the first associated <see cref="DataPointAnomaly"/> occurred.
         /// </summary>
-        [CodeGenMember("StartTime")]
-        public DateTimeOffset StartedOn { get; }
+        public DateTimeOffset StartTime { get; }
 
         /// <summary>
         /// Corresponds to the time, in UTC, when the last associated <see cref="DataPointAnomaly"/> occurred.
         /// </summary>
-        [CodeGenMember("LastTime")]
-        public DateTimeOffset LastDetectedOn { get; }
+        public DateTimeOffset LastTime { get; }
 
         /// <summary>
         /// The severity of the detected <see cref="AnomalyIncident"/>, as evaluated by the service.

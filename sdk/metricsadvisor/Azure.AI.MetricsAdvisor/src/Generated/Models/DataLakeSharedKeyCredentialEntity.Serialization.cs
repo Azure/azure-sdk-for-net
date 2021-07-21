@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WritePropertyName("parameters");
             writer.WriteObjectValue(Parameters);
             writer.WritePropertyName("dataSourceCredentialType");
-            writer.WriteStringValue(CredentialKind.ToString());
+            writer.WriteStringValue(DataSourceCredentialType.ToString());
             writer.WritePropertyName("dataSourceCredentialName");
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         internal static DataLakeSharedKeyCredentialEntity DeserializeDataLakeSharedKeyCredentialEntity(JsonElement element)
         {
             DataLakeGen2SharedKeyParam parameters = default;
-            DataSourceCredentialKind dataSourceCredentialType = default;
+            DataSourceCredentialType dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
             Optional<string> dataSourceCredentialDescription = default;
@@ -46,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
                 if (property.NameEquals("dataSourceCredentialType"))
                 {
-                    dataSourceCredentialType = new DataSourceCredentialKind(property.Value.GetString());
+                    dataSourceCredentialType = new DataSourceCredentialType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataSourceCredentialId"))

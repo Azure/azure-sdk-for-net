@@ -22,11 +22,6 @@ namespace Azure.Search.Documents
         public const string ApiKeyHeaderName = "api-key";
 
         /// <summary>
-        /// The name of the scope to authenticate for when creating a <see cref="Azure.Core.Pipeline.BearerTokenAuthenticationPolicy"/>
-        /// </summary>
-        public const string CredentialScopeName = "https://search.azure.com/.default";
-
-        /// <summary>
         /// Gets the representation of a NaN value.
         /// </summary>
         public const string NanValue = "NaN";

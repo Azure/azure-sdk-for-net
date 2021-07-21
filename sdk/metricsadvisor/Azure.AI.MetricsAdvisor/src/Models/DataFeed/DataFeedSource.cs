@@ -8,29 +8,13 @@ using Azure.AI.MetricsAdvisor.Models;
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
-    /// The source that periodically provides data to a <see cref="DataFeed"/>. The service
-    /// accepts tables of aggregated data. The supported data feed sources are:
-    /// <list type="bullet">
-    ///   <item><see cref="AzureApplicationInsightsDataFeedSource"/></item>
-    ///   <item><see cref="AzureBlobDataFeedSource"/></item>
-    ///   <item><see cref="AzureCosmosDbDataFeedSource"/></item>
-    ///   <item><see cref="AzureDataExplorerDataFeedSource"/></item>
-    ///   <item><see cref="AzureDataLakeStorageDataFeedSource"/></item>
-    ///   <item><see cref="AzureEventHubsDataFeedSource"/></item>
-    ///   <item><see cref="AzureTableDataFeedSource"/></item>
-    ///   <item><see cref="InfluxDbDataFeedSource"/></item>
-    ///   <item><see cref="LogAnalyticsDataFeedSource"/></item>
-    ///   <item><see cref="MongoDbDataFeedSource"/></item>
-    ///   <item><see cref="MySqlDataFeedSource"/></item>
-    ///   <item><see cref="PostgreSqlDataFeedSource"/></item>
-    ///   <item><see cref="SqlServerDataFeedSource"/></item>
-    /// </list>
+    /// Ingests data into a <see cref="DataFeed"/> for anomaly detection.
     /// </summary>
     public abstract class DataFeedSource
     {
-        internal DataFeedSource(DataFeedSourceKind dataFeedSourceKind)
+        internal DataFeedSource(DataFeedSourceKind dataFeedSourceType)
         {
-            DataSourceKind = dataFeedSourceKind;
+            DataSourceKind = dataFeedSourceType;
         }
 
         /// <summary>
@@ -54,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 MySqlDataFeed d => new MySqlDataFeedSource(d.DataSourceParameter),
                 PostgreSqlDataFeed d => new PostgreSqlDataFeedSource(d.DataSourceParameter),
                 SQLServerDataFeed d => new SqlServerDataFeedSource(d.DataSourceParameter, d.AuthenticationType, d.CredentialId),
-                _ => new UnknownDataFeedSource(dataFeedDetail.DataSourceType)
+                _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
             };
 
         /// <summary>
@@ -92,7 +76,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
                 SqlServerDataFeedSource d => new SQLServerDataFeed(name, granularityType, metricColumns, ingestionStartTime,
                     new SqlSourceParameter(d.Query) { ConnectionString = d.ConnectionString }),
-                _ => new DataFeedDetail(name, granularityType, metricColumns, ingestionStartTime) { DataSourceType = DataSourceKind }
+                _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
             };
         }
 
@@ -127,15 +111,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
             SqlServerDataFeedSource d => new SQLServerDataFeedPatch()
                 { DataSourceParameter = new() { Query = d.Query, ConnectionString = d.ConnectionString } },
-            _ => new DataFeedDetailPatch() { DataSourceType = DataSourceKind }
+            _ => throw new InvalidOperationException("Invalid DataFeedDetailPatch type")
         };
-
-        private class UnknownDataFeedSource : DataFeedSource
-        {
-            public UnknownDataFeedSource(DataFeedSourceKind dataFeedSourceKind)
-                : base(dataFeedSourceKind)
-            {
-            }
-        }
     }
 }

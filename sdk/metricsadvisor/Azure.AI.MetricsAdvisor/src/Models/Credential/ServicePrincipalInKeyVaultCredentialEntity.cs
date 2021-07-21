@@ -13,10 +13,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// authentication must be stored as secrets in a Key Vault resource, so credentials to access this Key Vault instance
     /// must also be provided.
     /// </summary>
-    /// <remarks>
-    /// In order to create a credential entity, you must pass this instance to the method
-    /// <see cref="MetricsAdvisorAdministrationClient.CreateDataSourceCredentialAsync"/>.
-    /// </remarks>
     [CodeGenModel("ServicePrincipalInKVCredential")]
     [CodeGenSuppress(nameof(ServicePrincipalInKeyVaultCredentialEntity), typeof(string), typeof(ServicePrincipalInKVParam))]
     public partial class ServicePrincipalInKeyVaultCredentialEntity
@@ -43,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Argument.AssertNotNullOrEmpty(secretNameForClientId, nameof(secretNameForClientId));
             Argument.AssertNotNullOrEmpty(secretNameForClientSecret, nameof(secretNameForClientSecret));
 
-            CredentialKind = DataSourceCredentialKind.ServicePrincipalInKeyVault;
+            DataSourceCredentialType = DataSourceCredentialType.ServicePrincipalInKV;
             Endpoint = endpoint;
             KeyVaultClientId = keyVaultClientId;
             KeyVaultClientSecret = keyVaultClientSecret;
@@ -52,10 +48,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
             SecretNameForClientSecret = secretNameForClientSecret;
         }
 
-        internal ServicePrincipalInKeyVaultCredentialEntity(DataSourceCredentialKind dataSourceCredentialType, string id, string name, string description, ServicePrincipalInKVParam parameters)
+        internal ServicePrincipalInKeyVaultCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalInKVParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
-            CredentialKind = dataSourceCredentialType;
+            DataSourceCredentialType = dataSourceCredentialType;
             Endpoint = new Uri(parameters.KeyVaultEndpoint);
             KeyVaultClientId = parameters.KeyVaultClientId;
             KeyVaultClientSecret = parameters.KeyVaultClientSecret;

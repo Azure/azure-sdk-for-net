@@ -18,13 +18,13 @@ namespace Azure.AI.MetricsAdvisor
         {
             writer.WriteStartObject();
             writer.WritePropertyName("startTime");
-            writer.WriteStringValue(StartsOn, "O");
+            writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("endTime");
-            writer.WriteStringValue(EndsOn, "O");
+            writer.WriteStringValue(EndTime, "O");
             writer.WritePropertyName("value");
             writer.WriteObjectValue(ValueInternal);
             writer.WritePropertyName("feedbackType");
-            writer.WriteStringValue(FeedbackKind.ToString());
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("metricId");
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter");
@@ -42,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> userPrincipal = default;
             string metricId = default;
-            FeedbackFilter dimensionFilter = default;
+            FeedbackDimensionFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"))
@@ -92,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
                 if (property.NameEquals("dimensionFilter"))
                 {
-                    dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
+                    dimensionFilter = FeedbackDimensionFilter.DeserializeFeedbackDimensionFilter(property.Value);
                     continue;
                 }
             }

@@ -17,10 +17,9 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Filters the result by dimension value. Only values containing the filter as a
-        /// substring will be returned. Case insensitive.
+        /// The dimension value to be filtered.
         /// </summary>
-        public string DimensionValueFilter { get; set; }
+        public string DimensionValueToFilter { get; set; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to

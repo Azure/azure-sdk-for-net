@@ -58,5 +58,3 @@ steps:
         -Force `
         -Verbose | Out-Null
     displayName: Deploy test resources
-    env:
-      TEMP: $(Agent.TempDirectory)

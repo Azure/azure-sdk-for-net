@@ -399,12 +399,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static void CopyDictionary<TKey, TValue>(IDictionary<TKey, TValue> source,
                                                          IDictionary<TKey, TValue> destination)
         {
-            if (source.Count > 0)
+            foreach (var key in source.Keys)
             {
-                foreach (var pair in source)
-                {
-                    destination[pair.Key] = pair.Value;
-                }
+                destination[key] = source[key];
             }
         }
     }

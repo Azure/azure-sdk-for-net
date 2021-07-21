@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
@@ -57,18 +59,20 @@ namespace Azure.Core.Samples
         {
             #region Snippet:PageableOperationGetValuesAsync
             // create a client
-            var client = new MyStoreClient();
+            var client = new TextAnalyticsClient(new Uri("http://example.com"), new DefaultAzureCredential());
+            var document = new List<string>() { "document with information" };
 
             // Start the operation
-            GetProductsOperation operation = client.StartGetProducts();
+            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(document);
 
-            await operation.WaitForCompletionAsync();
+            await healthOperation.WaitForCompletionAsync();
 
-            await foreach (Product product in operation.GetValuesAsync())
+            await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValuesAsync())
             {
-                Console.WriteLine($"Name: {product.Name}");
-                Console.WriteLine($"Quantity: {product.Quantity}");
-                Console.WriteLine($"Price: {product.Price}");
+                foreach (HealthcareEntity entity in documentsInPage[0].Entities)
+                {
+                    Console.WriteLine($"    Entity: {entity.Text}");
+                }
             }
             #endregion
         }
@@ -79,18 +83,20 @@ namespace Azure.Core.Samples
         {
             #region Snippet:PageableOperationGetValues
             // create a client
-            var client = new MyStoreClient();
+            var client = new TextAnalyticsClient(new Uri("http://example.com"), new DefaultAzureCredential());
+            var document = new List<string>() { "document with information" };
 
             // Start the operation
-            GetProductsOperation operation = client.StartGetProducts();
+            AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(document);
 
-            await operation.WaitForCompletionAsync();
+            await healthOperation.WaitForCompletionAsync();
 
-            foreach (Product product in operation.GetValues())
+            foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
             {
-                Console.WriteLine($"Name: {product.Name}");
-                Console.WriteLine($"Quantity: {product.Quantity}");
-                Console.WriteLine($"Price: {product.Price}");
+                foreach (HealthcareEntity entity in documentsInPage[0].Entities)
+                {
+                    Console.WriteLine($"    Entity: {entity.Text}");
+                }
             }
             #endregion
         }

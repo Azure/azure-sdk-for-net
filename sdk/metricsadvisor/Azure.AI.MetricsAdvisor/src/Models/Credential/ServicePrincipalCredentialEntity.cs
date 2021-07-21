@@ -11,10 +11,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// <summary>
     /// Authenticates to an Azure service via service principal.
     /// </summary>
-    /// <remarks>
-    /// In order to create a credential entity, you must pass this instance to the method
-    /// <see cref="MetricsAdvisorAdministrationClient.CreateDataSourceCredentialAsync"/>.
-    /// </remarks>
     [CodeGenModel("ServicePrincipalCredential")]
     [CodeGenSuppress(nameof(ServicePrincipalCredentialEntity), typeof(string), typeof(ServicePrincipalParam))]
     public partial class ServicePrincipalCredentialEntity
@@ -35,16 +31,16 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Argument.AssertNotNullOrEmpty(clientSecret, nameof(clientSecret));
             Argument.AssertNotNullOrEmpty(tenantId, nameof(tenantId));
 
-            CredentialKind = DataSourceCredentialKind.ServicePrincipal;
+            DataSourceCredentialType = DataSourceCredentialType.ServicePrincipal;
             ClientId = clientId;
             ClientSecret = clientSecret;
             TenantId = tenantId;
         }
 
-        internal ServicePrincipalCredentialEntity(DataSourceCredentialKind dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters)
+        internal ServicePrincipalCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
-            CredentialKind = dataSourceCredentialType;
+            DataSourceCredentialType = dataSourceCredentialType;
             ClientId = parameters.ClientId;
             ClientSecret = parameters.ClientSecret;
             TenantId = parameters.TenantId;

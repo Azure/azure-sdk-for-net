@@ -4,23 +4,23 @@
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Sets the boundaries that delimit the expected value range of an anomaly detection condition. Data points out
-    /// of this range are considered anomalous.
+    /// The direction of the boundaries specified by an anomaly detection condition or a
+    /// <see cref="MetricBoundaryCondition"/>.
     /// </summary>
     public readonly partial struct AnomalyDetectorDirection
     {
         /// <summary>
-        /// Any values out of the expected value range will be considered anomalies.
+        /// Used when both lower and upper bounds are applied.
         /// </summary>
         public static AnomalyDetectorDirection Both { get; } = new AnomalyDetectorDirection(BothValue);
 
         /// <summary>
-        /// Only values below the expected value range will be considered anomalies.
+        /// Used when only a lower bound is applied.
         /// </summary>
         public static AnomalyDetectorDirection Down { get; } = new AnomalyDetectorDirection(DownValue);
 
         /// <summary>
-        /// Only values above the expected value range will be considered anomalies.
+        /// Used when only an upper bound is applied.
         /// </summary>
         public static AnomalyDetectorDirection Up { get; } = new AnomalyDetectorDirection(UpValue);
     }

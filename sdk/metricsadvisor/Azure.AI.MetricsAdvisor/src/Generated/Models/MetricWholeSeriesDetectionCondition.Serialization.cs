@@ -15,10 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConditionOperator))
+            if (Optional.IsDefined(CrossConditionsOperator))
             {
                 writer.WritePropertyName("conditionOperator");
-                writer.WriteStringValue(ConditionOperator.Value.ToString());
+                writer.WriteStringValue(CrossConditionsOperator.Value.ToString());
             }
             if (Optional.IsDefined(SmartDetectionCondition))
             {
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MetricWholeSeriesDetectionCondition DeserializeMetricWholeSeriesDetectionCondition(JsonElement element)
         {
-            Optional<DetectionConditionOperator> conditionOperator = default;
+            Optional<DetectionConditionsOperator> conditionOperator = default;
             Optional<SmartDetectionCondition> smartDetectionCondition = default;
             Optional<HardThresholdCondition> hardThresholdCondition = default;
             Optional<ChangeThresholdCondition> changeThresholdCondition = default;
@@ -53,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    conditionOperator = new DetectionConditionOperator(property.Value.GetString());
+                    conditionOperator = new DetectionConditionsOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("smartDetectionCondition"))

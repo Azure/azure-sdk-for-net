@@ -10,13 +10,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
-    /// Alert notifications are not sent by default. In order to be notified when an alert is fired, you must
-    /// create a <see cref="NotificationHook"/> and pass its ID to an <see cref="AnomalyAlertConfiguration"/>.
-    /// The supported hooks are:
-    /// <list type="bullet">
-    ///   <item><see cref="EmailNotificationHook"/></item>
-    ///   <item><see cref="WebNotificationHook"/></item>
-    /// </list>
+    /// An alert notification to be triggered after an anomaly is detected by Metrics Advisor.
     /// </summary>
     [CodeGenModel("HookInfo")]
     public abstract partial class NotificationHook
@@ -26,71 +20,44 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             Name = name;
-            Administrators = new ChangeTrackingList<string>();
+            AdministratorEmails = new ChangeTrackingList<string>();
         }
 
-        internal NotificationHook(NotificationHookKind hookType, string id, string name, string description, string internalExternalLink, IList<string> administrators)
+        internal NotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IReadOnlyList<string> administrators)
         {
-            HookKind = hookType;
+            HookType = hookType;
             Id = id;
             Name = name;
             Description = description;
             ExternalUri = string.IsNullOrEmpty(internalExternalLink) ? null : new Uri(internalExternalLink);
-            Administrators = administrators;
+            AdministratorEmails = administrators;
         }
 
         /// <summary>
-        /// The unique identifier of this <see cref="NotificationHook"/>.
+        /// The unique identifier for the hook.
         /// </summary>
-        /// <remarks>
-        /// If <c>null</c>, it means this instance has not been sent to the service to be created yet. This property
-        /// will be set by the service after creation.
-        /// </remarks>
         [CodeGenMember("HookId")]
         public string Id { get; }
 
         /// <summary>
-        /// A custom name for this <see cref="NotificationHook"/> to be displayed on the web portal. Hook names
-        /// must be unique across the same Metris Advisor resource.
+        /// The name of the hook.
         /// </summary>
         [CodeGenMember("HookName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// The list of users with administrative rights to manage this hook. Each element in this list represents a user with
-        /// administrator access, but the value of each <c>string</c> element depends on the type of authentication to be used by
-        /// this administrator when communicating with the service. If <see cref="MetricsAdvisorKeyCredential"/> authentication will
-        /// be used, the <c>string</c> must be the user's email address. If AAD authentication will be used instead, the <c>string</c>
-        /// must uniquely identify the user's principal. For instance, for a <c>ClientSecretCredential</c>, the <c>string</c> must be
-        /// the client ID.
+        /// The list of user e-mails with administrative rights to manage this hook.
         /// </summary>
-        /// <remarks>
-        /// Upon hook creation, the creator user is automatically assigned as an administrator by the service.
-        /// </remarks>
         [CodeGenMember("Admins")]
-        public IList<string> Administrators { get; }
+        public IReadOnlyList<string> AdministratorEmails { get; }
 
-        /// <summary>
-        /// The hook kind.
-        /// </summary>
-        [CodeGenMember("HookType")]
-        public NotificationHookKind HookKind { get; internal set; }
+        /// <summary> The hook type. </summary>
+        internal HookType HookType { get; set; }
 
-        /// <summary>
-        /// A description of this <see cref="NotificationHook"/>. Defaults to an empty string.
-        /// </summary>
-        /// <remarks>
-        /// If set to null during an update operation, this property is set to its default value.
-        /// </remarks>
+        /// <summary> The hook description. </summary>
         public string Description { get; set; }
 
-        /// <summary>
-        /// Optional field which enables a customized redirect, such as for troubleshooting notes.
-        /// Defaults to an empty string.
-        /// </summary>
-        /// <remarks>
-        /// If set to null during an update operation, this property is set to its default value.
-        /// </remarks>
+        /// <summary> Optional field which enables a customized redirect, such as for troubleshooting notes. </summary>
         public Uri ExternalUri { get; set; }
 
         /// <summary>
@@ -122,11 +89,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 _ => new HookInfoPatch()
             };
 
-            patch.HookType = hook.HookKind;
+            patch.HookType = hook.HookType;
             patch.HookName = hook.Name;
             patch.Description = hook.Description;
             patch.ExternalLink = hook.ExternalUri?.AbsoluteUri;
-            patch.Admins = hook.Administrators;
+            patch.Admins = hook.AdministratorEmails;
 
             return patch;
         }
@@ -143,17 +110,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
                         return WebNotificationHook.DeserializeWebNotificationHook(element);
                 }
             }
-            NotificationHookKind hookType = default;
+            HookType hookType = default;
             Optional<string> hookId = default;
             string hookName = default;
             Optional<string> description = default;
             Optional<string> externalLink = default;
-            Optional<IList<string>> admins = default;
+            Optional<IReadOnlyList<string>> admins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hookType"))
                 {
-                    hookType = new NotificationHookKind(property.Value.GetString());
+                    hookType = new HookType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hookId"))
@@ -197,7 +164,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         private class UnknownNotificationHook : NotificationHook
         {
-            public UnknownNotificationHook(NotificationHookKind hookType, string id, string name, string description, string internalExternalLink, IList<string> administrators)
+            public UnknownNotificationHook(HookType hookType, string id, string name, string description, string internalExternalLink, IReadOnlyList<string> administrators)
                 : base(hookType, id, name, description, internalExternalLink, administrators)
             {
             }

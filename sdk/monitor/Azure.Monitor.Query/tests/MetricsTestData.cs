@@ -12,11 +12,8 @@ namespace Azure.Monitor.Query.Tests
 {
     public class MetricsTestData
     {
-        private static Task _initialization;
-        private static readonly object _initializationLock = new object();
-
+        private static bool _initialized;
         private readonly MonitorQueryClientTestEnvironment _testEnvironment;
-        private static TimeSpan AllowedMetricAge = TimeSpan.FromMinutes(25);
         public string Name1 { get; } = "Guinness";
         public string Name2 { get; } = "Bessie";
         public TimeSpan Duration { get; } = TimeSpan.FromMinutes(15);
@@ -39,23 +36,24 @@ namespace Azure.Monitor.Query.Tests
 
         public async Task InitializeAsync()
         {
-            if (_testEnvironment.Mode == RecordedTestMode.Playback)
+            if (_testEnvironment.Mode == RecordedTestMode.Playback || _initialized)
             {
                 return;
             }
 
-            lock (_initializationLock)
-            {
-                _initialization ??= Initialize();
-            }
-
-            await _initialization;
-        }
-
-        private async Task Initialize()
-        {
+            _initialized = true;
             var metricClient = new MetricsQueryClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
 
+            await SendData();
+
+            while (!await MetricsPropagated(metricClient))
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+        }
+
+        private async Task SendData()
+        {
             var senderClient = new MetricsSenderClient(
                 _testEnvironment.Location,
                 _testEnvironment.MetricsIngestionEndpoint,
@@ -66,21 +64,7 @@ namespace Azure.Monitor.Query.Tests
                     Diagnostics = { IsLoggingContentEnabled = true }
                 });
 
-            do
-            {
-                // Stop sending when we are past the allowed threshold
-                if (DateTimeOffset.UtcNow - StartTime < AllowedMetricAge)
-                {
-                    await SendData(senderClient);
-                }
-
-                await Task.Delay(TimeSpan.FromSeconds(5));
-            } while (!await MetricsPropagated(metricClient));
-        }
-
-        private async Task SendData(MetricsSenderClient senderClient)
-        {
-            var names = new[] { Name1, Name2 };
+            var names = new[] {Name1, Name2};
 
             foreach (var name in names)
             {
@@ -92,7 +76,7 @@ namespace Azure.Monitor.Query.Tests
                         new[] { "Name" },
                         new SeriesValue[]
                         {
-                            new(new[] { name }, 5 * i, 20 * i, 30 * i, 1 + i)
+                            new(new[] {name}, 5 * i, 20 * i, 30 * i,  1 + i)
                         }))));
                 }
             }

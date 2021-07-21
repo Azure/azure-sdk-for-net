@@ -107,13 +107,6 @@ namespace Microsoft.Azure.Management.NetApp
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -296,11 +289,17 @@ namespace Microsoft.Azure.Management.NetApp
         /// The location
         /// </param>
         /// <param name='name'>
-        /// File path to verify.
+        /// Resource name to verify.
         /// </param>
-        /// <param name='subnetId'>
-        /// The Azure Resource URI for a delegated subnet. Must have the delegation
-        /// Microsoft.NetApp/volumes
+        /// <param name='type'>
+        /// Resource type used for verification. Possible values include:
+        /// 'Microsoft.NetApp/netAppAccounts',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
+        /// </param>
+        /// <param name='resourceGroup'>
+        /// Resource group name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -323,7 +322,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CheckAvailabilityResponse>> CheckFilePathAvailabilityWithHttpMessagesAsync(string location, string name, string subnetId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckAvailabilityResponse>> CheckFilePathAvailabilityWithHttpMessagesAsync(string location, string name, string type, string resourceGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -337,26 +336,24 @@ namespace Microsoft.Azure.Management.NetApp
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
-            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (subnetId == null)
+            if (type == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "subnetId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "type");
             }
-            FilePathAvailabilityRequest body = new FilePathAvailabilityRequest();
-            if (name != null || subnetId != null)
+            if (resourceGroup == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroup");
+            }
+            ResourceNameAvailabilityRequest body = new ResourceNameAvailabilityRequest();
+            if (name != null || type != null || resourceGroup != null)
             {
                 body.Name = name;
-                body.SubnetId = subnetId;
+                body.Type = type;
+                body.ResourceGroup = resourceGroup;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -567,13 +564,6 @@ namespace Microsoft.Azure.Management.NetApp
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.ApiVersion != null)
-            {
-                if (Client.ApiVersion.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
-                }
             }
             if (name == null)
             {

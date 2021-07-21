@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> a summary of request statistics grouped by API in hour or minute aggregates for queues. </summary>
+    /// <summary> The Metrics. </summary>
     public partial class QueueMetrics
     {
 

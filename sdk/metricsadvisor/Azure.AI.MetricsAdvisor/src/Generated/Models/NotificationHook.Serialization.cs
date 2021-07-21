@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("hookType");
-            writer.WriteStringValue(HookKind.ToString());
+            writer.WriteStringValue(HookType.ToString());
             writer.WritePropertyName("hookName");
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
@@ -30,11 +30,11 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 writer.WritePropertyName("externalLink");
                 writer.WriteStringValue(InternalExternalLink);
             }
-            if (Optional.IsCollectionDefined(Administrators))
+            if (Optional.IsCollectionDefined(AdministratorEmails))
             {
                 writer.WritePropertyName("admins");
                 writer.WriteStartArray();
-                foreach (var item in Administrators)
+                foreach (var item in AdministratorEmails)
                 {
                     writer.WriteStringValue(item);
                 }

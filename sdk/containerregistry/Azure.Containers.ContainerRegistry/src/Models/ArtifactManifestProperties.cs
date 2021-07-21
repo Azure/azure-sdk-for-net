@@ -17,13 +17,13 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
-        /// <summary> Whether or not this tag can be deleted. </summary>
+        /// <summary> Delete enabled. </summary>
         public bool? CanDelete { get; set; }
-        /// <summary> Whether or not this tag can be written to. </summary>
+        /// <summary> Write enabled. </summary>
         public bool? CanWrite { get; set;  }
-        /// <summary> Whether or not to include this artifact in the collection returned from <see cref="ContainerRepository.GetManifestPropertiesCollection"/>. </summary>
+        /// <summary> List enabled. </summary>
         public bool? CanList { get; set;  }
-        /// <summary> Whether or not this tag can be read. </summary>
+        /// <summary> Read enabled. </summary>
         public bool? CanRead { get; set; }
         /// <summary> Quarantine state. </summary>
         internal string QuarantineState { get; }

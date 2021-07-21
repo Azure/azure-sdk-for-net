@@ -11,10 +11,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// <summary>
     /// Authenticates to a Data Lake Storage Gen2 resource via shared key.
     /// </summary>
-    /// <remarks>
-    /// In order to create a credential entity, you must pass this instance to the method
-    /// <see cref="MetricsAdvisorAdministrationClient.CreateDataSourceCredentialAsync"/>.
-    /// </remarks>
     [CodeGenModel("DataLakeGen2SharedKeyCredential")]
     [CodeGenSuppress(nameof(DataLakeSharedKeyCredentialEntity), typeof(string), typeof(DataLakeGen2SharedKeyParam))]
     public partial class DataLakeSharedKeyCredentialEntity
@@ -31,14 +27,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Argument.AssertNotNullOrEmpty(accountKey, nameof(accountKey));
 
-            CredentialKind = DataSourceCredentialKind.DataLakeSharedKey;
+            DataSourceCredentialType = DataSourceCredentialType.DataLakeGen2SharedKey;
             AccountKey = accountKey;
         }
 
-        internal DataLakeSharedKeyCredentialEntity(DataSourceCredentialKind dataSourceCredentialType, string id, string name, string description, DataLakeGen2SharedKeyParam parameters)
+        internal DataLakeSharedKeyCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, DataLakeGen2SharedKeyParam parameters)
             : base(dataSourceCredentialType, id, name, description)
         {
-            CredentialKind = dataSourceCredentialType;
+            DataSourceCredentialType = dataSourceCredentialType;
             AccountKey = parameters.AccountKey;
         }
 

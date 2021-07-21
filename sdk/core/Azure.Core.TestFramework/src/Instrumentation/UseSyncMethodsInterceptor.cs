@@ -247,13 +247,9 @@ namespace Azure.Core.TestFramework
 
         private static bool IsInternal(MethodBase method) => method.IsAssembly || method.IsFamilyAndAssembly && !method.IsFamilyOrAssembly;
 
-        public class SyncPageableWrapper<T> : AsyncPageable<T>
+        private class SyncPageableWrapper<T> : AsyncPageable<T>
         {
             private readonly Pageable<T> _enumerable;
-
-            protected SyncPageableWrapper()
-            {
-            }
 
             public SyncPageableWrapper(Pageable<T> enumerable)
             {

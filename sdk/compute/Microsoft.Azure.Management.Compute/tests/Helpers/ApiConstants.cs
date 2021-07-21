@@ -16,8 +16,7 @@ namespace Compute.Tests
             Hosts = "hosts",
             VMScaleSets = "virtualMachineScaleSets",
             CloudServices = "cloudServices",
-            ResourceProviderNamespace = "Microsoft.Compute",
-            CapacityReservationGroups = "CapacityReservationGroups";
+            ResourceProviderNamespace = "Microsoft.Compute";
     }
 
     public static class Constants

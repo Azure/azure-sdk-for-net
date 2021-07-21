@@ -9,7 +9,10 @@
       For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/CHANGELOG.md.
     </Description>
     <PackageTags>azure;management;communication</PackageTags>
-    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
+    <!--
+    AZC0001 - Azure.ResourceManager.Communication namespace needs to be registered in the analyzer
+    -->
+    <NoWarn>$(NoWarn);AZC0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

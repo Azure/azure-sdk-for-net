@@ -78,12 +78,6 @@ namespace Azure.Messaging.EventHubs.Producer
         public string EventHubName => Connection.EventHubName;
 
         /// <summary>
-        ///   A unique name used to identify this producer.
-        /// </summary>
-        ///
-        public string Identifier { get; }
-
-        /// <summary>
         ///   Indicates whether or not this <see cref="EventHubProducerClient" /> has been closed.
         /// </summary>
         ///
@@ -232,14 +226,9 @@ namespace Azure.Messaging.EventHubs.Producer
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Options = clientOptions;
 
-            Identifier = string.IsNullOrEmpty(clientOptions.Identifier)
-                ? Guid.NewGuid().ToString()
-                : clientOptions.Identifier;
-
             PartitionProducerPool = new TransportProducerPool(partitionId =>
                 Connection.CreateTransportProducer(
                     partitionId,
-                    Identifier,
                     clientOptions.CreateFeatureFlags(),
                     Options.GetPublishingOptionsOrDefaultForPartition(partitionId),
                     RetryPolicy));
@@ -316,14 +305,9 @@ namespace Azure.Messaging.EventHubs.Producer
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Options = clientOptions;
 
-            Identifier = string.IsNullOrEmpty(clientOptions.Identifier)
-                ? Guid.NewGuid().ToString()
-                : clientOptions.Identifier;
-
             PartitionProducerPool = new TransportProducerPool(partitionId =>
                 Connection.CreateTransportProducer(
                     partitionId,
-                    Identifier,
                     clientOptions.CreateFeatureFlags(),
                     Options.GetPublishingOptionsOrDefaultForPartition(partitionId),
                     RetryPolicy));
@@ -358,7 +342,6 @@ namespace Azure.Messaging.EventHubs.Producer
             Connection = connection;
             RetryPolicy = new EventHubsRetryOptions().ToRetryPolicy();
             Options = new EventHubProducerClientOptions();
-            Identifier = Guid.NewGuid().ToString();
             PartitionProducerPool = partitionProducerPool ?? new TransportProducerPool(partitionId => transportProducer);
 
             if (RequiresStatefulPartitions(Options))
@@ -401,14 +384,9 @@ namespace Azure.Messaging.EventHubs.Producer
             Options = clientOptions;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
 
-            Identifier = string.IsNullOrEmpty(clientOptions.Identifier)
-                ? Guid.NewGuid().ToString()
-                : clientOptions.Identifier;
-
             PartitionProducerPool = new TransportProducerPool(partitionId =>
                 Connection.CreateTransportProducer(
                     partitionId,
-                    Identifier,
                     clientOptions.CreateFeatureFlags(),
                     Options.GetPublishingOptionsOrDefaultForPartition(partitionId),
                     RetryPolicy));
@@ -714,7 +692,9 @@ namespace Azure.Messaging.EventHubs.Producer
             }
 
             IsClosed = true;
-            EventHubsEventSource.Log.ClientCloseStart(nameof(EventHubProducerClient), EventHubName, Identifier);
+
+            var identifier = GetHashCode().ToString(CultureInfo.InvariantCulture);
+            EventHubsEventSource.Log.ClientCloseStart(nameof(EventHubProducerClient), EventHubName, identifier);
 
             // Attempt to close the pool of producers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -727,7 +707,7 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubProducerClient), EventHubName, Identifier, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubProducerClient), EventHubName, identifier, ex.Message);
                 transportProducerPoolException = ex;
             }
 
@@ -743,12 +723,12 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubProducerClient), EventHubName, Identifier, ex.Message);
+                EventHubsEventSource.Log.ClientCloseError(nameof(EventHubProducerClient), EventHubName, identifier, ex.Message);
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(nameof(EventHubProducerClient), EventHubName, Identifier);
+                EventHubsEventSource.Log.ClientCloseComplete(nameof(EventHubProducerClient), EventHubName, identifier);
             }
 
             // If there was an active exception pending from closing the

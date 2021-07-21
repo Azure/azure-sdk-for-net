@@ -50,7 +50,7 @@ namespace Azure.IoT.Hub.Service
             var jobProperties = new JobProperties
             {
                 Type = JobPropertiesType.Export,
-                OutputBlobContainerUri = outputBlobContainerUri.AbsoluteUri,
+                OutputBlobContainerUri = outputBlobContainerUri.ToString(),
                 ExcludeKeysInExport = excludeKeys,
                 StorageAuthenticationType = options?.AuthenticationType,
                 OutputBlobName = options?.OutputBlobName
@@ -78,7 +78,7 @@ namespace Azure.IoT.Hub.Service
             var jobProperties = new JobProperties
             {
                 Type = JobPropertiesType.Export,
-                OutputBlobContainerUri = outputBlobContainerUri.AbsoluteUri,
+                OutputBlobContainerUri = outputBlobContainerUri.ToString(),
                 ExcludeKeysInExport = excludeKeys,
                 StorageAuthenticationType = options?.AuthenticationType,
                 OutputBlobName = options?.OutputBlobName
@@ -107,8 +107,8 @@ namespace Azure.IoT.Hub.Service
             var jobProperties = new JobProperties
             {
                 Type = JobPropertiesType.Import,
-                InputBlobContainerUri = importBlobContainerUri.AbsoluteUri,
-                OutputBlobContainerUri = outputBlobContainerUri.AbsoluteUri,
+                InputBlobContainerUri = importBlobContainerUri.ToString(),
+                OutputBlobContainerUri = outputBlobContainerUri.ToString(),
                 StorageAuthenticationType = options?.AuthenticationType,
                 InputBlobName = options?.InputBlobName,
                 OutputBlobName = options?.OutputBlobName,
@@ -137,8 +137,8 @@ namespace Azure.IoT.Hub.Service
             var jobProperties = new JobProperties
             {
                 Type = JobPropertiesType.Import,
-                InputBlobContainerUri = importBlobContainerUri.AbsoluteUri,
-                OutputBlobContainerUri = outputBlobContainerUri.AbsoluteUri,
+                InputBlobContainerUri = importBlobContainerUri.ToString(),
+                OutputBlobContainerUri = outputBlobContainerUri.ToString(),
                 StorageAuthenticationType = options?.AuthenticationType,
                 InputBlobName = options?.InputBlobName,
                 OutputBlobName = options?.OutputBlobName,

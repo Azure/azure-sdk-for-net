@@ -73,12 +73,6 @@ namespace Azure.Messaging.EventHubs.Primitives
         public string PartitionId { get; }
 
         /// <summary>
-        ///   A unique name used to identify this receiver.
-        /// </summary>
-        ///
-        public string Identifier { get; }
-
-        /// <summary>
         ///   The position within the partition where the client begins reading events.
         /// </summary>
         ///
@@ -205,21 +199,10 @@ namespace Azure.Messaging.EventHubs.Primitives
             DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
 
-            Identifier = string.IsNullOrEmpty(options.Identifier)
-                ? Guid.NewGuid().ToString()
-                : options.Identifier;
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
+            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
 
-            InnerConsumer = Connection.CreateTransportConsumer(
-                consumerGroup,
-                partitionId,
-                Identifier,
-                eventPosition,
-                RetryPolicy,
-                options.TrackLastEnqueuedEventProperties,
-                InvalidateConsumerWhenPartitionIsStolen,
-                options.OwnerLevel,
-                (uint?)options.PrefetchCount,
-                options.PrefetchSizeInBytes);
         }
 
         /// <summary>
@@ -318,21 +301,9 @@ namespace Azure.Messaging.EventHubs.Primitives
             DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
 
-            Identifier = string.IsNullOrEmpty(options.Identifier)
-                ? Guid.NewGuid().ToString()
-                : options.Identifier;
-
-            InnerConsumer = Connection.CreateTransportConsumer(
-                consumerGroup,
-                partitionId,
-                Identifier,
-                eventPosition,
-                RetryPolicy,
-                options.TrackLastEnqueuedEventProperties,
-                InvalidateConsumerWhenPartitionIsStolen,
-                options.OwnerLevel,
-                (uint?)options.PrefetchCount,
-                options.PrefetchSizeInBytes);
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
+            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -370,21 +341,9 @@ namespace Azure.Messaging.EventHubs.Primitives
             DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
 
-            Identifier = string.IsNullOrEmpty(options.Identifier)
-                ? Guid.NewGuid().ToString()
-                : options.Identifier;
-
-            InnerConsumer = Connection.CreateTransportConsumer(
-                consumerGroup,
-                partitionId,
-                Identifier,
-                eventPosition,
-                RetryPolicy,
-                options.TrackLastEnqueuedEventProperties,
-                InvalidateConsumerWhenPartitionIsStolen,
-                options.OwnerLevel,
-                (uint?)options.PrefetchCount,
-                options.PrefetchSizeInBytes);
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
+            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -493,7 +452,9 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
 
             IsClosed = true;
-            Logger.ClientCloseStart(nameof(PartitionReceiver), EventHubName, Identifier);
+
+            var clientHash = GetHashCode().ToString(CultureInfo.InvariantCulture);
+            Logger.ClientCloseStart(nameof(PartitionReceiver), EventHubName, clientHash);
 
             // Attempt to close the transport consumer.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -506,7 +467,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (Exception ex)
             {
-                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, Identifier, ex.Message);
+                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, clientHash, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -522,12 +483,12 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (Exception ex)
             {
-                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, Identifier, ex.Message);
+                Logger.ClientCloseError(nameof(PartitionReceiver), EventHubName, clientHash, ex.Message);
                 throw;
             }
             finally
             {
-                Logger.ClientCloseComplete(nameof(PartitionReceiver), EventHubName, Identifier);
+                Logger.ClientCloseComplete(nameof(PartitionReceiver), EventHubName, clientHash);
             }
 
             // If there was an active exception pending from closing the transport
@@ -578,6 +539,25 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates an <see cref="TransportConsumer" /> to use for reading events.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group the consumer will be associated with.  Events will be read in the context of this group.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="options">A set of options to apply when configuring the consumer.</param>
+        ///
+        /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
+        ///
+        internal virtual TransportConsumer CreateTransportConsumer(string consumerGroup,
+                                                                   string partitionId,
+                                                                   EventPosition eventPosition,
+                                                                   EventHubsRetryPolicy retryPolicy,
+                                                                   PartitionReceiverOptions options) =>
+            Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, options.OwnerLevel, (uint?)options.PrefetchCount, options.PrefetchSizeInBytes);
 
         /// <summary>
         ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.

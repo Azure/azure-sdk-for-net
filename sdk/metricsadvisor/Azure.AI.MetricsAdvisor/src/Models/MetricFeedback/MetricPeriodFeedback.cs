@@ -8,66 +8,61 @@ using Azure.AI.MetricsAdvisor.Models;
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary>
-    /// For seasonal data, when performing anomaly detection, one step is to estimate the period (seasonality) of the time series,
-    /// and apply it to the anomaly detection phase. Sometimes, it's hard to identify a precise period, and the period may also
-    /// change. An incorrectly defined period may have side effects on the anomaly detection results. This class allows providing
-    /// feedback for a period to fix this kind of anomaly detection error.
+    /// Feedback indicating that this is an interval of seasonality.
     /// </summary>
-    /// <remarks>
-    /// In order to create period feedback, you must pass this instance to the method
-    /// <see cref="MetricsAdvisorClient.AddFeedbackAsync"/>.
-    /// </remarks>
     [CodeGenModel("PeriodFeedback")]
-    [CodeGenSuppress(nameof(MetricPeriodFeedback), typeof(string), typeof(FeedbackFilter))]
+    [CodeGenSuppress(nameof(MetricPeriodFeedback), typeof(string), typeof(FeedbackDimensionFilter))]
     public partial class MetricPeriodFeedback : MetricFeedback
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MetricPeriodFeedback"/> class.
-        /// </summary>
-        /// <param name="metricId">The identifier of the metric to which the <see cref="MetricPeriodFeedback"/> applies.</param>
-        /// <param name="dimensionKey">
-        /// A key that identifies a set of time series to which the <see cref="MetricPeriodFeedback"/> applies.
-        /// If all possible dimensions are set, this key uniquely identifies a single time series
-        /// for the specified <paramref name="metricId"/>. If only a subset of dimensions are set, this
-        /// key uniquely identifies a group of time series.
-        /// </param>
-        /// <param name="periodType">Tells the service how to determine the period of the seasonal data.</param>
-        /// <param name="periodValue">The expected value of the period, measured in amount of data points. 0 means non-seasonal data.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="metricId"/> or <paramref name="dimensionKey"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentException"><paramref name="metricId"/> is empty.</exception>
-        public MetricPeriodFeedback(string metricId, DimensionKey dimensionKey, MetricPeriodType periodType, int periodValue)
-            : base(metricId, dimensionKey)
+        /// <summary> Initializes a new <see cref="MetricPeriodFeedback"/> instance. </summary>
+        /// <param name="metricId"> The metric unique id. </param>
+        /// <param name="dimensionFilter"> The <see cref="FeedbackDimensionFilter"/> to apply to the feedback. </param>
+        /// <param name="periodType"> The <see cref="MetricPeriodType"/>. </param>
+        /// <param name="periodValue"> The period value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="dimensionFilter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metricId"/> is empty. </exception>
+        public MetricPeriodFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, MetricPeriodType periodType, int periodValue) : base(metricId, dimensionFilter)
         {
+            Argument.AssertNotNullOrEmpty(metricId, nameof(metricId));
+            Argument.AssertNotNull(dimensionFilter, nameof(dimensionFilter));
+
             ValueInternal = new PeriodFeedbackValue(periodType, periodValue);
-            FeedbackKind = MetricFeedbackKind.Period;
+            Kind = MetricFeedbackKind.Period;
         }
 
         /// <summary> Initializes a new instance of MetricPeriodFeedback. </summary>
         /// <param name="metricId"> metric unique id. </param>
-        /// <param name="feedbackFilter"> . </param>
+        /// <param name="dimensionFilter"> . </param>
         /// <param name="valueInternal"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/>, <paramref name="feedbackFilter"/>, or <paramref name="valueInternal"/> is null. </exception>
-        internal MetricPeriodFeedback(string metricId, FeedbackFilter feedbackFilter, PeriodFeedbackValue valueInternal)
-            : base(metricId, feedbackFilter.DimensionKey)
+        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/>, <paramref name="dimensionFilter"/>, or <paramref name="valueInternal"/> is null. </exception>
+        internal MetricPeriodFeedback(string metricId, FeedbackDimensionFilter dimensionFilter, PeriodFeedbackValue valueInternal) : base(metricId, dimensionFilter)
         {
+            if (metricId == null)
+            {
+                throw new ArgumentNullException(nameof(metricId));
+            }
+            if (dimensionFilter == null)
+            {
+                throw new ArgumentNullException(nameof(dimensionFilter));
+            }
             if (valueInternal == null)
             {
                 throw new ArgumentNullException(nameof(valueInternal));
             }
 
             ValueInternal = valueInternal;
-            FeedbackKind = MetricFeedbackKind.Period;
+            Kind = MetricFeedbackKind.Period;
         }
 
         /// <summary>
-        /// Tells the service how to determine the period of the seasonal data.
+        /// The <see cref="MetricPeriodType"/>.
         /// </summary>
-        public MetricPeriodType PeriodType => ValueInternal.PeriodType;
+        public MetricPeriodType PeriodType { get => ValueInternal.PeriodType; }
 
         /// <summary>
-        /// The expected value of the period, measured in amount of data points. 0 means non-seasonal data.
+        /// The period value.
         /// </summary>
-        public int PeriodValue => ValueInternal.PeriodValue;
+        public int PeriodValue { get => ValueInternal.PeriodValue; }
 
         [CodeGenMember("Value")]
         internal PeriodFeedbackValue ValueInternal { get; }

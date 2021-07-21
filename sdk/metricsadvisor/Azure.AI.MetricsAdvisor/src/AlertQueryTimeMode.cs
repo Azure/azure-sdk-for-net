@@ -12,24 +12,21 @@ namespace Azure.AI.MetricsAdvisor
     /// operations.
     /// </summary>
     [CodeGenModel("TimeMode")]
-    public enum AlertQueryTimeMode
+    public readonly partial struct AlertQueryTimeMode
     {
         /// <summary>
         /// Filters alerts by <see cref="AnomalyAlert.Timestamp"/>.
         /// </summary>
-        [CodeGenMember("AnomalyTime")]
-        AnomalyDetectedOn,
+        public static AlertQueryTimeMode AnomalyTime { get; } = new AlertQueryTimeMode(AnomalyTimeValue);
 
         /// <summary>
-        /// Filters alerts by <see cref="AnomalyAlert.CreatedOn"/>.
+        /// Filters alerts by <see cref="AnomalyAlert.CreatedTime"/>.
         /// </summary>
-        [CodeGenMember("CreatedTime")]
-        CreatedOn,
+        public static AlertQueryTimeMode CreatedTime { get; } = new AlertQueryTimeMode(CreatedTimeValue);
 
         /// <summary>
-        /// Filters alerts by <see cref="AnomalyAlert.LastModified"/>.
+        /// Filters alerts by <see cref="AnomalyAlert.ModifiedTime"/>.
         /// </summary>
-        [CodeGenMember("ModifiedTime")]
-        LastModified
+        public static AlertQueryTimeMode ModifiedTime { get; } = new AlertQueryTimeMode(ModifiedTimeValue);
     }
 }

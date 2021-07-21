@@ -23,16 +23,16 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CrossMetricsOperator))
+            if (Optional.IsDefined(ConditionOperator))
             {
                 writer.WritePropertyName("crossMetricsOperator");
-                writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
+                writer.WriteStringValue(ConditionOperator.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DimensionsToSplitAlert))
+            if (Optional.IsCollectionDefined(SplitAlertByDimensions))
             {
                 writer.WritePropertyName("splitAlertByDimensions");
                 writer.WriteStartArray();
-                foreach (var item in DimensionsToSplitAlert)
+                foreach (var item in SplitAlertByDimensions)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -60,7 +60,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<string> anomalyAlertingConfigurationId = default;
             string name = default;
             Optional<string> description = default;
-            Optional<MetricAlertConfigurationsOperator> crossMetricsOperator = default;
+            Optional<DetectionConditionOperator> crossMetricsOperator = default;
             Optional<IList<string>> splitAlertByDimensions = default;
             IList<string> hookIds = default;
             IList<MetricAlertConfiguration> metricAlertingConfigurations = default;
@@ -88,7 +88,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    crossMetricsOperator = new MetricAlertConfigurationsOperator(property.Value.GetString());
+                    crossMetricsOperator = new DetectionConditionOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("splitAlertByDimensions"))

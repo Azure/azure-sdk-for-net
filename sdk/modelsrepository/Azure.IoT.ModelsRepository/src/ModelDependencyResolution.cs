@@ -14,8 +14,15 @@ namespace Azure.IoT.ModelsRepository
         Disabled,
 
         /// <summary>
-        /// Enable model dependency resolution.
+        /// Enable model dependency resolution. The client will parse
+        /// models and calculate dependencies recursively.
         /// </summary>
-        Enabled
+        Enabled,
+
+        /// <summary>
+        /// Try to get pre-computed model dependencies using .expanded.json.
+        /// If the model expanded form does not exist fall back to ModelDependencyResolution.Enabled processing.
+        /// </summary>
+        TryFromExpanded
     }
 }

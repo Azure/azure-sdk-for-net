@@ -145,8 +145,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="client">The client used to check for completion.</param>
         public DocumentTranslationOperation(string translationId, DocumentTranslationClient client)
         {
-            var parsedTranslationId = ClientCommon.ValidateModelId(translationId, nameof(translationId));
-            Id = parsedTranslationId.ToString();
+            Id = translationId;
             _serviceClient = client._serviceRestClient;
             _diagnostics = client._clientDiagnostics;
         }
@@ -327,8 +326,7 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                var parsedDocumentId = ClientCommon.ValidateModelId(documentId, nameof(documentId));
-                return _serviceClient.GetDocumentStatus(new Guid(Id), parsedDocumentId, cancellationToken);
+                return _serviceClient.GetDocumentStatus(new Guid(Id), new Guid(documentId), cancellationToken);
             }
             catch (Exception e)
             {
@@ -349,8 +347,7 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                var parsedDocumentId = ClientCommon.ValidateModelId(documentId, nameof(documentId));
-                return await _serviceClient.GetDocumentStatusAsync(new Guid(Id), parsedDocumentId, cancellationToken).ConfigureAwait(false);
+                return await _serviceClient.GetDocumentStatusAsync(new Guid(Id), new Guid(documentId), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {

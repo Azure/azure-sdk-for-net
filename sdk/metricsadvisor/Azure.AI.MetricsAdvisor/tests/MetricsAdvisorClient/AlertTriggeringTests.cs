@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var options = new GetAlertsOptions(default, default, AlertQueryTimeMode.AnomalyDetectedOn);
+            var options = new GetAlertsOptions(default, default, AlertQueryTimeMode.AnomalyTime);
 
             Assert.That(() => client.GetAlertsAsync(null, options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetAlertsAsync("", options), Throws.InstanceOf<ArgumentException>());
@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var options = new GetAlertsOptions(default, default, AlertQueryTimeMode.AnomalyDetectedOn);
+            var options = new GetAlertsOptions(default, default, AlertQueryTimeMode.AnomalyTime);
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();

@@ -15,9 +15,12 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "QueryFormat");
-            writer.WriteStartElement("Type");
-            writer.WriteValue(Type.ToSerialString());
-            writer.WriteEndElement();
+            if (Optional.IsDefined(Type))
+            {
+                writer.WriteStartElement("Type");
+                writer.WriteValue(Type.Value.ToSerialString());
+                writer.WriteEndElement();
+            }
             if (Optional.IsDefined(DelimitedTextConfiguration))
             {
                 writer.WriteObjectValue(DelimitedTextConfiguration, "DelimitedTextConfiguration");

@@ -16,28 +16,28 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAnomaliesForDetectionConfigurationOptions"/> class.
         /// </summary>
-        /// <param name="startsOn">Filters the result. Only anomalies created from this point in time, in UTC, will be returned.</param>
-        /// <param name="endsOn">Filters the result. Only anomalies created up to this point in time, in UTC, will be returned.</param>
-        public GetAnomaliesForDetectionConfigurationOptions(DateTimeOffset startsOn, DateTimeOffset endsOn)
+        /// <param name="startTime">Filters the result. Only anomalies created from this point in time, in UTC, will be returned.</param>
+        /// <param name="endTime">Filters the result. Only anomalies created up to this point in time, in UTC, will be returned.</param>
+        public GetAnomaliesForDetectionConfigurationOptions(DateTimeOffset startTime, DateTimeOffset endTime)
         {
-            StartsOn = startsOn;
-            EndsOn = endsOn;
+            StartTime = startTime;
+            EndTime = endTime;
         }
 
         /// <summary>
         /// Filters the result. Only anomalies created from this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset StartsOn { get; }
+        public DateTimeOffset StartTime { get; }
 
         /// <summary>
         /// Filters the result. Only anomalies created up to this point in time, in UTC, will be returned.
         /// </summary>
-        public DateTimeOffset EndsOn { get; }
+        public DateTimeOffset EndTime { get; }
 
         /// <summary>
         /// Optional filters, such as filtering by time series or by severity level.
         /// </summary>
-        public AnomalyFilter Filter { get; set; }
+        public GetAnomaliesForDetectionConfigurationFilter Filter { get; set; }
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to

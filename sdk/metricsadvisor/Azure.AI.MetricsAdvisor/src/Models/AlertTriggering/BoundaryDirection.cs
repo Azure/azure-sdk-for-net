@@ -6,24 +6,23 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// Sets the boundaries that delimit the expected value range of a <see cref="MetricBoundaryCondition"/>. Data points out
-    /// of this range can be included in an alert.
+    /// The direction of the boundaries specified by a <see cref="MetricBoundaryCondition"/>.
     /// </summary>
     [CodeGenModel("Direction")]
     public readonly partial struct BoundaryDirection
     {
         /// <summary>
-        /// Any values outside of the expected value range can be included in an alert.
+        /// Used when both lower and upper bounds are applied.
         /// </summary>
         public static BoundaryDirection Both { get; } = new BoundaryDirection(BothValue);
 
         /// <summary>
-        /// Only values below the expected value range can be included in an alert.
+        /// Used when only a lower bound is applied.
         /// </summary>
         public static BoundaryDirection Down { get; } = new BoundaryDirection(DownValue);
 
         /// <summary>
-        /// Only values above the expected value range can be included in an alert.
+        /// Used when only an upper bound is applied.
         /// </summary>
         public static BoundaryDirection Up { get; } = new BoundaryDirection(UpValue);
     }

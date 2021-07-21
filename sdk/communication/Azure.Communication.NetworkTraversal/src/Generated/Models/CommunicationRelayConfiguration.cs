@@ -11,36 +11,36 @@ using System.Linq;
 
 namespace Azure.Communication.NetworkTraversal
 {
-    /// <summary> A relay configuration containing the STUN/TURN URLs and credentials. </summary>
+    /// <summary> A TURN credentials response. </summary>
     public partial class CommunicationRelayConfiguration
     {
         /// <summary> Initializes a new instance of CommunicationRelayConfiguration. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. </param>
-        /// <param name="iceServers"> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="iceServers"/> is null. </exception>
-        internal CommunicationRelayConfiguration(DateTimeOffset expiresOn, IEnumerable<CommunicationIceServer> iceServers)
+        /// <param name="turnServers"> An array representing the credentials and the TURN server URL. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="turnServers"/> is null. </exception>
+        internal CommunicationRelayConfiguration(DateTimeOffset expiresOn, IEnumerable<CommunicationTurnServer> turnServers)
         {
-            if (iceServers == null)
+            if (turnServers == null)
             {
-                throw new ArgumentNullException(nameof(iceServers));
+                throw new ArgumentNullException(nameof(turnServers));
             }
 
             ExpiresOn = expiresOn;
-            IceServers = iceServers.ToList();
+            TurnServers = turnServers.ToList();
         }
 
         /// <summary> Initializes a new instance of CommunicationRelayConfiguration. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. </param>
-        /// <param name="iceServers"> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </param>
-        internal CommunicationRelayConfiguration(DateTimeOffset expiresOn, IReadOnlyList<CommunicationIceServer> iceServers)
+        /// <param name="turnServers"> An array representing the credentials and the TURN server URL. </param>
+        internal CommunicationRelayConfiguration(DateTimeOffset expiresOn, IReadOnlyList<CommunicationTurnServer> turnServers)
         {
             ExpiresOn = expiresOn;
-            IceServers = iceServers;
+            TurnServers = turnServers;
         }
 
         /// <summary> The date for which the username and credentials are not longer valid. </summary>
         public DateTimeOffset ExpiresOn { get; }
-        /// <summary> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </summary>
-        public IReadOnlyList<CommunicationIceServer> IceServers { get; }
+        /// <summary> An array representing the credentials and the TURN server URL. </summary>
+        public IReadOnlyList<CommunicationTurnServer> TurnServers { get; }
     }
 }

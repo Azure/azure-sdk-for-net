@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor
             writer.WritePropertyName("value");
             writer.WriteObjectValue(ValueInternal);
             writer.WritePropertyName("feedbackType");
-            writer.WriteStringValue(FeedbackKind.ToString());
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("metricId");
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter");
@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> userPrincipal = default;
             string metricId = default;
-            FeedbackFilter dimensionFilter = default;
+            FeedbackDimensionFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -76,7 +76,7 @@ namespace Azure.AI.MetricsAdvisor
                 }
                 if (property.NameEquals("dimensionFilter"))
                 {
-                    dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
+                    dimensionFilter = FeedbackDimensionFilter.DeserializeFeedbackDimensionFilter(property.Value);
                     continue;
                 }
             }
