@@ -116,7 +116,7 @@
 
   <!-- Packages intended for Management libraries only -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true'">
-    <PackageReference Update="Azure.ResourceManager.Core" Version="1.0.0-alpha.20210713.2" />
+    <PackageReference Update="Azure.ResourceManager.Core" Version="1.0.0-alpha.20210721.1" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
