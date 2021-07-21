@@ -233,6 +233,64 @@ namespace Microsoft.Azure.Management.Purview
             }
 
             /// <summary>
+            /// Approves/Rejects private endpoint connection request.
+            /// </summary>
+            /// <remarks>
+            /// Create or update a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the account.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='request'>
+            /// The request.
+            /// </param>
+            public static PrivateEndpointConnection BeginCreateOrUpdate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection request)
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, accountName, privateEndpointConnectionName, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Approves/Rejects private endpoint connection request.
+            /// </summary>
+            /// <remarks>
+            /// Create or update a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the account.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='request'>
+            /// The request.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateEndpointConnection> BeginCreateOrUpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, privateEndpointConnectionName, request, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes private endpoint connection.
             /// </summary>
             /// <remarks>

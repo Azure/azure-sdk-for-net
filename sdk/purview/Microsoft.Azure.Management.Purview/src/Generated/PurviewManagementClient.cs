@@ -47,14 +47,14 @@ namespace Microsoft.Azure.Management.Purview
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// The api version to use.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The subscription identifier
         /// </summary>
         public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The api version to use.
+        /// </summary>
+        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.Purview
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-12-01-preview";
+            ApiVersion = "2021-07-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

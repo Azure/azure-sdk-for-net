@@ -347,6 +347,55 @@ namespace Microsoft.Azure.Management.Purview
             }
 
             /// <summary>
+            /// Add the administrator for root collection.
+            /// </summary>
+            /// <remarks>
+            /// Add the administrator for root collection associated with this account.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the account.
+            /// </param>
+            /// <param name='collectionAdminUpdate'>
+            /// The collection admin update payload.
+            /// </param>
+            public static void AddRootCollectionAdmin(this IAccountsOperations operations, string resourceGroupName, string accountName, CollectionAdminUpdate collectionAdminUpdate)
+            {
+                operations.AddRootCollectionAdminAsync(resourceGroupName, accountName, collectionAdminUpdate).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Add the administrator for root collection.
+            /// </summary>
+            /// <remarks>
+            /// Add the administrator for root collection associated with this account.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the account.
+            /// </param>
+            /// <param name='collectionAdminUpdate'>
+            /// The collection admin update payload.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task AddRootCollectionAdminAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CollectionAdminUpdate collectionAdminUpdate, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.AddRootCollectionAdminWithHttpMessagesAsync(resourceGroupName, accountName, collectionAdminUpdate, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Checks the account name availability.
             /// </summary>
             /// <remarks>
