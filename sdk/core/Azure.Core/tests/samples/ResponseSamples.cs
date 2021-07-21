@@ -90,6 +90,24 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
+        public async Task AsyncPageable()
+        {
+            // create a client
+            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+            #region Snippet:AsyncPageable
+            // call a service method, which returns AsyncPageable<T>
+            AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
+
+            await foreach (SecretProperties secretProperties in allSecretProperties)
+            {
+                Console.WriteLine(secretProperties.Name);
+            }
+            #endregion
+        }        
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
         public void RequestFailedException()
         {
             // create a client
