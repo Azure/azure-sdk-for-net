@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="func"> The method to pass the internal properties to. </param>
         /// <returns> Whatever the delegate returns. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
             return func(BaseUri, Credential, ClientOptions, Pipeline);
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Resources
         /// Gets the predefined tag container under this subscription.
         /// </summary>
         /// <returns> The tags container. </returns>
-        public virtual PreDefinedTagContainer GetPredefinedTags()
+        public virtual PredefinedTagContainer GetPredefinedTags()
         {
-            return new PreDefinedTagContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+            return new PredefinedTagContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
         }
 
         /// <summary>
@@ -189,9 +190,9 @@ namespace Azure.ResourceManager.Resources
         /// Gets the predefined tag operations under this subscription.
         /// </summary>
         /// <returns> The predefined tags operations. </returns>
-        public virtual PreDefinedTagOperations GetPreDefinedTagOperations()
+        public virtual PredefinedTagOperations GetPreDefinedTagOperations()
         {
-            return new PreDefinedTagOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
+            return new PredefinedTagOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), Id);
         }
 
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>

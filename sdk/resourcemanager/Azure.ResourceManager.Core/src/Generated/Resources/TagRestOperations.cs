@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
-        public async Task<Response<PreDefinedTagValue>> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        public async Task<Response<PredefinedTagValue>> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -155,9 +155,9 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                 case 201:
                     {
-                        PreDefinedTagValue value = default;
+                        PredefinedTagValue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PreDefinedTagValue.DeserializeTagValue(document.RootElement);
+                        value = PredefinedTagValue.DeserializeTagValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagValue"> The value of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
-        public Response<PreDefinedTagValue> CreateOrUpdateValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
+        public Response<PredefinedTagValue> CreateOrUpdateValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                 case 201:
                     {
-                        PreDefinedTagValue value = default;
+                        PredefinedTagValue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PreDefinedTagValue.DeserializeTagValue(document.RootElement);
+                        value = PredefinedTagValue.DeserializeTagValue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        public async Task<Response<PreDefinedTagData>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
+        public async Task<Response<PredefinedTagData>> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -233,9 +233,9 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                 case 201:
                     {
-                        PreDefinedTagData value = default;
+                        PredefinedTagData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PreDefinedTagData.DeserializeTagDetails(document.RootElement);
+                        value = PredefinedTagData.DeserializeTagDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
-        public Response<PreDefinedTagData> CreateOrUpdate(string tagName, CancellationToken cancellationToken = default)
+        public Response<PredefinedTagData> CreateOrUpdate(string tagName, CancellationToken cancellationToken = default)
         {
             if (tagName == null)
             {
@@ -261,9 +261,9 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                 case 201:
                     {
-                        PreDefinedTagData value = default;
+                        PredefinedTagData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PreDefinedTagData.DeserializeTagDetails(document.RootElement);
+                        value = PredefinedTagData.DeserializeTagDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<PreDefinedTagsListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<PredefinedTagsListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -360,9 +360,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        PreDefinedTagsListResult value = default;
+                        PredefinedTagsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PreDefinedTagsListResult.DeserializeTagsListResult(document.RootElement);
+                        value = PredefinedTagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<PreDefinedTagsListResult> List(CancellationToken cancellationToken = default)
+        public Response<PredefinedTagsListResult> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
@@ -380,9 +380,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        PreDefinedTagsListResult value = default;
+                        PredefinedTagsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PreDefinedTagsListResult.DeserializeTagsListResult(document.RootElement);
+                        value = PredefinedTagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<PreDefinedTagsListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<PredefinedTagsListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -420,9 +420,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        PreDefinedTagsListResult value = default;
+                        PredefinedTagsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PreDefinedTagsListResult.DeserializeTagsListResult(document.RootElement);
+                        value = PredefinedTagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<PreDefinedTagsListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<PredefinedTagsListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -447,9 +447,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        PreDefinedTagsListResult value = default;
+                        PredefinedTagsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PreDefinedTagsListResult.DeserializeTagsListResult(document.RootElement);
+                        value = PredefinedTagsListResult.DeserializeTagsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

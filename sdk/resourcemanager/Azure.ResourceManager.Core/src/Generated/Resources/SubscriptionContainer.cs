@@ -239,9 +239,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool DoesExist(string subscriptionGuid, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("SubscriptionContainer.DoesExist");
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.CheckIfExists");
             scope.Start();
             return TryGet(subscriptionGuid, cancellationToken) != null;
         }
@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<bool> DoesExistAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> CheckIfExistsAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("SubscriptionContainer.DoesExist");
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.CheckIfExists");
             scope.Start();
             return await TryGetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false) != null;
         }

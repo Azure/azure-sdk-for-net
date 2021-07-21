@@ -4,10 +4,10 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Tag information. </summary>
-    public partial class PreDefinedTagValue
+    public partial class PredefinedTagValue
     {
         /// <summary> Initializes a new instance of TagValue. </summary>
-        internal PreDefinedTagValue()
+        internal PredefinedTagValue()
         {
         }
 
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="id"> The tag value ID. </param>
         /// <param name="tagValueValue"> The tag value. </param>
         /// <param name="count"> The tag value count. </param>
-        internal PreDefinedTagValue(string id, string tagValueValue, PreDefinedTagCount count)
+        internal PredefinedTagValue(string id, string tagValueValue, PredefinedTagCount count)
         {
             Id = id;
             TagValueValue = tagValueValue;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The tag value. </summary>
         public string TagValueValue { get; }
         /// <summary> The tag value count. </summary>
-        public PreDefinedTagCount Count { get; }
+        public PredefinedTagCount Count { get; }
     }
 }

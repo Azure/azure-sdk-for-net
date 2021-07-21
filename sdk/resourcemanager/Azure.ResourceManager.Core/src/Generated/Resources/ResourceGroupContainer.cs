@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool DoesExist(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.DoesExist");
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<bool> DoesExistAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> CheckIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.DoesExist");
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CheckIfExists");
             scope.Start();
             try
             {
