@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
-        private BlobEventStoreEventSource() : base(EventSourceName)
+        protected BlobEventStoreEventSource() : base(EventSourceName)
         {
         }
 
