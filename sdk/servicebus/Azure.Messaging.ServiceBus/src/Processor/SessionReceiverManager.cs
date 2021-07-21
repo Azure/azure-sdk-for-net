@@ -3,11 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -40,26 +38,27 @@ namespace Azure.Messaging.ServiceBus
         protected override ServiceBusReceiver Receiver => _receiver;
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+        private readonly ServiceBusSessionProcessor _sessionProcessor;
 
         public SessionReceiverManager(
-            ServiceBusProcessor processor,
+            ServiceBusSessionProcessor sessionProcessor,
             string sessionId,
             SemaphoreSlim concurrentAcceptSessionsSemaphore,
             EntityScopeFactory scopeFactory,
-            IList<ServiceBusPlugin> plugins,
             int maxCallsPerSession,
             bool keepOpenOnReceiveTimeout)
-            : base(processor, scopeFactory, plugins)
+            : base(sessionProcessor.InnerProcessor, scopeFactory)
         {
             _concurrentAcceptSessionsSemaphore = concurrentAcceptSessionsSemaphore;
             _maxCallsPerSession = maxCallsPerSession;
             _sessionReceiverOptions = new ServiceBusSessionReceiverOptions
             {
-                ReceiveMode = processor.Options.ReceiveMode,
-                PrefetchCount = processor.Options.PrefetchCount,
+                ReceiveMode = sessionProcessor.InnerProcessor.Options.ReceiveMode,
+                PrefetchCount = sessionProcessor.InnerProcessor.Options.PrefetchCount,
             };
             _sessionId = sessionId;
             _keepOpenOnReceiveTimeout = keepOpenOnReceiveTimeout;
+            _sessionProcessor = sessionProcessor;
         }
 
         private async Task<bool> EnsureCanProcess(CancellationToken cancellationToken)
@@ -142,7 +141,6 @@ namespace Azure.Messaging.ServiceBus
                 _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                     entityPath: Processor.EntityPath,
                     connection: Processor.Connection,
-                    plugins: _plugins,
                     options: _sessionReceiverOptions,
                     sessionId: _sessionId,
                     cancellationToken: processorCancellationToken,
@@ -384,7 +382,20 @@ namespace Azure.Messaging.ServiceBus
                 _receiver,
                 this,
                 cancellationToken);
-            await Processor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
+            await _sessionProcessor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
+        }
+
+        protected override async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
+        {
+            try
+            {
+                await _sessionProcessor.OnProcessErrorAsync(eventArgs).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                // don't bubble up exceptions raised from customer exception handler
+                ServiceBusEventSource.Log.ProcessorErrorHandlerThrewException(exception.ToString());
+            }
         }
 
         internal void ReleaseSession()

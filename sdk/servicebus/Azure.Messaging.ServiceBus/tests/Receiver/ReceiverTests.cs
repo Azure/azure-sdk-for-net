@@ -265,7 +265,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     It.IsAny<CancellationToken>()))
                 .Returns(mockTransportReceiver.Object);
 
-            var receiver = new ServiceBusReceiver(mockConnection.Object, "fake", default, default, new ServiceBusReceiverOptions());
+            var receiver = new ServiceBusReceiver(mockConnection.Object, "fake", default, new ServiceBusReceiverOptions());
             await receiver.CloseAsync(cts.Token);
             mockTransportReceiver.Verify(transportReceiver => transportReceiver.CloseAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
         }
