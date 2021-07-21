@@ -114,10 +114,10 @@ namespace Azure.DigitalTwins.Core.Samples
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
                 .Where(q => q
-                .Parenthetical(q => q
-                    .IsOfType("Humidity", AdtDataType.AdtNumber)
-                    .Or()
-                    .IsDefined("Humidity"))
+                    .Parenthetical(q => q
+                        .IsOfType("Humidity", AdtDataType.AdtNumber)
+                        .Or()
+                        .IsDefined("Humidity"))
                 .And()
                 .Parenthetical(q => q
                     .IsOfModel("dtmi:example:hvac;1")
@@ -193,7 +193,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 .SelectAs("T.Humidity", "Hum")
                 .From(AdtCollection.DigitalTwins, "T")
                 .Where(q => q
-                  .Compare("T.Temperature", QueryComparisonOperator.Equal, 50)
+                    .Compare("T.Temperature", QueryComparisonOperator.Equal, 50)
                     .And()
                     .Compare("T.Humidity", QueryComparisonOperator.Equal, 30));
                 
