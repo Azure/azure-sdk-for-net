@@ -52,9 +52,11 @@ namespace Azure.AI.Translation.Document
             V1_0 = 1,
         }
     }
-    public partial class DocumentTranslationError
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DocumentTranslationError
     {
-        internal DocumentTranslationError() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public Azure.AI.Translation.Document.DocumentTranslationErrorCode ErrorCode { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
@@ -184,7 +186,7 @@ namespace Azure.AI.Translation.Document
         public int DocumentsNotStarted { get { throw null; } }
         public int DocumentsSucceeded { get { throw null; } }
         public int DocumentsTotal { get { throw null; } }
-        public Azure.AI.Translation.Document.DocumentTranslationError Error { get { throw null; } }
+        public Azure.AI.Translation.Document.DocumentTranslationError? Error { get { throw null; } }
         public string Id { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public Azure.AI.Translation.Document.DocumentTranslationStatus Status { get { throw null; } }
