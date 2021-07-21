@@ -35,6 +35,7 @@
     <Compile Include="Shared\AppContextSwitchHelper.cs" />
     <Compile Include="Shared\Argument.cs" />
     <Compile Include="Shared\AuthorizationChallengeParser.cs" />
+    <Compile Include="Shared\AzureEventSource.cs" />
     <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />

@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics.Tracing;
 
 namespace Azure.Core.Diagnostics
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class AzureCoreEventSource : EventSource
+    internal sealed class AzureCoreEventSource : AzureEventSource
     {
         private const string EventSourceName = "Azure-Core";
 
@@ -29,7 +28,7 @@ namespace Azure.Core.Diagnostics
         private const int RequestRetryingEvent = 10;
         private const int ExceptionResponseEvent = 18;
 
-        private AzureCoreEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
+        private AzureCoreEventSource() : base(EventSourceName) { }
 
         public static AzureCoreEventSource Singleton { get; } = new AzureCoreEventSource();
 

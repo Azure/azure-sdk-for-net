@@ -25,6 +25,9 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
+    <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
