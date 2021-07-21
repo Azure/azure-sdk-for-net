@@ -326,7 +326,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [certificate_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/src/CertificateClient.cs
-[soft_delete]: https://docs.microsoft.com/azure/key-vault/key-vault-ovw-soft-delete
+[soft_delete]: https://docs.microsoft.com/azure/key-vault/general/soft-delete-overview
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#defaultazurecredential
 [keyvault_rest]: https://docs.microsoft.com/rest/api/keyvault/
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Secrets

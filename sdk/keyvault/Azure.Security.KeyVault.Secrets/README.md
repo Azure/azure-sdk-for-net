@@ -348,7 +348,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [secret_client_nuget_package]: https://www.nuget.org/packages/Azure.Security.KeyVault.Secrets/
 [secret_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples
 [secret_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/src
-[soft_delete]: https://docs.microsoft.com/azure/key-vault/key-vault-ovw-soft-delete
+[soft_delete]: https://docs.microsoft.com/azure/key-vault/general/soft-delete-overview
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/CONTRIBUTING.md
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
