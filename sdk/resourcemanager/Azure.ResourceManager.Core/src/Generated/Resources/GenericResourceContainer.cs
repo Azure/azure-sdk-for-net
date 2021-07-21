@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Core
         protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
 
         /// <inheritdoc/>
-        protected override void Validate(ResourceIdentifier identifier)
+        protected override void ValidateResourceType(ResourceIdentifier identifier)
         {
         }
 
@@ -482,9 +482,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool DoesExist(string resourceName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.DoesExist");
+            using var scope = Diagnostics.CreateScope("GenericResourceContainer.CheckIfExists");
             scope.Start();
             return TryGet(resourceName, cancellationToken) != null;
         }
@@ -496,9 +496,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<bool> DoesExistAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> CheckIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.DoesExist");
+            using var scope = Diagnostics.CreateScope("GenericResourceContainer.CheckIfExists");
             scope.Start();
             return await TryGetAsync(resourceName, cancellationToken).ConfigureAwait(false) != null;
         }

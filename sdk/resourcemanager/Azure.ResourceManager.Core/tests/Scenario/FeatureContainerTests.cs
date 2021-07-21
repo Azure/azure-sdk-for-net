@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [RecordedTest]
-        public async Task DoesExist()
+        public async Task CheckIfExists()
         {
             Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
-            Assert.IsTrue(await provider.GetFeatures().DoesExistAsync("AHUB"));
+            Assert.IsTrue(await provider.GetFeatures().CheckIfExistsAsync("AHUB"));
         }
     }
 }

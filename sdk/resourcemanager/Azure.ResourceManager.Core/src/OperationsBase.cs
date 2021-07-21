@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Core
             Pipeline = clientContext.Pipeline;
             Diagnostics = new ClientDiagnostics(ClientOptions);
 
-            Validate(id);
+            ValidateResourceType(id);
         }
 
         /// <summary>
         /// Get the tenant operations <see cref="TenantOperations"/> class.
         /// </summary>
-        public TenantOperations Tenant => _tenant ??= new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
+        public virtual TenantOperations Tenant => _tenant ??= new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
 
         internal ClientDiagnostics Diagnostics { get; }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Core
         /// Validate the resource identifier against current operations.
         /// </summary>
         /// <param name="identifier"> The resource identifier. </param>
-        protected virtual void Validate(ResourceIdentifier identifier)
+        protected virtual void ValidateResourceType(ResourceIdentifier identifier)
         {
             if (identifier?.ResourceType != ValidResourceType)
                 throw new ArgumentException($"Invalid resource type {identifier?.ResourceType} expected {ValidResourceType}");

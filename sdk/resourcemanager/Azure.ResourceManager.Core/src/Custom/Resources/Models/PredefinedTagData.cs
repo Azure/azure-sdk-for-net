@@ -7,12 +7,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Tag details. </summary>
-    public partial class PreDefinedTagData : SubResource
+    public partial class PredefinedTagData : SubResource
     {
         /// <summary> Initializes a new instance of TagDetails. </summary>
-        internal PreDefinedTagData()
+        internal PredefinedTagData()
         {
-            Values = new ChangeTrackingList<PreDefinedTagValue>();
+            Values = new ChangeTrackingList<PredefinedTagValue>();
         }
 
         /// <summary> Initializes a new instance of TagDetails. </summary>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="tagName"> The tag name. </param>
         /// <param name="count"> The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0. </param>
         /// <param name="values"> The list of tag values. </param>
-        internal PreDefinedTagData(string id, string tagName, PreDefinedTagCount count, IReadOnlyList<PreDefinedTagValue> values) : base(id)
+        internal PredefinedTagData(string id, string tagName, PredefinedTagCount count, IReadOnlyList<PredefinedTagValue> values) : base(id)
         {
             TagName = tagName;
             Count = count;
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Core
         /// <summary> The tag name. </summary>
         public string TagName { get; }
         /// <summary> The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0. </summary>
-        public PreDefinedTagCount Count { get; }
+        public PredefinedTagCount Count { get; }
         /// <summary> The list of tag values. </summary>
-        public IReadOnlyList<PreDefinedTagValue> Values { get; }
+        public IReadOnlyList<PredefinedTagValue> Values { get; }
     }
 }

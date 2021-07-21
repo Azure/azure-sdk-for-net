@@ -59,12 +59,12 @@ var armClient = new ArmClient(new DefaultAzureCredential());
         [Ignore("Only verifying that the sample builds")]
         public async Task CheckIfResourceGroupExists()
         {
-            #region Snippet:Readme_DoesExistsRG
+            #region Snippet:Readme_CheckIfExistssRG
             var armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.DefaultSubscription;
             string rgName = "myRgName";
 
-            var exists = await subscription.GetResourceGroups().DoesExistAsync(rgName);
+            var exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
 
             if (exists)
             {
@@ -77,7 +77,7 @@ var armClient = new ArmClient(new DefaultAzureCredential());
             {
                 Console.WriteLine($"Resource Group {rgName} does not exist.");
             }
-            #endregion Snippet:Readme_DoesExistsRG
+            #endregion Snippet:Readme_CheckIfExistssRG
         }
 
         [Test]
