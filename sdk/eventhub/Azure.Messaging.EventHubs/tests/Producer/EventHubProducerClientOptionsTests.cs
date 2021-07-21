@@ -27,6 +27,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubProducerClientOptions
             {
+                Identifier = "Test-123",
                 EnableIdempotentPartitions = true,
                 ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
                 RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(36) }
@@ -42,6 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
 
+            Assert.That(clone.Identifier, Is.EqualTo(options.Identifier), "The identifier should match.");
             Assert.That(clone.EnableIdempotentPartitions, Is.EqualTo(options.EnableIdempotentPartitions), "The flag to enable idempotent publishing should have been copied.");
             Assert.That(clone.ConnectionOptions.TransportType, Is.EqualTo(options.ConnectionOptions.TransportType), "The connection options of the clone should copy properties.");
             Assert.That(clone.ConnectionOptions, Is.Not.SameAs(options.ConnectionOptions), "The connection options of the clone should be a copy, not the same instance.");

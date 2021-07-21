@@ -18,14 +18,14 @@ namespace Azure.AI.MetricsAdvisor.Models
     [CodeGenSuppress("Dimension")]
     public partial class DataPointAnomaly
     {
-        internal DataPointAnomaly(string dataFeedId, string metricId, string anomalyDetectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property)
+        internal DataPointAnomaly(string dataFeedId, string metricId, string anomalyDetectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdOn, DateTimeOffset? lastModified, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property)
         {
             DataFeedId = dataFeedId;
             MetricId = metricId;
             DetectionConfigurationId = anomalyDetectionConfigurationId;
             Timestamp = timestamp;
-            CreatedTime = createdTime;
-            ModifiedTime = modifiedTime;
+            CreatedOn = createdOn;
+            LastModified = lastModified;
             SeriesKey = new DimensionKey(dimension);
             Severity = property.AnomalySeverity;
             Status = property.AnomalyStatus;
@@ -62,8 +62,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary>
         /// The key that, within a metric, uniquely identifies the time series in which this anomaly has
-        /// been detected. Every dimension contained in the associated <see cref="DataFeed"/> has been
-        /// assigned a value.
+        /// been detected. In this key, a value is assigned to every possible dimension.
         /// </summary>
         public DimensionKey SeriesKey { get; }
 
@@ -93,7 +92,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
-        public DateTimeOffset? CreatedTime { get; }
+        [CodeGenMember("CreatedTime")]
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary>
         /// The date and time, in UTC, in which this anomaly entry has been modified for the last time. This
@@ -101,7 +101,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// or <see cref="MetricsAdvisorClient.GetAnomaliesForAlertAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
         /// For other overloads, this property will be <c>null</c>.
         /// </summary>
-        public DateTimeOffset? ModifiedTime { get; }
+        [CodeGenMember("ModifiedTime")]
+        public DateTimeOffset? LastModified { get; }
 
         /// <summary>
         /// The value of the data point that generated this anomaly.

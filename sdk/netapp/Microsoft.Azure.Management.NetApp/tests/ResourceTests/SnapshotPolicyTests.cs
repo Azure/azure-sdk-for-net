@@ -124,7 +124,7 @@ namespace NetApp.Tests.ResourceTests
                 Assert.NotNull(createVolume.DataProtection.Snapshot.SnapshotPolicyId);
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
-                    Thread.Sleep(30000);
+                    Thread.Sleep(5000);
                 }
                 //Get volume and check
                 var getVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
@@ -132,14 +132,52 @@ namespace NetApp.Tests.ResourceTests
                 Assert.NotNull(getVolume.DataProtection.Snapshot);
                 Assert.NotNull(getVolume.DataProtection.Snapshot.SnapshotPolicyId);
 
-                //ListVolumes 
-                ///TODO this is not ready, due to an issue with the result causing serialization errors, needs service side fix will be added in 2020-11-01
-                //var listVolumes = netAppMgmtClient.SnapshotPolicies.ListVolumes(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.snapshotPolicyName1);
-                //Assert.NotNull(listVolumes);
-
                 // clean up                
                 ResourceUtils.DeleteVolume(netAppMgmtClient);
                 netAppMgmtClient.SnapshotPolicies.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.snapshotPolicyName1);                
+                ResourceUtils.DeletePool(netAppMgmtClient);
+                ResourceUtils.DeleteAccount(netAppMgmtClient);
+            }
+        }
+
+        [Fact]
+        public void ListVolumesWithSnapshotPolicy()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // create the Pool and account
+                ResourceUtils.CreatePool(netAppMgmtClient);
+                // create the snapshotPolicy
+                var snapshotPolicy = CreatePolicy(ResourceUtils.location, ResourceUtils.snapshotPolicyName1);
+                var createSnapshotPolicy = netAppMgmtClient.SnapshotPolicies.Create(snapshotPolicy, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.snapshotPolicyName1);
+
+                // Create volume with snapshotPolicy
+                var createVolume = ResourceUtils.CreateVolume(netAppMgmtClient, snapshotPolicyId: createSnapshotPolicy.Id);
+                Assert.NotNull(createVolume.DataProtection);
+                Assert.NotNull(createVolume.DataProtection.Snapshot);
+                Assert.NotNull(createVolume.DataProtection.Snapshot.SnapshotPolicyId);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(5000);
+                }
+                //Get volume and check
+                var getVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
+                Assert.NotNull(getVolume.DataProtection);   
+                Assert.NotNull(getVolume.DataProtection.Snapshot);
+                Assert.NotNull(getVolume.DataProtection.Snapshot.SnapshotPolicyId);
+
+                //ListVolumes 
+                ///TODO this is not ready, due to an issue with the result causing serialization errors, needs service side fix will be added in 2020-11-01
+                var listVolumes = netAppMgmtClient.SnapshotPolicies.ListVolumes(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.snapshotPolicyName1);
+                Assert.NotNull(listVolumes);
+                Assert.NotNull(listVolumes.Value);
+                
+                // clean up                
+                ResourceUtils.DeleteVolume(netAppMgmtClient);
+                netAppMgmtClient.SnapshotPolicies.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.snapshotPolicyName1);
                 ResourceUtils.DeletePool(netAppMgmtClient);
                 ResourceUtils.DeleteAccount(netAppMgmtClient);
             }

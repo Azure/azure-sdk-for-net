@@ -1,9 +1,9 @@
 {
   "matrix": {
     "Agent": {
-      "ubuntu-18.04": {
-          "OSVmImage": "MMSUbuntu18.04",
-          "Pool": "azsdk-pool-mms-ubuntu-1804-storage"
+      "ubuntu-20.04": {
+          "OSVmImage": "MMSUbuntu20.04",
+          "Pool": "azsdk-pool-mms-ubuntu-2004-storage"
       },
       "windows-2019": {
           "OSVmImage": "MMS2019",
