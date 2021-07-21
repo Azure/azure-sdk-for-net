@@ -200,6 +200,7 @@ namespace Azure.Storage.Files.Shares
                     // recorded one
                     if (etag != result.GetRawResponse().Headers.ETag)
                     {
+                        Console.WriteLine($"{etag} {result.GetRawResponse().Headers.ETag} {result.Value.Details.ContentRange}");
                         throw new ShareFileModifiedException(
                             "File has been modified concurrently",
                             _client.Uri, etag, result.GetRawResponse().Headers.ETag.GetValueOrDefault(), ParseRange(result.Value.Details.ContentRange));
@@ -350,7 +351,7 @@ namespace Azure.Storage.Files.Shares
             {
                 throw ShareErrors.ParsingFullHttpRangeFailed(range);
             }
-            string[] rangeBounds = range.Substring(6, lengthSeparator).Split('-');
+            string[] rangeBounds = range.Substring(6, lengthSeparator - 6).Split('-');
             return new HttpRange(
                 long.Parse(rangeBounds[0], CultureInfo.InvariantCulture),
                 long.Parse(rangeBounds[1], CultureInfo.InvariantCulture));
