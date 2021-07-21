@@ -42,7 +42,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
             if (TestEnvironment.Mode == RecordedTestMode.Playback)
             {
-                Options.WaitForCompletionDefaultPollingInterval = TimeSpan.Zero;
+                Options.OperationPollingInterval = TimeSpan.Zero;
             }
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(
