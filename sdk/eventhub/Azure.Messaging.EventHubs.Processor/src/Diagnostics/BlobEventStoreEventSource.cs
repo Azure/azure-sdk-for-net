@@ -28,16 +28,14 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   use for logging.
         /// </summary>
         ///
-        public static BlobEventStoreEventSource Log { get; } = new BlobEventStoreEventSource(EventSourceName);
+        public static BlobEventStoreEventSource Log { get; } = new BlobEventStoreEventSource();
 
         /// <summary>
         ///   Prevents an instance of the <see cref="BlobEventStoreEventSource" /> class from being created
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
-        /// <param name="eventSourceName">The name to assign to the event source.</param>
-        ///
-        private BlobEventStoreEventSource(string eventSourceName) : base(eventSourceName)
+        private BlobEventStoreEventSource() : base(EventSourceName)
         {
         }
 
