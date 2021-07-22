@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -33,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(SortBy))
             {
                 writer.WritePropertyName("sortBy");
-                writer.WriteStringValue(SortBy.Value.ToString());
+                writer.WriteStringValue(SortBy.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

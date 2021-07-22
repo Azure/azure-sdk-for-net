@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.AI.TextAnalytics;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The ExtractiveSummarizationTaskParameters. </summary>
@@ -18,6 +20,6 @@ namespace Azure.AI.TextAnalytics.Models
         public string ModelVersion { get; set; }
         public StringIndexType? StringIndexType { get; set; }
         public int? SentenceCount { get; set; }
-        public ExtractiveSummarizationTaskParametersSortBy? SortBy { get; set; }
+        public SummarySentencesOrder? SortBy { get; set; }
     }
 }

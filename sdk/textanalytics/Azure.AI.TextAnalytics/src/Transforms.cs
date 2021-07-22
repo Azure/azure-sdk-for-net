@@ -393,6 +393,20 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
+        internal static ExtractiveSummarizationTask ConvertToExtractiveSummarizationTask(ExtractSummaryAction action)
+        {
+            return new ExtractiveSummarizationTask()
+            {
+                Parameters = new ExtractiveSummarizationTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    StringIndexType = Constants.DefaultStringIndexType,
+                    SentenceCount = action.MaxSentenceCount,
+                    SortBy = action.OrderBy
+                }
+            };
+        }
+
         internal static IList<EntityLinkingTask> ConvertFromRecognizeLinkedEntitiesActionsToTasks(IReadOnlyCollection<RecognizeLinkedEntitiesAction> recognizeLinkedEntitiesActions)
         {
             List<EntityLinkingTask> list = new List<EntityLinkingTask>();
@@ -448,6 +462,18 @@ namespace Azure.AI.TextAnalytics
             foreach (AnalyzeSentimentAction action in analyzeSentimentActions)
             {
                 list.Add(ConvertToSentimentAnalysisTask(action));
+            }
+
+            return list;
+        }
+
+        internal static IList<ExtractiveSummarizationTask> ConvertFromExtractSummaryActionsToTasks(IReadOnlyCollection<ExtractSummaryAction> extractSummaryActions)
+        {
+            List<ExtractiveSummarizationTask> list = new List<ExtractiveSummarizationTask>();
+
+            foreach (ExtractSummaryAction action in extractSummaryActions)
+            {
+                list.Add(ConvertToExtractiveSummarizationTask(action));
             }
 
             return list;
