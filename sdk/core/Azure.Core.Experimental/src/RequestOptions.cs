@@ -14,7 +14,7 @@ namespace Azure
     /// </summary>
     public class RequestOptions
     {
-        private List<(int StatusCode, ResponseClassification Classification)> _classifiers = new();
+        private List<Func<HttpMessage, ResponseClassification?>> _classifiers = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestOptions"/> class.
@@ -59,8 +59,17 @@ namespace Azure
         {
             foreach (var statusCode in statusCodes)
             {
-                _classifiers.Add((statusCode, classification));
+                _classifiers.Add(message => message.Response.Status == statusCode ? classification : null);
             }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="classifier"></param>
+        public void AddClassifier(Func<HttpMessage, ResponseClassification?> classifier)
+        {
+            _classifiers.Add(classifier);
         }
 
         /// <summary>
@@ -152,8 +161,7 @@ namespace Azure
             {
                 foreach (var classifier in _options._classifiers)
                 {
-                    if (classifier.StatusCode == message.Response.Status &&
-                        classifier.Classification == responseClassification)
+                    if (classifier(message) == responseClassification)
                     {
                         return true;
                     }
