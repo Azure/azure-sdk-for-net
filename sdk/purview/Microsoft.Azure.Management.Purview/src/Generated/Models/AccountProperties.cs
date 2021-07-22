@@ -10,39 +10,27 @@
 
 namespace Microsoft.Azure.Management.Purview.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Account resource
+    /// The account properties
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class Account : TrackedResource
+    public partial class AccountProperties
     {
         /// <summary>
-        /// Initializes a new instance of the Account class.
+        /// Initializes a new instance of the AccountProperties class.
         /// </summary>
-        public Account()
+        public AccountProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Account class.
+        /// Initializes a new instance of the AccountProperties class.
         /// </summary>
-        /// <param name="id">Gets or sets the identifier.</param>
-        /// <param name="identity">Identity Info on the tracked
-        /// resource</param>
-        /// <param name="location">Gets or sets the location.</param>
-        /// <param name="name">Gets or sets the name.</param>
-        /// <param name="systemData">Metadata pertaining to creation and last
-        /// modification of the resource.</param>
-        /// <param name="tags">Tags on the azure resource.</param>
-        /// <param name="type">Gets or sets the type.</param>
         /// <param name="cloudConnectors">Cloud connectors.
         /// External cloud identifier used as part of scanning
         /// configuration.</param>
@@ -67,9 +55,7 @@ namespace Microsoft.Azure.Management.Purview.Models
         /// <param name="publicNetworkAccess">Gets or sets the public network
         /// access. Possible values include: 'NotSpecified', 'Enabled',
         /// 'Disabled'</param>
-        /// <param name="sku">Gets or sets the Sku.</param>
-        public Account(string id = default(string), Identity identity = default(Identity), string location = default(string), string name = default(string), TrackedResourceSystemData systemData = default(TrackedResourceSystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string), CloudConnectors cloudConnectors = default(CloudConnectors), System.DateTime? createdAt = default(System.DateTime?), string createdBy = default(string), string createdByObjectId = default(string), AccountPropertiesEndpoints endpoints = default(AccountPropertiesEndpoints), string friendlyName = default(string), string managedResourceGroupName = default(string), AccountPropertiesManagedResources managedResources = default(AccountPropertiesManagedResources), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string publicNetworkAccess = default(string), AccountSku sku = default(AccountSku))
-            : base(id, identity, location, name, systemData, tags, type)
+        public AccountProperties(CloudConnectors cloudConnectors = default(CloudConnectors), System.DateTime? createdAt = default(System.DateTime?), string createdBy = default(string), string createdByObjectId = default(string), AccountPropertiesEndpoints endpoints = default(AccountPropertiesEndpoints), string friendlyName = default(string), string managedResourceGroupName = default(string), AccountPropertiesManagedResources managedResources = default(AccountPropertiesManagedResources), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string publicNetworkAccess = default(string))
         {
             CloudConnectors = cloudConnectors;
             CreatedAt = createdAt;
@@ -82,7 +68,6 @@ namespace Microsoft.Azure.Management.Purview.Models
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             PublicNetworkAccess = publicNetworkAccess;
-            Sku = sku;
             CustomInit();
         }
 
@@ -95,55 +80,55 @@ namespace Microsoft.Azure.Management.Purview.Models
         /// Gets or sets cloud connectors.
         /// External cloud identifier used as part of scanning configuration.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.cloudConnectors")]
+        [JsonProperty(PropertyName = "cloudConnectors")]
         public CloudConnectors CloudConnectors { get; set; }
 
         /// <summary>
         /// Gets the time at which the entity was created.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.createdAt")]
+        [JsonProperty(PropertyName = "createdAt")]
         public System.DateTime? CreatedAt { get; private set; }
 
         /// <summary>
         /// Gets the creator of the entity.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.createdBy")]
+        [JsonProperty(PropertyName = "createdBy")]
         public string CreatedBy { get; private set; }
 
         /// <summary>
         /// Gets the creators of the entity's object id.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.createdByObjectId")]
+        [JsonProperty(PropertyName = "createdByObjectId")]
         public string CreatedByObjectId { get; private set; }
 
         /// <summary>
         /// Gets the URIs that are the public endpoints of the account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.endpoints")]
+        [JsonProperty(PropertyName = "endpoints")]
         public AccountPropertiesEndpoints Endpoints { get; private set; }
 
         /// <summary>
         /// Gets or sets the friendly name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.friendlyName")]
+        [JsonProperty(PropertyName = "friendlyName")]
         public string FriendlyName { get; private set; }
 
         /// <summary>
         /// Gets or sets the managed resource group name
         /// </summary>
-        [JsonProperty(PropertyName = "properties.managedResourceGroupName")]
+        [JsonProperty(PropertyName = "managedResourceGroupName")]
         public string ManagedResourceGroupName { get; set; }
 
         /// <summary>
         /// Gets the resource identifiers of the managed resources.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.managedResources")]
+        [JsonProperty(PropertyName = "managedResources")]
         public AccountPropertiesManagedResources ManagedResources { get; private set; }
 
         /// <summary>
         /// Gets the private endpoint connections information.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        [JsonProperty(PropertyName = "privateEndpointConnections")]
         public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
 
         /// <summary>
@@ -151,21 +136,15 @@ namespace Microsoft.Azure.Management.Purview.Models
         /// include: 'Unknown', 'Creating', 'Moving', 'Deleting',
         /// 'SoftDeleting', 'SoftDeleted', 'Failed', 'Succeeded', 'Canceled'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the public network access. Possible values include:
         /// 'NotSpecified', 'Enabled', 'Disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        [JsonProperty(PropertyName = "publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Sku.
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public AccountSku Sku { get; set; }
 
     }
 }

@@ -13,25 +13,27 @@ namespace Microsoft.Azure.Management.Purview.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class CloudConnectors
+    /// <summary>
+    /// Collection administrator update.
+    /// </summary>
+    public partial class CollectionAdminUpdate
     {
         /// <summary>
-        /// Initializes a new instance of the CloudConnectors class.
+        /// Initializes a new instance of the CollectionAdminUpdate class.
         /// </summary>
-        public CloudConnectors()
+        public CollectionAdminUpdate()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CloudConnectors class.
+        /// Initializes a new instance of the CollectionAdminUpdate class.
         /// </summary>
-        /// <param name="awsExternalId">AWS external identifier.
-        /// Configured in AWS to allow use of the role arn used for
-        /// scanning</param>
-        public CloudConnectors(string awsExternalId = default(string))
+        /// <param name="objectId">Gets or sets the object identifier of the
+        /// admin.</param>
+        public CollectionAdminUpdate(string objectId = default(string))
         {
-            AwsExternalId = awsExternalId;
+            ObjectId = objectId;
             CustomInit();
         }
 
@@ -41,11 +43,10 @@ namespace Microsoft.Azure.Management.Purview.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets AWS external identifier.
-        /// Configured in AWS to allow use of the role arn used for scanning
+        /// Gets or sets the object identifier of the admin.
         /// </summary>
-        [JsonProperty(PropertyName = "awsExternalId")]
-        public string AwsExternalId { get; private set; }
+        [JsonProperty(PropertyName = "objectId")]
+        public string ObjectId { get; set; }
 
     }
 }
