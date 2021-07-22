@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string AzureBlobValue = "AzureBlob";
         private const string AzureCosmosDbValue = "AzureCosmosDB";
         private const string AzureDataExplorerValue = "AzureDataExplorer";
-        private const string AzureDataLakeStorageGen2Value = "AzureDataLakeStorageGen2";
+        private const string AzureDataLakeStorageValue = "AzureDataLakeStorageGen2";
         private const string AzureEventHubsValue = "AzureEventHubs";
         private const string LogAnalyticsValue = "AzureLogAnalytics";
         private const string AzureTableValue = "AzureTable";

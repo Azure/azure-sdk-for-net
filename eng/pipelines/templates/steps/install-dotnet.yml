@@ -12,10 +12,10 @@ steps:
       performMultiLevelLookup: true
   - task: UseDotNet@2
     condition: ne(variables['Agent.OS'], 'Windows_NT') # Windows supports MultiLevelLookup and doesn't need explicit framework installation
-    displayName: 'Use .NET Core 2.1 runtime'
+    displayName: 'Use .NET Core 3.1 runtime'
     inputs:
       packageType: runtime
-      version: "2.1.x"
+      version: "3.1.x"
   - task: Cache@2
     inputs:
       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'

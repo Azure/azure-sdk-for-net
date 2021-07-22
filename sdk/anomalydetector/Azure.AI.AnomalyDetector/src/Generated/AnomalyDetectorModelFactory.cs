@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AnomalyDetector.Models;
 
-namespace Azure.AI.AnomalyDetector
+namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class AnomalyDetectorModelFactory

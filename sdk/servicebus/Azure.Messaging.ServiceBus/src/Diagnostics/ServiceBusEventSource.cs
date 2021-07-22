@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
     ///   the CompleteEvent.Id must be exactly StartEvent.Id + 1.
     /// </remarks>
     [EventSource(Name = EventSourceName)]
-    internal class ServiceBusEventSource : EventSource
+    internal class ServiceBusEventSource : AzureEventSource
     {
         /// <summary>The name to use for the event source.</summary>
         private const string EventSourceName = "Azure-Messaging-ServiceBus";
@@ -32,19 +32,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///   Provides a singleton instance of the event source for callers to
         ///   use for logging.
         /// </summary>
-        public static ServiceBusEventSource Log { get; } = new ServiceBusEventSource(EventSourceName);
+        public static ServiceBusEventSource Log { get; } = new ServiceBusEventSource();
 
         /// <summary>
         ///   Prevents an instance of the <see cref="ServiceBusEventSource"/> class from being
         ///   created outside the scope of the <see cref="Log" /> instance, as well as setting up the
         ///   integration with AzureEventSourceListener.
         /// </summary>
-        private ServiceBusEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        protected ServiceBusEventSource() : base(EventSourceName)
         {
         }
-
-        // Parameterless constructor for mocking
-        internal ServiceBusEventSource() { }
 
         #region event constants
         // event constants should not be changed

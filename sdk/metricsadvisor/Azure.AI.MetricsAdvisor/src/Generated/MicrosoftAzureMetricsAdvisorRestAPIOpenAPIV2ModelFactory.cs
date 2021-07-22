@@ -8,22 +8,45 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.MetricsAdvisor.Models;
 
-namespace Azure.AI.MetricsAdvisor
+namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     internal static partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2ModelFactory
     {
+        /// <summary> Initializes a new instance of AnomalyAlertConfiguration. </summary>
+        /// <param name="id"> anomaly alerting configuration unique id. </param>
+        /// <param name="name"> anomaly alerting configuration name. </param>
+        /// <param name="description"> anomaly alerting configuration description. </param>
+        /// <param name="crossMetricsOperator">
+        /// cross metrics operator
+        /// 
+        /// 
+        /// 
+        /// should be specified when setting up multiple metric alerting configurations.
+        /// </param>
+        /// <param name="dimensionsToSplitAlert"> dimensions used to split alert. </param>
+        /// <param name="idsOfHooksToAlert"> hook unique ids. </param>
+        /// <param name="metricAlertConfigurations"> Anomaly alerting configurations. </param>
+        /// <returns> A new <see cref="Models.AnomalyAlertConfiguration"/> instance for mocking. </returns>
+        public static AnomalyAlertConfiguration AnomalyAlertConfiguration(string id = null, string name = null, string description = null, MetricAlertConfigurationsOperator? crossMetricsOperator = null, IEnumerable<string> dimensionsToSplitAlert = null, IEnumerable<string> idsOfHooksToAlert = null, IEnumerable<MetricAlertConfiguration> metricAlertConfigurations = null)
+        {
+            dimensionsToSplitAlert ??= new List<string>();
+            idsOfHooksToAlert ??= new List<string>();
+            metricAlertConfigurations ??= new List<MetricAlertConfiguration>();
+
+            return new AnomalyAlertConfiguration(id, name, description, crossMetricsOperator, dimensionsToSplitAlert?.ToList(), idsOfHooksToAlert?.ToList(), metricAlertConfigurations?.ToList());
+        }
+
         /// <summary> Initializes a new instance of AnomalyAlert. </summary>
         /// <param name="id"> alert id. </param>
         /// <param name="timestamp"> anomaly time. </param>
-        /// <param name="createdTime"> created time. </param>
-        /// <param name="modifiedTime"> modified time. </param>
+        /// <param name="createdOn"> created time. </param>
+        /// <param name="lastModified"> modified time. </param>
         /// <returns> A new <see cref="Models.AnomalyAlert"/> instance for mocking. </returns>
-        public static AnomalyAlert AnomalyAlert(string id = null, DateTimeOffset timestamp = default, DateTimeOffset createdTime = default, DateTimeOffset modifiedTime = default)
+        public static AnomalyAlert AnomalyAlert(string id = null, DateTimeOffset timestamp = default, DateTimeOffset createdOn = default, DateTimeOffset lastModified = default)
         {
-            return new AnomalyAlert(id, timestamp, createdTime, modifiedTime);
+            return new AnomalyAlert(id, timestamp, createdOn, lastModified);
         }
 
         /// <summary> Initializes a new instance of AnomalyDetectionConfiguration. </summary>

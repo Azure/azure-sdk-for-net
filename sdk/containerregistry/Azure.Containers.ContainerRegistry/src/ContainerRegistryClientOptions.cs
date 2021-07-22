@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary>
-    /// The options for <see cref="ContainerRegistryClient"/>
+    /// Options that allow users to configure the requests sent to the Container Registry service.
     /// </summary>
     public class ContainerRegistryClientOptions : ClientOptions
     {
@@ -25,6 +25,7 @@ namespace Azure.Containers.ContainerRegistry
         public string AuthenticationScope { get; set; } = "https://management.azure.com/.default";
 
         /// <summary>
+        /// Create an instance of the options for configuring request sent to the Container Registry service.
         /// </summary>
         /// <param name="version"></param>
         public ContainerRegistryClientOptions(ServiceVersion version = ServiceVersion.V1_0)
@@ -49,6 +50,7 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
+        /// The versions of the Container Registry service supported by this client library.
         /// </summary>
         public enum ServiceVersion
         {

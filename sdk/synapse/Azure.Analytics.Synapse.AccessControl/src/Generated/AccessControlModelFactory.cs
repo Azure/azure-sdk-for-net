@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Analytics.Synapse.AccessControl.Models;
 
-namespace Azure.Analytics.Synapse.AccessControl
+namespace Azure.Analytics.Synapse.AccessControl.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class AccessControlModelFactory

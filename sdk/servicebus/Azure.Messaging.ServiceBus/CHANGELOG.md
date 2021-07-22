@@ -6,10 +6,14 @@
 
 ### Breaking Changes
 
-### Key Bugs Fixed
+### Bugs Fixed
+
+### Other Changes
+
+## 7.2.1 (2021-07-07)
 
 ### Fixed
-
+- Fixed bug in the `ServiceBusProcessor` where message locks stopped being automatically renewed after `StopProcessingAsync` was called.
 
 ## 7.2.0 (2021-06-22)
 

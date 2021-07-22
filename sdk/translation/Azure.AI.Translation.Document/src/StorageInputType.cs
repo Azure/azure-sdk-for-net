@@ -5,8 +5,19 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
+    /// <summary>
+    /// Storage type of the input documents source.
+    /// </summary>
     [CodeGenModel("StorageInputType")]
-    public readonly partial struct StorageInputType
+    public enum StorageInputType
     {
+        /// <summary>
+        /// File
+        /// </summary>
+        File,
+        /// <summary>
+        /// Folder
+        /// </summary>
+        Folder
     }
 }

@@ -567,7 +567,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"MaxAutoLockRenewalDuration\": \"00:05:00\",",
                $"  \"MaxConcurrentCalls\": {16 * Utility.GetProcessorCount()},",
                 "  \"MaxConcurrentSessions\": 8,",
-                "  \"MaxBatchSize\": 1000,",
+                "  \"MaxMessageBatchSize\": 1000,",
                 "  \"SessionIdleTimeout\": \"\"",
                 "  \"ClientRetryOptions\": {",
                 "       \"Mode\": \"Exponential\",",
@@ -749,7 +749,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var attribute = new ServiceBusAttribute(_firstQueueScope.QueueName)
                 {
-                    ServiceBusEntityType = ServiceBusEntityType.Queue
+                    EntityType = ServiceBusEntityType.Queue
                 };
 
                 var collector = await binder.BindAsync<IAsyncCollector<string>>(attribute);
@@ -773,7 +773,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 var attribute = new ServiceBusAttribute(_firstQueueScope.QueueName)
                 {
-                    ServiceBusEntityType = ServiceBusEntityType.Queue
+                    EntityType = ServiceBusEntityType.Queue
                 };
 
                 var collector = binder.Bind<ICollector<string>>(attribute);
@@ -1140,16 +1140,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     _logger = logger;
                 }
 
-                protected internal override async Task<bool> BeginProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
+                protected internal override async Task<bool> BeginProcessingMessageAsync(ServiceBusMessageActions actions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
                 {
                     _logger?.LogInformation("Custom processor Begin called!");
-                    return await base.BeginProcessingMessageAsync(messageActions, message, cancellationToken);
+                    return await base.BeginProcessingMessageAsync(actions, message, cancellationToken);
                 }
 
-                protected internal override async Task CompleteProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, Executors.FunctionResult result, CancellationToken cancellationToken)
+                protected internal override async Task CompleteProcessingMessageAsync(ServiceBusMessageActions actions, ServiceBusReceivedMessage message, Executors.FunctionResult result, CancellationToken cancellationToken)
                 {
                     _logger?.LogInformation("Custom processor End called!");
-                    await base.CompleteProcessingMessageAsync(messageActions, message, result, cancellationToken);
+                    await base.CompleteProcessingMessageAsync(actions, message, result, cancellationToken);
                 }
             }
         }

@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Azure.AI.TextAnalytics.Models;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Model factory that enables mocking for the Text Analytics library.
     /// </summary>
+    [CodeGenType(nameof(TextAnalyticsModelFactory))]
     public static partial class TextAnalyticsModelFactory
     {
         #region Common

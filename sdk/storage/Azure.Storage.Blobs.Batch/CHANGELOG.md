@@ -5,8 +5,7 @@
 - Added support for service version 2020-10-02.
 - TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
     - A new property is now available on the ClientOptions called `EnableTenantDiscovery`. If set to true, the client will attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.
-
-- This release contains bug fixes to improve quality.
+- Fixed bug where blob name was not encoded properly when using batch operations.
 
 ## 12.6.0 (2021-06-08)
 - Includes all features from 12.6.0-beta.4.

@@ -12,37 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class HookInfoPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("hookType");
-            writer.WriteStringValue(HookType.ToString());
-            if (Optional.IsDefined(HookName))
-            {
-                writer.WritePropertyName("hookName");
-                writer.WriteStringValue(HookName);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description");
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(ExternalLink))
-            {
-                writer.WritePropertyName("externalLink");
-                writer.WriteStringValue(ExternalLink);
-            }
-            if (Optional.IsCollectionDefined(Admins))
-            {
-                writer.WritePropertyName("admins");
-                writer.WriteStartArray();
-                foreach (var item in Admins)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
     }
 }

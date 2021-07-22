@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
         private CancellationTokenSource _sessionLockRenewalCancellationSource;
         private Task _sessionLockRenewalTask;
         private CancellationTokenSource _sessionCancellationSource;
-        private bool _receiveTimeout;
+        private volatile bool _receiveTimeout;
 
         protected override ServiceBusReceiver Receiver => _receiver;
 
@@ -74,7 +74,10 @@ namespace Azure.Messaging.ServiceBus
                 // if we don't intend to leave the receiver open on receive timeouts. This
                 // will help ensure other sessions get a chance to be processed.
                 if (_threadCount >= _maxCallsPerSession ||
-                    (_receiveTimeout && !_keepOpenOnReceiveTimeout))
+                    (_receiveTimeout && !_keepOpenOnReceiveTimeout) ||
+                    // If cancellation was requested but the receiver has not been closed yet,
+                    // do not initiate new processing.
+                    (_receiver != null && _sessionCancellationSource.IsCancellationRequested))
                 {
                     return false;
                 }
@@ -189,7 +192,7 @@ namespace Azure.Messaging.ServiceBus
                     // MaxConcurrentSessions.
                     if ((_receiveTimeout && !_keepOpenOnReceiveTimeout) ||
                         // if the session is cancelled we should still close the receiver
-                        // as this means the session lock was lost.
+                        // as this means the session lock was lost or the user requested to close the session.
                         _sessionCancellationSource.IsCancellationRequested)
                     {
                         await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
@@ -379,8 +382,14 @@ namespace Azure.Messaging.ServiceBus
             var args = new ProcessSessionMessageEventArgs(
                 message,
                 _receiver,
+                this,
                 cancellationToken);
             await Processor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
+        }
+
+        internal void ReleaseSession()
+        {
+            _sessionCancellationSource.Cancel();
         }
     }
 }

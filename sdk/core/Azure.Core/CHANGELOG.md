@@ -1,5 +1,17 @@
 # Release History
 
+## 1.17.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+- Fixed `NotSupportedException` when running in Unity.
+
 ## 1.16.0 (2021-06-30)
 
 ### Changed

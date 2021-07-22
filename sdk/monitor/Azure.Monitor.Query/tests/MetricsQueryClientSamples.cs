@@ -18,15 +18,15 @@ namespace Azure.Monitor.Query.Tests
             #region Snippet:QueryMetrics
 
 #if SNIPPET
-            var endpoint = new Uri("https://management.azure.com");
             string resourceId =
                 "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.OperationalInsights/workspaces/<workspace_name>";
 #else
-            Uri endpoint = TestEnvironment.LogsEndpoint;
             string resourceId = TestEnvironment.MetricsResource;
 #endif
 
-            var metricsClient = new MetricsQueryClient(endpoint, new DefaultAzureCredential());
+            #region Snippet:CreateMetricsClient
+            var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+            #endregion
 
             Response<MetricQueryResult> results = await metricsClient.QueryAsync(
                 resourceId,
