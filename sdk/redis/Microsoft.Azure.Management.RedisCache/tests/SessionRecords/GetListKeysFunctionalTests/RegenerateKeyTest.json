@@ -135,7 +135,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"******\",\r\n  \"secondaryKey\": \"******\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"******\",\r\n  \"secondaryKey\": \"*****\"\r\n}",
       "StatusCode": 200
     }
   ],
