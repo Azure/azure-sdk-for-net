@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
+    #region Snippet:PluginSessionProcessor
     public class PluginSessionProcessor : ServiceBusSessionProcessor
     {
         private IEnumerable<Func<ServiceBusReceivedMessage, Task>> _plugins;
@@ -38,4 +39,5 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             return Task.CompletedTask;
         }
     }
+    #endregion
 }

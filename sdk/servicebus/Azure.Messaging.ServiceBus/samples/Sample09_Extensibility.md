@@ -90,64 +90,38 @@ public class PluginProcessor : ServiceBusProcessor
 ```
 
 And a `PluginSessionProcessor`:
-```C# Snippet:End2EndPluginSessionProcessor
-string connectionString = "<connection_string>";
-string queueName = "<queue_name>";
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
-await using ServiceBusSender sender = client.CreatePluginSender(queueName, new List<Func<ServiceBusMessage, Task>>()
+```C# Snippet:PluginSessionProcessor
+public class PluginSessionProcessor : ServiceBusSessionProcessor
 {
-    message =>
+    private IEnumerable<Func<ServiceBusReceivedMessage, Task>> _plugins;
+
+    internal PluginSessionProcessor(string queueName, ServiceBusClient client, IEnumerable<Func<ServiceBusReceivedMessage, Task>> plugins, ServiceBusSessionProcessorOptions options) :
+        base(client, queueName, options)
     {
-        message.Subject = "Updated subject";
-        message.SessionId = "sessionId";
-        Console.WriteLine("First send plugin executed!");
-    return Task.CompletedTask;
-    },
-    message =>
+        _plugins = plugins;
+    }
+
+    internal PluginSessionProcessor(string topicName, string subscriptionName, ServiceBusClient client, IEnumerable<Func<ServiceBusReceivedMessage, Task>> plugins, ServiceBusSessionProcessorOptions options) :
+        base(client, topicName, subscriptionName, options)
     {
-        Console.WriteLine(message.Subject); // prints "Updated subject"
-        Console.WriteLine(message.SessionId); // prints "sessionId"
-        Console.WriteLine("Second send plugin executed!");
+        _plugins = plugins;
+    }
+
+    protected internal override async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
+    {
+        foreach (var plugin in _plugins)
+        {
+            await plugin.Invoke(args.Message);
+        }
+
+        await base.OnProcessSessionMessageAsync(args);
+    }
+
+    protected internal override Task OnProcessErrorAsync(ProcessErrorEventArgs args)
+    {
         return Task.CompletedTask;
-    },
-});
-
-await sender.SendMessageAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-
-await using ServiceBusSessionProcessor processor = client.CreatePluginSessionProcessor(queueName, new List<Func<ServiceBusReceivedMessage, Task>>()
-{
-    message =>
-    {
-        var rawMessage = message.GetRawAmqpMessage();
-        rawMessage.Properties.Subject = "Received subject";
-        Console.WriteLine("First receive plugin executed!");
-        return Task.CompletedTask;
-    },
-    message =>
-    {
-        Console.WriteLine(message.Subject); // prints "Received subject"
-        var rawMessage = message.GetRawAmqpMessage();
-        rawMessage.Properties.Subject = "Last subject";
-        Console.WriteLine("Second receive plugin executed!");
-        return Task.CompletedTask;
-    },
-});
-
-processor.ProcessMessageAsync += args =>
-{
-    Console.WriteLine(args.Message.Subject);
-    return Task.CompletedTask;
-};
-
-processor.ProcessErrorAsync += args =>
-{
-    Console.WriteLine(args.Exception);
-    return Task.CompletedTask;
-};
-
-await processor.StartProcessingAsync();
-Console.ReadKey();
+    }
+}
 ```
 
 ### Defining extension methods
