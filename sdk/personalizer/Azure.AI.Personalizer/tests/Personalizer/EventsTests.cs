@@ -17,14 +17,14 @@ namespace Azure.AI.Personalizer.Tests
         public async Task Reward()
         {
             PersonalizerClient client = GetPersonalizerClient();
-            await client.Events.RewardAsync("123456789", new RewardRequest((float)0.5));
+            await client.RewardAsync("123456789", new PersonalizerRewardOptions((float)0.5));
         }
 
         [Test]
         public async Task Activate()
         {
             PersonalizerClient client = GetPersonalizerClient();
-            await client.Events.ActivateAsync("123456789");
+            await client.ActivateAsync("123456789");
         }
     }
 }

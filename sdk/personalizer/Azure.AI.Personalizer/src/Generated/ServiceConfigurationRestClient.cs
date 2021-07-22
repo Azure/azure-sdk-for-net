@@ -39,7 +39,7 @@ namespace Azure.AI.Personalizer
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateUpdateRequest(ServiceConfiguration config)
+        internal HttpMessage CreateUpdateRequest(PersonalizerServiceConfiguration config)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -61,7 +61,7 @@ namespace Azure.AI.Personalizer
         /// <param name="config"> The personalizer service configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="config"/> is null. </exception>
-        public async Task<Response<ServiceConfiguration>> UpdateAsync(ServiceConfiguration config, CancellationToken cancellationToken = default)
+        public async Task<Response<PersonalizerServiceConfiguration>> UpdateAsync(PersonalizerServiceConfiguration config, CancellationToken cancellationToken = default)
         {
             if (config == null)
             {
@@ -74,9 +74,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        ServiceConfiguration value = default;
+                        PersonalizerServiceConfiguration value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceConfiguration.DeserializeServiceConfiguration(document.RootElement);
+                        value = PersonalizerServiceConfiguration.DeserializePersonalizerServiceConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -88,7 +88,7 @@ namespace Azure.AI.Personalizer
         /// <param name="config"> The personalizer service configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="config"/> is null. </exception>
-        public Response<ServiceConfiguration> Update(ServiceConfiguration config, CancellationToken cancellationToken = default)
+        public Response<PersonalizerServiceConfiguration> Update(PersonalizerServiceConfiguration config, CancellationToken cancellationToken = default)
         {
             if (config == null)
             {
@@ -101,9 +101,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        ServiceConfiguration value = default;
+                        PersonalizerServiceConfiguration value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceConfiguration.DeserializeServiceConfiguration(document.RootElement);
+                        value = PersonalizerServiceConfiguration.DeserializePersonalizerServiceConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -127,7 +127,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get the Personalizer service configuration. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ServiceConfiguration>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<PersonalizerServiceConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -135,9 +135,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        ServiceConfiguration value = default;
+                        PersonalizerServiceConfiguration value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceConfiguration.DeserializeServiceConfiguration(document.RootElement);
+                        value = PersonalizerServiceConfiguration.DeserializePersonalizerServiceConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -147,7 +147,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get the Personalizer service configuration. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ServiceConfiguration> Get(CancellationToken cancellationToken = default)
+        public Response<PersonalizerServiceConfiguration> Get(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
             _pipeline.Send(message, cancellationToken);
@@ -155,9 +155,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        ServiceConfiguration value = default;
+                        PersonalizerServiceConfiguration value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceConfiguration.DeserializeServiceConfiguration(document.RootElement);
+                        value = PersonalizerServiceConfiguration.DeserializePersonalizerServiceConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -165,7 +165,7 @@ namespace Azure.AI.Personalizer
             }
         }
 
-        internal HttpMessage CreateApplyFromEvaluationRequest(PolicyReferenceContract body)
+        internal HttpMessage CreateApplyFromEvaluationRequest(PersonalizerPolicyReferenceOptions body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -187,7 +187,7 @@ namespace Azure.AI.Personalizer
         /// <param name="body"> The PolicyReferenceContract to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response> ApplyFromEvaluationAsync(PolicyReferenceContract body, CancellationToken cancellationToken = default)
+        public async Task<Response> ApplyFromEvaluationAsync(PersonalizerPolicyReferenceOptions body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -209,7 +209,7 @@ namespace Azure.AI.Personalizer
         /// <param name="body"> The PolicyReferenceContract to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response ApplyFromEvaluation(PolicyReferenceContract body, CancellationToken cancellationToken = default)
+        public Response ApplyFromEvaluation(PersonalizerPolicyReferenceOptions body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {

@@ -117,7 +117,7 @@ namespace Azure.AI.Personalizer
         /// <param name="evaluationId"> Id of the Offline Evaluation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationId"/> is null. </exception>
-        public async Task<Response<Evaluation>> GetAsync(string evaluationId, CancellationToken cancellationToken = default)
+        public async Task<Response<PersonalizerEvaluation>> GetAsync(string evaluationId, CancellationToken cancellationToken = default)
         {
             if (evaluationId == null)
             {
@@ -130,9 +130,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        Evaluation value = default;
+                        PersonalizerEvaluation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Evaluation.DeserializeEvaluation(document.RootElement);
+                        value = PersonalizerEvaluation.DeserializePersonalizerEvaluation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -144,7 +144,7 @@ namespace Azure.AI.Personalizer
         /// <param name="evaluationId"> Id of the Offline Evaluation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationId"/> is null. </exception>
-        public Response<Evaluation> Get(string evaluationId, CancellationToken cancellationToken = default)
+        public Response<PersonalizerEvaluation> Get(string evaluationId, CancellationToken cancellationToken = default)
         {
             if (evaluationId == null)
             {
@@ -157,9 +157,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        Evaluation value = default;
+                        PersonalizerEvaluation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Evaluation.DeserializeEvaluation(document.RootElement);
+                        value = PersonalizerEvaluation.DeserializePersonalizerEvaluation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,7 +183,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> List of all Offline Evaluations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IReadOnlyList<Evaluation>>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<PersonalizerEvaluation>>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -191,12 +191,12 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        IReadOnlyList<Evaluation> value = default;
+                        IReadOnlyList<PersonalizerEvaluation> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<Evaluation> array = new List<Evaluation>();
+                        List<PersonalizerEvaluation> array = new List<PersonalizerEvaluation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Evaluation.DeserializeEvaluation(item));
+                            array.Add(PersonalizerEvaluation.DeserializePersonalizerEvaluation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -208,7 +208,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> List of all Offline Evaluations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IReadOnlyList<Evaluation>> List(CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<PersonalizerEvaluation>> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
             _pipeline.Send(message, cancellationToken);
@@ -216,12 +216,12 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        IReadOnlyList<Evaluation> value = default;
+                        IReadOnlyList<PersonalizerEvaluation> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<Evaluation> array = new List<Evaluation>();
+                        List<PersonalizerEvaluation> array = new List<PersonalizerEvaluation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Evaluation.DeserializeEvaluation(item));
+                            array.Add(PersonalizerEvaluation.DeserializePersonalizerEvaluation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -253,7 +253,7 @@ namespace Azure.AI.Personalizer
         /// <param name="evaluation"> The Offline Evaluation job definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Evaluation, EvaluationsCreateHeaders>> CreateAsync(EvaluationContract evaluation, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PersonalizerEvaluation, EvaluationsCreateHeaders>> CreateAsync(EvaluationContract evaluation, CancellationToken cancellationToken = default)
         {
             if (evaluation == null)
             {
@@ -267,9 +267,9 @@ namespace Azure.AI.Personalizer
             {
                 case 201:
                     {
-                        Evaluation value = default;
+                        PersonalizerEvaluation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Evaluation.DeserializeEvaluation(document.RootElement);
+                        value = PersonalizerEvaluation.DeserializePersonalizerEvaluation(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -281,7 +281,7 @@ namespace Azure.AI.Personalizer
         /// <param name="evaluation"> The Offline Evaluation job definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        public ResponseWithHeaders<Evaluation, EvaluationsCreateHeaders> Create(EvaluationContract evaluation, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PersonalizerEvaluation, EvaluationsCreateHeaders> Create(EvaluationContract evaluation, CancellationToken cancellationToken = default)
         {
             if (evaluation == null)
             {
@@ -295,9 +295,9 @@ namespace Azure.AI.Personalizer
             {
                 case 201:
                     {
-                        Evaluation value = default;
+                        PersonalizerEvaluation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Evaluation.DeserializeEvaluation(document.RootElement);
+                        value = PersonalizerEvaluation.DeserializePersonalizerEvaluation(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:

@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Personalizer
 {
     /// <summary> The Policy service client. </summary>
-    public partial class PolicyClient
+    internal partial class PolicyClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
@@ -31,7 +31,7 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PolicyClient(string endpoint, TokenCredential credential, PersonalizerBaseClientOptions options = null)
+        public PolicyClient(string endpoint, TokenCredential credential, PersonalizerClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.AI.Personalizer
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new PersonalizerBaseClientOptions();
+            options ??= new PersonalizerClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://cognitiveservices.azure.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
@@ -53,7 +53,7 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PolicyClient(string endpoint, AzureKeyCredential credential, PersonalizerBaseClientOptions options = null)
+        public PolicyClient(string endpoint, AzureKeyCredential credential, PersonalizerClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -64,7 +64,7 @@ namespace Azure.AI.Personalizer
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new PersonalizerBaseClientOptions();
+            options ??= new PersonalizerClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "Ocp-Apim-Subscription-Key"));
             RestClient = new PolicyRestClient(_clientDiagnostics, _pipeline, endpoint);
@@ -83,7 +83,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get the Learning Settings currently used by the Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicyContract>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerPolicyOptions>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyClient.Get");
             scope.Start();
@@ -100,7 +100,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get the Learning Settings currently used by the Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicyContract> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerPolicyOptions> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyClient.Get");
             scope.Start();
@@ -118,7 +118,7 @@ namespace Azure.AI.Personalizer
         /// <summary> Update the Learning Settings that the Personalizer service will use to train models. </summary>
         /// <param name="policy"> The learning settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicyContract>> UpdateAsync(PolicyContract policy, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerPolicyOptions>> UpdateAsync(PersonalizerPolicyOptions policy, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyClient.Update");
             scope.Start();
@@ -136,7 +136,7 @@ namespace Azure.AI.Personalizer
         /// <summary> Update the Learning Settings that the Personalizer service will use to train models. </summary>
         /// <param name="policy"> The learning settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicyContract> Update(PolicyContract policy, CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerPolicyOptions> Update(PersonalizerPolicyOptions policy, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyClient.Update");
             scope.Start();
@@ -153,7 +153,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Resets the learning settings of the Personalizer service to default. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicyContract>> ResetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerPolicyOptions>> ResetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyClient.Reset");
             scope.Start();
@@ -170,7 +170,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Resets the learning settings of the Personalizer service to default. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicyContract> Reset(CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerPolicyOptions> Reset(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyClient.Reset");
             scope.Start();

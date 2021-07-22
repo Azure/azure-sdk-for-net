@@ -39,7 +39,7 @@ namespace Azure.AI.Personalizer
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateRankRequest(MultiSlotRankRequest body)
+        internal HttpMessage CreateRankRequest(PersonalizerMultiSlotRankOptions body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -61,7 +61,7 @@ namespace Azure.AI.Personalizer
         /// <param name="body"> A Personalizer multi-slot Rank request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<MultiSlotRankResponse>> RankAsync(MultiSlotRankRequest body, CancellationToken cancellationToken = default)
+        public async Task<Response<PersonalizerMultiSlotRankResult>> RankAsync(PersonalizerMultiSlotRankOptions body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -74,9 +74,9 @@ namespace Azure.AI.Personalizer
             {
                 case 201:
                     {
-                        MultiSlotRankResponse value = default;
+                        PersonalizerMultiSlotRankResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MultiSlotRankResponse.DeserializeMultiSlotRankResponse(document.RootElement);
+                        value = PersonalizerMultiSlotRankResult.DeserializePersonalizerMultiSlotRankResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -88,7 +88,7 @@ namespace Azure.AI.Personalizer
         /// <param name="body"> A Personalizer multi-slot Rank request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<MultiSlotRankResponse> Rank(MultiSlotRankRequest body, CancellationToken cancellationToken = default)
+        public Response<PersonalizerMultiSlotRankResult> Rank(PersonalizerMultiSlotRankOptions body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -101,9 +101,9 @@ namespace Azure.AI.Personalizer
             {
                 case 201:
                     {
-                        MultiSlotRankResponse value = default;
+                        PersonalizerMultiSlotRankResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MultiSlotRankResponse.DeserializeMultiSlotRankResponse(document.RootElement);
+                        value = PersonalizerMultiSlotRankResult.DeserializePersonalizerMultiSlotRankResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

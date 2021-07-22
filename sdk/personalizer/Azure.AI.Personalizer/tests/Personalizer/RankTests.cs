@@ -18,16 +18,16 @@ namespace Azure.AI.Personalizer.Tests
         public async Task RankNullParameters()
         {
             PersonalizerClient client = GetPersonalizerClient();
-            IList<RankableAction> actions = new List<RankableAction>();
+            IList<PersonalizerRankableAction> actions = new List<PersonalizerRankableAction>();
             actions.Add
-                (new RankableAction(
+                (new PersonalizerRankableAction(
                     id: "Person",
                     features:
                     new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "30-35" } }
             ));
-            var request = new RankRequest(actions);
+            var request = new PersonalizerRankOptions(actions);
             // Action
-            RankResponse response = await client.PersonalizerBase.RankAsync(request);
+            PersonalizerRankResult response = await client.RankAsync(request);
             // Assert
             Assert.AreEqual(actions.Count, response.Ranking.Count);
             for (int i = 0; i < response.Ranking.Count; i++)
@@ -44,24 +44,24 @@ namespace Azure.AI.Personalizer.Tests
                 new { Features = new { day = "tuesday", time = "night", weather = "rainy" } },
                 new { Features = new { userId = "1234", payingUser = true, favoriteGenre = "documentary", hoursOnSite = 0.12, lastwatchedType = "movie" } }
             };
-            IList<RankableAction> actions = new List<RankableAction>();
+            IList<PersonalizerRankableAction> actions = new List<PersonalizerRankableAction>();
             actions.Add(
-                new RankableAction(
+                new PersonalizerRankableAction(
                     id: "Person1",
                     features:
                     new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "30-35" } }
             ));
             actions.Add(
-                new RankableAction(
+                new PersonalizerRankableAction(
                     id: "Person2",
                     features:
                         new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "40-45" }}
             ));
             IList<string> excludeActions = new List<string> { "Person1" };
             string eventId = "123456789";
-            var request = new RankRequest(actions, contextFeatures, excludeActions, eventId);
+            var request = new PersonalizerRankOptions(actions, contextFeatures, excludeActions, eventId);
             // Action
-            RankResponse response = await client.PersonalizerBase.RankAsync(request);
+            PersonalizerRankResult response = await client.RankAsync(request);
             // Assert
             Assert.AreEqual(eventId, response.EventId);
             Assert.AreEqual(actions.Count, response.Ranking.Count);

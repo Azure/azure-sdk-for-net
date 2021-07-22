@@ -18,16 +18,16 @@ namespace Azure.AI.Personalizer.Tests
         public async Task Reward()
         {
             PersonalizerClient client = GetPersonalizerClient();
-            SlotReward slotReward = new SlotReward("testSlot", 1);
-            MultiSlotRewardRequest rewardRequest = new MultiSlotRewardRequest(new List<SlotReward> { slotReward });
-            await client.MultiSlotEvents.RewardAsync("123456789", rewardRequest);
+            PersonalizerSlotReward slotReward = new PersonalizerSlotReward("testSlot", 1);
+            PersonalizerMultiSlotRewardOptions rewardRequest = new PersonalizerMultiSlotRewardOptions(new List<PersonalizerSlotReward> { slotReward });
+            await client.MultiSlotRewardAsync("123456789", rewardRequest);
         }
 
         [Test]
         public async Task Activate()
         {
             PersonalizerClient client = GetPersonalizerClient();
-            await client.MultiSlotEvents.ActivateAsync("123456789");
+            await client.MultiSlotActivateAsync("123456789");
         }
     }
 }

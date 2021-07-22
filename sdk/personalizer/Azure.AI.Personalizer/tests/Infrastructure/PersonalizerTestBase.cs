@@ -17,30 +17,26 @@ namespace Azure.AI.Personalizer.Tests
         protected PersonalizerClient GetPersonalizerClient()
         {
             var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            var options = InstrumentClientOptions(new PersonalizerBaseClientOptions());
-            PersonalizerClient client = new PersonalizerClient(TestEnvironment.Endpoint, credential, options);
-            client.PersonalizerBase = InstrumentClient(client.PersonalizerBase);
-            client.MultiSlot = InstrumentClient(client.MultiSlot);
-            client.MultiSlotEvents = InstrumentClient(client.MultiSlotEvents);
-            client.Model = InstrumentClient(client.Model);
-            client.Log = InstrumentClient(client.Log);
-            client.Events = InstrumentClient(client.Events);
-            client.Evaluations = InstrumentClient(client.Evaluations);
-            client.Policy = InstrumentClient(client.Policy);
-            client.ServiceConfiguration = InstrumentClient(client.ServiceConfiguration);
-            return client;
+            var options = InstrumentClientOptions(new PersonalizerClientOptions());
+            PersonalizerClient personalizerClient = new PersonalizerClient(TestEnvironment.Endpoint, credential, options);
+            personalizerClient.RankClient = InstrumentClient(personalizerClient.RankClient);
+            personalizerClient.EventsClient = InstrumentClient(personalizerClient.EventsClient);
+            personalizerClient.MultiSlotClient = InstrumentClient(personalizerClient.MultiSlotClient);
+            personalizerClient.MultiSlotEventsClient = InstrumentClient(personalizerClient.MultiSlotEventsClient);
+            return personalizerClient;
         }
 
-        internal MultiSlotEventsClient GetMultiSlotEventClient()
+        protected PersonalizerManagementClient GetPersonalizerManagementClient()
         {
             var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            return new MultiSlotEventsClient(TestEnvironment.Endpoint, credential);
-        }
-
-        internal MultiSlotClient GetMultiSlotClient()
-        {
-            var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            return new MultiSlotClient(TestEnvironment.Endpoint, credential);
+            var options = InstrumentClientOptions(new PersonalizerClientOptions());
+            PersonalizerManagementClient personalizerManagementClient = new PersonalizerManagementClient(TestEnvironment.Endpoint, credential, options);
+            personalizerManagementClient.LogClient = InstrumentClient(personalizerManagementClient.LogClient);
+            personalizerManagementClient.ModelClient = InstrumentClient(personalizerManagementClient.ModelClient);
+            personalizerManagementClient.PolicyClient = InstrumentClient(personalizerManagementClient.PolicyClient);
+            personalizerManagementClient.EvaluationsClient = InstrumentClient(personalizerManagementClient.EvaluationsClient);
+            personalizerManagementClient.ServiceConfigurationClient = InstrumentClient(personalizerManagementClient.ServiceConfigurationClient);
+            return personalizerManagementClient;
         }
     }
 }

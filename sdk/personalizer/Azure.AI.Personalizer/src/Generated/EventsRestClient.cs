@@ -38,7 +38,7 @@ namespace Azure.AI.Personalizer
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateRewardRequest(string eventId, RewardRequest reward)
+        internal HttpMessage CreateRewardRequest(string eventId, PersonalizerRewardOptions reward)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,7 +63,7 @@ namespace Azure.AI.Personalizer
         /// <param name="reward"> The reward should be a floating point number, typically between 0 and 1. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventId"/> or <paramref name="reward"/> is null. </exception>
-        public async Task<Response> RewardAsync(string eventId, RewardRequest reward, CancellationToken cancellationToken = default)
+        public async Task<Response> RewardAsync(string eventId, PersonalizerRewardOptions reward, CancellationToken cancellationToken = default)
         {
             if (eventId == null)
             {
@@ -90,7 +90,7 @@ namespace Azure.AI.Personalizer
         /// <param name="reward"> The reward should be a floating point number, typically between 0 and 1. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventId"/> or <paramref name="reward"/> is null. </exception>
-        public Response Reward(string eventId, RewardRequest reward, CancellationToken cancellationToken = default)
+        public Response Reward(string eventId, PersonalizerRewardOptions reward, CancellationToken cancellationToken = default)
         {
             if (eventId == null)
             {

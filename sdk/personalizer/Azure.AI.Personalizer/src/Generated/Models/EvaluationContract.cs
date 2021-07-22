@@ -20,7 +20,7 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="endTime"> The end time of the evaluation. </param>
         /// <param name="policies"> Additional learning settings to evaluate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="policies"/> is null. </exception>
-        public EvaluationContract(string name, DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<PolicyContract> policies)
+        public EvaluationContract(string name, DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<PersonalizerPolicyOptions> policies)
         {
             if (name == null)
             {
@@ -46,6 +46,6 @@ namespace Azure.AI.Personalizer.Models
         /// <summary> The end time of the evaluation. </summary>
         public DateTimeOffset EndTime { get; }
         /// <summary> Additional learning settings to evaluate. </summary>
-        public IList<PolicyContract> Policies { get; }
+        public IList<PersonalizerPolicyOptions> Policies { get; }
     }
 }

@@ -55,7 +55,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get the Learning Settings currently used by the Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<PolicyContract>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<PersonalizerPolicyOptions>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -63,9 +63,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        PolicyContract value = default;
+                        PersonalizerPolicyOptions value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PolicyContract.DeserializePolicyContract(document.RootElement);
+                        value = PersonalizerPolicyOptions.DeserializePersonalizerPolicyOptions(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -75,7 +75,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get the Learning Settings currently used by the Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<PolicyContract> Get(CancellationToken cancellationToken = default)
+        public Response<PersonalizerPolicyOptions> Get(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
             _pipeline.Send(message, cancellationToken);
@@ -83,9 +83,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        PolicyContract value = default;
+                        PersonalizerPolicyOptions value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PolicyContract.DeserializePolicyContract(document.RootElement);
+                        value = PersonalizerPolicyOptions.DeserializePersonalizerPolicyOptions(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -93,7 +93,7 @@ namespace Azure.AI.Personalizer
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(PolicyContract policy)
+        internal HttpMessage CreateUpdateRequest(PersonalizerPolicyOptions policy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -115,7 +115,7 @@ namespace Azure.AI.Personalizer
         /// <param name="policy"> The learning settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policy"/> is null. </exception>
-        public async Task<Response<PolicyContract>> UpdateAsync(PolicyContract policy, CancellationToken cancellationToken = default)
+        public async Task<Response<PersonalizerPolicyOptions>> UpdateAsync(PersonalizerPolicyOptions policy, CancellationToken cancellationToken = default)
         {
             if (policy == null)
             {
@@ -128,9 +128,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        PolicyContract value = default;
+                        PersonalizerPolicyOptions value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PolicyContract.DeserializePolicyContract(document.RootElement);
+                        value = PersonalizerPolicyOptions.DeserializePersonalizerPolicyOptions(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -142,7 +142,7 @@ namespace Azure.AI.Personalizer
         /// <param name="policy"> The learning settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policy"/> is null. </exception>
-        public Response<PolicyContract> Update(PolicyContract policy, CancellationToken cancellationToken = default)
+        public Response<PersonalizerPolicyOptions> Update(PersonalizerPolicyOptions policy, CancellationToken cancellationToken = default)
         {
             if (policy == null)
             {
@@ -155,9 +155,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        PolicyContract value = default;
+                        PersonalizerPolicyOptions value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PolicyContract.DeserializePolicyContract(document.RootElement);
+                        value = PersonalizerPolicyOptions.DeserializePersonalizerPolicyOptions(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -181,7 +181,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Resets the learning settings of the Personalizer service to default. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<PolicyContract>> ResetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<PersonalizerPolicyOptions>> ResetAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateResetRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -189,9 +189,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        PolicyContract value = default;
+                        PersonalizerPolicyOptions value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PolicyContract.DeserializePolicyContract(document.RootElement);
+                        value = PersonalizerPolicyOptions.DeserializePersonalizerPolicyOptions(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -201,7 +201,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Resets the learning settings of the Personalizer service to default. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<PolicyContract> Reset(CancellationToken cancellationToken = default)
+        public Response<PersonalizerPolicyOptions> Reset(CancellationToken cancellationToken = default)
         {
             using var message = CreateResetRequest();
             _pipeline.Send(message, cancellationToken);
@@ -209,9 +209,9 @@ namespace Azure.AI.Personalizer
             {
                 case 200:
                     {
-                        PolicyContract value = default;
+                        PersonalizerPolicyOptions value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PolicyContract.DeserializePolicyContract(document.RootElement);
+                        value = PersonalizerPolicyOptions.DeserializePersonalizerPolicyOptions(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
