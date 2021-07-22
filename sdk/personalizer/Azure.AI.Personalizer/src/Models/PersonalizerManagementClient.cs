@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -33,12 +34,13 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PersonalizerManagementClient(string endpoint, TokenCredential credential, PersonalizerClientOptions options = null)
+        public PersonalizerManagementClient(Uri endpoint, TokenCredential credential, PersonalizerClientOptions options = null)
         {
-            LogClient = new LogClient(endpoint, credential, options);
-            ServiceConfigurationClient = new ServiceConfigurationClient(endpoint, credential, options);
-            ModelClient = new ModelClient(endpoint, credential, options);
-            PolicyClient = new PolicyClient(endpoint, credential, options);
+            string stringEndpoint = endpoint.ToString();
+            LogClient = new LogClient(stringEndpoint, credential, options);
+            ServiceConfigurationClient = new ServiceConfigurationClient(stringEndpoint, credential, options);
+            ModelClient = new ModelClient(stringEndpoint, credential, options);
+            PolicyClient = new PolicyClient(stringEndpoint, credential, options);
         }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
@@ -47,10 +49,11 @@ namespace Azure.AI.Personalizer
         /// <param name="options"> The options for configuring the client. </param>
         public PersonalizerManagementClient(string endpoint, AzureKeyCredential credential, PersonalizerClientOptions options = null)
         {
-            LogClient = new LogClient(endpoint, credential, options);
-            ServiceConfigurationClient = new ServiceConfigurationClient(endpoint, credential, options);
-            ModelClient = new ModelClient(endpoint, credential, options);
-            PolicyClient = new PolicyClient(endpoint, credential, options);
+            string stringEndpoint = endpoint.ToString();
+            LogClient = new LogClient(stringEndpoint, credential, options);
+            ServiceConfigurationClient = new ServiceConfigurationClient(stringEndpoint, credential, options);
+            ModelClient = new ModelClient(stringEndpoint, credential, options);
+            PolicyClient = new PolicyClient(stringEndpoint, credential, options);
         }
 
         /// <summary> Delete all logs of Rank and Reward calls stored by Personalizer. </summary>
@@ -84,7 +87,7 @@ namespace Azure.AI.Personalizer
         /// <summary> Update the Personalizer service configuration. </summary>
         /// <param name="config"> The personalizer service configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerServiceConfiguration>> UpdatePersonalizerConfigurationAsync(PersonalizerServiceConfiguration config, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerServiceProperties >> UpdatePersonalizerConfigurationAsync(PersonalizerServiceProperties  config, CancellationToken cancellationToken = default)
         {
             return await ServiceConfigurationClient.UpdateAsync(config, cancellationToken).ConfigureAwait(false);
         }
@@ -92,21 +95,21 @@ namespace Azure.AI.Personalizer
         /// <summary> Update the Personalizer service configuration. </summary>
         /// <param name="config"> The personalizer service configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerServiceConfiguration> UpdatePersonalizerConfiguration(PersonalizerServiceConfiguration config, CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerServiceProperties > UpdatePersonalizerConfiguration(PersonalizerServiceProperties  config, CancellationToken cancellationToken = default)
         {
             return ServiceConfigurationClient.Update(config, cancellationToken);
         }
 
         /// <summary> Get the Personalizer service configuration. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerServiceConfiguration>> GetPersonalizerConfigurationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerServiceProperties >> GetPersonalizerConfigurationAsync(CancellationToken cancellationToken = default)
         {
             return await ServiceConfigurationClient.GetAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the Personalizer service configuration. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerServiceConfiguration> GetPersonalizerConfiguration(CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerServiceProperties > GetPersonalizerConfiguration(CancellationToken cancellationToken = default)
         {
             return ServiceConfigurationClient.Get(cancellationToken);
         }

@@ -35,7 +35,5 @@ namespace Azure.AI.Personalizer.Models
 
         /// <summary> Id of the action. </summary>
         public string Id { get; }
-        /// <summary> List of dictionaries containing features. </summary>
-        public IList<object> Features { get; }
     }
 }

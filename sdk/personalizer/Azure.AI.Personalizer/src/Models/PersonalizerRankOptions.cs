@@ -10,6 +10,17 @@ namespace Azure.AI.Personalizer.Models
     public partial class PersonalizerRankOptions
     {
         /// <summary>
+        /// Features of the context used for Personalizer as a
+        /// dictionary of dictionaries. This is determined by your application, and
+        /// typically includes features about the current user, their
+        /// device, profile information, aggregated data about time and date, etc.
+        /// Features should not include personally identifiable information (PII),
+        /// unique UserIDs, or precise timestamps.
+        /// Need to be JSON serializable. https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features.
+        /// </summary>
+        public IList<object> ContextFeatures { get; }
+
+        /// <summary>
         /// Initializes a new instance of the RankRequest class.
         /// </summary>
         public PersonalizerRankOptions()
@@ -34,7 +45,9 @@ namespace Azure.AI.Personalizer.Models
         /// typically includes features about the current user, their
         /// device, profile information, aggregated data about time and date, etc.
         /// Features should not include personally identifiable information (PII),
-        /// unique UserIDs, or precise timestamps.</param>
+        /// unique UserIDs, or precise timestamps. Need to be JSON serializable.
+        /// https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features.
+        /// </param>
         /// <param name="excludedActions">The set of action ids to exclude from ranking.</param>
         /// <param name="eventId">Optionally pass an eventId that uniquely
         /// identifies this Rank event.

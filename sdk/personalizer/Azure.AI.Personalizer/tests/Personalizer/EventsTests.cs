@@ -17,7 +17,7 @@ namespace Azure.AI.Personalizer.Tests
         public async Task Reward()
         {
             PersonalizerClient client = GetPersonalizerClient();
-            await client.RewardAsync("123456789", new PersonalizerRewardOptions((float)0.5));
+            await client.RewardAsync("123456789", (float)0.5);
         }
 
         [Test]

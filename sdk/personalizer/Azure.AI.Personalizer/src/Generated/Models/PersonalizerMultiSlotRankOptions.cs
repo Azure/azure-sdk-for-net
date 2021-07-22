@@ -43,16 +43,6 @@ namespace Azure.AI.Personalizer.Models
             Actions = actions.ToList();
             Slots = slots.ToList();
         }
-
-        /// <summary>
-        /// Features of the context used for Personalizer as a
-        /// dictionary of dictionaries. This is determined by your application, and
-        /// typically includes features about the current user, their
-        /// device, profile information, aggregated data about time and date, etc.
-        /// Features should not include personally identifiable information (PII),
-        /// unique UserIDs, or precise timestamps.
-        /// </summary>
-        public IList<object> ContextFeatures { get; }
         /// <summary>
         /// The set of actions the Personalizer service can pick from.
         /// The set should not contain more than 50 actions.

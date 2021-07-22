@@ -18,7 +18,7 @@ namespace Azure.AI.Personalizer.Tests
         public async Task GetServiceConfiguration()
         {
             PersonalizerManagementClient client = GetPersonalizerManagementClient();
-            PersonalizerServiceConfiguration defaultConfig = await client.GetPersonalizerConfigurationAsync();
+            PersonalizerServiceProperties  defaultConfig = await client.GetPersonalizerConfigurationAsync();
             Assert.AreEqual(TimeSpan.FromMinutes(1), defaultConfig.RewardWaitTime);
             Assert.AreEqual(TimeSpan.FromHours(1), defaultConfig.ModelExportFrequency);
             Assert.AreEqual(1, defaultConfig.DefaultReward);
@@ -43,7 +43,7 @@ namespace Azure.AI.Personalizer.Tests
             double newDefaultReward = 1.0;
             string newRewardFuntion = "average";
             double newExplorationPercentage = 0.2f;
-            var config = new PersonalizerServiceConfiguration(
+            var config = new PersonalizerServiceProperties (
                 rewardAggregation: newRewardFuntion,
                 modelExportFrequency: modelExportFrequency,
                 defaultReward: (float)newDefaultReward,
@@ -51,7 +51,7 @@ namespace Azure.AI.Personalizer.Tests
                 explorationPercentage: (float)newExplorationPercentage,
                 logRetentionDays: int.MaxValue
             );
-            PersonalizerServiceConfiguration result = await client.UpdatePersonalizerConfigurationAsync(config);
+            PersonalizerServiceProperties  result = await client.UpdatePersonalizerConfigurationAsync(config);
             Assert.AreEqual(config.DefaultReward, result.DefaultReward);
             Assert.True(Math.Abs(config.ExplorationPercentage - result.ExplorationPercentage) < 1e-3);
             Assert.AreEqual(config.ModelExportFrequency, result.ModelExportFrequency);

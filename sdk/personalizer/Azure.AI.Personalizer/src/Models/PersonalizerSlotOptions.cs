@@ -12,6 +12,12 @@ namespace Azure.AI.Personalizer.Models
     public partial class PersonalizerSlotOptions
     {
         /// <summary>
+        /// List of dictionaries containing slot features.
+        /// Need to be JSON serializable. https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features.
+        /// </summary>
+        public IList<object> Features { get; }
+
+        /// <summary>
         /// Initializes a new instance of the RankRequest class.
         /// </summary>
         public PersonalizerSlotOptions()
@@ -22,7 +28,8 @@ namespace Azure.AI.Personalizer.Models
         /// <summary> Initializes a new instance of SlotRequest. </summary>
         /// <param name="id"> Slot ID. </param>
         /// <param name="baselineAction">
-        /// <param name="excludedActions">The set of action ids to exclude from ranking.</param>
+        /// <param name="excludedActions">The set of action ids to exclude from ranking. Need to be JSON serializable.
+        /// https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features. </param>
         /// <param name="features"> List of dictionaries containing features. </param>
         /// The &apos;baseline action&apos; ID for the slot.
         ///

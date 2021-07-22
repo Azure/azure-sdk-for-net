@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.Personalizer.Models
 {
-    public partial class PersonalizerServiceConfiguration : IUtf8JsonSerializable
+    public partial class PersonalizerServiceProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.AI.Personalizer.Models
             if (Optional.IsDefined(LogMirrorSasUri))
             {
                 writer.WritePropertyName("logMirrorSasUri");
-                writer.WriteStringValue(LogMirrorSasUri);
+                writer.WriteStringValue(LogMirrorSasUri.AbsoluteUri);
             }
             writer.WritePropertyName("logRetentionDays");
             writer.WriteNumberValue(LogRetentionDays);
@@ -66,7 +66,7 @@ namespace Azure.AI.Personalizer.Models
             writer.WriteEndObject();
         }
 
-        internal static PersonalizerServiceConfiguration DeserializePersonalizerServiceConfiguration(JsonElement element)
+        internal static PersonalizerServiceProperties DeserializePersonalizerServiceProperties(JsonElement element)
         {
             TimeSpan rewardWaitTime = default;
             float defaultReward = default;
@@ -74,7 +74,7 @@ namespace Azure.AI.Personalizer.Models
             float explorationPercentage = default;
             TimeSpan modelExportFrequency = default;
             Optional<bool> logMirrorEnabled = default;
-            Optional<string> logMirrorSasUri = default;
+            Optional<Uri> logMirrorSasUri = default;
             int logRetentionDays = default;
             Optional<DateTimeOffset> lastConfigurationEditDate = default;
             Optional<PersonalizerLearningMode> learningMode = default;
@@ -120,7 +120,12 @@ namespace Azure.AI.Personalizer.Models
                 }
                 if (property.NameEquals("logMirrorSasUri"))
                 {
-                    logMirrorSasUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    logMirrorSasUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("logRetentionDays"))
@@ -179,7 +184,7 @@ namespace Azure.AI.Personalizer.Models
                     continue;
                 }
             }
-            return new PersonalizerServiceConfiguration(rewardWaitTime, defaultReward, rewardAggregation, explorationPercentage, modelExportFrequency, Optional.ToNullable(logMirrorEnabled), logMirrorSasUri.Value, logRetentionDays, Optional.ToNullable(lastConfigurationEditDate), Optional.ToNullable(learningMode), Optional.ToNullable(isAutoOptimizationEnabled), Optional.ToNullable(autoOptimizationFrequency), Optional.ToNullable(autoOptimizationStartDate));
+            return new PersonalizerServiceProperties(rewardWaitTime, defaultReward, rewardAggregation, explorationPercentage, modelExportFrequency, Optional.ToNullable(logMirrorEnabled), logMirrorSasUri.Value, logRetentionDays, Optional.ToNullable(lastConfigurationEditDate), Optional.ToNullable(learningMode), Optional.ToNullable(isAutoOptimizationEnabled), Optional.ToNullable(autoOptimizationFrequency), Optional.ToNullable(autoOptimizationStartDate));
         }
     }
 }

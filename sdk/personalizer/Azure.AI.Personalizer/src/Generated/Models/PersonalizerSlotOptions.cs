@@ -43,8 +43,6 @@ namespace Azure.AI.Personalizer.Models
 
         /// <summary> Slot ID. </summary>
         public string Id { get; }
-        /// <summary> List of dictionaries containing slot features. </summary>
-        public IList<object> Features { get; }
         /// <summary> List of excluded action Ids. </summary>
         public IList<string> ExcludedActions { get; }
         /// <summary>

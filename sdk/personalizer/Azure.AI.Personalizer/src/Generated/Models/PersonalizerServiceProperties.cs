@@ -10,9 +10,9 @@ using System;
 namespace Azure.AI.Personalizer.Models
 {
     /// <summary> The configuration of the service. </summary>
-    public partial class PersonalizerServiceConfiguration
+    public partial class PersonalizerServiceProperties
     {
-        /// <summary> Initializes a new instance of PersonalizerServiceConfiguration. </summary>
+        /// <summary> Initializes a new instance of PersonalizerServiceProperties. </summary>
         /// <param name="rewardWaitTime">
         /// The time span waited until a request is marked with the default reward
         /// and should be between 5 seconds and 2 days.
@@ -29,7 +29,7 @@ namespace Azure.AI.Personalizer.Models
         /// </param>
         /// <param name="logRetentionDays"> Number of days historical logs are to be maintained. -1 implies the logs will never be deleted. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rewardAggregation"/> is null. </exception>
-        public PersonalizerServiceConfiguration(TimeSpan rewardWaitTime, float defaultReward, string rewardAggregation, float explorationPercentage, TimeSpan modelExportFrequency, int logRetentionDays)
+        public PersonalizerServiceProperties(TimeSpan rewardWaitTime, float defaultReward, string rewardAggregation, float explorationPercentage, TimeSpan modelExportFrequency, int logRetentionDays)
         {
             if (rewardAggregation == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.AI.Personalizer.Models
             LogRetentionDays = logRetentionDays;
         }
 
-        /// <summary> Initializes a new instance of PersonalizerServiceConfiguration. </summary>
+        /// <summary> Initializes a new instance of PersonalizerServiceProperties. </summary>
         /// <param name="rewardWaitTime">
         /// The time span waited until a request is marked with the default reward
         /// and should be between 5 seconds and 2 days.
@@ -71,7 +71,7 @@ namespace Azure.AI.Personalizer.Models
         /// \r\nsee http://en.wikipedia.org/wiki/ISO_8601#Durations
         /// </param>
         /// <param name="autoOptimizationStartDate"> Date when the first automatic optimization evaluation must be performed. Only relevant if IsAutoOptimizationEnabled is true. </param>
-        internal PersonalizerServiceConfiguration(TimeSpan rewardWaitTime, float defaultReward, string rewardAggregation, float explorationPercentage, TimeSpan modelExportFrequency, bool? logMirrorEnabled, string logMirrorSasUri, int logRetentionDays, DateTimeOffset? lastConfigurationEditDate, PersonalizerLearningMode? learningMode, bool? isAutoOptimizationEnabled, TimeSpan? autoOptimizationFrequency, DateTimeOffset? autoOptimizationStartDate)
+        internal PersonalizerServiceProperties(TimeSpan rewardWaitTime, float defaultReward, string rewardAggregation, float explorationPercentage, TimeSpan modelExportFrequency, bool? logMirrorEnabled, Uri logMirrorSasUri, int logRetentionDays, DateTimeOffset? lastConfigurationEditDate, PersonalizerLearningMode? learningMode, bool? isAutoOptimizationEnabled, TimeSpan? autoOptimizationFrequency, DateTimeOffset? autoOptimizationStartDate)
         {
             RewardWaitTime = rewardWaitTime;
             DefaultReward = defaultReward;
@@ -109,8 +109,6 @@ namespace Azure.AI.Personalizer.Models
         public TimeSpan ModelExportFrequency { get; set; }
         /// <summary> Flag indicates whether log mirroring is enabled. </summary>
         public bool? LogMirrorEnabled { get; set; }
-        /// <summary> Azure storage account container SAS URI for log mirroring. </summary>
-        public string LogMirrorSasUri { get; set; }
         /// <summary> Number of days historical logs are to be maintained. -1 implies the logs will never be deleted. </summary>
         public int LogRetentionDays { get; set; }
         /// <summary> Last time model training configuration was updated. </summary>
