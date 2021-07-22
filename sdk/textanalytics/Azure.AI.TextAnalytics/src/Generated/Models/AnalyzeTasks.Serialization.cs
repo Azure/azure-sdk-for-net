@@ -24,6 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IReadOnlyList<KeyPhraseExtractionTasksItem>> keyPhraseExtractionTasks = default;
             Optional<IReadOnlyList<EntityLinkingTasksItem>> entityLinkingTasks = default;
             Optional<IReadOnlyList<SentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
+            Optional<IReadOnlyList<TasksStateTasksExtractiveSummarizationTasksItem>> extractiveSummarizationTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completed"))
@@ -121,8 +122,23 @@ namespace Azure.AI.TextAnalytics.Models
                     sentimentAnalysisTasks = array;
                     continue;
                 }
+                if (property.NameEquals("extractiveSummarizationTasks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<TasksStateTasksExtractiveSummarizationTasksItem> array = new List<TasksStateTasksExtractiveSummarizationTasksItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TasksStateTasksExtractiveSummarizationTasksItem.DeserializeTasksStateTasksExtractiveSummarizationTasksItem(item));
+                    }
+                    extractiveSummarizationTasks = array;
+                    continue;
+                }
             }
-            return new AnalyzeTasks(completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks));
+            return new AnalyzeTasks(completed, failed, inProgress, total, Optional.ToList(entityRecognitionTasks), Optional.ToList(entityRecognitionPiiTasks), Optional.ToList(keyPhraseExtractionTasks), Optional.ToList(entityLinkingTasks), Optional.ToList(sentimentAnalysisTasks), Optional.ToList(extractiveSummarizationTasks));
         }
     }
 }
