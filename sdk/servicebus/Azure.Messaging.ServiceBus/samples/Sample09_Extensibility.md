@@ -221,8 +221,7 @@ public static PluginSessionProcessor CreatePluginSessionProcessor(
 }
 ```
 
-Finally, here is how consuming code might use these types.
-Since we have derived from the library types, the only thing that would need to be updated to use this pattern is the place where the derived types are created. All other usages can be left as is:
+Finally, here is how consuming code might use these types. Since we have derived from the library types, the only thing that would need to be updated to use this pattern is the place where the derived types are created. All other usages can be left as is:
 
 ```C# Snippet:End2EndPluginReceiver
 string connectionString = "<connection_string>";
