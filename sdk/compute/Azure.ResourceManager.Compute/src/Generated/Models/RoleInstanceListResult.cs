@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     internal partial class RoleInstanceListResult
     {
         /// <summary> Initializes a new instance of RoleInstanceListResult. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RoleInstanceListResult(IEnumerable<RoleInstance> value)
         {
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of RoleInstanceListResult. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
         internal RoleInstanceListResult(IReadOnlyList<RoleInstance> value, string nextLink)
         {
             Value = value;

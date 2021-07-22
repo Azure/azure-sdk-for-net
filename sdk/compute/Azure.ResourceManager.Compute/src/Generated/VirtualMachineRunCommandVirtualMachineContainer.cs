@@ -327,11 +327,11 @@ namespace Azure.ResourceManager.Compute
         {
             Page<VirtualMachineRunCommandVirtualMachine> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineContainer.ListByVirtualMachine");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    var response = _restClient.ListByVirtualMachine(Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineRunCommandVirtualMachine(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -342,11 +342,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<VirtualMachineRunCommandVirtualMachine> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineContainer.ListByVirtualMachine");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    var response = _restClient.ListByVirtualMachineNextPage(nextLink, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineRunCommandVirtualMachine(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -366,11 +366,11 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<VirtualMachineRunCommandVirtualMachine>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineContainer.ListByVirtualMachine");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListByVirtualMachineAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineRunCommandVirtualMachine(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -381,11 +381,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<VirtualMachineRunCommandVirtualMachine>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineContainer.ListByVirtualMachine");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.ListByVirtualMachineNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineRunCommandVirtualMachine(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of VirtualMachineRunCommandVirtualMachine for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="VirtualMachineRunCommandVirtualMachine" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Filters the list of VirtualMachineRunCommandVirtualMachine for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="VirtualMachineRunCommandVirtualMachine" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>

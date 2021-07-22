@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
@@ -364,6 +365,41 @@ namespace Azure.ResourceManager.Compute
                 TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken);
                 var originalResponse = _restClient.GetByVirtualMachine(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachineRunCommandVirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary> Gets specific run command for a subscription in a location. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RunCommandDocument>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineOperations.Get");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets specific run command for a subscription in a location. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RunCommandDocument> Get(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineOperations.Get");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

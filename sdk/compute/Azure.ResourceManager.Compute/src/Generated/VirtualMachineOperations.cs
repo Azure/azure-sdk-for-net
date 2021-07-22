@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
@@ -520,6 +521,52 @@ namespace Azure.ResourceManager.Compute
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Lists all available virtual machine sizes to which the specified virtual machine can be resized. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
+        public Pageable<VirtualMachineSize> ListAvailableSizes(CancellationToken cancellationToken = default)
+        {
+            Page<VirtualMachineSize> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineOperations.ListAvailableSizes");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.ListAvailableSizes(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Lists all available virtual machine sizes to which the specified virtual machine can be resized. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
+        public AsyncPageable<VirtualMachineSize> ListAvailableSizesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<VirtualMachineSize>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineOperations.ListAvailableSizes");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.ListAvailableSizesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary> Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs. </summary>

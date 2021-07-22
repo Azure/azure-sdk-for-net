@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="type"> The type. </param>
         /// <param name="location"> Resource Location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="sku"> . </param>
-        /// <param name="properties"> . </param>
+        /// <param name="sku"></param>
+        /// <param name="properties"></param>
         internal RoleInstance(TenantResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceProperties properties) : base(id, name, type)
         {
             Location = location;

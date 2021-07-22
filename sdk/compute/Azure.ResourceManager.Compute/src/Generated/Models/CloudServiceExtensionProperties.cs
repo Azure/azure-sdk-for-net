@@ -26,17 +26,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="autoUpgradeMinorVersion"> Explicitly specify whether platform can automatically upgrade typeHandlerVersion to higher minor versions when they become available. </param>
         /// <param name="settings"> Public settings for the extension. For JSON extensions, this is the JSON settings for the extension. For XML Extension (like RDP), this is the XML setting for the extension. </param>
         /// <param name="protectedSettings"> Protected settings for the extension which are encrypted before sent to the role instance. </param>
-        /// <param name="protectedSettingsFromKeyVault"> . </param>
+        /// <param name="protectedSettingsFromKeyVault"></param>
         /// <param name="forceUpdateTag">
         /// Tag to force apply the provided public and protected settings.
-        /// 
         /// Changing the tag value allows for re-running the extension without changing any of the public or protected settings.
-        /// 
         /// If forceUpdateTag is not changed, updates to public or protected settings would still be applied by the handler.
-        /// 
         /// If neither forceUpdateTag nor any of public or protected settings change, extension would flow to the role instance with the same sequence-number, and
-        /// 
-        /// it is up to handler implementation whether to re-run it or not.
+        /// it is up to handler implementation whether to re-run it or not
         /// </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="rolesAppliedTo"> Optional list of roles to apply this extension. If property is not specified or &apos;*&apos; is specified, extension is applied to all roles in the cloud service. </param>
@@ -69,14 +65,10 @@ namespace Azure.ResourceManager.Compute.Models
         public CloudServiceVaultAndSecretReference ProtectedSettingsFromKeyVault { get; set; }
         /// <summary>
         /// Tag to force apply the provided public and protected settings.
-        /// 
         /// Changing the tag value allows for re-running the extension without changing any of the public or protected settings.
-        /// 
         /// If forceUpdateTag is not changed, updates to public or protected settings would still be applied by the handler.
-        /// 
         /// If neither forceUpdateTag nor any of public or protected settings change, extension would flow to the role instance with the same sequence-number, and
-        /// 
-        /// it is up to handler implementation whether to re-run it or not.
+        /// it is up to handler implementation whether to re-run it or not
         /// </summary>
         public string ForceUpdateTag { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>

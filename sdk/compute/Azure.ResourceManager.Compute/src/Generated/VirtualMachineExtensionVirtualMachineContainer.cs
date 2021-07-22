@@ -319,52 +319,6 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Filters the list of VirtualMachineExtensionVirtualMachine for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineContainer.ListAsGenericResource");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(VirtualMachineExtensionVirtualMachineOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of VirtualMachineExtensionVirtualMachine for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineContainer.ListAsGenericResource");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(VirtualMachineExtensionVirtualMachineOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> The operation to get all extensions of a Virtual Machine. </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -395,6 +349,52 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _restClient.List(Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 return Response.FromValue(response.Value.Value.Select(data => new VirtualMachineExtensionVirtualMachine(Parent, data)).ToArray() as IReadOnlyList<VirtualMachineExtensionVirtualMachine>, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Filters the list of <see cref="VirtualMachineExtensionVirtualMachine" /> for this resource group represented as generic resources. </summary>
+        /// <param name="nameFilter"> The filter used in this operation. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
+        /// <param name="top"> The number of results to return. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
+        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineContainer.ListAsGenericResource");
+            scope.Start();
+            try
+            {
+                var filters = new ResourceFilterCollection(VirtualMachineExtensionVirtualMachineOperations.ResourceType);
+                filters.SubstringFilter = nameFilter;
+                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Filters the list of <see cref="VirtualMachineExtensionVirtualMachine" /> for this resource group represented as generic resources. </summary>
+        /// <param name="nameFilter"> The filter used in this operation. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
+        /// <param name="top"> The number of results to return. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
+        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineExtensionVirtualMachineContainer.ListAsGenericResource");
+            scope.Start();
+            try
+            {
+                var filters = new ResourceFilterCollection(VirtualMachineExtensionVirtualMachineOperations.ResourceType);
+                filters.SubstringFilter = nameFilter;
+                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

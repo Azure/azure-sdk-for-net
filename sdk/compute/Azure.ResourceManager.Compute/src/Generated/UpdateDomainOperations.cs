@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
@@ -88,6 +89,82 @@ namespace Azure.ResourceManager.Compute
         public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
+        }
+
+        /// <summary> Updates the role instances in the specified update domain. </summary>
+        /// <param name="parameters"> The update domain object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response> WalkUpdateDomainAsync(UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainOperations.WalkUpdateDomain");
+            scope.Start();
+            try
+            {
+                var operation = await StartWalkUpdateDomainAsync(parameters, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the role instances in the specified update domain. </summary>
+        /// <param name="parameters"> The update domain object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response WalkUpdateDomain(UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainOperations.WalkUpdateDomain");
+            scope.Start();
+            try
+            {
+                var operation = StartWalkUpdateDomain(parameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the role instances in the specified update domain. </summary>
+        /// <param name="parameters"> The update domain object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<CloudServicesUpdateDomainWalkUpdateDomainOperation> StartWalkUpdateDomainAsync(UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainOperations.StartWalkUpdateDomain");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.WalkUpdateDomainAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _restClient.CreateWalkUpdateDomainRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the role instances in the specified update domain. </summary>
+        /// <param name="parameters"> The update domain object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual CloudServicesUpdateDomainWalkUpdateDomainOperation StartWalkUpdateDomain(UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainOperations.StartWalkUpdateDomain");
+            scope.Start();
+            try
+            {
+                var response = _restClient.WalkUpdateDomain(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                return new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _restClient.CreateWalkUpdateDomainRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

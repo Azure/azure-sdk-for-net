@@ -2,10 +2,6 @@
 
 Run `dotnet build /t:GenerateCode` to generate code.
 
-# Azure.ResourceManager.Compute
-
-> see https://aka.ms/autorest
-
 ``` yaml
 azure-arm: true
 library-name: Compute
@@ -70,7 +66,7 @@ operation-group-to-parent:
   SharedGalleryImages: Microsoft.Compute/locations/sharedGalleries
   SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images
   # TODO -- temporary solution, should be removed after Shivangi's PR merges
-  Locations: subscriptions ## this operation group comes from directive
+#   Locations: subscriptions ## this operation group comes from directive
 operation-group-is-extension: VirtualMachineRunCommands;VirtualMachineScaleSetVMRunCommands;VirtualMachineScaleSetVMExtensions;VirtualMachineExtensions
 directive:
   - from: compute.json
@@ -101,18 +97,18 @@ directive:
               delete $[key]
           }
       }
-  - from: swagger-document # TODO -- temporary solution, should be removed after Shivangi's PR merges
-    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands/{commandId}'].get.operationId
-    transform: return "Locations_GetVirtualMachineRunCommand";
-  - from: swagger-document # TODO -- temporary solution, should be removed after Shivangi's PR merges
-    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands'].get.operationId
-    transform: return "VirtualMachineRunCommands_ListBySubscription";
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands'].get.operationId # TODO -- temporary solution, should be removed after Shivangi's PR merges
-    transform: return "VirtualMachineRunCommands_List";
-  - from: swagger-document # TODO -- temporary solution, should be removed after Shivangi's PR merges
-    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands'].get.operationId
-    transform: return "Locations_ListVirtualMachineRunCommands"
+#   - from: swagger-document # TODO -- temporary solution, should be removed after Shivangi's PR merges
+#     where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands/{commandId}'].get.operationId
+#     transform: return "Locations_GetVirtualMachineRunCommand";
+#   - from: swagger-document # TODO -- temporary solution, should be removed after Shivangi's PR merges
+#     where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands'].get.operationId
+#     transform: return "VirtualMachineRunCommands_ListBySubscription";
+#   - from: swagger-document
+#     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands'].get.operationId # TODO -- temporary solution, should be removed after Shivangi's PR merges
+#     transform: return "VirtualMachineRunCommands_List";
+#   - from: swagger-document # TODO -- temporary solution, should be removed after Shivangi's PR merges
+#     where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/runCommands'].get.operationId
+#     transform: return "Locations_ListVirtualMachineRunCommands"
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}'].put.operationId
     transform: return "PrivateEndpointConnections_CreateOrUpdate"

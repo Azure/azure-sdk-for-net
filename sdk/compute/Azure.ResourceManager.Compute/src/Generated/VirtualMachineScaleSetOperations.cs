@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
@@ -498,6 +499,158 @@ namespace Azure.ResourceManager.Compute
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetSku" /> that may take multiple service requests to iterate over. </returns>
+        public Pageable<VirtualMachineScaleSetSku> ListSkus(CancellationToken cancellationToken = default)
+        {
+            Page<VirtualMachineScaleSetSku> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.ListSkus");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.ListSkus(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<VirtualMachineScaleSetSku> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.ListSkus");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.ListSkusNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSetSku" /> that may take multiple service requests to iterate over. </returns>
+        public AsyncPageable<VirtualMachineScaleSetSku> ListSkusAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<VirtualMachineScaleSetSku>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.ListSkus");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.ListSkusAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<VirtualMachineScaleSetSku>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.ListSkus");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.ListSkusNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets list of OS upgrades on a VM scale set instance. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="UpgradeOperationHistoricalStatusInfo" /> that may take multiple service requests to iterate over. </returns>
+        public Pageable<UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistory(CancellationToken cancellationToken = default)
+        {
+            Page<UpgradeOperationHistoricalStatusInfo> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.GetOSUpgradeHistory");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.GetOSUpgradeHistory(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<UpgradeOperationHistoricalStatusInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.GetOSUpgradeHistory");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.GetOSUpgradeHistoryNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Gets list of OS upgrades on a VM scale set instance. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="UpgradeOperationHistoricalStatusInfo" /> that may take multiple service requests to iterate over. </returns>
+        public AsyncPageable<UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistoryAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<UpgradeOperationHistoricalStatusInfo>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.GetOSUpgradeHistory");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.GetOSUpgradeHistoryAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<UpgradeOperationHistoricalStatusInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetOperations.GetOSUpgradeHistory");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.GetOSUpgradeHistoryNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases the compute resources. You are not billed for the compute resources that this virtual machine scale set deallocates. </summary>

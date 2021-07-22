@@ -18,30 +18,24 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceProperties. </summary>
         /// <param name="packageUrl">
         /// Specifies a URL that refers to the location of the service package in the Blob service. The service package URL can be Shared Access Signature (SAS) URI from any storage account.
-        /// 
         /// This is a write-only property and is not returned in GET calls.
         /// </param>
         /// <param name="configuration"> Specifies the XML service configuration (.cscfg) for the cloud service. </param>
         /// <param name="configurationUrl">
         /// Specifies a URL that refers to the location of the service configuration in the Blob service. The service package URL  can be Shared Access Signature (SAS) URI from any storage account.
-        /// 
         /// This is a write-only property and is not returned in GET calls.
         /// </param>
         /// <param name="startCloudService">
         /// (Optional) Indicates whether to start the cloud service immediately after it is created. The default value is `true`.
-        /// 
         /// If false, the service model is still deployed, but the code is not run immediately. Instead, the service is PoweredOff until you call Start, at which time the service will be started. A deployed service still incurs charges, even if it is poweredoff.
         /// </param>
         /// <param name="allowModelOverride">
         /// (Optional) Indicates whether the role sku properties (roleProfile.roles.sku) specified in the model/template should override the role instance count and vm size specified in the .cscfg and .csdef respectively.
-        /// 
         /// The default value is `false`.
         /// </param>
         /// <param name="upgradeMode">
         /// Update mode for the cloud service. Role instances are allocated to update domains when the service is deployed. Updates can be initiated manually in each update domain or initiated automatically in all update domains.
-        /// 
         /// Possible Values are &lt;br /&gt;&lt;br /&gt;**Auto**&lt;br /&gt;&lt;br /&gt;**Manual** &lt;br /&gt;&lt;br /&gt;**Simultaneous**&lt;br /&gt;&lt;br /&gt;
-        /// 
         /// If not specified, the default value is Auto. If set to Manual, PUT UpdateDomain must be called to apply the update. If set to Auto, the update is automatically applied to each update domain in sequence.
         /// </param>
         /// <param name="roleProfile"> Describes the role profile for the cloud service. </param>
@@ -68,7 +62,6 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary>
         /// Specifies a URL that refers to the location of the service package in the Blob service. The service package URL can be Shared Access Signature (SAS) URI from any storage account.
-        /// 
         /// This is a write-only property and is not returned in GET calls.
         /// </summary>
         public string PackageUrl { get; set; }
@@ -76,27 +69,22 @@ namespace Azure.ResourceManager.Compute.Models
         public string Configuration { get; set; }
         /// <summary>
         /// Specifies a URL that refers to the location of the service configuration in the Blob service. The service package URL  can be Shared Access Signature (SAS) URI from any storage account.
-        /// 
         /// This is a write-only property and is not returned in GET calls.
         /// </summary>
         public string ConfigurationUrl { get; set; }
         /// <summary>
         /// (Optional) Indicates whether to start the cloud service immediately after it is created. The default value is `true`.
-        /// 
         /// If false, the service model is still deployed, but the code is not run immediately. Instead, the service is PoweredOff until you call Start, at which time the service will be started. A deployed service still incurs charges, even if it is poweredoff.
         /// </summary>
         public bool? StartCloudService { get; set; }
         /// <summary>
         /// (Optional) Indicates whether the role sku properties (roleProfile.roles.sku) specified in the model/template should override the role instance count and vm size specified in the .cscfg and .csdef respectively.
-        /// 
         /// The default value is `false`.
         /// </summary>
         public bool? AllowModelOverride { get; set; }
         /// <summary>
         /// Update mode for the cloud service. Role instances are allocated to update domains when the service is deployed. Updates can be initiated manually in each update domain or initiated automatically in all update domains.
-        /// 
         /// Possible Values are &lt;br /&gt;&lt;br /&gt;**Auto**&lt;br /&gt;&lt;br /&gt;**Manual** &lt;br /&gt;&lt;br /&gt;**Simultaneous**&lt;br /&gt;&lt;br /&gt;
-        /// 
         /// If not specified, the default value is Auto. If set to Manual, PUT UpdateDomain must be called to apply the update. If set to Auto, the update is automatically applied to each update domain in sequence.
         /// </summary>
         public CloudServiceUpgradeMode? UpgradeMode { get; set; }

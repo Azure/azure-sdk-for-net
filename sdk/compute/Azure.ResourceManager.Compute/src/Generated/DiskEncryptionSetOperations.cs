@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 
@@ -332,6 +333,82 @@ namespace Azure.ResourceManager.Compute
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Lists all resources that are encrypted with this disk encryption set. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        public Pageable<string> ListAssociatedResources(CancellationToken cancellationToken = default)
+        {
+            Page<string> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.ListAssociatedResources");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.ListAssociatedResources(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.ListAssociatedResources");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.ListAssociatedResourcesNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Lists all resources that are encrypted with this disk encryption set. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        public AsyncPageable<string> ListAssociatedResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.ListAssociatedResources");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.ListAssociatedResourcesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.ListAssociatedResources");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.ListAssociatedResourcesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

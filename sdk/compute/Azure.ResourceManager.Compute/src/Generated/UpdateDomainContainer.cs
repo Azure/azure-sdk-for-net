@@ -45,110 +45,6 @@ namespace Azure.ResourceManager.Compute
 
         // Container level operations.
 
-        /// <summary> Updates the role instances in the specified update domain. </summary>
-        /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
-        /// <param name="parameters"> The update domain object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateDomain"/> is null. </exception>
-        public virtual Response CreateOrUpdate(string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
-        {
-            if (updateDomain == null)
-            {
-                throw new ArgumentNullException(nameof(updateDomain));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = StartCreateOrUpdate(updateDomain, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates the role instances in the specified update domain. </summary>
-        /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
-        /// <param name="parameters"> The update domain object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateDomain"/> is null. </exception>
-        public async virtual Task<Response> CreateOrUpdateAsync(string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
-        {
-            if (updateDomain == null)
-            {
-                throw new ArgumentNullException(nameof(updateDomain));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var operation = await StartCreateOrUpdateAsync(updateDomain, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates the role instances in the specified update domain. </summary>
-        /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
-        /// <param name="parameters"> The update domain object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateDomain"/> is null. </exception>
-        public virtual CloudServicesUpdateDomainWalkUpdateDomainOperation StartCreateOrUpdate(string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
-        {
-            if (updateDomain == null)
-            {
-                throw new ArgumentNullException(nameof(updateDomain));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.StartCreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _restClient.WalkUpdateDomain(Id.ResourceGroupName, Id.Name, updateDomain, parameters, cancellationToken);
-                return new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _restClient.CreateWalkUpdateDomainRequest(Id.ResourceGroupName, Id.Name, updateDomain, parameters).Request, response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates the role instances in the specified update domain. </summary>
-        /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
-        /// <param name="parameters"> The update domain object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateDomain"/> is null. </exception>
-        public async virtual Task<CloudServicesUpdateDomainWalkUpdateDomainOperation> StartCreateOrUpdateAsync(string updateDomain, UpdateDomainData parameters = null, CancellationToken cancellationToken = default)
-        {
-            if (updateDomain == null)
-            {
-                throw new ArgumentNullException(nameof(updateDomain));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.StartCreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.WalkUpdateDomainAsync(Id.ResourceGroupName, Id.Name, updateDomain, parameters, cancellationToken).ConfigureAwait(false);
-                return new CloudServicesUpdateDomainWalkUpdateDomainOperation(_clientDiagnostics, Pipeline, _restClient.CreateWalkUpdateDomainRequest(Id.ResourceGroupName, Id.Name, updateDomain, parameters).Request, response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
@@ -373,7 +269,7 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of UpdateDomain for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="UpdateDomain" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -396,7 +292,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Filters the list of UpdateDomain for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="UpdateDomain" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
