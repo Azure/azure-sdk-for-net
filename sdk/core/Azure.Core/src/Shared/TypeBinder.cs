@@ -81,6 +81,10 @@ namespace Azure.Monitor.Query
                         switch (memberInfo)
                         {
                             case PropertyInfo propertyInfo:
+                                if (propertyInfo.GetIndexParameters().Length > 0)
+                                {
+                                    continue;
+                                }
                                 members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), propertyInfo.PropertyType), propertyInfo));
                                 break;
                             case FieldInfo fieldInfo:
