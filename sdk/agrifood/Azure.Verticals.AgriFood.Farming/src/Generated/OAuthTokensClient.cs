@@ -64,7 +64,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -116,7 +115,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -168,7 +166,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -237,25 +234,25 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the farmer. </term>
+        ///     <term>ID of the farmer.</term>
         ///   </item>
         ///   <item>
         ///     <term>oAuthProviderId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the OAuthProvider. </term>
+        ///     <term>ID of the OAuthProvider.</term>
         ///   </item>
         ///   <item>
         ///     <term>userRedirectLink</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Link to redirect the user to, at the end of the oauth flow. </term>
+        ///     <term>Link to redirect the user to, at the end of the oauth flow.</term>
         ///   </item>
         ///   <item>
         ///     <term>userRedirectState</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> State to provide back when redirecting the user, at the end of the oauth flow. </term>
+        ///     <term>State to provide back when redirecting the user, at the end of the oauth flow.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -312,25 +309,25 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the farmer. </term>
+        ///     <term>ID of the farmer.</term>
         ///   </item>
         ///   <item>
         ///     <term>oAuthProviderId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the OAuthProvider. </term>
+        ///     <term>ID of the OAuthProvider.</term>
         ///   </item>
         ///   <item>
         ///     <term>userRedirectLink</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Link to redirect the user to, at the end of the oauth flow. </term>
+        ///     <term>Link to redirect the user to, at the end of the oauth flow.</term>
         ///   </item>
         ///   <item>
         ///     <term>userRedirectState</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> State to provide back when redirecting the user, at the end of the oauth flow. </term>
+        ///     <term>State to provide back when redirecting the user, at the end of the oauth flow.</term>
         ///   </item>
         /// </list>
         /// </remarks>

@@ -63,7 +63,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Retrieves all event routes.
         /// Status codes:
-        /// * 200 OK.
+        /// * 200 OK
         /// </summary>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +88,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Retrieves all event routes.
         /// Status codes:
-        /// * 200 OK.
+        /// * 200 OK
         /// </summary>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -374,7 +374,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Retrieves all event routes.
         /// Status codes:
-        /// * 200 OK.
+        /// * 200 OK
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
@@ -406,7 +406,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Retrieves all event routes.
         /// Status codes:
-        /// * 200 OK.
+        /// * 200 OK
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>

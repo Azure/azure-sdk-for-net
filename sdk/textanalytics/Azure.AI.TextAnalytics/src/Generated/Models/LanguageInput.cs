@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Models
     {
         /// <summary> Initializes a new instance of LanguageInput. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
-        /// <param name="text"> . </param>
+        /// <param name="text"></param>
         public LanguageInput(string id, string text)
         {
             Id = id;

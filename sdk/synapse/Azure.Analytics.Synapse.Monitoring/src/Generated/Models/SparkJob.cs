@@ -22,21 +22,21 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         }
 
         /// <summary> Initializes a new instance of SparkJob. </summary>
-        /// <param name="state"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="submitter"> . </param>
-        /// <param name="compute"> . </param>
-        /// <param name="sparkApplicationId"> . </param>
-        /// <param name="livyId"> . </param>
-        /// <param name="timing"> . </param>
-        /// <param name="sparkJobDefinition"> . </param>
-        /// <param name="pipeline"> . </param>
-        /// <param name="jobType"> . </param>
-        /// <param name="submitTime"> . </param>
-        /// <param name="endTime"> . </param>
-        /// <param name="queuedDuration"> . </param>
-        /// <param name="runningDuration"> . </param>
-        /// <param name="totalDuration"> . </param>
+        /// <param name="state"></param>
+        /// <param name="name"></param>
+        /// <param name="submitter"></param>
+        /// <param name="compute"></param>
+        /// <param name="sparkApplicationId"></param>
+        /// <param name="livyId"></param>
+        /// <param name="timing"></param>
+        /// <param name="sparkJobDefinition"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="jobType"></param>
+        /// <param name="submitTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="queuedDuration"></param>
+        /// <param name="runningDuration"></param>
+        /// <param name="totalDuration"></param>
         internal SparkJob(string state, string name, string submitter, string compute, string sparkApplicationId, string livyId, IReadOnlyList<string> timing, string sparkJobDefinition, IReadOnlyList<SparkJob> pipeline, string jobType, DateTimeOffset? submitTime, DateTimeOffset? endTime, string queuedDuration, string runningDuration, string totalDuration)
         {
             State = state;
