@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 1.0.0-preview.4 (2021-07-22)
 
 - Consumes new service metadata capability
 - Simplifies client API surface area:
