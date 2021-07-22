@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics
         Offset,
 
         /// <summary>
-        /// Orders sentences according to their relevance to the text input, as decided by the service.
+        /// Orders sentences according to their relevance to the document input, as decided by the service.
         /// </summary>
         Rank
     }
