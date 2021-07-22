@@ -34,7 +34,7 @@ namespace Azure.Storage.DataMovement
         // authentication from the original job and for updating the jobs for progress tracking
         private AsyncQueue<StorageTransferJob> _jobsToProcess;
         // Not sure if we should keep the jobs that in in progress here
-        // private IList<StorageTransferJob> _jobsInProgress;
+        //private IList<StorageTransferJob> _jobsInProgress;
         // local directory path to put hte memory mapped file of the progress tracking. if we pause or break
         // we will have the information on where to continue from.
         private string _transferStateDirectoryPath;
@@ -171,46 +171,8 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// TODO: Replace generated docs
-        ///
         /// Pauses transfers that are currently being processed.
         /// Does not allow any other transfer start.
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        ///
-        /// TODO: Fix below errors and rmeove suppressions
-#pragma warning disable CA1822 // Mark members as static
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-#pragma warning disable CA1801 // Review unused parameters
-        public async Task StartTransferAsync(CancellationToken token = default)
-#pragma warning restore CA1801 // Review unused parameters
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-#pragma warning restore CA1822 // Mark members as static
-        {
-            /*JobScheduler jobScheduler = new JobScheduler(_transferOptions);
-            List<Task> tasks = new List<Task>();
-
-            while (!_jobsToProcess.IsEmpty)
-            {
-                StorageTransferJob job = await _jobsToProcess.DequeueAsync(token).ConfigureAwait(false);
-                Task task = Task.Factory.StartNew(async () =>
-                {
-                    await job.CreateTransferTaskAsync().ConfigureAwait(false);
-                }, token, default, jobScheduler);
-
-                tasks.Add(task);
-            }
-
-            await Task.WhenAll(tasks).ConfigureAwait(false);*/
-
-            // TODO: repair above code with new parallelism argument system and re-enable
-
-            return;
-        }
-
-        /// <summary>
-        /// Pause transfers.
         /// </summary>
         /// TODO: Returns actual object, or at least in a designated log
         /// file we have a place where people can continue transfers

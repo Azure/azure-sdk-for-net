@@ -10,9 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using CloudNative.CloudEvents.SystemTextJson;
 using CloudEvent = CloudNative.CloudEvents.CloudEvent;
 
 #pragma warning disable AZC0001 // Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/registered_namespaces.html): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.Iot, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
@@ -90,19 +92,18 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
             writer.WriteStartArray();
             foreach (var cloudEvent in cloudEvents)
             {
-                var attributes = cloudEvent.GetAttributes();
                 if (activityId != null &&
-                        !attributes.ContainsKey(TraceParentHeaderName) &&
-                        !attributes.ContainsKey(TraceStateHeaderName))
+                    !cloudEvent.GetPopulatedAttributes().Any(
+                        pair => pair.Key.Name is TraceParentHeaderName or TraceStateHeaderName))
                 {
-                    attributes.Add(TraceParentHeaderName, activityId);
+                    cloudEvent.SetAttributeFromString(TraceParentHeaderName, activityId);
                     if (traceState != null)
                     {
-                        attributes.Add(TraceStateHeaderName, traceState);
+                        cloudEvent.SetAttributeFromString(TraceStateHeaderName, traceState);
                     }
                 }
 
-                byte[] bytes = s_eventFormatter.EncodeStructuredEvent(cloudEvent, out var _);
+                ReadOnlyMemory<byte> bytes = s_eventFormatter.EncodeStructuredModeMessage(cloudEvent, out var _);
                 using JsonDocument document = JsonDocument.Parse(bytes);
                 document.RootElement.WriteTo(writer);
             }

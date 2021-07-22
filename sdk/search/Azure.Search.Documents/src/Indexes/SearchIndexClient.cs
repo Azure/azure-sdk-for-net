@@ -127,7 +127,7 @@ namespace Azure.Search.Documents.Indexes
         private SearchServiceRestClient ServiceClient => LazyInitializer.EnsureInitialized(ref _serviceClient, () => new SearchServiceRestClient(
             _clientDiagnostics,
             _pipeline,
-            Endpoint.ToString(),
+            Endpoint.AbsoluteUri,
             null,
             _version.ToVersionString())
         );
@@ -138,7 +138,7 @@ namespace Azure.Search.Documents.Indexes
         private IndexesRestClient IndexesClient => LazyInitializer.EnsureInitialized(ref _indexesClient, () => new IndexesRestClient(
             _clientDiagnostics,
             _pipeline,
-            Endpoint.ToString(),
+            Endpoint.AbsoluteUri,
             null,
             _version.ToVersionString())
         );
@@ -149,7 +149,7 @@ namespace Azure.Search.Documents.Indexes
         private SynonymMapsRestClient SynonymMapsClient => LazyInitializer.EnsureInitialized(ref _synonymMapsClient, () => new SynonymMapsRestClient(
             _clientDiagnostics,
             _pipeline,
-            Endpoint.ToString(),
+            Endpoint.AbsoluteUri,
             null,
             _version.ToVersionString())
         );

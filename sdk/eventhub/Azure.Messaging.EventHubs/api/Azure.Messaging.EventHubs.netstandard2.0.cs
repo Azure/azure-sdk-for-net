@@ -8,12 +8,16 @@ namespace Azure.Messaging.EventHubs
         public EventData(System.ReadOnlyMemory<byte> eventBody) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected EventData(System.ReadOnlyMemory<byte> eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }
+        public EventData(string eventBody) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.ReadOnlyMemory<byte> Body { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.IO.Stream BodyAsStream { get { throw null; } }
+        public string ContentType { get { throw null; } set { } }
+        public string CorrelationId { get { throw null; } set { } }
         public System.DateTimeOffset EnqueuedTime { get { throw null; } }
         public System.BinaryData EventBody { get { throw null; } }
+        public string MessageId { get { throw null; } set { } }
         public long Offset { get { throw null; } }
         public string PartitionKey { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } }
@@ -23,6 +27,7 @@ namespace Azure.Messaging.EventHubs
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawAmqpMessage() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }

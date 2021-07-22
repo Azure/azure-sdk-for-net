@@ -27,11 +27,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// Initializes a new instance of the
         /// ManagedClusterPropertiesIdentityProfileValue class.
         /// </summary>
-        /// <param name="resourceId">The resource id of the user assigned
+        /// <param name="resourceId">The resource ID of the user assigned
         /// identity.</param>
-        /// <param name="clientId">The client id of the user assigned
+        /// <param name="clientId">The client ID of the user assigned
         /// identity.</param>
-        /// <param name="objectId">The object id of the user assigned
+        /// <param name="objectId">The object ID of the user assigned
         /// identity.</param>
         public ManagedClusterPropertiesIdentityProfileValue(string resourceId = default(string), string clientId = default(string), string objectId = default(string))
             : base(resourceId, clientId, objectId)

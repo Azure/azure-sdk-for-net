@@ -1,6 +1,23 @@
 # Release History
 
-## 5.0.0-beta.4 (2021-06-09)
+## 5.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.0.0-beta.5 (2021-07-07)
+
+### Breaking Changes
+- Renamed `ServiceBusEntityType` property to `EntityType`.
+- Renamed `messageActions` and `sessionActions` parameters to `actions` in `MessageProcessor` and `SessionMessageProcessor`.
+- Renamed `MaxBatchSize` to `MaxMessageBatchSize` in `ServiceBusOptions`.
+
+## 5.0.0-beta.4 (2021-06-22)
 
 ### Added
 - Added `AutoCompleteMessages` property to `ServiceBusTriggerAttribute` which allows configuring autocompletion at the function level.

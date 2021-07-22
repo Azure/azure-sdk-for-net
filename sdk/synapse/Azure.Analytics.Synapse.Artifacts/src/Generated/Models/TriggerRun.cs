@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Trigger runs. </summary>
-    public partial class TriggerRun : IReadOnlyDictionary<string, object>
+    public partial class TriggerRun
     {
         /// <summary> Initializes a new instance of TriggerRun. </summary>
         internal TriggerRun()
@@ -32,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="message"> Trigger error message. </param>
         /// <param name="properties"> List of property name and value related to trigger run. Name, value pair depends on type of trigger. </param>
         /// <param name="triggeredPipelines"> List of pipeline name and run Id triggered by the trigger run. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         internal TriggerRun(string triggerRunId, string triggerName, string triggerType, DateTimeOffset? triggerRunTimestamp, TriggerRunStatus? status, string message, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> triggeredPipelines, IReadOnlyDictionary<string, object> additionalProperties)
         {
             TriggerRunId = triggerRunId;
@@ -62,25 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public IReadOnlyDictionary<string, string> Properties { get; }
         /// <summary> List of pipeline name and run Id triggered by the trigger run. </summary>
         public IReadOnlyDictionary<string, string> TriggeredPipelines { get; }
-        internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
-        /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
-        /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
-        public IEnumerable<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
-        int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
-        /// <inheritdoc />
-        public object this[string key]
-        {
-            get => AdditionalProperties[key];
-        }
+        /// <summary> Additional Properties. </summary>
+        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }

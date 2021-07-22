@@ -45,7 +45,7 @@ jobs:
       matrix:
         Linux:
           Pool: Azure Pipelines
-          OSVmImage: "ubuntu-18.04"
+          OSVmImage: "ubuntu-20.04"
         Windows:
           Pool: Azure Pipelines
           OSVmImage: "windows-2019"

@@ -226,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var storageManager = EventProcessor<EventProcessorPartition>.CreateStorageManager(mockProcessor.Object);
             Assert.That(storageManager, Is.Not.Null, "The storage manager should have been created.");
 
-            Assert.That(() => storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint(), new EventData(Array.Empty<byte>()), CancellationToken.None), Throws.InstanceOf<NotImplementedException>(), "Calling to update checkpoints should not be implemented.");
+            Assert.That(() => storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint(), new EventData(new BinaryData(Array.Empty<byte>())), CancellationToken.None), Throws.InstanceOf<NotImplementedException>(), "Calling to update checkpoints should not be implemented.");
         }
 
         /// <summary>

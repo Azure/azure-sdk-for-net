@@ -1,7 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <Description>This is the Microsoft Azure Cognitive Services Metrics Advisor client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.MetricsAdvisor client library</AssemblyTitle>
-    <Version>1.0.0-beta.5</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <PackageTags>Microsoft Azure Metrics Advisor</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>
       $(NoWarn);

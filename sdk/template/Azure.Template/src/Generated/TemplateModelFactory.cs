@@ -6,14 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Template.Models;
 
-namespace Azure.Template
+namespace Azure.Template.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class TemplateModelFactory
     {
-        /// <summary> Initializes new instance of SecretBundle class. </summary>
+        /// <summary> Initializes a new instance of SecretBundle. </summary>
         /// <param name="value"> The secret value. </param>
         /// <param name="id"> The secret id. </param>
         /// <param name="contentType"> The content type of the secret. </param>
@@ -21,9 +20,10 @@ namespace Azure.Template
         /// <param name="kid"> If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate. </param>
         /// <param name="managed"> True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true. </param>
         /// <returns> A new <see cref="Models.SecretBundle"/> instance for mocking. </returns>
-        public static SecretBundle SecretBundle(string value = default, string id = default, string contentType = default, IReadOnlyDictionary<string, string> tags = default, string kid = default, bool? managed = default)
+        public static SecretBundle SecretBundle(string value = null, string id = null, string contentType = null, IReadOnlyDictionary<string, string> tags = null, string kid = null, bool? managed = null)
         {
             tags ??= new Dictionary<string, string>();
+
             return new SecretBundle(value, id, contentType, tags, kid, managed);
         }
     }

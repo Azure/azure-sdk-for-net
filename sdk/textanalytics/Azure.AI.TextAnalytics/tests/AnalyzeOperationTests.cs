@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5)]
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1)]
     public class AnalyzeOperationTests : TextAnalyticsClientLiveTestBase
     {
         public AnalyzeOperationTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -215,6 +215,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(entitiesActionsResults);
             Assert.IsNotNull(piiActionsResults);
             Assert.IsNotNull(entityLinkingActionsResults);
+            Assert.IsNotNull(analyzeSentimentActionsResults);
             Assert.AreEqual("AnalyzeOperationWithMultipleTasks", operation.DisplayName);
 
             // Keyphrases
@@ -357,7 +358,6 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>()
                 {
-                    new ExtractKeyPhrasesAction(),
                     new ExtractKeyPhrasesAction()
                     {
                         ModelVersion = "InvalidVersion"
@@ -407,7 +407,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20984")]
         public async Task AnalyzeOperationWithPHIDomain()
         {
             TextAnalyticsClient client = GetClient();
@@ -441,6 +440,42 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsFalse(piiDocumentsResults[0].HasError);
             Assert.AreEqual(2, piiDocumentsResults[0].Entities.Count);
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeOperationWithPiiCategories()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            var documents = new List<string>
+            {
+                "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft.",
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() { CategoriesFilter = { PiiEntityCategory.USSocialSecurityNumber } } },
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions, "en");
+
+            await operation.WaitForCompletionAsync();
+
+            //Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiActionsResults = resultCollection.RecognizePiiEntitiesResults;
+
+            Assert.IsNotNull(piiActionsResults);
+
+            RecognizePiiEntitiesResultCollection piiDocumentsResults = piiActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, piiDocumentsResults.Count);
+
+            Assert.IsNotEmpty(piiDocumentsResults[0].Entities.RedactedText);
+
+            Assert.IsFalse(piiDocumentsResults[0].HasError);
+            Assert.AreEqual(1, piiDocumentsResults[0].Entities.Count);
+            Assert.AreEqual(PiiEntityCategory.USSocialSecurityNumber, piiDocumentsResults[0].Entities.FirstOrDefault().Category);
         }
 
         [RecordedTest]

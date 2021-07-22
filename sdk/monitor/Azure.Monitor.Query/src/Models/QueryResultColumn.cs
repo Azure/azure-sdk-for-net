@@ -8,5 +8,10 @@ namespace Azure.Monitor.Query.Models
     [CodeGenModel("Column")]
     public partial class LogsQueryResultColumn
     {
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return $"{Name} ({Type})";
+        }
     }
 }

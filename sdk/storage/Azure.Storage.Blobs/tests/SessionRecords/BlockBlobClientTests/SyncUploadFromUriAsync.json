@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://kasobolcanadacentral.blob.core.windows.net/test-container-0f14edc0-8f7e-251b-97ad-0d63822235c0?restype=container",
@@ -12,19 +12,19 @@
         "x-ms-client-request-id": "d1585f76-5251-b14d-b1b2-f1e3a59eaee6",
         "x-ms-date": "Mon, 26 Apr 2021 21:54:43 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 21:54:43 GMT",
-        "ETag": "\u00220x8D908FDE6AE3935\u0022",
+        "ETag": "\"0x8D908FDE6AE3935\"",
         "Last-Modified": "Mon, 26 Apr 2021 21:54:43 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "d1585f76-5251-b14d-b1b2-f1e3a59eaee6",
         "x-ms-request-id": "a20d9bd9-101e-0045-0be6-3a1f52000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
@@ -51,22 +51,22 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
-      "RequestBody": "lWslnopixAwoVMyYxBR0r08RD7exix2QtWeZmH3VOgACqqPS28RVcSng\u002BnWW1QHITjwRuPX\u002BMQpNlekiySuOUxnMlRlwodOLvJ2N0JCo\u002Bd9l0ElBw4IKBHmYhEbaM6j9UqZbyj/oWKxohvxYcGB6pZsKvfniTI\u002BXwZGg2ByMsIj1j37pTC\u002BffXec2T2GspMYHt\u002Br0HauGwUXxAiuSICQ29VzY\u002BHikVhraj\u002BBRXNSEQ/\u002Bh7k94d8SRnR40ogn8DX3DP1oEk\u002ByNo2GQGU2LNWRxLP5sMDGUvr1YBxsab7QQ3oKijh26f7AS1AstqF63Bqe5w3VLkB0MbkDcrIyRc3OtfzrLKKdG9q0OGRvmZxYe4QCzoKx\u002BxU5lVh\u002Bc3dMjQaDXgCkjrB3AcsyIPXcBJcdqvYuL3ZKHLrnspZJHqdjaKtd6zubs\u002B3Uis22ftofXJHBYciBHV2QOUFGvdsZLuIjz7hKfxhcgvYIWqWolJ3fyFUEiL3f4kpNzbL5VfYRulzqkq8i1N14ZN7SeMO456SjZvWGFKUlRO1t/LFlYy0A959IvgLuvPN3iyPeDWmGleYOVe4Ai6W2xE3CtdcsEwGx0YAjcCiitaoBDomBRzeD5mfLVw4//2z6kfm0LAcbS3giLDvpYyW9a59D/3wcNXwWP85vYLvzctEUKd4v7omj5sIQXhr7moNCDuxu\u002BwDv3lx8nuw4q\u002Bu9L7pp1DpGjn0WoBm6C9ZiGqVLLVLPhHbRJUqCsk\u002BcazrXUy9gkcVJ/H9uV1rnNdKGGoRH7H6Y7apDmK/vxNsteTXe4rinAYjfAjHSYC0b6vB4\u002B5fLVH67PmWEHPkWWTekQN0lCFIZ3xj7aOpNxYx9KK6/d8hDYSW2I6NTI\u002BWOyaj5Lh9P9uGeXhx/0OyUbnnYBvRKV\u002BJuYN64buSuxrszbJ5BU5dtLjHMIRmrxJE4IrUqexzxRHLGis5Alof875dgTGNNUhria9jCfjbJwptMf0svg0ufQSgse8nILJeqzzGBS3gu6s\u002BbSA9EL8U8/ccz8xY7zWtMwQo6IddQGT9AGK4ER3ciHpV8lDs7WhJj8H4BlTiAbgLFNIlu9Mn4Si7QAxYXN7VPENWBvzgwEGb41zFZT4QHwKmrPxLutCrLg0oMa1b7S7jJsYRi/q7KlCQidRyYn/qqyUNsa/iiYVyrtjvtI6UQ/It4kJ3/pMH74aruyz4NM\u002BRPYqISjuDAJ08nt0hz3HF\u002BEniQHw5dqiSCcYpNs5YenYJWnsAD/W6ruGlO1\u002B14iAQ5b7nFfRPW8rh9kBxVcnO5CRnFHD6wexQK5WelDtI3CemGFEPdWCBvgKsIhWxRVUX1lM7Ts2vFiPSkupesMOPmRYczzw==",
+      "RequestBody": "lWslnopixAwoVMyYxBR0r08RD7exix2QtWeZmH3VOgACqqPS28RVcSng+nWW1QHITjwRuPX+MQpNlekiySuOUxnMlRlwodOLvJ2N0JCo+d9l0ElBw4IKBHmYhEbaM6j9UqZbyj/oWKxohvxYcGB6pZsKvfniTI+XwZGg2ByMsIj1j37pTC+ffXec2T2GspMYHt+r0HauGwUXxAiuSICQ29VzY+HikVhraj+BRXNSEQ/+h7k94d8SRnR40ogn8DX3DP1oEk+yNo2GQGU2LNWRxLP5sMDGUvr1YBxsab7QQ3oKijh26f7AS1AstqF63Bqe5w3VLkB0MbkDcrIyRc3OtfzrLKKdG9q0OGRvmZxYe4QCzoKx+xU5lVh+c3dMjQaDXgCkjrB3AcsyIPXcBJcdqvYuL3ZKHLrnspZJHqdjaKtd6zubs+3Uis22ftofXJHBYciBHV2QOUFGvdsZLuIjz7hKfxhcgvYIWqWolJ3fyFUEiL3f4kpNzbL5VfYRulzqkq8i1N14ZN7SeMO456SjZvWGFKUlRO1t/LFlYy0A959IvgLuvPN3iyPeDWmGleYOVe4Ai6W2xE3CtdcsEwGx0YAjcCiitaoBDomBRzeD5mfLVw4//2z6kfm0LAcbS3giLDvpYyW9a59D/3wcNXwWP85vYLvzctEUKd4v7omj5sIQXhr7moNCDuxu+wDv3lx8nuw4q+u9L7pp1DpGjn0WoBm6C9ZiGqVLLVLPhHbRJUqCsk+cazrXUy9gkcVJ/H9uV1rnNdKGGoRH7H6Y7apDmK/vxNsteTXe4rinAYjfAjHSYC0b6vB4+5fLVH67PmWEHPkWWTekQN0lCFIZ3xj7aOpNxYx9KK6/d8hDYSW2I6NTI+WOyaj5Lh9P9uGeXhx/0OyUbnnYBvRKV+JuYN64buSuxrszbJ5BU5dtLjHMIRmrxJE4IrUqexzxRHLGis5Alof875dgTGNNUhria9jCfjbJwptMf0svg0ufQSgse8nILJeqzzGBS3gu6s+bSA9EL8U8/ccz8xY7zWtMwQo6IddQGT9AGK4ER3ciHpV8lDs7WhJj8H4BlTiAbgLFNIlu9Mn4Si7QAxYXN7VPENWBvzgwEGb41zFZT4QHwKmrPxLutCrLg0oMa1b7S7jJsYRi/q7KlCQidRyYn/qqyUNsa/iiYVyrtjvtI6UQ/It4kJ3/pMH74aruyz4NM+RPYqISjuDAJ08nt0hz3HF+EniQHw5dqiSCcYpNs5YenYJWnsAD/W6ruGlO1+14iAQ5b7nFfRPW8rh9kBxVcnO5CRnFHD6wexQK5WelDtI3CemGFEPdWCBvgKsIhWxRVUX1lM7Ts2vFiPSkupesMOPmRYczzw==",
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Content-MD5": "xwYjb4o8\u002BytiVJYG9Cx2Xg==",
+        "Content-MD5": "xwYjb4o8+ytiVJYG9Cx2Xg==",
         "Date": "Mon, 26 Apr 2021 21:54:43 GMT",
-        "ETag": "\u00220x8D908FDE6E46919\u0022",
+        "ETag": "\"0x8D908FDE6E46919\"",
         "Last-Modified": "Mon, 26 Apr 2021 21:54:44 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "7e566403-8bc0-384f-9d88-c250c72140e5",
         "x-ms-content-crc64": "MAXZRkhr24M=",
         "x-ms-request-id": "a20d9cd0-101e-0045-4ce6-3a1f52000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
@@ -84,21 +84,21 @@
         "x-ms-copy-source": "http://kasobolcanadacentral.blob.core.windows.net/test-container-0f14edc0-8f7e-251b-97ad-0d63822235c0/test-blob-762d23f3-695a-0436-05b8-8d393d0162e0",
         "x-ms-date": "Mon, 26 Apr 2021 21:54:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Mon, 26 Apr 2021 21:54:44 GMT",
-        "ETag": "\u00220x8D908FDE700CFFE\u0022",
+        "ETag": "\"0x8D908FDE700CFFE\"",
         "Last-Modified": "Mon, 26 Apr 2021 21:54:44 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "e1e2697f-b531-d30f-e0a3-1270944bcb86",
         "x-ms-content-crc64": "MAXZRkhr24M=",
         "x-ms-request-id": "a20d9d41-101e-0045-21e6-3a1f52000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
@@ -113,7 +113,7 @@
         "x-ms-client-request-id": "5ed03880-5f3e-69b4-7613-e4140a68c884",
         "x-ms-date": "Mon, 26 Apr 2021 21:54:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -124,10 +124,10 @@
         "Content-Encoding": "wwrxeokyhifbhpdfyxeh",
         "Content-Language": "uebtmqugvfjavexgmygh",
         "Content-Length": "1024",
-        "Content-MD5": "xwYjb4o8\u002BytiVJYG9Cx2Xg==",
+        "Content-MD5": "xwYjb4o8+ytiVJYG9Cx2Xg==",
         "Content-Type": "gxfywhyjppalgetsuwln",
         "Date": "Mon, 26 Apr 2021 21:54:44 GMT",
-        "ETag": "\u00220x8D908FDE700CFFE\u0022",
+        "ETag": "\"0x8D908FDE700CFFE\"",
         "Last-Modified": "Mon, 26 Apr 2021 21:54:44 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-blob-type": "BlockBlob",
@@ -142,9 +142,9 @@
         "x-ms-meta-UPPER": "case",
         "x-ms-request-id": "a20d9daf-101e-0045-78e6-3a1f52000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
-      "ResponseBody": "lWslnopixAwoVMyYxBR0r08RD7exix2QtWeZmH3VOgACqqPS28RVcSng\u002BnWW1QHITjwRuPX\u002BMQpNlekiySuOUxnMlRlwodOLvJ2N0JCo\u002Bd9l0ElBw4IKBHmYhEbaM6j9UqZbyj/oWKxohvxYcGB6pZsKvfniTI\u002BXwZGg2ByMsIj1j37pTC\u002BffXec2T2GspMYHt\u002Br0HauGwUXxAiuSICQ29VzY\u002BHikVhraj\u002BBRXNSEQ/\u002Bh7k94d8SRnR40ogn8DX3DP1oEk\u002ByNo2GQGU2LNWRxLP5sMDGUvr1YBxsab7QQ3oKijh26f7AS1AstqF63Bqe5w3VLkB0MbkDcrIyRc3OtfzrLKKdG9q0OGRvmZxYe4QCzoKx\u002BxU5lVh\u002Bc3dMjQaDXgCkjrB3AcsyIPXcBJcdqvYuL3ZKHLrnspZJHqdjaKtd6zubs\u002B3Uis22ftofXJHBYciBHV2QOUFGvdsZLuIjz7hKfxhcgvYIWqWolJ3fyFUEiL3f4kpNzbL5VfYRulzqkq8i1N14ZN7SeMO456SjZvWGFKUlRO1t/LFlYy0A959IvgLuvPN3iyPeDWmGleYOVe4Ai6W2xE3CtdcsEwGx0YAjcCiitaoBDomBRzeD5mfLVw4//2z6kfm0LAcbS3giLDvpYyW9a59D/3wcNXwWP85vYLvzctEUKd4v7omj5sIQXhr7moNCDuxu\u002BwDv3lx8nuw4q\u002Bu9L7pp1DpGjn0WoBm6C9ZiGqVLLVLPhHbRJUqCsk\u002BcazrXUy9gkcVJ/H9uV1rnNdKGGoRH7H6Y7apDmK/vxNsteTXe4rinAYjfAjHSYC0b6vB4\u002B5fLVH67PmWEHPkWWTekQN0lCFIZ3xj7aOpNxYx9KK6/d8hDYSW2I6NTI\u002BWOyaj5Lh9P9uGeXhx/0OyUbnnYBvRKV\u002BJuYN64buSuxrszbJ5BU5dtLjHMIRmrxJE4IrUqexzxRHLGis5Alof875dgTGNNUhria9jCfjbJwptMf0svg0ufQSgse8nILJeqzzGBS3gu6s\u002BbSA9EL8U8/ccz8xY7zWtMwQo6IddQGT9AGK4ER3ciHpV8lDs7WhJj8H4BlTiAbgLFNIlu9Mn4Si7QAxYXN7VPENWBvzgwEGb41zFZT4QHwKmrPxLutCrLg0oMa1b7S7jJsYRi/q7KlCQidRyYn/qqyUNsa/iiYVyrtjvtI6UQ/It4kJ3/pMH74aruyz4NM\u002BRPYqISjuDAJ08nt0hz3HF\u002BEniQHw5dqiSCcYpNs5YenYJWnsAD/W6ruGlO1\u002B14iAQ5b7nFfRPW8rh9kBxVcnO5CRnFHD6wexQK5WelDtI3CemGFEPdWCBvgKsIhWxRVUX1lM7Ts2vFiPSkupesMOPmRYczzw=="
+      "ResponseBody": "lWslnopixAwoVMyYxBR0r08RD7exix2QtWeZmH3VOgACqqPS28RVcSng+nWW1QHITjwRuPX+MQpNlekiySuOUxnMlRlwodOLvJ2N0JCo+d9l0ElBw4IKBHmYhEbaM6j9UqZbyj/oWKxohvxYcGB6pZsKvfniTI+XwZGg2ByMsIj1j37pTC+ffXec2T2GspMYHt+r0HauGwUXxAiuSICQ29VzY+HikVhraj+BRXNSEQ/+h7k94d8SRnR40ogn8DX3DP1oEk+yNo2GQGU2LNWRxLP5sMDGUvr1YBxsab7QQ3oKijh26f7AS1AstqF63Bqe5w3VLkB0MbkDcrIyRc3OtfzrLKKdG9q0OGRvmZxYe4QCzoKx+xU5lVh+c3dMjQaDXgCkjrB3AcsyIPXcBJcdqvYuL3ZKHLrnspZJHqdjaKtd6zubs+3Uis22ftofXJHBYciBHV2QOUFGvdsZLuIjz7hKfxhcgvYIWqWolJ3fyFUEiL3f4kpNzbL5VfYRulzqkq8i1N14ZN7SeMO456SjZvWGFKUlRO1t/LFlYy0A959IvgLuvPN3iyPeDWmGleYOVe4Ai6W2xE3CtdcsEwGx0YAjcCiitaoBDomBRzeD5mfLVw4//2z6kfm0LAcbS3giLDvpYyW9a59D/3wcNXwWP85vYLvzctEUKd4v7omj5sIQXhr7moNCDuxu+wDv3lx8nuw4q+u9L7pp1DpGjn0WoBm6C9ZiGqVLLVLPhHbRJUqCsk+cazrXUy9gkcVJ/H9uV1rnNdKGGoRH7H6Y7apDmK/vxNsteTXe4rinAYjfAjHSYC0b6vB4+5fLVH67PmWEHPkWWTekQN0lCFIZ3xj7aOpNxYx9KK6/d8hDYSW2I6NTI+WOyaj5Lh9P9uGeXhx/0OyUbnnYBvRKV+JuYN64buSuxrszbJ5BU5dtLjHMIRmrxJE4IrUqexzxRHLGis5Alof875dgTGNNUhria9jCfjbJwptMf0svg0ufQSgse8nILJeqzzGBS3gu6s+bSA9EL8U8/ccz8xY7zWtMwQo6IddQGT9AGK4ER3ciHpV8lDs7WhJj8H4BlTiAbgLFNIlu9Mn4Si7QAxYXN7VPENWBvzgwEGb41zFZT4QHwKmrPxLutCrLg0oMa1b7S7jJsYRi/q7KlCQidRyYn/qqyUNsa/iiYVyrtjvtI6UQ/It4kJ3/pMH74aruyz4NM+RPYqISjuDAJ08nt0hz3HF+EniQHw5dqiSCcYpNs5YenYJWnsAD/W6ruGlO1+14iAQ5b7nFfRPW8rh9kBxVcnO5CRnFHD6wexQK5WelDtI3CemGFEPdWCBvgKsIhWxRVUX1lM7Ts2vFiPSkupesMOPmRYczzw=="
     },
     {
       "RequestUri": "http://kasobolcanadacentral.blob.core.windows.net/test-container-0f14edc0-8f7e-251b-97ad-0d63822235c0/test-blob-23edeed4-63c9-c56e-ddc2-eb61ca04b5e3",
@@ -157,7 +157,7 @@
         "x-ms-client-request-id": "5bf07767-6c7a-5647-0d30-932705addb21",
         "x-ms-date": "Mon, 26 Apr 2021 21:54:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -168,10 +168,10 @@
         "Content-Encoding": "wwrxeokyhifbhpdfyxeh",
         "Content-Language": "uebtmqugvfjavexgmygh",
         "Content-Length": "1024",
-        "Content-MD5": "xwYjb4o8\u002BytiVJYG9Cx2Xg==",
+        "Content-MD5": "xwYjb4o8+ytiVJYG9Cx2Xg==",
         "Content-Type": "gxfywhyjppalgetsuwln",
         "Date": "Mon, 26 Apr 2021 21:54:44 GMT",
-        "ETag": "\u00220x8D908FDE700CFFE\u0022",
+        "ETag": "\"0x8D908FDE700CFFE\"",
         "Last-Modified": "Mon, 26 Apr 2021 21:54:44 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-access-tier": "Hot",
@@ -188,7 +188,7 @@
         "x-ms-meta-UPPER": "case",
         "x-ms-request-id": "a20d9df8-101e-0045-33e6-3a1f52000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
@@ -203,7 +203,7 @@
         "x-ms-client-request-id": "93ac55ea-6c78-fa09-11f2-2c3769278ef9",
         "x-ms-date": "Mon, 26 Apr 2021 21:54:44 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -213,14 +213,14 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "93ac55ea-6c78-fa09-11f2-2c3769278ef9",
         "x-ms-request-id": "a20d9e19-101e-0045-4be6-3a1f52000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-26T14:54:43.1679989-07:00",
+    "DateTimeOffsetNow": "2021-04-26T16:54:43.1679989-05:00",
     "RandomSeed": "1391433156",
-    "Storage_TestConfigDefault": "ProductionTenant\nkasobolcanadacentral\nU2FuaXRpemVk\nhttp://kasobolcanadacentral.blob.core.windows.net\nhttp://kasobolcanadacentral.file.core.windows.net\nhttp://kasobolcanadacentral.queue.core.windows.net\nhttp://kasobolcanadacentral.table.core.windows.net\n\n\n\n\nhttp://kasobolcanadacentral-secondary.blob.core.windows.net\nhttp://kasobolcanadacentral-secondary.file.core.windows.net\nhttp://kasobolcanadacentral-secondary.queue.core.windows.net\nhttp://kasobolcanadacentral-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://kasobolcanadacentral.blob.core.windows.net/;QueueEndpoint=http://kasobolcanadacentral.queue.core.windows.net/;FileEndpoint=http://kasobolcanadacentral.file.core.windows.net/;BlobSecondaryEndpoint=http://kasobolcanadacentral-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasobolcanadacentral-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasobolcanadacentral-secondary.file.core.windows.net/;AccountName=kasobolcanadacentral;AccountKey=Kg==;\nencryptionScope"
+    "Storage_TestConfigDefault": "ProductionTenant\nkasobolcanadacentral\nU2FuaXRpemVk\nhttp://kasobolcanadacentral.blob.core.windows.net\nhttp://kasobolcanadacentral.file.core.windows.net\nhttp://kasobolcanadacentral.queue.core.windows.net\nhttp://kasobolcanadacentral.table.core.windows.net\n\n\n\n\nhttp://kasobolcanadacentral-secondary.blob.core.windows.net\nhttp://kasobolcanadacentral-secondary.file.core.windows.net\nhttp://kasobolcanadacentral-secondary.queue.core.windows.net\nhttp://kasobolcanadacentral-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://kasobolcanadacentral.blob.core.windows.net/;QueueEndpoint=http://kasobolcanadacentral.queue.core.windows.net/;FileEndpoint=http://kasobolcanadacentral.file.core.windows.net/;BlobSecondaryEndpoint=http://kasobolcanadacentral-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasobolcanadacentral-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasobolcanadacentral-secondary.file.core.windows.net/;AccountName=kasobolcanadacentral;AccountKey=Kg==;\nencryptionScope\n\n"
   }
 }

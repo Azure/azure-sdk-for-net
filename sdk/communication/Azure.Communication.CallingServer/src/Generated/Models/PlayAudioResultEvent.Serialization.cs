@@ -10,34 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class PlayAudioResultEvent : IUtf8JsonSerializable
+    public partial class PlayAudioResultEvent
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ResultInfo))
-            {
-                writer.WritePropertyName("resultInfo");
-                writer.WriteObjectValue(ResultInfo);
-            }
-            if (Optional.IsDefined(OperationContext))
-            {
-                writer.WritePropertyName("operationContext");
-                writer.WriteStringValue(OperationContext);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            writer.WriteEndObject();
-        }
-
         internal static PlayAudioResultEvent DeserializePlayAudioResultEvent(JsonElement element)
         {
             Optional<ResultInfo> resultInfo = default;
             Optional<string> operationContext = default;
-            Optional<OperationStatus> status = default;
+            OperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resultInfo"))
@@ -57,16 +36,11 @@ namespace Azure.Communication.CallingServer
                 }
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     status = new OperationStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new PlayAudioResultEvent(resultInfo.Value, operationContext.Value, Optional.ToNullable(status));
+            return new PlayAudioResultEvent(resultInfo.Value, operationContext.Value, status);
         }
     }
 }

@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Describes an Azure Blob data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
@@ -47,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="container"/>, or <paramref name="blobTemplate"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="container"/>, or <paramref name="blobTemplate"/> is empty.</exception>
         public AzureBlobDataFeedSource(string connectionString, string container, string blobTemplate)
-            : base(DataFeedSourceType.AzureBlob)
+            : base(DataFeedSourceKind.AzureBlob)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(container, nameof(container));
@@ -59,7 +61,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         internal AzureBlobDataFeedSource(AzureBlobParameter parameter, AuthenticationTypeEnum? authentication)
-            : base(DataFeedSourceType.AzureBlob)
+            : base(DataFeedSourceKind.AzureBlob)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 
@@ -67,26 +69,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             Container = parameter.Container;
             BlobTemplate = parameter.BlobTemplate;
 
-            SetAuthentication(authentication);
+            Authentication = (authentication == null) ? default(AuthenticationType?) : new AuthenticationType(authentication.ToString());
         }
-
-        /// <summary>
-        /// The different ways of authenticating to an <see cref="AzureBlobDataFeedSource"/>.
-        /// Defaults to <see cref="Basic"/>.
-        /// </summary>
-        public enum AuthenticationType
-        {
-            /// <summary>
-            /// Only uses the <see cref="ConnectionString"/> present in this <see cref="AzureBlobDataFeedSource"/>
-            /// instance for authentication.
-            /// </summary>
-            Basic,
-
-            /// <summary>
-            /// Uses Managed Identity authentication.
-            /// </summary>
-            ManagedIdentity
-        };
 
         /// <summary>
         /// The method used to authenticate to this <see cref="AzureDataExplorerDataFeedSource"/>. Defaults to
@@ -147,24 +131,64 @@ namespace Azure.AI.MetricsAdvisor.Models
             ConnectionString = connectionString;
         }
 
-        internal AuthenticationTypeEnum? GetAuthenticationTypeEnum() => Authentication switch
+        /// <summary>
+        /// The different ways of authenticating to an <see cref="AzureBlobDataFeedSource"/>.
+        /// Defaults to <see cref="Basic"/>.
+        /// </summary>
+#pragma warning disable CA1034 // Nested types should not be visible
+        public readonly partial struct AuthenticationType : IEquatable<AuthenticationType>
+#pragma warning restore CA1034 // Nested types should not be visible
         {
-            null => default(AuthenticationTypeEnum?),
-            AuthenticationType.Basic => AuthenticationTypeEnum.Basic,
-            AuthenticationType.ManagedIdentity => AuthenticationTypeEnum.ManagedIdentity,
-            _ => throw new InvalidOperationException($"Unknown authentication type: {Authentication}")
-        };
+            private readonly string _value;
 
-        internal void SetAuthentication(AuthenticationTypeEnum? authentication)
-        {
-            if (authentication == AuthenticationTypeEnum.Basic)
+            /// <summary>
+            /// Initializes a new instance of the <see cref="AuthenticationType"/> structure.
+            /// </summary>
+            /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+            internal AuthenticationType(string value)
             {
-                Authentication = AuthenticationType.Basic;
+                _value = value ?? throw new ArgumentNullException(nameof(value));
             }
-            else if (authentication == AuthenticationTypeEnum.ManagedIdentity)
-            {
-                Authentication = AuthenticationType.ManagedIdentity;
-            }
+
+            /// <summary>
+            /// Only uses the <see cref="ConnectionString"/> present in this <see cref="AzureBlobDataFeedSource"/>
+            /// instance for authentication.
+            /// </summary>
+            public static AuthenticationType Basic => new AuthenticationType(AuthenticationTypeEnum.Basic.ToString());
+
+            /// <summary>
+            /// Uses Managed Identity authentication.
+            /// </summary>
+            public static AuthenticationType ManagedIdentity => new AuthenticationType(AuthenticationTypeEnum.ManagedIdentity.ToString());
+
+            /// <summary>
+            /// Determines if two <see cref="AuthenticationType"/> values are the same.
+            /// </summary>
+            public static bool operator ==(AuthenticationType left, AuthenticationType right) => left.Equals(right);
+
+            /// <summary>
+            /// Determines if two <see cref="AuthenticationType"/> values are not the same.
+            /// </summary>
+            public static bool operator !=(AuthenticationType left, AuthenticationType right) => !left.Equals(right);
+
+            /// <summary>
+            /// Converts a <c>string</c> to an <see cref="AuthenticationType"/>.
+            /// </summary>
+            public static implicit operator AuthenticationType(string value) => new AuthenticationType(value);
+
+            /// <inheritdoc/>
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            public override bool Equals(object obj) => obj is AuthenticationType other && Equals(other);
+
+            /// <inheritdoc/>
+            public bool Equals(AuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+            /// <inheritdoc/>
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+            /// <inheritdoc/>
+            public override string ToString() => _value;
         }
     }
 }

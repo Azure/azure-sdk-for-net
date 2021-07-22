@@ -9,7 +9,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
-    <PackageReference Include="Azure.Messaging.EventGrid" />
+    <!-- Add back after next Event Grid GA -->
+    <!-- <PackageReference Include="Azure.Messaging.EventGrid" /> -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Remove after next Event Grid GA -->
+    <ProjectReference Include="..\..\Azure.Messaging.EventGrid\src\Azure.Messaging.EventGrid.csproj" />
   </ItemGroup>
 
 </Project>

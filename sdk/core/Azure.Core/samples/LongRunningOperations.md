@@ -43,27 +43,25 @@ Console.WriteLine(operation.HasValue);
 
 A Pageable Operation is use when the service call returns multiple values in pages after the Long Running Operation completes. The results can be access with the `GetValues()`, `GetValuesAsync()` methods which return `Pageable<T>/AsyncPageable<T>` respectively.
 
-To access the result you can iterate over the `Pageable<T>/AsyncPageable<T>`. For more information see [Consuming Service Methods Returning Pageable/AsyncPageable](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core#consuming-service-methods-returning-asyncpageablet).
+To access the result you can iterate over the `Pageable<T>/AsyncPageable<T>`. For more information see [Consuming Service Methods Returning Pageable/AsyncPageable](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core#consuming-service-methods-returning-asyncpageablet).
 
 ### Using `GetValuesAsync()`
 The `GetValuesAsync` method will contain the `AsyncPageable<T>` results.
 
 ```C# Snippet:PageableOperationGetValuesAsync
 // create a client
-var client = new TextAnalyticsClient(new Uri("http://example.com"), new DefaultAzureCredential());
-var document = new List<string>() { "document with information" };
+var client = new MyStoreClient();
 
 // Start the operation
-AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(document);
+GetProductsOperation operation = client.StartGetProducts();
 
-await healthOperation.WaitForCompletionAsync();
+await operation.WaitForCompletionAsync();
 
-await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValuesAsync())
+await foreach (Product product in operation.GetValuesAsync())
 {
-    foreach (HealthcareEntity entity in documentsInPage[0].Entities)
-    {
-        Console.WriteLine($"    Entity: {entity.Text}");
-    }
+    Console.WriteLine($"Name: {product.Name}");
+    Console.WriteLine($"Quantity: {product.Quantity}");
+    Console.WriteLine($"Price: {product.Price}");
 }
 ```
 
@@ -72,19 +70,17 @@ The `GetValues` method will contain the `Pageable<T>` results.
 
 ```C# Snippet:PageableOperationGetValues
 // create a client
-var client = new TextAnalyticsClient(new Uri("http://example.com"), new DefaultAzureCredential());
-var document = new List<string>() { "document with information" };
+var client = new MyStoreClient();
 
 // Start the operation
-AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(document);
+GetProductsOperation operation = client.StartGetProducts();
 
-await healthOperation.WaitForCompletionAsync();
+await operation.WaitForCompletionAsync();
 
-foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
+foreach (Product product in operation.GetValues())
 {
-    foreach (HealthcareEntity entity in documentsInPage[0].Entities)
-    {
-        Console.WriteLine($"    Entity: {entity.Text}");
-    }
+    Console.WriteLine($"Name: {product.Name}");
+    Console.WriteLine($"Quantity: {product.Quantity}");
+    Console.WriteLine($"Price: {product.Price}");
 }
 ```

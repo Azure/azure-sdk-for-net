@@ -665,7 +665,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SendWithoutOptionsInvokesTheTransportProducer()
         {
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducerClient(new MockConnection(() => transportProducer));
 
@@ -685,7 +685,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SendInvokesTheTransportProducer()
         {
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var options = new SendEventOptions();
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducerClient(new MockConnection(() => transportProducer));
@@ -1803,15 +1803,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(transport => transport.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
                 .Returns(async () => await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token)));
 
-            Assert.That(batch.TryAdd(new EventData(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
+            Assert.That(batch.TryAdd(new EventData(new BinaryData(Array.Empty<byte>()))), Is.True, "The batch should not be locked before sending.");
             var sendTask = producer.SendAsync(batch);
 
-            Assert.That(() => batch.TryAdd(new EventData(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
+            Assert.That(() => batch.TryAdd(new EventData(new BinaryData(Array.Empty<byte>()))), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
             completionSource.TrySetResult(true);
 
             await sendTask;
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(batch.TryAdd(new EventData(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
+            Assert.That(batch.TryAdd(new EventData(new BinaryData(Array.Empty<byte>()))), Is.True, "The batch should not be locked after sending.");
 
             cancellationSource.Cancel();
         }
@@ -2049,7 +2049,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubProducerClientShouldCloseAProducer()
         {
             var options = new SendEventOptions { PartitionId = "0" };
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new ObservableTransportProducerMock();
             var eventHubConnection = new MockConnection(() => transportProducer);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2077,7 +2077,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object, eventHubConnection, retryPolicy);
             var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
 
             transportProducer
                 .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(),
@@ -2205,7 +2205,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicDoesNotStartWhenPartitionIdIsNull()
         {
             var options = new SendEventOptions { PartitionId = "0" };
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2265,7 +2265,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task RetryLogicDoesNotWorkForClosedConnections()
         {
             var options = new SendEventOptions { PartitionId = "0" };
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2336,7 +2336,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicDoesNotWorkForClosedEventHubProducerClients()
         {
             var options = new SendEventOptions { PartitionId = "0" };
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2407,7 +2407,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicShouldNotStartWhenCancellationTriggered()
         {
             var options = new SendEventOptions { PartitionId = "0" };
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2462,7 +2462,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicDetectsAnEmbeddedAmqpErrorForOperationCanceled()
         {
             var options = new SendEventOptions { PartitionId = "0" };
-            var events = new[] { new EventData(Array.Empty<byte>()) };
+            var events = new[] { new EventData(new BinaryData(Array.Empty<byte>())) };
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();

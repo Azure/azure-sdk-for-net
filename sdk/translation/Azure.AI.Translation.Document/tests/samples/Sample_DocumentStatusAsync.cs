@@ -36,14 +36,14 @@ namespace Azure.AI.Translation.Document.Samples
             {
                 await operation.UpdateStatusAsync();
 
-                AsyncPageable<DocumentStatusResult> documentsStatus = operation.GetAllDocumentStatusesAsync();
-                await foreach (DocumentStatusResult docStatus in documentsStatus)
+                AsyncPageable<DocumentStatus> documentsStatus = operation.GetAllDocumentStatusesAsync();
+                await foreach (DocumentStatus docStatus in documentsStatus)
                 {
-                    if (documentscompleted.Contains(docStatus.DocumentId))
+                    if (documentscompleted.Contains(docStatus.Id))
                         continue;
-                    if (docStatus.Status == TranslationStatus.Succeeded || docStatus.Status == TranslationStatus.Failed)
+                    if (docStatus.Status == DocumentTranslationStatus.Succeeded || docStatus.Status == DocumentTranslationStatus.Failed)
                     {
-                        documentscompleted.Add(docStatus.DocumentId);
+                        documentscompleted.Add(docStatus.Id);
                         Console.WriteLine($"Document {docStatus.TranslatedDocumentUri} completed with status {docStatus.Status}");
                     }
                 }

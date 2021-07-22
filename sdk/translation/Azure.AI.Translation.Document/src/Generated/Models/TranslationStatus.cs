@@ -6,61 +6,57 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
+using Azure.AI.Translation.Document.Models;
 
 namespace Azure.AI.Translation.Document
 {
-    /// <summary> List of possible statuses for job or document. </summary>
-    public readonly partial struct TranslationStatus : IEquatable<TranslationStatus>
+    /// <summary> Translation job status response. </summary>
+    public partial class TranslationStatus
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="TranslationStatus"/> values are the same. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TranslationStatus(string value)
+        /// <summary> Initializes a new instance of TranslationStatus. </summary>
+        /// <param name="id"> Id of the operation. </param>
+        /// <param name="createdOn"> Operation created date time. </param>
+        /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
+        /// <param name="status"> List of possible statuses for job or document. </param>
+        /// <param name="summary"> . </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="summary"/> is null. </exception>
+        internal TranslationStatus(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, StatusSummary summary)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (summary == null)
+            {
+                throw new ArgumentNullException(nameof(summary));
+            }
+
+            Id = id;
+            CreatedOn = createdOn;
+            LastModified = lastModified;
+            Status = status;
+            Summary = summary;
         }
 
-        private const string NotStartedValue = "NotStarted";
-        private const string RunningValue = "Running";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
-        private const string CancellingValue = "Cancelling";
-        private const string ValidationFailedValue = "ValidationFailed";
-
-        /// <summary> NotStarted. </summary>
-        public static TranslationStatus NotStarted { get; } = new TranslationStatus(NotStartedValue);
-        /// <summary> Running. </summary>
-        public static TranslationStatus Running { get; } = new TranslationStatus(RunningValue);
-        /// <summary> Succeeded. </summary>
-        public static TranslationStatus Succeeded { get; } = new TranslationStatus(SucceededValue);
-        /// <summary> Failed. </summary>
-        public static TranslationStatus Failed { get; } = new TranslationStatus(FailedValue);
-        /// <summary> Cancelled. </summary>
-        public static TranslationStatus Cancelled { get; } = new TranslationStatus(CancelledValue);
-        /// <summary> Cancelling. </summary>
-        public static TranslationStatus Cancelling { get; } = new TranslationStatus(CancellingValue);
-        /// <summary> ValidationFailed. </summary>
-        public static TranslationStatus ValidationFailed { get; } = new TranslationStatus(ValidationFailedValue);
-        /// <summary> Determines if two <see cref="TranslationStatus"/> values are the same. </summary>
-        public static bool operator ==(TranslationStatus left, TranslationStatus right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="TranslationStatus"/> values are not the same. </summary>
-        public static bool operator !=(TranslationStatus left, TranslationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TranslationStatus"/>. </summary>
-        public static implicit operator TranslationStatus(string value) => new TranslationStatus(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TranslationStatus other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(TranslationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> Initializes a new instance of TranslationStatus. </summary>
+        /// <param name="id"> Id of the operation. </param>
+        /// <param name="createdOn"> Operation created date time. </param>
+        /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
+        /// <param name="status"> List of possible statuses for job or document. </param>
+        /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
+        /// <param name="summary"> . </param>
+        internal TranslationStatus(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, DocumentTranslationError error, StatusSummary summary)
+        {
+            Id = id;
+            CreatedOn = createdOn;
+            LastModified = lastModified;
+            Status = status;
+            Error = error;
+            Summary = summary;
+        }
+        /// <summary> List of possible statuses for job or document. </summary>
+        public DocumentTranslationStatus Status { get; }
+        /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
+        public DocumentTranslationError Error { get; }
     }
 }

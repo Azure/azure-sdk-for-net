@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>
         /// <param name="type"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
         /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>

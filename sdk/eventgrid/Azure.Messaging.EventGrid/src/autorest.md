@@ -63,11 +63,14 @@ directive:
         $[path]["x-namespace"] = namespace;
       }
       if (path.endsWith("EventData") || 
-          path.endsWith("SubscriptionValidationResponse") || 
           path.includes("EventGridEvent") || 
          ($[path]["x-ms-client-name"] && $[path]["x-ms-client-name"].endsWith("EventData")))
       {
         $[path]["x-csharp-usage"] = "model,output,converter";
+      }
+      if (path.endsWith("SubscriptionValidationResponse"))
+      {
+        $[path]["x-csharp-usage"] = "model,input,output,converter";
       }
       $[path]["x-csharp-formats"] = "json";
       if (path.includes("WebAppServicePlanUpdatedEventData"))

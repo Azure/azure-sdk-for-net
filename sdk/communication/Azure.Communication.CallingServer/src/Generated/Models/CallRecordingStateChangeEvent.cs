@@ -13,30 +13,34 @@ namespace Azure.Communication.CallingServer
     public partial class CallRecordingStateChangeEvent
     {
         /// <summary> Initializes a new instance of CallRecordingStateChangeEvent. </summary>
-        public CallRecordingStateChangeEvent()
+        /// <param name="state"> The state of the recording. </param>
+        /// <param name="startDateTime"> The time of the recording started. </param>
+        internal CallRecordingStateChangeEvent(CallRecordingState state, DateTimeOffset startDateTime)
         {
+            State = state;
+            StartDateTime = startDateTime;
         }
 
         /// <summary> Initializes a new instance of CallRecordingStateChangeEvent. </summary>
         /// <param name="recordingId"> The call recording id. </param>
-        /// <param name="state"> The recording state of the recording. </param>
+        /// <param name="state"> The state of the recording. </param>
         /// <param name="startDateTime"> The time of the recording started. </param>
-        /// <param name="conversationId"> The conversation id from a out call start recording request. </param>
-        internal CallRecordingStateChangeEvent(string recordingId, CallRecordingState? state, DateTimeOffset? startDateTime, string conversationId)
+        /// <param name="serverCallId"> The server call.id. </param>
+        internal CallRecordingStateChangeEvent(string recordingId, CallRecordingState state, DateTimeOffset startDateTime, string serverCallId)
         {
             RecordingId = recordingId;
             State = state;
             StartDateTime = startDateTime;
-            ConversationId = conversationId;
+            ServerCallId = serverCallId;
         }
 
         /// <summary> The call recording id. </summary>
-        public string RecordingId { get; set; }
-        /// <summary> The recording state of the recording. </summary>
-        public CallRecordingState? State { get; set; }
+        public string RecordingId { get; }
+        /// <summary> The state of the recording. </summary>
+        public CallRecordingState State { get; }
         /// <summary> The time of the recording started. </summary>
-        public DateTimeOffset? StartDateTime { get; set; }
-        /// <summary> The conversation id from a out call start recording request. </summary>
-        public string ConversationId { get; set; }
+        public DateTimeOffset StartDateTime { get; }
+        /// <summary> The server call.id. </summary>
+        public string ServerCallId { get; }
     }
 }

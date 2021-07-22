@@ -8,7 +8,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The tone.
     /// </summary>
-    [CodeGenModel("ToneValue", Usage = new string[] { "input", "output" }, Formats = new string[] { "json" })]
+    [CodeGenModel("ToneValue", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public readonly partial struct ToneValue
     {
     }

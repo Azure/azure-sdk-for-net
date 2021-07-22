@@ -6,7 +6,7 @@
     <PackageId>Azure.ResourceManager.Communication</PackageId>
     <Description>
       Azure management client SDK for Azure resource provider Microsoft.Communication.
-      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.ResourceManager.Communication/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.ResourceManager.Communication/CHANGELOG.md.
+      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.ResourceManager.Communication/CHANGELOG.md.
     </Description>
     <PackageTags>azure;management;communication</PackageTags>
     <!--
@@ -14,6 +14,10 @@
     -->
     <NoWarn>$(NoWarn);AZC0001</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Link="README.md" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />

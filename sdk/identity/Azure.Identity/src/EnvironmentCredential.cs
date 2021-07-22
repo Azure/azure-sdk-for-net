@@ -30,6 +30,7 @@ namespace Azure.Identity
     {
         private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured.";
         private readonly CredentialPipeline _pipeline;
+        private readonly TokenCredentialOptions _options;
 
         internal TokenCredential Credential { get; }
 
@@ -50,6 +51,7 @@ namespace Azure.Identity
         public EnvironmentCredential(TokenCredentialOptions options)
             : this(CredentialPipeline.GetInstance(options))
         {
+            _options = options;
         }
 
         internal EnvironmentCredential(CredentialPipeline pipeline)
@@ -67,15 +69,15 @@ namespace Azure.Identity
             {
                 if (!string.IsNullOrEmpty(clientSecret))
                 {
-                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, null, _pipeline, null);
+                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _options, _pipeline, null);
                 }
                 else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
-                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, null, _pipeline, null);
+                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _options, _pipeline, null);
                 }
                 else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
-                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, null, _pipeline, null);
+                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, _options, _pipeline, null);
                 }
             }
         }

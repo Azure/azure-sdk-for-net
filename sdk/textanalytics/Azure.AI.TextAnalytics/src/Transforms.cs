@@ -322,16 +322,22 @@ namespace Azure.AI.TextAnalytics
 
         internal static PiiTask ConvertToPiiTask(RecognizePiiEntitiesAction action)
         {
+            var parameters = new PiiTaskParameters()
+            {
+                Domain = action.DomainFilter.GetString() ?? (PiiTaskParametersDomain?)null,
+                ModelVersion = action.ModelVersion,
+                StringIndexType = Constants.DefaultStringIndexType,
+                LoggingOptOut = action.DisableServiceLogs
+            };
+
+            if (action.CategoriesFilter.Count > 0)
+            {
+                parameters.PiiCategories = action.CategoriesFilter;
+            }
+
             return new PiiTask()
             {
-                Parameters = new PiiTaskParameters()
-                {
-                    Domain = action.DomainFilter.GetString() ?? (PiiTaskParametersDomain?)null,
-                    ModelVersion = action.ModelVersion,
-                    StringIndexType = Constants.DefaultStringIndexType,
-                    LoggingOptOut = action.DisableServiceLogs
-                    // Categories are not enabled because of https://github.com/Azure/azure-sdk-for-net/issues/19237
-                }
+                Parameters = parameters
             };
         }
 
@@ -482,7 +488,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     string[] targetPair = parseActionErrorTarget(error.Target);
                     if (targetPair == null)
-                        throw new InvalidOperationException("Invalid action/id error");
+                        throw new InvalidOperationException($"Invalid action/id error. \n Additional information: Error code: {error.Code} Error message: {error.Message}");
 
                     string taskName = targetPair[0];
                     int taskIndex = int.Parse(targetPair[1], CultureInfo.InvariantCulture);
@@ -509,7 +515,7 @@ namespace Azure.AI.TextAnalytics
                     }
                     else
                     {
-                        throw new InvalidOperationException($"Invalid task name in target reference - {taskName}");
+                        throw new InvalidOperationException($"Invalid task name in target reference - {taskName}. \n Additional information: Error code: {error.Code} Error message: {error.Message}");
                     }
                 }
             }
@@ -532,11 +538,11 @@ namespace Azure.AI.TextAnalytics
 
                 if (taskError != null)
                 {
-                    collection.Add(new AnalyzeSentimentActionResult(null, task.LastUpdateDateTime, taskError));
+                    collection.Add(new AnalyzeSentimentActionResult(task.LastUpdateDateTime, taskError));
                 }
                 else
                 {
-                    collection.Add(new AnalyzeSentimentActionResult(ConvertToAnalyzeSentimentResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, null));
+                    collection.Add(new AnalyzeSentimentActionResult(ConvertToAnalyzeSentimentResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
                 }
                 index++;
             }
@@ -554,11 +560,11 @@ namespace Azure.AI.TextAnalytics
 
                 if (taskError != null)
                 {
-                    collection.Add(new RecognizeLinkedEntitiesActionResult(null, task.LastUpdateDateTime, taskError));
+                    collection.Add(new RecognizeLinkedEntitiesActionResult(task.LastUpdateDateTime, taskError));
                 }
                 else
                 {
-                    collection.Add(new RecognizeLinkedEntitiesActionResult(ConvertToRecognizeLinkedEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, null));
+                    collection.Add(new RecognizeLinkedEntitiesActionResult(ConvertToRecognizeLinkedEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
                 }
                 index++;
             }
@@ -576,11 +582,11 @@ namespace Azure.AI.TextAnalytics
 
                 if (taskError != null)
                 {
-                    collection.Add(new ExtractKeyPhrasesActionResult(null, task.LastUpdateDateTime, taskError));
+                    collection.Add(new ExtractKeyPhrasesActionResult(task.LastUpdateDateTime, taskError));
                 }
                 else
                 {
-                    collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, null));
+                    collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
                 }
                 index++;
             }
@@ -598,11 +604,11 @@ namespace Azure.AI.TextAnalytics
 
                 if (taskError != null)
                 {
-                    collection.Add(new RecognizePiiEntitiesActionResult(null, task.LastUpdateDateTime, taskError));
+                    collection.Add(new RecognizePiiEntitiesActionResult(task.LastUpdateDateTime, taskError));
                 }
                 else
                 {
-                    collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, taskError));
+                    collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
                 }
                 index++;
             }
@@ -622,11 +628,11 @@ namespace Azure.AI.TextAnalytics
 
                 if (taskError != null)
                 {
-                    collection.Add(new RecognizeEntitiesActionResult(null, task.LastUpdateDateTime, taskError));
+                    collection.Add(new RecognizeEntitiesActionResult(task.LastUpdateDateTime, taskError));
                 }
                 else
                 {
-                    collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime, taskError));
+                    collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.Results, idToIndexMap), task.LastUpdateDateTime));
                 }
                 index++;
             }

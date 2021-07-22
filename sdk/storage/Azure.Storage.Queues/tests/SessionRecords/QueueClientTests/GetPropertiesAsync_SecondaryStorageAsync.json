@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://seanmccragrs.queue.core.windows.net/test-queue-62e7742d-6588-c1da-7841-54e1187123b5",
@@ -61,9 +61,9 @@
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EQueueNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified queue does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>QueueNotFound</Code><Message>The specified queue does not exist.\n",
         "RequestId:0c59de50-8003-0024-0ed3-e3a3ae000000\n",
-        "Time:2021-01-06T02:31:05.3393871Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2021-01-06T02:31:05.3393871Z</Message></Error>"
       ]
     },
     {
@@ -131,6 +131,6 @@
   ],
   "Variables": {
     "RandomSeed": "217401132",
-    "Storage_TestConfigSecondary": "SecondaryTenant\nseanmccragrs\nU2FuaXRpemVk\nhttp://seanmccragrs.blob.core.windows.net\nhttp://seanmccragrs.file.core.windows.net\nhttp://seanmccragrs.queue.core.windows.net\nhttp://seanmccragrs.table.core.windows.net\n\n\n\n\nhttp://seanmccragrs-secondary.blob.core.windows.net\nhttp://seanmccragrs-secondary.file.core.windows.net\nhttp://seanmccragrs-secondary.queue.core.windows.net\nhttp://seanmccragrs-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanmccragrs.blob.core.windows.net/;QueueEndpoint=http://seanmccragrs.queue.core.windows.net/;FileEndpoint=http://seanmccragrs.file.core.windows.net/;BlobSecondaryEndpoint=http://seanmccragrs-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanmccragrs-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanmccragrs-secondary.file.core.windows.net/;AccountName=seanmccragrs;AccountKey=Sanitized\n"
+    "Storage_TestConfigSecondary": "SecondaryTenant\nseanmccragrs\nU2FuaXRpemVk\nhttp://seanmccragrs.blob.core.windows.net\nhttp://seanmccragrs.file.core.windows.net\nhttp://seanmccragrs.queue.core.windows.net\nhttp://seanmccragrs.table.core.windows.net\n\n\n\n\nhttp://seanmccragrs-secondary.blob.core.windows.net\nhttp://seanmccragrs-secondary.file.core.windows.net\nhttp://seanmccragrs-secondary.queue.core.windows.net\nhttp://seanmccragrs-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanmccragrs.blob.core.windows.net/;QueueEndpoint=http://seanmccragrs.queue.core.windows.net/;FileEndpoint=http://seanmccragrs.file.core.windows.net/;BlobSecondaryEndpoint=http://seanmccragrs-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanmccragrs-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanmccragrs-secondary.file.core.windows.net/;AccountName=seanmccragrs;AccountKey=Sanitized\n\n\n"
   }
 }

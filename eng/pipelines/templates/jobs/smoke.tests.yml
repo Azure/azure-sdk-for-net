@@ -16,8 +16,8 @@ jobs:
   - ${{ if eq(parameters.Daily, false) }}:
     - job: smoke_test_eligibility
       pool:
-        name: "azsdk-pool-mms-ubuntu-1804-general"
-        vmImage: "MMSUbuntu18.04"
+        name: "azsdk-pool-mms-ubuntu-2004-general"
+        vmImage: "MMSUbuntu20.04"
       displayName: Check Smoke Test Eligibility
       steps:
         # pipelines only supports template each when it generates the entire script block.
@@ -48,15 +48,15 @@ jobs:
     strategy:
       matrix:
         Linux (AzureCloud):
-          Pool: "azsdk-pool-mms-ubuntu-1804-general"
-          OSVmImage: "MMSUbuntu18.04"
+          Pool: "azsdk-pool-mms-ubuntu-2004-general"
+          OSVmImage: "MMSUbuntu20.04"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
           Location: "westus"
         Linux (AzureCloud Canary):
-          Pool: "azsdk-pool-mms-ubuntu-1804-general"
-          OSVmImage: "MMSUbuntu18.04"
+          Pool: "azsdk-pool-mms-ubuntu-2004-general"
+          OSVmImage: "MMSUbuntu20.04"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
           ArmTemplateParameters: $(azureCloudArmParameters)

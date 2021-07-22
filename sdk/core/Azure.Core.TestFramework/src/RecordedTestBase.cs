@@ -99,7 +99,7 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
-        /// Add a static TestEventListener which will redirect SDK logging
+        /// Add a static <see cref="Diagnostics.AzureEventSourceListener"/> which will redirect SDK logging
         /// to Console.Out for easy debugging.
         /// </summary>
         private static TestLogger Logger { get; set; }

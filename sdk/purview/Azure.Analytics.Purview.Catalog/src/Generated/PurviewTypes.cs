@@ -31,23 +31,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the classification definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetClassificationDefByGuidAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetClassificationDefByGuidAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationDefByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetClassificationDefByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -71,23 +71,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the classification definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetClassificationDefByGuid(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetClassificationDefByGuid(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationDefByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetClassificationDefByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -111,8 +111,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetClassificationDefByGuid"/> and <see cref="GetClassificationDefByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetClassificationDefByGuidRequest(string guid, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetClassificationDefByGuidRequest(string guid, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -129,23 +129,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the classification definition by its name (unique). </summary>
         /// <param name="name"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetClassificationDefByNameAsync(string name, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetClassificationDefByNameAsync(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationDefByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetClassificationDefByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -169,23 +169,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the classification definition by its name (unique). </summary>
         /// <param name="name"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetClassificationDefByName(string name, RequestOptions requestOptions = null)
+        public virtual Response GetClassificationDefByName(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetClassificationDefByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetClassificationDefByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -209,8 +209,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetClassificationDefByName"/> and <see cref="GetClassificationDefByNameAsync"/> operations. </summary>
         /// <param name="name"> The name of the classification. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetClassificationDefByNameRequest(string name, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetClassificationDefByNameRequest(string name, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -227,23 +227,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the Entity definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEntityDefinitionByGuidAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetEntityDefinitionByGuidAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -267,23 +267,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the Entity definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetEntityDefinitionByGuid(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetEntityDefinitionByGuid(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -307,8 +307,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetEntityDefinitionByGuid"/> and <see cref="GetEntityDefinitionByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetEntityDefinitionByGuidRequest(string guid, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetEntityDefinitionByGuidRequest(string guid, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -325,23 +325,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the entity definition by its name (unique). </summary>
         /// <param name="name"> The name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEntityDefinitionByNameAsync(string name, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetEntityDefinitionByNameAsync(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -365,23 +365,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the entity definition by its name (unique). </summary>
         /// <param name="name"> The name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetEntityDefinitionByName(string name, RequestOptions requestOptions = null)
+        public virtual Response GetEntityDefinitionByName(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -405,8 +405,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetEntityDefinitionByName"/> and <see cref="GetEntityDefinitionByNameAsync"/> operations. </summary>
         /// <param name="name"> The name of the entity. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetEntityDefinitionByNameRequest(string name, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetEntityDefinitionByNameRequest(string name, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -423,23 +423,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the enum definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEnumDefByGuidAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetEnumDefByGuidAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEnumDefByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetEnumDefByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -463,23 +463,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the enum definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetEnumDefByGuid(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetEnumDefByGuid(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEnumDefByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetEnumDefByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -503,8 +503,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetEnumDefByGuid"/> and <see cref="GetEnumDefByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetEnumDefByGuidRequest(string guid, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetEnumDefByGuidRequest(string guid, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -521,23 +521,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the enum definition by its name (unique). </summary>
         /// <param name="name"> The name of the enum. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEnumDefByNameAsync(string name, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetEnumDefByNameAsync(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEnumDefByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetEnumDefByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -561,23 +561,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the enum definition by its name (unique). </summary>
         /// <param name="name"> The name of the enum. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetEnumDefByName(string name, RequestOptions requestOptions = null)
+        public virtual Response GetEnumDefByName(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEnumDefByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetEnumDefByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -601,8 +601,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetEnumDefByName"/> and <see cref="GetEnumDefByNameAsync"/> operations. </summary>
         /// <param name="name"> The name of the enum. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetEnumDefByNameRequest(string name, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetEnumDefByNameRequest(string name, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -619,23 +619,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the relationship definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRelationshipDefByGuidAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetRelationshipDefByGuidAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -659,23 +659,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the relationship definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetRelationshipDefByGuid(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetRelationshipDefByGuid(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRelationshipDefByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -699,8 +699,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetRelationshipDefByGuid"/> and <see cref="GetRelationshipDefByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetRelationshipDefByGuidRequest(string guid, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetRelationshipDefByGuidRequest(string guid, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -717,23 +717,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the relationship definition by its name (unique). </summary>
         /// <param name="name"> The name of the relationship. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetRelationshipDefByNameAsync(string name, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetRelationshipDefByNameAsync(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetRelationshipDefByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRelationshipDefByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -757,23 +757,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the relationship definition by its name (unique). </summary>
         /// <param name="name"> The name of the relationship. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetRelationshipDefByName(string name, RequestOptions requestOptions = null)
+        public virtual Response GetRelationshipDefByName(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetRelationshipDefByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRelationshipDefByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -797,8 +797,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetRelationshipDefByName"/> and <see cref="GetRelationshipDefByNameAsync"/> operations. </summary>
         /// <param name="name"> The name of the relationship. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetRelationshipDefByNameRequest(string name, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetRelationshipDefByNameRequest(string name, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -815,23 +815,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the struct definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetStructDefByGuidAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetStructDefByGuidAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetStructDefByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetStructDefByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -855,23 +855,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the struct definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetStructDefByGuid(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetStructDefByGuid(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetStructDefByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetStructDefByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -895,8 +895,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetStructDefByGuid"/> and <see cref="GetStructDefByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetStructDefByGuidRequest(string guid, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetStructDefByGuidRequest(string guid, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -913,23 +913,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the struct definition by its name (unique). </summary>
         /// <param name="name"> The name of the struct. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetStructDefByNameAsync(string name, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetStructDefByNameAsync(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetStructDefByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetStructDefByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -953,23 +953,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the struct definition by its name (unique). </summary>
         /// <param name="name"> The name of the struct. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetStructDefByName(string name, RequestOptions requestOptions = null)
+        public virtual Response GetStructDefByName(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetStructDefByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetStructDefByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -993,8 +993,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetStructDefByName"/> and <see cref="GetStructDefByNameAsync"/> operations. </summary>
         /// <param name="name"> The name of the struct. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetStructDefByNameRequest(string name, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetStructDefByNameRequest(string name, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1011,23 +1011,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the type definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTypeDefinitionByGuidAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetTypeDefinitionByGuidAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1051,23 +1051,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the type definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetTypeDefinitionByGuid(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetTypeDefinitionByGuid(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1091,8 +1091,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetTypeDefinitionByGuid"/> and <see cref="GetTypeDefinitionByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetTypeDefinitionByGuidRequest(string guid, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetTypeDefinitionByGuidRequest(string guid, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1109,23 +1109,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the type definition by its name (unique). </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTypeDefinitionByNameAsync(string name, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetTypeDefinitionByNameAsync(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1149,23 +1149,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the type definition by its name (unique). </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetTypeDefinitionByName(string name, RequestOptions requestOptions = null)
+        public virtual Response GetTypeDefinitionByName(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1189,8 +1189,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetTypeDefinitionByName"/> and <see cref="GetTypeDefinitionByNameAsync"/> operations. </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetTypeDefinitionByNameRequest(string name, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetTypeDefinitionByNameRequest(string name, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1207,23 +1207,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete API for type identified by its name. </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteTypeByNameAsync(string name, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteTypeByNameAsync(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTypeByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteTypeByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1247,23 +1247,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete API for type identified by its name. </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteTypeByName(string name, RequestOptions requestOptions = null)
+        public virtual Response DeleteTypeByName(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTypeByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteTypeByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1287,8 +1287,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="DeleteTypeByName"/> and <see cref="DeleteTypeByNameAsync"/> operations. </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteTypeByNameRequest(string name, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteTypeByNameRequest(string name, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1308,23 +1308,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template.
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAllTypeDefinitionsAsync(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetAllTypeDefinitionsAsync(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1352,23 +1352,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template.
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetAllTypeDefinitions(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
+        public virtual Response GetAllTypeDefinitions(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1396,8 +1396,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template.
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetAllTypeDefinitionsRequest(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetAllTypeDefinitionsRequest(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1426,12 +1426,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>classificationDefs</term>
         ///     <term>AtlasClassificationDef[]</term>
@@ -1471,12 +1471,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassificationDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -1599,12 +1599,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntityDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -1716,12 +1716,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEnumDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
@@ -1821,12 +1821,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -1960,12 +1960,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasStructDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
@@ -2059,12 +2059,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TermTemplateDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -2158,12 +2158,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>DateFormat</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
@@ -2221,12 +2221,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipEndDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -2266,12 +2266,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasAttributeDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -2353,12 +2353,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>NumberFormat</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
@@ -2446,12 +2446,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeZone</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>dstSavings</term>
         ///     <term>number</term>
@@ -2491,12 +2491,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipAttributeDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -2590,12 +2590,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEnumElementDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
@@ -2617,12 +2617,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasConstraintDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>params</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -2637,24 +2637,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateTypeDefinitionsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateTypeDefinitionsAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateTypeDefinitionsRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateTypeDefinitionsRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -2683,12 +2683,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>classificationDefs</term>
         ///     <term>AtlasClassificationDef[]</term>
@@ -2728,12 +2728,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassificationDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -2856,12 +2856,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntityDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -2973,12 +2973,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEnumDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
@@ -3078,12 +3078,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -3217,12 +3217,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasStructDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
@@ -3316,12 +3316,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TermTemplateDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -3415,12 +3415,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>DateFormat</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
@@ -3478,12 +3478,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipEndDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -3523,12 +3523,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasAttributeDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -3610,12 +3610,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>NumberFormat</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
@@ -3703,12 +3703,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeZone</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>dstSavings</term>
         ///     <term>number</term>
@@ -3748,12 +3748,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipAttributeDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -3847,12 +3847,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEnumElementDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
@@ -3874,12 +3874,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasConstraintDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>params</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -3894,24 +3894,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateTypeDefinitions(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateTypeDefinitions(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateTypeDefinitionsRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateTypeDefinitionsRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -3934,9 +3934,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="CreateTypeDefinitions"/> and <see cref="CreateTypeDefinitionsAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateTypeDefinitionsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateTypeDefinitionsRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -3948,7 +3948,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -3956,12 +3956,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>classificationDefs</term>
         ///     <term>AtlasClassificationDef[]</term>
@@ -4001,12 +4001,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassificationDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -4129,12 +4129,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntityDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -4246,12 +4246,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEnumDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
@@ -4351,12 +4351,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -4490,12 +4490,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasStructDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
@@ -4589,12 +4589,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TermTemplateDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -4688,12 +4688,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>DateFormat</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
@@ -4751,12 +4751,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipEndDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -4796,12 +4796,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasAttributeDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -4883,12 +4883,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>NumberFormat</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
@@ -4976,12 +4976,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeZone</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>dstSavings</term>
         ///     <term>number</term>
@@ -5021,12 +5021,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipAttributeDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -5120,12 +5120,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEnumElementDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
@@ -5147,12 +5147,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasConstraintDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>params</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -5167,24 +5167,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateAtlasTypeDefinitionsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> UpdateAtlasTypeDefinitionsAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -5210,12 +5210,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>classificationDefs</term>
         ///     <term>AtlasClassificationDef[]</term>
@@ -5255,12 +5255,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassificationDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -5383,12 +5383,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntityDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -5500,12 +5500,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEnumDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
@@ -5605,12 +5605,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -5744,12 +5744,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasStructDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
@@ -5843,12 +5843,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TermTemplateDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -5942,12 +5942,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>DateFormat</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
@@ -6005,12 +6005,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipEndDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -6050,12 +6050,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasAttributeDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -6137,12 +6137,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>NumberFormat</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
@@ -6230,12 +6230,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeZone</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>dstSavings</term>
         ///     <term>number</term>
@@ -6275,12 +6275,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipAttributeDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -6374,12 +6374,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEnumElementDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
@@ -6401,12 +6401,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasConstraintDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>params</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -6421,24 +6421,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response UpdateAtlasTypeDefinitions(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response UpdateAtlasTypeDefinitions(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -6461,9 +6461,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="UpdateAtlasTypeDefinitions"/> and <see cref="UpdateAtlasTypeDefinitionsAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateUpdateAtlasTypeDefinitionsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateUpdateAtlasTypeDefinitionsRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -6475,7 +6475,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -6483,12 +6483,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>classificationDefs</term>
         ///     <term>AtlasClassificationDef[]</term>
@@ -6528,12 +6528,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassificationDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -6656,12 +6656,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntityDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -6773,12 +6773,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEnumDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
@@ -6878,12 +6878,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -7017,12 +7017,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasStructDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
@@ -7116,12 +7116,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TermTemplateDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -7215,12 +7215,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>DateFormat</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
@@ -7278,12 +7278,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipEndDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -7323,12 +7323,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasAttributeDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -7410,12 +7410,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>NumberFormat</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
@@ -7503,12 +7503,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeZone</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>dstSavings</term>
         ///     <term>number</term>
@@ -7548,12 +7548,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipAttributeDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -7647,12 +7647,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEnumElementDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
@@ -7674,12 +7674,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasConstraintDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>params</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -7694,24 +7694,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteTypeDefinitionsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteTypeDefinitionsAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTypeDefinitionsRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteTypeDefinitionsRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -7737,12 +7737,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>classificationDefs</term>
         ///     <term>AtlasClassificationDef[]</term>
@@ -7782,12 +7782,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasClassificationDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -7910,12 +7910,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEntityDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -8027,12 +8027,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEnumDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
@@ -8132,12 +8132,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -8271,12 +8271,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasStructDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
@@ -8370,12 +8370,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TermTemplateDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
@@ -8469,12 +8469,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>DateFormat</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
@@ -8532,12 +8532,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipEndDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -8577,12 +8577,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasAttributeDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -8664,12 +8664,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>NumberFormat</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
@@ -8757,12 +8757,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>TimeZone</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>dstSavings</term>
         ///     <term>number</term>
@@ -8802,12 +8802,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasRelationshipAttributeDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
@@ -8901,12 +8901,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasEnumElementDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
@@ -8928,12 +8928,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// Schema for <c>AtlasConstraintDef</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>params</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
@@ -8948,24 +8948,24 @@ namespace Azure.Analytics.Purview.Catalog
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteTypeDefinitions(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response DeleteTypeDefinitions(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTypeDefinitionsRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteTypeDefinitionsRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -8988,9 +8988,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="DeleteTypeDefinitions"/> and <see cref="DeleteTypeDefinitionsAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteTypeDefinitionsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteTypeDefinitionsRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -9001,7 +9001,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/types/typedefs", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -9011,23 +9011,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template.
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTypeDefinitionHeadersAsync(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetTypeDefinitionHeadersAsync(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -9055,23 +9055,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template.
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetTypeDefinitionHeaders(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
+        public virtual Response GetTypeDefinitionHeaders(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -9099,8 +9099,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// This is always true when search filter type=term_template.
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetTypeDefinitionHeadersRequest(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetTypeDefinitionHeadersRequest(bool? includeTermTemplate = null, string type = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -9124,23 +9124,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the term template definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTermTemplateDefByGuidAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetTermTemplateDefByGuidAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -9164,23 +9164,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the term template definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetTermTemplateDefByGuid(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetTermTemplateDefByGuid(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetTermTemplateDefByGuidRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -9204,8 +9204,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetTermTemplateDefByGuid"/> and <see cref="GetTermTemplateDefByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetTermTemplateDefByGuidRequest(string guid, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetTermTemplateDefByGuidRequest(string guid, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -9223,23 +9223,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the term template definition by its name (unique). </summary>
         /// <param name="name"> The name of the term template. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTermTemplateDefByNameAsync(string name, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetTermTemplateDefByNameAsync(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTermTemplateDefByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetTermTemplateDefByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -9263,23 +9263,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get the term template definition by its name (unique). </summary>
         /// <param name="name"> The name of the term template. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetTermTemplateDefByName(string name, RequestOptions requestOptions = null)
+        public virtual Response GetTermTemplateDefByName(string name, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTermTemplateDefByNameRequest(name, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetTermTemplateDefByNameRequest(name, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -9303,8 +9303,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetTermTemplateDefByName"/> and <see cref="GetTermTemplateDefByNameAsync"/> operations. </summary>
         /// <param name="name"> The name of the term template. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetTermTemplateDefByNameRequest(string name, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetTermTemplateDefByNameRequest(string name, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

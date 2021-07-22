@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of AvroWriteSettings. </summary>
         /// <param name="type"> The write setting type. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="recordName"> Top level record name in write result, which is required in AVRO spec. </param>
         /// <param name="recordNamespace"> Record namespace in the write result. </param>
         /// <param name="maxRowsPerFile"> Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>

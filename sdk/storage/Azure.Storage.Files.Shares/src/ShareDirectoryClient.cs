@@ -1558,8 +1558,78 @@ namespace Azure.Storage.Files.Shares
 
         #region GetFilesAndDirectories
         /// <summary>
-        /// The <see cref="GetFilesAndDirectories"/> operation returns an async
-        /// sequence of files and subdirectories in this directory.
+        /// The <see cref="GetFilesAndDirectoriesAsync(ShareDirectoryGetFilesAndDirectoriesOptions, CancellationToken)"/>
+        /// operation returns an async sequence of files and subdirectories in this directory.
+        /// Enumerating the files and directories may make multiple requests
+        /// to the service while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-directories-and-files">
+        /// List Directories and Files</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.  <see cref="ShareDirectoryGetFilesAndDirectoriesOptions"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IEnumerable{T}" /> of <see cref="Response{StorageFileItem}"/>
+        /// describing  the items in the directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<ShareFileItem> GetFilesAndDirectories(
+            ShareDirectoryGetFilesAndDirectoriesOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetFilesAndDirectoriesAsyncCollection(
+                client: this,
+                prefix: options?.Prefix,
+                traits: options?.Traits,
+                includeExtendedInfo: options?.IncludeExtendedInfo)
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetFilesAndDirectoriesAsync(ShareDirectoryGetFilesAndDirectoriesOptions, CancellationToken)"/>
+        /// operation returns an async collection of files and subdirectories in this directory.
+        /// Enumerating the files and directories may make multiple requests
+        /// to the service while fetching all the values.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-directories-and-files">
+        /// List Directories and Files</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.  <see cref="ShareDirectoryGetFilesAndDirectoriesOptions"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="AsyncPageable{T}"/> describing the
+        /// items in the directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<ShareFileItem> GetFilesAndDirectoriesAsync(
+            ShareDirectoryGetFilesAndDirectoriesOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetFilesAndDirectoriesAsyncCollection(
+                client: this,
+                prefix: options?.Prefix,
+                traits: options?.Traits,
+                includeExtendedInfo: options?.IncludeExtendedInfo)
+            .ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetFilesAndDirectories(string, CancellationToken)"/>
+        /// operation returns an async sequence of files and subdirectories in this directory.
         /// Enumerating the files and directories may make multiple requests
         /// to the service while fetching all the values.
         ///
@@ -1584,13 +1654,18 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<ShareFileItem> GetFilesAndDirectories(
-            string prefix = default,
+            string prefix,
             CancellationToken cancellationToken = default) =>
-            new GetFilesAndDirectoriesAsyncCollection(this, prefix).ToSyncCollection(cancellationToken);
+            new GetFilesAndDirectoriesAsyncCollection(
+                client: this,
+                prefix: prefix,
+                traits: null,
+                includeExtendedInfo: null)
+            .ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetFilesAndDirectoriesAsync"/> operation returns an
-        /// async collection of files and subdirectories in this directory.
+        /// The <see cref="GetFilesAndDirectoriesAsync(string, CancellationToken)"/>
+        /// operation returns an async collection of files and subdirectories in this directory.
         /// Enumerating the files and directories may make multiple requests
         /// to the service while fetching all the values.
         ///
@@ -1615,9 +1690,14 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<ShareFileItem> GetFilesAndDirectoriesAsync(
-            string prefix = default,
+            string prefix,
             CancellationToken cancellationToken = default) =>
-            new GetFilesAndDirectoriesAsyncCollection(this, prefix).ToAsyncCollection(cancellationToken);
+            new GetFilesAndDirectoriesAsyncCollection(
+                client: this,
+                prefix: prefix,
+                traits: null,
+                includeExtendedInfo: null)
+            .ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetFilesAndDirectoriesInternal"/> operation returns a
@@ -1645,6 +1725,12 @@ namespace Azure.Storage.Files.Shares
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
         /// </param>
+        /// <param name="traits">
+        /// Specifies traits to include in the <see cref="ShareFileItem"/>.
+        /// </param>
+        /// <param name="includeExtendedInfo">
+        /// If extended info should be included in the <see cref="ShareFileItem"/>.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1664,6 +1750,8 @@ namespace Azure.Storage.Files.Shares
             string marker,
             string prefix,
             int? pageSizeHint,
+            ShareFileTraits? traits,
+            bool? includeExtendedInfo,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1689,6 +1777,8 @@ namespace Azure.Storage.Files.Shares
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
+                            include: ShareExtensions.AsIncludeItems(traits),
+                            includeExtendedInfo: includeExtendedInfo,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1698,6 +1788,8 @@ namespace Azure.Storage.Files.Shares
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
+                            include: ShareExtensions.AsIncludeItems(traits),
+                            includeExtendedInfo: includeExtendedInfo,
                             cancellationToken: cancellationToken);
                     }
 

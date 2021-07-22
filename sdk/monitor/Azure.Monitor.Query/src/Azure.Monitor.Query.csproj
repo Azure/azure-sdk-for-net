@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This library allows querying logs and metrics from the Azure Motnitor service.</Description>
+    <Description>This library allows querying logs and metrics from the Azure Monitor service.</Description>
     <AssemblyTitle>Azure Monitor Query client library</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.3</Version>
     <PackageTags>Azure Monitor Query</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001</NoWarn>

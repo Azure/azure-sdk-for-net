@@ -1187,5 +1187,246 @@ namespace Azure.Storage.Blobs.Specialized
             return Response.FromValue(response.Headers, response.GetRawResponse());
         }
         #endregion
+
+        #region CopyFromUri
+        /// <summary>
+        /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
+        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
+        /// which is either public or authorized with a shared access signature.
+        ///
+        /// The size of the source blob can be a maximum length of up to 256 MB.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
+        /// Copy Blob From URL</see>.
+        /// </summary>
+        /// <param name="source">
+        /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
+        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
+        /// source blob must either be public or must be authorized via a shared access signature. If the
+        /// source blob is public, no authorization is required to perform the operation. If the size of the
+        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// the source blob has to be block blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobCopyInfo}"/> describing the
+        /// state of the copy operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobCopyInfo> SyncCopyFromUri(
+            Uri source,
+            BlobCopyFromUriOptions options = default,
+            CancellationToken cancellationToken = default)
+            => SyncCopyFromUriInternal(
+                source: source,
+                metadata: options?.Metadata,
+                tags: options?.Tags,
+                accessTier: options?.AccessTier,
+                sourceConditions: options?.SourceConditions,
+                destinationConditions: options?.DestinationConditions,
+                async: false,
+                cancellationToken: cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
+        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
+        /// which is either public or authorized with a shared access signature.
+        ///
+        /// The size of the source blob can be a maximum length of up to 256 MB.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
+        /// Copy Blob From URL</see>.
+        /// </summary>
+        /// <param name="source">
+        /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
+        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
+        /// source blob must either be public or must be authorized via a shared access signature. If the
+        /// source blob is public, no authorization is required to perform the operation. If the size of the
+        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// the source blob has to be block blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobCopyInfo}"/> describing the
+        /// state of the copy operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobCopyInfo>> SyncCopyFromUriAsync(
+            Uri source,
+            BlobCopyFromUriOptions options = default,
+            CancellationToken cancellationToken = default)
+            => await SyncCopyFromUriInternal(
+                source: source,
+                metadata: options?.Metadata,
+                tags: options?.Tags,
+                accessTier: options?.AccessTier,
+                sourceConditions: options?.SourceConditions,
+                destinationConditions: options?.DestinationConditions,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// The Copy Blob From URL operation copies a blob to a destination within the storage account synchronously
+        /// for source blob sizes up to 256 MB. This API is available starting in version 2018-03-28.
+        /// The source for a Copy Blob From URL operation can be any committed block blob in any Azure storage account
+        /// which is either public or authorized with a shared access signature.
+        ///
+        /// The size of the source blob can be a maximum length of up to 256 MB.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url">
+        /// Copy Blob From URL</see>.
+        /// </summary>
+        /// <param name="source">
+        /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
+        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
+        /// source blob must either be public or must be authorized via a shared access signature. If the
+        /// source blob is public, no authorization is required to perform the operation. If the size of the
+        /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
+        /// the source blob has to be block blob.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this blob.
+        /// </param>
+        /// <param name="tags">
+        /// Optional tags to set for this blob.
+        /// </param>
+        /// <param name="accessTier">
+        /// Optional <see cref="AccessTier"/>
+        /// Indicates the tier to be set on the blob.
+        /// </param>
+        /// <param name="sourceConditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on the copying of data from this source blob.
+        /// </param>
+        /// <param name="destinationConditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// the copying of data to this blob.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobCopyInfo}"/> describing the
+        /// state of the copy operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<BlobCopyInfo>> SyncCopyFromUriInternal(
+            Uri source,
+            Metadata metadata,
+            Tags tags,
+            AccessTier? accessTier,
+            BlobRequestConditions sourceConditions,
+            BlobRequestConditions destinationConditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            {
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SyncCopyFromUri)}");
+
+                try
+                {
+                    ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobBaseClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(source)}: {source}\n" +
+                    $"{nameof(sourceConditions)}: {sourceConditions}\n" +
+                    $"{nameof(destinationConditions)}: {destinationConditions}");
+
+                    scope.Start();
+
+                    ResponseWithHeaders<BlobCopyFromURLHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.CopyFromURLAsync(
+                            copySource: source.AbsoluteUri,
+                            metadata: metadata,
+                            tier: accessTier,
+                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: sourceConditions?.IfMatch.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
+                            ifModifiedSince: destinationConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
+                            ifMatch: destinationConditions?.IfMatch?.ToString(),
+                            ifNoneMatch: destinationConditions?.IfNoneMatch?.ToString(),
+                            ifTags: destinationConditions?.TagConditions,
+                            leaseId: destinationConditions?.LeaseId,
+                            blobTagsString: tags?.ToTagsString(),
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.CopyFromURL(
+                            copySource: source.AbsoluteUri,
+                            metadata: metadata,
+                            tier: accessTier,
+                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: sourceConditions?.IfMatch.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
+                            ifModifiedSince: destinationConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
+                            ifMatch: destinationConditions?.IfMatch?.ToString(),
+                            ifNoneMatch: destinationConditions?.IfNoneMatch?.ToString(),
+                            ifTags: destinationConditions?.TagConditions,
+                            leaseId: destinationConditions?.LeaseId,
+                            blobTagsString: tags?.ToTagsString(),
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobCopyInfo(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion CopyFromUri
     }
 }

@@ -781,7 +781,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var lastEvent = new EventData
             (
-                eventBody: Array.Empty<byte>(),
+                eventBody: new BinaryData(Array.Empty<byte>()),
                 lastPartitionSequenceNumber: 1234,
                 lastPartitionOffset: 42,
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
