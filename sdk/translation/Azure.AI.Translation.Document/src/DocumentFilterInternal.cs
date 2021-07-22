@@ -10,7 +10,7 @@ namespace Azure.AI.Translation.Document
     /// <see cref="TranslationSource"/> class.
     /// </summary>
     [CodeGenModel("DocumentFilter")]
-    public partial class DocumentFilter
+    internal partial class DocumentFilterInternal
     {
     }
 }

@@ -8,10 +8,10 @@
 namespace Azure.AI.Translation.Document
 {
     /// <summary> The DocumentFilter. </summary>
-    public partial class DocumentFilter
+    internal partial class DocumentFilterInternal
     {
-        /// <summary> Initializes a new instance of DocumentFilter. </summary>
-        public DocumentFilter()
+        /// <summary> Initializes a new instance of DocumentFilterInternal. </summary>
+        public DocumentFilterInternal()
         {
         }
 

@@ -1,11 +1,5 @@
 namespace Azure.AI.Translation.Document
 {
-    public partial class DocumentFilter
-    {
-        public DocumentFilter() { }
-        public string Prefix { get { throw null; } set { } }
-        public string Suffix { get { throw null; } set { } }
-    }
     public partial class DocumentStatus
     {
         internal DocumentStatus() { }
@@ -172,9 +166,10 @@ namespace Azure.AI.Translation.Document
     public partial class TranslationSource
     {
         public TranslationSource(System.Uri sourceUri) { }
-        public Azure.AI.Translation.Document.DocumentFilter Filter { get { throw null; } set { } }
         public string LanguageCode { get { throw null; } set { } }
+        public string Prefix { get { throw null; } set { } }
         public System.Uri SourceUri { get { throw null; } }
+        public string Suffix { get { throw null; } set { } }
     }
     public partial class TranslationStatus
     {
