@@ -39,9 +39,8 @@ namespace Azure.Identity
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
         public EnvironmentCredential()
-            : this(CredentialPipeline.GetInstance(null))
-        {
-        }
+            : this(CredentialPipeline.GetInstance(null), new TokenCredentialOptions())
+        { }
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
@@ -49,14 +48,13 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public EnvironmentCredential(TokenCredentialOptions options)
-            : this(CredentialPipeline.GetInstance(options))
-        {
-            _options = options;
-        }
+            : this(CredentialPipeline.GetInstance(options), options)
+        { }
 
-        internal EnvironmentCredential(CredentialPipeline pipeline)
+        internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredentialOptions options)
         {
             _pipeline = pipeline;
+            _options = options;
 
             string tenantId = EnvironmentVariables.TenantId;
             string clientId = EnvironmentVariables.ClientId;
