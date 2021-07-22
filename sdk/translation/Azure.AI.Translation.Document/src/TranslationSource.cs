@@ -32,7 +32,7 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         public string Prefix
         {
-            get => Filter.Prefix;
+            get => Filter?.Prefix;
             set
             {
                 if (Filter == null)
@@ -47,7 +47,7 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         public string Suffix
         {
-            get => Filter.Suffix;
+            get => Filter?.Suffix;
             set
             {
                 if (Filter == null)
