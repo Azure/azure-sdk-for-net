@@ -5,7 +5,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Configurations that allow callers to specify details about how to execute
-    /// an Extract Summary action in a set of documents.
+    /// an Extractive Text Summarization action in a set of documents.
     /// For example, set the model version, specify the order in which extracted
     /// sentences are returned, and more.
     /// </summary>
@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtractSummaryAction"/>
         /// class which allows callers to specify details about how to execute
-        /// an Extract Summary action in a set of documents.
+        /// an Extractive Text Summarization action in a set of documents.
         /// For example, set the model version, specify the order in which extracted
         /// sentences are returned, and more.
         /// </summary>
