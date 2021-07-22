@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "01f7f3aa-1fb3-4c14-8d34-67ef24f58976"
+          "8abc58af-f939-4323-b3c2-85a0dfd0cc54"
         ],
         "accept-language": [
           "en-US"
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 19 Jul 2021 16:48:18 GMT"
+          "Thu, 22 Jul 2021 14:00:59 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,13 +33,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "185b8b96-17ac-4cb9-bf48-a991c239e826"
+          "d6b19e36-3f67-42cf-834d-ca80165a3169"
         ],
         "x-ms-correlation-request-id": [
-          "185b8b96-17ac-4cb9-bf48-a991c239e826"
+          "d6b19e36-3f67-42cf-834d-ca80165a3169"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20210719T164819Z:185b8b96-17ac-4cb9-bf48-a991c239e826"
+          "SOUTHINDIA:20210722T140100Z:d6b19e36-3f67-42cf-834d-ca80165a3169"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -67,7 +67,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1aa6b3dd-34d0-482a-8bfe-b950ef25dcf4"
+          "33e6df00-0a6e-4621-b074-1c56439b09f0"
         ],
         "accept-language": [
           "en-US"
@@ -84,7 +84,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 19 Jul 2021 16:48:18 GMT"
+          "Thu, 22 Jul 2021 14:01:00 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -93,13 +93,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "6ed74957-9d11-4246-99cc-bbdae2634551"
+          "528af9dd-f23f-42ce-bee6-38031c7c29bf"
         ],
         "x-ms-correlation-request-id": [
-          "6ed74957-9d11-4246-99cc-bbdae2634551"
+          "528af9dd-f23f-42ce-bee6-38031c7c29bf"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20210719T164819Z:6ed74957-9d11-4246-99cc-bbdae2634551"
+          "SOUTHINDIA:20210722T140100Z:528af9dd-f23f-42ce-bee6-38031c7c29bf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -121,13 +121,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourcegroups/RedisCreateUpdate9048?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlZ3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlOTA0OD9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourcegroups/RedisCreateUpdate2796?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlZ3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Nj9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "43169cac-b8f4-4a1d-b916-dff119bb54af"
+          "59178c49-192d-47ff-874b-398c06fbd783"
         ],
         "accept-language": [
           "en-US"
@@ -150,7 +150,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 19 Jul 2021 16:48:21 GMT"
+          "Thu, 22 Jul 2021 14:01:03 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -159,13 +159,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "e3bee810-c35b-40f9-acc3-a1dfa70f066e"
+          "6d718d04-f0e2-4171-bb70-ed8896c05c58"
         ],
         "x-ms-correlation-request-id": [
-          "e3bee810-c35b-40f9-acc3-a1dfa70f066e"
+          "6d718d04-f0e2-4171-bb70-ed8896c05c58"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20210719T164821Z:e3bee810-c35b-40f9-acc3-a1dfa70f066e"
+          "SOUTHINDIA:20210722T140104Z:6d718d04-f0e2-4171-bb70-ed8896c05c58"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -183,17 +183,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate9048\",\r\n  \"name\": \"RedisCreateUpdate9048\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796\",\r\n  \"name\": \"RedisCreateUpdate2796\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourcegroups/RedisCreateUpdate9048?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlZ3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlOTA0OD9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestUri": "/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourcegroups/RedisCreateUpdate2796?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMWFiMmQ5MDEtNjdiOC00NDJhLTk5ZGMtMWZlZTE2MzAyNDUzL3Jlc291cmNlZ3JvdXBzL1JlZGlzQ3JlYXRlVXBkYXRlMjc5Nj9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3dc9017b-8cd0-4a3e-8547-2d08b8a1b3b5"
+          "aa2cd467-ba45-4e07-a8ca-571b0b351724"
         ],
         "accept-language": [
           "en-US"
@@ -210,7 +210,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 19 Jul 2021 16:48:21 GMT"
+          "Thu, 22 Jul 2021 14:01:03 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -219,13 +219,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "9c3b6c5c-b1b5-41bf-99ea-f908cc20588e"
+          "752341e3-b245-4feb-91d6-9dfcdb93cbce"
         ],
         "x-ms-correlation-request-id": [
-          "9c3b6c5c-b1b5-41bf-99ea-f908cc20588e"
+          "752341e3-b245-4feb-91d6-9dfcdb93cbce"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20210719T164821Z:9c3b6c5c-b1b5-41bf-99ea-f908cc20588e"
+          "SOUTHINDIA:20210722T140104Z:752341e3-b245-4feb-91d6-9dfcdb93cbce"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -243,14 +243,14 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate9048\",\r\n  \"name\": \"RedisCreateUpdate9048\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/1ab2d901-67b8-442a-99dc-1fee16302453/resourceGroups/RedisCreateUpdate2796\",\r\n  \"name\": \"RedisCreateUpdate2796\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {
     ".ctor": [
-      "RedisCreateUpdate9048",
-      "RedisCreateUpdate662"
+      "RedisCreateUpdate2796",
+      "RedisCreateUpdate2324"
     ]
   },
   "Variables": {
