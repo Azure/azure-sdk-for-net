@@ -48,60 +48,6 @@ namespace EventHubsPerfStandalone
 
             var sw = new Stopwatch();
             
-            //var printStatusThread = new Thread(() =>
-            //{
-            //    var lastResults = new int[_eventsProcessed.Length];
-            //    var lastElapsedSeconds = (double) 0;
-            //    var lastTotalEvents = 0;
-
-            //    while (true)
-            //    {
-            //        var elapsedSeconds = sw.Elapsed.TotalSeconds;
-            //        var recentElapsedSeconds = elapsedSeconds - lastElapsedSeconds;
-            //        var totalEvents = 0;
-
-            //        for (var i = 0; i < _eventsProcessed.Length; i++)
-            //        {
-            //            var events = _eventsProcessed[i];
-
-            //            if (events == 0)
-            //            {
-            //                continue;
-            //            }
-
-            //            totalEvents += events;
-
-            //            var lastEvents = lastResults[i];
-            //            var recentEvents = events - lastEvents;
-
-            //            var eventsPerSecond = events / elapsedSeconds;
-            //            var recentEventsPerSecond = recentEvents / recentElapsedSeconds;
-
-            //            //Console.WriteLine($"[{kvp.Key}] Recent: {recentEvents} ({recentEventsPerSecond:N2} events/sec), " +
-            //            //    $"Total: {events} ({eventsPerSecond:N2} events/sec)");
-
-            //            Console.Write(events + ",");
-
-            //            lastResults[i] = events;
-            //        }
-
-            //        Console.WriteLine();
-
-            //        var recentTotalEvents = totalEvents - lastTotalEvents;
-
-            //        var recentTotalEventsPerSecond = recentTotalEvents / recentElapsedSeconds;
-            //        var totalEventsPerSecond = totalEvents / elapsedSeconds;
-
-            //        //Console.WriteLine($"Recent: {recentTotalEvents} ({recentTotalEventsPerSecond:N2} events/sec), " +
-            //        //    $"Total: {totalEvents} ({totalEventsPerSecond:N2} events/sec)");
-            //        //Console.WriteLine();
-
-            //        lastElapsedSeconds = elapsedSeconds;
-            //        lastTotalEvents = totalEvents;
-
-            //        Thread.Sleep(1000);
-            //    }
-            //});
             var printStatusThread = new Thread(() =>
             {
                 Console.WriteLine("Elapsed\tCur\tCurRate\tTot\tTotRate");
@@ -149,7 +95,10 @@ namespace EventHubsPerfStandalone
 
         private static async Task ProcessEventAsync(ProcessEventArgs arg)
         {
-            Interlocked.Increment(ref _eventsProcessed[int.Parse(arg.Partition.PartitionId)]);
+            // EventProcessorClient guarantees events within a partition are processed serially, so
+            // Interlocked.Increment() should not be required.
+            _eventsProcessed[int.Parse(arg.Partition.PartitionId)]++;
+
             if (_delay)
             {
                 await Task.Delay(TimeSpan.FromSeconds(1));
