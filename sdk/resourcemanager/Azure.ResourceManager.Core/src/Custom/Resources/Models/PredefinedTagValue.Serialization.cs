@@ -6,13 +6,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class PreDefinedTagValue
+    public partial class PredefinedTagValue
     {
-        internal static PreDefinedTagValue DeserializeTagValue(JsonElement element)
+        internal static PredefinedTagValue DeserializeTagValue(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> tagValue = default;
-            Optional<PreDefinedTagCount> count = default;
+            Optional<PredefinedTagCount> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    count = PreDefinedTagCount.DeserializeTagCount(property.Value);
+                    count = PredefinedTagCount.DeserializeTagCount(property.Value);
                     continue;
                 }
             }
-            return new PreDefinedTagValue(id.Value, tagValue.Value, count.Value);
+            return new PredefinedTagValue(id.Value, tagValue.Value, count.Value);
         }
     }
 }

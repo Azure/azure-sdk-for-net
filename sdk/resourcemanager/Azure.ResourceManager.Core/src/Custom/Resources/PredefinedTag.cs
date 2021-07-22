@@ -6,21 +6,21 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing a Tags along with the instance operations that can be performed on it.
     /// </summary>
-    public class PreDefinedTag : PreDefinedTagOperations
+    public class PredefinedTag : PredefinedTagOperations
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PreDefinedTag"/> class for mocking.
+        /// Initializes a new instance of the <see cref="PredefinedTag"/> class for mocking.
         /// </summary>
-        protected PreDefinedTag()
+        protected PredefinedTag()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PreDefinedTag"/> class.
+        /// Initializes a new instance of the <see cref="PredefinedTag"/> class.
         /// </summary>
         /// <param name="operations"> The operations object to copy the client parameters from. </param>
         /// <param name="data"> The data model representing the generic azure resource. </param>
-        internal PreDefinedTag(OperationsBase operations, PreDefinedTagData data)
+        internal PredefinedTag(OperationsBase operations, PredefinedTagData data)
             : base(new ClientContext(operations.ClientOptions,operations.Credential, operations.BaseUri, operations.Pipeline), operations.Id)
         {
             Data = data;
@@ -29,6 +29,6 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Tags data model.
         /// </summary>
-        public virtual PreDefinedTagData Data { get; }
+        public virtual PredefinedTagData Data { get; }
     }
 }

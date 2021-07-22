@@ -8,7 +8,7 @@ using System.Diagnostics.Tracing;
 namespace Azure.IoT.ModelsRepository
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class ModelsRepositoryEventSource : EventSource
+    internal sealed class ModelsRepositoryEventSource : AzureEventSource
     {
         private const string EventSourceName = ModelsRepositoryConstants.ModelsRepositoryEventSourceName;
 
@@ -30,10 +30,7 @@ namespace Azure.IoT.ModelsRepository
         public static ModelsRepositoryEventSource Instance { get; } = new ModelsRepositoryEventSource();
 
         private ModelsRepositoryEventSource()
-            : base(EventSourceName,
-                  EventSourceSettings.Default,
-                  AzureEventSourceListener.TraitName,
-                  AzureEventSourceListener.TraitValue)
+            : base(EventSourceName)
         { }
 
         [Event(InitFetcherEventId, Level = EventLevel.Informational, Message = StandardStrings.ClientInitWithFetcher)]

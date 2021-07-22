@@ -7,14 +7,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    public partial class PreDefinedTagData
+    public partial class PredefinedTagData
     {
-        internal static PreDefinedTagData DeserializeTagDetails(JsonElement element)
+        internal static PredefinedTagData DeserializeTagDetails(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> tagName = default;
-            Optional<PreDefinedTagCount> count = default;
-            Optional<IReadOnlyList<PreDefinedTagValue>> values = default;
+            Optional<PredefinedTagCount> count = default;
+            Optional<IReadOnlyList<PredefinedTagValue>> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    count = PreDefinedTagCount.DeserializeTagCount(property.Value);
+                    count = PredefinedTagCount.DeserializeTagCount(property.Value);
                     continue;
                 }
                 if (property.NameEquals("values"))
@@ -44,16 +44,16 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PreDefinedTagValue> array = new List<PreDefinedTagValue>();
+                    List<PredefinedTagValue> array = new List<PredefinedTagValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PreDefinedTagValue.DeserializeTagValue(item));
+                        array.Add(PredefinedTagValue.DeserializeTagValue(item));
                     }
                     values = array;
                     continue;
                 }
             }
-            return new PreDefinedTagData(id.Value, tagName.Value, count.Value, Optional.ToList(values));
+            return new PredefinedTagData(id.Value, tagName.Value, count.Value, Optional.ToList(values));
         }
     }
 }

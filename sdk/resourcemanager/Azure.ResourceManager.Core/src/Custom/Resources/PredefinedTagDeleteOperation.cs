@@ -14,16 +14,16 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> The operation type for the delete API. </summary>
-    public partial class PreDefinedTagDeleteOperation : Operation
+    public partial class PredefinedTagDeleteOperation : Operation
     {
         private readonly OperationOrResponseInternals _operation;
 
         /// <summary> Initializes a new instance of PreDefinedTagDeleteOperation for mocking. </summary>
-        protected PreDefinedTagDeleteOperation()
+        protected PredefinedTagDeleteOperation()
         {
         }
 
-        internal PreDefinedTagDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PredefinedTagDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PreDefinedTagDeleteOperation");
         }

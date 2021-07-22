@@ -220,9 +220,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(documentsFromOperationList[0].TranslationProgressPercentage, documentsFromGetAllList[0].TranslationProgressPercentage);
             Assert.AreEqual(documentsFromOperationList[0].TranslatedTo, documentsFromGetAllList[0].TranslatedTo);
             Assert.AreEqual(documentsFromOperationList[0].CreatedOn, documentsFromGetAllList[0].CreatedOn);
-            // Ignore because of flaky behavior. Service issue has been created.
-            // https://github.com/Azure/azure-sdk-for-net/issues/20116
-            // Assert.AreEqual(documentsFromOperationList[0].LastModified, documentsFromGetAllList[0].LastModified);
+            Assert.AreEqual(documentsFromOperationList[0].LastModified, documentsFromGetAllList[0].LastModified);
         }
 
         [RecordedTest]
