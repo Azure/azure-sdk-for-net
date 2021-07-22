@@ -14,7 +14,7 @@ namespace Azure.AI.Personalizer.Models
     {
         internal static PersonalizerLogProperties DeserializePersonalizerLogProperties(JsonElement element)
         {
-            Optional<LogsPropertiesDateRange> dateRange = default;
+            Optional<PersonalizerLogsPropertiesDateRange> dateRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateRange"))
@@ -24,7 +24,7 @@ namespace Azure.AI.Personalizer.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateRange = LogsPropertiesDateRange.DeserializeLogsPropertiesDateRange(property.Value);
+                    dateRange = PersonalizerLogsPropertiesDateRange.DeserializePersonalizerLogsPropertiesDateRange(property.Value);
                     continue;
                 }
             }

@@ -72,18 +72,18 @@ namespace Azure.AI.Personalizer.Models
         /// <summary> Initializes a new instance of PersonalizerLogProperties. </summary>
         /// <param name="dateRange"> Date range. </param>
         /// <returns> A new <see cref="Models.PersonalizerLogProperties"/> instance for mocking. </returns>
-        public static PersonalizerLogProperties PersonalizerLogProperties(LogsPropertiesDateRange dateRange = null)
+        public static PersonalizerLogProperties PersonalizerLogProperties(PersonalizerLogsPropertiesDateRange dateRange = null)
         {
             return new PersonalizerLogProperties(dateRange);
         }
 
-        /// <summary> Initializes a new instance of DateRange. </summary>
-        /// <param name="from"> Start date for the range. </param>
-        /// <param name="to"> End date for the range. </param>
-        /// <returns> A new <see cref="Models.DateRange"/> instance for mocking. </returns>
-        public static DateRange DateRange(DateTimeOffset? @from = null, DateTimeOffset? to = null)
+        /// <summary> Initializes a new instance of PersonalizerDateRange. </summary>
+        /// <param name="start"> Start date for the range. </param>
+        /// <param name="end"> End date for the range. </param>
+        /// <returns> A new <see cref="Models.PersonalizerDateRange"/> instance for mocking. </returns>
+        public static PersonalizerDateRange PersonalizerDateRange(DateTimeOffset? start = null, DateTimeOffset? end = null)
         {
-            return new DateRange(@from, to);
+            return new PersonalizerDateRange(start, end);
         }
 
         /// <summary> Initializes a new instance of PersonalizerModelProperties. </summary>

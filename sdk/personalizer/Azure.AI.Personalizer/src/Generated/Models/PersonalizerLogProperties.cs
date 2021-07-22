@@ -17,12 +17,12 @@ namespace Azure.AI.Personalizer.Models
 
         /// <summary> Initializes a new instance of PersonalizerLogProperties. </summary>
         /// <param name="dateRange"> Date range. </param>
-        internal PersonalizerLogProperties(LogsPropertiesDateRange dateRange)
+        internal PersonalizerLogProperties(PersonalizerLogsPropertiesDateRange dateRange)
         {
             DateRange = dateRange;
         }
 
         /// <summary> Date range. </summary>
-        public LogsPropertiesDateRange DateRange { get; }
+        public PersonalizerLogsPropertiesDateRange DateRange { get; }
     }
 }

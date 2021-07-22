@@ -20,8 +20,8 @@ namespace Azure.AI.Personalizer.Tests
             PersonalizerManagementClient client = GetPersonalizerManagementClient();
             PersonalizerLogProperties properties = await client.GetPersonalizerLogPropertiesAsync();
 
-            Assert.AreEqual(new DateTime(0001, 01, 01), new DateTime(properties.DateRange.From.Value.Year, properties.DateRange.From.Value.Month, properties.DateRange.From.Value.Day));
-            Assert.AreEqual(new DateTime(0001, 01, 01), new DateTime(properties.DateRange.To.Value.Year, properties.DateRange.To.Value.Month, properties.DateRange.To.Value.Day));
+            Assert.AreEqual(new DateTime(0001, 01, 01), new DateTime(properties.DateRange.Start.Value.Year, properties.DateRange.Start.Value.Month, properties.DateRange.Start.Value.Day));
+            Assert.AreEqual(new DateTime(0001, 01, 01), new DateTime(properties.DateRange.End.Value.Year, properties.DateRange.End.Value.Month, properties.DateRange.End.Value.Day));
         }
 
         [Test]
