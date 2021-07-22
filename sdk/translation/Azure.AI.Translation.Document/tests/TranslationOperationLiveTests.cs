@@ -126,14 +126,11 @@ namespace Azure.AI.Translation.Document.Tests
 
             DocumentTranslationClient client = GetClient();
 
-            var filter = new DocumentFilter
+            var source = new TranslationSource(sourceUri)
             {
                 Prefix = "File"
             };
-            var source = new TranslationSource(sourceUri)
-            {
-                Filter = filter
-            };
+
             var targets = new List<TranslationTarget> { new TranslationTarget(targetUri, "fr") };
             var input = new DocumentTranslationInput(source, targets);
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
@@ -163,14 +160,11 @@ namespace Azure.AI.Translation.Document.Tests
 
             DocumentTranslationClient client = GetClient();
 
-            var filter = new DocumentFilter
+            var source = new TranslationSource(sourceUri)
             {
                 Suffix = "1.txt"
             };
-            var source = new TranslationSource(sourceUri)
-            {
-                Filter = filter
-            };
+
             var targets = new List<TranslationTarget> { new TranslationTarget(targetUri, "fr") };
             var input = new DocumentTranslationInput(source, targets);
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
