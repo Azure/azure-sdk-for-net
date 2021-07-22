@@ -4,12 +4,19 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// TODO.
+    /// Configurations that allow callers to specify details about how to execute
+    /// an Extract Summary action in a set of documents.
+    /// For example, set the model version, specify the order in which extracted
+    /// sentences are returned, and more.
     /// </summary>
     public class ExtractSummaryAction
     {
         /// <summary>
-        /// TODO.
+        /// Initializes a new instance of the <see cref="ExtractSummaryAction"/>
+        /// class which allows callers to specify details about how to execute
+        /// an Extract Summary action in a set of documents.
+        /// For example, set the model version, specify the order in which extracted
+        /// sentences are returned, and more.
         /// </summary>
         public ExtractSummaryAction()
         {
@@ -29,7 +36,10 @@ namespace Azure.AI.TextAnalytics
         public int? MaxSentenceCount { get; set; }
 
         /// <summary>
-        /// TODO.
+        /// If set, specifies the order in which the extracted sentences will be returned in the result. Use
+        /// <see cref="SummarySentencesOrder.Offset"/> to keep the original order in which the sentences appear
+        /// in the input. Use <see cref="SummarySentencesOrder.Rank"/> to order them according to their relevance
+        /// to the text input, as decided by the service. Defaults to <see cref="SummarySentencesOrder.Offset"/>.
         /// </summary>
         public SummarySentencesOrder? OrderBy { get; set; }
     }

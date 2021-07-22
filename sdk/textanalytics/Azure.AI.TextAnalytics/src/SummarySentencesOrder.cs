@@ -6,18 +6,18 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// TODO.
+    /// The order in which extracted sentences will be returned on summary extraction.
     /// </summary>
     [CodeGenModel("ExtractiveSummarizationTaskParametersSortBy")]
     public enum SummarySentencesOrder
     {
         /// <summary>
-        /// TODO.
+        /// Keeps the original order in which the sentences appear in the input.
         /// </summary>
         Offset,
 
         /// <summary>
-        /// TODO.
+        /// Orders sentences according to their relevance to the text input, as decided by the service.
         /// </summary>
         Rank
     }
