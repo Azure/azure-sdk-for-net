@@ -99,6 +99,8 @@ namespace EventHubsPerfStandalone
             // Consume properties
             foreach (var kvp in arg.Data.Properties)
             {
+                var key = kvp.Key;
+                var value = kvp.Value;
             }
             
             // Consume body
