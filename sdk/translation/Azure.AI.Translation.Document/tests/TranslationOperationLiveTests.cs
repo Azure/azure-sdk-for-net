@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -248,7 +249,6 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        [Ignore("Flaky test. Enable once service provides fix/information")]
         public async Task WrongSourceRightTarget()
         {
             Uri source = new("https://idont.ex.ist");
@@ -258,6 +258,7 @@ namespace Azure.AI.Translation.Document.Tests
 
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+            Thread.Sleep(2000);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
 
@@ -269,7 +270,6 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        [Ignore("Flaky test. Enable once service provides fix/information")]
         public async Task RightSourceWrongTarget()
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
@@ -279,10 +279,11 @@ namespace Azure.AI.Translation.Document.Tests
 
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+            Thread.Sleep(2000);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
 
-            Assert.AreEqual("InvalidDocumentAccessLevel", ex.ErrorCode);
+            Assert.AreEqual("InvalidTargetDocumentAccessLevel", ex.ErrorCode);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
