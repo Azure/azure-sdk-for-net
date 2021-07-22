@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -45,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
         /// The primitive for ensuring that the service is not overloaded with
         /// accept session requests.
         /// </summary>
-        private SemaphoreSlim MaxConcurrentAcceptSessionsSemaphore { get; set; }
+        private SemaphoreSlim MaxConcurrentAcceptSessionsSemaphore { get; }
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
         private readonly SemaphoreSlim _processingStartStopSemaphore = new SemaphoreSlim(1, 1);
@@ -64,13 +63,13 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the path of the Service Bus entity that the processor is connected to, specific to the
         /// Service Bus namespace that contains it.
         /// </summary>
-        public virtual string EntityPath { get; private set; }
+        public virtual string EntityPath { get; }
 
         /// <summary>
         /// Gets the ID to identify this processor. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new processor has a unique ID.</remarks>
-        internal string Identifier { get; private set; }
+        internal string Identifier { get; }
 
         /// <summary>
         /// Gets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
@@ -161,9 +160,9 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
-        private readonly IList<ServiceBusPlugin> _plugins;
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
+        private readonly ServiceBusSessionProcessor _sessionProcessor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
@@ -172,7 +171,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="entityPath">The queue name or subscription path to process messages from.</param>
         /// <param name="isSessionEntity">Whether or not the processor is associated with a session entity.</param>
-        /// <param name="plugins">The set of plugins to apply to incoming messages.</param>
         /// <param name="options">The set of options to use when configuring the processor.</param>
         /// <param name="sessionIds">An optional set of session Ids to limit processing to.
         /// Only applies if isSessionEntity is true.</param>
@@ -180,15 +178,16 @@ namespace Azure.Messaging.ServiceBus
         /// Only applies if isSessionEntity is true.</param>
         /// <param name="maxConcurrentCallsPerSession">The max number of concurrent calls per session.
         /// Only applies if isSessionEntity is true.</param>
+        /// <param name="sessionProcessor">If this is for a session processor, will contain the session processor instance.</param>
         internal ServiceBusProcessor(
             ServiceBusConnection connection,
             string entityPath,
             bool isSessionEntity,
-            IList<ServiceBusPlugin> plugins,
             ServiceBusProcessorOptions options,
             string[] sessionIds = default,
             int maxConcurrentSessions = default,
-            int maxConcurrentCallsPerSession = default)
+            int maxConcurrentCallsPerSession = default,
+            ServiceBusSessionProcessor sessionProcessor = default)
         {
             Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connection, nameof(connection));
@@ -208,6 +207,7 @@ namespace Azure.Messaging.ServiceBus
             MaxConcurrentSessions = maxConcurrentSessions;
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
+            _sessionProcessor = sessionProcessor;
 
             _maxConcurrentCalls = isSessionEntity ?
                 (_sessionIds.Length > 0 ?
@@ -227,13 +227,35 @@ namespace Azure.Messaging.ServiceBus
 
             IsSessionProcessor = isSessionEntity;
             _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
-            _plugins = plugins;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class for mocking.
         /// </summary>
         protected ServiceBusProcessor()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the processor.</param>
+        /// <param name="queueName">The name of the queue to processor from.</param>
+        /// <param name="options">The set of options to use when configuring the processor.</param>
+        protected ServiceBusProcessor(ServiceBusClient client, string queueName, ServiceBusProcessorOptions options) :
+            this(client?.Connection, queueName, false, options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the processor.</param>
+        /// <param name="topicName">The topic to create a processor for.</param>
+        /// <param name="subscriptionName">The subscription to create a processor for.</param>
+        /// <param name="options">The set of options to use when configuring the processor.</param>
+        protected ServiceBusProcessor(ServiceBusClient client, string topicName, string subscriptionName, ServiceBusProcessorOptions options) :
+            this(client?.Connection, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), false,  options)
         {
         }
 
@@ -446,7 +468,7 @@ namespace Azure.Messaging.ServiceBus
         /// This method can be overridden to raise an event manually for testing purposes.
         /// </summary>
         /// <param name="args">The event args containing information related to the error.</param>
-        protected internal async virtual Task OnProcessErrorAsync(ProcessErrorEventArgs args)
+        protected internal virtual async Task OnProcessErrorAsync(ProcessErrorEventArgs args)
         {
             await _processErrorAsync(args).ConfigureAwait(false);
         }
@@ -559,11 +581,10 @@ namespace Azure.Messaging.ServiceBus
 
                     _receiverManagers.Add(
                         new SessionReceiverManager(
-                            this,
+                            _sessionProcessor,
                             sessionId,
                             MaxConcurrentAcceptSessionsSemaphore,
                             _scopeFactory,
-                            _plugins,
                             MaxConcurrentCallsPerSession,
                             keepOpenOnReceiveTimeout));
                 }
@@ -573,8 +594,7 @@ namespace Azure.Messaging.ServiceBus
                 _receiverManagers.Add(
                     new ReceiverManager(
                         this,
-                        _scopeFactory,
-                        _plugins));
+                        _scopeFactory));
             }
         }
 

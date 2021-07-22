@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -27,14 +25,12 @@ namespace Azure.Messaging.ServiceBus
         private readonly ServiceBusReceiverOptions _receiverOptions;
         protected readonly ServiceBusProcessorOptions ProcessorOptions;
         protected readonly EntityScopeFactory _scopeFactory;
-        protected readonly IList<ServiceBusPlugin> _plugins;
 
         protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
         public ReceiverManager(
             ServiceBusProcessor processor,
-            EntityScopeFactory scopeFactory,
-            IList<ServiceBusPlugin> plugins)
+            EntityScopeFactory scopeFactory)
         {
             Processor = processor;
             ProcessorOptions = processor.Options;
@@ -47,13 +43,11 @@ namespace Azure.Messaging.ServiceBus
                 SubQueue = SubQueue.None
             };
             _maxReceiveWaitTime = ProcessorOptions.MaxReceiveWaitTime;
-            _plugins = plugins;
             Receiver = new ServiceBusReceiver(
                 connection: Processor.Connection,
                 entityPath: Processor.EntityPath,
                 isSessionEntity: false,
                 isProcessor: true,
-                plugins: _plugins,
                 options: _receiverOptions);
             _scopeFactory = scopeFactory;
         }
@@ -348,7 +342,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        protected async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
+        protected virtual async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
         {
             try
             {
