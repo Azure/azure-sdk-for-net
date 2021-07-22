@@ -1,6 +1,6 @@
 # Release History
 
-## 12.8.0-beta.1 (Unreleased)
+## 12.8.0-beta.1 (2021-07-22)
 - Added support for service version 2020-10-02.
 - Added support for Parquet as an input format in DataLakeFileClient.Query().
 - Added support for RequestConditions parameter validation.  If a request condition is set for an API that doesn't support it, and ArguementException will be thrown.
