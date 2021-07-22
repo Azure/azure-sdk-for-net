@@ -14,7 +14,7 @@ dotnet add package Azure.ResourceManager.KeyVault --version 1.0.0-preview.1
 
 ### Prerequisites
 
-* You must have an [Azure subscription](https://azure.microsoft.com/free/)
+* You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/)
 
 ### Authenticate the Client
 

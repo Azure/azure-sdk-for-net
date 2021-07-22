@@ -29,7 +29,7 @@ namespace Azure.Storage
         /// <returns>The <see cref="IDisposable"/> instance that needs to be disposed when server timeout shouldn't be used anymore.</returns>
         /// <example>
         /// Sample usage:
-        /// <code snippet="Snippet:Sample_StorageServerTimeout">
+        /// <code snippet="Snippet:Sample_StorageServerTimeout" language="csharp">
         /// BlobServiceClient client = new BlobServiceClient(connectionString, options);
         /// using (StorageExtensions.CreateServiceTimeoutScope(TimeSpan.FromSeconds(10)))
         /// {

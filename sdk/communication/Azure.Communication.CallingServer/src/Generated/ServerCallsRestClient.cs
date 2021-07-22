@@ -733,12 +733,9 @@ namespace Azure.Communication.CallingServer
         /// <summary> Play audio in the call. </summary>
         /// <param name="serverCallId"> The server call id. </param>
         /// <param name="audioFileUri">
-        /// The media resource uri of the play audio request.
-        /// 
+        /// The media resource uri of the play audio request. 
         /// Currently only Wave file (.wav) format audio prompts are supported.
-        /// 
         /// More specifically, the audio content in the wave file must be mono (single-channel),
-        /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
         /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>
@@ -773,12 +770,9 @@ namespace Azure.Communication.CallingServer
         /// <summary> Play audio in the call. </summary>
         /// <param name="serverCallId"> The server call id. </param>
         /// <param name="audioFileUri">
-        /// The media resource uri of the play audio request.
-        /// 
+        /// The media resource uri of the play audio request. 
         /// Currently only Wave file (.wav) format audio prompts are supported.
-        /// 
         /// More specifically, the audio content in the wave file must be mono (single-channel),
-        /// 
         /// 16-bit samples with a 16,000 (16KHz) sampling rate.
         /// </param>
         /// <param name="loop"> The flag indicating whether audio file needs to be played in loop or not. </param>

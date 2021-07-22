@@ -8,15 +8,14 @@
         "Authorization": "Sanitized",
         "Content-Length": "304",
         "Content-Type": "application/json",
-        "Date": "Tue, 15 Jun 2021 17:54:49 GMT",
-        "traceparent": "00-fed501a9fe81ed478e52110f4c40b93f-25b8df6f1ee2a542-00",
+        "traceparent": "00-ae4e7461655d40479a3edfd205777c67-5efd688142fc6b4e-00",
         "User-Agent": [
-          "azsdk-net-Communication.Sms/1.1.0-alpha.20210615.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Communication.Sms/1.1.0-alpha.20210622.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "617c06a557cc9ab5da8c2a02e6ee330c",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 15 Jun 2021 17:54:49 GMT",
+        "x-ms-date": "Tue, 22 Jun 2021 22:06:06 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -43,26 +42,26 @@
       "ResponseHeaders": {
         "api-supported-versions": "2020-07-20-preview1, 2020-08-20-preview, 2021-03-07",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Jun 2021 17:54:49 GMT",
-        "MS-CV": "ziTZJ44HXkmpqH0nz36ZNA.0",
+        "Date": "Tue, 22 Jun 2021 22:06:06 GMT",
+        "MS-CV": "Oq9NeihT2Eev/JaIj0JTsw.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0aenIYAAAAADeJh\u002BJwGWnSr/QfQNQaHF4WVZSMzBFREdFMDQxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0zl7SYAAAAAAYD/hGShi0T4uXdQ0a/JT2WVZSMzBFREdFMDQxNAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "545ms"
+        "X-Processing-Time": "496ms"
       },
       "ResponseBody": {
         "value": [
           {
             "to": "Sanitized",
-            "messageId": "Outgoing_20210615175449d8348d49-111c-4299-9dbe-5d68fde2453e_noam",
+            "messageId": "Outgoing_20210622220606d587f643-94ba-4cc7-86ee-364b48a0997c_noam",
             "httpStatusCode": 202,
             "repeatabilityResult": "accepted",
             "successful": true
           },
           {
             "to": "Sanitized",
-            "messageId": "Outgoing_202106151754497cd3e3de-ef21-4677-8c09-0be3a770dd5d_noam",
+            "messageId": "Outgoing_20210622220606850a6b46-1aa7-46fb-8754-af48d5432c5e_noam",
             "httpStatusCode": 202,
             "repeatabilityResult": "accepted",
             "successful": true

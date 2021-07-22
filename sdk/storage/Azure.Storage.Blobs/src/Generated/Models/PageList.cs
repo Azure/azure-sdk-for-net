@@ -21,8 +21,8 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of PageList. </summary>
-        /// <param name="pageRange"> . </param>
-        /// <param name="clearRange"> . </param>
+        /// <param name="pageRange"></param>
+        /// <param name="clearRange"></param>
         internal PageList(IReadOnlyList<PageRange> pageRange, IReadOnlyList<ClearRange> clearRange)
         {
             PageRange = pageRange;

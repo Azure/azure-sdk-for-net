@@ -169,19 +169,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>kind</term>
         ///     <term>&quot;System&quot; | &quot;Custom&quot;</term>
         ///     <term>Yes</term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -239,19 +239,19 @@ namespace Azure.Analytics.Purview.Scanning
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>kind</term>
         ///     <term>&quot;System&quot; | &quot;Custom&quot;</term>
         ///     <term>Yes</term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -337,6 +337,7 @@ namespace Azure.Analytics.Purview.Scanning
                     switch (message.Response.Status)
                     {
                         case 200:
+                            return message.Response;
                         case 204:
                             return message.Response;
                         default:
@@ -377,6 +378,7 @@ namespace Azure.Analytics.Purview.Scanning
                     switch (message.Response.Status)
                     {
                         case 200:
+                            return message.Response;
                         case 204:
                             return message.Response;
                         default:

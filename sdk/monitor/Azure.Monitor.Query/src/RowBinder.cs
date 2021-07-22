@@ -9,6 +9,7 @@ namespace Azure.Monitor.Query
 {
     internal class RowBinder: TypeBinder<LogsQueryResultRow>
     {
+        internal static RowBinder Shared = new();
         internal IReadOnlyList<T> BindResults<T>(IReadOnlyList<LogsQueryResultTable> tables)
         {
             List<T> results = new List<T>();
@@ -96,7 +97,8 @@ namespace Azure.Monitor.Query
 
             else
             {
-                throw new NotSupportedException($"The {typeof(T)} type is not supported as a deserialization target.");
+                throw new NotSupportedException($"The {typeof(T)} type is not supported as a deserialization target. " +
+                                                "Supported types are string, bool, long, decimal, double, object, Guid, DateTimeOffset, TimeSpan, BinaryData.");
             }
 
             return true;

@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the TopicUpdateParameters class.
         /// </summary>
-        /// <param name="tags">Tags of the resource.</param>
-        /// <param name="identity">Resource identity information.</param>
+        /// <param name="tags">Tags of the Topic resource.</param>
+        /// <param name="identity">Topic resource identity information.</param>
         /// <param name="publicNetworkAccess">This determines if traffic is
         /// allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso
@@ -44,13 +44,18 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="inboundIpRules">This can be used to restrict traffic
         /// from specific IPs instead of all IPs. Note: These are considered
         /// only if PublicNetworkAccess is enabled.</param>
+        /// <param name="disableLocalAuth">This boolean is used to enable or
+        /// disable local auth. Default value is false. When the property is
+        /// set to true, only AAD token will be used to authenticate if user is
+        /// allowed to publish to the topic.</param>
         /// <param name="sku">The Sku pricing tier for the topic.</param>
-        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityInfo identity = default(IdentityInfo), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), ResourceSku sku = default(ResourceSku))
+        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityInfo identity = default(IdentityInfo), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), ResourceSku sku = default(ResourceSku))
         {
             Tags = tags;
             Identity = identity;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
+            DisableLocalAuth = disableLocalAuth;
             Sku = sku;
             CustomInit();
         }
@@ -61,13 +66,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets tags of the resource.
+        /// Gets or sets tags of the Topic resource.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets resource identity information.
+        /// Gets or sets topic resource identity information.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public IdentityInfo Identity { get; set; }
@@ -90,6 +95,15 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundIpRules")]
         public IList<InboundIpRule> InboundIpRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets this boolean is used to enable or disable local auth.
+        /// Default value is false. When the property is set to true, only AAD
+        /// token will be used to authenticate if user is allowed to publish to
+        /// the topic.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
 
         /// <summary>
         /// Gets or sets the Sku pricing tier for the topic.

@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.NetApp
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 

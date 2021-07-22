@@ -5,6 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -12,7 +13,7 @@ namespace Azure.Storage.Blobs
     /// Provides the client configuration options for connecting to Azure Blob
     /// Storage.
     /// </summary>
-    public class BlobClientOptions : ClientOptions
+    public class BlobClientOptions : ClientOptions, ISupportsTenantIdChallenges
     {
         /// <summary>
         /// The Latest service version supported by this client library.
@@ -267,5 +268,8 @@ namespace Azure.Storage.Blobs
         {
             return this.Build(credentials, GeoRedundantSecondaryUri);
         }
+
+        /// <inheritdoc />
+        public bool EnableTenantDiscovery { get; set; }
     }
 }

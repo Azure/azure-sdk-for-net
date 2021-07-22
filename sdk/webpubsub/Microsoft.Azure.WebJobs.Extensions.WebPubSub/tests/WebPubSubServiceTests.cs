@@ -20,6 +20,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             Assert.NotNull(clientConnection);
             Assert.AreEqual(expectedBaseUrl, clientConnection.BaseUrl);
+            Assert.NotNull(clientConnection.AccessToken);
+
+            var absoluteUrl = $"{expectedBaseUrl}?access_token={clientConnection.AccessToken}";
+            Assert.AreEqual(absoluteUrl, clientConnection.Url);
         }
 
         [TestCase]

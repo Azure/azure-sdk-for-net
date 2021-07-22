@@ -782,7 +782,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             var senderA = client.CreateSender(queueA.QueueName);
-            var processorA = client.CreateProcessor(queueA.QueueName);
+            await using var processorA = client.CreateProcessor(queueA.QueueName);
 
             var receiverA = client.CreateReceiver(queueA.QueueName);
             var receiverB = client.CreateReceiver(queueB.QueueName);
@@ -828,7 +828,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
             var senderA = noTxClient.CreateSender(queueA.QueueName);
-            var processorA = client.CreateProcessor(queueA.QueueName);
+            await using var processorA = client.CreateProcessor(queueA.QueueName);
 
             var receiverA = noTxClient.CreateReceiver(queueA.QueueName);
             var receiverB = noTxClient.CreateReceiver(queueB.QueueName);
@@ -878,7 +878,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
             await using var queueC = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
             var senderA = client.CreateSender(queueA.QueueName);
-            var processorA = client.CreateSessionProcessor(queueA.QueueName);
+            await using var processorA = client.CreateSessionProcessor(queueA.QueueName);
             var senderB = client.CreateSender(queueB.QueueName);
             var senderC = client.CreateSender(queueC.QueueName);
 
@@ -923,7 +923,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             await using var noTxClient = CreateNoRetryClient();
             var senderA = noTxClient.CreateSender(queueA.QueueName);
 
-            var processorA = client.CreateSessionProcessor(queueA.QueueName);
+            await using var processorA = client.CreateSessionProcessor(queueA.QueueName);
             var senderB = client.CreateSender(queueB.QueueName);
             var senderC = client.CreateSender(queueC.QueueName);
 

@@ -35,6 +35,7 @@
     "azsdk",
     "blazor",
     "contoso",
+    "deserializable",
     "deserializes",
     "diagnoser",
     "dtmf",
@@ -72,6 +73,21 @@
     {
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": ["warnaserror"]
+    },
+    {
+      "filename": "**/sdk/storage/**/*.cs",
+      "words": [
+        "Aadds",
+        "Deprovisioning",
+        "Gzrs",
+        "Ntfs",
+        "Posix",
+        "Ragrs",
+        "Ragzrs",
+        "Rehydrated",
+        "Skus",
+        "Undelete"
+      ]
     }
   ],
   "allowCompoundWords": true

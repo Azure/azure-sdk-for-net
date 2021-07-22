@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkStatementCollection
     {
         /// <summary> Initializes a new instance of SparkStatementCollection. </summary>
-        /// <param name="total"> . </param>
+        /// <param name="total"></param>
         internal SparkStatementCollection(int total)
         {
             Total = total;
@@ -22,8 +22,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         }
 
         /// <summary> Initializes a new instance of SparkStatementCollection. </summary>
-        /// <param name="total"> . </param>
-        /// <param name="statements"> . </param>
+        /// <param name="total"></param>
+        /// <param name="statements"></param>
         internal SparkStatementCollection(int total, IReadOnlyList<SparkStatement> statements)
         {
             Total = total;

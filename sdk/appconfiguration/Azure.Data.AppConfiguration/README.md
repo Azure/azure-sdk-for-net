@@ -221,7 +221,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [reference_docs]: https://azure.github.io/azure-sdk-for-net/appconfiguration.html
 [azconfig_rest]: https://docs.microsoft.com/azure/azure-app-configuration/rest-api
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [configuration_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/src/ConfigurationClient.cs
 [configuration_store]: https://docs.microsoft.com/azure/azure-app-configuration/quickstart-dotnet-core-app#create-an-app-configuration-store
 [label_concept]: https://docs.microsoft.com/azure/azure-app-configuration/concept-key-value#label-keys

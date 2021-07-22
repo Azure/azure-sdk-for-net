@@ -41,11 +41,9 @@ namespace Azure.Template.Tests.Samples
         {
             var connectionString = TestEnvironment.ConnectionString;
 
-            #region Snippet:WebPubSubHelloWorldConnStr
             var serviceClient = new WebPubSubServiceClient(connectionString, "some_hub");
 
             serviceClient.SendToAll("Hello World!");
-            #endregion
         }
 
         public void JsonMessage()
@@ -56,13 +54,13 @@ namespace Azure.Template.Tests.Samples
             #region Snippet:WebPubSubSendJson
             var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
-            serviceClient.SendToAll("application/json",
-                RequestContent.Create(
+            serviceClient.SendToAll(RequestContent.Create(
                     new
                     {
                         Foo = "Hello World!",
                         Bar = 42
-                    }));
+                    }),
+                    ContentType.ApplicationJson);
             #endregion
         }
 
@@ -75,7 +73,7 @@ namespace Azure.Template.Tests.Samples
             var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
             Stream stream = BinaryData.FromString("Hello World!").ToStream();
-            serviceClient.SendToAll("application/octet-stream", RequestContent.Create(stream));
+            serviceClient.SendToAll(RequestContent.Create(stream), ContentType.ApplicationOctetStream);
             #endregion
         }
 
@@ -84,7 +82,6 @@ namespace Azure.Template.Tests.Samples
             var endpoint = TestEnvironment.Endpoint;
             var key = TestEnvironment.Key;
 
-            #region Snippet:WebPubAddUserToGroup
             var client = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
             client.AddUserToGroup("some_group", "some_user");
@@ -96,7 +93,6 @@ namespace Azure.Template.Tests.Samples
             }
 
             client.RemoveUserFromGroup("some_group", "some_user");
-            #endregion
         }
     }
 }
