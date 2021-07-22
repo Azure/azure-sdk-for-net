@@ -10,9 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The operation type for the create or update API. </summary>
     public partial class PredefinedTagCreateOrUpdateOperation : Operation<PredefinedTag>

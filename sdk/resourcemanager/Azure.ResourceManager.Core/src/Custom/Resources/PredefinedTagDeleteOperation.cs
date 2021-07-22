@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The operation type for the delete API. </summary>
     public partial class PredefinedTagDeleteOperation : Operation

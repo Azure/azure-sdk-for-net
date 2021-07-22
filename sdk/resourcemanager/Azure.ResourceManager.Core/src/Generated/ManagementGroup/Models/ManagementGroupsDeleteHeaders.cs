@@ -8,7 +8,7 @@
 using Azure;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Management
+namespace Azure.ResourceManager.Management.Models
 {
     internal partial class ManagementGroupsDeleteHeaders
     {

@@ -11,9 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Captures the specified resource group as a template. </summary>
     public partial class ResourceGroupsExportTemplateOperation : Operation<ResourceGroupExportResult>, IOperationSource<ResourceGroupExportResult>

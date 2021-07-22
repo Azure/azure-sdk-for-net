@@ -8,11 +8,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deletes a resource by ID. </summary>
     public partial class ResourcesDeleteByIdOperation : Operation

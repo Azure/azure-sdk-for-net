@@ -8,8 +8,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Management.Models;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.Management
 {
     public partial class ManagementGroupData
     {

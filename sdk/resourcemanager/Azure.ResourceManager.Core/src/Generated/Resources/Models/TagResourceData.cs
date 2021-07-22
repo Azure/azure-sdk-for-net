@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
     /// <summary> Wrapper resource for tags API requests and responses. </summary>
     public partial class TagResourceData : Resource<TenantResourceIdentifier>
