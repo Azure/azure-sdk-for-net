@@ -38,6 +38,7 @@ namespace Azure.AI.Translation.Document.Tests
             try
             {
                 await client.GetSupportedDocumentFormatsAsync();
+                await client.GetSupportedGlossaryFormatsAsync();
                 client.GetAllTranslationStatuses().Take(2);
             }
             catch (RequestFailedException e) when (e.Status == 401)
