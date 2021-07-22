@@ -104,8 +104,8 @@ namespace EventHubsPerfStandalone
             //});
             var printStatusThread = new Thread(() =>
             {
-                Console.WriteLine("Elapsed\tCurrent\tAverage");
-                Console.WriteLine("-------\t-------\t-------");
+                Console.WriteLine("Elapsed\tCur\tCurRate\tTot\tTotRate");
+                Console.WriteLine("-------\t---\t-------\t---\t-------");
 
                 var lastElapsedSeconds = (double)0;
                 var lastTotalEvents = 0;
@@ -113,15 +113,15 @@ namespace EventHubsPerfStandalone
                 while (true)
                 {
                     var elapsedSeconds = sw.Elapsed.TotalSeconds;
-                    var recentElapsedSeconds = elapsedSeconds - lastElapsedSeconds;
+                    var currentElapsedSeconds = elapsedSeconds - lastElapsedSeconds;
 
                     var totalEvents = _eventsProcessed.Sum();
-                    var recentTotalEvents = totalEvents - lastTotalEvents;
+                    var currentTotalEvents = totalEvents - lastTotalEvents;
 
-                    var recentTotalEventsPerSecond = recentTotalEvents / recentElapsedSeconds;
+                    var currentTotalEventsPerSecond = currentTotalEvents / currentElapsedSeconds;
                     var totalEventsPerSecond = totalEvents / elapsedSeconds;
 
-                    Console.WriteLine($"{elapsedSeconds:N1}\t{recentTotalEventsPerSecond:N1}\t{totalEventsPerSecond:N1}");
+                    Console.WriteLine($"{elapsedSeconds:N1}\t{currentTotalEvents:N0}\t{currentTotalEventsPerSecond:N1}\t{totalEvents:N0}\t{totalEventsPerSecond:N1}");
 
                     lastElapsedSeconds = elapsedSeconds;
                     lastTotalEvents = totalEvents;
