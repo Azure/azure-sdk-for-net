@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics
         /// If set, specifies the order in which the extracted sentences will be returned in the result. Use
         /// <see cref="SummarySentencesOrder.Offset"/> to keep the original order in which the sentences appear
         /// in the input. Use <see cref="SummarySentencesOrder.Rank"/> to order them according to their relevance
-        /// to the text input, as decided by the service. Defaults to <see cref="SummarySentencesOrder.Offset"/>.
+        /// to the document input, as decided by the service. Defaults to <see cref="SummarySentencesOrder.Offset"/>.
         /// </summary>
         public SummarySentencesOrder? OrderBy { get; set; }
     }
