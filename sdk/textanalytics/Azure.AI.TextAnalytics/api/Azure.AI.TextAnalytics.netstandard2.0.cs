@@ -253,6 +253,7 @@ namespace Azure.AI.TextAnalytics
     public partial class ExtractSummaryAction
     {
         public ExtractSummaryAction() { }
+        public bool? DisableServiceLogs { get { throw null; } set { } }
         public int? MaxSentenceCount { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
         public Azure.AI.TextAnalytics.SummarySentencesOrder? OrderBy { get { throw null; } set { } }

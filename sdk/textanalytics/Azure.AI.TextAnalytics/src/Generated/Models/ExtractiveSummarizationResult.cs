@@ -40,6 +40,19 @@ namespace Azure.AI.TextAnalytics.Models
             ModelVersion = modelVersion;
         }
 
+        /// <summary> Initializes a new instance of ExtractiveSummarizationResult. </summary>
+        /// <param name="documents"> Response by document. </param>
+        /// <param name="errors"> Errors by document id. </param>
+        /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
+        /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
+        internal ExtractiveSummarizationResult(IReadOnlyList<ExtractedDocumentSummary> documents, IReadOnlyList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion)
+        {
+            Documents = documents;
+            Errors = errors;
+            Statistics = statistics;
+            ModelVersion = modelVersion;
+        }
+
         /// <summary> Response by document. </summary>
         public IReadOnlyList<ExtractedDocumentSummary> Documents { get; }
         /// <summary> Errors by document id. </summary>

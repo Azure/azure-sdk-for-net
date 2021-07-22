@@ -13,15 +13,15 @@ namespace Azure.AI.TextAnalytics
     {
         public static string ToSerialString(this SummarySentencesOrder value) => value switch
         {
-            SummarySentencesOrder.Offset => "offset",
-            SummarySentencesOrder.Rank => "rank",
+            SummarySentencesOrder.Offset => "Offset",
+            SummarySentencesOrder.Rank => "Rank",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SummarySentencesOrder value.")
         };
 
         public static SummarySentencesOrder ToSummarySentencesOrder(this string value)
         {
-            if (string.Equals(value, "offset", StringComparison.InvariantCultureIgnoreCase)) return SummarySentencesOrder.Offset;
-            if (string.Equals(value, "rank", StringComparison.InvariantCultureIgnoreCase)) return SummarySentencesOrder.Rank;
+            if (string.Equals(value, "Offset", StringComparison.InvariantCultureIgnoreCase)) return SummarySentencesOrder.Offset;
+            if (string.Equals(value, "Rank", StringComparison.InvariantCultureIgnoreCase)) return SummarySentencesOrder.Rank;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SummarySentencesOrder value.");
         }
     }

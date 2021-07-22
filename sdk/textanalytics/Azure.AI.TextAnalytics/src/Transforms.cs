@@ -401,6 +401,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     ModelVersion = action.ModelVersion,
                     StringIndexType = Constants.DefaultStringIndexType,
+                    LoggingOptOut = action.DisableServiceLogs,
                     SentenceCount = action.MaxSentenceCount,
                     SortBy = action.OrderBy
                 }

@@ -40,6 +40,19 @@ namespace Azure.AI.TextAnalytics.Models
             Warnings = warnings.ToList();
         }
 
+        /// <summary> Initializes a new instance of ExtractedDocumentSummary. </summary>
+        /// <param name="id"> Unique, non-empty document identifier. </param>
+        /// <param name="sentences"> A ranked list of sentences representing the extracted summary. </param>
+        /// <param name="warnings"> Warnings encountered while processing document. </param>
+        /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
+        internal ExtractedDocumentSummary(string id, IReadOnlyList<ExtractedSummarySentence> sentences, IReadOnlyList<TextAnalyticsWarningInternal> warnings, TextDocumentStatistics? statistics)
+        {
+            Id = id;
+            Sentences = sentences;
+            Warnings = warnings;
+            Statistics = statistics;
+        }
+
         /// <summary> Unique, non-empty document identifier. </summary>
         public string Id { get; }
         /// <summary> A ranked list of sentences representing the extracted summary. </summary>
