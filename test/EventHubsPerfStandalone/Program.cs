@@ -7,6 +7,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -95,6 +96,14 @@ namespace EventHubsPerfStandalone
 
         private static async Task ProcessEventAsync(ProcessEventArgs arg)
         {
+            // Consume properties
+            foreach (var kvp in arg.Data.Properties)
+            {
+            }
+            
+            // Consume body
+            await arg.Data.EventBody.ToStream().CopyToAsync(Stream.Null);
+
             // EventProcessorClient guarantees events within a partition are processed serially, so
             // Interlocked.Increment() should not be required.
             _eventsProcessed[int.Parse(arg.Partition.PartitionId)]++;
