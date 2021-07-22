@@ -41,10 +41,15 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// keys:
         /// rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
         /// etc.</param>
+        /// <param name="redisVersion">Redis version. Only major version will
+        /// be used in PUT/PATCH request with current valid values: (4,
+        /// 6)</param>
         /// <param name="enableNonSslPort">Specifies whether the non-ssl Redis
         /// server port (6379) is enabled.</param>
         /// <param name="replicasPerMaster">The number of replicas to be
-        /// created per master.</param>
+        /// created per primary.</param>
+        /// <param name="replicasPerPrimary">The number of replicas to be
+        /// created per primary.</param>
         /// <param name="tenantSettings">A dictionary of tenant
         /// settings</param>
         /// <param name="shardCount">The number of shards to be created on a
@@ -52,6 +57,11 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="minimumTlsVersion">Optional: requires clients to use a
         /// specified TLS version (or higher) to connect (e,g, '1.0', '1.1',
         /// '1.2'). Possible values include: '1.0', '1.1', '1.2'</param>
+        /// <param name="publicNetworkAccess">Whether or not public endpoint
+        /// access is allowed for this cache.  Value is optional but if passed
+        /// in, must be 'Enabled' or 'Disabled'. If 'Disabled', private
+        /// endpoints are the exclusive access method. Default value is
+        /// 'Enabled'. Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="subnetId">The full resource ID of a subnet in a
         /// virtual network to deploy the Redis cache in. Example format:
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1</param>
@@ -60,14 +70,17 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="zones">A list of availability zones denoting where the
         /// resource needs to come from.</param>
         /// <param name="tags">Resource tags.</param>
-        public RedisCreateParameters(Sku sku, string location, IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string subnetId = default(string), string staticIP = default(string), IList<string> zones = default(IList<string>), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public RedisCreateParameters(Sku sku, string location, IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), string redisVersion = default(string), bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), int? replicasPerPrimary = default(int?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string publicNetworkAccess = default(string), string subnetId = default(string), string staticIP = default(string), IList<string> zones = default(IList<string>), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             RedisConfiguration = redisConfiguration;
+            RedisVersion = redisVersion;
             EnableNonSslPort = enableNonSslPort;
             ReplicasPerMaster = replicasPerMaster;
+            ReplicasPerPrimary = replicasPerPrimary;
             TenantSettings = tenantSettings;
             ShardCount = shardCount;
             MinimumTlsVersion = minimumTlsVersion;
+            PublicNetworkAccess = publicNetworkAccess;
             Sku = sku;
             SubnetId = subnetId;
             StaticIP = staticIP;
@@ -91,6 +104,13 @@ namespace Microsoft.Azure.Management.Redis.Models
         public IDictionary<string, string> RedisConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets redis version. Only major version will be used in
+        /// PUT/PATCH request with current valid values: (4, 6)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.redisVersion")]
+        public string RedisVersion { get; set; }
+
+        /// <summary>
         /// Gets or sets specifies whether the non-ssl Redis server port (6379)
         /// is enabled.
         /// </summary>
@@ -98,10 +118,16 @@ namespace Microsoft.Azure.Management.Redis.Models
         public bool? EnableNonSslPort { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of replicas to be created per master.
+        /// Gets or sets the number of replicas to be created per primary.
         /// </summary>
         [JsonProperty(PropertyName = "properties.replicasPerMaster")]
         public int? ReplicasPerMaster { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of replicas to be created per primary.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.replicasPerPrimary")]
+        public int? ReplicasPerPrimary { get; set; }
 
         /// <summary>
         /// Gets or sets a dictionary of tenant settings
@@ -123,6 +149,16 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
         public string MinimumTlsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not public endpoint access is allowed for
+        /// this cache.  Value is optional but if passed in, must be 'Enabled'
+        /// or 'Disabled'. If 'Disabled', private endpoints are the exclusive
+        /// access method. Default value is 'Enabled'. Possible values include:
+        /// 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU of the Redis cache to deploy.

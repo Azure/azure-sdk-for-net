@@ -34,7 +34,7 @@ namespace AzureRedisCache.Tests.InMemoryTests
         public void RegenerateKey_404()
         {
             RedisManagementClient client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.NotFound);
-            Assert.Throws<CloudException> (() => client.Redis.RegenerateKey(resourceGroupName: "resource-group", name: "cachename", parameters: new RedisRegenerateKeyParameters() { KeyType = RedisKeyType.Primary }));
+            Assert.Throws<ErrorResponseException> (() => client.Redis.RegenerateKey(resourceGroupName: "resource-group", name: "cachename", parameters: new RedisRegenerateKeyParameters() { KeyType = RedisKeyType.Primary }));
         }
 
         [Fact]

@@ -37,6 +37,7 @@ namespace AzureRedisCache.Tests
                                             },
                                             MinimumTlsVersion = TlsVersion.OneFullStopTwo,
                                             ReplicasPerMaster = 2,
+                                            RedisVersion = "6",
                                         });
 
                 Assert.Contains(redisCacheName, response.Id);
@@ -46,6 +47,7 @@ namespace AzureRedisCache.Tests
                 Assert.Equal(SkuFamily.P, response.Sku.Family);
                 Assert.Equal(TlsVersion.OneFullStopTwo, response.MinimumTlsVersion);
                 Assert.Equal(2, response.ReplicasPerMaster);
+                Assert.Equal("6", response.RedisVersion.Split(".")[0]);
 
                 Assert.Equal(3, response.Instances.Count);
                 for (int i = 0; i < response.Instances.Count; i++)
@@ -54,7 +56,6 @@ namespace AzureRedisCache.Tests
                     Assert.Null(response.Instances[i].NonSslPort);
                     Assert.Null(response.Instances[i].ShardId);
                     Assert.Null(response.Instances[i].Zone);
-                    Assert.Null(response.Instances[i].IsMaster);
                 }
 
                 for (int i = 0; i < 60; i++)

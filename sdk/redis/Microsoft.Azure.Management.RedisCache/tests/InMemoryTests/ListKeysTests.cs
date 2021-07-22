@@ -48,7 +48,7 @@ namespace AzureRedisCache.Tests.InMemoryTests
         public void ListKeys_404()
         {
             RedisManagementClient client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.NotFound);
-            Assert.Throws<CloudException>(() => client.Redis.ListKeys(resourceGroupName: "resource-group", name: "cachename"));
+            Assert.Throws<ErrorResponseException>(() => client.Redis.ListKeys(resourceGroupName: "resource-group", name: "cachename"));
         }
 
         [Fact]

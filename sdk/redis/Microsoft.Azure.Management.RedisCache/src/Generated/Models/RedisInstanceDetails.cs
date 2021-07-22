@@ -36,15 +36,18 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// availability zone where this instance is located.</param>
         /// <param name="shardId">If clustering is enabled, the Shard ID of
         /// Redis Instance</param>
-        /// <param name="isMaster">Specifies whether the instance is a master
+        /// <param name="isMaster">Specifies whether the instance is a primary
         /// node.</param>
-        public RedisInstanceDetails(int? sslPort = default(int?), int? nonSslPort = default(int?), string zone = default(string), int? shardId = default(int?), bool? isMaster = default(bool?))
+        /// <param name="isPrimary">Specifies whether the instance is a primary
+        /// node.</param>
+        public RedisInstanceDetails(int? sslPort = default(int?), int? nonSslPort = default(int?), string zone = default(string), int? shardId = default(int?), bool? isMaster = default(bool?), bool? isPrimary = default(bool?))
         {
             SslPort = sslPort;
             NonSslPort = nonSslPort;
             Zone = zone;
             ShardId = shardId;
             IsMaster = isMaster;
+            IsPrimary = isPrimary;
             CustomInit();
         }
 
@@ -80,10 +83,16 @@ namespace Microsoft.Azure.Management.Redis.Models
         public int? ShardId { get; private set; }
 
         /// <summary>
-        /// Gets specifies whether the instance is a master node.
+        /// Gets specifies whether the instance is a primary node.
         /// </summary>
         [JsonProperty(PropertyName = "isMaster")]
         public bool? IsMaster { get; private set; }
+
+        /// <summary>
+        /// Gets specifies whether the instance is a primary node.
+        /// </summary>
+        [JsonProperty(PropertyName = "isPrimary")]
+        public bool? IsPrimary { get; private set; }
 
     }
 }

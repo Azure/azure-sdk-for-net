@@ -74,13 +74,13 @@ namespace AzureRedisCache.Tests
                 Assert.Equal("10.0.0.128", ruleTwo.EndIP);
 
                 // List test
-                IPage<RedisFirewallRule> rules = _client.FirewallRules.ListByRedisResource(resourceGroupName, redisCacheName);
+                IPage<RedisFirewallRule> rules = _client.FirewallRules.List(resourceGroupName, redisCacheName);
                 Assert.Equal(2, rules.Count());
 
                 // Delete
                 _client.FirewallRules.Delete(resourceGroupName, redisCacheName, "RuleTwo");
-
-                rules = _client.FirewallRules.ListByRedisResource(resourceGroupName, redisCacheName);
+                
+                rules = _client.FirewallRules.List(resourceGroupName, redisCacheName);
                 Assert.Single(rules);
                 Assert.Equal("10.0.0.0", rules.First().StartIP);
                 Assert.Equal("10.0.0.32", rules.First().EndIP);

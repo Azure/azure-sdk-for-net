@@ -18,34 +18,39 @@ namespace Microsoft.Azure.Management.Redis.Models
     using System.Linq;
 
     /// <summary>
-    /// Response to put/get patch schedules for Redis cache.
+    /// A private link resource
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class RedisPatchSchedule : ProxyResource
+    public partial class PrivateLinkResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the RedisPatchSchedule class.
+        /// Initializes a new instance of the PrivateLinkResource class.
         /// </summary>
-        public RedisPatchSchedule()
+        public PrivateLinkResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RedisPatchSchedule class.
+        /// Initializes a new instance of the PrivateLinkResource class.
         /// </summary>
-        /// <param name="scheduleEntries">List of patch schedules for a Redis
-        /// cache.</param>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        public RedisPatchSchedule(IList<ScheduleEntry> scheduleEntries, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="groupId">The private link resource group id.</param>
+        /// <param name="requiredMembers">The private link resource required
+        /// member names.</param>
+        /// <param name="requiredZoneNames">The private link resource Private
+        /// link DNS zone name.</param>
+        public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), string groupId = default(string), IList<string> requiredMembers = default(IList<string>), IList<string> requiredZoneNames = default(IList<string>))
             : base(id, name, type)
         {
-            ScheduleEntries = scheduleEntries;
+            GroupId = groupId;
+            RequiredMembers = requiredMembers;
+            RequiredZoneNames = requiredZoneNames;
             CustomInit();
         }
 
@@ -55,33 +60,22 @@ namespace Microsoft.Azure.Management.Redis.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of patch schedules for a Redis cache.
+        /// Gets the private link resource group id.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.scheduleEntries")]
-        public IList<ScheduleEntry> ScheduleEntries { get; set; }
+        [JsonProperty(PropertyName = "properties.groupId")]
+        public string GroupId { get; private set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets the private link resource required member names.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ScheduleEntries == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ScheduleEntries");
-            }
-            if (ScheduleEntries != null)
-            {
-                foreach (var element in ScheduleEntries)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-        }
+        [JsonProperty(PropertyName = "properties.requiredMembers")]
+        public IList<string> RequiredMembers { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the private link resource Private link DNS zone name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.requiredZoneNames")]
+        public IList<string> RequiredZoneNames { get; set; }
+
     }
 }

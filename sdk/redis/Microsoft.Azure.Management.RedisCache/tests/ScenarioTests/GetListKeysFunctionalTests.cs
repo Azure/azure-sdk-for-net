@@ -91,7 +91,7 @@ namespace AzureRedisCache.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
-                IPage<RedisResource> listResponse = _client.Redis.List();
+                IPage<RedisResource> listResponse = _client.Redis.ListBySubscription();
 
                 Assert.True(listResponse.Count() >= 1);
 

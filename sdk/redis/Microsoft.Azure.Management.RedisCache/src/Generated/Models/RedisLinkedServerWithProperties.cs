@@ -40,9 +40,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// cache.</param>
         /// <param name="serverRole">Role of the linked server. Possible values
         /// include: 'Primary', 'Secondary'</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="provisioningState">Terminal state of the link between
         /// primary and secondary redis cache.</param>
         public RedisLinkedServerWithProperties(string linkedRedisCacheId, string linkedRedisCacheLocation, ReplicationRole serverRole, string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string))

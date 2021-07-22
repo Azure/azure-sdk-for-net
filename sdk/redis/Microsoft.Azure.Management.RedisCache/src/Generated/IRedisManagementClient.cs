@@ -96,5 +96,15 @@ namespace Microsoft.Azure.Management.Redis
         /// </summary>
         ILinkedServerOperations LinkedServer { get; }
 
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
     }
 }

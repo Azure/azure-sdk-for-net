@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -73,5 +72,6 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "ports")]
         public IList<int?> Ports { get; set; }
+
     }
 }

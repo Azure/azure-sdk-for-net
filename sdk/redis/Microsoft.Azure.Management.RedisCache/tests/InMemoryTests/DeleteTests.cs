@@ -34,7 +34,7 @@ namespace AzureRedisCache.Tests.InMemoryTests
         public void Delete_406()
         {
             RedisManagementClient client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.NotAcceptable);
-            Assert.Throws<CloudException>(() => client.Redis.Delete(resourceGroupName: "resource-group", name: "cachename"));
+            Assert.Throws<ErrorResponseException>(() => client.Redis.Delete(resourceGroupName: "resource-group", name: "cachename"));
         }
 
         [Fact]

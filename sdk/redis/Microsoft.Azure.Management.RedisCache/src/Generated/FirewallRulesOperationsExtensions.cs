@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cacheName'>
             /// The name of the Redis cache.
             /// </param>
-            public static IPage<RedisFirewallRule> ListByRedisResource(this IFirewallRulesOperations operations, string resourceGroupName, string cacheName)
+            public static IPage<RedisFirewallRule> List(this IFirewallRulesOperations operations, string resourceGroupName, string cacheName)
             {
-                return operations.ListByRedisResourceAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, cacheName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RedisFirewallRule>> ListByRedisResourceAsync(this IFirewallRulesOperations operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RedisFirewallRule>> ListAsync(this IFirewallRulesOperations operations, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByRedisResourceWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, cacheName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='parameters'>
             /// Parameters supplied to the create or update redis firewall rule operation.
             /// </param>
-            public static RedisFirewallRule CreateOrUpdate(this IFirewallRulesOperations operations, string resourceGroupName, string cacheName, string ruleName, RedisFirewallRuleCreateParameters parameters)
+            public static RedisFirewallRule CreateOrUpdate(this IFirewallRulesOperations operations, string resourceGroupName, string cacheName, string ruleName, RedisFirewallRule parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, cacheName, ruleName, parameters).GetAwaiter().GetResult();
             }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RedisFirewallRule> CreateOrUpdateAsync(this IFirewallRulesOperations operations, string resourceGroupName, string cacheName, string ruleName, RedisFirewallRuleCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RedisFirewallRule> CreateOrUpdateAsync(this IFirewallRulesOperations operations, string resourceGroupName, string cacheName, string ruleName, RedisFirewallRule parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, cacheName, ruleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -211,9 +211,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RedisFirewallRule> ListByRedisResourceNext(this IFirewallRulesOperations operations, string nextPageLink)
+            public static IPage<RedisFirewallRule> ListNext(this IFirewallRulesOperations operations, string nextPageLink)
             {
-                return operations.ListByRedisResourceNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -228,9 +228,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RedisFirewallRule>> ListByRedisResourceNextAsync(this IFirewallRulesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RedisFirewallRule>> ListNextAsync(this IFirewallRulesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByRedisResourceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

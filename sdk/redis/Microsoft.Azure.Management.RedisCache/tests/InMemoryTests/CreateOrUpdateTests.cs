@@ -119,7 +119,7 @@ namespace AzureRedisCache.Tests.InMemoryTests
         public void CreateOrUpdate_404()
         {
             RedisManagementClient client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.NotFound);
-            Assert.Throws<CloudException>(() => client.Redis.Create(resourceGroupName: "resource-group", name: "cachename",
+            Assert.Throws<ErrorResponseException>(() => client.Redis.Create(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateParameters
                                                                             {
                                                                                 Location = "North Europe",
@@ -137,7 +137,7 @@ namespace AzureRedisCache.Tests.InMemoryTests
         public void CheckNameAvailability_409()
         {
             RedisManagementClient client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.Conflict);
-            Assert.Throws<CloudException>(() => client.Redis.CheckNameAvailability(parameters: new CheckNameAvailabilityParameters
+            Assert.Throws<ErrorResponseException>(() => client.Redis.CheckNameAvailability(parameters: new CheckNameAvailabilityParameters
                                                                                     {
                                                                                         Name = "cachename",
                                                                                         Type = "Microsoft.Cache/Redis"

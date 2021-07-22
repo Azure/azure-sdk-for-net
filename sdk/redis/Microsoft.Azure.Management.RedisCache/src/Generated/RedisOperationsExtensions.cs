@@ -52,7 +52,53 @@ namespace Microsoft.Azure.Management.Redis
             public static async Task CheckNameAvailabilityAsync(this IRedisOperations operations, CheckNameAvailabilityParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.CheckNameAvailabilityWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }            
+            }
+
+            /// <summary>
+            /// Gets any upgrade notifications for a Redis cache.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the Redis cache.
+            /// </param>
+            /// <param name='history'>
+            /// how many minutes in past to look for upgrade notifications
+            /// </param>
+            public static IPage<UpgradeNotification> ListUpgradeNotifications(this IRedisOperations operations, string resourceGroupName, string name, double history)
+            {
+                return operations.ListUpgradeNotificationsAsync(resourceGroupName, name, history).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets any upgrade notifications for a Redis cache.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the Redis cache.
+            /// </param>
+            /// <param name='history'>
+            /// how many minutes in past to look for upgrade notifications
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<UpgradeNotification>> ListUpgradeNotificationsAsync(this IRedisOperations operations, string resourceGroupName, string name, double history, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListUpgradeNotificationsWithHttpMessagesAsync(resourceGroupName, name, history, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
 
             /// <summary>
             /// Create or replace (overwrite/recreate, with potential downtime) an existing
@@ -265,9 +311,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<RedisResource> List(this IRedisOperations operations)
+            public static IPage<RedisResource> ListBySubscription(this IRedisOperations operations)
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -279,9 +325,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RedisResource>> ListAsync(this IRedisOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RedisResource>> ListBySubscriptionAsync(this IRedisOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -683,6 +729,40 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             /// <summary>
+            /// Gets any upgrade notifications for a Redis cache.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<UpgradeNotification> ListUpgradeNotificationsNext(this IRedisOperations operations, string nextPageLink)
+            {
+                return operations.ListUpgradeNotificationsNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets any upgrade notifications for a Redis cache.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<UpgradeNotification>> ListUpgradeNotificationsNextAsync(this IRedisOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListUpgradeNotificationsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all Redis caches in a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -725,9 +805,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RedisResource> ListNext(this IRedisOperations operations, string nextPageLink)
+            public static IPage<RedisResource> ListBySubscriptionNext(this IRedisOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -742,9 +822,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RedisResource>> ListNextAsync(this IRedisOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RedisResource>> ListBySubscriptionNextAsync(this IRedisOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

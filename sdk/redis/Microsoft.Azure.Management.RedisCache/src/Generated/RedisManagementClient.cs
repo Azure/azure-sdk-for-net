@@ -102,6 +102,16 @@ namespace Microsoft.Azure.Management.Redis
         public virtual ILinkedServerOperations LinkedServer { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -347,8 +357,10 @@ namespace Microsoft.Azure.Management.Redis
             FirewallRules = new FirewallRulesOperations(this);
             PatchSchedules = new PatchSchedulesOperations(this);
             LinkedServer = new LinkedServerOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-07-01";
+            ApiVersion = "2020-12-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

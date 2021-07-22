@@ -19,13 +19,13 @@ namespace Microsoft.Azure.Management.Redis
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PatchSchedulesOperations operations.
+    /// PrivateEndpointConnectionsOperations operations.
     /// </summary>
-    public partial interface IPatchSchedulesOperations
+    public partial interface IPrivateEndpointConnectionsOperations
     {
         /// <summary>
-        /// Gets all patch schedules in the specified redis cache (there is
-        /// only one).
+        /// List all the private endpoint connections associated with the redis
+        /// cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -48,18 +48,20 @@ namespace Microsoft.Azure.Management.Redis
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RedisPatchSchedule>>> ListByRedisResourceWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<PrivateEndpointConnection>>> ListWithHttpMessagesAsync(string resourceGroupName, string cacheName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or replace the patching schedule for Redis cache.
+        /// Gets the specified private endpoint connection associated with the
+        /// redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='name'>
+        /// <param name='cacheName'>
         /// The name of the Redis cache.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters to set the patching schedule for Redis cache.
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection associated with the
+        /// Azure resource
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -76,15 +78,23 @@ namespace Microsoft.Azure.Management.Redis
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RedisPatchSchedule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisPatchSchedule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string cacheName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the patching schedule of a redis cache.
+        /// Update the state of specified private endpoint connection
+        /// associated with the redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='name'>
-        /// The name of the redis cache.
+        /// <param name='cacheName'>
+        /// The name of the Redis cache.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection associated with the
+        /// Azure resource
+        /// </param>
+        /// <param name='properties'>
+        /// The private endpoint connection properties.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -95,18 +105,26 @@ namespace Microsoft.Azure.Management.Redis
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> PutWithHttpMessagesAsync(string resourceGroupName, string cacheName, string privateEndpointConnectionName, PrivateEndpointConnection properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the patching schedule of a redis cache.
+        /// Deletes the specified private endpoint connection associated with
+        /// the redis cache.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='name'>
-        /// The name of the redis cache.
+        /// <param name='cacheName'>
+        /// The name of the Redis cache.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection associated with the
+        /// Azure resource
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -117,19 +135,26 @@ namespace Microsoft.Azure.Management.Redis
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RedisPatchSchedule>> GetWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string cacheName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all patch schedules in the specified redis cache (there is
-        /// only one).
+        /// Update the state of specified private endpoint connection
+        /// associated with the redis cache.
         /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='cacheName'>
+        /// The name of the Redis cache.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection associated with the
+        /// Azure resource
+        /// </param>
+        /// <param name='properties'>
+        /// The private endpoint connection properties.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -146,6 +171,6 @@ namespace Microsoft.Azure.Management.Redis
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RedisPatchSchedule>>> ListByRedisResourceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginPutWithHttpMessagesAsync(string resourceGroupName, string cacheName, string privateEndpointConnectionName, PrivateEndpointConnection properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -37,9 +37,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// range</param>
         /// <param name="endIP">highest IP address included in the
         /// range</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         public RedisFirewallRule(string startIP, string endIP, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {

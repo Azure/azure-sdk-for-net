@@ -10,40 +10,40 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Parameters required for creating a firewall rule on redis cache. (Note,
-    /// you can just use the FirewallRule type instead now.)
+    /// Entity Resource
     /// </summary>
-    public partial class RedisFirewallRuleCreateParameters : RedisFirewallRule
+    /// <remarks>
+    /// The resource model definition for an Azure Resource Manager resource
+    /// with an etag.
+    /// </remarks>
+    public partial class AzureEntityResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the RedisFirewallRuleCreateParameters
-        /// class.
+        /// Initializes a new instance of the AzureEntityResource class.
         /// </summary>
-        public RedisFirewallRuleCreateParameters()
+        public AzureEntityResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RedisFirewallRuleCreateParameters
-        /// class.
+        /// Initializes a new instance of the AzureEntityResource class.
         /// </summary>
-        /// <param name="startIP">lowest IP address included in the
-        /// range</param>
-        /// <param name="endIP">highest IP address included in the
-        /// range</param>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        public RedisFirewallRuleCreateParameters(string startIP, string endIP, string id = default(string), string name = default(string), string type = default(string))
-            : base(startIP, endIP, id, name, type)
+        /// <param name="etag">Resource Etag.</param>
+        public AzureEntityResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
+            : base(id, name, type)
         {
+            Etag = etag;
             CustomInit();
         }
 
@@ -53,14 +53,10 @@ namespace Microsoft.Azure.Management.Redis.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Validate the object.
+        /// Gets resource Etag.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
+
     }
 }
