@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The order in which extracted sentences will be returned on summary extraction.
+    /// The order in which extracted sentences will be returned on extractive text summarization.
     /// </summary>
     [CodeGenModel("ExtractiveSummarizationTaskParametersSortBy")]
     public enum SummarySentencesOrder
