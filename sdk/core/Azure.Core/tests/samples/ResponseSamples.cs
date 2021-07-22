@@ -104,6 +104,33 @@ namespace Azure.Core.Samples
                 Console.WriteLine(secretProperties.Name);
             }
             #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task AsyncPageableLoop()
+        {
+            // create a client
+            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+            #region Snippet:AsyncPageableLoop
+            // call a service method, which returns AsyncPageable<T>
+            AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
+
+            IAsyncEnumerator<SecretProperties> enumerator = allSecretProperties.GetAsyncEnumerator();
+            try
+            {
+                while (await enumerator.MoveNextAsync())
+                {
+                    SecretProperties secretProperties = enumerator.Current;
+                    Console.WriteLine(secretProperties.Name);
+                }
+            }
+            finally
+            {
+                await enumerator.DisposeAsync();
+            }
+            #endregion
         }        
 
         [Test]
