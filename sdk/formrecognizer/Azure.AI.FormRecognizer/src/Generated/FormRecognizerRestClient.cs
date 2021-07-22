@@ -640,9 +640,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Compose request would include list of models ids.
-        /// 
         /// It would validate what all models either trained with labels model or composed model.
-        /// 
         /// It would validate limit of models put together.
         /// </summary>
         /// <param name="composeRequest"> Compose models. </param>
@@ -669,9 +667,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Compose request would include list of models ids.
-        /// 
         /// It would validate what all models either trained with labels model or composed model.
-        /// 
         /// It would validate limit of models put together.
         /// </summary>
         /// <param name="composeRequest"> Compose models. </param>

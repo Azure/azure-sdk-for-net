@@ -20,12 +20,12 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="createdOn"> feedback created time. </param>
         /// <param name="userPrincipal"> user who gives this feedback. </param>
         /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"> . </param>
+        /// <param name="dimensionFilter"></param>
         /// <param name="startsOn"> the start timestamp of feedback time range. </param>
         /// <param name="endsOn"> the end timestamp of feedback time range, when equals to startTime means only one timestamp. </param>
-        /// <param name="valueInternal"> . </param>
+        /// <param name="valueInternal"></param>
         /// <param name="detectionConfigurationId"> the corresponding anomaly detection configuration of this feedback. </param>
-        /// <param name="detectionConfigurationSnapshot"> . </param>
+        /// <param name="detectionConfigurationSnapshot"></param>
         internal MetricAnomalyFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startsOn, DateTimeOffset endsOn, AnomalyFeedbackValue valueInternal, string detectionConfigurationId, AnomalyDetectionConfiguration detectionConfigurationSnapshot) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
         {
             StartsOn = startsOn;

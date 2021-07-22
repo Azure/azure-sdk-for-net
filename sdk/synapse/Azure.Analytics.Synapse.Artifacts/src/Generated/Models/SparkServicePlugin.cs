@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of SparkServicePlugin. </summary>
-        /// <param name="preparationStartedAt"> . </param>
-        /// <param name="resourceAcquisitionStartedAt"> . </param>
-        /// <param name="submissionStartedAt"> . </param>
-        /// <param name="monitoringStartedAt"> . </param>
-        /// <param name="cleanupStartedAt"> . </param>
-        /// <param name="currentState"> . </param>
+        /// <param name="preparationStartedAt"></param>
+        /// <param name="resourceAcquisitionStartedAt"></param>
+        /// <param name="submissionStartedAt"></param>
+        /// <param name="monitoringStartedAt"></param>
+        /// <param name="cleanupStartedAt"></param>
+        /// <param name="currentState"></param>
         internal SparkServicePlugin(DateTimeOffset? preparationStartedAt, DateTimeOffset? resourceAcquisitionStartedAt, DateTimeOffset? submissionStartedAt, DateTimeOffset? monitoringStartedAt, DateTimeOffset? cleanupStartedAt, PluginCurrentState? currentState)
         {
             PreparationStartedAt = preparationStartedAt;

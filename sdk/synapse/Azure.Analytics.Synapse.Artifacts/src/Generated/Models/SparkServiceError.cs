@@ -16,9 +16,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of SparkServiceError. </summary>
-        /// <param name="message"> . </param>
-        /// <param name="errorCode"> . </param>
-        /// <param name="source"> . </param>
+        /// <param name="message"></param>
+        /// <param name="errorCode"></param>
+        /// <param name="source"></param>
         internal SparkServiceError(string message, string errorCode, SparkErrorSource? source)
         {
             Message = message;

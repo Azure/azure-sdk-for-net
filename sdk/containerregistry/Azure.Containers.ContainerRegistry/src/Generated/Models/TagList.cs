@@ -43,7 +43,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="tagAttributeBases"> List of tag attribute details. </param>
-        /// <param name="link"> . </param>
+        /// <param name="link"></param>
         internal TagList(string registryLoginServer, string repository, IReadOnlyList<TagAttributesBase> tagAttributeBases, string link)
         {
             RegistryLoginServer = registryLoginServer;

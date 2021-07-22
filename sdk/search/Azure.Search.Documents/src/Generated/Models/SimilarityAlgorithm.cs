@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
 
         /// <summary> Initializes a new instance of SimilarityAlgorithm. </summary>
-        /// <param name="oDataType"> . </param>
+        /// <param name="oDataType"></param>
         internal SimilarityAlgorithm(string oDataType)
         {
             ODataType = oDataType;

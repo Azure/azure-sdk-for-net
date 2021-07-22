@@ -20,8 +20,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of AnomalyAlertingConfigurationList. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
         internal AnomalyAlertingConfigurationList(IReadOnlyList<AnomalyAlertConfiguration> value, string nextLink)
         {
             Value = value;
