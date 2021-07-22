@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `GetRandomBytes` and `GetRandomBytesAsync` to `KeyClient` to get random bytes from a managed HSM.
+
 ### Breaking Changes
 
 ### Key Bugs Fixed

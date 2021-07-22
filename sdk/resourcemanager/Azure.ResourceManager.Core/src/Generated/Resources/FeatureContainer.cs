@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool DoesExist(string featureName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("FeatureContainer.DoesExist");
+            using var scope = Diagnostics.CreateScope("FeatureContainer.CheckIfExists");
             scope.Start();
             return TryGet(featureName, cancellationToken) != null;
         }
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<bool> DoesExistAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> CheckIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("FeatureContainer.DoesExist");
+            using var scope = Diagnostics.CreateScope("FeatureContainer.CheckIfExists");
             scope.Start();
             return await TryGetAsync(featureName, cancellationToken).ConfigureAwait(false) != null;
         }

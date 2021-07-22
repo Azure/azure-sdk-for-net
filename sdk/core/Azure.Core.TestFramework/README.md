@@ -240,8 +240,6 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
 
 When tests are run in recording mode, session records are saved to the project directory automatically in a folder named 'SessionRecords'.
 
-__NOTE:__ recordings are copied from `netcoreapp2.1` directory by default, make sure you are running the right target framework.
-
 ### Sanitizing
 
 Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record.

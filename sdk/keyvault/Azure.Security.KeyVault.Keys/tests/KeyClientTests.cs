@@ -196,6 +196,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsNotNull(key.Key);
         }
 
+        [Test]
+        public void GetRandomBytesValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await Client.GetRandomBytesAsync(-1));
+            Assert.AreEqual("count", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await Client.GetRandomBytesAsync(0));
+            Assert.AreEqual("count", ex.ParamName);
+        }
+
         private class MockCredential : TokenCredential
         {
             public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) =>

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Core
         protected override ResourceType ValidResourceType => ResourceType;
 
         /// <inheritdoc/>
-        protected override void Validate(ResourceIdentifier identifier)
+        protected override void ValidateResourceType(ResourceIdentifier identifier)
         {
             if (identifier.ResourceType != $"{Id.ResourceType.Namespace}/features")
             {

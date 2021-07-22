@@ -34,9 +34,19 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ArmClient"/> class.
         /// </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
+        public ArmClient(TokenCredential credential)
+            : this(null, new Uri(DefaultUri), credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArmClient"/> class.
+        /// </summary>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, ArmClientOptions options = default)
+        public ArmClient(TokenCredential credential, ArmClientOptions options)
             : this(null, new Uri(DefaultUri), credential, options)
         {
         }
@@ -158,15 +168,16 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Creates a container using the lambda expression passed in.
+        /// Provides a way to reuse the protected client context.
         /// </summary>
-        /// <typeparam name="T"> The type of container to construct. </typeparam>
-        /// <param name="func"> The lambda expression to execute. </param>
-        /// <returns> The container type requested. </returns>
+        /// <typeparam name="T"> The actual type returned by the delegate. </typeparam>
+        /// <param name="func"> The method to pass the internal properties to. </param>
+        /// <returns> Whatever the delegate returns. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public T GetContainer<T>(Func<ArmClientOptions, TokenCredential, Uri, HttpPipeline, T> func)
+        [ForwardsClientCalls]
+        public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
-            return func(ClientOptions, Credential, BaseUri, Pipeline);
+            return func(BaseUri, Credential, ClientOptions, Pipeline);
         }
 
         /// <summary>
@@ -174,14 +185,29 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
         /// <returns> The list of operations that can be performed over the GenericResources. </returns>
-        public virtual IList<GenericResourceOperations> GetGenericResourceOperations(IEnumerable<string> ids)
+        public virtual IReadOnlyList<GenericResourceOperations> GetGenericResourceOperations(params string[] ids)
+        {
+            return GetGenericResourceOperationsInternal(ids);
+        }
+
+        /// <summary>
+        /// Get the operations for a list of specific resources.
+        /// </summary>
+        /// <param name="ids"> A list of the IDs of the resources to retrieve. </param>
+        /// <returns> The list of operations that can be performed over the GenericResources. </returns>
+        public virtual IReadOnlyList<GenericResourceOperations> GetGenericResourceOperations(IEnumerable<string> ids)
+        {
+            return GetGenericResourceOperationsInternal(ids);
+        }
+
+        private IReadOnlyList<GenericResourceOperations> GetGenericResourceOperationsInternal(IEnumerable<string> ids)
         {
             if (ids == null)
             {
                 throw new ArgumentNullException(nameof(ids));
             }
 
-            IList<GenericResourceOperations> genericRespirceOperations = new List<GenericResourceOperations>();
+            var genericRespirceOperations = new ChangeTrackingList<GenericResourceOperations>();
             foreach (string id in ids)
             {
                 genericRespirceOperations.Add(new GenericResourceOperations(DefaultSubscription, id));
@@ -207,11 +233,11 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the RestApi definition for a given Azure namespace.
         /// </summary>
-        /// <param name="nameSpace"> The namespace to get the rest API for. </param>
+        /// <param name="azureNamespace"> The namespace to get the rest API for. </param>
         /// <returns> A container representing the rest apis for the namespace. </returns>
-        public virtual RestApiContainer GetRestApis(string nameSpace)
+        public virtual RestApiContainer GetRestApis(string azureNamespace)
         {
-            return new RestApiContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), nameSpace);
+            return new RestApiContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), azureNamespace);
         }
 
         /// <summary> Gets all resource providers for a subscription. </summary>

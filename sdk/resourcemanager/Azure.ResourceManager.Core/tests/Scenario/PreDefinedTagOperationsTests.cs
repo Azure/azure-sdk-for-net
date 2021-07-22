@@ -9,9 +9,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    public class PreDefinedTagOperationsTests : ResourceManagerTestBase
+    public class PredefinedTagOperationsTests : ResourceManagerTestBase
     {
-        public PreDefinedTagOperationsTests(bool isAsync)
+        public PredefinedTagOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
