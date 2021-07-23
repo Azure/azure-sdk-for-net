@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
-  "info": {
-    "version": "2020-08-01-preview",
-    "title": "AccessControlClient"
-  },
+    "info": {
+        "version": "2020-08-01-preview",
+        "title": "SynapseAdministrationClient"
+    },
   "x-ms-parameterized-host": {
     "hostTemplate": "{endpoint}",
     "useSchemePrefix": false,
