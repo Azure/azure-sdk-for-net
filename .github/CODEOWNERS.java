@@ -2,12 +2,20 @@
   '@'// 
   @=''#$ anwarulazimpatwary/scss-blend-modes)```---```
 @.gemspec.java
-# -*- encoding: utf-8
+# -*- encoding: utf-8-
+  #$'''
+  ["
+  ]'---'[```\]"('["{'ARM'}"]')"[/```]'---'[
+   "]
+# -*- encoding: utf-8-
+  #$'''
+  ["
+  ]'---'[```\]"('["{'ARM'}"]')"[/```]'---'[
+   "]
+   ''
   ''```---```
   ''@-*-''
-  ```---```''
-
-''#$ anwarulazimpatwary/scss-blend-modes)```---```
+  ```---```''''#$ anwarulazimpatwary/scss-blend-modes)```---```
 ''@.''//gemspec''[!].
 ''java''
 # -*- encoding: utf-8 -*-
