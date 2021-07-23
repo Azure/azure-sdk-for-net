@@ -20,8 +20,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of MetricSeriesList. </summary>
-        /// <param name="nextLink"> . </param>
-        /// <param name="value"> . </param>
+        /// <param name="nextLink"></param>
+        /// <param name="value"></param>
         internal MetricSeriesList(string nextLink, IReadOnlyList<MetricSeriesDefinition> value)
         {
             NextLink = nextLink;

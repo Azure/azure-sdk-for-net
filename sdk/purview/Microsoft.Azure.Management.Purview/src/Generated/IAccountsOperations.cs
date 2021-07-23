@@ -220,6 +220,35 @@ namespace Microsoft.Azure.Management.Purview
         /// </exception>
         Task<AzureOperationResponse<AccessKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Add the administrator for root collection.
+        /// </summary>
+        /// <remarks>
+        /// Add the administrator for root collection associated with this
+        /// account.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the account.
+        /// </param>
+        /// <param name='collectionAdminUpdate'>
+        /// The collection admin update payload.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseModelException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> AddRootCollectionAdminWithHttpMessagesAsync(string resourceGroupName, string accountName, CollectionAdminUpdate collectionAdminUpdate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Checks the account name availability.
         /// </summary>
         /// <remarks>

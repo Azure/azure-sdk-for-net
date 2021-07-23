@@ -40,8 +40,7 @@ namespace Azure.Identity
         /// </summary>
         public EnvironmentCredential()
             : this(CredentialPipeline.GetInstance(null))
-        {
-        }
+        { }
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
@@ -49,14 +48,13 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public EnvironmentCredential(TokenCredentialOptions options)
-            : this(CredentialPipeline.GetInstance(options))
-        {
-            _options = options;
-        }
+            : this(CredentialPipeline.GetInstance(options), options)
+        { }
 
-        internal EnvironmentCredential(CredentialPipeline pipeline)
+        internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredentialOptions options = null)
         {
             _pipeline = pipeline;
+            _options = options ?? new TokenCredentialOptions();
 
             string tenantId = EnvironmentVariables.TenantId;
             string clientId = EnvironmentVariables.ClientId;

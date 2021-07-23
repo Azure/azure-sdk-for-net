@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    public class PreDefinedTagContainerTests : ResourceManagerTestBase
+    public class PredefinedTagContainerTests : ResourceManagerTestBase
     {
-        public PreDefinedTagContainerTests(bool isAsync)
+        public PredefinedTagContainerTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }

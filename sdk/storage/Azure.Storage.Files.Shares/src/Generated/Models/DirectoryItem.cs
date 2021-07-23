@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
     internal partial class DirectoryItem
     {
         /// <summary> Initializes a new instance of DirectoryItem. </summary>
-        /// <param name="name"> . </param>
+        /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal DirectoryItem(string name)
         {
@@ -26,11 +26,11 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> Initializes a new instance of DirectoryItem. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="fileId"> . </param>
+        /// <param name="name"></param>
+        /// <param name="fileId"></param>
         /// <param name="properties"> File properties. </param>
-        /// <param name="attributes"> . </param>
-        /// <param name="permissionKey"> . </param>
+        /// <param name="attributes"></param>
+        /// <param name="permissionKey"></param>
         internal DirectoryItem(string name, string fileId, FileProperty properties, string attributes, string permissionKey)
         {
             Name = name;

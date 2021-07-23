@@ -256,9 +256,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual bool DoesExist(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -281,9 +281,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<bool> DoesExistAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CheckIfExists");
             scope.Start();
             try
             {

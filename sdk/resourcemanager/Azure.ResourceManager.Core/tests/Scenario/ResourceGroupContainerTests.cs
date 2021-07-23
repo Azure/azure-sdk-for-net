@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task DoesExist()
+        public async Task CheckIfExists()
         {
             var rgName = Recording.GenerateAssetName("testRg-");
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
-            Assert.IsTrue(await Client.DefaultSubscription.GetResourceGroups().DoesExistAsync(rgName));
-            Assert.IsFalse(await Client.DefaultSubscription.GetResourceGroups().DoesExistAsync(rgName + "1"));
+            Assert.IsTrue(await Client.DefaultSubscription.GetResourceGroups().CheckIfExistsAsync(rgName));
+            Assert.IsFalse(await Client.DefaultSubscription.GetResourceGroups().CheckIfExistsAsync(rgName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.DefaultSubscription.GetResourceGroups().DoesExistAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.DefaultSubscription.GetResourceGroups().CheckIfExistsAsync(null));
         }
     }
 }

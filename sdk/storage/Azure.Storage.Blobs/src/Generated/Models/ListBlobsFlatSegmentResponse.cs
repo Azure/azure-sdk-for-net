@@ -13,9 +13,9 @@ namespace Azure.Storage.Blobs.Models
     internal partial class ListBlobsFlatSegmentResponse
     {
         /// <summary> Initializes a new instance of ListBlobsFlatSegmentResponse. </summary>
-        /// <param name="serviceEndpoint"> . </param>
-        /// <param name="containerName"> . </param>
-        /// <param name="segment"> . </param>
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="containerName"></param>
+        /// <param name="segment"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="containerName"/>, or <paramref name="segment"/> is null. </exception>
         internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, BlobFlatListSegment segment)
         {
@@ -38,13 +38,13 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of ListBlobsFlatSegmentResponse. </summary>
-        /// <param name="serviceEndpoint"> . </param>
-        /// <param name="containerName"> . </param>
-        /// <param name="prefix"> . </param>
-        /// <param name="marker"> . </param>
-        /// <param name="maxResults"> . </param>
-        /// <param name="segment"> . </param>
-        /// <param name="nextMarker"> . </param>
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="containerName"></param>
+        /// <param name="prefix"></param>
+        /// <param name="marker"></param>
+        /// <param name="maxResults"></param>
+        /// <param name="segment"></param>
+        /// <param name="nextMarker"></param>
         internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, BlobFlatListSegment segment, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;

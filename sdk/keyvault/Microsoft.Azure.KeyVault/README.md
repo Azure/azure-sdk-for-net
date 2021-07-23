@@ -40,7 +40,7 @@ complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](https
 
 The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](https://azure.microsoft.com/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
 
-Please review [Get started with Azure Key Vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started) if you are not familiar with Azure Key Vault.
+Please review the [overview](https://docs.microsoft.com/azure/key-vault/general/overview) if you are not familiar with Azure Key Vault.
 
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes. 
 

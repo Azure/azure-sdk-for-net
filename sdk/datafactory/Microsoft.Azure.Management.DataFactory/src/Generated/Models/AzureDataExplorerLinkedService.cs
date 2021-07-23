@@ -58,7 +58,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="tenant">The name or ID of the tenant to which the
         /// service principal belongs. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureDataExplorerLinkedService(object endpoint, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object))
+        /// <param name="credential">The credential reference containing
+        /// authentication information.</param>
+        public AzureDataExplorerLinkedService(object endpoint, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), CredentialReference credential = default(CredentialReference))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Endpoint = endpoint;
@@ -66,6 +68,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             ServicePrincipalKey = servicePrincipalKey;
             Database = database;
             Tenant = tenant;
+            Credential = credential;
             CustomInit();
         }
 
@@ -114,6 +117,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object Tenant { get; set; }
 
         /// <summary>
+        /// Gets or sets the credential reference containing authentication
+        /// information.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.credential")]
+        public CredentialReference Credential { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -129,6 +139,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Database == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Database");
+            }
+            if (Credential != null)
+            {
+                Credential.Validate();
             }
         }
     }

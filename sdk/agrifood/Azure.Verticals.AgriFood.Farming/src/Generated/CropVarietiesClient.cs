@@ -63,7 +63,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -73,7 +72,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -124,7 +122,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -134,7 +131,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -185,7 +181,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -195,7 +190,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -276,7 +270,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -286,7 +279,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -336,7 +328,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -346,7 +337,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -396,7 +386,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -406,7 +395,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -594,75 +582,70 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>cropId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ID of the crop it belongs to. </term>
+        ///     <term>ID of the crop it belongs to.</term>
         ///   </item>
         ///   <item>
         ///     <term>brand</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> CropVariety Brand. </term>
+        ///     <term>CropVariety Brand.</term>
         ///   </item>
         ///   <item>
         ///     <term>product</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> CropVariety product. </term>
+        ///     <term>CropVariety product.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique resource ID. </term>
+        ///     <term>Unique resource ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>eTag</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The ETag value to implement optimistic concurrency. </term>
+        ///     <term>The ETag value to implement optimistic concurrency.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status of the resource. </term>
+        ///     <term>Status of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>modifiedDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -722,75 +705,70 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>cropId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ID of the crop it belongs to. </term>
+        ///     <term>ID of the crop it belongs to.</term>
         ///   </item>
         ///   <item>
         ///     <term>brand</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> CropVariety Brand. </term>
+        ///     <term>CropVariety Brand.</term>
         ///   </item>
         ///   <item>
         ///     <term>product</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> CropVariety product. </term>
+        ///     <term>CropVariety product.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique resource ID. </term>
+        ///     <term>Unique resource ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>eTag</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The ETag value to implement optimistic concurrency. </term>
+        ///     <term>The ETag value to implement optimistic concurrency.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status of the resource. </term>
+        ///     <term>Status of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>modifiedDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>

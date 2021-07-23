@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of MetricDataList. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         internal MetricDataList(IReadOnlyList<MetricSeriesData> value)
         {
             Value = value;
