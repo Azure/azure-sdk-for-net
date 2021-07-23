@@ -3,6 +3,7 @@
 ## 5.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added property `ExtractSummaryActions` to `TextAnalyticsActions` to support the new 'extractive text summarization' API. This action can be used to extract relevant sentences from an input document.
 
 ### Breaking Changes
 

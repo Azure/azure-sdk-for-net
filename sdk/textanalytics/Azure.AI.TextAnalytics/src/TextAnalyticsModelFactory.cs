@@ -611,7 +611,7 @@ namespace Azure.AI.TextAnalytics
                 recognizePiiEntitiesActionResults.ToList(),
                 recognizeLinkedEntitiesActionsResults.ToList(),
                 analyzeSentimentActionsResults.ToList(),
-                null); // TODO: update model factory.
+                null); // TODO: include extractive summarization API (https://github.com/Azure/azure-sdk-for-net/issues/22836).
         }
 
         /// <summary>
