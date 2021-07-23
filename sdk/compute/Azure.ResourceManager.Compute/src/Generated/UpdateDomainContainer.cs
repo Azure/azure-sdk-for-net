@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<UpdateDomain> Get(string updateDomain, CancellationToken cancellationToken = default)
+        public virtual Response<UpdateDomain> Get(string updateDomain, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.Get");
             scope.Start();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<UpdateDomain>> GetAsync(string updateDomain, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<UpdateDomain>> GetAsync(string updateDomain, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.Get");
             scope.Start();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public UpdateDomain TryGet(string updateDomain, CancellationToken cancellationToken = default)
+        public virtual UpdateDomain TryGet(string updateDomain, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.TryGet");
             scope.Start();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<UpdateDomain> TryGetAsync(string updateDomain, CancellationToken cancellationToken = default)
+        public async virtual Task<UpdateDomain> TryGetAsync(string updateDomain, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.TryGet");
             scope.Start();
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public bool DoesExist(string updateDomain, CancellationToken cancellationToken = default)
+        public virtual bool DoesExist(string updateDomain, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.DoesExist");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<bool> DoesExistAsync(string updateDomain, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> DoesExistAsync(string updateDomain, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.DoesExist");
             scope.Start();

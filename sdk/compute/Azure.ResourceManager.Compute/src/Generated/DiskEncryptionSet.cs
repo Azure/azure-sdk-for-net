@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a DiskEncryptionSet along with the instance operations that can be performed on it. </summary>
     public class DiskEncryptionSet : DiskEncryptionSetOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "DiskEncryptionSet"/> class for mocking. </summary>
+        protected DiskEncryptionSet() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "DiskEncryptionSet"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the DiskEncryptionSetData. </summary>
-        public DiskEncryptionSetData Data { get; private set; }
+        public virtual DiskEncryptionSetData Data { get; private set; }
     }
 }

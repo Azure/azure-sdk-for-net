@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The operation to get the VMSS VM extension. </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet>> GetAsync(string expand, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet>> GetAsync(string expand, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetOperations.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The operation to get the VMSS VM extension. </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet> Get(string expand, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet> Get(string expand, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetOperations.Get");
             scope.Start();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary> The operation to delete the VMSS VM extension. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetOperations.Delete");
             scope.Start();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The operation to delete the VMSS VM extension. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetOperations.Delete");
             scope.Start();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The operation to delete the VMSS VM extension. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<VirtualMachineScaleSetVMExtensionsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetVMExtensionsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetOperations.StartDelete");
             scope.Start();
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The operation to delete the VMSS VM extension. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public VirtualMachineScaleSetVMExtensionsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetVMExtensionsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetOperations.StartDelete");
             scope.Start();
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionParameters"/> is null. </exception>
-        public async Task<Response<VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet>> UpdateAsync(VirtualMachineScaleSetVMExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet>> UpdateAsync(VirtualMachineScaleSetVMExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (extensionParameters == null)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionParameters"/> is null. </exception>
-        public Response<VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet> Update(VirtualMachineScaleSetVMExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet> Update(VirtualMachineScaleSetVMExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (extensionParameters == null)
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionParameters"/> is null. </exception>
-        public async Task<VirtualMachineScaleSetVMExtensionsUpdateOperation> StartUpdateAsync(VirtualMachineScaleSetVMExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetVMExtensionsUpdateOperation> StartUpdateAsync(VirtualMachineScaleSetVMExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (extensionParameters == null)
             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="extensionParameters"> Parameters supplied to the Update Virtual Machine Extension operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionParameters"/> is null. </exception>
-        public VirtualMachineScaleSetVMExtensionsUpdateOperation StartUpdate(VirtualMachineScaleSetVMExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetVMExtensionsUpdateOperation StartUpdate(VirtualMachineScaleSetVMExtensionUpdate extensionParameters, CancellationToken cancellationToken = default)
         {
             if (extensionParameters == null)
             {

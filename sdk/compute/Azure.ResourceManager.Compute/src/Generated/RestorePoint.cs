@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a RestorePoint along with the instance operations that can be performed on it. </summary>
     public class RestorePoint : RestorePointOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "RestorePoint"/> class for mocking. </summary>
+        protected RestorePoint() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "RestorePoint"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the RestorePointData. </summary>
-        public RestorePointData Data { get; private set; }
+        public virtual RestorePointData Data { get; private set; }
     }
 }

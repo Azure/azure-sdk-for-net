@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a DiskAccess along with the instance operations that can be performed on it. </summary>
     public class DiskAccess : DiskAccessOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "DiskAccess"/> class for mocking. </summary>
+        protected DiskAccess() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "DiskAccess"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the DiskAccessData. </summary>
-        public DiskAccessData Data { get; private set; }
+        public virtual DiskAccessData Data { get; private set; }
     }
 }

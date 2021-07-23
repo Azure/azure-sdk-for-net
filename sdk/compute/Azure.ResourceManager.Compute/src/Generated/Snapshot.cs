@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a Snapshot along with the instance operations that can be performed on it. </summary>
     public class Snapshot : SnapshotOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "Snapshot"/> class for mocking. </summary>
+        protected Snapshot() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "Snapshot"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the SnapshotData. </summary>
-        public SnapshotData Data { get; private set; }
+        public virtual SnapshotData Data { get; private set; }
     }
 }

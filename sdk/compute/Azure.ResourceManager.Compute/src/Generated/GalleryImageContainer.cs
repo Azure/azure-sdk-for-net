@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<GalleryImage> Get(string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryImage> Get(string galleryImageName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.Get");
             scope.Start();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<GalleryImage>> GetAsync(string galleryImageName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<GalleryImage>> GetAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.Get");
             scope.Start();
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public GalleryImage TryGet(string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual GalleryImage TryGet(string galleryImageName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.TryGet");
             scope.Start();
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<GalleryImage> TryGetAsync(string galleryImageName, CancellationToken cancellationToken = default)
+        public async virtual Task<GalleryImage> TryGetAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.TryGet");
             scope.Start();
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public bool DoesExist(string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual bool DoesExist(string galleryImageName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.DoesExist");
             scope.Start();
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<bool> DoesExistAsync(string galleryImageName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> DoesExistAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.DoesExist");
             scope.Start();

@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<RestorePoint> Get(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual Response<RestorePoint> Get(string restorePointName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RestorePointContainer.Get");
             scope.Start();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<RestorePoint>> GetAsync(string restorePointName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<RestorePoint>> GetAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RestorePointContainer.Get");
             scope.Start();
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public RestorePoint TryGet(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual RestorePoint TryGet(string restorePointName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RestorePointContainer.TryGet");
             scope.Start();
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<RestorePoint> TryGetAsync(string restorePointName, CancellationToken cancellationToken = default)
+        public async virtual Task<RestorePoint> TryGetAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RestorePointContainer.TryGet");
             scope.Start();
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public bool DoesExist(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual bool DoesExist(string restorePointName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RestorePointContainer.DoesExist");
             scope.Start();
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<bool> DoesExistAsync(string restorePointName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> DoesExistAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RestorePointContainer.DoesExist");
             scope.Start();

@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a Disk along with the instance operations that can be performed on it. </summary>
     public class Disk : DiskOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "Disk"/> class for mocking. </summary>
+        protected Disk() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "Disk"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the DiskData. </summary>
-        public DiskData Data { get; private set; }
+        public virtual DiskData Data { get; private set; }
     }
 }

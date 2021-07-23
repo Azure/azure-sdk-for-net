@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a DedicatedHostGroup along with the instance operations that can be performed on it. </summary>
     public class DedicatedHostGroup : DedicatedHostGroupOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "DedicatedHostGroup"/> class for mocking. </summary>
+        protected DedicatedHostGroup() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "DedicatedHostGroup"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the DedicatedHostGroupData. </summary>
-        public DedicatedHostGroupData Data { get; private set; }
+        public virtual DedicatedHostGroupData Data { get; private set; }
     }
 }

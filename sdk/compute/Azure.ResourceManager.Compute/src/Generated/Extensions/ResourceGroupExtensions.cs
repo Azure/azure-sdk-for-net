@@ -5,13 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
@@ -19,7 +12,7 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region AvailabilitySets
+        #region AvailabilitySet
         /// <summary> Gets an object representing a AvailabilitySetContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="AvailabilitySetContainer" /> object. </returns>
@@ -29,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region ProximityPlacementGroups
+        #region ProximityPlacementGroup
         /// <summary> Gets an object representing a ProximityPlacementGroupContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="ProximityPlacementGroupContainer" /> object. </returns>
@@ -39,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region DedicatedHostGroups
+        #region DedicatedHostGroup
         /// <summary> Gets an object representing a DedicatedHostGroupContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="DedicatedHostGroupContainer" /> object. </returns>
@@ -49,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region SshPublicKeys
+        #region SshPublicKey
         /// <summary> Gets an object representing a SshPublicKeyContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="SshPublicKeyContainer" /> object. </returns>
@@ -59,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachines
+        #region VirtualMachine
         /// <summary> Gets an object representing a VirtualMachineContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="VirtualMachineContainer" /> object. </returns>
@@ -69,7 +62,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachineScaleSets
+        #region VirtualMachineScaleSet
         /// <summary> Gets an object representing a VirtualMachineScaleSetContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetContainer" /> object. </returns>
@@ -79,7 +72,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region Images
+        #region Image
         /// <summary> Gets an object representing a ImageContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="ImageContainer" /> object. </returns>
@@ -89,7 +82,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region RestorePointCollections
+        #region RestorePointCollection
         /// <summary> Gets an object representing a RestorePointCollectionContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="RestorePointCollectionContainer" /> object. </returns>
@@ -99,7 +92,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region Disks
+        #region Disk
         /// <summary> Gets an object representing a DiskContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="DiskContainer" /> object. </returns>
@@ -109,7 +102,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region Snapshots
+        #region Snapshot
         /// <summary> Gets an object representing a SnapshotContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="SnapshotContainer" /> object. </returns>
@@ -119,7 +112,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region DiskEncryptionSets
+        #region DiskEncryptionSet
         /// <summary> Gets an object representing a DiskEncryptionSetContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="DiskEncryptionSetContainer" /> object. </returns>
@@ -129,7 +122,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region DiskAccesss
+        #region DiskAccess
         /// <summary> Gets an object representing a DiskAccessContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="DiskAccessContainer" /> object. </returns>
@@ -139,7 +132,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region Gallerys
+        #region Gallery
         /// <summary> Gets an object representing a GalleryContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="GalleryContainer" /> object. </returns>
@@ -149,7 +142,7 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region CloudServices
+        #region CloudService
         /// <summary> Gets an object representing a CloudServiceContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="CloudServiceContainer" /> object. </returns>
@@ -157,212 +150,6 @@ namespace Azure.ResourceManager.Compute
         {
             return new CloudServiceContainer(resourceGroup);
         }
-        #endregion
-
-        #region DiskRestorePoint
-        private static DiskRestorePointRestOperations GetDiskRestorePointRestOperations(ClientDiagnostics clientDiagnostics, TokenCredential credential, ArmClientOptions clientOptions, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
-        {
-            return new DiskRestorePointRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
-        }
-
-        /// <summary> Lists the DiskRestorePoints for this ResourceGroupOperations. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> or <paramref name="vmRestorePointName"/> is null. </exception>
-        public static AsyncPageable<DiskRestorePoint> ListDiskRestorePointsByRestorePointAsync(this ResourceGroupOperations resourceGroup, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
-        {
-            if (restorePointCollectionName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointCollectionName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-
-            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDiskRestorePointRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                async Task<Page<DiskRestorePoint>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.ListDiskRestorePointsByRestorePoint");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListByRestorePointAsync(resourceGroup.Id.Name, restorePointCollectionName, vmRestorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<DiskRestorePoint>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.ListDiskRestorePointsByRestorePoint");
-                    scope.Start();
-                    try
-                    {
-                        var response = await restOperations.ListByRestorePointNextPageAsync(nextLink, resourceGroup.Id.Name, restorePointCollectionName, vmRestorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
-        }
-
-        /// <summary> Lists the DiskRestorePoints for this ResourceGroupOperations. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> or <paramref name="vmRestorePointName"/> is null. </exception>
-        public static Pageable<DiskRestorePoint> ListDiskRestorePointsByRestorePoint(this ResourceGroupOperations resourceGroup, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
-        {
-            if (restorePointCollectionName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointCollectionName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-
-            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDiskRestorePointRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                Page<DiskRestorePoint> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.ListDiskRestorePointsByRestorePoint");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListByRestorePoint(resourceGroup.Id.Name, restorePointCollectionName, vmRestorePointName, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<DiskRestorePoint> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.ListDiskRestorePointsByRestorePoint");
-                    scope.Start();
-                    try
-                    {
-                        var response = restOperations.ListByRestorePointNextPage(nextLink, resourceGroup.Id.Name, restorePointCollectionName, vmRestorePointName, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-            }
-            );
-        }
-
-        /// <summary> Get disk restorePoint resource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, or <paramref name="diskRestorePointName"/> is null. </exception>
-        public static async Task<Response<DiskRestorePoint>> GetDiskRestorePointAsync(this ResourceGroupOperations resourceGroup, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
-        {
-            if (restorePointCollectionName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointCollectionName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-
-            return await resourceGroup.UseClientContext(async (baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDiskRestorePointRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetDiskRestorePoint");
-                scope.Start();
-                try
-                {
-                    var response = await restOperations.GetAsync(resourceGroup.Id.Name, restorePointCollectionName, vmRestorePointName, diskRestorePointName, cancellationToken).ConfigureAwait(false);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            );
-        }
-
-        /// <summary> Get disk restorePoint resource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, or <paramref name="diskRestorePointName"/> is null. </exception>
-        public static Response<DiskRestorePoint> GetDiskRestorePoint(this ResourceGroupOperations resourceGroup, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
-        {
-            if (restorePointCollectionName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointCollectionName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-
-            return resourceGroup.UseClientContext((baseUri, credential, options, pipeline) =>
-            {
-                var clientDiagnostics = new ClientDiagnostics(options);
-                var restOperations = GetDiskRestorePointRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetDiskRestorePoint");
-                scope.Start();
-                try
-                {
-                    var response = restOperations.Get(resourceGroup.Id.Name, restorePointCollectionName, vmRestorePointName, diskRestorePointName, cancellationToken);
-                    return response;
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            );
-        }
-
         #endregion
     }
 }

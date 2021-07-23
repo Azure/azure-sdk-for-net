@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a VirtualMachine along with the instance operations that can be performed on it. </summary>
     public class VirtualMachine : VirtualMachineOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "VirtualMachine"/> class for mocking. </summary>
+        protected VirtualMachine() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "VirtualMachine"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the VirtualMachineData. </summary>
-        public VirtualMachineData Data { get; private set; }
+        public virtual VirtualMachineData Data { get; private set; }
     }
 }

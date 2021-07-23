@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static DiskRestorePointList DeserializeDiskRestorePointList(JsonElement element)
         {
-            IReadOnlyList<DiskRestorePoint> value = default;
+            IReadOnlyList<DiskRestorePointData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DiskRestorePoint> array = new List<DiskRestorePoint>();
+                    List<DiskRestorePointData> array = new List<DiskRestorePointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskRestorePoint.DeserializeDiskRestorePoint(item));
+                        array.Add(DiskRestorePointData.DeserializeDiskRestorePointData(item));
                     }
                     value = array;
                     continue;

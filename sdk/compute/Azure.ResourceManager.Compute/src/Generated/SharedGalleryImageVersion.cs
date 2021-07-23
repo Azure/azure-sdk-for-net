@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A Class representing a SharedGalleryImageVersion along with the instance operations that can be performed on it. </summary>
     public class SharedGalleryImageVersion : SharedGalleryImageVersionOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "SharedGalleryImageVersion"/> class for mocking. </summary>
+        protected SharedGalleryImageVersion()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "SharedGalleryImageVersion"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets or sets the SharedGalleryImageVersionData. </summary>
-        public SharedGalleryImageVersionData Data { get; private set; }
+        public virtual SharedGalleryImageVersionData Data { get; private set; }
     }
 }

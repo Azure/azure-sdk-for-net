@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, or <paramref name="diskRestorePointName"/> is null. </exception>
-        public async Task<Response<DiskRestorePoint>> GetAsync(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
+        public async Task<Response<DiskRestorePointData>> GetAsync(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        DiskRestorePoint value = default;
+                        DiskRestorePointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiskRestorePoint.DeserializeDiskRestorePoint(document.RootElement);
+                        value = DiskRestorePointData.DeserializeDiskRestorePointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, or <paramref name="diskRestorePointName"/> is null. </exception>
-        public Response<DiskRestorePoint> Get(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
+        public Response<DiskRestorePointData> Get(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        DiskRestorePoint value = default;
+                        DiskRestorePointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiskRestorePoint.DeserializeDiskRestorePoint(document.RootElement);
+                        value = DiskRestorePointData.DeserializeDiskRestorePointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
