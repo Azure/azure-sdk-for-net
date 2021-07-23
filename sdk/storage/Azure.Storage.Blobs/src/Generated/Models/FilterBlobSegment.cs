@@ -15,9 +15,9 @@ namespace Azure.Storage.Blobs.Models
     internal partial class FilterBlobSegment
     {
         /// <summary> Initializes a new instance of FilterBlobSegment. </summary>
-        /// <param name="serviceEndpoint"> . </param>
-        /// <param name="where"> . </param>
-        /// <param name="blobs"> . </param>
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="where"></param>
+        /// <param name="blobs"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="where"/>, or <paramref name="blobs"/> is null. </exception>
         internal FilterBlobSegment(string serviceEndpoint, string @where, IEnumerable<FilterBlobItem> blobs)
         {
@@ -40,10 +40,10 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of FilterBlobSegment. </summary>
-        /// <param name="serviceEndpoint"> . </param>
-        /// <param name="where"> . </param>
-        /// <param name="blobs"> . </param>
-        /// <param name="nextMarker"> . </param>
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="where"></param>
+        /// <param name="blobs"></param>
+        /// <param name="nextMarker"></param>
         internal FilterBlobSegment(string serviceEndpoint, string @where, IReadOnlyList<FilterBlobItem> blobs, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;

@@ -67,37 +67,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>keywords</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The keywords applied to all searchable fields. </term>
+        ///     <term>The keywords applied to all searchable fields.</term>
         ///   </item>
         ///   <item>
         ///     <term>offset</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The offset. The default value is 0. </term>
+        ///     <term>The offset. The default value is 0.</term>
         ///   </item>
         ///   <item>
         ///     <term>limit</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The limit of the number of the search result. default value is 50; maximum value is 1000. </term>
+        ///     <term>The limit of the number of the search result. default value is 50; maximum value is 1000.</term>
         ///   </item>
         ///   <item>
         ///     <term>filter</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> The filter for the search. See examples for the usage of supported filters. </term>
+        ///     <term>The filter for the search. See examples for the usage of supported filters.</term>
         ///   </item>
         ///   <item>
         ///     <term>facets</term>
         ///     <term>SearchFacetItem[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>taxonomySetting</term>
         ///     <term>SearchRequestTaxonomySetting</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>SearchRequestTaxonomySetting</c>:
@@ -112,13 +112,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>assetTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>facet</term>
         ///     <term>SearchFacetItem</term>
         ///     <term></term>
-        ///     <term> The content of a search facet result item. </term>
+        ///     <term>The content of a search facet result item.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>SearchFacetItem</c>:
@@ -133,19 +133,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>count</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The count of the facet item. </term>
+        ///     <term>The count of the facet item.</term>
         ///   </item>
         ///   <item>
         ///     <term>facet</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the facet item. </term>
+        ///     <term>The name of the facet item.</term>
         ///   </item>
         ///   <item>
         ///     <term>sort</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> Any object. </term>
+        ///     <term>Any object</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -202,37 +202,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>keywords</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The keywords applied to all searchable fields. </term>
+        ///     <term>The keywords applied to all searchable fields.</term>
         ///   </item>
         ///   <item>
         ///     <term>offset</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The offset. The default value is 0. </term>
+        ///     <term>The offset. The default value is 0.</term>
         ///   </item>
         ///   <item>
         ///     <term>limit</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The limit of the number of the search result. default value is 50; maximum value is 1000. </term>
+        ///     <term>The limit of the number of the search result. default value is 50; maximum value is 1000.</term>
         ///   </item>
         ///   <item>
         ///     <term>filter</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> The filter for the search. See examples for the usage of supported filters. </term>
+        ///     <term>The filter for the search. See examples for the usage of supported filters.</term>
         ///   </item>
         ///   <item>
         ///     <term>facets</term>
         ///     <term>SearchFacetItem[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>taxonomySetting</term>
         ///     <term>SearchRequestTaxonomySetting</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>SearchRequestTaxonomySetting</c>:
@@ -247,13 +247,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>assetTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>facet</term>
         ///     <term>SearchFacetItem</term>
         ///     <term></term>
-        ///     <term> The content of a search facet result item. </term>
+        ///     <term>The content of a search facet result item.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>SearchFacetItem</c>:
@@ -268,19 +268,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>count</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The count of the facet item. </term>
+        ///     <term>The count of the facet item.</term>
         ///   </item>
         ///   <item>
         ///     <term>facet</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the facet item. </term>
+        ///     <term>The name of the facet item.</term>
         ///   </item>
         ///   <item>
         ///     <term>sort</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> Any object. </term>
+        ///     <term>Any object</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -357,19 +357,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>keywords</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode. </term>
+        ///     <term>The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.</term>
         ///   </item>
         ///   <item>
         ///     <term>limit</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100. </term>
+        ///     <term>The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.</term>
         ///   </item>
         ///   <item>
         ///     <term>filter</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> The filter for the search. </term>
+        ///     <term>The filter for the search.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -426,19 +426,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>keywords</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode. </term>
+        ///     <term>The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.</term>
         ///   </item>
         ///   <item>
         ///     <term>limit</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100. </term>
+        ///     <term>The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.</term>
         ///   </item>
         ///   <item>
         ///     <term>filter</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> The filter for the search. </term>
+        ///     <term>The filter for the search.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -515,19 +515,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>keywords</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters. </term>
+        ///     <term>The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.</term>
         ///   </item>
         ///   <item>
         ///     <term>limit</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100. </term>
+        ///     <term>The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.</term>
         ///   </item>
         ///   <item>
         ///     <term>filter</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> The filter for the autocomplete request. </term>
+        ///     <term>The filter for the autocomplete request.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -584,19 +584,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>keywords</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters. </term>
+        ///     <term>The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.</term>
         ///   </item>
         ///   <item>
         ///     <term>limit</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100. </term>
+        ///     <term>The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.</term>
         ///   </item>
         ///   <item>
         ///     <term>filter</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> The filter for the autocomplete request. </term>
+        ///     <term>The filter for the autocomplete request.</term>
         ///   </item>
         /// </list>
         /// </remarks>

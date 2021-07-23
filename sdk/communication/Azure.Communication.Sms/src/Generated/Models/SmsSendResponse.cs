@@ -16,7 +16,7 @@ namespace Azure.Communication.Sms.Models
     internal partial class SmsSendResponse
     {
         /// <summary> Initializes a new instance of SmsSendResponse. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SmsSendResponse(IEnumerable<SmsSendResult> value)
         {
@@ -29,7 +29,7 @@ namespace Azure.Communication.Sms.Models
         }
 
         /// <summary> Initializes a new instance of SmsSendResponse. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         internal SmsSendResponse(IReadOnlyList<SmsSendResult> value)
         {
             Value = value;

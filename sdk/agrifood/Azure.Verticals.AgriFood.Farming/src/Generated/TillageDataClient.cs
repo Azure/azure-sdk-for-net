@@ -75,7 +75,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -85,7 +84,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -148,7 +146,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -158,7 +155,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -221,7 +217,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -231,7 +226,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -372,7 +366,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -382,7 +375,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -444,7 +436,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -454,7 +445,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -516,7 +506,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -526,7 +515,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -762,127 +750,119 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>tillageDepth</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>tillagePressure</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>area</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Source of the operation data. </term>
+        ///     <term>Source of the operation data.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationModifiedDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term>
-        /// Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// 
-        /// Note: this will be specified by the source provider itself.
-        /// </term>
+        ///     <term>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationStartDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationEndDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>attachmentsLink</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Link for attachments. </term>
+        ///     <term>Link for attachments.</term>
         ///   </item>
         ///   <item>
         ///     <term>associatedBoundaryId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Optional boundary ID of the field for which operation was applied. </term>
+        ///     <term>Optional boundary ID of the field for which operation was applied.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationBoundaryId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Optional boundary ID of the actual area for which operation was applied inside the specified field. </term>
+        ///     <term>Optional boundary ID of the actual area for which operation was applied inside the specified field.</term>
         ///   </item>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Farmer ID which belongs to the operation data. </term>
+        ///     <term>Farmer ID which belongs to the operation data.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique resource ID. </term>
+        ///     <term>Unique resource ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>eTag</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The ETag value to implement optimistic concurrency. </term>
+        ///     <term>The ETag value to implement optimistic concurrency.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status of the resource. </term>
+        ///     <term>Status of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>modifiedDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>Measure</c>:
@@ -897,13 +877,13 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>unit</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Data unit. </term>
+        ///     <term>Data unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>value</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Data value. </term>
+        ///     <term>Data value.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -963,127 +943,119 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>tillageDepth</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>tillagePressure</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>area</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Source of the operation data. </term>
+        ///     <term>Source of the operation data.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationModifiedDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term>
-        /// Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// 
-        /// Note: this will be specified by the source provider itself.
-        /// </term>
+        ///     <term>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationStartDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationEndDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>attachmentsLink</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Link for attachments. </term>
+        ///     <term>Link for attachments.</term>
         ///   </item>
         ///   <item>
         ///     <term>associatedBoundaryId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Optional boundary ID of the field for which operation was applied. </term>
+        ///     <term>Optional boundary ID of the field for which operation was applied.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationBoundaryId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Optional boundary ID of the actual area for which operation was applied inside the specified field. </term>
+        ///     <term>Optional boundary ID of the actual area for which operation was applied inside the specified field.</term>
         ///   </item>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Farmer ID which belongs to the operation data. </term>
+        ///     <term>Farmer ID which belongs to the operation data.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique resource ID. </term>
+        ///     <term>Unique resource ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>eTag</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The ETag value to implement optimistic concurrency. </term>
+        ///     <term>The ETag value to implement optimistic concurrency.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status of the resource. </term>
+        ///     <term>Status of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>modifiedDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>Measure</c>:
@@ -1098,13 +1070,13 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>unit</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Data unit. </term>
+        ///     <term>Data unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>value</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Data value. </term>
+        ///     <term>Data value.</term>
         ///   </item>
         /// </list>
         /// </remarks>
