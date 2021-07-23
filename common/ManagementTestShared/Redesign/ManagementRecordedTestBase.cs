@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 return new ArmClient(
                         TestEnvironment.SubscriptionId,
+                        GetUri(TestEnvironment.ResourceManagerUrl),
                         TestEnvironment.Credential,
                         new ArmClientOptions());
             }
@@ -78,8 +79,14 @@ namespace Azure.ResourceManager.TestFramework
 
             return CreateClient<ArmClient>(
                 TestEnvironment.SubscriptionId,
+                GetUri(TestEnvironment.ResourceManagerUrl),
                 TestEnvironment.Credential,
                 options);
+        }
+
+        private Uri GetUri(string endpoint)
+        {
+            return !string.IsNullOrEmpty(endpoint) ? new Uri(endpoint) : null;
         }
 
         [SetUp]
@@ -159,6 +166,7 @@ namespace Azure.ResourceManager.TestFramework
 
             GlobalClient = CreateClient<ArmClient>(
                 SessionEnvironment.SubscriptionId,
+                GetUri(SessionEnvironment.ResourceManagerUrl),
                 SessionEnvironment.Credential,
                 options);
         }
