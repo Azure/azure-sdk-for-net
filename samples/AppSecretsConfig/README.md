@@ -35,20 +35,24 @@ Examples of secrets that should be stored in Key Vault:
 
 To build and run this sample you will need:
 
+Software:
+
+* [.NET][dotnet_install]
+* [Azure CLI][azure_cli]
+
+Azure services:
+
 * [App Configuration][appconfig_overview]
 * [Key Vault][keyvault_overview]
-
-To deploy this sample you will also need:
-
-* [App Service][appservice_overview]
-
-Optionally, you may configure the App Service to use [Application Insights][appinsights_overview] to monitor traffic.
+* (Optional) [App Service][appservice_overview] - needed to deploy the web application to Azure, which is provisioned in the [Bicep][bicep_overview] [template][sample_template].
+* (Optional) [Application Insights][appinsights_overview] - to monitor web traffic and application traces, which is *not* provisioned in the Bicep template.
 
 [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)][sample_deploy]
 
 To deploy the template manually, make sure your [Azure CLI][azure_cli] is up to date and run:
 
 ```bash
+az bicep install
 az group create --location {location} --resource-group {group-name}
 az deployment group create --resource-group {group-name} --template-file azuredeploy.bicep
 ```
@@ -145,7 +149,7 @@ az keyvault set-policy -n {vault-host-name} --spn {spn} --secret-permissions get
 
 #### Deploying the sample
 
-See the [ASP.NET quickstart][aspnet_quickstart] for instructions to deploy for Visual Studio, Visual Studio Code, and the `dotnet` CLI. For Visual Studio and Visual Studio Code, make sure you select your existing resource if you deployed the Bicep template above; otherwise, for the `dotnet` CLI you can deploy to an existing resource by [configuring Local Git support][aspnet_deploy_localgit].
+See the [ASP.NET quickstart][aspnet_quickstart] for instructions to deploy for Visual Studio, Visual Studio Code, and the `dotnet` CLI. For Visual Studio and Visual Studio Code, make sure you select your existing resource if you deployed the Bicep template above; otherwise, for the `dotnet` CLI you can deploy to an existing resource by [configuring Git support][aspnet_deploy_localgit] and pushing source, which will be built automatically on the host.
 
 ## Configuring App Configuration with Key Vault references
 
@@ -235,7 +239,9 @@ In [ASP.NET Razor pages][aspnet_razor] as an example, you can then inject them i
 [aspnet_quickstart]: https://docs.microsoft.com/azure/app-service/quickstart-dotnetcore
 [aspnet_razor]: https://docs.microsoft.com/aspnet/core/razor-pages/
 [azure_cli]: https://docs.microsoft.com/cli/azure/
+[bicep_overview]: https://docs.microsoft.com/azure/azure-resource-manager/bicep/overview
 [dotnet_cli]: https://docs.microsoft.com/dotnet/core/tools/
+[dotnet_install]: https://dotnet.microsoft.com/download
 [identity_defaultazurecredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [identity_troubleshooting]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#troubleshooting
 [keyvault_injection]: https://docs.microsoft.com/dotnet/api/overview/azure/microsoft.extensions.azure-readme-pre
