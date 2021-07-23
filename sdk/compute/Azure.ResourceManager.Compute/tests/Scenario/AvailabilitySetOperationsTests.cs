@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Tests
         private async Task<AvailabilitySet> CreateAvailabilitySetAsync(string setName)
         {
             var container = (await CreateResourceGroupAsync()).GetAvailabilitySets();
-            var input = AvailabilitySetHelpers.GetBasicAvailabilitySetData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
+            var input = AvailabilitySetHelper.GetBasicAvailabilitySetData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
             return await container.CreateOrUpdateAsync(setName, input);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var set1 = await CreateAvailabilitySetAsync(setName);
             AvailabilitySet set2 = await set1.GetAsync();
 
-            AvailabilitySetHelpers.AssertAvailabilitySet(set1.Data, set2.Data);
+            AvailabilitySetHelper.AssertAvailabilitySet(set1.Data, set2.Data);
         }
     }
 }

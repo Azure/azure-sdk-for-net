@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests.Helpers
 {
-    public static class AvailabilitySetHelpers
+    public static class AvailabilitySetHelper
     {
         public static void AssertAvailabilitySet(AvailabilitySetData set1, AvailabilitySetData set2)
         {
