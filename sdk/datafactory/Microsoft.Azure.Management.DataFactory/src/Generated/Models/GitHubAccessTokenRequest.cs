@@ -34,10 +34,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="gitHubAccessTokenBaseUrl">GitHub access token base
         /// URL.</param>
         /// <param name="gitHubClientId">GitHub application client ID.</param>
-        public GitHubAccessTokenRequest(string gitHubAccessCode, string gitHubAccessTokenBaseUrl, string gitHubClientId = default(string))
+        /// <param name="gitHubClientSecret">GitHub bring your own app client
+        /// secret information.</param>
+        public GitHubAccessTokenRequest(string gitHubAccessCode, string gitHubAccessTokenBaseUrl, string gitHubClientId = default(string), GitHubClientSecret gitHubClientSecret = default(GitHubClientSecret))
         {
             GitHubAccessCode = gitHubAccessCode;
             GitHubClientId = gitHubClientId;
+            GitHubClientSecret = gitHubClientSecret;
             GitHubAccessTokenBaseUrl = gitHubAccessTokenBaseUrl;
             CustomInit();
         }
@@ -58,6 +61,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "gitHubClientId")]
         public string GitHubClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets gitHub bring your own app client secret information.
+        /// </summary>
+        [JsonProperty(PropertyName = "gitHubClientSecret")]
+        public GitHubClientSecret GitHubClientSecret { get; set; }
 
         /// <summary>
         /// Gets or sets gitHub access token base URL.

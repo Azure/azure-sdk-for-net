@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
     internal partial class BlobPrefix
     {
         /// <summary> Initializes a new instance of BlobPrefix. </summary>
-        /// <param name="name"> . </param>
+        /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal BlobPrefix(string name)
         {

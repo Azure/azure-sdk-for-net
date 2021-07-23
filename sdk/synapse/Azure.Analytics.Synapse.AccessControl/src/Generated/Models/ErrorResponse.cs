@@ -15,8 +15,8 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
     internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="code"> . </param>
-        /// <param name="message"> . </param>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal ErrorResponse(string code, string message)
         {
@@ -35,10 +35,10 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="code"> . </param>
-        /// <param name="message"> . </param>
-        /// <param name="target"> . </param>
-        /// <param name="details"> . </param>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <param name="target"></param>
+        /// <param name="details"></param>
         internal ErrorResponse(string code, string message, string target, IReadOnlyList<ErrorDetail> details)
         {
             Code = code;

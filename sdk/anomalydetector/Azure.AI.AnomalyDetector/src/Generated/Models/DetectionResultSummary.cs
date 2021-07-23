@@ -34,7 +34,7 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <summary> Initializes a new instance of DetectionResultSummary. </summary>
         /// <param name="status"> Multivariate anomaly detection status. </param>
         /// <param name="errors"> Error message when creating or training model fails. </param>
-        /// <param name="variableStates"> . </param>
+        /// <param name="variableStates"></param>
         /// <param name="setupInfo"> Request when creating the model. </param>
         internal DetectionResultSummary(DetectionStatus status, IReadOnlyList<ErrorResponse> errors, IReadOnlyList<VariableState> variableStates, DetectionRequest setupInfo)
         {

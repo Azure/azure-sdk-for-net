@@ -4,12 +4,15 @@
 
 ### Features Added
 
+- Added `GetRandomBytes` and `GetRandomBytesAsync` to `KeyClient` to get random bytes from a managed HSM.
+
 ### Breaking Changes
 
 ### Key Bugs Fixed
 
 ### Fixed
 
+- The default service version is now "7.3-preview".
 
 ## 4.2.0 (2021-06-15)
 

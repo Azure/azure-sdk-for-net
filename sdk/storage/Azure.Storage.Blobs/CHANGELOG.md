@@ -1,6 +1,6 @@
 # Release History
 
-## 12.10.0-beta.1 (Unreleased)
+## 12.10.0-beta.1 (2021-07-22)
 - Added support for service version 2020-10-02.
 - Added support for Immutable Storage with Versioning
     - Added BlobBaseClient.SetImmutibilityPolicy()
@@ -13,6 +13,7 @@
 - Added support for RequestConditions parameter validation.  If a request condition is set for an API that doesn't support it, and ArguementException will be thrown.
     - This feature can be disabled with the environment variable "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION" or the App Context switch "Azure.Storage.DisableRequestConditionsValidation".
 - Fixed bug where BlobBaseClient.DownloadStreamingAsync() won't correctly parse the LeaseStatus header.
+- Fixed bug where BlobBaseClient.DownloadContentAsync() fails on 304 response.
 
 ## 12.9.1 (2021-06-23)
 - Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.
