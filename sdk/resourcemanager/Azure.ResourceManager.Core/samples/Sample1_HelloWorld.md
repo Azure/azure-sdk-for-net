@@ -6,7 +6,7 @@ Namespaces for this example:
 ```C# Snippet:Hello_World_Namespaces
 using System;
 using Azure.Identity;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources;
 ```
 
 The following code shows how to get the default subscription:
