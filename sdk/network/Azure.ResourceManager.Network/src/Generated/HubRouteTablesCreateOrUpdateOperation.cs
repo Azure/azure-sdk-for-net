@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates a RouteTable resource if it doesn&apos;t exist else updates the existing RouteTable. </summary>
     public partial class HubRouteTablesCreateOrUpdateOperation : Operation<HubRouteTable>, IOperationSource<HubRouteTable>
     {
-        private readonly ArmOperationHelpers<HubRouteTable> _operation;
+        private readonly OperationInternals<HubRouteTable> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of HubRouteTablesCreateOrUpdateOperation for mocking. </summary>
         protected HubRouteTablesCreateOrUpdateOperation()
         {
         }
 
-        internal HubRouteTablesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal HubRouteTablesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<HubRouteTable>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "HubRouteTablesCreateOrUpdateOperation");
+            _operation = new OperationInternals<HubRouteTable>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "HubRouteTablesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         HubRouteTable IOperationSource<HubRouteTable>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return HubRouteTable.DeserializeHubRouteTable(document.RootElement);
+            return new HubRouteTable(_operationBase, HubRouteTableData.DeserializeHubRouteTableData(document.RootElement));
         }
 
         async ValueTask<HubRouteTable> IOperationSource<HubRouteTable>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return HubRouteTable.DeserializeHubRouteTable(document.RootElement);
+            return new HubRouteTable(_operationBase, HubRouteTableData.DeserializeHubRouteTableData(document.RootElement));
         }
     }
 }

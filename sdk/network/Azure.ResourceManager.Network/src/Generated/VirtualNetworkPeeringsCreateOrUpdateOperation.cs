@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a peering in the specified virtual network. </summary>
     public partial class VirtualNetworkPeeringsCreateOrUpdateOperation : Operation<VirtualNetworkPeering>, IOperationSource<VirtualNetworkPeering>
     {
-        private readonly ArmOperationHelpers<VirtualNetworkPeering> _operation;
+        private readonly OperationInternals<VirtualNetworkPeering> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VirtualNetworkPeeringsCreateOrUpdateOperation for mocking. </summary>
         protected VirtualNetworkPeeringsCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualNetworkPeeringsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualNetworkPeeringsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VirtualNetworkPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworkPeeringsCreateOrUpdateOperation");
+            _operation = new OperationInternals<VirtualNetworkPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworkPeeringsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         VirtualNetworkPeering IOperationSource<VirtualNetworkPeering>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VirtualNetworkPeering.DeserializeVirtualNetworkPeering(document.RootElement);
+            return new VirtualNetworkPeering(_operationBase, VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(document.RootElement));
         }
 
         async ValueTask<VirtualNetworkPeering> IOperationSource<VirtualNetworkPeering>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VirtualNetworkPeering.DeserializeVirtualNetworkPeering(document.RootElement);
+            return new VirtualNetworkPeering(_operationBase, VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(document.RootElement));
         }
     }
 }

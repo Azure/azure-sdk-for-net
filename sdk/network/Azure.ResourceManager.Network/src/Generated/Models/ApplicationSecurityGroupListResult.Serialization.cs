@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ApplicationSecurityGroupListResult DeserializeApplicationSecurityGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ApplicationSecurityGroup>> value = default;
+            Optional<IReadOnlyList<ApplicationSecurityGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApplicationSecurityGroup> array = new List<ApplicationSecurityGroup>();
+                    List<ApplicationSecurityGroupData> array = new List<ApplicationSecurityGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationSecurityGroup.DeserializeApplicationSecurityGroup(item));
+                        array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item));
                     }
                     value = array;
                     continue;

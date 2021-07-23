@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates a virtual wan p2s vpn gateway if it doesn&apos;t exist else updates the existing gateway. </summary>
     public partial class P2SVpnGatewaysCreateOrUpdateOperation : Operation<P2SVpnGateway>, IOperationSource<P2SVpnGateway>
     {
-        private readonly ArmOperationHelpers<P2SVpnGateway> _operation;
+        private readonly OperationInternals<P2SVpnGateway> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of P2SVpnGatewaysCreateOrUpdateOperation for mocking. </summary>
         protected P2SVpnGatewaysCreateOrUpdateOperation()
         {
         }
 
-        internal P2SVpnGatewaysCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal P2SVpnGatewaysCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<P2SVpnGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "P2SVpnGatewaysCreateOrUpdateOperation");
+            _operation = new OperationInternals<P2SVpnGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "P2SVpnGatewaysCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         P2SVpnGateway IOperationSource<P2SVpnGateway>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return P2SVpnGateway.DeserializeP2SVpnGateway(document.RootElement);
+            return new P2SVpnGateway(_operationBase, P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement));
         }
 
         async ValueTask<P2SVpnGateway> IOperationSource<P2SVpnGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return P2SVpnGateway.DeserializeP2SVpnGateway(document.RootElement);
+            return new P2SVpnGateway(_operationBase, P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement));
         }
     }
 }

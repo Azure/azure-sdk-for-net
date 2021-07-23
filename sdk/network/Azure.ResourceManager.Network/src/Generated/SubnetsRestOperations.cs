@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Network
     {
         private string subscriptionId;
         private Uri endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -28,17 +30,23 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public SubnetsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public SubnetsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
             endpoint ??= new Uri("https://management.azure.com");
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             this.subscriptionId = subscriptionId;
             this.endpoint = endpoint;
+            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -58,7 +66,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(virtualNetworkName, true);
             uri.AppendPath("/subnets/", false);
             uri.AppendPath(subnetName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -147,7 +155,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(virtualNetworkName, true);
             uri.AppendPath("/subnets/", false);
             uri.AppendPath(subnetName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -164,7 +172,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, or <paramref name="subnetName"/> is null. </exception>
-        public async Task<Response<Subnet>> GetAsync(string resourceGroupName, string virtualNetworkName, string subnetName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SubnetData>> GetAsync(string resourceGroupName, string virtualNetworkName, string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -185,9 +193,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        Subnet value = default;
+                        SubnetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Subnet.DeserializeSubnet(document.RootElement);
+                        value = SubnetData.DeserializeSubnetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,7 +210,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, or <paramref name="subnetName"/> is null. </exception>
-        public Response<Subnet> Get(string resourceGroupName, string virtualNetworkName, string subnetName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<SubnetData> Get(string resourceGroupName, string virtualNetworkName, string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -223,9 +231,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        Subnet value = default;
+                        SubnetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Subnet.DeserializeSubnet(document.RootElement);
+                        value = SubnetData.DeserializeSubnetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -233,7 +241,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string virtualNetworkName, string subnetName, SubnetData subnetParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -248,7 +256,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(virtualNetworkName, true);
             uri.AppendPath("/subnets/", false);
             uri.AppendPath(subnetName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -265,7 +273,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, <paramref name="subnetName"/>, or <paramref name="subnetParameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualNetworkName, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -303,7 +311,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetParameters"> Parameters supplied to the create or update subnet operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, <paramref name="subnetName"/>, or <paramref name="subnetParameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string virtualNetworkName, string subnetName, SubnetData subnetParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -334,7 +342,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreatePrepareNetworkPoliciesRequest(string resourceGroupName, string virtualNetworkName, string subnetName, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters)
+        internal HttpMessage CreatePrepareNetworkPoliciesRequest(string resourceGroupName, string virtualNetworkName, string subnetName, string serviceName, IEnumerable<NetworkIntentPolicyConfiguration> networkIntentPolicyConfigurations)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -350,12 +358,24 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/subnets/", false);
             uri.AppendPath(subnetName, true);
             uri.AppendPath("/PrepareNetworkPolicies", false);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequest = new PrepareNetworkPoliciesRequest()
+            {
+                ServiceName = serviceName
+            };
+            if (networkIntentPolicyConfigurations != null)
+            {
+                foreach (var value in networkIntentPolicyConfigurations)
+                {
+                    prepareNetworkPoliciesRequest.NetworkIntentPolicyConfigurations.Add(value);
+                }
+            }
+            var model = prepareNetworkPoliciesRequest;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(prepareNetworkPoliciesRequestParameters);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -364,10 +384,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
-        /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
+        /// <param name="serviceName"> The name of the service for which subnet is being prepared for. </param>
+        /// <param name="networkIntentPolicyConfigurations"> A list of NetworkIntentPolicyConfiguration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, <paramref name="subnetName"/>, or <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public async Task<Response> PrepareNetworkPoliciesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, or <paramref name="subnetName"/> is null. </exception>
+        public async Task<Response> PrepareNetworkPoliciesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, string serviceName = null, IEnumerable<NetworkIntentPolicyConfiguration> networkIntentPolicyConfigurations = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -381,12 +402,8 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(subnetName));
             }
-            if (prepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
-            }
 
-            using var message = CreatePrepareNetworkPoliciesRequest(resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters);
+            using var message = CreatePrepareNetworkPoliciesRequest(resourceGroupName, virtualNetworkName, subnetName, serviceName, networkIntentPolicyConfigurations);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -402,10 +419,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
-        /// <param name="prepareNetworkPoliciesRequestParameters"> Parameters supplied to prepare subnet by applying network intent policies. </param>
+        /// <param name="serviceName"> The name of the service for which subnet is being prepared for. </param>
+        /// <param name="networkIntentPolicyConfigurations"> A list of NetworkIntentPolicyConfiguration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, <paramref name="subnetName"/>, or <paramref name="prepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public Response PrepareNetworkPolicies(string resourceGroupName, string virtualNetworkName, string subnetName, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, or <paramref name="subnetName"/> is null. </exception>
+        public Response PrepareNetworkPolicies(string resourceGroupName, string virtualNetworkName, string subnetName, string serviceName = null, IEnumerable<NetworkIntentPolicyConfiguration> networkIntentPolicyConfigurations = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -419,12 +437,8 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(subnetName));
             }
-            if (prepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(prepareNetworkPoliciesRequestParameters));
-            }
 
-            using var message = CreatePrepareNetworkPoliciesRequest(resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters);
+            using var message = CreatePrepareNetworkPoliciesRequest(resourceGroupName, virtualNetworkName, subnetName, serviceName, networkIntentPolicyConfigurations);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -436,7 +450,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUnprepareNetworkPoliciesRequest(string resourceGroupName, string virtualNetworkName, string subnetName, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters)
+        internal HttpMessage CreateUnprepareNetworkPoliciesRequest(string resourceGroupName, string virtualNetworkName, string subnetName, string serviceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -452,12 +466,16 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/subnets/", false);
             uri.AppendPath(subnetName, true);
             uri.AppendPath("/UnprepareNetworkPolicies", false);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            var model = new UnprepareNetworkPoliciesRequest()
+            {
+                ServiceName = serviceName
+            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(unprepareNetworkPoliciesRequestParameters);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -466,10 +484,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
-        /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
+        /// <param name="serviceName"> The name of the service for which subnet is being unprepared for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, <paramref name="subnetName"/>, or <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public async Task<Response> UnprepareNetworkPoliciesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, or <paramref name="subnetName"/> is null. </exception>
+        public async Task<Response> UnprepareNetworkPoliciesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, string serviceName = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -483,12 +501,8 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(subnetName));
             }
-            if (unprepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
-            }
 
-            using var message = CreateUnprepareNetworkPoliciesRequest(resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters);
+            using var message = CreateUnprepareNetworkPoliciesRequest(resourceGroupName, virtualNetworkName, subnetName, serviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -504,10 +518,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
-        /// <param name="unprepareNetworkPoliciesRequestParameters"> Parameters supplied to unprepare subnet to remove network intent policies. </param>
+        /// <param name="serviceName"> The name of the service for which subnet is being unprepared for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, <paramref name="subnetName"/>, or <paramref name="unprepareNetworkPoliciesRequestParameters"/> is null. </exception>
-        public Response UnprepareNetworkPolicies(string resourceGroupName, string virtualNetworkName, string subnetName, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/>, or <paramref name="subnetName"/> is null. </exception>
+        public Response UnprepareNetworkPolicies(string resourceGroupName, string virtualNetworkName, string subnetName, string serviceName = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -521,12 +535,8 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(subnetName));
             }
-            if (unprepareNetworkPoliciesRequestParameters == null)
-            {
-                throw new ArgumentNullException(nameof(unprepareNetworkPoliciesRequestParameters));
-            }
 
-            using var message = CreateUnprepareNetworkPoliciesRequest(resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters);
+            using var message = CreateUnprepareNetworkPoliciesRequest(resourceGroupName, virtualNetworkName, subnetName, serviceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -552,7 +562,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualNetworks/", false);
             uri.AppendPath(virtualNetworkName, true);
             uri.AppendPath("/subnets", false);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

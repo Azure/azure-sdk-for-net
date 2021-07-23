@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> NOTE: This feature is currently in preview and still being tested for stability. Lists all available internet service providers for a specified Azure region. </summary>
     public partial class NetworkWatchersListAvailableProvidersOperation : Operation<AvailableProvidersList>, IOperationSource<AvailableProvidersList>
     {
-        private readonly ArmOperationHelpers<AvailableProvidersList> _operation;
+        private readonly OperationInternals<AvailableProvidersList> _operation;
 
         /// <summary> Initializes a new instance of NetworkWatchersListAvailableProvidersOperation for mocking. </summary>
         protected NetworkWatchersListAvailableProvidersOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal NetworkWatchersListAvailableProvidersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<AvailableProvidersList>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersListAvailableProvidersOperation");
+            _operation = new OperationInternals<AvailableProvidersList>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersListAvailableProvidersOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

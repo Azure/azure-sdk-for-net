@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<NetworkInterfaceAssociation> networkInterfaceAssociation = default;
             Optional<SubnetAssociation> subnetAssociation = default;
-            Optional<IReadOnlyList<SecurityRule>> defaultSecurityRules = default;
+            Optional<IReadOnlyList<SecurityRuleData>> defaultSecurityRules = default;
             Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SecurityRule> array = new List<SecurityRule>();
+                    List<SecurityRuleData> array = new List<SecurityRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityRule.DeserializeSecurityRule(item));
+                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item));
                     }
                     defaultSecurityRules = array;
                     continue;

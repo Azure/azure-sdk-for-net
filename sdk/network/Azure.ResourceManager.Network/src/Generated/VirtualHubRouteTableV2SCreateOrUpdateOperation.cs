@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates a VirtualHubRouteTableV2 resource if it doesn&apos;t exist else updates the existing VirtualHubRouteTableV2. </summary>
     public partial class VirtualHubRouteTableV2SCreateOrUpdateOperation : Operation<VirtualHubRouteTableV2>, IOperationSource<VirtualHubRouteTableV2>
     {
-        private readonly ArmOperationHelpers<VirtualHubRouteTableV2> _operation;
+        private readonly OperationInternals<VirtualHubRouteTableV2> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2SCreateOrUpdateOperation for mocking. </summary>
         protected VirtualHubRouteTableV2SCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualHubRouteTableV2SCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualHubRouteTableV2SCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VirtualHubRouteTableV2>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualHubRouteTableV2SCreateOrUpdateOperation");
+            _operation = new OperationInternals<VirtualHubRouteTableV2>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualHubRouteTableV2SCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         VirtualHubRouteTableV2 IOperationSource<VirtualHubRouteTableV2>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VirtualHubRouteTableV2.DeserializeVirtualHubRouteTableV2(document.RootElement);
+            return new VirtualHubRouteTableV2(_operationBase, VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(document.RootElement));
         }
 
         async ValueTask<VirtualHubRouteTableV2> IOperationSource<VirtualHubRouteTableV2>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VirtualHubRouteTableV2.DeserializeVirtualHubRouteTableV2(document.RootElement);
+            return new VirtualHubRouteTableV2(_operationBase, VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(document.RootElement));
         }
     }
 }

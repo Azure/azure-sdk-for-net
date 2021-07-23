@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Gets all network security groups applied to a network interface. </summary>
     public partial class NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation : Operation<EffectiveNetworkSecurityGroupListResult>, IOperationSource<EffectiveNetworkSecurityGroupListResult>
     {
-        private readonly ArmOperationHelpers<EffectiveNetworkSecurityGroupListResult> _operation;
+        private readonly OperationInternals<EffectiveNetworkSecurityGroupListResult> _operation;
 
         /// <summary> Initializes a new instance of NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation for mocking. </summary>
         protected NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<EffectiveNetworkSecurityGroupListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation");
+            _operation = new OperationInternals<EffectiveNetworkSecurityGroupListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

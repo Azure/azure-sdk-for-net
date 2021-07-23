@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a route in the specified route filter. </summary>
     public partial class RouteFilterRulesCreateOrUpdateOperation : Operation<RouteFilterRule>, IOperationSource<RouteFilterRule>
     {
-        private readonly ArmOperationHelpers<RouteFilterRule> _operation;
+        private readonly OperationInternals<RouteFilterRule> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of RouteFilterRulesCreateOrUpdateOperation for mocking. </summary>
         protected RouteFilterRulesCreateOrUpdateOperation()
         {
         }
 
-        internal RouteFilterRulesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal RouteFilterRulesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<RouteFilterRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RouteFilterRulesCreateOrUpdateOperation");
+            _operation = new OperationInternals<RouteFilterRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RouteFilterRulesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         RouteFilterRule IOperationSource<RouteFilterRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return RouteFilterRule.DeserializeRouteFilterRule(document.RootElement);
+            return new RouteFilterRule(_operationBase, RouteFilterRuleData.DeserializeRouteFilterRuleData(document.RootElement));
         }
 
         async ValueTask<RouteFilterRule> IOperationSource<RouteFilterRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return RouteFilterRule.DeserializeRouteFilterRule(document.RootElement);
+            return new RouteFilterRule(_operationBase, RouteFilterRuleData.DeserializeRouteFilterRuleData(document.RootElement));
         }
     }
 }

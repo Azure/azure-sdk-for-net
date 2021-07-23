@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Generates VPN client package for P2S client of the virtual network gateway in the specified resource group. </summary>
     public partial class VirtualNetworkGatewaysGeneratevpnclientpackageOperation : Operation<string>, IOperationSource<string>
     {
-        private readonly ArmOperationHelpers<string> _operation;
+        private readonly OperationInternals<string> _operation;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewaysGeneratevpnclientpackageOperation for mocking. </summary>
         protected VirtualNetworkGatewaysGeneratevpnclientpackageOperation()
@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Network
 
         internal VirtualNetworkGatewaysGeneratevpnclientpackageOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<string>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGeneratevpnclientpackageOperation");
+            _operation = new OperationInternals<string>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGeneratevpnclientpackageOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

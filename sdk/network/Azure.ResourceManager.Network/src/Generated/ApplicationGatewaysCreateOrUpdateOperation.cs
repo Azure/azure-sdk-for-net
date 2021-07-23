@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates the specified application gateway. </summary>
     public partial class ApplicationGatewaysCreateOrUpdateOperation : Operation<ApplicationGateway>, IOperationSource<ApplicationGateway>
     {
-        private readonly ArmOperationHelpers<ApplicationGateway> _operation;
+        private readonly OperationInternals<ApplicationGateway> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ApplicationGatewaysCreateOrUpdateOperation for mocking. </summary>
         protected ApplicationGatewaysCreateOrUpdateOperation()
         {
         }
 
-        internal ApplicationGatewaysCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ApplicationGatewaysCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ApplicationGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ApplicationGatewaysCreateOrUpdateOperation");
+            _operation = new OperationInternals<ApplicationGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ApplicationGatewaysCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         ApplicationGateway IOperationSource<ApplicationGateway>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ApplicationGateway.DeserializeApplicationGateway(document.RootElement);
+            return new ApplicationGateway(_operationBase, ApplicationGatewayData.DeserializeApplicationGatewayData(document.RootElement));
         }
 
         async ValueTask<ApplicationGateway> IOperationSource<ApplicationGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ApplicationGateway.DeserializeApplicationGateway(document.RootElement);
+            return new ApplicationGateway(_operationBase, ApplicationGatewayData.DeserializeApplicationGatewayData(document.RootElement));
         }
     }
 }

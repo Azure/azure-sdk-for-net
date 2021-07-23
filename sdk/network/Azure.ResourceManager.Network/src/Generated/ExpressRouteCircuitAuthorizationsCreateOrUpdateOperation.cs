@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates an authorization in the specified express route circuit. </summary>
     public partial class ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation : Operation<ExpressRouteCircuitAuthorization>, IOperationSource<ExpressRouteCircuitAuthorization>
     {
-        private readonly ArmOperationHelpers<ExpressRouteCircuitAuthorization> _operation;
+        private readonly OperationInternals<ExpressRouteCircuitAuthorization> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ExpressRouteCircuitAuthorization>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation");
+            _operation = new OperationInternals<ExpressRouteCircuitAuthorization>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         ExpressRouteCircuitAuthorization IOperationSource<ExpressRouteCircuitAuthorization>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ExpressRouteCircuitAuthorization.DeserializeExpressRouteCircuitAuthorization(document.RootElement);
+            return new ExpressRouteCircuitAuthorization(_operationBase, ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(document.RootElement));
         }
 
         async ValueTask<ExpressRouteCircuitAuthorization> IOperationSource<ExpressRouteCircuitAuthorization>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ExpressRouteCircuitAuthorization.DeserializeExpressRouteCircuitAuthorization(document.RootElement);
+            return new ExpressRouteCircuitAuthorization(_operationBase, ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(document.RootElement));
         }
     }
 }

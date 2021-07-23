@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group. </summary>
     public partial class VpnServerConfigurationsAssociatedWithVirtualWanListOperation : Operation<VpnServerConfigurationsResponse>, IOperationSource<VpnServerConfigurationsResponse>
     {
-        private readonly ArmOperationHelpers<VpnServerConfigurationsResponse> _operation;
+        private readonly OperationInternals<VpnServerConfigurationsResponse> _operation;
 
         /// <summary> Initializes a new instance of VpnServerConfigurationsAssociatedWithVirtualWanListOperation for mocking. </summary>
         protected VpnServerConfigurationsAssociatedWithVirtualWanListOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal VpnServerConfigurationsAssociatedWithVirtualWanListOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VpnServerConfigurationsResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VpnServerConfigurationsAssociatedWithVirtualWanListOperation");
+            _operation = new OperationInternals<VpnServerConfigurationsResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VpnServerConfigurationsAssociatedWithVirtualWanListOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
     public partial class VirtualNetworkGatewayConnectionsResetSharedKeyOperation : Operation<ConnectionResetSharedKey>, IOperationSource<ConnectionResetSharedKey>
     {
-        private readonly ArmOperationHelpers<ConnectionResetSharedKey> _operation;
+        private readonly OperationInternals<ConnectionResetSharedKey> _operation;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionsResetSharedKeyOperation for mocking. </summary>
         protected VirtualNetworkGatewayConnectionsResetSharedKeyOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal VirtualNetworkGatewayConnectionsResetSharedKeyOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ConnectionResetSharedKey>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewayConnectionsResetSharedKeyOperation");
+            _operation = new OperationInternals<ConnectionResetSharedKey>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewayConnectionsResetSharedKeyOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

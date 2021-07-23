@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Configures flow log and traffic analytics (optional) on a specified resource. </summary>
     public partial class NetworkWatchersSetFlowLogConfigurationOperation : Operation<FlowLogInformation>, IOperationSource<FlowLogInformation>
     {
-        private readonly ArmOperationHelpers<FlowLogInformation> _operation;
+        private readonly OperationInternals<FlowLogInformation> _operation;
 
         /// <summary> Initializes a new instance of NetworkWatchersSetFlowLogConfigurationOperation for mocking. </summary>
         protected NetworkWatchersSetFlowLogConfigurationOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal NetworkWatchersSetFlowLogConfigurationOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<FlowLogInformation>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersSetFlowLogConfigurationOperation");
+            _operation = new OperationInternals<FlowLogInformation>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersSetFlowLogConfigurationOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

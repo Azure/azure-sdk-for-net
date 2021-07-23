@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Gets the route table summary associated with the express route cross connection in a resource group. </summary>
     public partial class ExpressRouteCrossConnectionsListRoutesTableSummaryOperation : Operation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>, IOperationSource<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>
     {
-        private readonly ArmOperationHelpers<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> _operation;
+        private readonly OperationInternals<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> _operation;
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionsListRoutesTableSummaryOperation for mocking. </summary>
         protected ExpressRouteCrossConnectionsListRoutesTableSummaryOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal ExpressRouteCrossConnectionsListRoutesTableSummaryOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCrossConnectionsListRoutesTableSummaryOperation");
+            _operation = new OperationInternals<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCrossConnectionsListRoutesTableSummaryOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

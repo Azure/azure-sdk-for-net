@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Vpn Client Parameters for package generation. </summary>
-    public partial class P2SVpnProfileParameters
+    internal partial class P2SVpnProfileParameters
     {
         /// <summary> Initializes a new instance of P2SVpnProfileParameters. </summary>
         public P2SVpnProfileParameters()

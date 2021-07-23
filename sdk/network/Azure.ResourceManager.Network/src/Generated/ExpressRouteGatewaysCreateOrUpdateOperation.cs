@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a ExpressRoute gateway in a specified resource group. </summary>
     public partial class ExpressRouteGatewaysCreateOrUpdateOperation : Operation<ExpressRouteGateway>, IOperationSource<ExpressRouteGateway>
     {
-        private readonly ArmOperationHelpers<ExpressRouteGateway> _operation;
+        private readonly OperationInternals<ExpressRouteGateway> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ExpressRouteGatewaysCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRouteGatewaysCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRouteGatewaysCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteGatewaysCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ExpressRouteGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteGatewaysCreateOrUpdateOperation");
+            _operation = new OperationInternals<ExpressRouteGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteGatewaysCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         ExpressRouteGateway IOperationSource<ExpressRouteGateway>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ExpressRouteGateway.DeserializeExpressRouteGateway(document.RootElement);
+            return new ExpressRouteGateway(_operationBase, ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(document.RootElement));
         }
 
         async ValueTask<ExpressRouteGateway> IOperationSource<ExpressRouteGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ExpressRouteGateway.DeserializeExpressRouteGateway(document.RootElement);
+            return new ExpressRouteGateway(_operationBase, ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(document.RootElement));
         }
     }
 }

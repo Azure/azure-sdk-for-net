@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a nat gateway. </summary>
     public partial class NatGatewaysCreateOrUpdateOperation : Operation<NatGateway>, IOperationSource<NatGateway>
     {
-        private readonly ArmOperationHelpers<NatGateway> _operation;
+        private readonly OperationInternals<NatGateway> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of NatGatewaysCreateOrUpdateOperation for mocking. </summary>
         protected NatGatewaysCreateOrUpdateOperation()
         {
         }
 
-        internal NatGatewaysCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NatGatewaysCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<NatGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "NatGatewaysCreateOrUpdateOperation");
+            _operation = new OperationInternals<NatGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "NatGatewaysCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         NatGateway IOperationSource<NatGateway>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return NatGateway.DeserializeNatGateway(document.RootElement);
+            return new NatGateway(_operationBase, NatGatewayData.DeserializeNatGatewayData(document.RootElement));
         }
 
         async ValueTask<NatGateway> IOperationSource<NatGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return NatGateway.DeserializeNatGateway(document.RootElement);
+            return new NatGateway(_operationBase, NatGatewayData.DeserializeNatGatewayData(document.RootElement));
         }
     }
 }

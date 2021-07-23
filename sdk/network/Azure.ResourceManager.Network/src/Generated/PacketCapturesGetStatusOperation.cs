@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Query the status of a running packet capture session. </summary>
     public partial class PacketCapturesGetStatusOperation : Operation<PacketCaptureQueryStatusResult>, IOperationSource<PacketCaptureQueryStatusResult>
     {
-        private readonly ArmOperationHelpers<PacketCaptureQueryStatusResult> _operation;
+        private readonly OperationInternals<PacketCaptureQueryStatusResult> _operation;
 
         /// <summary> Initializes a new instance of PacketCapturesGetStatusOperation for mocking. </summary>
         protected PacketCapturesGetStatusOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal PacketCapturesGetStatusOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<PacketCaptureQueryStatusResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PacketCapturesGetStatusOperation");
+            _operation = new OperationInternals<PacketCaptureQueryStatusResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PacketCapturesGetStatusOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

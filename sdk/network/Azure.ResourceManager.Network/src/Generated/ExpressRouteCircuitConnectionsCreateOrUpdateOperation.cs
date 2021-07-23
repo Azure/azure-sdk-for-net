@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a Express Route Circuit Connection in the specified express route circuits. </summary>
     public partial class ExpressRouteCircuitConnectionsCreateOrUpdateOperation : Operation<ExpressRouteCircuitConnection>, IOperationSource<ExpressRouteCircuitConnection>
     {
-        private readonly ArmOperationHelpers<ExpressRouteCircuitConnection> _operation;
+        private readonly OperationInternals<ExpressRouteCircuitConnection> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionsCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRouteCircuitConnectionsCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRouteCircuitConnectionsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCircuitConnectionsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ExpressRouteCircuitConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCircuitConnectionsCreateOrUpdateOperation");
+            _operation = new OperationInternals<ExpressRouteCircuitConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCircuitConnectionsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         ExpressRouteCircuitConnection IOperationSource<ExpressRouteCircuitConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ExpressRouteCircuitConnection.DeserializeExpressRouteCircuitConnection(document.RootElement);
+            return new ExpressRouteCircuitConnection(_operationBase, ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(document.RootElement));
         }
 
         async ValueTask<ExpressRouteCircuitConnection> IOperationSource<ExpressRouteCircuitConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ExpressRouteCircuitConnection.DeserializeExpressRouteCircuitConnection(document.RootElement);
+            return new ExpressRouteCircuitConnection(_operationBase, ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(document.RootElement));
         }
     }
 }

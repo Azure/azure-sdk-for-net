@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of p2s vpn connections to be disconnected. </summary>
-    public partial class P2SVpnConnectionRequest
+    internal partial class P2SVpnConnectionRequest
     {
         /// <summary> Initializes a new instance of P2SVpnConnectionRequest. </summary>
         public P2SVpnConnectionRequest()

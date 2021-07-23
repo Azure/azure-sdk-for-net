@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static PrivateEndpointListResult DeserializePrivateEndpointListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateEndpoint>> value = default;
+            Optional<IReadOnlyList<PrivateEndpointData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateEndpoint> array = new List<PrivateEndpoint>();
+                    List<PrivateEndpointData> array = new List<PrivateEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpoint.DeserializePrivateEndpoint(item));
+                        array.Add(PrivateEndpointData.DeserializePrivateEndpointData(item));
                     }
                     value = array;
                     continue;

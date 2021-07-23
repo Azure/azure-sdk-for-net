@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a security rule in the specified network security group. </summary>
     public partial class SecurityRulesCreateOrUpdateOperation : Operation<SecurityRule>, IOperationSource<SecurityRule>
     {
-        private readonly ArmOperationHelpers<SecurityRule> _operation;
+        private readonly OperationInternals<SecurityRule> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of SecurityRulesCreateOrUpdateOperation for mocking. </summary>
         protected SecurityRulesCreateOrUpdateOperation()
         {
         }
 
-        internal SecurityRulesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SecurityRulesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<SecurityRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecurityRulesCreateOrUpdateOperation");
+            _operation = new OperationInternals<SecurityRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecurityRulesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         SecurityRule IOperationSource<SecurityRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return SecurityRule.DeserializeSecurityRule(document.RootElement);
+            return new SecurityRule(_operationBase, SecurityRuleData.DeserializeSecurityRuleData(document.RootElement));
         }
 
         async ValueTask<SecurityRule> IOperationSource<SecurityRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return SecurityRule.DeserializeSecurityRule(document.RootElement);
+            return new SecurityRule(_operationBase, SecurityRuleData.DeserializeSecurityRuleData(document.RootElement));
         }
     }
 }

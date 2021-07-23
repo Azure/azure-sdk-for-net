@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates an express route circuit. </summary>
     public partial class ExpressRouteCircuitsCreateOrUpdateOperation : Operation<ExpressRouteCircuit>, IOperationSource<ExpressRouteCircuit>
     {
-        private readonly ArmOperationHelpers<ExpressRouteCircuit> _operation;
+        private readonly OperationInternals<ExpressRouteCircuit> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitsCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRouteCircuitsCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRouteCircuitsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCircuitsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ExpressRouteCircuit>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCircuitsCreateOrUpdateOperation");
+            _operation = new OperationInternals<ExpressRouteCircuit>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCircuitsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         ExpressRouteCircuit IOperationSource<ExpressRouteCircuit>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
+            return new ExpressRouteCircuit(_operationBase, ExpressRouteCircuitData.DeserializeExpressRouteCircuitData(document.RootElement));
         }
 
         async ValueTask<ExpressRouteCircuit> IOperationSource<ExpressRouteCircuit>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ExpressRouteCircuit.DeserializeExpressRouteCircuit(document.RootElement);
+            return new ExpressRouteCircuit(_operationBase, ExpressRouteCircuitData.DeserializeExpressRouteCircuitData(document.RootElement));
         }
     }
 }

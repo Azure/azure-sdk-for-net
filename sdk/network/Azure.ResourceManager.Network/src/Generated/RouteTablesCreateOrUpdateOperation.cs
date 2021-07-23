@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Create or updates a route table in a specified resource group. </summary>
     public partial class RouteTablesCreateOrUpdateOperation : Operation<RouteTable>, IOperationSource<RouteTable>
     {
-        private readonly ArmOperationHelpers<RouteTable> _operation;
+        private readonly OperationInternals<RouteTable> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of RouteTablesCreateOrUpdateOperation for mocking. </summary>
         protected RouteTablesCreateOrUpdateOperation()
         {
         }
 
-        internal RouteTablesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal RouteTablesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<RouteTable>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RouteTablesCreateOrUpdateOperation");
+            _operation = new OperationInternals<RouteTable>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RouteTablesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         RouteTable IOperationSource<RouteTable>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return RouteTable.DeserializeRouteTable(document.RootElement);
+            return new RouteTable(_operationBase, RouteTableData.DeserializeRouteTableData(document.RootElement));
         }
 
         async ValueTask<RouteTable> IOperationSource<RouteTable>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return RouteTable.DeserializeRouteTable(document.RootElement);
+            return new RouteTable(_operationBase, RouteTableData.DeserializeRouteTableData(document.RootElement));
         }
     }
 }

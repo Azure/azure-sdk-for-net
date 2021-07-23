@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a Virtual Network Tap. </summary>
     public partial class VirtualNetworkTapsCreateOrUpdateOperation : Operation<VirtualNetworkTap>, IOperationSource<VirtualNetworkTap>
     {
-        private readonly ArmOperationHelpers<VirtualNetworkTap> _operation;
+        private readonly OperationInternals<VirtualNetworkTap> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VirtualNetworkTapsCreateOrUpdateOperation for mocking. </summary>
         protected VirtualNetworkTapsCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualNetworkTapsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualNetworkTapsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VirtualNetworkTap>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworkTapsCreateOrUpdateOperation");
+            _operation = new OperationInternals<VirtualNetworkTap>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworkTapsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         VirtualNetworkTap IOperationSource<VirtualNetworkTap>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VirtualNetworkTap.DeserializeVirtualNetworkTap(document.RootElement);
+            return new VirtualNetworkTap(_operationBase, VirtualNetworkTapData.DeserializeVirtualNetworkTapData(document.RootElement));
         }
 
         async ValueTask<VirtualNetworkTap> IOperationSource<VirtualNetworkTap>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VirtualNetworkTap.DeserializeVirtualNetworkTap(document.RootElement);
+            return new VirtualNetworkTap(_operationBase, VirtualNetworkTapData.DeserializeVirtualNetworkTapData(document.RootElement));
         }
     }
 }

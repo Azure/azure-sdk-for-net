@@ -17,9 +17,9 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Resets the primary of the vpn gateway in the specified resource group. </summary>
-    public partial class VpnGatewaysResetOperation : Operation<VpnGateway>, IOperationSource<VpnGateway>
+    public partial class VpnGatewaysResetOperation : Operation<VpnGatewayData>, IOperationSource<VpnGatewayData>
     {
-        private readonly ArmOperationHelpers<VpnGateway> _operation;
+        private readonly OperationInternals<VpnGatewayData> _operation;
 
         /// <summary> Initializes a new instance of VpnGatewaysResetOperation for mocking. </summary>
         protected VpnGatewaysResetOperation()
@@ -28,13 +28,14 @@ namespace Azure.ResourceManager.Network
 
         internal VpnGatewaysResetOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VpnGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VpnGatewaysResetOperation");
+            _operation = new OperationInternals<VpnGatewayData>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VpnGatewaysResetOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override VpnGateway Value => _operation.Value;
+        public override VpnGatewayData Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,21 +53,21 @@ namespace Azure.ResourceManager.Network
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<VpnGateway>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<VpnGatewayData>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<VpnGateway>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<VpnGatewayData>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        VpnGateway IOperationSource<VpnGateway>.CreateResult(Response response, CancellationToken cancellationToken)
+        VpnGatewayData IOperationSource<VpnGatewayData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VpnGateway.DeserializeVpnGateway(document.RootElement);
+            return VpnGatewayData.DeserializeVpnGatewayData(document.RootElement);
         }
 
-        async ValueTask<VpnGateway> IOperationSource<VpnGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VpnGatewayData> IOperationSource<VpnGatewayData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VpnGateway.DeserializeVpnGateway(document.RootElement);
+            return VpnGatewayData.DeserializeVpnGatewayData(document.RootElement);
         }
     }
 }

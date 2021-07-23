@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ServiceEndpointPolicyDefinitionListResult DeserializeServiceEndpointPolicyDefinitionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceEndpointPolicyDefinition>> value = default;
+            Optional<IReadOnlyList<ServiceEndpointPolicyDefinitionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceEndpointPolicyDefinition> array = new List<ServiceEndpointPolicyDefinition>();
+                    List<ServiceEndpointPolicyDefinitionData> array = new List<ServiceEndpointPolicyDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceEndpointPolicyDefinition.DeserializeServiceEndpointPolicyDefinition(item));
+                        array.Add(ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(item));
                     }
                     value = array;
                     continue;

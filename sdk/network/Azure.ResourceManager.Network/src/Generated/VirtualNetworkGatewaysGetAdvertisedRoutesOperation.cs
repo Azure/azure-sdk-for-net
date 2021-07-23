@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer. </summary>
     public partial class VirtualNetworkGatewaysGetAdvertisedRoutesOperation : Operation<GatewayRouteListResult>, IOperationSource<GatewayRouteListResult>
     {
-        private readonly ArmOperationHelpers<GatewayRouteListResult> _operation;
+        private readonly OperationInternals<GatewayRouteListResult> _operation;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewaysGetAdvertisedRoutesOperation for mocking. </summary>
         protected VirtualNetworkGatewaysGetAdvertisedRoutesOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal VirtualNetworkGatewaysGetAdvertisedRoutesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<GatewayRouteListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetAdvertisedRoutesOperation");
+            _operation = new OperationInternals<GatewayRouteListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetAdvertisedRoutesOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

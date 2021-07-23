@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualNetworkListResult. </summary>
         internal VirtualNetworkListResult()
         {
-            Value = new ChangeTrackingList<VirtualNetwork>();
+            Value = new ChangeTrackingList<VirtualNetworkData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkListResult. </summary>
         /// <param name="value"> A list of VirtualNetwork resources in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal VirtualNetworkListResult(IReadOnlyList<VirtualNetwork> value, string nextLink)
+        internal VirtualNetworkListResult(IReadOnlyList<VirtualNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of VirtualNetwork resources in a resource group. </summary>
-        public IReadOnlyList<VirtualNetwork> Value { get; }
+        public IReadOnlyList<VirtualNetworkData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

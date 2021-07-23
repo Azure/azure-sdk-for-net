@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkVirtualApplianceListResult DeserializeNetworkVirtualApplianceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkVirtualAppliance>> value = default;
+            Optional<IReadOnlyList<NetworkVirtualApplianceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkVirtualAppliance> array = new List<NetworkVirtualAppliance>();
+                    List<NetworkVirtualApplianceData> array = new List<NetworkVirtualApplianceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkVirtualAppliance.DeserializeNetworkVirtualAppliance(item));
+                        array.Add(NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(item));
                     }
                     value = array;
                     continue;

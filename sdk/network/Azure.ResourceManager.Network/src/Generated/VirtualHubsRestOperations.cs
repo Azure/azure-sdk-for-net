@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Network
     {
         private string subscriptionId;
         private Uri endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -28,17 +30,23 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public VirtualHubsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public VirtualHubsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
             endpoint ??= new Uri("https://management.azure.com");
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             this.subscriptionId = subscriptionId;
             this.endpoint = endpoint;
+            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -56,7 +64,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
             uri.AppendPath(virtualHubName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -67,7 +75,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
-        public async Task<Response<VirtualHub>> GetAsync(string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualHubData>> GetAsync(string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -84,9 +92,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VirtualHub value = default;
+                        VirtualHubData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualHub.DeserializeVirtualHub(document.RootElement);
+                        value = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -99,7 +107,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
-        public Response<VirtualHub> Get(string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
+        public Response<VirtualHubData> Get(string resourceGroupName, string virtualHubName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -116,9 +124,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VirtualHub value = default;
+                        VirtualHubData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualHub.DeserializeVirtualHub(document.RootElement);
+                        value = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -126,7 +134,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string virtualHubName, VirtualHub virtualHubParameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string virtualHubName, VirtualHubData virtualHubParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -139,7 +147,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
             uri.AppendPath(virtualHubName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -155,7 +163,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubParameters"> Parameters supplied to create or update VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="virtualHubParameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualHubName, VirtualHub virtualHubParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -188,7 +196,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHubParameters"> Parameters supplied to create or update VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="virtualHubParameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string virtualHubName, VirtualHub virtualHubParameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string virtualHubName, VirtualHubData virtualHubParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -215,7 +223,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string virtualHubName, TagsObject virtualHubParameters)
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string virtualHubName, IDictionary<string, string> tags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -228,12 +236,21 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
             uri.AppendPath(virtualHubName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            TagsObject tagsObject = new TagsObject();
+            if (tags != null)
+            {
+                foreach (var value in tags)
+                {
+                    tagsObject.Tags.Add(value);
+                }
+            }
+            var model = tagsObject;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(virtualHubParameters);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -241,10 +258,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates VirtualHub tags. </summary>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
-        /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="virtualHubParameters"/> is null. </exception>
-        public async Task<Response<VirtualHub>> UpdateTagsAsync(string resourceGroupName, string virtualHubName, TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
+        public async Task<Response<VirtualHubData>> UpdateTagsAsync(string resourceGroupName, string virtualHubName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -254,20 +271,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
-            if (virtualHubParameters == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHubParameters));
-            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualHubName, virtualHubParameters);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualHubName, tags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VirtualHub value = default;
+                        VirtualHubData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualHub.DeserializeVirtualHub(document.RootElement);
+                        value = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -278,10 +291,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates VirtualHub tags. </summary>
         /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
-        /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualHubName"/>, or <paramref name="virtualHubParameters"/> is null. </exception>
-        public Response<VirtualHub> UpdateTags(string resourceGroupName, string virtualHubName, TagsObject virtualHubParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
+        public Response<VirtualHubData> UpdateTags(string resourceGroupName, string virtualHubName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -291,20 +304,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(virtualHubName));
             }
-            if (virtualHubParameters == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHubParameters));
-            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualHubName, virtualHubParameters);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, virtualHubName, tags);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VirtualHub value = default;
+                        VirtualHubData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualHub.DeserializeVirtualHub(document.RootElement);
+                        value = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -325,7 +334,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
             uri.AppendPath(virtualHubName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -401,7 +410,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs", false);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -471,7 +480,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs", false);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -512,6 +521,95 @@ namespace Azure.ResourceManager.Network
                         value = ListVirtualHubsResult.DeserializeListVirtualHubsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetEffectiveVirtualHubRoutesRequest(string resourceGroupName, string virtualHubName, string resourceId, string virtualWanResourceType)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
+            uri.AppendPath(virtualHubName, true);
+            uri.AppendPath("/effectiveRoutes", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new EffectiveRoutesParameters()
+            {
+                ResourceId = resourceId,
+                VirtualWanResourceType = virtualWanResourceType
+            };
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
+        /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
+        /// <param name="virtualHubName"> The name of the VirtualHub. </param>
+        /// <param name="resourceId"> The resource whose effective routes are being requested. </param>
+        /// <param name="virtualWanResourceType"> The type of the specified resource like RouteTable, ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
+        public async Task<Response> GetEffectiveVirtualHubRoutesAsync(string resourceGroupName, string virtualHubName, string resourceId = null, string virtualWanResourceType = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+
+            using var message = CreateGetEffectiveVirtualHubRoutesRequest(resourceGroupName, virtualHubName, resourceId, virtualWanResourceType);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets the effective routes configured for the Virtual Hub resource or the specified resource . </summary>
+        /// <param name="resourceGroupName"> The resource group name of the VirtualHub. </param>
+        /// <param name="virtualHubName"> The name of the VirtualHub. </param>
+        /// <param name="resourceId"> The resource whose effective routes are being requested. </param>
+        /// <param name="virtualWanResourceType"> The type of the specified resource like RouteTable, ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualHubName"/> is null. </exception>
+        public Response GetEffectiveVirtualHubRoutes(string resourceGroupName, string virtualHubName, string resourceId = null, string virtualWanResourceType = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+
+            using var message = CreateGetEffectiveVirtualHubRoutesRequest(resourceGroupName, virtualHubName, resourceId, virtualWanResourceType);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

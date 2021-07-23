@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Network
     {
         private string subscriptionId;
         private Uri endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -28,17 +30,23 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public PublicIPAddressesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public PublicIPAddressesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
             endpoint ??= new Uri("https://management.azure.com");
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             this.subscriptionId = subscriptionId;
             this.endpoint = endpoint;
+            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -56,7 +64,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/publicIPAddresses/", false);
             uri.AppendPath(publicIpAddressName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -64,7 +72,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified public IP address. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="publicIpAddressName"> The name of the subnet. </param>
+        /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
         public async Task<Response> DeleteAsync(string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default)
@@ -93,7 +101,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Deletes the specified public IP address. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="publicIpAddressName"> The name of the subnet. </param>
+        /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
         public Response Delete(string resourceGroupName, string publicIpAddressName, CancellationToken cancellationToken = default)
@@ -133,7 +141,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/publicIPAddresses/", false);
             uri.AppendPath(publicIpAddressName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -145,11 +153,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the specified public IP address in a specified resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="publicIpAddressName"> The name of the subnet. </param>
+        /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
-        public async Task<Response<PublicIPAddress>> GetAsync(string resourceGroupName, string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PublicIPAddressData>> GetAsync(string resourceGroupName, string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -166,9 +174,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PublicIPAddress value = default;
+                        PublicIPAddressData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
+                        value = PublicIPAddressData.DeserializePublicIPAddressData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -178,11 +186,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the specified public IP address in a specified resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="publicIpAddressName"> The name of the subnet. </param>
+        /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
-        public Response<PublicIPAddress> Get(string resourceGroupName, string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<PublicIPAddressData> Get(string resourceGroupName, string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -199,9 +207,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PublicIPAddress value = default;
+                        PublicIPAddressData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
+                        value = PublicIPAddressData.DeserializePublicIPAddressData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -209,7 +217,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string publicIpAddressName, PublicIPAddressData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -222,7 +230,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/publicIPAddresses/", false);
             uri.AppendPath(publicIpAddressName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -238,7 +246,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update public IP address operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="publicIpAddressName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string publicIpAddressName, PublicIPAddressData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -271,7 +279,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update public IP address operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="publicIpAddressName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string publicIpAddressName, PublicIPAddressData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -298,7 +306,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string publicIpAddressName, TagsObject parameters)
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string publicIpAddressName, IDictionary<string, string> tags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -311,12 +319,21 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/publicIPAddresses/", false);
             uri.AppendPath(publicIpAddressName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            TagsObject tagsObject = new TagsObject();
+            if (tags != null)
+            {
+                foreach (var value in tags)
+                {
+                    tagsObject.Tags.Add(value);
+                }
+            }
+            var model = tagsObject;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -324,10 +341,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates public IP address tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
-        /// <param name="parameters"> Parameters supplied to update public IP address tags. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="publicIpAddressName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<PublicIPAddress>> UpdateTagsAsync(string resourceGroupName, string publicIpAddressName, TagsObject parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
+        public async Task<Response<PublicIPAddressData>> UpdateTagsAsync(string resourceGroupName, string publicIpAddressName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -337,20 +354,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(publicIpAddressName));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, publicIpAddressName, parameters);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, publicIpAddressName, tags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PublicIPAddress value = default;
+                        PublicIPAddressData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
+                        value = PublicIPAddressData.DeserializePublicIPAddressData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -361,10 +374,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates public IP address tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
-        /// <param name="parameters"> Parameters supplied to update public IP address tags. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="publicIpAddressName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<PublicIPAddress> UpdateTags(string resourceGroupName, string publicIpAddressName, TagsObject parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
+        public Response<PublicIPAddressData> UpdateTags(string resourceGroupName, string publicIpAddressName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -374,20 +387,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(publicIpAddressName));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, publicIpAddressName, parameters);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, publicIpAddressName, tags);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        PublicIPAddress value = default;
+                        PublicIPAddressData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
+                        value = PublicIPAddressData.DeserializePublicIPAddressData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -405,7 +414,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Network/publicIPAddresses", false);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -463,7 +472,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/publicIPAddresses", false);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -516,347 +525,6 @@ namespace Azure.ResourceManager.Network
                         PublicIPAddressListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListVirtualMachineScaleSetPublicIPAddressesRequest(string resourceGroupName, string virtualMachineScaleSetName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(virtualMachineScaleSetName, true);
-            uri.AppendPath("/publicipaddresses", false);
-            uri.AppendQuery("api-version", "2018-10-01", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Gets information about all public IP addresses on a virtual machine scale set level. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is null. </exception>
-        public async Task<Response<PublicIPAddressListResult>> ListVirtualMachineScaleSetPublicIPAddressesAsync(string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-
-            using var message = CreateListVirtualMachineScaleSetPublicIPAddressesRequest(resourceGroupName, virtualMachineScaleSetName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PublicIPAddressListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets information about all public IP addresses on a virtual machine scale set level. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is null. </exception>
-        public Response<PublicIPAddressListResult> ListVirtualMachineScaleSetPublicIPAddresses(string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-
-            using var message = CreateListVirtualMachineScaleSetPublicIPAddressesRequest(resourceGroupName, virtualMachineScaleSetName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PublicIPAddressListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListVirtualMachineScaleSetVMPublicIPAddressesRequest(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(virtualMachineScaleSetName, true);
-            uri.AppendPath("/virtualMachines/", false);
-            uri.AppendPath(virtualmachineIndex, true);
-            uri.AppendPath("/networkInterfaces/", false);
-            uri.AppendPath(networkInterfaceName, true);
-            uri.AppendPath("/ipconfigurations/", false);
-            uri.AppendPath(ipConfigurationName, true);
-            uri.AppendPath("/publicipaddresses", false);
-            uri.AppendQuery("api-version", "2018-10-01", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Gets information about all public IP addresses in a virtual machine IP configuration in a virtual machine scale set. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
-        /// <param name="virtualmachineIndex"> The virtual machine index. </param>
-        /// <param name="networkInterfaceName"> The network interface name. </param>
-        /// <param name="ipConfigurationName"> The IP configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
-        public async Task<Response<PublicIPAddressListResult>> ListVirtualMachineScaleSetVMPublicIPAddressesAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (ipConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurationName));
-            }
-
-            using var message = CreateListVirtualMachineScaleSetVMPublicIPAddressesRequest(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PublicIPAddressListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets information about all public IP addresses in a virtual machine IP configuration in a virtual machine scale set. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
-        /// <param name="virtualmachineIndex"> The virtual machine index. </param>
-        /// <param name="networkInterfaceName"> The network interface name. </param>
-        /// <param name="ipConfigurationName"> The IP configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
-        public Response<PublicIPAddressListResult> ListVirtualMachineScaleSetVMPublicIPAddresses(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (ipConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurationName));
-            }
-
-            using var message = CreateListVirtualMachineScaleSetVMPublicIPAddressesRequest(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PublicIPAddressListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetVirtualMachineScaleSetPublicIPAddressRequest(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIpAddressName, string expand)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(virtualMachineScaleSetName, true);
-            uri.AppendPath("/virtualMachines/", false);
-            uri.AppendPath(virtualmachineIndex, true);
-            uri.AppendPath("/networkInterfaces/", false);
-            uri.AppendPath(networkInterfaceName, true);
-            uri.AppendPath("/ipconfigurations/", false);
-            uri.AppendPath(ipConfigurationName, true);
-            uri.AppendPath("/publicipaddresses/", false);
-            uri.AppendPath(publicIpAddressName, true);
-            uri.AppendQuery("api-version", "2018-10-01", true);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Get the specified public IP address in a virtual machine scale set. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
-        /// <param name="virtualmachineIndex"> The virtual machine index. </param>
-        /// <param name="networkInterfaceName"> The name of the network interface. </param>
-        /// <param name="ipConfigurationName"> The name of the IP configuration. </param>
-        /// <param name="publicIpAddressName"> The name of the public IP Address. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, <paramref name="ipConfigurationName"/>, or <paramref name="publicIpAddressName"/> is null. </exception>
-        public async Task<Response<PublicIPAddress>> GetVirtualMachineScaleSetPublicIPAddressAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (ipConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurationName));
-            }
-            if (publicIpAddressName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIpAddressName));
-            }
-
-            using var message = CreateGetVirtualMachineScaleSetPublicIPAddressRequest(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, publicIpAddressName, expand);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PublicIPAddress value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Get the specified public IP address in a virtual machine scale set. </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
-        /// <param name="virtualmachineIndex"> The virtual machine index. </param>
-        /// <param name="networkInterfaceName"> The name of the network interface. </param>
-        /// <param name="ipConfigurationName"> The name of the IP configuration. </param>
-        /// <param name="publicIpAddressName"> The name of the public IP Address. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, <paramref name="ipConfigurationName"/>, or <paramref name="publicIpAddressName"/> is null. </exception>
-        public Response<PublicIPAddress> GetVirtualMachineScaleSetPublicIPAddress(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (ipConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurationName));
-            }
-            if (publicIpAddressName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIpAddressName));
-            }
-
-            using var message = CreateGetVirtualMachineScaleSetPublicIPAddressRequest(resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, publicIpAddressName, expand);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PublicIPAddress value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -993,210 +661,6 @@ namespace Azure.ResourceManager.Network
             }
 
             using var message = CreateListNextPageRequest(nextLink, resourceGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PublicIPAddressListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListVirtualMachineScaleSetPublicIPAddressesNextPageRequest(string nextLink, string resourceGroupName, string virtualMachineScaleSetName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Gets information about all public IP addresses on a virtual machine scale set level. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineScaleSetName"/> is null. </exception>
-        public async Task<Response<PublicIPAddressListResult>> ListVirtualMachineScaleSetPublicIPAddressesNextPageAsync(string nextLink, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-
-            using var message = CreateListVirtualMachineScaleSetPublicIPAddressesNextPageRequest(nextLink, resourceGroupName, virtualMachineScaleSetName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PublicIPAddressListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets information about all public IP addresses on a virtual machine scale set level. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualMachineScaleSetName"/> is null. </exception>
-        public Response<PublicIPAddressListResult> ListVirtualMachineScaleSetPublicIPAddressesNextPage(string nextLink, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-
-            using var message = CreateListVirtualMachineScaleSetPublicIPAddressesNextPageRequest(nextLink, resourceGroupName, virtualMachineScaleSetName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PublicIPAddressListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListVirtualMachineScaleSetVMPublicIPAddressesNextPageRequest(string nextLink, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Gets information about all public IP addresses in a virtual machine IP configuration in a virtual machine scale set. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
-        /// <param name="virtualmachineIndex"> The virtual machine index. </param>
-        /// <param name="networkInterfaceName"> The network interface name. </param>
-        /// <param name="ipConfigurationName"> The IP configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
-        public async Task<Response<PublicIPAddressListResult>> ListVirtualMachineScaleSetVMPublicIPAddressesNextPageAsync(string nextLink, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (ipConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurationName));
-            }
-
-            using var message = CreateListVirtualMachineScaleSetVMPublicIPAddressesNextPageRequest(nextLink, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PublicIPAddressListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PublicIPAddressListResult.DeserializePublicIPAddressListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets information about all public IP addresses in a virtual machine IP configuration in a virtual machine scale set. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
-        /// <param name="virtualmachineIndex"> The virtual machine index. </param>
-        /// <param name="networkInterfaceName"> The network interface name. </param>
-        /// <param name="ipConfigurationName"> The IP configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, or <paramref name="ipConfigurationName"/> is null. </exception>
-        public Response<PublicIPAddressListResult> ListVirtualMachineScaleSetVMPublicIPAddressesNextPage(string nextLink, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (ipConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurationName));
-            }
-
-            using var message = CreateListVirtualMachineScaleSetVMPublicIPAddressesNextPageRequest(nextLink, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

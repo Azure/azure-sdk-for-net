@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Gets the currently advertised ARP table associated with the express route cross connection in a resource group. </summary>
     public partial class ExpressRouteCrossConnectionsListArpTableOperation : Operation<ExpressRouteCircuitsArpTableListResult>, IOperationSource<ExpressRouteCircuitsArpTableListResult>
     {
-        private readonly ArmOperationHelpers<ExpressRouteCircuitsArpTableListResult> _operation;
+        private readonly OperationInternals<ExpressRouteCircuitsArpTableListResult> _operation;
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionsListArpTableOperation for mocking. </summary>
         protected ExpressRouteCrossConnectionsListArpTableOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal ExpressRouteCrossConnectionsListArpTableOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ExpressRouteCircuitsArpTableListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCrossConnectionsListArpTableOperation");
+            _operation = new OperationInternals<ExpressRouteCircuitsArpTableListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCrossConnectionsListArpTableOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

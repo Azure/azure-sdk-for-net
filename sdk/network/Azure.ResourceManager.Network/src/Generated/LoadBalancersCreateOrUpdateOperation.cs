@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a load balancer. </summary>
     public partial class LoadBalancersCreateOrUpdateOperation : Operation<LoadBalancer>, IOperationSource<LoadBalancer>
     {
-        private readonly ArmOperationHelpers<LoadBalancer> _operation;
+        private readonly OperationInternals<LoadBalancer> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of LoadBalancersCreateOrUpdateOperation for mocking. </summary>
         protected LoadBalancersCreateOrUpdateOperation()
         {
         }
 
-        internal LoadBalancersCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal LoadBalancersCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<LoadBalancer>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LoadBalancersCreateOrUpdateOperation");
+            _operation = new OperationInternals<LoadBalancer>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LoadBalancersCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         LoadBalancer IOperationSource<LoadBalancer>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return LoadBalancer.DeserializeLoadBalancer(document.RootElement);
+            return new LoadBalancer(_operationBase, LoadBalancerData.DeserializeLoadBalancerData(document.RootElement));
         }
 
         async ValueTask<LoadBalancer> IOperationSource<LoadBalancer>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return LoadBalancer.DeserializeLoadBalancer(document.RootElement);
+            return new LoadBalancer(_operationBase, LoadBalancerData.DeserializeLoadBalancerData(document.RootElement));
         }
     }
 }

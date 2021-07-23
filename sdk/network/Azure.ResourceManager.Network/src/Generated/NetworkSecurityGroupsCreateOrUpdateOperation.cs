@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a network security group in the specified resource group. </summary>
     public partial class NetworkSecurityGroupsCreateOrUpdateOperation : Operation<NetworkSecurityGroup>, IOperationSource<NetworkSecurityGroup>
     {
-        private readonly ArmOperationHelpers<NetworkSecurityGroup> _operation;
+        private readonly OperationInternals<NetworkSecurityGroup> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of NetworkSecurityGroupsCreateOrUpdateOperation for mocking. </summary>
         protected NetworkSecurityGroupsCreateOrUpdateOperation()
         {
         }
 
-        internal NetworkSecurityGroupsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NetworkSecurityGroupsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<NetworkSecurityGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "NetworkSecurityGroupsCreateOrUpdateOperation");
+            _operation = new OperationInternals<NetworkSecurityGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "NetworkSecurityGroupsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         NetworkSecurityGroup IOperationSource<NetworkSecurityGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return NetworkSecurityGroup.DeserializeNetworkSecurityGroup(document.RootElement);
+            return new NetworkSecurityGroup(_operationBase, NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(document.RootElement));
         }
 
         async ValueTask<NetworkSecurityGroup> IOperationSource<NetworkSecurityGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return NetworkSecurityGroup.DeserializeNetworkSecurityGroup(document.RootElement);
+            return new NetworkSecurityGroup(_operationBase, NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(document.RootElement));
         }
     }
 }

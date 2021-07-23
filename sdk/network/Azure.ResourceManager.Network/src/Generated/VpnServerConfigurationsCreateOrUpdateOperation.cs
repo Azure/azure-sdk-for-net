@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates a VpnServerConfiguration resource if it doesn&apos;t exist else updates the existing VpnServerConfiguration. </summary>
     public partial class VpnServerConfigurationsCreateOrUpdateOperation : Operation<VpnServerConfiguration>, IOperationSource<VpnServerConfiguration>
     {
-        private readonly ArmOperationHelpers<VpnServerConfiguration> _operation;
+        private readonly OperationInternals<VpnServerConfiguration> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VpnServerConfigurationsCreateOrUpdateOperation for mocking. </summary>
         protected VpnServerConfigurationsCreateOrUpdateOperation()
         {
         }
 
-        internal VpnServerConfigurationsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VpnServerConfigurationsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VpnServerConfiguration>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VpnServerConfigurationsCreateOrUpdateOperation");
+            _operation = new OperationInternals<VpnServerConfiguration>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VpnServerConfigurationsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         VpnServerConfiguration IOperationSource<VpnServerConfiguration>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VpnServerConfiguration.DeserializeVpnServerConfiguration(document.RootElement);
+            return new VpnServerConfiguration(_operationBase, VpnServerConfigurationData.DeserializeVpnServerConfigurationData(document.RootElement));
         }
 
         async ValueTask<VpnServerConfiguration> IOperationSource<VpnServerConfiguration>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VpnServerConfiguration.DeserializeVpnServerConfiguration(document.RootElement);
+            return new VpnServerConfiguration(_operationBase, VpnServerConfigurationData.DeserializeVpnServerConfigurationData(document.RootElement));
         }
     }
 }

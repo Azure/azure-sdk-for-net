@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Gets the next hop from the specified VM. </summary>
     public partial class NetworkWatchersGetNextHopOperation : Operation<NextHopResult>, IOperationSource<NextHopResult>
     {
-        private readonly ArmOperationHelpers<NextHopResult> _operation;
+        private readonly OperationInternals<NextHopResult> _operation;
 
         /// <summary> Initializes a new instance of NetworkWatchersGetNextHopOperation for mocking. </summary>
         protected NetworkWatchersGetNextHopOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal NetworkWatchersGetNextHopOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<NextHopResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetNextHopOperation");
+            _operation = new OperationInternals<NextHopResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetNextHopOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

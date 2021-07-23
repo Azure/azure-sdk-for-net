@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Gets all route tables applied to a network interface. </summary>
     public partial class NetworkInterfacesGetEffectiveRouteTableOperation : Operation<EffectiveRouteListResult>, IOperationSource<EffectiveRouteListResult>
     {
-        private readonly ArmOperationHelpers<EffectiveRouteListResult> _operation;
+        private readonly OperationInternals<EffectiveRouteListResult> _operation;
 
         /// <summary> Initializes a new instance of NetworkInterfacesGetEffectiveRouteTableOperation for mocking. </summary>
         protected NetworkInterfacesGetEffectiveRouteTableOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal NetworkInterfacesGetEffectiveRouteTableOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<EffectiveRouteListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkInterfacesGetEffectiveRouteTableOperation");
+            _operation = new OperationInternals<EffectiveRouteListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkInterfacesGetEffectiveRouteTableOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

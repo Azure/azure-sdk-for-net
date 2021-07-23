@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Query a snapshot of the most recent connection states. </summary>
     public partial class ConnectionMonitorsQueryOperation : Operation<ConnectionMonitorQueryResult>, IOperationSource<ConnectionMonitorQueryResult>
     {
-        private readonly ArmOperationHelpers<ConnectionMonitorQueryResult> _operation;
+        private readonly OperationInternals<ConnectionMonitorQueryResult> _operation;
 
         /// <summary> Initializes a new instance of ConnectionMonitorsQueryOperation for mocking. </summary>
         protected ConnectionMonitorsQueryOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal ConnectionMonitorsQueryOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ConnectionMonitorQueryResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ConnectionMonitorsQueryOperation");
+            _operation = new OperationInternals<ConnectionMonitorQueryResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ConnectionMonitorsQueryOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

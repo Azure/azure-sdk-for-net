@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualNetworkPeeringListResult DeserializeVirtualNetworkPeeringListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualNetworkPeering>> value = default;
+            Optional<IReadOnlyList<VirtualNetworkPeeringData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualNetworkPeering> array = new List<VirtualNetworkPeering>();
+                    List<VirtualNetworkPeeringData> array = new List<VirtualNetworkPeeringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkPeering.DeserializeVirtualNetworkPeering(item));
+                        array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item));
                     }
                     value = array;
                     continue;

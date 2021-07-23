@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NatGatewayListResult DeserializeNatGatewayListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NatGateway>> value = default;
+            Optional<IReadOnlyList<NatGatewayData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NatGateway> array = new List<NatGateway>();
+                    List<NatGatewayData> array = new List<NatGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NatGateway.DeserializeNatGateway(item));
+                        array.Add(NatGatewayData.DeserializeNatGatewayData(item));
                     }
                     value = array;
                     continue;

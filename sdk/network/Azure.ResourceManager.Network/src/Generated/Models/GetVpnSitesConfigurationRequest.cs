@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of Vpn-Sites. </summary>
-    public partial class GetVpnSitesConfigurationRequest
+    internal partial class GetVpnSitesConfigurationRequest
     {
         /// <summary> Initializes a new instance of GetVpnSitesConfigurationRequest. </summary>
         /// <param name="outputBlobSasUrl"> The sas-url to download the configurations for vpn-sites. </param>

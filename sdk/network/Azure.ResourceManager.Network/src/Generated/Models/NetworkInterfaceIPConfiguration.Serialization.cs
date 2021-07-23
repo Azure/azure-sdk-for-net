@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,13 +22,20 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(Type);
             }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(GatewayLoadBalancer))
+            {
+                writer.WritePropertyName("gatewayLoadBalancer");
+                writer.WriteObjectValue(GatewayLoadBalancer);
+            }
             if (Optional.IsCollectionDefined(VirtualNetworkTaps))
             {
                 writer.WritePropertyName("virtualNetworkTaps");
@@ -116,18 +124,20 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<IList<VirtualNetworkTap>> virtualNetworkTaps = default;
+            Optional<string> type = default;
+            ResourceIdentifier id = default;
+            Optional<SubResource> gatewayLoadBalancer = default;
+            Optional<IList<VirtualNetworkTapData>> virtualNetworkTaps = default;
             Optional<IList<ApplicationGatewayBackendAddressPool>> applicationGatewayBackendAddressPools = default;
-            Optional<IList<BackendAddressPool>> loadBalancerBackendAddressPools = default;
-            Optional<IList<InboundNatRule>> loadBalancerInboundNatRules = default;
+            Optional<IList<BackendAddressPoolData>> loadBalancerBackendAddressPools = default;
+            Optional<IList<InboundNatRuleData>> loadBalancerInboundNatRules = default;
             Optional<string> privateIPAddress = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
             Optional<IPVersion> privateIPAddressVersion = default;
-            Optional<Subnet> subnet = default;
+            Optional<SubnetData> subnet = default;
             Optional<bool> primary = default;
-            Optional<PublicIPAddress> publicIPAddress = default;
-            Optional<IList<ApplicationSecurityGroup>> applicationSecurityGroups = default;
+            Optional<PublicIPAddressData> publicIPAddress = default;
+            Optional<IList<ApplicationSecurityGroupData>> applicationSecurityGroups = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties> privateLinkConnectionProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -140,6 +150,11 @@ namespace Azure.ResourceManager.Network.Models
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -156,6 +171,16 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("gatewayLoadBalancer"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            gatewayLoadBalancer = SubResource.DeserializeSubResource(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("virtualNetworkTaps"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -163,10 +188,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VirtualNetworkTap> array = new List<VirtualNetworkTap>();
+                            List<VirtualNetworkTapData> array = new List<VirtualNetworkTapData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkTap.DeserializeVirtualNetworkTap(item));
+                                array.Add(VirtualNetworkTapData.DeserializeVirtualNetworkTapData(item));
                             }
                             virtualNetworkTaps = array;
                             continue;
@@ -193,10 +218,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<BackendAddressPool> array = new List<BackendAddressPool>();
+                            List<BackendAddressPoolData> array = new List<BackendAddressPoolData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BackendAddressPool.DeserializeBackendAddressPool(item));
+                                array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item));
                             }
                             loadBalancerBackendAddressPools = array;
                             continue;
@@ -208,10 +233,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<InboundNatRule> array = new List<InboundNatRule>();
+                            List<InboundNatRuleData> array = new List<InboundNatRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InboundNatRule.DeserializeInboundNatRule(item));
+                                array.Add(InboundNatRuleData.DeserializeInboundNatRuleData(item));
                             }
                             loadBalancerInboundNatRules = array;
                             continue;
@@ -248,7 +273,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnet = Subnet.DeserializeSubnet(property0.Value);
+                            subnet = SubnetData.DeserializeSubnetData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("primary"))
@@ -268,7 +293,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddress = PublicIPAddress.DeserializePublicIPAddress(property0.Value);
+                            publicIPAddress = PublicIPAddressData.DeserializePublicIPAddressData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("applicationSecurityGroups"))
@@ -278,10 +303,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ApplicationSecurityGroup> array = new List<ApplicationSecurityGroup>();
+                            List<ApplicationSecurityGroupData> array = new List<ApplicationSecurityGroupData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationSecurityGroup.DeserializeApplicationSecurityGroup(item));
+                                array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item));
                             }
                             applicationSecurityGroups = array;
                             continue;
@@ -310,7 +335,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkInterfaceIPConfiguration(id.Value, name.Value, etag.Value, Optional.ToList(virtualNetworkTaps), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, Optional.ToNullable(primary), publicIPAddress.Value, Optional.ToList(applicationSecurityGroups), Optional.ToNullable(provisioningState), privateLinkConnectionProperties.Value);
+            return new NetworkInterfaceIPConfiguration(id, name.Value, etag.Value, type.Value, gatewayLoadBalancer.Value, Optional.ToList(virtualNetworkTaps), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, Optional.ToNullable(primary), publicIPAddress.Value, Optional.ToList(applicationSecurityGroups), Optional.ToNullable(provisioningState), privateLinkConnectionProperties.Value);
         }
     }
 }

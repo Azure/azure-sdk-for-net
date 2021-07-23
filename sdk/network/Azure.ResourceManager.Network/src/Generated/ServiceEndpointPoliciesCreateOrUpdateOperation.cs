@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a service Endpoint Policies. </summary>
     public partial class ServiceEndpointPoliciesCreateOrUpdateOperation : Operation<ServiceEndpointPolicy>, IOperationSource<ServiceEndpointPolicy>
     {
-        private readonly ArmOperationHelpers<ServiceEndpointPolicy> _operation;
+        private readonly OperationInternals<ServiceEndpointPolicy> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ServiceEndpointPoliciesCreateOrUpdateOperation for mocking. </summary>
         protected ServiceEndpointPoliciesCreateOrUpdateOperation()
         {
         }
 
-        internal ServiceEndpointPoliciesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ServiceEndpointPoliciesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ServiceEndpointPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ServiceEndpointPoliciesCreateOrUpdateOperation");
+            _operation = new OperationInternals<ServiceEndpointPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ServiceEndpointPoliciesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         ServiceEndpointPolicy IOperationSource<ServiceEndpointPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
+            return new ServiceEndpointPolicy(_operationBase, ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(document.RootElement));
         }
 
         async ValueTask<ServiceEndpointPolicy> IOperationSource<ServiceEndpointPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ServiceEndpointPolicy.DeserializeServiceEndpointPolicy(document.RootElement);
+            return new ServiceEndpointPolicy(_operationBase, ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(document.RootElement));
         }
     }
 }

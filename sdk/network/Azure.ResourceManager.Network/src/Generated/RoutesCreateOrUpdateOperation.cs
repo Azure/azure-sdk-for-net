@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a route in the specified route table. </summary>
     public partial class RoutesCreateOrUpdateOperation : Operation<Route>, IOperationSource<Route>
     {
-        private readonly ArmOperationHelpers<Route> _operation;
+        private readonly OperationInternals<Route> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of RoutesCreateOrUpdateOperation for mocking. </summary>
         protected RoutesCreateOrUpdateOperation()
         {
         }
 
-        internal RoutesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal RoutesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Route>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RoutesCreateOrUpdateOperation");
+            _operation = new OperationInternals<Route>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RoutesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         Route IOperationSource<Route>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return Route.DeserializeRoute(document.RootElement);
+            return new Route(_operationBase, RouteData.DeserializeRouteData(document.RootElement));
         }
 
         async ValueTask<Route> IOperationSource<Route>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return Route.DeserializeRoute(document.RootElement);
+            return new Route(_operationBase, RouteData.DeserializeRouteData(document.RootElement));
         }
     }
 }

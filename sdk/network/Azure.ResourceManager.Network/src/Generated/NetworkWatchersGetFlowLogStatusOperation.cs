@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Queries status of flow log and traffic analytics (optional) on a specified resource. </summary>
     public partial class NetworkWatchersGetFlowLogStatusOperation : Operation<FlowLogInformation>, IOperationSource<FlowLogInformation>
     {
-        private readonly ArmOperationHelpers<FlowLogInformation> _operation;
+        private readonly OperationInternals<FlowLogInformation> _operation;
 
         /// <summary> Initializes a new instance of NetworkWatchersGetFlowLogStatusOperation for mocking. </summary>
         protected NetworkWatchersGetFlowLogStatusOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal NetworkWatchersGetFlowLogStatusOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<FlowLogInformation>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetFlowLogStatusOperation");
+            _operation = new OperationInternals<FlowLogInformation>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetFlowLogStatusOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates a VirtualWAN resource if it doesn&apos;t exist else updates the existing VirtualWAN. </summary>
     public partial class VirtualWansCreateOrUpdateOperation : Operation<VirtualWAN>, IOperationSource<VirtualWAN>
     {
-        private readonly ArmOperationHelpers<VirtualWAN> _operation;
+        private readonly OperationInternals<VirtualWAN> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VirtualWansCreateOrUpdateOperation for mocking. </summary>
         protected VirtualWansCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualWansCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualWansCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VirtualWAN>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualWansCreateOrUpdateOperation");
+            _operation = new OperationInternals<VirtualWAN>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualWansCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         VirtualWAN IOperationSource<VirtualWAN>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VirtualWAN.DeserializeVirtualWAN(document.RootElement);
+            return new VirtualWAN(_operationBase, VirtualWANData.DeserializeVirtualWANData(document.RootElement));
         }
 
         async ValueTask<VirtualWAN> IOperationSource<VirtualWAN>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VirtualWAN.DeserializeVirtualWAN(document.RootElement);
+            return new VirtualWAN(_operationBase, VirtualWANData.DeserializeVirtualWANData(document.RootElement));
         }
     }
 }

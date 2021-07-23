@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a service endpoint policy definition in the specified service endpoint policy. </summary>
     public partial class ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation : Operation<ServiceEndpointPolicyDefinition>, IOperationSource<ServiceEndpointPolicyDefinition>
     {
-        private readonly ArmOperationHelpers<ServiceEndpointPolicyDefinition> _operation;
+        private readonly OperationInternals<ServiceEndpointPolicyDefinition> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation for mocking. </summary>
         protected ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation()
         {
         }
 
-        internal ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ServiceEndpointPolicyDefinition>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation");
+            _operation = new OperationInternals<ServiceEndpointPolicyDefinition>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         ServiceEndpointPolicyDefinition IOperationSource<ServiceEndpointPolicyDefinition>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ServiceEndpointPolicyDefinition.DeserializeServiceEndpointPolicyDefinition(document.RootElement);
+            return new ServiceEndpointPolicyDefinition(_operationBase, ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(document.RootElement));
         }
 
         async ValueTask<ServiceEndpointPolicyDefinition> IOperationSource<ServiceEndpointPolicyDefinition>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ServiceEndpointPolicyDefinition.DeserializeServiceEndpointPolicyDefinition(document.RootElement);
+            return new ServiceEndpointPolicyDefinition(_operationBase, ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(document.RootElement));
         }
     }
 }

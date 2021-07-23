@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a virtual network in the specified resource group. </summary>
     public partial class VirtualNetworksCreateOrUpdateOperation : Operation<VirtualNetwork>, IOperationSource<VirtualNetwork>
     {
-        private readonly ArmOperationHelpers<VirtualNetwork> _operation;
+        private readonly OperationInternals<VirtualNetwork> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VirtualNetworksCreateOrUpdateOperation for mocking. </summary>
         protected VirtualNetworksCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualNetworksCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualNetworksCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VirtualNetwork>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworksCreateOrUpdateOperation");
+            _operation = new OperationInternals<VirtualNetwork>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworksCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         VirtualNetwork IOperationSource<VirtualNetwork>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
+            return new VirtualNetwork(_operationBase, VirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement));
         }
 
         async ValueTask<VirtualNetwork> IOperationSource<VirtualNetwork>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VirtualNetwork.DeserializeVirtualNetwork(document.RootElement);
+            return new VirtualNetwork(_operationBase, VirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement));
         }
     }
 }

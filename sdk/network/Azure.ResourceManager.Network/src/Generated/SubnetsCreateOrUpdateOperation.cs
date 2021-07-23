@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a subnet in the specified virtual network. </summary>
     public partial class SubnetsCreateOrUpdateOperation : Operation<Subnet>, IOperationSource<Subnet>
     {
-        private readonly ArmOperationHelpers<Subnet> _operation;
+        private readonly OperationInternals<Subnet> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of SubnetsCreateOrUpdateOperation for mocking. </summary>
         protected SubnetsCreateOrUpdateOperation()
         {
         }
 
-        internal SubnetsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SubnetsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Subnet>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SubnetsCreateOrUpdateOperation");
+            _operation = new OperationInternals<Subnet>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SubnetsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         Subnet IOperationSource<Subnet>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return Subnet.DeserializeSubnet(document.RootElement);
+            return new Subnet(_operationBase, SubnetData.DeserializeSubnetData(document.RootElement));
         }
 
         async ValueTask<Subnet> IOperationSource<Subnet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return Subnet.DeserializeSubnet(document.RootElement);
+            return new Subnet(_operationBase, SubnetData.DeserializeSubnetData(document.RootElement));
         }
     }
 }

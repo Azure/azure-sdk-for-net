@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ListVirtualWANsResult DeserializeListVirtualWANsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualWAN>> value = default;
+            Optional<IReadOnlyList<VirtualWANData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualWAN> array = new List<VirtualWAN>();
+                    List<VirtualWANData> array = new List<VirtualWANData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualWAN.DeserializeVirtualWAN(item));
+                        array.Add(VirtualWANData.DeserializeVirtualWANData(item));
                     }
                     value = array;
                     continue;

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static IpGroupListResult DeserializeIpGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<IpGroup>> value = default;
+            Optional<IReadOnlyList<IpGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IpGroup> array = new List<IpGroup>();
+                    List<IpGroupData> array = new List<IpGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IpGroup.DeserializeIpGroup(item));
+                        array.Add(IpGroupData.DeserializeIpGroupData(item));
                     }
                     value = array;
                     continue;

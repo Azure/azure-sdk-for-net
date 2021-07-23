@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates an ipGroups in a specified resource group. </summary>
     public partial class IpGroupsCreateOrUpdateOperation : Operation<IpGroup>, IOperationSource<IpGroup>
     {
-        private readonly ArmOperationHelpers<IpGroup> _operation;
+        private readonly OperationInternals<IpGroup> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of IpGroupsCreateOrUpdateOperation for mocking. </summary>
         protected IpGroupsCreateOrUpdateOperation()
         {
         }
 
-        internal IpGroupsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal IpGroupsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<IpGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "IpGroupsCreateOrUpdateOperation");
+            _operation = new OperationInternals<IpGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "IpGroupsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         IpGroup IOperationSource<IpGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return IpGroup.DeserializeIpGroup(document.RootElement);
+            return new IpGroup(_operationBase, IpGroupData.DeserializeIpGroupData(document.RootElement));
         }
 
         async ValueTask<IpGroup> IOperationSource<IpGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return IpGroup.DeserializeIpGroup(document.RootElement);
+            return new IpGroup(_operationBase, IpGroupData.DeserializeIpGroupData(document.RootElement));
         }
     }
 }

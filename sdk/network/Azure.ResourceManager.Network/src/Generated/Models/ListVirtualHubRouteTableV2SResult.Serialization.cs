@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ListVirtualHubRouteTableV2SResult DeserializeListVirtualHubRouteTableV2SResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualHubRouteTableV2>> value = default;
+            Optional<IReadOnlyList<VirtualHubRouteTableV2Data>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualHubRouteTableV2> array = new List<VirtualHubRouteTableV2>();
+                    List<VirtualHubRouteTableV2Data> array = new List<VirtualHubRouteTableV2Data>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualHubRouteTableV2.DeserializeVirtualHubRouteTableV2(item));
+                        array.Add(VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(item));
                     }
                     value = array;
                     continue;

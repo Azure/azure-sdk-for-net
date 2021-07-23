@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> The GetBgpPeerStatus operation retrieves the status of all BGP peers. </summary>
     public partial class VirtualNetworkGatewaysGetBgpPeerStatusOperation : Operation<BgpPeerStatusListResult>, IOperationSource<BgpPeerStatusListResult>
     {
-        private readonly ArmOperationHelpers<BgpPeerStatusListResult> _operation;
+        private readonly OperationInternals<BgpPeerStatusListResult> _operation;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewaysGetBgpPeerStatusOperation for mocking. </summary>
         protected VirtualNetworkGatewaysGetBgpPeerStatusOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal VirtualNetworkGatewaysGetBgpPeerStatusOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<BgpPeerStatusListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetBgpPeerStatusOperation");
+            _operation = new OperationInternals<BgpPeerStatusListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetBgpPeerStatusOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

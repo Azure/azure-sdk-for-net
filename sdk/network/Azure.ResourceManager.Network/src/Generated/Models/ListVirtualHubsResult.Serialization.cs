@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ListVirtualHubsResult DeserializeListVirtualHubsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualHub>> value = default;
+            Optional<IReadOnlyList<VirtualHubData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualHub> array = new List<VirtualHub>();
+                    List<VirtualHubData> array = new List<VirtualHubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualHub.DeserializeVirtualHub(item));
+                        array.Add(VirtualHubData.DeserializeVirtualHubData(item));
                     }
                     value = array;
                     continue;

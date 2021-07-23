@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Gets the currently advertised routes table associated with the express route circuit in a resource group. </summary>
     public partial class ExpressRouteCircuitsListRoutesTableOperation : Operation<ExpressRouteCircuitsRoutesTableListResult>, IOperationSource<ExpressRouteCircuitsRoutesTableListResult>
     {
-        private readonly ArmOperationHelpers<ExpressRouteCircuitsRoutesTableListResult> _operation;
+        private readonly OperationInternals<ExpressRouteCircuitsRoutesTableListResult> _operation;
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitsListRoutesTableOperation for mocking. </summary>
         protected ExpressRouteCircuitsListRoutesTableOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal ExpressRouteCircuitsListRoutesTableOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ExpressRouteCircuitsRoutesTableListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCircuitsListRoutesTableOperation");
+            _operation = new OperationInternals<ExpressRouteCircuitsRoutesTableListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCircuitsListRoutesTableOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a peering in the specified express route circuits. </summary>
     public partial class ExpressRouteCircuitPeeringsCreateOrUpdateOperation : Operation<ExpressRouteCircuitPeering>, IOperationSource<ExpressRouteCircuitPeering>
     {
-        private readonly ArmOperationHelpers<ExpressRouteCircuitPeering> _operation;
+        private readonly OperationInternals<ExpressRouteCircuitPeering> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringsCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRouteCircuitPeeringsCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRouteCircuitPeeringsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCircuitPeeringsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ExpressRouteCircuitPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCircuitPeeringsCreateOrUpdateOperation");
+            _operation = new OperationInternals<ExpressRouteCircuitPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCircuitPeeringsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         ExpressRouteCircuitPeering IOperationSource<ExpressRouteCircuitPeering>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(document.RootElement);
+            return new ExpressRouteCircuitPeering(_operationBase, ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(document.RootElement));
         }
 
         async ValueTask<ExpressRouteCircuitPeering> IOperationSource<ExpressRouteCircuitPeering>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ExpressRouteCircuitPeering.DeserializeExpressRouteCircuitPeering(document.RootElement);
+            return new ExpressRouteCircuitPeering(_operationBase, ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(document.RootElement));
         }
     }
 }

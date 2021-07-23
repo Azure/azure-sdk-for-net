@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Get the last completed troubleshooting result on a specified resource. </summary>
     public partial class NetworkWatchersGetTroubleshootingResultOperation : Operation<TroubleshootingResult>, IOperationSource<TroubleshootingResult>
     {
-        private readonly ArmOperationHelpers<TroubleshootingResult> _operation;
+        private readonly OperationInternals<TroubleshootingResult> _operation;
 
         /// <summary> Initializes a new instance of NetworkWatchersGetTroubleshootingResultOperation for mocking. </summary>
         protected NetworkWatchersGetTroubleshootingResultOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal NetworkWatchersGetTroubleshootingResultOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<TroubleshootingResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetTroubleshootingResultOperation");
+            _operation = new OperationInternals<TroubleshootingResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetTroubleshootingResultOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

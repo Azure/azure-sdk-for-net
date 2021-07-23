@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a static or dynamic public IP prefix. </summary>
     public partial class PublicIPPrefixesCreateOrUpdateOperation : Operation<PublicIPPrefix>, IOperationSource<PublicIPPrefix>
     {
-        private readonly ArmOperationHelpers<PublicIPPrefix> _operation;
+        private readonly OperationInternals<PublicIPPrefix> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of PublicIPPrefixesCreateOrUpdateOperation for mocking. </summary>
         protected PublicIPPrefixesCreateOrUpdateOperation()
         {
         }
 
-        internal PublicIPPrefixesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PublicIPPrefixesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<PublicIPPrefix>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PublicIPPrefixesCreateOrUpdateOperation");
+            _operation = new OperationInternals<PublicIPPrefix>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PublicIPPrefixesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         PublicIPPrefix IOperationSource<PublicIPPrefix>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return PublicIPPrefix.DeserializePublicIPPrefix(document.RootElement);
+            return new PublicIPPrefix(_operationBase, PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement));
         }
 
         async ValueTask<PublicIPPrefix> IOperationSource<PublicIPPrefix>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return PublicIPPrefix.DeserializePublicIPPrefix(document.RootElement);
+            return new PublicIPPrefix(_operationBase, PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement));
         }
     }
 }

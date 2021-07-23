@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a local network gateway in the specified resource group. </summary>
     public partial class LocalNetworkGatewaysCreateOrUpdateOperation : Operation<LocalNetworkGateway>, IOperationSource<LocalNetworkGateway>
     {
-        private readonly ArmOperationHelpers<LocalNetworkGateway> _operation;
+        private readonly OperationInternals<LocalNetworkGateway> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of LocalNetworkGatewaysCreateOrUpdateOperation for mocking. </summary>
         protected LocalNetworkGatewaysCreateOrUpdateOperation()
         {
         }
 
-        internal LocalNetworkGatewaysCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal LocalNetworkGatewaysCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<LocalNetworkGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LocalNetworkGatewaysCreateOrUpdateOperation");
+            _operation = new OperationInternals<LocalNetworkGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LocalNetworkGatewaysCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         LocalNetworkGateway IOperationSource<LocalNetworkGateway>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return LocalNetworkGateway.DeserializeLocalNetworkGateway(document.RootElement);
+            return new LocalNetworkGateway(_operationBase, LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(document.RootElement));
         }
 
         async ValueTask<LocalNetworkGateway> IOperationSource<LocalNetworkGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return LocalNetworkGateway.DeserializeLocalNetworkGateway(document.RootElement);
+            return new LocalNetworkGateway(_operationBase, LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(document.RootElement));
         }
     }
 }

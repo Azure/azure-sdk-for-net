@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider. </summary>
     public partial class VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation : Operation<VpnClientIPsecParameters>, IOperationSource<VpnClientIPsecParameters>
     {
-        private readonly ArmOperationHelpers<VpnClientIPsecParameters> _operation;
+        private readonly OperationInternals<VpnClientIPsecParameters> _operation;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation for mocking. </summary>
         protected VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VpnClientIPsecParameters>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation");
+            _operation = new OperationInternals<VpnClientIPsecParameters>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetVpnclientIpsecParametersOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a DDoS protection plan. </summary>
     public partial class DdosProtectionPlansCreateOrUpdateOperation : Operation<DdosProtectionPlan>, IOperationSource<DdosProtectionPlan>
     {
-        private readonly ArmOperationHelpers<DdosProtectionPlan> _operation;
+        private readonly OperationInternals<DdosProtectionPlan> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of DdosProtectionPlansCreateOrUpdateOperation for mocking. </summary>
         protected DdosProtectionPlansCreateOrUpdateOperation()
         {
         }
 
-        internal DdosProtectionPlansCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DdosProtectionPlansCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<DdosProtectionPlan>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DdosProtectionPlansCreateOrUpdateOperation");
+            _operation = new OperationInternals<DdosProtectionPlan>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DdosProtectionPlansCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         DdosProtectionPlan IOperationSource<DdosProtectionPlan>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return DdosProtectionPlan.DeserializeDdosProtectionPlan(document.RootElement);
+            return new DdosProtectionPlan(_operationBase, DdosProtectionPlanData.DeserializeDdosProtectionPlanData(document.RootElement));
         }
 
         async ValueTask<DdosProtectionPlan> IOperationSource<DdosProtectionPlan>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return DdosProtectionPlan.DeserializeDdosProtectionPlan(document.RootElement);
+            return new DdosProtectionPlan(_operationBase, DdosProtectionPlanData.DeserializeDdosProtectionPlanData(document.RootElement));
         }
     }
 }

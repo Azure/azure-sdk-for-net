@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteGatewayList. </summary>
         internal ExpressRouteGatewayList()
         {
-            Value = new ChangeTrackingList<ExpressRouteGateway>();
+            Value = new ChangeTrackingList<ExpressRouteGatewayData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteGatewayList. </summary>
         /// <param name="value"> List of ExpressRoute gateways. </param>
-        internal ExpressRouteGatewayList(IReadOnlyList<ExpressRouteGateway> value)
+        internal ExpressRouteGatewayList(IReadOnlyList<ExpressRouteGatewayData> value)
         {
             Value = value;
         }
 
         /// <summary> List of ExpressRoute gateways. </summary>
-        public IReadOnlyList<ExpressRouteGateway> Value { get; }
+        public IReadOnlyList<ExpressRouteGatewayData> Value { get; }
     }
 }

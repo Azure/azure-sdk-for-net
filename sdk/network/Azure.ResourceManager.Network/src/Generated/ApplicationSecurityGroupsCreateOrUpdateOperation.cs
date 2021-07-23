@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates an application security group. </summary>
     public partial class ApplicationSecurityGroupsCreateOrUpdateOperation : Operation<ApplicationSecurityGroup>, IOperationSource<ApplicationSecurityGroup>
     {
-        private readonly ArmOperationHelpers<ApplicationSecurityGroup> _operation;
+        private readonly OperationInternals<ApplicationSecurityGroup> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ApplicationSecurityGroupsCreateOrUpdateOperation for mocking. </summary>
         protected ApplicationSecurityGroupsCreateOrUpdateOperation()
         {
         }
 
-        internal ApplicationSecurityGroupsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ApplicationSecurityGroupsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ApplicationSecurityGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ApplicationSecurityGroupsCreateOrUpdateOperation");
+            _operation = new OperationInternals<ApplicationSecurityGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ApplicationSecurityGroupsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         ApplicationSecurityGroup IOperationSource<ApplicationSecurityGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ApplicationSecurityGroup.DeserializeApplicationSecurityGroup(document.RootElement);
+            return new ApplicationSecurityGroup(_operationBase, ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(document.RootElement));
         }
 
         async ValueTask<ApplicationSecurityGroup> IOperationSource<ApplicationSecurityGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ApplicationSecurityGroup.DeserializeApplicationSecurityGroup(document.RootElement);
+            return new ApplicationSecurityGroup(_operationBase, ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(document.RootElement));
         }
     }
 }

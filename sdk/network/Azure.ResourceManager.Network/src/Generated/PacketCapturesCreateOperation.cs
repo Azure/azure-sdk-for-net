@@ -12,29 +12,34 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Create and start a packet capture on the specified VM. </summary>
-    public partial class PacketCapturesCreateOperation : Operation<PacketCaptureResult>, IOperationSource<PacketCaptureResult>
+    public partial class PacketCapturesCreateOperation : Operation<PacketCapture>, IOperationSource<PacketCapture>
     {
-        private readonly ArmOperationHelpers<PacketCaptureResult> _operation;
+        private readonly OperationInternals<PacketCapture> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of PacketCapturesCreateOperation for mocking. </summary>
         protected PacketCapturesCreateOperation()
         {
         }
 
-        internal PacketCapturesCreateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PacketCapturesCreateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<PacketCaptureResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PacketCapturesCreateOperation");
+            _operation = new OperationInternals<PacketCapture>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PacketCapturesCreateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override PacketCaptureResult Value => _operation.Value;
+        public override PacketCapture Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,21 +57,21 @@ namespace Azure.ResourceManager.Network
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<PacketCaptureResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<PacketCapture>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<PacketCaptureResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<PacketCapture>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        PacketCaptureResult IOperationSource<PacketCaptureResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        PacketCapture IOperationSource<PacketCapture>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return PacketCaptureResult.DeserializePacketCaptureResult(document.RootElement);
+            return new PacketCapture(_operationBase, PacketCaptureData.DeserializePacketCaptureData(document.RootElement));
         }
 
-        async ValueTask<PacketCaptureResult> IOperationSource<PacketCaptureResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PacketCapture> IOperationSource<PacketCapture>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return PacketCaptureResult.DeserializePacketCaptureResult(document.RootElement);
+            return new PacketCapture(_operationBase, PacketCaptureData.DeserializePacketCaptureData(document.RootElement));
         }
     }
 }

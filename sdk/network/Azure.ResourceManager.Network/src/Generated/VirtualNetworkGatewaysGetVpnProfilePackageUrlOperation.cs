@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile. </summary>
     public partial class VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation : Operation<string>, IOperationSource<string>
     {
-        private readonly ArmOperationHelpers<string> _operation;
+        private readonly OperationInternals<string> _operation;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation for mocking. </summary>
         protected VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation()
@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Network
 
         internal VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<string>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation");
+            _operation = new OperationInternals<string>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetVpnProfilePackageUrlOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

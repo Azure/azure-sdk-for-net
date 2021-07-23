@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a load balancer inbound nat rule. </summary>
     public partial class InboundNatRulesCreateOrUpdateOperation : Operation<InboundNatRule>, IOperationSource<InboundNatRule>
     {
-        private readonly ArmOperationHelpers<InboundNatRule> _operation;
+        private readonly OperationInternals<InboundNatRule> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of InboundNatRulesCreateOrUpdateOperation for mocking. </summary>
         protected InboundNatRulesCreateOrUpdateOperation()
         {
         }
 
-        internal InboundNatRulesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal InboundNatRulesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<InboundNatRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "InboundNatRulesCreateOrUpdateOperation");
+            _operation = new OperationInternals<InboundNatRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "InboundNatRulesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         InboundNatRule IOperationSource<InboundNatRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return InboundNatRule.DeserializeInboundNatRule(document.RootElement);
+            return new InboundNatRule(_operationBase, InboundNatRuleData.DeserializeInboundNatRuleData(document.RootElement));
         }
 
         async ValueTask<InboundNatRule> IOperationSource<InboundNatRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return InboundNatRule.DeserializeInboundNatRule(document.RootElement);
+            return new InboundNatRule(_operationBase, InboundNatRuleData.DeserializeInboundNatRuleData(document.RootElement));
         }
     }
 }

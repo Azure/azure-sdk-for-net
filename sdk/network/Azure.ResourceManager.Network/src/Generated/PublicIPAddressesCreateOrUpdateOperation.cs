@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a static or dynamic public IP address. </summary>
     public partial class PublicIPAddressesCreateOrUpdateOperation : Operation<PublicIPAddress>, IOperationSource<PublicIPAddress>
     {
-        private readonly ArmOperationHelpers<PublicIPAddress> _operation;
+        private readonly OperationInternals<PublicIPAddress> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of PublicIPAddressesCreateOrUpdateOperation for mocking. </summary>
         protected PublicIPAddressesCreateOrUpdateOperation()
         {
         }
 
-        internal PublicIPAddressesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PublicIPAddressesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<PublicIPAddress>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PublicIPAddressesCreateOrUpdateOperation");
+            _operation = new OperationInternals<PublicIPAddress>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PublicIPAddressesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         PublicIPAddress IOperationSource<PublicIPAddress>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
+            return new PublicIPAddress(_operationBase, PublicIPAddressData.DeserializePublicIPAddressData(document.RootElement));
         }
 
         async ValueTask<PublicIPAddress> IOperationSource<PublicIPAddress>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return PublicIPAddress.DeserializePublicIPAddress(document.RootElement);
+            return new PublicIPAddress(_operationBase, PublicIPAddressData.DeserializePublicIPAddressData(document.RootElement));
         }
     }
 }

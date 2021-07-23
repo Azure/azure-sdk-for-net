@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates the specified Firewall Policy. </summary>
     public partial class FirewallPoliciesCreateOrUpdateOperation : Operation<FirewallPolicy>, IOperationSource<FirewallPolicy>
     {
-        private readonly ArmOperationHelpers<FirewallPolicy> _operation;
+        private readonly OperationInternals<FirewallPolicy> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of FirewallPoliciesCreateOrUpdateOperation for mocking. </summary>
         protected FirewallPoliciesCreateOrUpdateOperation()
         {
         }
 
-        internal FirewallPoliciesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal FirewallPoliciesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<FirewallPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "FirewallPoliciesCreateOrUpdateOperation");
+            _operation = new OperationInternals<FirewallPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "FirewallPoliciesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         FirewallPolicy IOperationSource<FirewallPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return FirewallPolicy.DeserializeFirewallPolicy(document.RootElement);
+            return new FirewallPolicy(_operationBase, FirewallPolicyData.DeserializeFirewallPolicyData(document.RootElement));
         }
 
         async ValueTask<FirewallPolicy> IOperationSource<FirewallPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return FirewallPolicy.DeserializeFirewallPolicy(document.RootElement);
+            return new FirewallPolicy(_operationBase, FirewallPolicyData.DeserializeFirewallPolicyData(document.RootElement));
         }
     }
 }

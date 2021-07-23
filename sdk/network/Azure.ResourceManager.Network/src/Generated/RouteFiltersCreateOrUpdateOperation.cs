@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a route filter in a specified resource group. </summary>
     public partial class RouteFiltersCreateOrUpdateOperation : Operation<RouteFilter>, IOperationSource<RouteFilter>
     {
-        private readonly ArmOperationHelpers<RouteFilter> _operation;
+        private readonly OperationInternals<RouteFilter> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of RouteFiltersCreateOrUpdateOperation for mocking. </summary>
         protected RouteFiltersCreateOrUpdateOperation()
         {
         }
 
-        internal RouteFiltersCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal RouteFiltersCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<RouteFilter>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RouteFiltersCreateOrUpdateOperation");
+            _operation = new OperationInternals<RouteFilter>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RouteFiltersCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         RouteFilter IOperationSource<RouteFilter>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return RouteFilter.DeserializeRouteFilter(document.RootElement);
+            return new RouteFilter(_operationBase, RouteFilterData.DeserializeRouteFilterData(document.RootElement));
         }
 
         async ValueTask<RouteFilter> IOperationSource<RouteFilter>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return RouteFilter.DeserializeRouteFilter(document.RootElement);
+            return new RouteFilter(_operationBase, RouteFilterData.DeserializeRouteFilterData(document.RootElement));
         }
     }
 }

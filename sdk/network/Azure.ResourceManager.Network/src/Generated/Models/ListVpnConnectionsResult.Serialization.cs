@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ListVpnConnectionsResult DeserializeListVpnConnectionsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VpnConnection>> value = default;
+            Optional<IReadOnlyList<VpnConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VpnConnection> array = new List<VpnConnection>();
+                    List<VpnConnectionData> array = new List<VpnConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VpnConnection.DeserializeVpnConnection(item));
+                        array.Add(VpnConnectionData.DeserializeVpnConnectionData(item));
                     }
                     value = array;
                     continue;

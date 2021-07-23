@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Create or update a flow log for the specified network security group. </summary>
     public partial class FlowLogsCreateOrUpdateOperation : Operation<FlowLog>, IOperationSource<FlowLog>
     {
-        private readonly ArmOperationHelpers<FlowLog> _operation;
+        private readonly OperationInternals<FlowLog> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of FlowLogsCreateOrUpdateOperation for mocking. </summary>
         protected FlowLogsCreateOrUpdateOperation()
         {
         }
 
-        internal FlowLogsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal FlowLogsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<FlowLog>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "FlowLogsCreateOrUpdateOperation");
+            _operation = new OperationInternals<FlowLog>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "FlowLogsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         FlowLog IOperationSource<FlowLog>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return FlowLog.DeserializeFlowLog(document.RootElement);
+            return new FlowLog(_operationBase, FlowLogData.DeserializeFlowLogData(document.RootElement));
         }
 
         async ValueTask<FlowLog> IOperationSource<FlowLog>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return FlowLog.DeserializeFlowLog(document.RootElement);
+            return new FlowLog(_operationBase, FlowLogData.DeserializeFlowLogData(document.RootElement));
         }
     }
 }

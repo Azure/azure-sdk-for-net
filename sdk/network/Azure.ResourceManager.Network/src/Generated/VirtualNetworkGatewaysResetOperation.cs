@@ -17,9 +17,9 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Resets the primary of the virtual network gateway in the specified resource group. </summary>
-    public partial class VirtualNetworkGatewaysResetOperation : Operation<VirtualNetworkGateway>, IOperationSource<VirtualNetworkGateway>
+    public partial class VirtualNetworkGatewaysResetOperation : Operation<VirtualNetworkGatewayData>, IOperationSource<VirtualNetworkGatewayData>
     {
-        private readonly ArmOperationHelpers<VirtualNetworkGateway> _operation;
+        private readonly OperationInternals<VirtualNetworkGatewayData> _operation;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewaysResetOperation for mocking. </summary>
         protected VirtualNetworkGatewaysResetOperation()
@@ -28,13 +28,14 @@ namespace Azure.ResourceManager.Network
 
         internal VirtualNetworkGatewaysResetOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VirtualNetworkGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysResetOperation");
+            _operation = new OperationInternals<VirtualNetworkGatewayData>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysResetOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override VirtualNetworkGateway Value => _operation.Value;
+        public override VirtualNetworkGatewayData Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -52,21 +53,21 @@ namespace Azure.ResourceManager.Network
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<VirtualNetworkGateway>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<VirtualNetworkGatewayData>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<VirtualNetworkGateway>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<VirtualNetworkGatewayData>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        VirtualNetworkGateway IOperationSource<VirtualNetworkGateway>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualNetworkGatewayData IOperationSource<VirtualNetworkGatewayData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VirtualNetworkGateway.DeserializeVirtualNetworkGateway(document.RootElement);
+            return VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(document.RootElement);
         }
 
-        async ValueTask<VirtualNetworkGateway> IOperationSource<VirtualNetworkGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualNetworkGatewayData> IOperationSource<VirtualNetworkGatewayData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VirtualNetworkGateway.DeserializeVirtualNetworkGateway(document.RootElement);
+            return VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(document.RootElement);
         }
     }
 }

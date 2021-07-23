@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates an private link service in the specified resource group. </summary>
     public partial class PrivateLinkServicesCreateOrUpdateOperation : Operation<PrivateLinkService>, IOperationSource<PrivateLinkService>
     {
-        private readonly ArmOperationHelpers<PrivateLinkService> _operation;
+        private readonly OperationInternals<PrivateLinkService> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of PrivateLinkServicesCreateOrUpdateOperation for mocking. </summary>
         protected PrivateLinkServicesCreateOrUpdateOperation()
         {
         }
 
-        internal PrivateLinkServicesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PrivateLinkServicesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<PrivateLinkService>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PrivateLinkServicesCreateOrUpdateOperation");
+            _operation = new OperationInternals<PrivateLinkService>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PrivateLinkServicesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         PrivateLinkService IOperationSource<PrivateLinkService>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return PrivateLinkService.DeserializePrivateLinkService(document.RootElement);
+            return new PrivateLinkService(_operationBase, PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement));
         }
 
         async ValueTask<PrivateLinkService> IOperationSource<PrivateLinkService>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return PrivateLinkService.DeserializePrivateLinkService(document.RootElement);
+            return new PrivateLinkService(_operationBase, PrivateLinkServiceData.DeserializePrivateLinkServiceData(document.RootElement));
         }
     }
 }

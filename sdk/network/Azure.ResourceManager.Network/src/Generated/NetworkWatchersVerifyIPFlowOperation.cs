@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Verify IP flow from the specified VM to a location given the currently configured NSG rules. </summary>
     public partial class NetworkWatchersVerifyIPFlowOperation : Operation<VerificationIPFlowResult>, IOperationSource<VerificationIPFlowResult>
     {
-        private readonly ArmOperationHelpers<VerificationIPFlowResult> _operation;
+        private readonly OperationInternals<VerificationIPFlowResult> _operation;
 
         /// <summary> Initializes a new instance of NetworkWatchersVerifyIPFlowOperation for mocking. </summary>
         protected NetworkWatchersVerifyIPFlowOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal NetworkWatchersVerifyIPFlowOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VerificationIPFlowResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersVerifyIPFlowOperation");
+            _operation = new OperationInternals<VerificationIPFlowResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersVerifyIPFlowOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

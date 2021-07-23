@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Verifies the possibility of establishing a direct TCP connection from a virtual machine to a given endpoint including another VM or an arbitrary remote server. </summary>
     public partial class NetworkWatchersCheckConnectivityOperation : Operation<ConnectivityInformation>, IOperationSource<ConnectivityInformation>
     {
-        private readonly ArmOperationHelpers<ConnectivityInformation> _operation;
+        private readonly OperationInternals<ConnectivityInformation> _operation;
 
         /// <summary> Initializes a new instance of NetworkWatchersCheckConnectivityOperation for mocking. </summary>
         protected NetworkWatchersCheckConnectivityOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal NetworkWatchersCheckConnectivityOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ConnectivityInformation>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersCheckConnectivityOperation");
+            _operation = new OperationInternals<ConnectivityInformation>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersCheckConnectivityOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

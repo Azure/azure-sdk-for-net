@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static RouteTableListResult DeserializeRouteTableListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RouteTable>> value = default;
+            Optional<IReadOnlyList<RouteTableData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RouteTable> array = new List<RouteTable>();
+                    List<RouteTableData> array = new List<RouteTableData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteTable.DeserializeRouteTable(item));
+                        array.Add(RouteTableData.DeserializeRouteTableData(item));
                     }
                     value = array;
                     continue;

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> NOTE: This feature is currently in preview and still being tested for stability. Gets the relative latency score for internet service providers from a specified location to Azure regions. </summary>
     public partial class NetworkWatchersGetAzureReachabilityReportOperation : Operation<AzureReachabilityReport>, IOperationSource<AzureReachabilityReport>
     {
-        private readonly ArmOperationHelpers<AzureReachabilityReport> _operation;
+        private readonly OperationInternals<AzureReachabilityReport> _operation;
 
         /// <summary> Initializes a new instance of NetworkWatchersGetAzureReachabilityReportOperation for mocking. </summary>
         protected NetworkWatchersGetAzureReachabilityReportOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal NetworkWatchersGetAzureReachabilityReportOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<AzureReachabilityReport>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetAzureReachabilityReportOperation");
+            _operation = new OperationInternals<AzureReachabilityReport>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetAzureReachabilityReportOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates the specified ExpressRoutePort resource. </summary>
     public partial class ExpressRoutePortsCreateOrUpdateOperation : Operation<ExpressRoutePort>, IOperationSource<ExpressRoutePort>
     {
-        private readonly ArmOperationHelpers<ExpressRoutePort> _operation;
+        private readonly OperationInternals<ExpressRoutePort> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ExpressRoutePortsCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRoutePortsCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRoutePortsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRoutePortsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ExpressRoutePort>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRoutePortsCreateOrUpdateOperation");
+            _operation = new OperationInternals<ExpressRoutePort>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRoutePortsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         ExpressRoutePort IOperationSource<ExpressRoutePort>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ExpressRoutePort.DeserializeExpressRoutePort(document.RootElement);
+            return new ExpressRoutePort(_operationBase, ExpressRoutePortData.DeserializeExpressRoutePortData(document.RootElement));
         }
 
         async ValueTask<ExpressRoutePort> IOperationSource<ExpressRoutePort>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ExpressRoutePort.DeserializeExpressRoutePort(document.RootElement);
+            return new ExpressRoutePort(_operationBase, ExpressRoutePortData.DeserializeExpressRoutePortData(document.RootElement));
         }
     }
 }

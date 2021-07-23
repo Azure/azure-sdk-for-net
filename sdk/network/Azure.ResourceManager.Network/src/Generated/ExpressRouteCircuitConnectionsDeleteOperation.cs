@@ -15,9 +15,9 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Deletes the specified Express Route Circuit Connection from the specified express route circuit. </summary>
-    public partial class ExpressRouteCircuitConnectionsDeleteOperation : Operation<Response>, IOperationSource<Response>
+    public partial class ExpressRouteCircuitConnectionsDeleteOperation : Operation
     {
-        private readonly ArmOperationHelpers<Response> _operation;
+        private readonly OperationInternals _operation;
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionsDeleteOperation for mocking. </summary>
         protected ExpressRouteCircuitConnectionsDeleteOperation()
@@ -26,19 +26,14 @@ namespace Azure.ResourceManager.Network
 
         internal ExpressRouteCircuitConnectionsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCircuitConnectionsDeleteOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCircuitConnectionsDeleteOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override Response Value => _operation.Value;
-
-        /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
-
-        /// <inheritdoc />
-        public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
         public override Response GetRawResponse() => _operation.GetRawResponse();
@@ -50,19 +45,9 @@ namespace Azure.ResourceManager.Network
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
-
-        Response IOperationSource<Response>.CreateResult(Response response, CancellationToken cancellationToken)
-        {
-            return response;
-        }
-
-        async ValueTask<Response> IOperationSource<Response>.CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            return await new ValueTask<Response>(response).ConfigureAwait(false);
-        }
+        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
     }
 }

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates the specified Bastion Host. </summary>
     public partial class BastionHostsCreateOrUpdateOperation : Operation<BastionHost>, IOperationSource<BastionHost>
     {
-        private readonly ArmOperationHelpers<BastionHost> _operation;
+        private readonly OperationInternals<BastionHost> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of BastionHostsCreateOrUpdateOperation for mocking. </summary>
         protected BastionHostsCreateOrUpdateOperation()
         {
         }
 
-        internal BastionHostsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal BastionHostsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<BastionHost>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "BastionHostsCreateOrUpdateOperation");
+            _operation = new OperationInternals<BastionHost>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "BastionHostsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         BastionHost IOperationSource<BastionHost>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return BastionHost.DeserializeBastionHost(document.RootElement);
+            return new BastionHost(_operationBase, BastionHostData.DeserializeBastionHostData(document.RootElement));
         }
 
         async ValueTask<BastionHost> IOperationSource<BastionHost>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return BastionHost.DeserializeBastionHost(document.RootElement);
+            return new BastionHost(_operationBase, BastionHostData.DeserializeBastionHostData(document.RootElement));
         }
     }
 }

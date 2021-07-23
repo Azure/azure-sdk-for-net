@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Gets the sas url to get the connection health detail of P2S clients of the virtual wan P2SVpnGateway in the specified resource group. </summary>
     public partial class P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOperation : Operation<P2SVpnConnectionHealth>, IOperationSource<P2SVpnConnectionHealth>
     {
-        private readonly ArmOperationHelpers<P2SVpnConnectionHealth> _operation;
+        private readonly OperationInternals<P2SVpnConnectionHealth> _operation;
 
         /// <summary> Initializes a new instance of P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOperation for mocking. </summary>
         protected P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<P2SVpnConnectionHealth>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOperation");
+            _operation = new OperationInternals<P2SVpnConnectionHealth>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "P2SVpnGatewaysGetP2SVpnConnectionHealthDetailedOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

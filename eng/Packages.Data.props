@@ -76,7 +76,7 @@
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Common" Version="1.0.1" />
-    <PackageReference Update="Azure.Core" Version="1.15.0" />
+    <PackageReference Update="Azure.Core" Version="1.16.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.1.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.13" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.4.1" />
@@ -117,7 +117,7 @@
 
   <!-- Packages intended for Management libraries only -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true'">
-    <PackageReference Update="Azure.ResourceManager.Core" Version="1.0.0-alpha.20210526.3" />
+    <PackageReference Update="Azure.ResourceManager.Core" Version="1.0.0-alpha.20210721.3" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group. </summary>
     public partial class ApplicationGatewaysBackendHealthOnDemandOperation : Operation<ApplicationGatewayBackendHealthOnDemand>, IOperationSource<ApplicationGatewayBackendHealthOnDemand>
     {
-        private readonly ArmOperationHelpers<ApplicationGatewayBackendHealthOnDemand> _operation;
+        private readonly OperationInternals<ApplicationGatewayBackendHealthOnDemand> _operation;
 
         /// <summary> Initializes a new instance of ApplicationGatewaysBackendHealthOnDemandOperation for mocking. </summary>
         protected ApplicationGatewaysBackendHealthOnDemandOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal ApplicationGatewaysBackendHealthOnDemandOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ApplicationGatewayBackendHealthOnDemand>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ApplicationGatewaysBackendHealthOnDemandOperation");
+            _operation = new OperationInternals<ApplicationGatewayBackendHealthOnDemand>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ApplicationGatewaysBackendHealthOnDemandOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

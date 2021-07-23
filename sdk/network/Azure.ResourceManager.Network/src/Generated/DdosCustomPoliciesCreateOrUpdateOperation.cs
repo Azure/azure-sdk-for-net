@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a DDoS custom policy. </summary>
     public partial class DdosCustomPoliciesCreateOrUpdateOperation : Operation<DdosCustomPolicy>, IOperationSource<DdosCustomPolicy>
     {
-        private readonly ArmOperationHelpers<DdosCustomPolicy> _operation;
+        private readonly OperationInternals<DdosCustomPolicy> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of DdosCustomPoliciesCreateOrUpdateOperation for mocking. </summary>
         protected DdosCustomPoliciesCreateOrUpdateOperation()
         {
         }
 
-        internal DdosCustomPoliciesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DdosCustomPoliciesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<DdosCustomPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DdosCustomPoliciesCreateOrUpdateOperation");
+            _operation = new OperationInternals<DdosCustomPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DdosCustomPoliciesCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         DdosCustomPolicy IOperationSource<DdosCustomPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return DdosCustomPolicy.DeserializeDdosCustomPolicy(document.RootElement);
+            return new DdosCustomPolicy(_operationBase, DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement));
         }
 
         async ValueTask<DdosCustomPolicy> IOperationSource<DdosCustomPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return DdosCustomPolicy.DeserializeDdosCustomPolicy(document.RootElement);
+            return new DdosCustomPolicy(_operationBase, DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement));
         }
     }
 }

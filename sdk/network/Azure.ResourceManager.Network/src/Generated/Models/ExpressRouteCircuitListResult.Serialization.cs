@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteCircuitListResult DeserializeExpressRouteCircuitListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ExpressRouteCircuit>> value = default;
+            Optional<IReadOnlyList<ExpressRouteCircuitData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExpressRouteCircuit> array = new List<ExpressRouteCircuit>();
+                    List<ExpressRouteCircuitData> array = new List<ExpressRouteCircuitData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRouteCircuit.DeserializeExpressRouteCircuit(item));
+                        array.Add(ExpressRouteCircuitData.DeserializeExpressRouteCircuitData(item));
                     }
                     value = array;
                     continue;

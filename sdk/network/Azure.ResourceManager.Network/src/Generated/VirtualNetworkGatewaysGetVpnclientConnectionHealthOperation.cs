@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Get VPN client connection health detail per P2S client connection of the virtual network gateway in the specified resource group. </summary>
     public partial class VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation : Operation<VpnClientConnectionHealthDetailListResult>, IOperationSource<VpnClientConnectionHealthDetailListResult>
     {
-        private readonly ArmOperationHelpers<VpnClientConnectionHealthDetailListResult> _operation;
+        private readonly OperationInternals<VpnClientConnectionHealthDetailListResult> _operation;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation for mocking. </summary>
         protected VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VpnClientConnectionHealthDetailListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation");
+            _operation = new OperationInternals<VpnClientConnectionHealthDetailListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

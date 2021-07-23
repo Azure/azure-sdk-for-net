@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ListHubRouteTablesResult DeserializeListHubRouteTablesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<HubRouteTable>> value = default;
+            Optional<IReadOnlyList<HubRouteTableData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HubRouteTable> array = new List<HubRouteTable>();
+                    List<HubRouteTableData> array = new List<HubRouteTableData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HubRouteTable.DeserializeHubRouteTable(item));
+                        array.Add(HubRouteTableData.DeserializeHubRouteTableData(item));
                     }
                     value = array;
                     continue;

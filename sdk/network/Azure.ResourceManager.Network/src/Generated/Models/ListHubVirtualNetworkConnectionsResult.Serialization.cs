@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ListHubVirtualNetworkConnectionsResult DeserializeListHubVirtualNetworkConnectionsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<HubVirtualNetworkConnection>> value = default;
+            Optional<IReadOnlyList<HubVirtualNetworkConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HubVirtualNetworkConnection> array = new List<HubVirtualNetworkConnection>();
+                    List<HubVirtualNetworkConnectionData> array = new List<HubVirtualNetworkConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HubVirtualNetworkConnection.DeserializeHubVirtualNetworkConnection(item));
+                        array.Add(HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(item));
                     }
                     value = array;
                     continue;

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates a load balancer backend address pool. </summary>
     public partial class LoadBalancerBackendAddressPoolsCreateOrUpdateOperation : Operation<BackendAddressPool>, IOperationSource<BackendAddressPool>
     {
-        private readonly ArmOperationHelpers<BackendAddressPool> _operation;
+        private readonly OperationInternals<BackendAddressPool> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolsCreateOrUpdateOperation for mocking. </summary>
         protected LoadBalancerBackendAddressPoolsCreateOrUpdateOperation()
         {
         }
 
-        internal LoadBalancerBackendAddressPoolsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal LoadBalancerBackendAddressPoolsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<BackendAddressPool>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LoadBalancerBackendAddressPoolsCreateOrUpdateOperation");
+            _operation = new OperationInternals<BackendAddressPool>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LoadBalancerBackendAddressPoolsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         BackendAddressPool IOperationSource<BackendAddressPool>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return BackendAddressPool.DeserializeBackendAddressPool(document.RootElement);
+            return new BackendAddressPool(_operationBase, BackendAddressPoolData.DeserializeBackendAddressPoolData(document.RootElement));
         }
 
         async ValueTask<BackendAddressPool> IOperationSource<BackendAddressPool>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return BackendAddressPool.DeserializeBackendAddressPool(document.RootElement);
+            return new BackendAddressPool(_operationBase, BackendAddressPoolData.DeserializeBackendAddressPoolData(document.RootElement));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
     public partial class VirtualNetworkGatewayConnectionsSetSharedKeyOperation : Operation<ConnectionSharedKey>, IOperationSource<ConnectionSharedKey>
     {
-        private readonly ArmOperationHelpers<ConnectionSharedKey> _operation;
+        private readonly OperationInternals<ConnectionSharedKey> _operation;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionsSetSharedKeyOperation for mocking. </summary>
         protected VirtualNetworkGatewayConnectionsSetSharedKeyOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal VirtualNetworkGatewayConnectionsSetSharedKeyOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<ConnectionSharedKey>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworkGatewayConnectionsSetSharedKeyOperation");
+            _operation = new OperationInternals<ConnectionSharedKey>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworkGatewayConnectionsSetSharedKeyOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

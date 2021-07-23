@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Checks whether the subscription is visible to private link service. </summary>
     public partial class PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation : Operation<PrivateLinkServiceVisibility>, IOperationSource<PrivateLinkServiceVisibility>
     {
-        private readonly ArmOperationHelpers<PrivateLinkServiceVisibility> _operation;
+        private readonly OperationInternals<PrivateLinkServiceVisibility> _operation;
 
         /// <summary> Initializes a new instance of PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation for mocking. </summary>
         protected PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<PrivateLinkServiceVisibility>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation");
+            _operation = new OperationInternals<PrivateLinkServiceVisibility>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateLinkServicesCheckPrivateLinkServiceVisibilityOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

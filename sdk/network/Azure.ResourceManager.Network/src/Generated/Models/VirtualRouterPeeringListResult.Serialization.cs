@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualRouterPeeringListResult DeserializeVirtualRouterPeeringListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualRouterPeering>> value = default;
+            Optional<IReadOnlyList<VirtualRouterPeeringData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualRouterPeering> array = new List<VirtualRouterPeering>();
+                    List<VirtualRouterPeeringData> array = new List<VirtualRouterPeeringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualRouterPeering.DeserializeVirtualRouterPeering(item));
+                        array.Add(VirtualRouterPeeringData.DeserializeVirtualRouterPeeringData(item));
                     }
                     value = array;
                     continue;

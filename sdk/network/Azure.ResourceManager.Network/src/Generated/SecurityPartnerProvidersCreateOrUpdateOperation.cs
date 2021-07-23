@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates the specified Security Partner Provider. </summary>
     public partial class SecurityPartnerProvidersCreateOrUpdateOperation : Operation<SecurityPartnerProvider>, IOperationSource<SecurityPartnerProvider>
     {
-        private readonly ArmOperationHelpers<SecurityPartnerProvider> _operation;
+        private readonly OperationInternals<SecurityPartnerProvider> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of SecurityPartnerProvidersCreateOrUpdateOperation for mocking. </summary>
         protected SecurityPartnerProvidersCreateOrUpdateOperation()
         {
         }
 
-        internal SecurityPartnerProvidersCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SecurityPartnerProvidersCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<SecurityPartnerProvider>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecurityPartnerProvidersCreateOrUpdateOperation");
+            _operation = new OperationInternals<SecurityPartnerProvider>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecurityPartnerProvidersCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         SecurityPartnerProvider IOperationSource<SecurityPartnerProvider>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return SecurityPartnerProvider.DeserializeSecurityPartnerProvider(document.RootElement);
+            return new SecurityPartnerProvider(_operationBase, SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(document.RootElement));
         }
 
         async ValueTask<SecurityPartnerProvider> IOperationSource<SecurityPartnerProvider>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return SecurityPartnerProvider.DeserializeSecurityPartnerProvider(document.RootElement);
+            return new SecurityPartnerProvider(_operationBase, SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(document.RootElement));
         }
     }
 }

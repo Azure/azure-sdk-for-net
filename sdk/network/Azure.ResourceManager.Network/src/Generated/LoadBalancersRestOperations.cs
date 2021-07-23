@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Network
     {
         private string subscriptionId;
         private Uri endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -28,17 +30,23 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public LoadBalancersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public LoadBalancersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
             endpoint ??= new Uri("https://management.azure.com");
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             this.subscriptionId = subscriptionId;
             this.endpoint = endpoint;
+            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -56,7 +64,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/loadBalancers/", false);
             uri.AppendPath(loadBalancerName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -133,7 +141,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/loadBalancers/", false);
             uri.AppendPath(loadBalancerName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -149,7 +157,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
-        public async Task<Response<LoadBalancer>> GetAsync(string resourceGroupName, string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LoadBalancerData>> GetAsync(string resourceGroupName, string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -166,9 +174,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        LoadBalancer value = default;
+                        LoadBalancerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LoadBalancer.DeserializeLoadBalancer(document.RootElement);
+                        value = LoadBalancerData.DeserializeLoadBalancerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -182,7 +190,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
-        public Response<LoadBalancer> Get(string resourceGroupName, string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<LoadBalancerData> Get(string resourceGroupName, string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -199,9 +207,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        LoadBalancer value = default;
+                        LoadBalancerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LoadBalancer.DeserializeLoadBalancer(document.RootElement);
+                        value = LoadBalancerData.DeserializeLoadBalancerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -209,7 +217,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string loadBalancerName, LoadBalancer parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string loadBalancerName, LoadBalancerData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -222,7 +230,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/loadBalancers/", false);
             uri.AppendPath(loadBalancerName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -238,7 +246,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update load balancer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string loadBalancerName, LoadBalancerData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -271,7 +279,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to the create or update load balancer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string loadBalancerName, LoadBalancer parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string loadBalancerName, LoadBalancerData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -298,7 +306,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string loadBalancerName, TagsObject parameters)
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string loadBalancerName, IDictionary<string, string> tags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -311,12 +319,21 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/loadBalancers/", false);
             uri.AppendPath(loadBalancerName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            TagsObject tagsObject = new TagsObject();
+            if (tags != null)
+            {
+                foreach (var value in tags)
+                {
+                    tagsObject.Tags.Add(value);
+                }
+            }
+            var model = tagsObject;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -324,10 +341,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a load balancer tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="parameters"> Parameters supplied to update load balancer tags. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<LoadBalancer>> UpdateTagsAsync(string resourceGroupName, string loadBalancerName, TagsObject parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
+        public async Task<Response<LoadBalancerData>> UpdateTagsAsync(string resourceGroupName, string loadBalancerName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -337,20 +354,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(loadBalancerName));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, loadBalancerName, parameters);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, loadBalancerName, tags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        LoadBalancer value = default;
+                        LoadBalancerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LoadBalancer.DeserializeLoadBalancer(document.RootElement);
+                        value = LoadBalancerData.DeserializeLoadBalancerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -361,10 +374,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a load balancer tags. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="parameters"> Parameters supplied to update load balancer tags. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="loadBalancerName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<LoadBalancer> UpdateTags(string resourceGroupName, string loadBalancerName, TagsObject parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="loadBalancerName"/> is null. </exception>
+        public Response<LoadBalancerData> UpdateTags(string resourceGroupName, string loadBalancerName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -374,20 +387,16 @@ namespace Azure.ResourceManager.Network
             {
                 throw new ArgumentNullException(nameof(loadBalancerName));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
-            using var message = CreateUpdateTagsRequest(resourceGroupName, loadBalancerName, parameters);
+            using var message = CreateUpdateTagsRequest(resourceGroupName, loadBalancerName, tags);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        LoadBalancer value = default;
+                        LoadBalancerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LoadBalancer.DeserializeLoadBalancer(document.RootElement);
+                        value = LoadBalancerData.DeserializeLoadBalancerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -405,7 +414,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Network/loadBalancers", false);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -463,7 +472,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/loadBalancers", false);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -518,6 +527,85 @@ namespace Azure.ResourceManager.Network
                         value = LoadBalancerListResult.DeserializeLoadBalancerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateSwapPublicIpAddressesRequest(string location, IEnumerable<LoadBalancerVipSwapRequestFrontendIPConfiguration> frontendIPConfigurations)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/setLoadBalancerFrontendPublicIpAddresses", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            LoadBalancerVipSwapRequest loadBalancerVipSwapRequest = new LoadBalancerVipSwapRequest();
+            if (frontendIPConfigurations != null)
+            {
+                foreach (var value in frontendIPConfigurations)
+                {
+                    loadBalancerVipSwapRequest.FrontendIPConfigurations.Add(value);
+                }
+            }
+            var model = loadBalancerVipSwapRequest;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Swaps VIPs between two load balancers. </summary>
+        /// <param name="location"> The region where load balancers are located at. </param>
+        /// <param name="frontendIPConfigurations"> A list of frontend IP configuration resources that should swap VIPs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public async Task<Response> SwapPublicIpAddressesAsync(string location, IEnumerable<LoadBalancerVipSwapRequestFrontendIPConfiguration> frontendIPConfigurations = null, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var message = CreateSwapPublicIpAddressesRequest(location, frontendIPConfigurations);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Swaps VIPs between two load balancers. </summary>
+        /// <param name="location"> The region where load balancers are located at. </param>
+        /// <param name="frontendIPConfigurations"> A list of frontend IP configuration resources that should swap VIPs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public Response SwapPublicIpAddresses(string location, IEnumerable<LoadBalancerVipSwapRequestFrontendIPConfiguration> frontendIPConfigurations = null, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var message = CreateSwapPublicIpAddressesRequest(location, frontendIPConfigurations);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

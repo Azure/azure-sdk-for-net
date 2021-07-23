@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Generates VPN profile for P2S client of the P2SVpnGateway in the specified resource group. </summary>
     public partial class P2SVpnGatewaysGenerateVpnProfileOperation : Operation<VpnProfileResponse>, IOperationSource<VpnProfileResponse>
     {
-        private readonly ArmOperationHelpers<VpnProfileResponse> _operation;
+        private readonly OperationInternals<VpnProfileResponse> _operation;
 
         /// <summary> Initializes a new instance of P2SVpnGatewaysGenerateVpnProfileOperation for mocking. </summary>
         protected P2SVpnGatewaysGenerateVpnProfileOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal P2SVpnGatewaysGenerateVpnProfileOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VpnProfileResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "P2SVpnGatewaysGenerateVpnProfileOperation");
+            _operation = new OperationInternals<VpnProfileResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "P2SVpnGatewaysGenerateVpnProfileOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates a VirtualHub resource if it doesn&apos;t exist else updates the existing VirtualHub. </summary>
     public partial class VirtualHubsCreateOrUpdateOperation : Operation<VirtualHub>, IOperationSource<VirtualHub>
     {
-        private readonly ArmOperationHelpers<VirtualHub> _operation;
+        private readonly OperationInternals<VirtualHub> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VirtualHubsCreateOrUpdateOperation for mocking. </summary>
         protected VirtualHubsCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualHubsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualHubsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VirtualHub>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualHubsCreateOrUpdateOperation");
+            _operation = new OperationInternals<VirtualHub>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualHubsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         VirtualHub IOperationSource<VirtualHub>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VirtualHub.DeserializeVirtualHub(document.RootElement);
+            return new VirtualHub(_operationBase, VirtualHubData.DeserializeVirtualHubData(document.RootElement));
         }
 
         async ValueTask<VirtualHub> IOperationSource<VirtualHub>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VirtualHub.DeserializeVirtualHub(document.RootElement);
+            return new VirtualHub(_operationBase, VirtualHubData.DeserializeVirtualHubData(document.RootElement));
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Network
     {
         private string subscriptionId;
         private Uri endpoint;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -28,22 +30,28 @@ namespace Azure.ResourceManager.Network
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public FlowLogsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="apiVersion"/> is null. </exception>
+        public FlowLogsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null, string apiVersion = "2021-02-01")
         {
             if (subscriptionId == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionId));
             }
             endpoint ??= new Uri("https://management.azure.com");
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             this.subscriptionId = subscriptionId;
             this.endpoint = endpoint;
+            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string networkWatcherName, string flowLogName, FlowLog parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string networkWatcherName, string flowLogName, FlowLogData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,7 +66,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(networkWatcherName, true);
             uri.AppendPath("/flowLogs/", false);
             uri.AppendPath(flowLogName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -75,7 +83,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="flowLogName"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string networkWatcherName, string flowLogName, FlowLog parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string networkWatcherName, string flowLogName, FlowLogData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -113,7 +121,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the create or update flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="flowLogName"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string networkWatcherName, string flowLogName, FlowLog parameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string networkWatcherName, string flowLogName, FlowLogData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -144,6 +152,116 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal HttpMessage CreateUpdateTagsRequest(string resourceGroupName, string networkWatcherName, string flowLogName, IDictionary<string, string> tags)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
+            uri.AppendPath(networkWatcherName, true);
+            uri.AppendPath("/flowLogs/", false);
+            uri.AppendPath(flowLogName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            TagsObject tagsObject = new TagsObject();
+            if (tags != null)
+            {
+                foreach (var value in tags)
+                {
+                    tagsObject.Tags.Add(value);
+                }
+            }
+            var model = tagsObject;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Update tags of the specified flow log. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="networkWatcherName"> The name of the network watcher. </param>
+        /// <param name="flowLogName"> The name of the flow log. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="flowLogName"/> is null. </exception>
+        public async Task<Response<FlowLogData>> UpdateTagsAsync(string resourceGroupName, string networkWatcherName, string flowLogName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (networkWatcherName == null)
+            {
+                throw new ArgumentNullException(nameof(networkWatcherName));
+            }
+            if (flowLogName == null)
+            {
+                throw new ArgumentNullException(nameof(flowLogName));
+            }
+
+            using var message = CreateUpdateTagsRequest(resourceGroupName, networkWatcherName, flowLogName, tags);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FlowLogData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = FlowLogData.DeserializeFlowLogData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Update tags of the specified flow log. </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="networkWatcherName"> The name of the network watcher. </param>
+        /// <param name="flowLogName"> The name of the flow log. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="flowLogName"/> is null. </exception>
+        public Response<FlowLogData> UpdateTags(string resourceGroupName, string networkWatcherName, string flowLogName, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (networkWatcherName == null)
+            {
+                throw new ArgumentNullException(nameof(networkWatcherName));
+            }
+            if (flowLogName == null)
+            {
+                throw new ArgumentNullException(nameof(flowLogName));
+            }
+
+            using var message = CreateUpdateTagsRequest(resourceGroupName, networkWatcherName, flowLogName, tags);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FlowLogData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = FlowLogData.DeserializeFlowLogData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateGetRequest(string resourceGroupName, string networkWatcherName, string flowLogName)
         {
             var message = _pipeline.CreateMessage();
@@ -159,7 +277,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(networkWatcherName, true);
             uri.AppendPath("/flowLogs/", false);
             uri.AppendPath(flowLogName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -171,7 +289,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="flowLogName"/> is null. </exception>
-        public async Task<Response<FlowLog>> GetAsync(string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
+        public async Task<Response<FlowLogData>> GetAsync(string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -192,9 +310,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        FlowLog value = default;
+                        FlowLogData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FlowLog.DeserializeFlowLog(document.RootElement);
+                        value = FlowLogData.DeserializeFlowLogData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -208,7 +326,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="flowLogName"> The name of the flow log resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, or <paramref name="flowLogName"/> is null. </exception>
-        public Response<FlowLog> Get(string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
+        public Response<FlowLogData> Get(string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -229,9 +347,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        FlowLog value = default;
+                        FlowLogData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FlowLog.DeserializeFlowLog(document.RootElement);
+                        value = FlowLogData.DeserializeFlowLogData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -254,7 +372,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(networkWatcherName, true);
             uri.AppendPath("/flowLogs/", false);
             uri.AppendPath(flowLogName, true);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -340,7 +458,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/networkWatchers/", false);
             uri.AppendPath(networkWatcherName, true);
             uri.AppendPath("/flowLogs", false);
-            uri.AppendQuery("api-version", "2020-04-01", true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

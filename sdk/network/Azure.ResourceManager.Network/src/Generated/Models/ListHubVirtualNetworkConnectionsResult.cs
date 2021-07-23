@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListHubVirtualNetworkConnectionsResult. </summary>
         internal ListHubVirtualNetworkConnectionsResult()
         {
-            Value = new ChangeTrackingList<HubVirtualNetworkConnection>();
+            Value = new ChangeTrackingList<HubVirtualNetworkConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ListHubVirtualNetworkConnectionsResult. </summary>
         /// <param name="value"> List of HubVirtualNetworkConnections. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListHubVirtualNetworkConnectionsResult(IReadOnlyList<HubVirtualNetworkConnection> value, string nextLink)
+        internal ListHubVirtualNetworkConnectionsResult(IReadOnlyList<HubVirtualNetworkConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of HubVirtualNetworkConnections. </summary>
-        public IReadOnlyList<HubVirtualNetworkConnection> Value { get; }
+        public IReadOnlyList<HubVirtualNetworkConnectionData> Value { get; }
         /// <summary> URL to get the next set of operation list results if there are any. </summary>
         public string NextLink { get; }
     }

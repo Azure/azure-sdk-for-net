@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Details of UnprepareNetworkPolicies for Subnet. </summary>
-    public partial class UnprepareNetworkPoliciesRequest
+    internal partial class UnprepareNetworkPoliciesRequest
     {
         /// <summary> Initializes a new instance of UnprepareNetworkPoliciesRequest. </summary>
         public UnprepareNetworkPoliciesRequest()

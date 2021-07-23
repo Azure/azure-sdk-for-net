@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Starts packet capture on virtual network gateway connection in the specified resource group. </summary>
     public partial class VirtualNetworkGatewayConnectionsStartPacketCaptureOperation : Operation<string>, IOperationSource<string>
     {
-        private readonly ArmOperationHelpers<string> _operation;
+        private readonly OperationInternals<string> _operation;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionsStartPacketCaptureOperation for mocking. </summary>
         protected VirtualNetworkGatewayConnectionsStartPacketCaptureOperation()
@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Network
 
         internal VirtualNetworkGatewayConnectionsStartPacketCaptureOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<string>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewayConnectionsStartPacketCaptureOperation");
+            _operation = new OperationInternals<string>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewayConnectionsStartPacketCaptureOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

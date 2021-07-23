@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Gets Network Configuration Diagnostic data to help customers understand and debug network behavior. It provides detailed information on what security rules were applied to a specified traffic flow and the result of evaluating these rules. Customers must provide details of a flow like source, destination, protocol, etc. The API returns whether traffic was allowed or denied, the rules evaluated for the specified flow and the evaluation results. </summary>
     public partial class NetworkWatchersGetNetworkConfigurationDiagnosticOperation : Operation<NetworkConfigurationDiagnosticResponse>, IOperationSource<NetworkConfigurationDiagnosticResponse>
     {
-        private readonly ArmOperationHelpers<NetworkConfigurationDiagnosticResponse> _operation;
+        private readonly OperationInternals<NetworkConfigurationDiagnosticResponse> _operation;
 
         /// <summary> Initializes a new instance of NetworkWatchersGetNetworkConfigurationDiagnosticOperation for mocking. </summary>
         protected NetworkWatchersGetNetworkConfigurationDiagnosticOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal NetworkWatchersGetNetworkConfigurationDiagnosticOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<NetworkConfigurationDiagnosticResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetNetworkConfigurationDiagnosticOperation");
+            _operation = new OperationInternals<NetworkConfigurationDiagnosticResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetNetworkConfigurationDiagnosticOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

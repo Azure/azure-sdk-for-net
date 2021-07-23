@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> Gets the configured and effective security group rules on the specified VM. </summary>
     public partial class NetworkWatchersGetVMSecurityRulesOperation : Operation<SecurityGroupViewResult>, IOperationSource<SecurityGroupViewResult>
     {
-        private readonly ArmOperationHelpers<SecurityGroupViewResult> _operation;
+        private readonly OperationInternals<SecurityGroupViewResult> _operation;
 
         /// <summary> Initializes a new instance of NetworkWatchersGetVMSecurityRulesOperation for mocking. </summary>
         protected NetworkWatchersGetVMSecurityRulesOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal NetworkWatchersGetVMSecurityRulesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<SecurityGroupViewResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetVMSecurityRulesOperation");
+            _operation = new OperationInternals<SecurityGroupViewResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetVMSecurityRulesOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

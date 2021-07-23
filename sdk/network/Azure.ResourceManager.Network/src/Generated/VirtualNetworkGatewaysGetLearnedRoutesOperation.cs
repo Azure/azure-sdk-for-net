@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers. </summary>
     public partial class VirtualNetworkGatewaysGetLearnedRoutesOperation : Operation<GatewayRouteListResult>, IOperationSource<GatewayRouteListResult>
     {
-        private readonly ArmOperationHelpers<GatewayRouteListResult> _operation;
+        private readonly OperationInternals<GatewayRouteListResult> _operation;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewaysGetLearnedRoutesOperation for mocking. </summary>
         protected VirtualNetworkGatewaysGetLearnedRoutesOperation()
@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Network
 
         internal VirtualNetworkGatewaysGetLearnedRoutesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<GatewayRouteListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetLearnedRoutesOperation");
+            _operation = new OperationInternals<GatewayRouteListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetLearnedRoutesOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

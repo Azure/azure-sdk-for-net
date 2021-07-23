@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -19,17 +20,21 @@ namespace Azure.ResourceManager.Network
     /// <summary> Creates or updates the specified Virtual Router Peering. </summary>
     public partial class VirtualRouterPeeringsCreateOrUpdateOperation : Operation<VirtualRouterPeering>, IOperationSource<VirtualRouterPeering>
     {
-        private readonly ArmOperationHelpers<VirtualRouterPeering> _operation;
+        private readonly OperationInternals<VirtualRouterPeering> _operation;
+
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of VirtualRouterPeeringsCreateOrUpdateOperation for mocking. </summary>
         protected VirtualRouterPeeringsCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualRouterPeeringsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualRouterPeeringsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<VirtualRouterPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualRouterPeeringsCreateOrUpdateOperation");
+            _operation = new OperationInternals<VirtualRouterPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualRouterPeeringsCreateOrUpdateOperation");
+            _operationBase = operationsBase;
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
@@ -60,13 +65,13 @@ namespace Azure.ResourceManager.Network
         VirtualRouterPeering IOperationSource<VirtualRouterPeering>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return VirtualRouterPeering.DeserializeVirtualRouterPeering(document.RootElement);
+            return new VirtualRouterPeering(_operationBase, VirtualRouterPeeringData.DeserializeVirtualRouterPeeringData(document.RootElement));
         }
 
         async ValueTask<VirtualRouterPeering> IOperationSource<VirtualRouterPeering>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return VirtualRouterPeering.DeserializeVirtualRouterPeering(document.RootElement);
+            return new VirtualRouterPeering(_operationBase, VirtualRouterPeeringData.DeserializeVirtualRouterPeeringData(document.RootElement));
         }
     }
 }
