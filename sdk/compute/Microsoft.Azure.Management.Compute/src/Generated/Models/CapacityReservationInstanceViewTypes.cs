@@ -10,12 +10,45 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CapacityReservationInstanceViewTypes.
     /// </summary>
-    public static class CapacityReservationInstanceViewTypes
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum CapacityReservationInstanceViewTypes
     {
-        public const string InstanceView = "instanceView";
+        [EnumMember(Value = "instanceView")]
+        InstanceView
+    }
+    internal static class CapacityReservationInstanceViewTypesEnumExtension
+    {
+        internal static string ToSerializedValue(this CapacityReservationInstanceViewTypes? value)
+        {
+            return value == null ? null : ((CapacityReservationInstanceViewTypes)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this CapacityReservationInstanceViewTypes value)
+        {
+            switch( value )
+            {
+                case CapacityReservationInstanceViewTypes.InstanceView:
+                    return "instanceView";
+            }
+            return null;
+        }
+
+        internal static CapacityReservationInstanceViewTypes? ParseCapacityReservationInstanceViewTypes(this string value)
+        {
+            switch( value )
+            {
+                case "instanceView":
+                    return CapacityReservationInstanceViewTypes.InstanceView;
+            }
+            return null;
+        }
     }
 }

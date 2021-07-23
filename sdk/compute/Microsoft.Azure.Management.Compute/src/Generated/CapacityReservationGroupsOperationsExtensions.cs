@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.Compute
             /// outside of control plane operations. Possible values include:
             /// 'instanceView'
             /// </param>
-            public static CapacityReservationGroup Get(this ICapacityReservationGroupsOperations operations, string resourceGroupName, string capacityReservationGroupName, string expand = default(string))
+            public static CapacityReservationGroup Get(this ICapacityReservationGroupsOperations operations, string resourceGroupName, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = default(CapacityReservationGroupInstanceViewTypes?))
             {
                 return operations.GetAsync(resourceGroupName, capacityReservationGroupName, expand).GetAwaiter().GetResult();
             }
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CapacityReservationGroup> GetAsync(this ICapacityReservationGroupsOperations operations, string resourceGroupName, string capacityReservationGroupName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CapacityReservationGroup> GetAsync(this ICapacityReservationGroupsOperations operations, string resourceGroupName, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = default(CapacityReservationGroupInstanceViewTypes?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, capacityReservationGroupName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.Compute
             /// response. Possible values include: 'virtualMachineScaleSetVMs/$ref',
             /// 'virtualMachines/$ref'
             /// </param>
-            public static IPage<CapacityReservationGroup> ListByResourceGroup(this ICapacityReservationGroupsOperations operations, string resourceGroupName, string expand = default(string))
+            public static IPage<CapacityReservationGroup> ListByResourceGroup(this ICapacityReservationGroupsOperations operations, string resourceGroupName, ExpandTypesForGetCapacityReservationGroups? expand = default(ExpandTypesForGetCapacityReservationGroups?))
             {
                 return operations.ListByResourceGroupAsync(resourceGroupName, expand).GetAwaiter().GetResult();
             }
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CapacityReservationGroup>> ListByResourceGroupAsync(this ICapacityReservationGroupsOperations operations, string resourceGroupName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<CapacityReservationGroup>> ListByResourceGroupAsync(this ICapacityReservationGroupsOperations operations, string resourceGroupName, ExpandTypesForGetCapacityReservationGroups? expand = default(ExpandTypesForGetCapacityReservationGroups?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.Compute
             /// response. Possible values include: 'virtualMachineScaleSetVMs/$ref',
             /// 'virtualMachines/$ref'
             /// </param>
-            public static IPage<CapacityReservationGroup> ListBySubscription(this ICapacityReservationGroupsOperations operations, string expand = default(string))
+            public static IPage<CapacityReservationGroup> ListBySubscription(this ICapacityReservationGroupsOperations operations, ExpandTypesForGetCapacityReservationGroups? expand = default(ExpandTypesForGetCapacityReservationGroups?))
             {
                 return operations.ListBySubscriptionAsync(expand).GetAwaiter().GetResult();
             }
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<CapacityReservationGroup>> ListBySubscriptionAsync(this ICapacityReservationGroupsOperations operations, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<CapacityReservationGroup>> ListBySubscriptionAsync(this ICapacityReservationGroupsOperations operations, ExpandTypesForGetCapacityReservationGroups? expand = default(ExpandTypesForGetCapacityReservationGroups?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(expand, null, cancellationToken).ConfigureAwait(false))
                 {

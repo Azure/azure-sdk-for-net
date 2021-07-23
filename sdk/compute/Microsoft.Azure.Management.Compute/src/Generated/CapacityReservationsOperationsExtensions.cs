@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.Compute
             /// managed by the platform and can change outside of control plane operations.
             /// Possible values include: 'instanceView'
             /// </param>
-            public static CapacityReservation Get(this ICapacityReservationsOperations operations, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, string expand = default(string))
+            public static CapacityReservation Get(this ICapacityReservationsOperations operations, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationInstanceViewTypes? expand = default(CapacityReservationInstanceViewTypes?))
             {
                 return operations.GetAsync(resourceGroupName, capacityReservationGroupName, capacityReservationName, expand).GetAwaiter().GetResult();
             }
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CapacityReservation> GetAsync(this ICapacityReservationsOperations operations, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CapacityReservation> GetAsync(this ICapacityReservationsOperations operations, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationInstanceViewTypes? expand = default(CapacityReservationInstanceViewTypes?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, capacityReservationGroupName, capacityReservationName, expand, null, cancellationToken).ConfigureAwait(false))
                 {

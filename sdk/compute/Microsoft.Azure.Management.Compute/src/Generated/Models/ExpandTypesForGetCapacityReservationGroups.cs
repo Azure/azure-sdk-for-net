@@ -10,13 +10,51 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ExpandTypesForGetCapacityReservationGroups.
     /// </summary>
-    public static class ExpandTypesForGetCapacityReservationGroups
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ExpandTypesForGetCapacityReservationGroups
     {
-        public const string VirtualMachineScaleSetVMsRef = "virtualMachineScaleSetVMs/$ref";
-        public const string VirtualMachinesRef = "virtualMachines/$ref";
+        [EnumMember(Value = "virtualMachineScaleSetVMs/$ref")]
+        VirtualMachineScaleSetVMsRef,
+        [EnumMember(Value = "virtualMachines/$ref")]
+        VirtualMachinesRef
+    }
+    internal static class ExpandTypesForGetCapacityReservationGroupsEnumExtension
+    {
+        internal static string ToSerializedValue(this ExpandTypesForGetCapacityReservationGroups? value)
+        {
+            return value == null ? null : ((ExpandTypesForGetCapacityReservationGroups)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this ExpandTypesForGetCapacityReservationGroups value)
+        {
+            switch( value )
+            {
+                case ExpandTypesForGetCapacityReservationGroups.VirtualMachineScaleSetVMsRef:
+                    return "virtualMachineScaleSetVMs/$ref";
+                case ExpandTypesForGetCapacityReservationGroups.VirtualMachinesRef:
+                    return "virtualMachines/$ref";
+            }
+            return null;
+        }
+
+        internal static ExpandTypesForGetCapacityReservationGroups? ParseExpandTypesForGetCapacityReservationGroups(this string value)
+        {
+            switch( value )
+            {
+                case "virtualMachineScaleSetVMs/$ref":
+                    return ExpandTypesForGetCapacityReservationGroups.VirtualMachineScaleSetVMsRef;
+                case "virtualMachines/$ref":
+                    return ExpandTypesForGetCapacityReservationGroups.VirtualMachinesRef;
+            }
+            return null;
+        }
     }
 }

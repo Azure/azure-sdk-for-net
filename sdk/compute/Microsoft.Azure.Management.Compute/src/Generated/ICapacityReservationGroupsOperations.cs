@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CapacityReservationGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string capacityReservationGroupName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CapacityReservationGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = default(CapacityReservationGroupInstanceViewTypes?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the capacity reservation groups in the specified
         /// resource group. Use the nextLink property in the response to get
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<CapacityReservationGroup>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<CapacityReservationGroup>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, ExpandTypesForGetCapacityReservationGroups? expand = default(ExpandTypesForGetCapacityReservationGroups?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the capacity reservation groups in the subscription.
         /// Use the nextLink property in the response to get the next page of
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<CapacityReservationGroup>>> ListBySubscriptionWithHttpMessagesAsync(string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<CapacityReservationGroup>>> ListBySubscriptionWithHttpMessagesAsync(ExpandTypesForGetCapacityReservationGroups? expand = default(ExpandTypesForGetCapacityReservationGroups?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the capacity reservation groups in the specified
         /// resource group. Use the nextLink property in the response to get
