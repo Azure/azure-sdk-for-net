@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -205,6 +204,18 @@ namespace Azure.AI.Translation.Document
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true.
         /// An API call is then made to retrieve the status of the documents.
         /// </remarks>
+        public override Response<AsyncPageable<DocumentStatus>> WaitForCompletion(CancellationToken cancellationToken = default) =>
+            WaitForCompletion(DefaultPollingInterval, cancellationToken);
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true.
+        /// An API call is then made to retrieve the status of the documents.
+        /// </remarks>
         public override ValueTask<Response<AsyncPageable<DocumentStatus>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             WaitForCompletionAsync(DefaultPollingInterval, cancellationToken);
 
@@ -235,6 +246,56 @@ namespace Azure.AI.Translation.Document
                 else
                 {
                     var response = await _serviceClient.GetDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    _firstPage = Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    _hasValue = true;
+                    async Task<Page<DocumentStatus>> NextPageFunc(string nextLink, int? pageSizeHint)
+                    {
+                        // TODO: diagnostics scope?
+                        try
+                        {
+                            var response = await _serviceClient.GetDocumentsStatusNextPageAsync(nextLink, new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                            return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                        }
+                        catch (Exception)
+                        {
+                            throw;
+                        }
+                    }
+
+                    var result = PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
+                    return Response.FromValue(result, response);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="pollingInterval">
+        /// The interval between status requests to the server.
+        /// The interval can change based on information returned from the server.
+        /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatus till HasCompleted is true.
+        /// An API call is then made to retrieve the status of the documents.
+        /// </remarks>
+        public override Response<AsyncPageable<DocumentStatus>> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
+        {
+            while (true)
+            {
+                UpdateStatus(cancellationToken);
+                if (!HasCompleted)
+                {
+                    pollingInterval = _retryAfterHeaderValue.HasValue ? TimeSpan.FromSeconds(_retryAfterHeaderValue.Value) : pollingInterval;
+                    Thread.Sleep(pollingInterval);
+                }
+                else
+                {
+                    var response = _serviceClient.GetDocumentsStatus(new Guid(Id), cancellationToken: cancellationToken);
                     _firstPage = Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     _hasValue = true;
                     async Task<Page<DocumentStatus>> NextPageFunc(string nextLink, int? pageSizeHint)

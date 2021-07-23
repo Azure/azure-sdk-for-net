@@ -26,7 +26,7 @@ namespace Azure.AI.Translation.Document.Samples
             Uri targetUri = new Uri("<target SAS URI>");
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
-            DocumentTranslationOperation operation = client.StartTranslation(input);
+            DocumentTranslationOperation operation = client.Translation(input, waitForCompletion: false);
 
             TimeSpan pollingInterval = new(1000);
 

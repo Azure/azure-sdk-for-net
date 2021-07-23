@@ -27,9 +27,7 @@ namespace Azure.AI.Translation.Document.Samples
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
-
-            await operation.WaitForCompletionAsync();
+            DocumentTranslationOperation operation = await client.TranslationAsync(input);
 
             Console.WriteLine($"  Status: {operation.Status}");
             Console.WriteLine($"  Created on: {operation.CreatedOn}");

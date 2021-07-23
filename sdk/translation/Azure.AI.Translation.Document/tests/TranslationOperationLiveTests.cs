@@ -31,9 +31,7 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
-
-            await operation.WaitForCompletionAsync();
+            DocumentTranslationOperation operation = await client.TranslationAsync(input);
 
             if (operation.DocumentsSucceeded < 1)
             {
@@ -64,9 +62,7 @@ namespace Azure.AI.Translation.Document.Tests
             var input = new DocumentTranslationInput(source, targetFrench, "fr");
             input.AddTarget(targetSpanish, "es");
             input.AddTarget(targetArabic, "ar");
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
-
-            await operation.WaitForCompletionAsync();
+            DocumentTranslationOperation operation = await client.TranslationAsync(input);
 
             if (operation.DocumentsSucceeded < 3)
             {
@@ -99,9 +95,7 @@ namespace Azure.AI.Translation.Document.Tests
                 new DocumentTranslationInput(source2, target2, "es")
             };
 
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(inputs);
-
-            await operation.WaitForCompletionAsync();
+            DocumentTranslationOperation operation = await client.TranslationAsync(inputs);
 
             if (operation.DocumentsSucceeded < 2)
             {
@@ -136,9 +130,7 @@ namespace Azure.AI.Translation.Document.Tests
             };
             var targets = new List<TranslationTarget> { new TranslationTarget(targetUri, "fr") };
             var input = new DocumentTranslationInput(source, targets);
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
-
-            await operation.WaitForCompletionAsync();
+            DocumentTranslationOperation operation = await client.TranslationAsync(input);
 
             if (operation.DocumentsSucceeded < 1)
             {
@@ -173,9 +165,7 @@ namespace Azure.AI.Translation.Document.Tests
             };
             var targets = new List<TranslationTarget> { new TranslationTarget(targetUri, "fr") };
             var input = new DocumentTranslationInput(source, targets);
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
-
-            await operation.WaitForCompletionAsync();
+            DocumentTranslationOperation operation = await client.TranslationAsync(input);
 
             if (operation.DocumentsSucceeded < 1)
             {
@@ -202,9 +192,9 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, translateTo);
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.TranslationAsync(input);
 
-            AsyncPageable<DocumentStatus> documentsFromOperation = await operation.WaitForCompletionAsync();
+            AsyncPageable<DocumentStatus> documentsFromOperation = operation.Value;
             List<DocumentStatus> documentsFromOperationList = await documentsFromOperation.ToEnumerableAsync();
 
             Assert.AreEqual(1, documentsFromOperationList.Count);
@@ -235,9 +225,8 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, translateTo);
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.TranslationAsync(input);
 
-            await operation.WaitForCompletionAsync();
             AsyncPageable<DocumentStatus> documents = operation.GetAllDocumentStatusesAsync();
 
             List<DocumentStatus> documentsList = await documents.ToEnumerableAsync();
@@ -259,7 +248,7 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.TranslationAsync(input, waitForCompletion: false);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
 
@@ -280,7 +269,7 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.TranslationAsync(input, waitForCompletion: false);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
 
@@ -306,9 +295,7 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
-
-            await operation.WaitForCompletionAsync();
+            DocumentTranslationOperation operation = await client.TranslationAsync(input);
 
             if (operation.DocumentsSucceeded < 1)
             {
@@ -339,9 +326,7 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
-
-            AsyncPageable<DocumentStatus> documents = await operation.WaitForCompletionAsync();
+            DocumentTranslationOperation operation = await client.TranslationAsync(input);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
@@ -354,7 +339,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
 
-            List<DocumentStatus> documentsList = await documents.ToEnumerableAsync();
+            List<DocumentStatus> documentsList = await operation.Value.ToEnumerableAsync();
             Assert.AreEqual(1, documentsList.Count);
             Assert.AreEqual(DocumentTranslationStatus.Failed, documentsList[0].Status);
             Assert.AreEqual(new DocumentTranslationErrorCode("WrongDocumentEncoding"), documentsList[0].Error.ErrorCode);
@@ -369,9 +354,7 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
-
-            AsyncPageable<DocumentStatus> documents = await operation.WaitForCompletionAsync();
+            DocumentTranslationOperation operation = await client.TranslationAsync(input);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
@@ -384,7 +367,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
 
-            List<DocumentStatus> documentsList = await documents.ToEnumerableAsync();
+            List<DocumentStatus> documentsList = await operation.Value.ToEnumerableAsync();
             Assert.AreEqual(1, documentsList.Count);
             Assert.AreEqual(DocumentTranslationStatus.Failed, documentsList[0].Status);
             Assert.AreEqual(new DocumentTranslationErrorCode("TargetFileAlreadyExists"), documentsList[0].Error.ErrorCode);
@@ -413,9 +396,7 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetClient();
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, translateTo);
-            var operation = await client.StartTranslationAsync(input);
-
-            await operation.WaitForCompletionAsync();
+            var operation = await client.TranslationAsync(input);
 
             Assert.Throws(expectedException, () => operation.GetDocumentStatus(invalidGuid));
         }

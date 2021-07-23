@@ -44,9 +44,7 @@ namespace Azure.AI.Translation.Document.Samples
                     input2
                 };
 
-            DocumentTranslationOperation operation = await client.StartTranslationAsync(inputs);
-
-            await operation.WaitForCompletionAsync();
+            DocumentTranslationOperation operation = await client.TranslationAsync(inputs);
 
             await foreach (DocumentStatus document in operation.GetValuesAsync())
             {

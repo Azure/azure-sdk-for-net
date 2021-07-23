@@ -86,8 +86,7 @@ namespace Azure.AI.Translation.Document.Samples
 
             // Submit the translation operation and wait for it to finish
             var operationRequest = new DocumentTranslationInput(srcSasUri, tgtSasUri, "es");
-            DocumentTranslationOperation operationResult = await client.StartTranslationAsync(operationRequest);
-            await operationResult.WaitForCompletionAsync();
+            DocumentTranslationOperation operationResult = await client.TranslationAsync(operationRequest);
 
             Console.WriteLine($"Operation status: {operationResult.Status}");
             Console.WriteLine($"Operation created on: {operationResult.CreatedOn}");

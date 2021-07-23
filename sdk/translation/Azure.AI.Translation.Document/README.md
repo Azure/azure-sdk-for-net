@@ -188,9 +188,7 @@ Uri targetUri = new Uri("<target SAS URI>");
 
 var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
-DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
-
-await operation.WaitForCompletionAsync();
+DocumentTranslationOperation operation = await client.TranslationAsync(input);
 
 Console.WriteLine($"  Status: {operation.Status}");
 Console.WriteLine($"  Created on: {operation.CreatedOn}");
@@ -277,9 +275,7 @@ var inputs = new List<DocumentTranslationInput>()
         input2
     };
 
-DocumentTranslationOperation operation = await client.StartTranslationAsync(inputs);
-
-await operation.WaitForCompletionAsync();
+DocumentTranslationOperation operation = await client.TranslationAsync(inputs);
 
 await foreach (DocumentStatus document in operation.GetValuesAsync())
 {
@@ -309,7 +305,7 @@ Uri targetUri = new Uri("<target SAS URI>");
 
 var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
-DocumentTranslationOperation operation = client.StartTranslation(input);
+DocumentTranslationOperation operation = client.Translation(input, waitForCompletion: false);
 
 TimeSpan pollingInterval = new(1000);
 
@@ -371,7 +367,7 @@ var invalidInput = new DocumentTranslationInput(new TranslationSource(new Uri(en
 
 try
 {
-    DocumentTranslationOperation operation = client.StartTranslation(invalidInput);
+    DocumentTranslationOperation operation = client.Translation(invalidInput);
 }
 catch (RequestFailedException e)
 {
