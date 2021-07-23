@@ -375,6 +375,106 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> Update a Shared Image Gallery. </summary>
+        /// <param name="gallery"> Parameters supplied to the update Shared Image Gallery operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gallery"/> is null. </exception>
+        public async virtual Task<Response<Gallery>> UpdateAsync(GalleryUpdate gallery, CancellationToken cancellationToken = default)
+        {
+            if (gallery == null)
+            {
+                throw new ArgumentNullException(nameof(gallery));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GalleryOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = await StartUpdateAsync(gallery, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a Shared Image Gallery. </summary>
+        /// <param name="gallery"> Parameters supplied to the update Shared Image Gallery operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gallery"/> is null. </exception>
+        public virtual Response<Gallery> Update(GalleryUpdate gallery, CancellationToken cancellationToken = default)
+        {
+            if (gallery == null)
+            {
+                throw new ArgumentNullException(nameof(gallery));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GalleryOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = StartUpdate(gallery, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a Shared Image Gallery. </summary>
+        /// <param name="gallery"> Parameters supplied to the update Shared Image Gallery operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gallery"/> is null. </exception>
+        public async virtual Task<GalleriesUpdateOperation> StartUpdateAsync(GalleryUpdate gallery, CancellationToken cancellationToken = default)
+        {
+            if (gallery == null)
+            {
+                throw new ArgumentNullException(nameof(gallery));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GalleryOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, gallery, cancellationToken).ConfigureAwait(false);
+                return new GalleriesUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, gallery).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a Shared Image Gallery. </summary>
+        /// <param name="gallery"> Parameters supplied to the update Shared Image Gallery operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gallery"/> is null. </exception>
+        public virtual GalleriesUpdateOperation StartUpdate(GalleryUpdate gallery, CancellationToken cancellationToken = default)
+        {
+            if (gallery == null)
+            {
+                throw new ArgumentNullException(nameof(gallery));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GalleryOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, gallery, cancellationToken);
+                return new GalleriesUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, gallery).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Gets a list of GalleryImages in the Gallery. </summary>
         /// <returns> An object representing collection of GalleryImages and their operations over a Gallery. </returns>
         public GalleryImageContainer GetGalleryImages()

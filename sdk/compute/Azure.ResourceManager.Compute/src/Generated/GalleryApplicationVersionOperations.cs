@@ -372,5 +372,105 @@ namespace Azure.ResourceManager.Compute
                 throw;
             }
         }
+
+        /// <summary> Update a gallery Application Version. </summary>
+        /// <param name="galleryApplicationVersion"> Parameters supplied to the update gallery Application Version operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersion"/> is null. </exception>
+        public async virtual Task<Response<GalleryApplicationVersion>> UpdateAsync(GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
+        {
+            if (galleryApplicationVersion == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = await StartUpdateAsync(galleryApplicationVersion, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a gallery Application Version. </summary>
+        /// <param name="galleryApplicationVersion"> Parameters supplied to the update gallery Application Version operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersion"/> is null. </exception>
+        public virtual Response<GalleryApplicationVersion> Update(GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
+        {
+            if (galleryApplicationVersion == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = StartUpdate(galleryApplicationVersion, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a gallery Application Version. </summary>
+        /// <param name="galleryApplicationVersion"> Parameters supplied to the update gallery Application Version operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersion"/> is null. </exception>
+        public async virtual Task<GalleryApplicationVersionsUpdateOperation> StartUpdateAsync(GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
+        {
+            if (galleryApplicationVersion == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryApplicationVersion, cancellationToken).ConfigureAwait(false);
+                return new GalleryApplicationVersionsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryApplicationVersion).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a gallery Application Version. </summary>
+        /// <param name="galleryApplicationVersion"> Parameters supplied to the update gallery Application Version operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersion"/> is null. </exception>
+        public virtual GalleryApplicationVersionsUpdateOperation StartUpdate(GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default)
+        {
+            if (galleryApplicationVersion == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersion));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryApplicationVersion, cancellationToken);
+                return new GalleryApplicationVersionsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryApplicationVersion).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

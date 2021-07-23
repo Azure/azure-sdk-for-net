@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of InstanceViewStatusesSummary. </summary>
-        /// <param name="statusesSummary"> . </param>
+        /// <param name="statusesSummary"></param>
         internal InstanceViewStatusesSummary(IReadOnlyList<StatusCodeCount> statusesSummary)
         {
             StatusesSummary = statusesSummary;

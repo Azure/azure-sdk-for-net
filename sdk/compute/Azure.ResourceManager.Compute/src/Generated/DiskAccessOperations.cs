@@ -370,6 +370,106 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> Updates (patches) a disk access resource. </summary>
+        /// <param name="diskAccess"> disk access object supplied in the body of the Patch disk access operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccess"/> is null. </exception>
+        public async virtual Task<Response<DiskAccess>> UpdateAsync(DiskAccessUpdate diskAccess, CancellationToken cancellationToken = default)
+        {
+            if (diskAccess == null)
+            {
+                throw new ArgumentNullException(nameof(diskAccess));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = await StartUpdateAsync(diskAccess, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates (patches) a disk access resource. </summary>
+        /// <param name="diskAccess"> disk access object supplied in the body of the Patch disk access operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccess"/> is null. </exception>
+        public virtual Response<DiskAccess> Update(DiskAccessUpdate diskAccess, CancellationToken cancellationToken = default)
+        {
+            if (diskAccess == null)
+            {
+                throw new ArgumentNullException(nameof(diskAccess));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = StartUpdate(diskAccess, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates (patches) a disk access resource. </summary>
+        /// <param name="diskAccess"> disk access object supplied in the body of the Patch disk access operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccess"/> is null. </exception>
+        public async virtual Task<DiskAccessesUpdateOperation> StartUpdateAsync(DiskAccessUpdate diskAccess, CancellationToken cancellationToken = default)
+        {
+            if (diskAccess == null)
+            {
+                throw new ArgumentNullException(nameof(diskAccess));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, diskAccess, cancellationToken).ConfigureAwait(false);
+                return new DiskAccessesUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, diskAccess).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates (patches) a disk access resource. </summary>
+        /// <param name="diskAccess"> disk access object supplied in the body of the Patch disk access operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccess"/> is null. </exception>
+        public virtual DiskAccessesUpdateOperation StartUpdate(DiskAccessUpdate diskAccess, CancellationToken cancellationToken = default)
+        {
+            if (diskAccess == null)
+            {
+                throw new ArgumentNullException(nameof(diskAccess));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskAccessOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, diskAccess, cancellationToken);
+                return new DiskAccessesUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, diskAccess).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Gets a list of PrivateEndpointConnections in the DiskAccess. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a DiskAccess. </returns>
         public PrivateEndpointConnectionContainer GetPrivateEndpointConnections()

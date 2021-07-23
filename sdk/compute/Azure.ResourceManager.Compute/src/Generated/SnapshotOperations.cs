@@ -335,6 +335,106 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> Updates (patches) a snapshot. </summary>
+        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
+        public async virtual Task<Response<Snapshot>> UpdateAsync(SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        {
+            if (snapshot == null)
+            {
+                throw new ArgumentNullException(nameof(snapshot));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SnapshotOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = await StartUpdateAsync(snapshot, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates (patches) a snapshot. </summary>
+        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
+        public virtual Response<Snapshot> Update(SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        {
+            if (snapshot == null)
+            {
+                throw new ArgumentNullException(nameof(snapshot));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SnapshotOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = StartUpdate(snapshot, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates (patches) a snapshot. </summary>
+        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
+        public async virtual Task<SnapshotsUpdateOperation> StartUpdateAsync(SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        {
+            if (snapshot == null)
+            {
+                throw new ArgumentNullException(nameof(snapshot));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SnapshotOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, snapshot, cancellationToken).ConfigureAwait(false);
+                return new SnapshotsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, snapshot).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates (patches) a snapshot. </summary>
+        /// <param name="snapshot"> Snapshot object supplied in the body of the Patch snapshot operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/> is null. </exception>
+        public virtual SnapshotsUpdateOperation StartUpdate(SnapshotUpdate snapshot, CancellationToken cancellationToken = default)
+        {
+            if (snapshot == null)
+            {
+                throw new ArgumentNullException(nameof(snapshot));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("SnapshotOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, snapshot, cancellationToken);
+                return new SnapshotsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, snapshot).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Grants access to a snapshot. </summary>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get snapshot access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

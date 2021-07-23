@@ -6,11 +6,9 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
@@ -193,85 +191,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> List shared galleries by subscription id or tenant id. </summary>
-        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SharedGallery" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<SharedGallery> List(SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
-        {
-            Page<SharedGallery> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SharedGalleryContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.List(Id.Name, sharedTo, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SharedGallery(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SharedGallery> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SharedGalleryContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.ListNextPage(nextLink, Id.Name, sharedTo, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SharedGallery(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> List shared galleries by subscription id or tenant id. </summary>
-        /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SharedGallery" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<SharedGallery> ListAsync(SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SharedGallery>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SharedGalleryContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.ListAsync(Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SharedGallery(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SharedGallery>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("SharedGalleryContainer.List");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SharedGallery(Parent, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of SharedGallery for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="SharedGallery" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -294,7 +214,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Filters the list of SharedGallery for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="SharedGallery" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>

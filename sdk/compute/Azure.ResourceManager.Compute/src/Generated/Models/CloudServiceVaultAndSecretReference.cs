@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of CloudServiceVaultAndSecretReference. </summary>
-        /// <param name="sourceVault"> . </param>
-        /// <param name="secretUrl"> . </param>
+        /// <param name="sourceVault"></param>
+        /// <param name="secretUrl"></param>
         internal CloudServiceVaultAndSecretReference(SubResource sourceVault, string secretUrl)
         {
             SourceVault = sourceVault;

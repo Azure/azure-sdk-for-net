@@ -372,6 +372,55 @@ namespace Azure.ResourceManager.Compute
                 throw;
             }
         }
+        /// <summary> The operation to update the restore point collection. </summary>
+        /// <param name="parameters"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<RestorePointCollectionData>> UpdateAsync(RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollectionOperations.Update");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation to update the restore point collection. </summary>
+        /// <param name="parameters"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<RestorePointCollectionData> Update(RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("RestorePointCollectionOperations.Update");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary> Gets a list of RestorePoints in the RestorePointCollection. </summary>
         /// <returns> An object representing collection of RestorePoints and their operations over a RestorePointCollection. </returns>

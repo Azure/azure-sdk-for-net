@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     internal partial class OSVersionListResult
     {
         /// <summary> Initializes a new instance of OSVersionListResult. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OSVersionListResult(IEnumerable<OSVersion> value)
         {
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of OSVersionListResult. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
         internal OSVersionListResult(IReadOnlyList<OSVersion> value, string nextLink)
         {
             Value = value;

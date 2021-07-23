@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="type"> The type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Describes the cloud service role sku. </param>
-        /// <param name="properties"> . </param>
+        /// <param name="properties"></param>
         internal CloudServiceRole(TenantResourceIdentifier id, string name, ResourceType type, string location, CloudServiceRoleSku sku, CloudServiceRoleProperties properties) : base(id, name, type)
         {
             Location = location;

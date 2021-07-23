@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     internal partial class UpdateDomainListResult
     {
         /// <summary> Initializes a new instance of UpdateDomainListResult. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal UpdateDomainListResult(IEnumerable<UpdateDomainData> value)
         {
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of UpdateDomainListResult. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
         internal UpdateDomainListResult(IReadOnlyList<UpdateDomainData> value, string nextLink)
         {
             Value = value;

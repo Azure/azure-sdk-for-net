@@ -10,7 +10,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
@@ -326,6 +328,182 @@ namespace Azure.ResourceManager.Compute
                 TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DiskEncryptionSet(this, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists all resources that are encrypted with this disk encryption set. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<string> ListAssociatedResources(CancellationToken cancellationToken = default)
+        {
+            Page<string> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.ListAssociatedResources");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.ListAssociatedResources(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.ListAssociatedResources");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.ListAssociatedResourcesNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Lists all resources that are encrypted with this disk encryption set. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<string> ListAssociatedResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.ListAssociatedResources");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.ListAssociatedResourcesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.ListAssociatedResources");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.ListAssociatedResourcesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Updates (patches) a disk encryption set. </summary>
+        /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Patch disk encryption set operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSet"/> is null. </exception>
+        public async virtual Task<Response<DiskEncryptionSet>> UpdateAsync(DiskEncryptionSetUpdate diskEncryptionSet, CancellationToken cancellationToken = default)
+        {
+            if (diskEncryptionSet == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSet));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = await StartUpdateAsync(diskEncryptionSet, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates (patches) a disk encryption set. </summary>
+        /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Patch disk encryption set operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSet"/> is null. </exception>
+        public virtual Response<DiskEncryptionSet> Update(DiskEncryptionSetUpdate diskEncryptionSet, CancellationToken cancellationToken = default)
+        {
+            if (diskEncryptionSet == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSet));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = StartUpdate(diskEncryptionSet, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates (patches) a disk encryption set. </summary>
+        /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Patch disk encryption set operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSet"/> is null. </exception>
+        public async virtual Task<DiskEncryptionSetsUpdateOperation> StartUpdateAsync(DiskEncryptionSetUpdate diskEncryptionSet, CancellationToken cancellationToken = default)
+        {
+            if (diskEncryptionSet == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSet));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, diskEncryptionSet, cancellationToken).ConfigureAwait(false);
+                return new DiskEncryptionSetsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, diskEncryptionSet).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates (patches) a disk encryption set. </summary>
+        /// <param name="diskEncryptionSet"> disk encryption set object supplied in the body of the Patch disk encryption set operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSet"/> is null. </exception>
+        public virtual DiskEncryptionSetsUpdateOperation StartUpdate(DiskEncryptionSetUpdate diskEncryptionSet, CancellationToken cancellationToken = default)
+        {
+            if (diskEncryptionSet == null)
+            {
+                throw new ArgumentNullException(nameof(diskEncryptionSet));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, diskEncryptionSet, cancellationToken);
+                return new DiskEncryptionSetsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, diskEncryptionSet).Request, response);
             }
             catch (Exception e)
             {

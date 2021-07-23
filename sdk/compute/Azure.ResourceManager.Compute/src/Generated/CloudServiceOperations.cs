@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleInstance" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<RoleInstance> ListCloudServiceRoleInstances(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<RoleInstance> ListCloudServiceRoleInstances(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Page<RoleInstance> FirstPageFunc(int? pageSizeHint)
             {
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleInstance" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<RoleInstance> ListCloudServiceRoleInstancesAsync(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RoleInstance> ListCloudServiceRoleInstancesAsync(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<RoleInstance>> FirstPageFunc(int? pageSizeHint)
             {
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all roles in a cloud service. Use nextLink property in the response to get the next page of roles. Do this till nextLink is null to fetch all the roles. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CloudServiceRole" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<CloudServiceRole> ListCloudServiceRoles(CancellationToken cancellationToken = default)
+        public virtual Pageable<CloudServiceRole> ListCloudServiceRoles(CancellationToken cancellationToken = default)
         {
             Page<CloudServiceRole> FirstPageFunc(int? pageSizeHint)
             {
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all roles in a cloud service. Use nextLink property in the response to get the next page of roles. Do this till nextLink is null to fetch all the roles. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CloudServiceRole" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<CloudServiceRole> ListCloudServiceRolesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CloudServiceRole> ListCloudServiceRolesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CloudServiceRole>> FirstPageFunc(int? pageSizeHint)
             {
@@ -673,6 +673,82 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Update a cloud service. </summary>
+        /// <param name="parameters"> The cloud service object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<CloudService>> UpdateAsync(CloudServiceUpdate parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = await StartUpdateAsync(parameters, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a cloud service. </summary>
+        /// <param name="parameters"> The cloud service object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CloudService> Update(CloudServiceUpdate parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = StartUpdate(parameters, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a cloud service. </summary>
+        /// <param name="parameters"> The cloud service object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<CloudServicesUpdateOperation> StartUpdateAsync(CloudServiceUpdate parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new CloudServicesUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a cloud service. </summary>
+        /// <param name="parameters"> The cloud service object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual CloudServicesUpdateOperation StartUpdate(CloudServiceUpdate parameters = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return new CloudServicesUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Starts the cloud service. </summary>

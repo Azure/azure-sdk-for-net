@@ -335,6 +335,106 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> Updates (patches) a disk. </summary>
+        /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="disk"/> is null. </exception>
+        public async virtual Task<Response<Disk>> UpdateAsync(DiskUpdate disk, CancellationToken cancellationToken = default)
+        {
+            if (disk == null)
+            {
+                throw new ArgumentNullException(nameof(disk));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = await StartUpdateAsync(disk, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates (patches) a disk. </summary>
+        /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="disk"/> is null. </exception>
+        public virtual Response<Disk> Update(DiskUpdate disk, CancellationToken cancellationToken = default)
+        {
+            if (disk == null)
+            {
+                throw new ArgumentNullException(nameof(disk));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = StartUpdate(disk, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates (patches) a disk. </summary>
+        /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="disk"/> is null. </exception>
+        public async virtual Task<DisksUpdateOperation> StartUpdateAsync(DiskUpdate disk, CancellationToken cancellationToken = default)
+        {
+            if (disk == null)
+            {
+                throw new ArgumentNullException(nameof(disk));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, disk, cancellationToken).ConfigureAwait(false);
+                return new DisksUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, disk).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates (patches) a disk. </summary>
+        /// <param name="disk"> Disk object supplied in the body of the Patch disk operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="disk"/> is null. </exception>
+        public virtual DisksUpdateOperation StartUpdate(DiskUpdate disk, CancellationToken cancellationToken = default)
+        {
+            if (disk == null)
+            {
+                throw new ArgumentNullException(nameof(disk));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DiskOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, disk, cancellationToken);
+                return new DisksUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Name, disk).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Grants access to a disk. </summary>
         /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

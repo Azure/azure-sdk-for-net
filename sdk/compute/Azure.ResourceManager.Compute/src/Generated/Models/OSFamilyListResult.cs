@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     internal partial class OSFamilyListResult
     {
         /// <summary> Initializes a new instance of OSFamilyListResult. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OSFamilyListResult(IEnumerable<OSFamily> value)
         {
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of OSFamilyListResult. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
         internal OSFamilyListResult(IReadOnlyList<OSFamily> value, string nextLink)
         {
             Value = value;

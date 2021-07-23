@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
@@ -364,6 +365,106 @@ namespace Azure.ResourceManager.Compute
                 TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken);
                 var originalResponse = _restClient.GetByVirtualMachine(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
                 return Response.FromValue(new VirtualMachineRunCommandVirtualMachine(this, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation to update the run command. </summary>
+        /// <param name="runCommand"> Parameters supplied to the Update Virtual Machine RunCommand operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runCommand"/> is null. </exception>
+        public async virtual Task<Response<VirtualMachineRunCommandVirtualMachine>> UpdateAsync(VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
+        {
+            if (runCommand == null)
+            {
+                throw new ArgumentNullException(nameof(runCommand));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = await StartUpdateAsync(runCommand, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation to update the run command. </summary>
+        /// <param name="runCommand"> Parameters supplied to the Update Virtual Machine RunCommand operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runCommand"/> is null. </exception>
+        public virtual Response<VirtualMachineRunCommandVirtualMachine> Update(VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
+        {
+            if (runCommand == null)
+            {
+                throw new ArgumentNullException(nameof(runCommand));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = StartUpdate(runCommand, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation to update the run command. </summary>
+        /// <param name="runCommand"> Parameters supplied to the Update Virtual Machine RunCommand operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runCommand"/> is null. </exception>
+        public async virtual Task<VirtualMachineRunCommandsUpdateOperation> StartUpdateAsync(VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
+        {
+            if (runCommand == null)
+            {
+                throw new ArgumentNullException(nameof(runCommand));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand, cancellationToken).ConfigureAwait(false);
+                return new VirtualMachineRunCommandsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The operation to update the run command. </summary>
+        /// <param name="runCommand"> Parameters supplied to the Update Virtual Machine RunCommand operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runCommand"/> is null. </exception>
+        public virtual VirtualMachineRunCommandsUpdateOperation StartUpdate(VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
+        {
+            if (runCommand == null)
+            {
+                throw new ArgumentNullException(nameof(runCommand));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineRunCommandVirtualMachineOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand, cancellationToken);
+                return new VirtualMachineRunCommandsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, response);
             }
             catch (Exception e)
             {

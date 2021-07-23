@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="platformUpdateDomain"> The Update Domain. </param>
         /// <param name="platformFaultDomain"> The Fault Domain. </param>
         /// <param name="privateId"> Specifies a unique identifier generated internally for the cloud service associated with this role instance. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as &apos;DeploymentId&apos; for querying details. </param>
-        /// <param name="statuses"> . </param>
+        /// <param name="statuses"></param>
         internal RoleInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string privateId, IReadOnlyList<ResourceInstanceViewStatus> statuses)
         {
             PlatformUpdateDomain = platformUpdateDomain;
