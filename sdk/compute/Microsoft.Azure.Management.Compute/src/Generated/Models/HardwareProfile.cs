@@ -95,8 +95,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Standard_NC24s_v3', 'Standard_NC24rs_v3', 'Standard_ND6s',
         /// 'Standard_ND12s', 'Standard_ND24s', 'Standard_ND24rs',
         /// 'Standard_NV6', 'Standard_NV12', 'Standard_NV24'</param>
-        /// <param name="vmSizeProperties">Specifies the VM Size Properties for
-        /// customizing VM sizes.</param>
+        /// <param name="vmSizeProperties">Specifies the properties for
+        /// customizing the size of the virtual machine. Minimum api-version:
+        /// 2021-07-01. &lt;br&gt;&lt;br&gt; This feature is still in preview
+        /// mode and is not supported for VirtualMachineScaleSet.
+        /// &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM
+        /// Customization](https://aka.ms/vmcustomization) for more
+        /// details.</param>
         public HardwareProfile(string vmSize = default(string), VMSizeProperties vmSizeProperties = default(VMSizeProperties))
         {
             VmSize = vmSize;
@@ -183,8 +188,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string VmSize { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the VM Size Properties for customizing VM
-        /// sizes.
+        /// Gets or sets specifies the properties for customizing the size of
+        /// the virtual machine. Minimum api-version: 2021-07-01.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This feature is still in
+        /// preview mode and is not supported for VirtualMachineScaleSet.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Please follow the instructions
+        /// in [VM Customization](https://aka.ms/vmcustomization) for more
+        /// details.
         /// </summary>
         [JsonProperty(PropertyName = "vmSizeProperties")]
         public VMSizeProperties VmSizeProperties { get; set; }
