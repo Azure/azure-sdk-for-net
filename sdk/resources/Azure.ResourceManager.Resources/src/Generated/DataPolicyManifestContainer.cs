@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Initializes a new instance of DataPolicyManifestContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DataPolicyManifestContainer(ResourceOperationsBase parent) : base(parent)
+        internal DataPolicyManifestContainer(OperationsBase parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public Response<DataPolicyManifest> Get(string policyMode, CancellationToken cancellationToken = default)
+        public virtual Response<DataPolicyManifest> Get(string policyMode, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestContainer.Get");
             scope.Start();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets details for this resource from the service. </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async Task<Response<DataPolicyManifest>> GetAsync(string policyMode, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DataPolicyManifest>> GetAsync(string policyMode, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestContainer.Get");
             scope.Start();
@@ -84,6 +84,106 @@ namespace Azure.ResourceManager.Resources
 
                 var response = await _restClient.GetByPolicyModeAsync(policyMode, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DataPolicyManifest(Parent, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual DataPolicyManifest TryGet(string policyMode, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (policyMode == null)
+                {
+                    throw new ArgumentNullException(nameof(policyMode));
+                }
+
+                return Get(policyMode, cancellationToken: cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<DataPolicyManifest> TryGetAsync(string policyMode, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestContainer.TryGet");
+            scope.Start();
+            try
+            {
+                if (policyMode == null)
+                {
+                    throw new ArgumentNullException(nameof(policyMode));
+                }
+
+                return await GetAsync(policyMode, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public virtual bool DoesExist(string policyMode, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (policyMode == null)
+                {
+                    throw new ArgumentNullException(nameof(policyMode));
+                }
+
+                return TryGet(policyMode, cancellationToken: cancellationToken) != null;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        public async virtual Task<bool> DoesExistAsync(string policyMode, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestContainer.DoesExist");
+            scope.Start();
+            try
+            {
+                if (policyMode == null)
+                {
+                    throw new ArgumentNullException(nameof(policyMode));
+                }
+
+                return await TryGetAsync(policyMode, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {
@@ -170,12 +270,13 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of DataPolicyManifest for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="DataPolicyManifest" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<Core.GenericResource> ListAsGenericResource(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<ResourceManager.Core.GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestContainer.ListAsGenericResource");
             scope.Start();
@@ -183,7 +284,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var filters = new ResourceFilterCollection(DataPolicyManifestOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, top, cancellationToken);
+                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -192,12 +293,13 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Filters the list of DataPolicyManifest for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="DataPolicyManifest" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<Core.GenericResource> ListAsGenericResourceAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<ResourceManager.Core.GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DataPolicyManifestContainer.ListAsGenericResource");
             scope.Start();
@@ -205,7 +307,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var filters = new ResourceFilterCollection(DataPolicyManifestOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
+                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

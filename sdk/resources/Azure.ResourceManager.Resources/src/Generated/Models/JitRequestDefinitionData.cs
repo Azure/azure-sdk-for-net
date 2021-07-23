@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources
     {
         /// <summary> Initializes a new instance of JitRequestDefinitionData. </summary>
         /// <param name="location"> The location. </param>
-        public JitRequestDefinitionData(LocationData location) : base(location)
+        public JitRequestDefinitionData(Location location) : base(location)
         {
             JitAuthorizationPolicies = new ChangeTrackingList<JitAuthorizationPolicies>();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="jitRequestState"> The JIT request state. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal JitRequestDefinitionData(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, string applicationResourceId, string publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ProvisioningState? provisioningState, JitRequestState? jitRequestState, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, location, tags)
+        internal JitRequestDefinitionData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, string applicationResourceId, string publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ProvisioningState? provisioningState, JitRequestState? jitRequestState, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, location, tags)
         {
             ApplicationResourceId = applicationResourceId;
             PublisherTenantId = publisherTenantId;

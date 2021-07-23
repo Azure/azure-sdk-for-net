@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        internal PolicySetDefinitionsCreateOrUpdateAtManagementGroupOperation(ResourceOperationsBase operationsBase, Response<PolicySetDefinitionData> response)
+        internal PolicySetDefinitionsCreateOrUpdateAtManagementGroupOperation(OperationsBase operationsBase, Response<PolicySetDefinitionData> response)
         {
             _operation = new OperationOrResponseInternals<PolicySetDefinition>(Response.FromValue(new PolicySetDefinition(operationsBase, response.Value), response.GetRawResponse()));
         }

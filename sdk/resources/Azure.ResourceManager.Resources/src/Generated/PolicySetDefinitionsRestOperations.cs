@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.Resources
 {
     internal partial class PolicySetDefinitionsRestOperations
     {
-        private string subscriptionId;
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -25,24 +24,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of PolicySetDefinitionsRestOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public PolicySetDefinitionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
+        public PolicySetDefinitionsRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
             endpoint ??= new Uri("https://management.azure.com");
 
-            this.subscriptionId = subscriptionId;
             this.endpoint = endpoint;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string policySetDefinitionName, PolicySetDefinitionData parameters)
+        internal Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string policySetDefinitionName, PolicySetDefinitionData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,12 +56,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation creates or updates a policy set definition in the given subscription with the given name. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<PolicySetDefinitionData>> CreateOrUpdateAsync(string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="policySetDefinitionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<PolicySetDefinitionData>> CreateOrUpdateAsync(string subscriptionId, string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (policySetDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
@@ -79,7 +76,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(policySetDefinitionName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, policySetDefinitionName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -97,12 +94,17 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation creates or updates a policy set definition in the given subscription with the given name. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<PolicySetDefinitionData> CreateOrUpdate(string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="policySetDefinitionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<PolicySetDefinitionData> CreateOrUpdate(string subscriptionId, string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (policySetDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
@@ -112,7 +114,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateRequest(policySetDefinitionName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, policySetDefinitionName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -129,7 +131,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateDeleteRequest(string policySetDefinitionName)
+        internal Core.HttpMessage CreateDeleteRequest(string subscriptionId, string policySetDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -147,17 +149,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation deletes the policy set definition in the given subscription with the given name. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (policySetDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
 
-            using var message = CreateDeleteRequest(policySetDefinitionName);
+            using var message = CreateDeleteRequest(subscriptionId, policySetDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -170,17 +177,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation deletes the policy set definition in the given subscription with the given name. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public Response Delete(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
+        public Response Delete(string subscriptionId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (policySetDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
 
-            using var message = CreateDeleteRequest(policySetDefinitionName);
+            using var message = CreateDeleteRequest(subscriptionId, policySetDefinitionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -192,7 +204,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetRequest(string policySetDefinitionName)
+        internal Core.HttpMessage CreateGetRequest(string subscriptionId, string policySetDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -210,17 +222,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation retrieves the policy set definition in the given subscription with the given name. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public async Task<Response<PolicySetDefinitionData>> GetAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
+        public async Task<Response<PolicySetDefinitionData>> GetAsync(string subscriptionId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (policySetDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
 
-            using var message = CreateGetRequest(policySetDefinitionName);
+            using var message = CreateGetRequest(subscriptionId, policySetDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -237,17 +254,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation retrieves the policy set definition in the given subscription with the given name. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public Response<PolicySetDefinitionData> Get(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
+        public Response<PolicySetDefinitionData> Get(string subscriptionId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
             if (policySetDefinitionName == null)
             {
                 throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
 
-            using var message = CreateGetRequest(policySetDefinitionName);
+            using var message = CreateGetRequest(subscriptionId, policySetDefinitionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -263,7 +285,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetBuiltInRequest(string policySetDefinitionName)
+        internal Core.HttpMessage CreateGetBuiltInRequest(string policySetDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -332,7 +354,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListRequest(string filter, int? top)
+        internal Core.HttpMessage CreateListRequest(string subscriptionId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -357,12 +379,19 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation retrieves a list of all the policy set definitions in a given subscription that match the optional given $filter. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy set definitions associated with the subscription, including those that apply directly or from management groups that contain the given subscription. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given subscription. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn and Custom. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose category match the {value}. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given scope. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose category match the {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<PolicySetDefinitionListResult>> ListAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<PolicySetDefinitionListResult>> ListAsync(string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(filter, top);
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListRequest(subscriptionId, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -379,12 +408,19 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation retrieves a list of all the policy set definitions in a given subscription that match the optional given $filter. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy set definitions associated with the subscription, including those that apply directly or from management groups that contain the given subscription. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given subscription. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn and Custom. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose category match the {value}. </summary>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given scope. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose category match the {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<PolicySetDefinitionListResult> List(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public Response<PolicySetDefinitionListResult> List(string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(filter, top);
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            using var message = CreateListRequest(subscriptionId, filter, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -400,7 +436,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListBuiltInRequest(string filter, int? top)
+        internal Core.HttpMessage CreateListBuiltInRequest(string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -466,7 +502,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateCreateOrUpdateAtManagementGroupRequest(string policySetDefinitionName, string managementGroupId, PolicySetDefinitionData parameters)
+        internal Core.HttpMessage CreateCreateOrUpdateAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -488,27 +524,27 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation creates or updates a policy set definition in the given management group with the given name. </summary>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/>, <paramref name="managementGroupId"/>, or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<PolicySetDefinitionData>> CreateOrUpdateAtManagementGroupAsync(string policySetDefinitionName, string managementGroupId, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="policySetDefinitionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public async Task<Response<PolicySetDefinitionData>> CreateOrUpdateAtManagementGroupAsync(string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
             if (managementGroupId == null)
             {
                 throw new ArgumentNullException(nameof(managementGroupId));
+            }
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateAtManagementGroupRequest(policySetDefinitionName, managementGroupId, parameters);
+            using var message = CreateCreateOrUpdateAtManagementGroupRequest(managementGroupId, policySetDefinitionName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -526,27 +562,27 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation creates or updates a policy set definition in the given management group with the given name. </summary>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to create. </param>
         /// <param name="parameters"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/>, <paramref name="managementGroupId"/>, or <paramref name="parameters"/> is null. </exception>
-        public Response<PolicySetDefinitionData> CreateOrUpdateAtManagementGroup(string policySetDefinitionName, string managementGroupId, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="policySetDefinitionName"/>, or <paramref name="parameters"/> is null. </exception>
+        public Response<PolicySetDefinitionData> CreateOrUpdateAtManagementGroup(string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData parameters, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
             if (managementGroupId == null)
             {
                 throw new ArgumentNullException(nameof(managementGroupId));
+            }
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
             }
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var message = CreateCreateOrUpdateAtManagementGroupRequest(policySetDefinitionName, managementGroupId, parameters);
+            using var message = CreateCreateOrUpdateAtManagementGroupRequest(managementGroupId, policySetDefinitionName, parameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -563,7 +599,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateDeleteAtManagementGroupRequest(string policySetDefinitionName, string managementGroupId)
+        internal Core.HttpMessage CreateDeleteAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -581,22 +617,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation deletes the policy set definition in the given management group with the given name. </summary>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to delete. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="managementGroupId"/> is null. </exception>
-        public async Task<Response> DeleteAtManagementGroupAsync(string policySetDefinitionName, string managementGroupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
+        public async Task<Response> DeleteAtManagementGroupAsync(string managementGroupId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
             if (managementGroupId == null)
             {
                 throw new ArgumentNullException(nameof(managementGroupId));
             }
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
 
-            using var message = CreateDeleteAtManagementGroupRequest(policySetDefinitionName, managementGroupId);
+            using var message = CreateDeleteAtManagementGroupRequest(managementGroupId, policySetDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -609,22 +645,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation deletes the policy set definition in the given management group with the given name. </summary>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to delete. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="managementGroupId"/> is null. </exception>
-        public Response DeleteAtManagementGroup(string policySetDefinitionName, string managementGroupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
+        public Response DeleteAtManagementGroup(string managementGroupId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
             if (managementGroupId == null)
             {
                 throw new ArgumentNullException(nameof(managementGroupId));
             }
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
 
-            using var message = CreateDeleteAtManagementGroupRequest(policySetDefinitionName, managementGroupId);
+            using var message = CreateDeleteAtManagementGroupRequest(managementGroupId, policySetDefinitionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -636,7 +672,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateGetAtManagementGroupRequest(string policySetDefinitionName, string managementGroupId)
+        internal Core.HttpMessage CreateGetAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -654,22 +690,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation retrieves the policy set definition in the given management group with the given name. </summary>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="managementGroupId"/> is null. </exception>
-        public async Task<Response<PolicySetDefinitionData>> GetAtManagementGroupAsync(string policySetDefinitionName, string managementGroupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
+        public async Task<Response<PolicySetDefinitionData>> GetAtManagementGroupAsync(string managementGroupId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
             if (managementGroupId == null)
             {
                 throw new ArgumentNullException(nameof(managementGroupId));
             }
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
 
-            using var message = CreateGetAtManagementGroupRequest(policySetDefinitionName, managementGroupId);
+            using var message = CreateGetAtManagementGroupRequest(managementGroupId, policySetDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -686,22 +722,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> This operation retrieves the policy set definition in the given management group with the given name. </summary>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="managementGroupId"> The ID of the management group. </param>
+        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="managementGroupId"/> is null. </exception>
-        public Response<PolicySetDefinitionData> GetAtManagementGroup(string policySetDefinitionName, string managementGroupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
+        public Response<PolicySetDefinitionData> GetAtManagementGroup(string managementGroupId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
             if (managementGroupId == null)
             {
                 throw new ArgumentNullException(nameof(managementGroupId));
             }
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
 
-            using var message = CreateGetAtManagementGroupRequest(policySetDefinitionName, managementGroupId);
+            using var message = CreateGetAtManagementGroupRequest(managementGroupId, policySetDefinitionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -717,7 +753,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListByManagementGroupRequest(string managementGroupId, string filter, int? top)
+        internal Core.HttpMessage CreateListByManagementGroupRequest(string managementGroupId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -799,7 +835,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListNextPageRequest(string nextLink, string filter, int? top)
+        internal Core.HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -814,18 +850,23 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation retrieves a list of all the policy set definitions in a given subscription that match the optional given $filter. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy set definitions associated with the subscription, including those that apply directly or from management groups that contain the given subscription. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given subscription. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn and Custom. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose category match the {value}. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given scope. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose category match the {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<PolicySetDefinitionListResult>> ListNextPageAsync(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public async Task<Response<PolicySetDefinitionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListNextPageRequest(nextLink, filter, top);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -843,18 +884,23 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation retrieves a list of all the policy set definitions in a given subscription that match the optional given $filter. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy set definitions associated with the subscription, including those that apply directly or from management groups that contain the given subscription. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given subscription. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn and Custom. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose category match the {value}. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given scope. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy set definitions whose category match the {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<PolicySetDefinitionListResult> ListNextPage(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        public Response<PolicySetDefinitionListResult> ListNextPage(string nextLink, string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
 
-            using var message = CreateListNextPageRequest(nextLink, filter, top);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -870,7 +916,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListBuiltInNextPageRequest(string nextLink, string filter, int? top)
+        internal Core.HttpMessage CreateListBuiltInNextPageRequest(string nextLink, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -941,7 +987,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListByManagementGroupNextPageRequest(string nextLink, string managementGroupId, string filter, int? top)
+        internal Core.HttpMessage CreateListByManagementGroupNextPageRequest(string nextLink, string managementGroupId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

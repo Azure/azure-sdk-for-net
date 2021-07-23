@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        /// <summary> Service provider: Microsoft.Features. </summary>
+        /// <summary> Service provider: Microsoft.Solutions. </summary>
         public string Provider { get; }
-        /// <summary> Resource on which the operation is performed: Profile, endpoint, etc. </summary>
+        /// <summary> Resource on which the operation is performed: Application, JitRequest, etc. </summary>
         public string Resource { get; }
         /// <summary> Operation type: Read, write, delete, etc. </summary>
         public string Operation { get; }

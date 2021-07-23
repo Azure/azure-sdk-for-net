@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources
     {
         /// <summary> Initializes a new instance of GenericResource. </summary>
         /// <param name="location"> The location. </param>
-        public GenericResource(LocationData location) : base(location)
+        public GenericResource(Location location) : base(location)
         {
         }
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tags"> The tags. </param>
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="sku"> The SKU of the resource. </param>
-        internal GenericResource(ResourceGroupResourceIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags, string managedBy, Sku sku) : base(id, name, type, location, tags)
+        internal GenericResource(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, string managedBy, Sku sku) : base(id, name, type, location, tags)
         {
             ManagedBy = managedBy;
             Sku = sku;

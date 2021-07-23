@@ -1,19 +1,21 @@
 {
   "OutputFolder": ".",
-  "Namespace": "Azure.ResourceManager.Resources",
-  "LibraryName": "Resources",
+  "Namespace": "Azure.Resources.Sample",
+  "LibraryName": null,
   "SharedSourceFolders": [
-    "..\\Generator.Shared",
-    "..\\Azure.Core.Shared"
+    "..\\..\\..\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Generator.Shared",
+    "..\\..\\..\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Azure.Core.Shared"
   ],
   "azure-arm": true,
   "public-clients": true,
   "model-namespace": false,
+  "skip-csproj-packagereference": true,
   "OperationGroupToResourceType": {
     "DeploymentOperations": "Microsoft.Resources/deployments/operations",
     "ResourceLinks": "Microsoft.Resources/links",
     "Deployments": "Microsoft.Resources/deployments",
-    "DataPolicyManifests": "Microsoft.Authorization/dataPolicyManifests"
+    "DataPolicyManifests": "Microsoft.Authorization/dataPolicyManifests",
+    "DeploymentScriptLogs": "Microsoft.Resources/deploymentScripts/logs"
   },
   "OperationGroupToResource": {
     "DeploymentOperations": "DeploymentOperation",
@@ -21,7 +23,8 @@
     "Deployments": "DeploymentExtended",
     "DeploymentScripts": "DeploymentScript",
     "ApplicationDefinitions": "ApplicationDefinition",
-    "DataPolicyManifests": "DataPolicyManifest"
+    "DataPolicyManifests": "DataPolicyManifest",
+    "DeploymentScriptLogs": "ScriptLog"
   },
   "OperationGroupToParent": {
     "Deployments": "tenant",
@@ -30,7 +33,15 @@
     "PolicySetDefinitions": "tenant",
     "PolicyExemptions": "tenant",
     "DeploymentScripts": "resourceGroups",
-    "ManagementLocks": "resourceGroups",
+    "ManagementLocks": "tenant",
     "ResourceLinks": "tenant"
+  },
+  "MergeOperations": {
+    "WhatIf": [
+      "Deployments_WhatIf_POST",
+      "Deployments_WhatIfAtTenantScope_POST",
+      "Deployments_WhatIfAtManagementGroupScope_POST",
+      "Deployments_WhatIfAtSubscriptionScope_POST"
+    ]
   }
 }

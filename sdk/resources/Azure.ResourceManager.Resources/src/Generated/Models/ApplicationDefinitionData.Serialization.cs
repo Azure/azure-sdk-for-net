@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> managedBy = default;
             Optional<Sku> sku = default;
             IDictionary<string, string> tags = default;
-            LocationData location = default;
+            Location location = default;
             ResourceGroupResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

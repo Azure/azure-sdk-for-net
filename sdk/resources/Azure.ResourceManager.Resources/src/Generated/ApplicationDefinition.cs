@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
@@ -14,27 +12,20 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a ApplicationDefinition along with the instance operations that can be performed on it. </summary>
     public class ApplicationDefinition : ApplicationDefinitionOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "ApplicationDefinition"/> class for mocking. </summary>
+        protected ApplicationDefinition() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "ApplicationDefinition"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ApplicationDefinition(ResourceOperationsBase options, ApplicationDefinitionData resource) : base(options, resource.Id)
+        internal ApplicationDefinition(OperationsBase options, ApplicationDefinitionData resource) : base(options, resource.Id)
         {
             Data = resource;
         }
 
         /// <summary> Gets or sets the ApplicationDefinitionData. </summary>
-        public ApplicationDefinitionData Data { get; private set; }
-
-        /// <inheritdoc />
-        protected override ApplicationDefinition GetResource(CancellationToken cancellation = default)
-        {
-            return this;
-        }
-
-        /// <inheritdoc />
-        protected override Task<ApplicationDefinition> GetResourceAsync(CancellationToken cancellation = default)
-        {
-            return Task.FromResult(this);
-        }
+        public virtual ApplicationDefinitionData Data { get; private set; }
     }
 }

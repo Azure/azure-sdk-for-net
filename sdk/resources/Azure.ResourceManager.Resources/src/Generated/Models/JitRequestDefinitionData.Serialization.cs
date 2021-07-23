@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
         internal static JitRequestDefinitionData DeserializeJitRequestDefinitionData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
-            LocationData location = default;
+            Location location = default;
             ResourceGroupResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Resources
                             List<JitAuthorizationPolicies> array = new List<JitAuthorizationPolicies>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Resources.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item));
+                                array.Add(Sample.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item));
                             }
                             jitAuthorizationPolicies = array;
                             continue;

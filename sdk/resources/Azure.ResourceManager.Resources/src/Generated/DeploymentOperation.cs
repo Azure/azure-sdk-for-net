@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
@@ -14,27 +12,20 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a DeploymentOperation along with the instance operations that can be performed on it. </summary>
     public class DeploymentOperation : DeploymentOperationOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "DeploymentOperation"/> class for mocking. </summary>
+        protected DeploymentOperation() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "DeploymentOperation"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DeploymentOperation(ResourceOperationsBase options, DeploymentOperationData resource) : base(options, resource.Id)
+        internal DeploymentOperation(OperationsBase options, DeploymentOperationData resource) : base(options, resource.Id)
         {
             Data = resource;
         }
 
         /// <summary> Gets or sets the DeploymentOperationData. </summary>
-        public DeploymentOperationData Data { get; private set; }
-
-        /// <inheritdoc />
-        protected override DeploymentOperation GetResource(CancellationToken cancellation = default)
-        {
-            return this;
-        }
-
-        /// <inheritdoc />
-        protected override Task<DeploymentOperation> GetResourceAsync(CancellationToken cancellation = default)
-        {
-            return Task.FromResult(this);
-        }
+        public virtual DeploymentOperationData Data { get; private set; }
     }
 }

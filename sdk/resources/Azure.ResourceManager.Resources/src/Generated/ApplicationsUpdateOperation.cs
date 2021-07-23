@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        internal ApplicationsUpdateOperation(ResourceOperationsBase operationsBase, Response<ApplicationData> response)
+        internal ApplicationsUpdateOperation(OperationsBase operationsBase, Response<ApplicationData> response)
         {
             _operation = new OperationOrResponseInternals<Application>(Response.FromValue(new Application(operationsBase, response.Value), response.GetRawResponse()));
         }

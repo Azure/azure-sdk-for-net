@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        internal DeploymentScriptsUpdateOperation(ResourceOperationsBase operationsBase, Response<DeploymentScriptData> response)
+        internal DeploymentScriptsUpdateOperation(OperationsBase operationsBase, Response<DeploymentScriptData> response)
         {
             _operation = new OperationOrResponseInternals<DeploymentScript>(Response.FromValue(new DeploymentScript(operationsBase, response.Value), response.GetRawResponse()));
         }

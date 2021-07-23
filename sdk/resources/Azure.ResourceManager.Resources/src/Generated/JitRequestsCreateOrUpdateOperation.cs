@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Resources
     {
         private readonly OperationInternals<JitRequestDefinition> _operation;
 
-        private readonly ResourceOperationsBase _operationBase;
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of JitRequestsCreateOrUpdateOperation for mocking. </summary>
         protected JitRequestsCreateOrUpdateOperation()
         {
         }
 
-        internal JitRequestsCreateOrUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal JitRequestsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<JitRequestDefinition>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "JitRequestsCreateOrUpdateOperation");
             _operationBase = operationsBase;

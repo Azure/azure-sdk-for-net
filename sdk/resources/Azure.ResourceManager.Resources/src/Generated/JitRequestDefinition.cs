@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
@@ -14,27 +12,20 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a JitRequestDefinition along with the instance operations that can be performed on it. </summary>
     public class JitRequestDefinition : JitRequestDefinitionOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "JitRequestDefinition"/> class for mocking. </summary>
+        protected JitRequestDefinition() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "JitRequestDefinition"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal JitRequestDefinition(ResourceOperationsBase options, JitRequestDefinitionData resource) : base(options, resource.Id)
+        internal JitRequestDefinition(OperationsBase options, JitRequestDefinitionData resource) : base(options, resource.Id)
         {
             Data = resource;
         }
 
         /// <summary> Gets or sets the JitRequestDefinitionData. </summary>
-        public JitRequestDefinitionData Data { get; private set; }
-
-        /// <inheritdoc />
-        protected override JitRequestDefinition GetResource(CancellationToken cancellation = default)
-        {
-            return this;
-        }
-
-        /// <inheritdoc />
-        protected override Task<JitRequestDefinition> GetResourceAsync(CancellationToken cancellation = default)
-        {
-            return Task.FromResult(this);
-        }
+        public virtual JitRequestDefinitionData Data { get; private set; }
     }
 }

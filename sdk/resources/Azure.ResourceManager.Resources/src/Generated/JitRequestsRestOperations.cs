@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources
             _pipeline = pipeline;
         }
 
-        internal Azure.Core.HttpMessage CreateGetRequest(string resourceGroupName, string jitRequestName)
+        internal Core.HttpMessage CreateGetRequest(string resourceGroupName, string jitRequestName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string jitRequestName, JitRequestDefinitionData parameters)
+        internal Core.HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string jitRequestName, JitRequestDefinitionData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateUpdateRequest(string resourceGroupName, string jitRequestName, IDictionary<string, string> tags)
+        internal Core.HttpMessage CreateUpdateRequest(string resourceGroupName, string jitRequestName, IDictionary<string, string> tags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateDeleteRequest(string resourceGroupName, string jitRequestName)
+        internal Core.HttpMessage CreateDeleteRequest(string resourceGroupName, string jitRequestName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListBySubscriptionRequest()
+        internal Core.HttpMessage CreateListBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
+        internal Core.HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

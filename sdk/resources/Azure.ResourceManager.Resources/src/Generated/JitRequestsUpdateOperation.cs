@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        internal JitRequestsUpdateOperation(ResourceOperationsBase operationsBase, Response<JitRequestDefinitionData> response)
+        internal JitRequestsUpdateOperation(OperationsBase operationsBase, Response<JitRequestDefinitionData> response)
         {
             _operation = new OperationOrResponseInternals<JitRequestDefinition>(Response.FromValue(new JitRequestDefinition(operationsBase, response.Value), response.GetRawResponse()));
         }

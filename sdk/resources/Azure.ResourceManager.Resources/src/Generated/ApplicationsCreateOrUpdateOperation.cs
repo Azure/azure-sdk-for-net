@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Resources
     {
         private readonly OperationInternals<Application> _operation;
 
-        private readonly ResourceOperationsBase _operationBase;
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of ApplicationsCreateOrUpdateOperation for mocking. </summary>
         protected ApplicationsCreateOrUpdateOperation()
         {
         }
 
-        internal ApplicationsCreateOrUpdateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ApplicationsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<Application>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ApplicationsCreateOrUpdateOperation");
             _operationBase = operationsBase;

@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Resources
     {
         private readonly OperationInternals<DeploymentScript> _operation;
 
-        private readonly ResourceOperationsBase _operationBase;
+        private readonly OperationsBase _operationBase;
 
         /// <summary> Initializes a new instance of DeploymentScriptsCreateOperation for mocking. </summary>
         protected DeploymentScriptsCreateOperation()
         {
         }
 
-        internal DeploymentScriptsCreateOperation(ResourceOperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DeploymentScriptsCreateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<DeploymentScript>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentScriptsCreateOperation");
             _operationBase = operationsBase;
