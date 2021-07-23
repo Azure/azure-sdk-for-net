@@ -325,16 +325,5 @@ namespace Azure.Search.Documents
             destination.Size = source.Size;
             destination.Skip = source.Skip;
         }
-
-        /// <summary>
-        /// Creates a shallow copy of the SearchOptions.
-        /// </summary>
-        /// <returns>The cloned SearchOptions.</returns>
-        internal SearchOptions Clone()
-        {
-            SearchOptions clone = new SearchOptions();
-            Copy(this, clone);
-            return clone;
-        }
     }
 }

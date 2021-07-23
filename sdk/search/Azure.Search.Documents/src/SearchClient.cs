@@ -841,13 +841,13 @@ namespace Azure.Search.Documents
         {
             if (options != null && searchText != null)
             {
-                options = options.Clone();
                 options.SearchText = searchText;
             }
             else if (options == null)
             {
                 options = new SearchOptions() { SearchText = searchText };
             }
+
             return await SearchInternal<T>(
                 options,
                 $"{nameof(SearchClient)}.{nameof(Search)}",
