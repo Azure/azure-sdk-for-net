@@ -1,4 +1,4 @@
-# azure-proto-core-test
+# Azure ResourceManager Tests
 
 To run test: ```dotnet test```
 

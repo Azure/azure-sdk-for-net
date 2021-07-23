@@ -1,4 +1,4 @@
-# Azure ResourceManager Core client library for .NET
+# Azure ResourceManager client library for .NET
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), which provide core capabilities that are shared amongst all Azure SDKs, including:
 
@@ -11,10 +11,10 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Azure Resources management core library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Resources management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.ResourceManager.Core -Version 1.0.0-beta.1
+Install-Package Azure.ResourceManager -Version 1.0.0-beta.1
 ```
 
 ### Prerequisites
@@ -23,7 +23,7 @@ Set up a way to authenticate to Azure with Azure Identity.
 Some options are:
 - Through the [Azure CLI Login](https://docs.microsoft.com/cli/azure/authenticate-azure-cli).
 - Via [Visual Studio](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
-- Setting [Environment Variables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager.Core/docs/AuthUsingEnvironmentVariables.md).
+- Setting [Environment Variables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md).
 
 More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
@@ -273,7 +273,7 @@ await foreach(VirtualMachine vm in vmContainer.ListAsync())
 }
  ```
 
-For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager.Core/samples) we have available.
+For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
 
 ## Troubleshooting
 
@@ -285,8 +285,8 @@ For more detailed examples, take a look at [samples](https://github.com/Azure/az
 ## Next steps
 ### More sample code
 
-- [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager.Core/samples/Sample2_ManagingResourceGroups.md)
-- [Creating a Virtual Network](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager.Core/samples/Sample3_CreatingAVirtualNetwork.md)
+- [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/samples/Sample2_ManagingResourceGroups.md)
+- [Creating a Virtual Network](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/samples/Sample3_CreatingAVirtualNetwork.md)
 - [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ### Additional Documentation
@@ -295,7 +295,7 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 ## Contributing
 
 For details on contributing to this repository, see the [contributing
-guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager.Core/docs/CONTRIBUTING.md).
+guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md).
 
 This project welcomes contributions and suggestions. Most contributions
 require you to agree to a Contributor License Agreement (CLA) declaring
