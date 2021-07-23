@@ -131,7 +131,7 @@ namespace Azure.Core.Samples
                 await enumerator.DisposeAsync();
             }
             #endregion
-        }        
+        }
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
