@@ -1,0 +1,275 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "2020-08-01-preview",
+        "title": "AccessControlClient"
+    },
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{endpoint}",
+        "useSchemePrefix": false,
+        "parameters": [
+            {
+                "$ref": "#/parameters/Endpoint"
+            }
+        ]
+    },
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/roleDefinitions": {
+            "get": {
+                "tags": [
+                    "SynapseRoleDefinitions"
+                ],
+                "operationId": "RoleDefinitions_ListRoleDefinitions",
+                "description": "List role definitions.",
+                "x-ms-examples": {
+                    "List role definitions": {
+                        "$ref": "./examples/RoleDefinitions_ListRoleDefinitions.json"
+                    }
+                },
+                "consumes": [],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/IsBuiltInParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/ScopeParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response.",
+                        "schema": {
+                            "$ref": "#/definitions/RoleDefinitionsListResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response describing why the operation failed.",
+                        "schema": {
+                            "$ref": "./roleAssignments.json#/definitions/ErrorContract"
+                        }
+                    }
+                }
+            }
+        },
+        "/roleDefinitions/{roleDefinitionId}": {
+            "get": {
+                "tags": [
+                    "SynapseRoleDefinitions"
+                ],
+                "operationId": "RoleDefinitions_GetRoleDefinitionById",
+                "description": "Get role definition by role definition Id.",
+                "x-ms-examples": {
+                    "Get role definition information": {
+                        "$ref": "./examples/RoleDefinitions_GetRoleDefinitionById.json"
+                    }
+                },
+                "consumes": [],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/RoleDefinitionIdParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response.",
+                        "schema": {
+                            "$ref": "#/definitions/SynapseRoleDefinition"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response describing why the operation failed.",
+                        "schema": {
+                            "$ref": "./roleAssignments.json#/definitions/ErrorContract"
+                        }
+                    }
+                }
+            }
+        },
+        "/rbacScopes": {
+            "get": {
+                "tags": [
+                    "SynapseRbacScopes"
+                ],
+                "operationId": "RoleDefinitions_ListScopes",
+                "description": "List rbac scopes.",
+                "x-ms-examples": {
+                    "List rbac scopes": {
+                        "$ref": "./examples/RoleDefinitions_ListScopes.json"
+                    }
+                },
+                "consumes": [],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response.",
+                        "schema": {
+                            "description": "A list of Synapse rbac scopes available.",
+                            "type": "array",
+                            "items": {
+                                "description": "Synapse rbac scope.",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response describing why the operation failed.",
+                        "schema": {
+                            "$ref": "./roleAssignments.json#/definitions/ErrorContract"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "RoleDefinitionsListResponse": {
+            "description": "A list of Synapse roles available.",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/SynapseRoleDefinition"
+            }
+        },
+        "SynapseRoleDefinition": {
+            "description": "Synapse role definition details",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Role Definition ID",
+                    "format": "uuid",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the Synapse role",
+                    "type": "string"
+                },
+                "isBuiltIn": {
+                    "description": "Is a built-in role or not",
+                    "type": "boolean"
+                },
+                "description": {
+                    "description": "Description for the Synapse role",
+                    "type": "string"
+                },
+                "permissions": {
+                    "description": "Permissions for the Synapse role",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SynapseRbacPermission"
+                    }
+                },
+                "scopes": {
+                    "description": "Allowed scopes for the Synapse role",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "availabilityStatus": {
+                    "description": "Availability of the Synapse role",
+                    "type": "string"
+                }
+            }
+        },
+        "SynapseRbacPermission": {
+            "description": "Synapse role definition details",
+            "type": "object",
+            "properties": {
+                "actions": {
+                    "description": "List of actions",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "notActions": {
+                    "description": "List of Not actions",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "dataActions": {
+                    "description": "List of data actions",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "notDataActions": {
+                    "description": "List of Not data actions",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "parameters": {
+        "Endpoint": {
+            "name": "endpoint",
+            "description": "The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.",
+            "required": true,
+            "type": "string",
+            "in": "path",
+            "x-ms-skip-url-encoding": true,
+            "x-ms-parameter-location": "client"
+        },
+        "ApiVersionParameter": {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The Synapse client API Version."
+        },
+        "RoleDefinitionIdParameter": {
+            "name": "roleDefinitionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Synapse Built-In Role Definition Id.",
+            "x-ms-parameter-location": "method"
+        },
+        "IsBuiltInParameter": {
+            "name": "isBuiltIn",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "description": "Is a Synapse Built-In Role or not.",
+            "x-ms-parameter-location": "method"
+        },
+        "ScopeParameter": {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Scope of the Synapse Built-in Role.",
+            "x-ms-parameter-location": "method"
+        }
+    }
+}

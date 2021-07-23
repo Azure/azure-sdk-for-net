@@ -67,19 +67,19 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     <term>subject</term>
         ///     <term>SubjectInfo</term>
         ///     <term>Yes</term>
-        ///     <term> Subject details. </term>
+        ///     <term>Subject details</term>
         ///   </item>
         ///   <item>
         ///     <term>actions</term>
         ///     <term>RequiredAction[]</term>
         ///     <term>Yes</term>
-        ///     <term> List of actions. </term>
+        ///     <term>List of actions.</term>
         ///   </item>
         ///   <item>
         ///     <term>scope</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Scope at which the check access is done. </term>
+        ///     <term>Scope at which the check access is done.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>SubjectInfo</c>:
@@ -94,13 +94,13 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     <term>principalId</term>
         ///     <term>SubjectInfoPrincipalId</term>
         ///     <term>Yes</term>
-        ///     <term> Principal Id. </term>
+        ///     <term>Principal Id</term>
         ///   </item>
         ///   <item>
         ///     <term>groupIds</term>
         ///     <term>SubjectInfoGroupIdsItem[]</term>
         ///     <term></term>
-        ///     <term> List of group Ids that the principalId is part of. </term>
+        ///     <term>List of group Ids that the principalId is part of.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>RequiredAction</c>:
@@ -115,13 +115,13 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Action Id. </term>
+        ///     <term>Action Id.</term>
         ///   </item>
         ///   <item>
         ///     <term>isDataAction</term>
         ///     <term>boolean</term>
         ///     <term>Yes</term>
-        ///     <term> Is a data action or not. </term>
+        ///     <term>Is a data action or not.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -178,19 +178,19 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     <term>subject</term>
         ///     <term>SubjectInfo</term>
         ///     <term>Yes</term>
-        ///     <term> Subject details. </term>
+        ///     <term>Subject details</term>
         ///   </item>
         ///   <item>
         ///     <term>actions</term>
         ///     <term>RequiredAction[]</term>
         ///     <term>Yes</term>
-        ///     <term> List of actions. </term>
+        ///     <term>List of actions.</term>
         ///   </item>
         ///   <item>
         ///     <term>scope</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Scope at which the check access is done. </term>
+        ///     <term>Scope at which the check access is done.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>SubjectInfo</c>:
@@ -205,13 +205,13 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     <term>principalId</term>
         ///     <term>SubjectInfoPrincipalId</term>
         ///     <term>Yes</term>
-        ///     <term> Principal Id. </term>
+        ///     <term>Principal Id</term>
         ///   </item>
         ///   <item>
         ///     <term>groupIds</term>
         ///     <term>SubjectInfoGroupIdsItem[]</term>
         ///     <term></term>
-        ///     <term> List of group Ids that the principalId is part of. </term>
+        ///     <term>List of group Ids that the principalId is part of.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>RequiredAction</c>:
@@ -226,13 +226,13 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Action Id. </term>
+        ///     <term>Action Id.</term>
         ///   </item>
         ///   <item>
         ///     <term>isDataAction</term>
         ///     <term>boolean</term>
         ///     <term>Yes</term>
-        ///     <term> Is a data action or not. </term>
+        ///     <term>Is a data action or not.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -430,25 +430,25 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     <term>roleId</term>
         ///     <term>RoleAssignmentRequestRoleId</term>
         ///     <term>Yes</term>
-        ///     <term> Role ID of the Synapse Built-In Role. </term>
+        ///     <term>Role ID of the Synapse Built-In Role</term>
         ///   </item>
         ///   <item>
         ///     <term>principalId</term>
         ///     <term>RoleAssignmentRequestPrincipalId</term>
         ///     <term>Yes</term>
-        ///     <term> Object ID of the AAD principal or security-group. </term>
+        ///     <term>Object ID of the AAD principal or security-group</term>
         ///   </item>
         ///   <item>
         ///     <term>scope</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Scope at which the role assignment is created. </term>
+        ///     <term>Scope at which the role assignment is created</term>
         ///   </item>
         ///   <item>
         ///     <term>principalType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Type of the principal Id: User, Group or ServicePrincipal. </term>
+        ///     <term>Type of the principal Id: User, Group or ServicePrincipal</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -506,25 +506,25 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///     <term>roleId</term>
         ///     <term>RoleAssignmentRequestRoleId</term>
         ///     <term>Yes</term>
-        ///     <term> Role ID of the Synapse Built-In Role. </term>
+        ///     <term>Role ID of the Synapse Built-In Role</term>
         ///   </item>
         ///   <item>
         ///     <term>principalId</term>
         ///     <term>RoleAssignmentRequestPrincipalId</term>
         ///     <term>Yes</term>
-        ///     <term> Object ID of the AAD principal or security-group. </term>
+        ///     <term>Object ID of the AAD principal or security-group</term>
         ///   </item>
         ///   <item>
         ///     <term>scope</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Scope at which the role assignment is created. </term>
+        ///     <term>Scope at which the role assignment is created</term>
         ///   </item>
         ///   <item>
         ///     <term>principalType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Type of the principal Id: User, Group or ServicePrincipal. </term>
+        ///     <term>Type of the principal Id: User, Group or ServicePrincipal</term>
         ///   </item>
         /// </list>
         /// </remarks>

@@ -1,0 +1,270 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "2020-08-01-preview",
+        "title": "AccessControlClient"
+    },
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{endpoint}",
+        "useSchemePrefix": false,
+        "parameters": [
+            {
+                "$ref": "#/parameters/Endpoint"
+            }
+        ]
+    },
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/checkAccessSynapseRbac": {
+            "post": {
+                "tags": [
+                    "CheckPrincipalAccess"
+                ],
+                "operationId": "RoleAssignments_CheckPrincipalAccess",
+                "description": "Check if the given principalId has access to perform list of actions at a given scope.",
+                "x-ms-examples": {
+                    "Check access": {
+                        "$ref": "./examples/CheckAccessSynapseRbac.json"
+                    }
+                },
+                "consumes": [
+                    "application/json",
+                    "text/json"
+                ],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "x-ms-client-flatten": true,
+                        "description": "Details of scope, list of actions and principal.",
+                        "schema": {
+                            "$ref": "#/definitions/CheckPrincipalAccessRequest"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response.",
+                        "schema": {
+                            "$ref": "#/definitions/CheckPrincipalAccessResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "Error response describing why the operation failed.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorContract"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ErrorContract": {
+            "title": "Error details.",
+            "description": "Contains details when the response code indicates an error.",
+            "type": "object",
+            "properties": {
+                "error": {
+                    "description": "The error details.",
+                    "$ref": "#/definitions/ErrorResponse"
+                }
+            }
+        },
+        "ErrorResponse": {
+            "required": [
+                "code",
+                "message"
+            ],
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                },
+                "details": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ErrorDetail"
+                    }
+                }
+            }
+        },
+        "ErrorDetail": {
+            "required": [
+                "code",
+                "message"
+            ],
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                }
+            }
+        },
+        "CheckPrincipalAccessRequest": {
+            "description": "Check access request details",
+            "type": "object",
+            "required": [
+                "scope",
+                "actions",
+                "subject"
+            ],
+            "properties": {
+                "subject": {
+                    "description": "Subject details",
+                    "type": "object",
+                    "$ref": "#/definitions/SubjectInfo"
+                },
+                "actions": {
+                    "description": "List of actions.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RequiredAction"
+                    }
+                },
+                "scope": {
+                    "description": "Scope at which the check access is done.",
+                    "type": "string"
+                }
+            }
+        },
+        "RequiredAction": {
+            "description": "Action Info",
+            "type": "object",
+            "required": [
+                "id",
+                "isDataAction"
+            ],
+            "properties": {
+                "id": {
+                    "description": "Action Id.",
+                    "type": "string"
+                },
+                "isDataAction": {
+                    "description": "Is a data action or not.",
+                    "type": "boolean"
+                }
+            }
+        },
+        "CheckPrincipalAccessResponse": {
+            "description": "Check access response details",
+            "type": "object",
+            "properties": {
+                "AccessDecisions": {
+                    "description": "To check if the current user, group, or service principal has permission to read artifacts in the specified workspace.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CheckAccessDecision"
+                    }
+                }
+            }
+        },
+        "SubjectInfo": {
+            "description": "Subject details",
+            "type": "object",
+            "required": [
+                "principalId"
+            ],
+            "properties": {
+                "principalId": {
+                    "description": "Principal Id",
+                    "format": "uuid",
+                    "type": "string"
+                },
+                "groupIds": {
+                    "description": "List of group Ids that the principalId is part of.",
+                    "type": "array",
+                    "items": {
+                        "format": "uuid",
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "CheckAccessDecision": {
+            "description": "Check access response details",
+            "type": "object",
+            "properties": {
+                "accessDecision": {
+                    "description": "Access Decision.",
+                    "type": "string"
+                },
+                "actionId": {
+                    "description": "Action Id.",
+                    "type": "string"
+                },
+                "roleAssignment": {
+                    "$ref": "#/definitions/RoleAssignmentDetails"
+                }
+            }
+        },
+        "RoleAssignmentDetails": {
+            "description": "Role Assignment response details",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Role Assignment ID",
+                    "type": "string"
+                },
+                "roleDefinitionId": {
+                    "description": "Role ID of the Synapse Built-In Role",
+                    "format": "uuid",
+                    "type": "string"
+                },
+                "principalId": {
+                    "description": "Object ID of the AAD principal or security-group",
+                    "format": "uuid",
+                    "type": "string"
+                },
+                "scope": {
+                    "description": "Scope at the role assignment is created",
+                    "type": "string"
+                },
+                "principalType": {
+                    "description": "Type of the principal Id: User, Group or ServicePrincipal",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "parameters": {
+        "Endpoint": {
+            "name": "endpoint",
+            "description": "The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.",
+            "required": true,
+            "type": "string",
+            "in": "path",
+            "x-ms-skip-url-encoding": true,
+            "x-ms-parameter-location": "client"
+        },
+        "ApiVersionParameter": {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The Synapse client API Version."
+        }
+    }
+}
