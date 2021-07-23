@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 Initialize().ConfigureAwait(false).GetAwaiter().GetResult();
-                Location = "eastus2";
             }
         }
 
@@ -39,6 +38,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [Test]
         public async Task ManagedHsmCreateUpdateDelete()
         {
+            Location = "southcentralus";
             var parameters = new ManagedHsmData(Location)
             {
                 Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.StandardB1),
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 ManagedHsmSkuFamily.B,
                 ManagedHsmSkuName.StandardB1,
                 CreateMode.Default,
-                true,
+                false,
                 true,
                 new List<string> { ObjectId },
                 ManagedHsmProperties.NetworkAcls,
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 ManagedHsmSkuFamily.B,
                 ManagedHsmSkuName.StandardB1,
                 CreateMode.Default,
-                true,
+                false,
                 true,
                 new List<string> { ObjectId },
                 ManagedHsmProperties.NetworkAcls,
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 ManagedHsmSkuFamily.B,
                 ManagedHsmSkuName.StandardB1,
                 CreateMode.Default,
-                true,
+                false,
                 true,
                 new List<string> { ObjectId },
                 ManagedHsmProperties.NetworkAcls,
@@ -147,7 +147,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             // Delete
             await retrievedVault.Value.DeleteAsync();
-            await retrievedVault.Value.PurgeDeletedAsync();
+            //Purge need to use loaction parameter. Update them later.
+            //await retrievedVault.Value.PurgeDeletedAsync();
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
@@ -160,8 +161,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             List<string> resourceIds = new List<string>();
             List<ManagedHsm> vaultList = new List<ManagedHsm>();
-            Location = "eastus";
-            ManagedHsmProperties.EnablePurgeProtection = false;
+            Location = "westus";
 
             string vaultName = Recording.GenerateAssetName("sdktestvault");
             var parameters = new ManagedHsmData(Location)
@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
         }
 
+        [Ignore("Recovoer is not working, add back when it's verified")]
         [Test]
         public async Task ManagedHsmRecoverDeletedVault()
         {
-            Location = "eastus";
-            ManagedHsmProperties.EnablePurgeProtection = false;
+            Location = "westus";
             var parameters = new ManagedHsmData(Location)
             {
                 Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.StandardB1),

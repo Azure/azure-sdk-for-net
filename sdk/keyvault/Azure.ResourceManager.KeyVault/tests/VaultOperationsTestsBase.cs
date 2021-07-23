@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ManagedHsmProperties = new ManagedHsmProperties();
             ManagedHsmProperties.InitialAdminObjectIds.Add(ObjectId);
             ManagedHsmProperties.CreateMode = CreateMode.Default;
-            ManagedHsmProperties.EnablePurgeProtection = true;
+            ManagedHsmProperties.EnablePurgeProtection = false;
             ManagedHsmProperties.EnableSoftDelete = true;
             ManagedHsmProperties.NetworkAcls = new MhsmNetworkRuleSet()
             {

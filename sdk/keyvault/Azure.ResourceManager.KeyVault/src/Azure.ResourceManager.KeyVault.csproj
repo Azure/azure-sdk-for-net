@@ -9,7 +9,6 @@
     <PackageTags>azure;management;keyvault</PackageTags>
     <!-- TODO: Temp workaround. Should be fixed prio release  -->
     <NoWarn>$(NoWarn);AZC0008;AZC0001;AZC0100;CS1591;IDT003;</NoWarn>
-    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
   </PropertyGroup>
 
   <ItemGroup>
