@@ -568,7 +568,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateRoleAssignment"/> and <see cref="CreateRoleAssignmentAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="CreateRoleAssignment(string, RequestContent, RequestOptions)"/> and <see cref="CreateRoleAssignmentAsync"/> operations. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options. </param>
