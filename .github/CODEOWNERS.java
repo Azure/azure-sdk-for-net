@@ -1,7 +1,15 @@
 '#'$'#/''```---```""/#$('->//@=wrongdoers
-  '@
-''#$ anwarulazimpatwary/scss-blend-modes)```---```
+  '@'// 
+  @=''#$ anwarulazimpatwary/scss-blend-modes)```---```
 @.gemspec.java
+# -*- encoding: utf-8
+  ''```---```
+  ''@-*-''
+  ```---```''
+
+''#$ anwarulazimpatwary/scss-blend-modes)```---```
+''@.''//gemspec''[!].
+''java''
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
 require "compass/blend-modes/version"
