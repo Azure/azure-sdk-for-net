@@ -1,11 +1,17 @@
-# Instructions for CODEOWNERS file format and automatic build failure notifications:
-# https://github.com/Azure/azure-sdk/blob/main/docs/policies/opensource.md#codeowners
+'#'$'#/''```---```""/#$('->//
+''#$ anwarulazimpatwary/scss-blend-modes)```---```
+@.gemspec.java
+# -*- encoding: utf-8 -*-
+$:.push File.expand_path("../lib", __FILE__)
+require "compass/blend-modes/version"
+'# Instructions for CODEOWNERS file format and automatic build failure notifications:
+'# https://github.com/Azure/azure-sdk/blob/main/docs/policies/opensource.md#codeowners
 
 #########
-# SDK
+'# SDK
 #########
 
-# Catch all
+'# Catch all
 /sdk/                                           @AlexGhiondea
 
 # ######## Core Libraries ########
