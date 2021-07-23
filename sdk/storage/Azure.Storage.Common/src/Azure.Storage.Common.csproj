@@ -4,7 +4,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
-    <Version>12.9.0-beta.1</Version>
+    <Version>12.9.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>12.8.0</ApiCompatVersion>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
@@ -31,8 +31,8 @@
     <!--  end TODO-->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core"/>
-    <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core"/>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\Core" />
   </ItemGroup>
