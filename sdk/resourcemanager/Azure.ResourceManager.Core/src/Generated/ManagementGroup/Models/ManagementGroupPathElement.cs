@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Management.Models
 {
     /// <summary> A path element of a management group ancestors. </summary>
     public partial class ManagementGroupPathElement

@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The operation type for the patch API. </summary>
     public readonly partial struct TagPatchResourceOperation : IEquatable<TagPatchResourceOperation>

@@ -5,8 +5,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing the operations that can be performed over a specific Feature.

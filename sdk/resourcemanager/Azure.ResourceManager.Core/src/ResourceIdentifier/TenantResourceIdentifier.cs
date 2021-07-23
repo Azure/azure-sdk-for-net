@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// The identifier of any resource

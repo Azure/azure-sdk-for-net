@@ -11,8 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Management.Models
 {
     /// <summary>
     /// Create or update a management group.

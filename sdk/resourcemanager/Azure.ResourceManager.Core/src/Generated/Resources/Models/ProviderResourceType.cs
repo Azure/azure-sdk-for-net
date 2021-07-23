@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Resource type managed by the resource provider. </summary>
     public partial class ProviderResourceType

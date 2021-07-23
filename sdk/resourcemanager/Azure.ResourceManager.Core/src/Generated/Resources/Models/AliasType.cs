@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The type of the alias. </summary>
     public enum AliasType

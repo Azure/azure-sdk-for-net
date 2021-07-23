@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Subscription list operation response. </summary>
     internal partial class SubscriptionListResult

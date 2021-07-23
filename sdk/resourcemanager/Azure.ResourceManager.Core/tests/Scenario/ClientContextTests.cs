@@ -6,6 +6,7 @@ using Azure.Core.Pipeline;
 using System.Threading;
 using Azure.Core.TestFramework;
 using System.Threading.Tasks;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core.Tests
 {

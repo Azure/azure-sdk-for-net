@@ -9,8 +9,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Management;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// The entry point for all ARM clients.

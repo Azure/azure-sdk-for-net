@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// The identifier for a resource that is contained in a location.

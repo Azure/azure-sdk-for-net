@@ -1,7 +1,8 @@
-﻿using Azure.Identity;
-using Azure.ResourceManager.Core;
-using System.Threading.Tasks;
-using NUnit.Framework; 
+﻿using System.Threading.Tasks;
+using Azure.Identity;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests.Samples
 {

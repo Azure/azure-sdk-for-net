@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using System;
 using System.IO;

@@ -6,12 +6,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Create or update a Tag. </summary>
     public class TagCreateOrUpdateOperation : Operation<TagResource>

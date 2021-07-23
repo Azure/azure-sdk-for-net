@@ -3,8 +3,9 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources
 {
     public partial class TagResourceData : IUtf8JsonSerializable
     {

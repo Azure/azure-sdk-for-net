@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Management.Models
 {
     /// <summary> Management group name availability check parameters. </summary>
     public partial class CheckNameAvailabilityRequest

@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary>
     /// Generic representation of a tracked resource.  All tracked resources should extend this class

@@ -3,8 +3,10 @@
 
 using System;
 using Azure.Core;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing a generic azure resource along with the instance operations that can be performed on it.

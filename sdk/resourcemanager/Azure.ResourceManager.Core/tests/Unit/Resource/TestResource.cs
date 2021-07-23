@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core.Tests
 {

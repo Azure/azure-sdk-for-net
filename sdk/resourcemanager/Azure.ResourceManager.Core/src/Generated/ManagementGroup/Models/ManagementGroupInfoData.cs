@@ -5,10 +5,12 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Core
+using Azure.ResourceManager.Resources.Models;
+
+namespace Azure.ResourceManager.Management
 {
     /// <summary> The management group resource. </summary>
-    public partial class ManagementGroupInfoData
+    public partial class ManagementGroupInfoData : Resource<TenantResourceIdentifier>
     {
         /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>
         internal ManagementGroupInfoData()
@@ -22,20 +24,12 @@ namespace Azure.ResourceManager.Core
         /// <param name="tenantId"> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
         /// <param name="displayName"> The friendly name of the management group. </param>
         internal ManagementGroupInfoData(string id, string type, string name, string tenantId, string displayName)
+            : base(id, type, name)
         {
-            Id = id;
-            Type = type;
-            Name = name;
             TenantId = tenantId;
             DisplayName = displayName;
         }
 
-        /// <summary> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
-        public string Id { get; }
-        /// <summary> The type of the resource. For example, Microsoft.Management/managementGroups. </summary>
-        public string Type { get; }
-        /// <summary> The name of the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
-        public string Name { get; }
         /// <summary> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
         public string TenantId { get; }
         /// <summary> The friendly name of the management group. </summary>

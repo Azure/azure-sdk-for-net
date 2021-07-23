@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
