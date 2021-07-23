@@ -38,6 +38,7 @@ using Azure.Identity;
 using Azure.ResourceManager.Core;
 using System;
 using System.Threading.Tasks;
+using Azure.ResourceManager.Resources;
 
 // Code omitted for brevity
 

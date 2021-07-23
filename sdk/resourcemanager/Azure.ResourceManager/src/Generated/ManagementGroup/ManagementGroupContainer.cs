@@ -7,8 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Management.Models;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Management
 {
     /// <summary>
     /// A class representing collection of ManagementGroupContainer and their operations over a ManagementGroup.

@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// Extensions over ResourceIdentifier types.

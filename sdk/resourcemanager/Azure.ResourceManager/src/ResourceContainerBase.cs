@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
 {

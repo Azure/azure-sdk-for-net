@@ -2,7 +2,8 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Identity;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 #endregion
 using NUnit.Framework;
 

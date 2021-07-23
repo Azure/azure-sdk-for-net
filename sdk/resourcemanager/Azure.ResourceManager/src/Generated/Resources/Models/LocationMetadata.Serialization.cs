@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Resources.Models
 {
     public partial class LocationMetadata
     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Core
                     List<PairedRegion> array = new List<PairedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Core.PairedRegion.DeserializePairedRegion(item));
+                        array.Add(Models.PairedRegion.DeserializePairedRegion(item));
                     }
                     pairedRegion = array;
                     continue;

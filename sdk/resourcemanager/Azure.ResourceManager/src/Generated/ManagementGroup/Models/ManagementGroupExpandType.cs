@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Management.Models
 {
     /// <summary> The Enum0. </summary>
     public readonly partial struct ManagementGroupExpandType : IEquatable<ManagementGroupExpandType>

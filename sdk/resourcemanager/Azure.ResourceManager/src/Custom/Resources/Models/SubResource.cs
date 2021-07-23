@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.ResourceManager.Core
+using Azure.ResourceManager.Core;
+
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary>
     /// A class representing the sub resource of a ResourceIdentifier.

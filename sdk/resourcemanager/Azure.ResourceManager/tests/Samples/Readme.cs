@@ -3,6 +3,7 @@ using Azure.Identity;
 using Azure.ResourceManager.Core;
 using System;
 using System.Threading.Tasks;
+using Azure.ResourceManager.Resources;
 #if !SNIPPET
 using NUnit.Framework;
 
