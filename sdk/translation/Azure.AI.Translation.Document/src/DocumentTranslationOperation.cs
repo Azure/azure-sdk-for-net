@@ -204,6 +204,7 @@ namespace Azure.AI.Translation.Document
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true.
         /// An API call is then made to retrieve the status of the documents.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override Response<AsyncPageable<DocumentStatus>> WaitForCompletion(CancellationToken cancellationToken = default) =>
             WaitForCompletion(DefaultPollingInterval, cancellationToken);
 
@@ -283,6 +284,7 @@ namespace Azure.AI.Translation.Document
         /// This method will periodically call UpdateStatus till HasCompleted is true.
         /// An API call is then made to retrieve the status of the documents.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override Response<AsyncPageable<DocumentStatus>> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
         {
             while (true)

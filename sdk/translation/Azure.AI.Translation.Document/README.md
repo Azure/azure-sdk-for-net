@@ -305,36 +305,7 @@ Uri targetUri = new Uri("<target SAS URI>");
 
 var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
-DocumentTranslationOperation operation = client.Translation(input, waitForCompletion: false);
-
-TimeSpan pollingInterval = new(1000);
-
-while (true)
-{
-    operation.UpdateStatus();
-
-    Console.WriteLine($"  Status: {operation.Status}");
-    Console.WriteLine($"  Created on: {operation.CreatedOn}");
-    Console.WriteLine($"  Last modified: {operation.LastModified}");
-    Console.WriteLine($"  Total documents: {operation.DocumentsTotal}");
-    Console.WriteLine($"    Succeeded: {operation.DocumentsSucceeded}");
-    Console.WriteLine($"    Failed: {operation.DocumentsFailed}");
-    Console.WriteLine($"    In Progress: {operation.DocumentsInProgress}");
-    Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
-
-    if (operation.HasCompleted)
-    {
-        break;
-    }
-    else
-    {
-        if (operation.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
-        {
-            pollingInterval = TimeSpan.FromSeconds(Convert.ToInt32(value));
-        }
-        Thread.Sleep(pollingInterval);
-    }
-}
+DocumentTranslationOperation operation = client.Translation(input);
 
 foreach (DocumentStatus document in operation.GetValues())
 {

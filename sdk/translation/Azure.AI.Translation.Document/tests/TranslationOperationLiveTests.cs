@@ -248,15 +248,9 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            DocumentTranslationOperation operation = await client.TranslationAsync(input, waitForCompletion: false);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
-
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.TranslationAsync(input));
             Assert.AreEqual("InvalidDocumentAccessLevel", ex.ErrorCode);
-
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
-            Assert.AreEqual(DocumentTranslationStatus.ValidationFailed, operation.Status);
         }
 
         [RecordedTest]
@@ -269,15 +263,9 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            DocumentTranslationOperation operation = await client.TranslationAsync(input, waitForCompletion: false);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
-
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.TranslationAsync(input));
             Assert.AreEqual("InvalidDocumentAccessLevel", ex.ErrorCode);
-
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
-            Assert.AreEqual(DocumentTranslationStatus.ValidationFailed, operation.Status);
         }
 
         [RecordedTest]
