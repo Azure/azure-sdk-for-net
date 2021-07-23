@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Az
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Core", "src\Azure.ResourceManager.Core.csproj", "{010FE057-7BB5-4F8C-BB9A-6378144F4CA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "src\Azure.ResourceManager.csproj", "{010FE057-7BB5-4F8C-BB9A-6378144F4CA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Core.Tests", "tests\Azure.ResourceManager.Core.Tests.csproj", "{83E7651C-7FBE-45AA-B740-31FE9A3E44C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Tests", "tests\Azure.ResourceManager.Tests.csproj", "{83E7651C-7FBE-45AA-B740-31FE9A3E44C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
