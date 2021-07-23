@@ -23,12 +23,7 @@
     <NoWarn>$(NoWarn);AZC0001;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <!-- TODO: uncomment when Azure.Core ships 
     <PackageReference Include="Azure.Core" />
-    end TODO -->
-    <!-- TODO: revert when Azure.Core ships -->
-      <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-    <!--  end TODO-->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
