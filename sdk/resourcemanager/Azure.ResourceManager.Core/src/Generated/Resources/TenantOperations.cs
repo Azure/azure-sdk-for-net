@@ -48,25 +48,14 @@ namespace Azure.ResourceManager.Core
         protected override ResourceType ValidResourceType => ResourceType;
 
         /// <summary>
-        /// ListResources of type T.
+        /// Provides a way to reuse the protected client context.
         /// </summary>
-        /// <typeparam name="T"> The type of resource being returned in the list. </typeparam>
+        /// <typeparam name="T"> The actual type returned by the delegate. </typeparam>
         /// <param name="func"> The method to pass the internal properties to. </param>
-        /// <returns>  A collection of resources. </returns>
+        /// <returns> Whatever the delegate returns. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<T> ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, Pageable<T>> func)
-        {
-            return func(BaseUri, Credential, ClientOptions, Pipeline);
-        }
-
-        /// <summary>
-        /// ListResources of type T.
-        /// </summary>
-        /// <typeparam name="T"> The type of resource being returned in the list. </typeparam>
-        /// <param name="func"> The method to pass the internal properties to. </param>
-        /// <returns>  A collection of resources. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, AsyncPageable<T>> func)
+        [ForwardsClientCalls]
+        public virtual T UseClientContext<T>(Func<Uri, TokenCredential, ArmClientOptions, HttpPipeline, T> func)
         {
             return func(BaseUri, Credential, ClientOptions, Pipeline);
         }

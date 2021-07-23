@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -103,11 +102,6 @@ namespace Azure.Messaging.ServiceBus
         private readonly EntityScopeFactory _scopeFactory;
 
         /// <summary>
-        /// The list of plugins to apply to incoming messages.
-        /// </summary>
-        private readonly IList<ServiceBusPlugin> _plugins;
-
-        /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
@@ -120,7 +114,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="entityPath"></param>
         /// <param name="isSessionEntity"></param>
-        /// <param name="plugins">The plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
         /// <param name="sessionId">An optional session Id to scope the receiver to. If not specified,
         ///     the next available session returned from the service will be used.</param>
@@ -130,7 +123,6 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusConnection connection,
             string entityPath,
             bool isSessionEntity,
-            IList<ServiceBusPlugin> plugins,
             ServiceBusReceiverOptions options,
             string sessionId = default,
             bool isProcessor = default,
@@ -170,7 +162,6 @@ namespace Azure.Messaging.ServiceBus
                     isProcessor: isProcessor,
                     cancellationToken: cancellationToken);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
-                _plugins = plugins;
                 if (!isSessionEntity)
                 {
                     // don't log client completion for session receiver here as it is not complete until
@@ -190,6 +181,29 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         protected ServiceBusReceiver() { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the receiver.</param>
+        /// <param name="queueName">The name of the queue to receive from.</param>
+        /// <param name="options">The set of options to use when configuring the receiver.</param>
+        protected ServiceBusReceiver(ServiceBusClient client, string queueName, ServiceBusReceiverOptions options) :
+            this(client?.Connection, queueName, false,  options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the receiver.</param>
+        /// <param name="topicName">The topic to create a receiver for.</param>
+        /// <param name="subscriptionName">The subscription to create a receiver for.</param>
+        /// <param name="options">The set of options to use when configuring the receiver.</param>
+        protected ServiceBusReceiver(ServiceBusClient client, string topicName, string subscriptionName, ServiceBusReceiverOptions options) :
+            this(client?.Connection, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), false,  options)
+        {
+        }
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiver" />.
@@ -270,7 +284,6 @@ namespace Azure.Messaging.ServiceBus
                     maxMessages,
                     maxWaitTime,
                     cancellationToken).ConfigureAwait(false);
-                await ApplyPlugins(messages).ConfigureAwait(false);
             }
             catch (TaskCanceledException ex)
                 when (isProcessor)
@@ -345,28 +358,6 @@ namespace Azure.Messaging.ServiceBus
                 return message;
             }
             return null;
-        }
-
-        private async Task ApplyPlugins(IReadOnlyList<ServiceBusReceivedMessage> messages)
-        {
-            foreach (ServiceBusPlugin plugin in _plugins)
-            {
-                string pluginType = plugin.GetType().Name;
-                foreach (ServiceBusReceivedMessage message in messages)
-                {
-                    try
-                    {
-                        Logger.PluginCallStarted(pluginType, message.MessageId);
-                        await plugin.AfterMessageReceiveAsync(message).ConfigureAwait(false);
-                        Logger.PluginCallCompleted(pluginType, message.MessageId);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.PluginCallException(pluginType, message.MessageId, ex.ToString());
-                        throw;
-                    }
-                }
-            }
         }
 
         /// <summary>

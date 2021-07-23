@@ -13,6 +13,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using BenchmarkDotNet.Running;
 
 namespace Azure.Test.Perf
 {
@@ -31,6 +32,13 @@ namespace Azure.Test.Perf
 
         public static async Task Main(Assembly assembly, string[] args)
         {
+            // See if we want to run a BenchmarkDotNet microbenchmark
+            if (args.Length > 0 && args[0].Equals("micro", StringComparison.OrdinalIgnoreCase))
+            {
+                BenchmarkSwitcher.FromAssembly(assembly).Run(args.Skip(1).ToArray());
+                return;
+            }
+
             var testTypes = assembly.ExportedTypes
                 .Where(t => typeof(IPerfTest).IsAssignableFrom(t) && !t.IsAbstract);
 

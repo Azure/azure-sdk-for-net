@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkSession
     {
         /// <summary> Initializes a new instance of SparkSession. </summary>
-        /// <param name="id"> . </param>
+        /// <param name="id"></param>
         internal SparkSession(int id)
         {
             Errors = new ChangeTrackingList<SparkServiceError>();
@@ -25,24 +25,24 @@ namespace Azure.Analytics.Synapse.Spark.Models
         }
 
         /// <summary> Initializes a new instance of SparkSession. </summary>
-        /// <param name="livyInfo"> . </param>
-        /// <param name="name"> . </param>
-        /// <param name="workspaceName"> . </param>
-        /// <param name="sparkPoolName"> . </param>
-        /// <param name="submitterName"> . </param>
-        /// <param name="submitterId"> . </param>
-        /// <param name="artifactId"> . </param>
+        /// <param name="livyInfo"></param>
+        /// <param name="name"></param>
+        /// <param name="workspaceName"></param>
+        /// <param name="sparkPoolName"></param>
+        /// <param name="submitterName"></param>
+        /// <param name="submitterId"></param>
+        /// <param name="artifactId"></param>
         /// <param name="jobType"> The job type. </param>
-        /// <param name="result"> . </param>
-        /// <param name="scheduler"> . </param>
-        /// <param name="plugin"> . </param>
-        /// <param name="errors"> . </param>
+        /// <param name="result"></param>
+        /// <param name="scheduler"></param>
+        /// <param name="plugin"></param>
+        /// <param name="errors"></param>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="id"> . </param>
-        /// <param name="appId"> . </param>
+        /// <param name="id"></param>
+        /// <param name="appId"></param>
         /// <param name="appInfo"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="state"> . </param>
-        /// <param name="logLines"> . </param>
+        /// <param name="state"></param>
+        /// <param name="logLines"></param>
         internal SparkSession(SparkSessionState livyInfo, string name, string workspaceName, string sparkPoolName, string submitterName, string submitterId, string artifactId, SparkJobType? jobType, SparkSessionResultType? result, SparkScheduler scheduler, SparkServicePlugin plugin, IReadOnlyList<SparkServiceError> errors, IReadOnlyDictionary<string, string> tags, int id, string appId, IReadOnlyDictionary<string, string> appInfo, string state, IReadOnlyList<string> logLines)
         {
             LivyInfo = livyInfo;

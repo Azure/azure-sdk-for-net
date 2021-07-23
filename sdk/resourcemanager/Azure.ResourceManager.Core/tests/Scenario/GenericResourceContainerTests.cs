@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task DoesExist()
+        public async Task CheckIfExists()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
 
-            Assert.IsTrue(await Client.DefaultSubscription.GetGenericResources().DoesExistAsync(aset.Data.Id));
-            Assert.IsFalse(await Client.DefaultSubscription.GetGenericResources().DoesExistAsync(aset.Data.Id + "1"));
+            Assert.IsTrue(await Client.DefaultSubscription.GetGenericResources().CheckIfExistsAsync(aset.Data.Id));
+            Assert.IsFalse(await Client.DefaultSubscription.GetGenericResources().CheckIfExistsAsync(aset.Data.Id + "1"));
         }
 
         [TestCase]

@@ -1,7 +1,6 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
-
+## 12.9.0-beta.1 (2021-07-22)
 - TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
     - A new property is now available on the ClientOptions called `EnableTenantDiscovery`. If set to true, the client will attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.
 

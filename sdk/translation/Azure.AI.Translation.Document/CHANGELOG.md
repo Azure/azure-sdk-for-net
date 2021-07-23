@@ -5,6 +5,9 @@
 ### Features Added
 
 ### Breaking Changes
+- Properties `Suffix` and `Prefix` are now available under `TranslationSource` instead of in type `DocumentFilter`.
+- Type `DocumentTranslationError` is now a struct.
+- Type `StorageInputType` is now a regular enum instead of an extensible enum.
 
 ### Bugs Fixed
 

@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         }
 
         /// <summary> Initializes a new instance of SqlQueryStringDataModel. </summary>
-        /// <param name="query"> . </param>
+        /// <param name="query"></param>
         internal SqlQueryStringDataModel(string query)
         {
             Query = query;
