@@ -610,7 +610,8 @@ namespace Azure.AI.TextAnalytics
                 recognizeEntitiesActionResults.ToList(),
                 recognizePiiEntitiesActionResults.ToList(),
                 recognizeLinkedEntitiesActionsResults.ToList(),
-                analyzeSentimentActionsResults.ToList());
+                analyzeSentimentActionsResults.ToList(),
+                null); // TODO: update model factory.
         }
 
         /// <summary>

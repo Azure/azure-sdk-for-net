@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<IReadOnlyList<KeyPhraseExtractionTasksItem>> keyPhraseExtractionTasks = default;
             Optional<IReadOnlyList<EntityLinkingTasksItem>> entityLinkingTasks = default;
             Optional<IReadOnlyList<SentimentAnalysisTasksItem>> sentimentAnalysisTasks = default;
-            Optional<IReadOnlyList<TasksStateTasksExtractiveSummarizationTasksItem>> extractiveSummarizationTasks = default;
+            Optional<IReadOnlyList<ExtractiveSummarizationTasksItem>> extractiveSummarizationTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completed"))
@@ -129,10 +129,10 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TasksStateTasksExtractiveSummarizationTasksItem> array = new List<TasksStateTasksExtractiveSummarizationTasksItem>();
+                    List<ExtractiveSummarizationTasksItem> array = new List<ExtractiveSummarizationTasksItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TasksStateTasksExtractiveSummarizationTasksItem.DeserializeTasksStateTasksExtractiveSummarizationTasksItem(item));
+                        array.Add(ExtractiveSummarizationTasksItem.DeserializeExtractiveSummarizationTasksItem(item));
                     }
                     extractiveSummarizationTasks = array;
                     continue;
