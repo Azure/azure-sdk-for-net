@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.9.0-beta.2 (2021-07-23)
-- This release contains fix to depend on Azure.Core v1.16.0
+- This release changes the dependency on Azure.Core to v1.16.0
 
 ## 12.9.0-beta.1 (2021-07-22)
 - TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
