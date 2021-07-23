@@ -2,18 +2,36 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Azure.Sample.Perf
 {
     public class MockEventProcessor
     {
-        private static readonly MockEventArgs _eventArgs = new MockEventArgs(partition: 0, data: "hello");
+        public int Partitions { get; }
+        public int MaxEventsPerSecond { get; }
+        private double MaxEventsPerSecondPerPartition => ((double)MaxEventsPerSecond) / Partitions;
 
-        private bool _processing = false;
-        private bool _stopProcessing = false;
+        private readonly MockEventArgs[] _eventArgs;
+        private readonly int[] _eventsRaised;
+        private readonly Stopwatch _sw = new Stopwatch();
 
         private Func<MockEventArgs, Task> _processEventAsync;
+
+        public MockEventProcessor(int partitions, int maxEventsPerSecond)
+        {
+            Partitions = partitions;
+            MaxEventsPerSecond = maxEventsPerSecond;
+
+            _eventArgs = new MockEventArgs[partitions];
+            for (var i=0; i < partitions; i++)
+            {
+                _eventArgs[i] = new MockEventArgs(partition: i, data: "hello");
+            }
+
+            _eventsRaised = new int[partitions];
+        }
 
         public event Func<MockEventArgs, Task> ProcessEventAsync
         {
@@ -29,42 +47,48 @@ namespace Azure.Sample.Perf
 
         public Task StartProcessingAsync()
         {
-            if (_processing)
+            _sw.Start();
+
+            for (var i=0; i < Partitions; i++)
             {
-                throw new InvalidOperationException("Processing has already been started.");
+                _ = Process(i);
             }
 
-            _ = Process();
             return Task.CompletedTask;
         }
 
-        private async Task Process()
+        private async Task Process(int partition)
         {
             await Task.Yield();
 
-            _processing = true;
-            while (!_stopProcessing)
+            var eventArgs = _eventArgs[partition];
+
+            if (MaxEventsPerSecond > 0)
             {
-                await _processEventAsync(_eventArgs);
-            }
-            _processing = false;
-        }
+                while (true)
+                {
+                    var eventsRaised = _eventsRaised[partition];
+                    var targetEventsRaised = _sw.Elapsed.TotalSeconds * MaxEventsPerSecondPerPartition;
 
-        public async Task StopProcessingAsync()
-        {
-            if (!_processing)
+                    if (eventsRaised < targetEventsRaised)
+                    {
+                        await _processEventAsync(eventArgs).ConfigureAwait(false);
+                        _eventsRaised[partition]++;
+                    }
+                    else
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1 / MaxEventsPerSecondPerPartition));
+                    }
+                }
+            }
+            else
             {
-                throw new InvalidOperationException("Processing has already been stopped.");
+                while (true)
+                {
+                    await _processEventAsync(eventArgs).ConfigureAwait(false);
+                    _eventsRaised[partition]++;
+                }
             }
-
-            _stopProcessing = true;
-
-            while (_processing)
-            {
-                await Task.Delay(10);
-            }
-
-            _stopProcessing = false;
         }
     }
 }

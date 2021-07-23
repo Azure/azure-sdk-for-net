@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Azure.Test.Perf
 {
-    public abstract class EventPerfTest<TOptions> : PerfTest<TOptions> where TOptions : PerfOptions
+    public abstract class EventTwoSemaphorePerfTest<TOptions> : PerfTest<TOptions> where TOptions : PerfOptions
     {
         private readonly SemaphoreSlim _eventProcessed = new SemaphoreSlim(0);
         private readonly SemaphoreSlim _processNextEvent = new SemaphoreSlim(0);
         private CancellationToken _cancellationToken;
 
-        public EventPerfTest(TOptions options) : base(options)
+        public EventTwoSemaphorePerfTest(TOptions options) : base(options)
         {
         }
 

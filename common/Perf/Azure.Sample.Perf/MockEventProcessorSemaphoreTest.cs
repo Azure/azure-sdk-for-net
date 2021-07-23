@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Azure.Sample.Perf
 {
-    public class MockEventProcessorSemaphoreTest : PerfTest<PerfOptions>
+    public class MockEventProcessorSemaphoreTest : PerfTest<MockEventProcessorOptions>
     {
         private readonly MockEventProcessor _eventProcessor;
         private readonly SemaphoreSlim _eventProcessed = new SemaphoreSlim(0);
         private readonly SemaphoreSlim _processNextEvent = new SemaphoreSlim(0);
 
-        public MockEventProcessorSemaphoreTest(PerfOptions options) : base(options)
+        public MockEventProcessorSemaphoreTest(MockEventProcessorOptions options) : base(options)
         {
-            _eventProcessor = new MockEventProcessor();
+            _eventProcessor = new MockEventProcessor(options.Partitions, options.MaxEventsPerSecond);
             _eventProcessor.ProcessEventAsync += ProcessEventAsync;
         }
 
