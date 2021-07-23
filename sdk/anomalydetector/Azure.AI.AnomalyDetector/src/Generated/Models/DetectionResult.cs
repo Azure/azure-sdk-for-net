@@ -15,7 +15,7 @@ namespace Azure.AI.AnomalyDetector.Models
     public partial class DetectionResult
     {
         /// <summary> Initializes a new instance of DetectionResult. </summary>
-        /// <param name="resultId"> . </param>
+        /// <param name="resultId"></param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> anomaly status of each timestamp. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
@@ -36,7 +36,7 @@ namespace Azure.AI.AnomalyDetector.Models
         }
 
         /// <summary> Initializes a new instance of DetectionResult. </summary>
-        /// <param name="resultId"> . </param>
+        /// <param name="resultId"></param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> anomaly status of each timestamp. </param>
         internal DetectionResult(Guid resultId, DetectionResultSummary summary, IReadOnlyList<AnomalyState> results)

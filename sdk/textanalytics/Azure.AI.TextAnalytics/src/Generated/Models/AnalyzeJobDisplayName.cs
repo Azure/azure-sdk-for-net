@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of AnalyzeJobDisplayName. </summary>
-        /// <param name="displayName"> . </param>
+        /// <param name="displayName"></param>
         internal AnalyzeJobDisplayName(string displayName)
         {
             DisplayName = displayName;

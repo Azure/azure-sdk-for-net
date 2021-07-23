@@ -15,8 +15,8 @@ namespace Azure.Storage.Files.Shares.Models
     internal partial class FilesAndDirectoriesListSegment
     {
         /// <summary> Initializes a new instance of FilesAndDirectoriesListSegment. </summary>
-        /// <param name="directoryItems"> . </param>
-        /// <param name="fileItems"> . </param>
+        /// <param name="directoryItems"></param>
+        /// <param name="fileItems"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="directoryItems"/> or <paramref name="fileItems"/> is null. </exception>
         internal FilesAndDirectoriesListSegment(IEnumerable<DirectoryItem> directoryItems, IEnumerable<FileItem> fileItems)
         {
@@ -34,8 +34,8 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> Initializes a new instance of FilesAndDirectoriesListSegment. </summary>
-        /// <param name="directoryItems"> . </param>
-        /// <param name="fileItems"> . </param>
+        /// <param name="directoryItems"></param>
+        /// <param name="fileItems"></param>
         internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems)
         {
             DirectoryItems = directoryItems;

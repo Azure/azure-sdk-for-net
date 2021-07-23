@@ -246,7 +246,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of SparkBatchJob. </summary>
-        /// <param name="livyInfo"> . </param>
+        /// <param name="livyInfo"></param>
         /// <param name="name"> The batch name. </param>
         /// <param name="workspaceName"> The workspace name. </param>
         /// <param name="sparkPoolName"> The Spark pool name. </param>
@@ -284,7 +284,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="terminatedAt"> the time that at which &quot;killed&quot; livy state was first seen. </param>
         /// <param name="recoveringAt"> the time that at which &quot;recovering&quot; livy state was first seen. </param>
         /// <param name="currentState"> the Spark job state. </param>
-        /// <param name="jobCreationRequest"> . </param>
+        /// <param name="jobCreationRequest"></param>
         /// <returns> A new <see cref="Models.SparkBatchJobState"/> instance for mocking. </returns>
         public static SparkBatchJobState SparkBatchJobState(DateTimeOffset? notStartedAt = null, DateTimeOffset? startingAt = null, DateTimeOffset? runningAt = null, DateTimeOffset? deadAt = null, DateTimeOffset? successAt = null, DateTimeOffset? terminatedAt = null, DateTimeOffset? recoveringAt = null, string currentState = null, SparkRequest jobCreationRequest = null)
         {
@@ -292,20 +292,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of SparkRequest. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="file"> . </param>
-        /// <param name="className"> . </param>
-        /// <param name="arguments"> . </param>
-        /// <param name="jars"> . </param>
-        /// <param name="pythonFiles"> . </param>
-        /// <param name="files"> . </param>
-        /// <param name="archives"> . </param>
+        /// <param name="name"></param>
+        /// <param name="file"></param>
+        /// <param name="className"></param>
+        /// <param name="arguments"></param>
+        /// <param name="jars"></param>
+        /// <param name="pythonFiles"></param>
+        /// <param name="files"></param>
+        /// <param name="archives"></param>
         /// <param name="configuration"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="driverMemory"> . </param>
-        /// <param name="driverCores"> . </param>
-        /// <param name="executorMemory"> . </param>
-        /// <param name="executorCores"> . </param>
-        /// <param name="executorCount"> . </param>
+        /// <param name="driverMemory"></param>
+        /// <param name="driverCores"></param>
+        /// <param name="executorMemory"></param>
+        /// <param name="executorCores"></param>
+        /// <param name="executorCount"></param>
         /// <returns> A new <see cref="Models.SparkRequest"/> instance for mocking. </returns>
         public static SparkRequest SparkRequest(string name = null, string file = null, string className = null, IEnumerable<string> arguments = null, IEnumerable<string> jars = null, IEnumerable<string> pythonFiles = null, IEnumerable<string> files = null, IEnumerable<string> archives = null, IReadOnlyDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = null, string executorMemory = null, int? executorCores = null, int? executorCount = null)
         {
@@ -320,11 +320,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of SparkScheduler. </summary>
-        /// <param name="submittedAt"> . </param>
-        /// <param name="scheduledAt"> . </param>
-        /// <param name="endedAt"> . </param>
-        /// <param name="cancellationRequestedAt"> . </param>
-        /// <param name="currentState"> . </param>
+        /// <param name="submittedAt"></param>
+        /// <param name="scheduledAt"></param>
+        /// <param name="endedAt"></param>
+        /// <param name="cancellationRequestedAt"></param>
+        /// <param name="currentState"></param>
         /// <returns> A new <see cref="Models.SparkScheduler"/> instance for mocking. </returns>
         public static SparkScheduler SparkScheduler(DateTimeOffset? submittedAt = null, DateTimeOffset? scheduledAt = null, DateTimeOffset? endedAt = null, DateTimeOffset? cancellationRequestedAt = null, SchedulerCurrentState? currentState = null)
         {
@@ -332,12 +332,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of SparkServicePlugin. </summary>
-        /// <param name="preparationStartedAt"> . </param>
-        /// <param name="resourceAcquisitionStartedAt"> . </param>
-        /// <param name="submissionStartedAt"> . </param>
-        /// <param name="monitoringStartedAt"> . </param>
-        /// <param name="cleanupStartedAt"> . </param>
-        /// <param name="currentState"> . </param>
+        /// <param name="preparationStartedAt"></param>
+        /// <param name="resourceAcquisitionStartedAt"></param>
+        /// <param name="submissionStartedAt"></param>
+        /// <param name="monitoringStartedAt"></param>
+        /// <param name="cleanupStartedAt"></param>
+        /// <param name="currentState"></param>
         /// <returns> A new <see cref="Models.SparkServicePlugin"/> instance for mocking. </returns>
         public static SparkServicePlugin SparkServicePlugin(DateTimeOffset? preparationStartedAt = null, DateTimeOffset? resourceAcquisitionStartedAt = null, DateTimeOffset? submissionStartedAt = null, DateTimeOffset? monitoringStartedAt = null, DateTimeOffset? cleanupStartedAt = null, PluginCurrentState? currentState = null)
         {
@@ -345,9 +345,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of SparkServiceError. </summary>
-        /// <param name="message"> . </param>
-        /// <param name="errorCode"> . </param>
-        /// <param name="source"> . </param>
+        /// <param name="message"></param>
+        /// <param name="errorCode"></param>
+        /// <param name="source"></param>
         /// <returns> A new <see cref="Models.SparkServiceError"/> instance for mocking. </returns>
         public static SparkServiceError SparkServiceError(string message = null, string errorCode = null, SparkErrorSource? source = null)
         {
@@ -594,7 +594,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of GitHubAccessTokenResponse. </summary>
-        /// <param name="gitHubAccessToken"> . </param>
+        /// <param name="gitHubAccessToken"></param>
         /// <returns> A new <see cref="Models.GitHubAccessTokenResponse"/> instance for mocking. </returns>
         public static GitHubAccessTokenResponse GitHubAccessTokenResponse(string gitHubAccessToken = null)
         {

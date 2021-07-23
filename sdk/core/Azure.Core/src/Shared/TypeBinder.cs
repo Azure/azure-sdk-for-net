@@ -13,34 +13,48 @@ namespace Azure.Monitor.Query
     internal abstract class TypeBinder<TExchange>
     {
         private readonly ConcurrentDictionary<Type, BoundTypeInfo> _cache = new();
+        private Func<Type, BoundTypeInfo> _valueFactory;
+
+        protected TypeBinder()
+        {
+            _valueFactory = t => new(t, this);
+        }
 
         public T Deserialize<T>(TExchange source)
         {
             var info = GetBinderInfo(typeof(T));
-            return info.Deserialize<T>(source, this);
+            return info.Deserialize<T>(source);
         }
 
         public void Serialize<T>(T value, TExchange destination)
         {
             var info = GetBinderInfo(typeof(T));
-            info.Serialize(value, destination, this);
+            info.Serialize(value, destination);
         }
 
-        private BoundTypeInfo GetBinderInfo(Type type)
+        public void Serialize(object value, Type type, TExchange destination)
         {
-            return _cache.GetOrAdd(type, static t => new(t));
+            var info = GetBinderInfo(type);
+            info.Serialize(value, destination);
+        }
+
+        public BoundTypeInfo GetBinderInfo(Type type)
+        {
+            return _cache.GetOrAdd(type,  _valueFactory);
         }
 
         protected abstract void Set<T>(TExchange destination, T value, BoundMemberInfo memberInfo);
         protected abstract bool TryGet<T>(BoundMemberInfo memberInfo, TExchange source, out T value);
 
-        private class BoundTypeInfo
+        public class BoundTypeInfo
         {
+            private readonly TypeBinder<TExchange> _binderImplementation;
             private readonly bool _isPrimitive;
             private readonly BoundMemberInfo[] _members;
 
-            public BoundTypeInfo(Type type)
+            public BoundTypeInfo(Type type, TypeBinder<TExchange> binderImplementation)
             {
+                _binderImplementation = binderImplementation;
                 Type innerType = type;
                 if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
@@ -67,6 +81,10 @@ namespace Azure.Monitor.Query
                         switch (memberInfo)
                         {
                             case PropertyInfo propertyInfo:
+                                if (propertyInfo.GetIndexParameters().Length > 0)
+                                {
+                                    continue;
+                                }
                                 members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), propertyInfo.PropertyType), propertyInfo));
                                 break;
                             case FieldInfo fieldInfo:
@@ -79,22 +97,22 @@ namespace Azure.Monitor.Query
                 }
             }
 
-            public void Serialize<T>(T o, TExchange destination, TypeBinder<TExchange> binderImplementation)
+            public void Serialize<T>(T o, TExchange destination)
             {
                 foreach (var member in _members)
                 {
                     if (member.CanRead)
                     {
-                        member.Serialize(o, destination, binderImplementation);
+                        member.Serialize(o, destination, _binderImplementation);
                     }
                 }
             }
 
-            public T Deserialize<T>(TExchange source, TypeBinder<TExchange> binderImplementation)
+            public T Deserialize<T>(TExchange source)
             {
                 if (_isPrimitive)
                 {
-                    if (!binderImplementation.TryGet(null, source, out T result))
+                    if (!_binderImplementation.TryGet(null, source, out T result))
                     {
                         throw new InvalidOperationException($"Unable to deserialize into a primitive type {typeof(T)}");
                     }
@@ -107,12 +125,14 @@ namespace Azure.Monitor.Query
                 {
                     if (member.CanWrite)
                     {
-                        member.Deserialize(source, o, binderImplementation);
+                        member.Deserialize(source, o, _binderImplementation);
                     }
                 }
 
                 return o;
             }
+
+            public int MemberCount => _members?.Length ?? 0;
         }
 
         protected abstract class BoundMemberInfo
@@ -129,6 +149,7 @@ namespace Azure.Monitor.Query
 
             public string Name { get; }
             public MemberInfo MemberInfo { get; }
+            public abstract Type Type { get; }
             public abstract bool CanRead { get; }
             public abstract bool CanWrite { get; }
             public abstract void Serialize(object o, TExchange destination, TypeBinder<TExchange> binderImplementation);
@@ -144,16 +165,17 @@ namespace Azure.Monitor.Query
             private static ParameterExpression InputParameter = Expression.Parameter(typeof(object), "input");
             private static ParameterExpression ValueParameter = Expression.Parameter(typeof(TProperty), "value");
 
-            public BoundMemberInfo(PropertyInfo propertyInfo) : this(propertyInfo, propertyInfo.CanRead, propertyInfo.CanWrite)
+            public BoundMemberInfo(PropertyInfo propertyInfo) : this(propertyInfo, propertyInfo.CanRead, propertyInfo.CanWrite, propertyInfo.PropertyType)
             {
             }
 
-            public BoundMemberInfo(FieldInfo fieldInfo) : this(fieldInfo, true, !fieldInfo.IsInitOnly)
+            public BoundMemberInfo(FieldInfo fieldInfo) : this(fieldInfo, true, !fieldInfo.IsInitOnly, fieldInfo.FieldType)
             {
             }
 
-            private BoundMemberInfo(MemberInfo memberInfo, bool canRead, bool canWrite) : base(memberInfo)
+            private BoundMemberInfo(MemberInfo memberInfo, bool canRead, bool canWrite, Type type) : base(memberInfo)
             {
+                Type = type;
                 CanRead = canRead;
                 CanWrite = canWrite;
 
@@ -178,6 +200,7 @@ namespace Azure.Monitor.Query
             private PropertyGetter<TProperty> Getter { get; }
             private PropertySetter<TProperty> Setter { get; }
 
+            public override Type Type { get; }
             public override bool CanRead { get; }
             public override bool CanWrite { get; }
 
