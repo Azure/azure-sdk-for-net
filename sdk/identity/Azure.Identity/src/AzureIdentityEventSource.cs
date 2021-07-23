@@ -83,7 +83,7 @@ namespace Azure.Identity
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
-                ProbeImdsEndpoint(uri.ToString());
+                ProbeImdsEndpoint(uri.AbsoluteUri);
             }
         }
 
@@ -98,7 +98,7 @@ namespace Azure.Identity
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
-                ImdsEndpointFound(uri.ToString());
+                ImdsEndpointFound(uri.AbsoluteUri);
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Identity
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
-                ImdsEndpointUnavailable(uri.ToString(), error);
+                ImdsEndpointUnavailable(uri.AbsoluteUri, error);
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Identity
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
-                ImdsEndpointUnavailable(uri.ToString(), FormatException(e));
+                ImdsEndpointUnavailable(uri.AbsoluteUri, FormatException(e));
             }
         }
 
