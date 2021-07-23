@@ -20,6 +20,7 @@ namespace Azure.Core
         {
             IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             IsDistributedTracingEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TRACING_DISABLED")) ?? true;
+            IsLoggingPIIEnabled = EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_LOGGING_PII_ENABLED")) ?? false;
             ApplicationId = DefaultApplicationId;
             LoggedHeaderNames = new List<string>()
             {
@@ -73,6 +74,12 @@ namespace Azure.Core
         /// Gets or sets value indicating if request or response content should be logged.
         /// </summary>
         public bool IsLoggingContentEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets value indicating if logging that contains PII content should be logged.
+        /// Note: This setting has no relation to <see cref="IsLoggingContentEnabled" /> and will not affect whether logged content contains PII.
+        /// </summary>
+        public bool IsLoggingPIIEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets value indicating maximum size of content to log in bytes. Defaults to 4096.
