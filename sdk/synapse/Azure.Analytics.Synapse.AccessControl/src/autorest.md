@@ -12,7 +12,7 @@ input-file:
   - $(this-folder)/swagger/checkAccessSynapseRbac.json
   - $(this-folder)/swagger/roleAssignments.json
   - $(this-folder)/swagger/roleDefinitions.json
-namespace: Azure.Analytics.Synapse.AccessControl
+namespace: Azure.Analytics.Synapse.Administration
 public-clients: true
 low-level-client: true
 security: AADToken

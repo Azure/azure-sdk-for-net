@@ -1,401 +1,401 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "2020-08-01-preview",
-        "title": "AccessControlClient"
-    },
-    "x-ms-parameterized-host": {
-        "hostTemplate": "{endpoint}",
-        "useSchemePrefix": false,
+  "swagger": "2.0",
+  "info": {
+    "version": "2020-08-01-preview",
+    "title": "AccessControlClient"
+  },
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{endpoint}",
+    "useSchemePrefix": false,
+    "parameters": [
+      {
+        "$ref": "#/parameters/Endpoint"
+      }
+    ]
+  },
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/roleAssignments": {
+      "get": {
+        "tags": [
+          "RoleAssignments"
+        ],
+        "operationId": "SynapseAccessControl_ListRoleAssignments",
+        "description": "List role assignments.",
+        "x-ms-examples": {
+          "List role assignments": {
+            "$ref": "./examples/SynapseAccessControl_ListRoleAssignments.json"
+          }
+        },
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
         "parameters": [
-            {
-                "$ref": "#/parameters/Endpoint"
-            }
-        ]
-    },
-    "schemes": [
-        "https"
-    ],
-    "paths": {
-        "/roleAssignments": {
-            "get": {
-                "tags": [
-                    "RoleAssignments"
-                ],
-                "operationId": "RoleAssignments_ListRoleAssignments",
-                "description": "List role assignments.",
-                "x-ms-examples": {
-                    "List role assignments": {
-                        "$ref": "./examples/RoleAssignments_ListRoleAssignments.json"
-                    }
-                },
-                "consumes": [],
-                "produces": [
-                    "application/json",
-                    "text/json"
-                ],
-                "parameters": [
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    },
-                    {
-                        "$ref": "#/parameters/RoleIdParameter"
-                    },
-                    {
-                        "$ref": "#/parameters/PrincipalIdParameter"
-                    },
-                    {
-                        "$ref": "#/parameters/ScopeParameter"
-                    },
-                    {
-                        "$ref": "#/parameters/XMsContinuationToken"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success response.",
-                        "headers": {
-                            "x-ms-continuation": {
-                                "description": "If the number of role assignments to be listed exceeds the maxResults limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the list operation to continue listing the role assignments.",
-                                "type": "string"
-                            }
-                        },
-                        "schema": {
-                            "$ref": "#/definitions/RoleAssignmentDetailsList"
-                        }
-                    },
-                    "default": {
-                        "description": "Error response describing why the operation failed.",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorContract"
-                        }
-                    }
-                }
-            }
-        },
-        "/roleAssignments/{roleAssignmentId}": {
-            "put": {
-                "tags": [
-                    "RoleAssignments"
-                ],
-                "operationId": "RoleAssignments_CreateRoleAssignment",
-                "description": "Create role assignment.",
-                "x-ms-examples": {
-                    "Create role assignment": {
-                        "$ref": "./examples/RoleAssignments_CreateRoleAssignment.json"
-                    }
-                },
-                "consumes": [
-                    "application/json",
-                    "text/json"
-                ],
-                "produces": [
-                    "application/json",
-                    "text/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "x-ms-client-flatten": true,
-                        "description": "Details of role id, scope and object id.",
-                        "schema": {
-                            "$ref": "#/definitions/RoleAssignmentRequest"
-                        }
-                    },
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    },
-                    {
-                        "$ref": "#/parameters/RoleAssignmentIdParameter"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success response.",
-                        "schema": {
-                            "$ref": "#/definitions/RoleAssignmentDetails"
-                        }
-                    },
-                    "default": {
-                        "description": "Error response describing why the operation failed.",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorContract"
-                        }
-                    }
-                }
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/RoleIdParameter"
+          },
+          {
+            "$ref": "#/parameters/PrincipalIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ScopeParameter"
+          },
+          {
+            "$ref": "#/parameters/XMsContinuationToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response.",
+            "headers": {
+              "x-ms-continuation": {
+                "description": "If the number of role assignments to be listed exceeds the maxResults limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the list operation to continue listing the role assignments.",
+                "type": "string"
+              }
             },
-            "get": {
-                "tags": [
-                    "RoleAssignments"
-                ],
-                "operationId": "RoleAssignments_GetRoleAssignmentById",
-                "description": "Get role assignment by role assignment Id.",
-                "x-ms-examples": {
-                    "Get role assignment information": {
-                        "$ref": "./examples/RoleAssignments_GetRoleAssignmentById.json"
-                    }
-                },
-                "consumes": [],
-                "produces": [
-                    "application/json",
-                    "text/json"
-                ],
-                "parameters": [
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    },
-                    {
-                        "$ref": "#/parameters/RoleAssignmentIdParameter"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success response.",
-                        "schema": {
-                            "$ref": "#/definitions/RoleAssignmentDetails"
-                        }
-                    },
-                    "default": {
-                        "description": "Error response describing why the operation failed.",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorContract"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "RoleAssignments"
-                ],
-                "operationId": "RoleAssignments_DeleteRoleAssignmentById",
-                "description": "Delete role assignment by role assignment Id.",
-                "x-ms-examples": {
-                    "Delete role assignment": {
-                        "$ref": "./examples/RoleAssignments_DeleteRoleAssignmentById.json"
-                    }
-                },
-                "consumes": [],
-                "produces": [
-                    "application/json",
-                    "text/json"
-                ],
-                "parameters": [
-                    {
-                        "$ref": "#/parameters/ApiVersionParameter"
-                    },
-                    {
-                        "$ref": "#/parameters/RoleAssignmentIdParameter"
-                    },
-                    {
-                        "$ref": "#/parameters/ScopeParameter"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success response."
-                    },
-                    "204": {
-                        "description": "No Content."
-                    },
-                    "default": {
-                        "description": "Error response describing why the operation failed.",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorContract"
-                        }
-                    }
-                }
+            "schema": {
+              "$ref": "#/definitions/RoleAssignmentDetailsList"
             }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorContract"
+            }
+          }
         }
+      }
     },
-    "definitions": {
-        "ErrorContract": {
-            "title": "Error details.",
-            "description": "Contains details when the response code indicates an error.",
-            "type": "object",
-            "properties": {
-                "error": {
-                    "description": "The error details.",
-                    "$ref": "#/definitions/ErrorResponse"
-                }
-            }
+    "/roleAssignments/{roleAssignmentId}": {
+      "put": {
+        "tags": [
+          "RoleAssignments"
+        ],
+        "operationId": "SynapseAccessControl_CreateRoleAssignment",
+        "description": "Create role assignment.",
+        "x-ms-examples": {
+          "Create role assignment": {
+            "$ref": "./examples/SynapseAccessControl_CreateRoleAssignment.json"
+          }
         },
-        "ErrorResponse": {
-            "required": [
-                "code",
-                "message"
-            ],
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "target": {
-                    "type": "string"
-                },
-                "details": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ErrorDetail"
-                    }
-                }
+        "consumes": [
+          "application/json",
+          "text/json"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "x-ms-client-flatten": true,
+            "description": "Details of role id, scope and object id.",
+            "schema": {
+              "$ref": "#/definitions/RoleAssignmentRequest"
             }
-        },
-        "ErrorDetail": {
-            "required": [
-                "code",
-                "message"
-            ],
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "target": {
-                    "type": "string"
-                }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/RoleAssignmentIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response.",
+            "schema": {
+              "$ref": "#/definitions/RoleAssignmentDetails"
             }
-        },
-        "RoleAssignmentRequest": {
-            "description": "Role Assignment request details",
-            "type": "object",
-            "required": [
-                "roleId",
-                "principalId",
-                "scope"
-            ],
-            "properties": {
-                "roleId": {
-                    "description": "Role ID of the Synapse Built-In Role",
-                    "format": "uuid",
-                    "type": "string"
-                },
-                "principalId": {
-                    "description": "Object ID of the AAD principal or security-group",
-                    "format": "uuid",
-                    "type": "string"
-                },
-                "scope": {
-                    "description": "Scope at which the role assignment is created",
-                    "type": "string"
-                },
-                "principalType": {
-                    "description": "Type of the principal Id: User, Group or ServicePrincipal",
-                    "type": "string"
-                }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorContract"
             }
-        },
-        "RoleAssignmentDetailsList": {
-            "description": "Role Assignment response details",
-            "type": "object",
-            "properties": {
-                "count": {
-                    "description": "Number of role assignments",
-                    "type": "integer"
-                },
-                "value": {
-                    "description": "A list of role assignments",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/RoleAssignmentDetails"
-                    }
-                }
-            }
-        },
-        "RoleAssignmentDetails": {
-            "description": "Role Assignment response details",
-            "type": "object",
-            "properties": {
-                "id": {
-                    "description": "Role Assignment ID",
-                    "type": "string"
-                },
-                "roleDefinitionId": {
-                    "description": "Role ID of the Synapse Built-In Role",
-                    "format": "uuid",
-                    "type": "string"
-                },
-                "principalId": {
-                    "description": "Object ID of the AAD principal or security-group",
-                    "format": "uuid",
-                    "type": "string"
-                },
-                "scope": {
-                    "description": "Scope at the role assignment is created",
-                    "type": "string"
-                },
-                "principalType": {
-                    "description": "Type of the principal Id: User, Group or ServicePrincipal",
-                    "type": "string"
-                }
-            }
+          }
         }
-    },
-    "parameters": {
-        "Endpoint": {
-            "name": "endpoint",
-            "description": "The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.",
-            "required": true,
-            "type": "string",
-            "in": "path",
-            "x-ms-skip-url-encoding": true,
-            "x-ms-parameter-location": "client"
+      },
+      "get": {
+        "tags": [
+          "RoleAssignments"
+        ],
+        "operationId": "SynapseAccessControl_GetRoleAssignmentById",
+        "description": "Get role assignment by role assignment Id.",
+        "x-ms-examples": {
+          "Get role assignment information": {
+            "$ref": "./examples/SynapseAccessControl_GetRoleAssignmentById.json"
+          }
         },
-        "ApiVersionParameter": {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "description": "The Synapse client API Version."
-        },
-        "RoleIdParameter": {
-            "name": "roleId",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "Synapse Built-In Role Id.",
-            "x-ms-parameter-location": "method"
-        },
-        "PrincipalIdParameter": {
-            "name": "principalId",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "Object ID of the AAD principal or security-group.",
-            "x-ms-parameter-location": "method"
-        },
-        "RoleAssignmentIdParameter": {
-            "name": "roleAssignmentId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The ID of the role assignment.",
-            "minLength": 1,
-            "x-ms-parameter-location": "method"
-        },
-        "ScopeParameter": {
-            "name": "scope",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "Scope of the Synapse Built-in Role.",
-            "x-ms-parameter-location": "method"
-        },
-        "XMsContinuationToken": {
-            "name": "x-ms-continuation",
-            "x-ms-client-name": "continuationToken",
-            "in": "header",
-            "required": false,
-            "type": "string",
-            "description": "Continuation token.",
-            "x-ms-parameter-location": "method"
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/RoleAssignmentIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response.",
+            "schema": {
+              "$ref": "#/definitions/RoleAssignmentDetails"
+            }
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorContract"
+            }
+          }
         }
+      },
+      "delete": {
+        "tags": [
+          "RoleAssignments"
+        ],
+        "operationId": "SynapseAccessControl_DeleteRoleAssignmentById",
+        "description": "Delete role assignment by role assignment Id.",
+        "x-ms-examples": {
+          "Delete role assignment": {
+            "$ref": "./examples/SynapseAccessControl_DeleteRoleAssignmentById.json"
+          }
+        },
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/RoleAssignmentIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ScopeParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response."
+          },
+          "204": {
+            "description": "No Content."
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/ErrorContract"
+            }
+          }
+        }
+      }
     }
+  },
+  "definitions": {
+    "ErrorContract": {
+      "title": "Error details.",
+      "description": "Contains details when the response code indicates an error.",
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "The error details.",
+          "$ref": "#/definitions/ErrorResponse"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ErrorDetail"
+          }
+        }
+      }
+    },
+    "ErrorDetail": {
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        }
+      }
+    },
+    "RoleAssignmentRequest": {
+      "description": "Role Assignment request details",
+      "type": "object",
+      "required": [
+        "roleId",
+        "principalId",
+        "scope"
+      ],
+      "properties": {
+        "roleId": {
+          "description": "Role ID of the Synapse Built-In Role",
+          "format": "uuid",
+          "type": "string"
+        },
+        "principalId": {
+          "description": "Object ID of the AAD principal or security-group",
+          "format": "uuid",
+          "type": "string"
+        },
+        "scope": {
+          "description": "Scope at which the role assignment is created",
+          "type": "string"
+        },
+        "principalType": {
+          "description": "Type of the principal Id: User, Group or ServicePrincipal",
+          "type": "string"
+        }
+      }
+    },
+    "RoleAssignmentDetailsList": {
+      "description": "Role Assignment response details",
+      "type": "object",
+      "properties": {
+        "count": {
+          "description": "Number of role assignments",
+          "type": "integer"
+        },
+        "value": {
+          "description": "A list of role assignments",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RoleAssignmentDetails"
+          }
+        }
+      }
+    },
+    "RoleAssignmentDetails": {
+      "description": "Role Assignment response details",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Role Assignment ID",
+          "type": "string"
+        },
+        "roleDefinitionId": {
+          "description": "Role ID of the Synapse Built-In Role",
+          "format": "uuid",
+          "type": "string"
+        },
+        "principalId": {
+          "description": "Object ID of the AAD principal or security-group",
+          "format": "uuid",
+          "type": "string"
+        },
+        "scope": {
+          "description": "Scope at the role assignment is created",
+          "type": "string"
+        },
+        "principalType": {
+          "description": "Type of the principal Id: User, Group or ServicePrincipal",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "Endpoint": {
+      "name": "endpoint",
+      "description": "The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net.",
+      "required": true,
+      "type": "string",
+      "in": "path",
+      "x-ms-skip-url-encoding": true,
+      "x-ms-parameter-location": "client"
+    },
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "The Synapse client API Version."
+    },
+    "RoleIdParameter": {
+      "name": "roleId",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Synapse Built-In Role Id.",
+      "x-ms-parameter-location": "method"
+    },
+    "PrincipalIdParameter": {
+      "name": "principalId",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Object ID of the AAD principal or security-group.",
+      "x-ms-parameter-location": "method"
+    },
+    "RoleAssignmentIdParameter": {
+      "name": "roleAssignmentId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The ID of the role assignment.",
+      "minLength": 1,
+      "x-ms-parameter-location": "method"
+    },
+    "ScopeParameter": {
+      "name": "scope",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Scope of the Synapse Built-in Role.",
+      "x-ms-parameter-location": "method"
+    },
+    "XMsContinuationToken": {
+      "name": "x-ms-continuation",
+      "x-ms-client-name": "continuationToken",
+      "in": "header",
+      "required": false,
+      "type": "string",
+      "description": "Continuation token.",
+      "x-ms-parameter-location": "method"
+    }
+  }
 }

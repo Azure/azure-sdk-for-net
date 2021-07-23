@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
-    /// <summary> The RoleAssignments service client. </summary>
-    public partial class RoleAssignmentsClient
+    /// <summary> The SynapseAccessControl service client. </summary>
+    public partial class SynapseAccessControlClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -24,16 +24,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of RoleAssignmentsClient for mocking. </summary>
-        protected RoleAssignmentsClient()
+        /// <summary> Initializes a new instance of SynapseAccessControlClient for mocking. </summary>
+        protected SynapseAccessControlClient()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentsClient. </summary>
+        /// <summary> Initializes a new instance of SynapseAccessControlClient. </summary>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public RoleAssignmentsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options = null)
+        public SynapseAccessControlClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
+            using var scope = _clientDiagnostics.CreateScope("SynapseAccessControlClient.CheckPrincipalAccess");
             scope.Start();
             try
             {
@@ -248,7 +248,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
+            using var scope = _clientDiagnostics.CreateScope("SynapseAccessControlClient.CheckPrincipalAccess");
             scope.Start();
             try
             {
@@ -310,7 +310,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.ListRoleAssignments");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListRoleAssignments");
             scope0.Start();
             try
             {
@@ -353,7 +353,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.ListRoleAssignments");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListRoleAssignments");
             scope0.Start();
             try
             {
@@ -465,7 +465,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.CreateRoleAssignment");
             scope0.Start();
             try
             {
@@ -541,7 +541,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.CreateRoleAssignment");
             scope0.Start();
             try
             {
@@ -602,7 +602,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.GetRoleAssignmentById");
             scope0.Start();
             try
             {
@@ -642,7 +642,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.GetRoleAssignmentById");
             scope0.Start();
             try
             {
@@ -701,7 +701,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.DeleteRoleAssignmentById");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.DeleteRoleAssignmentById");
             scope0.Start();
             try
             {
@@ -743,7 +743,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.DeleteRoleAssignmentById");
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.DeleteRoleAssignmentById");
             scope0.Start();
             try
             {
@@ -789,6 +789,306 @@ namespace Azure.Analytics.Synapse.AccessControl
             {
                 uri.AppendQuery("scope", scope, true);
             }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> List role definitions. </summary>
+        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
+        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> ListRoleDefinitionsAsync(bool? isBuiltIn = null, string scope = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListRoleDefinitionsRequest(isBuiltIn, scope, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListRoleDefinitions");
+            scope0.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List role definitions. </summary>
+        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
+        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response ListRoleDefinitions(bool? isBuiltIn = null, string scope = null, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListRoleDefinitionsRequest(isBuiltIn, scope, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListRoleDefinitions");
+            scope0.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="ListRoleDefinitions"/> and <see cref="ListRoleDefinitionsAsync"/> operations. </summary>
+        /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
+        /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateListRoleDefinitionsRequest(bool? isBuiltIn = null, string scope = null, RequestOptions options = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/roleDefinitions", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            if (isBuiltIn != null)
+            {
+                uri.AppendQuery("isBuiltIn", isBuiltIn.Value, true);
+            }
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> Get role definition by role definition Id. </summary>
+        /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.GetRoleDefinitionById");
+            scope0.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get role definition by role definition Id. </summary>
+        /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.GetRoleDefinitionById");
+            scope0.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetRoleDefinitionById"/> and <see cref="GetRoleDefinitionByIdAsync"/> operations. </summary>
+        /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetRoleDefinitionByIdRequest(string roleDefinitionId, RequestOptions options = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/roleDefinitions/", false);
+            uri.AppendPath(roleDefinitionId, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> List rbac scopes. </summary>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> ListScopesAsync(RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListScopesRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListScopes");
+            scope0.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List rbac scopes. </summary>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response ListScopes(RequestOptions options = null)
+#pragma warning restore AZC0002
+        {
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListScopesRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope0 = _clientDiagnostics.CreateScope("SynapseAccessControlClient.ListScopes");
+            scope0.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="ListScopes"/> and <see cref="ListScopesAsync"/> operations. </summary>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateListScopesRequest(RequestOptions options = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/rbacScopes", false);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             return message;

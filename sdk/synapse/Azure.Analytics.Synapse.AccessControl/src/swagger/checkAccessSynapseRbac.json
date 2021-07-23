@@ -22,7 +22,7 @@
                 "tags": [
                     "CheckPrincipalAccess"
                 ],
-                "operationId": "RoleAssignments_CheckPrincipalAccess",
+                "operationId": "SynapseAccessControl_CheckPrincipalAccess",
                 "description": "Check if the given principalId has access to perform list of actions at a given scope.",
                 "x-ms-examples": {
                     "Check access": {

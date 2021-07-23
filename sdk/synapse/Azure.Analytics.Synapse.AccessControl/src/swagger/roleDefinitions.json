@@ -22,11 +22,11 @@
                 "tags": [
                     "SynapseRoleDefinitions"
                 ],
-                "operationId": "RoleDefinitions_ListRoleDefinitions",
+                "operationId": "SynapseAccessControl_ListRoleDefinitions",
                 "description": "List role definitions.",
                 "x-ms-examples": {
                     "List role definitions": {
-                        "$ref": "./examples/RoleDefinitions_ListRoleDefinitions.json"
+                        "$ref": "./examples/SynapseAccessControl_ListRoleDefinitions.json"
                     }
                 },
                 "consumes": [],
@@ -66,11 +66,11 @@
                 "tags": [
                     "SynapseRoleDefinitions"
                 ],
-                "operationId": "RoleDefinitions_GetRoleDefinitionById",
+                "operationId": "SynapseAccessControl_GetRoleDefinitionById",
                 "description": "Get role definition by role definition Id.",
                 "x-ms-examples": {
                     "Get role definition information": {
-                        "$ref": "./examples/RoleDefinitions_GetRoleDefinitionById.json"
+                        "$ref": "./examples/SynapseAccessControl_GetRoleDefinitionById.json"
                     }
                 },
                 "consumes": [],
@@ -107,11 +107,11 @@
                 "tags": [
                     "SynapseRbacScopes"
                 ],
-                "operationId": "RoleDefinitions_ListScopes",
+                "operationId": "SynapseAccessControl_ListScopes",
                 "description": "List rbac scopes.",
                 "x-ms-examples": {
                     "List rbac scopes": {
-                        "$ref": "./examples/RoleDefinitions_ListScopes.json"
+                        "$ref": "./examples/SynapseAccessControl_ListScopes.json"
                     }
                 },
                 "consumes": [],
