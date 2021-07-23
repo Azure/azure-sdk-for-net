@@ -16,7 +16,8 @@ namespace Azure.Core
         private HttpPipelineTransport _transport;
 
         /// <summary>
-        ///
+        /// Gets the default set of <see cref="ClientOptions"/>. Changes to the <see cref="Default"/> options would be reflected
+        /// in new instances of <see cref="ClientOptions"/> type created after changes to <see cref="Default"/> were made.
         /// </summary>
         public static ClientOptions Default { get; private set; } = new DefaultClientOptions();
 
