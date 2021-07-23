@@ -95,9 +95,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Standard_NC24s_v3', 'Standard_NC24rs_v3', 'Standard_ND6s',
         /// 'Standard_ND12s', 'Standard_ND24s', 'Standard_ND24rs',
         /// 'Standard_NV6', 'Standard_NV12', 'Standard_NV24'</param>
-        public HardwareProfile(string vmSize = default(string))
+        /// <param name="vmSizeProperties">Specifies the VM Size Properties for
+        /// customizing VM sizes.</param>
+        public HardwareProfile(string vmSize = default(string), VMSizeProperties vmSizeProperties = default(VMSizeProperties))
         {
             VmSize = vmSize;
+            VmSizeProperties = vmSizeProperties;
             CustomInit();
         }
 
@@ -178,6 +181,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the VM Size Properties for customizing VM
+        /// sizes.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmSizeProperties")]
+        public VMSizeProperties VmSizeProperties { get; set; }
 
     }
 }
