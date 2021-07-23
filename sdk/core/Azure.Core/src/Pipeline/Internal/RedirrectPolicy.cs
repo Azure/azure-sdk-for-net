@@ -7,11 +7,11 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
-    internal sealed class RedirectHandler : HttpPipelinePolicy
+    internal sealed class RedirectPolicy : HttpPipelinePolicy
     {
         private readonly int _maxAutomaticRedirections;
 
-        public RedirectHandler()
+        public RedirectPolicy()
         {
             _maxAutomaticRedirections = 50;
         }
