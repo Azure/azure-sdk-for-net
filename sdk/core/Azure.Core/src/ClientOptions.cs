@@ -13,15 +13,65 @@ namespace Azure.Core
     /// </summary>
     public abstract class ClientOptions
     {
-        private HttpPipelineTransport _transport = GetDefaultTransport();
+        private HttpPipelineTransport _transport;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public static ClientOptions Default { get; private set; } = new DefaultClientOptions();
+
+        // For testing
+        internal static void ResetDefaultOptions()
+        {
+            Default = new DefaultClientOptions();
+        }
 
         /// <summary>
         /// Creates a new instance of <see cref="ClientOptions"/>.
         /// </summary>
-        protected ClientOptions()
+        protected ClientOptions(): this(true)
         {
-            Retry = new RetryOptions();
-            Diagnostics = new DiagnosticsOptions();
+        }
+
+        internal ClientOptions(bool useDefaults)
+        {
+            if (useDefaults)
+            {
+                Retry = new RetryOptions
+                {
+                    MaxRetries = Default.Retry.MaxRetries,
+                    Delay = Default.Retry.Delay,
+                    MaxDelay = Default.Retry.MaxDelay,
+                    Mode = Default.Retry.Mode,
+                    NetworkTimeout = Default.Retry.NetworkTimeout
+                };
+
+                Diagnostics = new DiagnosticsOptions()
+                {
+                    ApplicationId = Default.Diagnostics.ApplicationId,
+                    IsLoggingEnabled = Default.Diagnostics.IsLoggingEnabled,
+                    IsTelemetryEnabled = Default.Diagnostics.IsTelemetryEnabled,
+                    LoggedHeaderNames = new List<string>(Default.Diagnostics.LoggedHeaderNames),
+                    LoggedQueryParameters = new List<string>(Default.Diagnostics.LoggedQueryParameters),
+                    LoggedContentSizeLimit = Default.Diagnostics.LoggedContentSizeLimit,
+                    IsDistributedTracingEnabled = Default.Diagnostics.IsDistributedTracingEnabled,
+                    IsLoggingContentEnabled = Default.Diagnostics.IsLoggingContentEnabled
+                };
+
+                _transport = Default.Transport;
+                PerCallPolicies = new List<HttpPipelinePolicy>(Default.PerCallPolicies);
+                PerRetryPolicies = new List<HttpPipelinePolicy>(Default.PerRetryPolicies);
+            }
+            else
+            {
+                // Intentionally laving this null. The only consumer of this branch is
+                // DefaultAzureCredential that would re-assign the value
+                _transport = null!;
+                PerCallPolicies = new List<HttpPipelinePolicy>();
+                PerRetryPolicies = new List<HttpPipelinePolicy>();
+                Diagnostics = new DiagnosticsOptions();
+                Retry = new RetryOptions();
+            }
         }
 
         /// <summary>
@@ -65,9 +115,9 @@ namespace Azure.Core
             }
         }
 
-        internal IList<HttpPipelinePolicy> PerCallPolicies { get; } = new List<HttpPipelinePolicy>();
+        internal IList<HttpPipelinePolicy> PerCallPolicies { get; }
 
-        internal IList<HttpPipelinePolicy> PerRetryPolicies { get; } = new List<HttpPipelinePolicy>();
+        internal IList<HttpPipelinePolicy> PerRetryPolicies { get; }
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -80,31 +130,5 @@ namespace Azure.Core
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string? ToString() => base.ToString();
-
-        private static HttpPipelineTransport GetDefaultTransport()
-        {
-#if NETFRAMEWORK
-            bool GetSwitchValue(string switchName, string envVariable)
-            {
-                if (!AppContext.TryGetSwitch(switchName, out bool ret))
-                {
-                    string? switchValue = Environment.GetEnvironmentVariable(envVariable);
-                    if (switchValue != null)
-                    {
-                        ret = string.Equals("true", switchValue, StringComparison.InvariantCultureIgnoreCase) ||
-                              switchValue.Equals("1", StringComparison.InvariantCultureIgnoreCase);
-                    }
-                }
-
-                return ret;
-            }
-
-            if (!GetSwitchValue("Azure.Core.Pipeline.DisableHttpWebRequestTransport", "AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT"))
-            {
-                return HttpWebRequestTransport.Shared;
-            }
-#endif
-            return HttpClientTransport.Shared;
-        }
     }
 }
