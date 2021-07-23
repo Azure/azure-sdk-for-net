@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Core.Tests.Samples
         {
 #endif
 
-// code omitted for brevity
+// Code omitted for brevity
 
 var armClient = new ArmClient(new DefaultAzureCredential());
 #endregion Snippet:Readme_AuthClient
@@ -24,41 +24,82 @@ var armClient = new ArmClient(new DefaultAzureCredential());
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task CreateRG()
+        public void CastingToSpecificType()
         {
-            #region Snippet:Readme_CreateRG
-            // First, initialize the ArmClient and get the default subscription
-            var armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.DefaultSubscription;
-            // Now we get a ResourceGroup container for that subscription
-            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
-
-            // With the container, we can create a new resource group with an specific name
-            string rgName = "myRgName";
-            Location location = Location.WestUS;
-            ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName);
-            #endregion Snippet:Readme_CreateRG
+            #region Snippet:Readme_CastToSpecificType
+            string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
+            // We know the subnet is a resource group level identifier since it has a resource group name in its string
+            ResourceGroupResourceIdentifier id = resourceId;
+            Console.WriteLine($"Subscription: {id.SubscriptionId}");
+            Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
+            Console.WriteLine($"Vnet: {id.Parent.Name}");
+            Console.WriteLine($"Subnet: {id.Name}");
+            #endregion Snippet:Readme_CastToSpecificType
         }
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task ListAllRG()
+        public void CastingToBaseResourceIdentifier()
         {
-            #region Snippet:Readme_ListAllRG
-            // First, initialize the ArmClient and get the default subscription
+            #region Snippet:Readme_CastToBaseResourceIdentifier
+            string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
+            // Assume we don't know what type of resource id we have we can cast to the base type
+            ResourceIdentifier id = resourceId;
+            string property;
+            if (id.TryGetSubscriptionId(out property))
+                Console.WriteLine($"Subscription: {property}");
+            if (id.TryGetResourceGroupName(out property))
+                Console.WriteLine($"ResourceGroup: {property}");
+            Console.WriteLine($"Vnet: {id.Parent.Name}");
+            Console.WriteLine($"Subnet: {id.Name}");
+            #endregion Snippet:Readme_CastToBaseResourceIdentifier
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task CheckIfResourceGroupExists()
+        {
+            #region Snippet:Readme_DoesExistsRG
             var armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.DefaultSubscription;
+            string rgName = "myRgName";
 
-            // Now we get a ResourceGroup container for that subscription
-            ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
+            var exists = await subscription.GetResourceGroups().DoesExistAsync(rgName);
 
-            // With ListAsync(), we can get a list of the resources in the container
-            AsyncPageable<ResourceGroup> response = rgContainer.ListAsync();
-            await foreach (ResourceGroup rg in response)
+            if (exists)
             {
-                Console.WriteLine(rg.Data.Name);
+                Console.WriteLine($"Resource Group {rgName} exists.");
+
+                // We can get the resource group now that we are sure it exists.
+                var myRG = await subscription.GetResourceGroups().GetAsync(rgName);
             }
-            #endregion Snippet:Readme_ListAllRG
+            else
+            {
+                Console.WriteLine($"Resource Group {rgName} does not exist.");
+            }
+            #endregion Snippet:Readme_DoesExistsRG
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task TryGetResourceGroup()
+        {
+            #region Snippet:Readme_TryGetRG
+            var armClient = new ArmClient(new DefaultAzureCredential());
+            Subscription subscription = armClient.DefaultSubscription;
+            string rgName = "myRgName";
+
+            var myRG = await subscription.GetResourceGroups().TryGetAsync(rgName);
+
+            if (myRG == null)
+            {
+                Console.WriteLine($"Resource Group {rgName} does not exist.");
+                return;
+            }
+
+            // At this point, we are sure that myRG is a not null Resource Group, so we can use this object to perform any operations we want.
+            
+            #endregion Snippet:Readme_TryGetRG
         }
     }
 }

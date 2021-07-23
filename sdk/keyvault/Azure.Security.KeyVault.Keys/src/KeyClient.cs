@@ -5,7 +5,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,6 +19,7 @@ namespace Azure.Security.KeyVault.Keys
     {
         internal const string KeysPath = "/keys/";
         internal const string DeletedKeysPath = "/deletedkeys/";
+        internal const string RngPath = "/rng";
 
         private readonly KeyVaultPipeline _pipeline;
 
@@ -1161,6 +1161,60 @@ namespace Azure.Security.KeyVault.Keys
             try
             {
                 return await _pipeline.SendRequestAsync(RequestMethod.Put, importKeyOptions, () => new KeyVaultKey(importKeyOptions.Name), cancellationToken, KeysPath, importKeyOptions.Name).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the requested number of bytes containing random values from a managed hardware security module (HSM).
+        /// </summary>
+        /// <param name="count">The requested number of random bytes.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A byte array containing random values from a managed hardware security module (HSM).</returns>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="count"/> is less than 0.</exception>
+        public virtual Response<byte[]> GetRandomBytes(int count, CancellationToken cancellationToken = default)
+        {
+            // Service currently documents 1 to 128 inclusive but we must not tightly couple to service constraints.
+            Argument.AssertInRange(count, 1, int.MaxValue, nameof(count));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetRandomBytes)}");
+            scope.Start();
+
+            try
+            {
+                Response<RandomBytes> response = _pipeline.SendRequest(RequestMethod.Post, new GetRandomBytesRequest(count), () => new RandomBytes(), cancellationToken, RngPath);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the requested number of bytes containing random values from a managed hardware security module (HSM).
+        /// </summary>
+        /// <param name="count">The requested number of random bytes.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A byte array containing random values from a managed hardware security module (HSM).</returns>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="count"/> is less than 0.</exception>
+        public virtual async Task<Response<byte[]>> GetRandomBytesAsync(int count, CancellationToken cancellationToken = default)
+        {
+            // Service currently documents 1 to 128 inclusive but we must not tightly couple to service constraints.
+            Argument.AssertInRange(count, 1, int.MaxValue, nameof(count));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetRandomBytes)}");
+            scope.Start();
+
+            try
+            {
+                Response<RandomBytes> response = await _pipeline.SendRequestAsync(RequestMethod.Post, new GetRandomBytesRequest(count), () => new RandomBytes(), cancellationToken, RngPath).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
             {

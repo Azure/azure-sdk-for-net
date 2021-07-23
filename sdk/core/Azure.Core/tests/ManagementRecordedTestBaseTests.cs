@@ -11,6 +11,7 @@ using NUnit.Framework;
 namespace Azure.Core.Tests.Management
 {
     [Parallelizable]
+    [PlaybackOnly("These are fake clients that won't run live")]
     internal class ManagementRecordedTestBaseTests : ManagementRecordedTestBase<TestEnvironmentTests.MockTestEnvironment>
     {
         public ManagementRecordedTestBaseTests(bool isAsync)

@@ -33,8 +33,6 @@ namespace Azure.ResourceManager.TestFramework
 
         private ArmClient _cleanupClient;
 
-        protected abstract Type OperationInternalsType { get; }
-
         protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
         {
             SessionEnvironment = new TEnvironment();
@@ -53,7 +51,7 @@ namespace Azure.ResourceManager.TestFramework
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                var pollField = OperationInternalsType.GetField("<DefaultPollingInterval>k__BackingField", BindingFlags.Static | BindingFlags.NonPublic);
+                var pollField = typeof(OperationInternals).GetField("<DefaultPollingInterval>k__BackingField", BindingFlags.Static | BindingFlags.NonPublic);
                 pollField.SetValue(null, TimeSpan.Zero);
             }
         }
@@ -64,6 +62,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 return new ArmClient(
                         TestEnvironment.SubscriptionId,
+                        GetUri(TestEnvironment.ResourceManagerUrl),
                         TestEnvironment.Credential,
                         new ArmClientOptions());
             }
@@ -80,8 +79,14 @@ namespace Azure.ResourceManager.TestFramework
 
             return CreateClient<ArmClient>(
                 TestEnvironment.SubscriptionId,
+                GetUri(TestEnvironment.ResourceManagerUrl),
                 TestEnvironment.Credential,
                 options);
+        }
+
+        private Uri GetUri(string endpoint)
+        {
+            return !string.IsNullOrEmpty(endpoint) ? new Uri(endpoint) : null;
         }
 
         [SetUp]
@@ -161,6 +166,7 @@ namespace Azure.ResourceManager.TestFramework
 
             GlobalClient = CreateClient<ArmClient>(
                 SessionEnvironment.SubscriptionId,
+                GetUri(SessionEnvironment.ResourceManagerUrl),
                 SessionEnvironment.Credential,
                 options);
         }

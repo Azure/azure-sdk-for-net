@@ -72,12 +72,6 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [TestCase]
-        public void TestClientOptionsParamCheck()
-        {
-            Assert.Throws<ArgumentNullException>(() => { new ArmClientOptions(null); });
-        }
-
-        [TestCase]
         public void VersionExist()
         {
             ArmClientOptions options = new ArmClientOptions();

@@ -12,8 +12,6 @@ using Azure.ResourceManager.Network;
 using System.Threading.Tasks;
 ```
 
-In addition, you need to install the `Azure.ResourceManager.Compute` library in your project and import it.
-
 ## Create a Resource Group
 Start by creating a new resource group, like we did above:
 

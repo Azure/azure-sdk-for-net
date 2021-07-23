@@ -82,6 +82,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
+        ///   A unique name used to identify the receiver.  If <c>null</c> or empty, a GUID will be used as the
+        ///   identifier.
+        /// </summary>
+        ///
+        public string Identifier { get; set; }
+
+        /// <summary>
         ///   When populated, the owner level indicates that a reading is intended to be performed exclusively for events in the
         ///   requested partition and for the associated consumer group.  To do so, reading will attempt to assert ownership
         ///   over the partition; in the case where more than one exclusive reader attempts to assert ownership for the same
@@ -219,6 +226,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 _defaultMaximumReceiveWaitTime = DefaultMaximumReceiveWaitTime,
                 _prefetchCount = PrefetchCount,
                 _prefetchSizeInBytes = PrefetchSizeInBytes,
+                Identifier = Identifier,
                 OwnerLevel = OwnerLevel,
                 TrackLastEnqueuedEventProperties = TrackLastEnqueuedEventProperties
             };

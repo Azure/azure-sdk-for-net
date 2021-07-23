@@ -1,13 +1,20 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.63.48766",
+      "templateHash": "7074975851172708714"
+    }
+  },
   "parameters": {
     "iotHubName": {
       "type": "string",
+      "defaultValue": "[resourceGroup().name]",
       "metadata": {
         "description": "The name of the source IoT hub."
-      },
-      "defaultValue": "[resourceGroup().name]"
+      }
     },
     "testApplicationOid": {
       "type": "string",
@@ -17,32 +24,28 @@
     },
     "region": {
       "type": "string",
+      "defaultValue": "[resourceGroup().location]",
       "metadata": {
         "description": "The region of the resource. By default, this is the same as the resource group."
-      },
-      "defaultValue": "[resourceGroup().location]"
+      }
     },
     "environmentName": {
       "type": "string",
-      "maxLength": 90,
+      "defaultValue": "[format('{0}-TSI', resourceGroup().name)]",
       "metadata": {
         "description": "Name of the environment. The name cannot include: '<', '>', '%', '&', ':', '\\', '?', '/' and any control characters. All other characters are allowed."
       },
-      "defaultValue": "[concat(resourceGroup().name, '-TSI')]"
+      "maxLength": 90
     },
     "consumerGroupName": {
       "type": "string",
+      "defaultValue": "[format('{0}CG', parameters('environmentName'))]",
       "metadata": {
         "description": "The name of the consumer group that the Time Series Insights service will use to read the data from the event hub. NOTE: To avoid resource contention, this consumer group must be dedicated to the Time Series Insights service and not shared with other readers."
-      },
-      "defaultValue": "[concat(parameters('environmentName'), 'CG')]"
+      }
     },
     "environmentTimeSeriesIdProperties": {
       "type": "array",
-      "maxLength": 3,
-      "metadata": {
-        "description": "Time Series ID acts as a partition key for your data and as a primary key for your time series model. It is important that you specify the appropriate Time Series Property ID during environment creation, since you cannot change it later. Note that the Property ID is case sensitive. You can use 1-3 keys: one is required, but up to three can be used to create a composite."
-      },
       "defaultValue": [
         {
           "name": "building",
@@ -56,43 +59,47 @@
           "name": "room",
           "type": "string"
         }
-      ]
+      ],
+      "metadata": {
+        "description": "Time Series ID acts as a partition key for your data and as a primary key for your time series model. It is important that you specify the appropriate Time Series Property ID during environment creation, since you cannot change it later. Note that the Property ID is case sensitive. You can use 1-3 keys: one is required, but up to three can be used to create a composite."
+      },
+      "maxLength": 3
     },
     "eventSourceName": {
       "type": "string",
-      "maxLength": 90,
+      "defaultValue": "[format('{0}EventSourceName', parameters('environmentName'))]",
       "metadata": {
         "description": "Name of the event source child resource. The name cannot include: '<', '>', '%', '&', ':', '\\', '?', '/' and any control characters. All other characters are allowed."
       },
-      "defaultValue": "[concat(parameters('environmentName'), 'EventSourceName')]"
+      "maxLength": 90
     },
     "resourceGroup": {
       "type": "string",
+      "defaultValue": "[resourceGroup().name]",
       "metadata": {
         "description": "If you have an existing IotHub provide the name here. Defaults to the same resource group as the TSI environnment."
-      },
-      "defaultValue": "[resourceGroup().name]"
+      }
     },
     "eventSourceTimestampPropertyName": {
       "type": "string",
-      "maxLength": 90,
+      "defaultValue": "[format('{0}TimestampPropertyName', parameters('eventSourceName'))]",
       "metadata": {
         "description": "The event property that will be used as the event source's timestamp. If a value is not specified for timestampPropertyName, or if null or empty-string is specified, the event creation time will be used."
       },
-      "defaultValue": "[concat(parameters('eventSourceName'), 'TimestampPropertyName')]"
+      "maxLength": 90
     },
     "eventSourceKeyName": {
       "type": "string",
+      "defaultValue": "service",
       "metadata": {
         "description": "The name of the shared access key that the Time Series Insights service will use to connect to the event hub."
-      },
-      "defaultValue": "service"
+      }
     }
   },
   "functions": [],
   "variables": {
     "rbacOwnerRoleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635', subscription().subscriptionId)]",
-    "storageAccountName": "[concat('tsi', uniqueString(resourceGroup().id))]",
+    "storageAccountName": "[format('tsi{0}', uniqueString(resourceGroup().id))]",
     "eventSourceResourceId": "[resourceId(parameters('resourceGroup'), 'Microsoft.Devices/IotHubs', parameters('iotHubName'))]",
     "hubKeysId": "[resourceId('Microsoft.Devices/IotHubs/Iothubkeys', parameters('iotHubName'), 'iothubowner')]"
   },
@@ -120,10 +127,7 @@
     {
       "type": "Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups",
       "apiVersion": "2020-03-01",
-      "name": "[concat(parameters('iotHubName'), '/events/', parameters('consumerGroupName'))]",
-      "properties": {
-        "mode": "Complete"
-      },
+      "name": "[format('{0}/events/{1}', parameters('iotHubName'), parameters('consumerGroupName'))]",
       "dependsOn": [
         "[resourceId('Microsoft.Devices/IotHubs', parameters('iotHubName'))]"
       ]
@@ -152,7 +156,7 @@
     {
       "type": "Microsoft.TimeSeriesInsights/environments/eventSources",
       "apiVersion": "2018-08-15-preview",
-      "name": "[concat(parameters('environmentName'), '/', parameters('eventSourceName'))]",
+      "name": "[format('{0}/{1}', parameters('environmentName'), parameters('eventSourceName'))]",
       "location": "[parameters('region')]",
       "kind": "Microsoft.IoTHub",
       "properties": {
@@ -164,7 +168,7 @@
         "timestampPropertyName": "[parameters('eventSourceTimestampPropertyName')]"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups', split(concat(parameters('iotHubName'), '/events/', parameters('consumerGroupName')), '/')[0], split(concat(parameters('iotHubName'), '/events/', parameters('consumerGroupName')), '/')[1], split(concat(parameters('iotHubName'), '/events/', parameters('consumerGroupName')), '/')[2])]",
+        "[resourceId('Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups', split(format('{0}/events/{1}', parameters('iotHubName'), parameters('consumerGroupName')), '/')[0], split(format('{0}/events/{1}', parameters('iotHubName'), parameters('consumerGroupName')), '/')[1], split(format('{0}/events/{1}', parameters('iotHubName'), parameters('consumerGroupName')), '/')[2])]",
         "[resourceId('Microsoft.TimeSeriesInsights/environments', parameters('environmentName'))]",
         "[resourceId('Microsoft.Devices/IotHubs', parameters('iotHubName'))]"
       ]
@@ -172,7 +176,7 @@
     {
       "type": "Microsoft.TimeSeriesInsights/environments/accessPolicies",
       "apiVersion": "2018-08-15-preview",
-      "name": "[concat(parameters('environmentName'), '/', 'contributorAccessPolicy0')]",
+      "name": "[format('{0}/contributorAccessPolicy0', parameters('environmentName'))]",
       "properties": {
         "principalObjectId": "[parameters('testApplicationOid')]",
         "roles": [
@@ -203,13 +207,6 @@
     "IOTHUB_CONNECTION_STRING": {
       "type": "string",
       "value": "[format('HostName={0}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey={1}', parameters('iotHubName'), listkeys(variables('hubKeysId'), '2019-11-04').primaryKey)]"
-    }
-  },
-  "metadata": {
-    "_generator": {
-      "name": "bicep",
-      "version": "0.3.1.62928",
-      "templateHash": "62977174382774977"
     }
   }
 }

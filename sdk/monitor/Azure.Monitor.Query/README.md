@@ -59,6 +59,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 - [Batch query](#batch-query)
 - [Query dynamic table](#query-dynamic-table)
 - [Increase query timeout](#increase-query-timeout)
+- [Query metrics](#query-metrics)
 
 ### Query logs
 
