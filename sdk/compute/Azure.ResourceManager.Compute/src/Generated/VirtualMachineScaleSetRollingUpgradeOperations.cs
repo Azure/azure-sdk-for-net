@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading.Tasks;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute

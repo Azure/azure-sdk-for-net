@@ -11,6 +11,6 @@
     <IsMgmtLibrary>true</IsMgmtLibrary>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Core"/>
+    <PackageReference Include="Azure.ResourceManager"/>
   </ItemGroup>
 </Project>
