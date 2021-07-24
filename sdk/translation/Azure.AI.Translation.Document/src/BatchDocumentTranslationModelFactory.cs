@@ -1,0 +1,159 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
+namespace Azure.AI.Translation.Document.Models
+{
+    /// <summary>
+    /// Model factory that enables mocking for the Document Translation Library.
+    /// </summary>
+    [CodeGenType(nameof(BatchDocumentTranslationModelFactory))]
+    public static partial class BatchDocumentTranslationModelFactory
+    {
+        #region errors
+        /// <summary>
+        /// Initializes a new instance of <see cref="Document.DocumentTranslationError"/> for mocking purposes.
+        /// </summary>
+        /// <param name="errorCode">Sets the <see cref="DocumentTranslationError.ErrorCode"/> property.</param>
+        /// <param name="message">Sets the <see cref="DocumentTranslationError.Message"/> property.</param>
+        /// <param name="target">Sets the <see cref="DocumentTranslationError.Target"/> property.</param>
+        /// <returns>A new instance of <see cref="Document.DocumentTranslationError"/> for mocking purposes.</returns>
+        public static DocumentTranslationError DocumentTranslationError(
+            DocumentTranslationErrorCode  errorCode,
+            string message,
+            string target
+            )
+        {
+            return new DocumentTranslationError(errorCode, message, target, default);
+        }
+        #endregion errors
+
+        #region Statuses
+        /// <summary>
+        /// Initializes a new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.
+        /// </summary>
+        /// <param name="sourceDocumentUri">Sets the <see cref="DocumentStatus.SourceDocumentUri"/> property.</param>
+        /// <param name="createdOn">Sets the <see cref="DocumentStatus.CreatedOn"/> property.</param>
+        /// <param name="lastModified">Sets the <see cref="DocumentStatus.LastModified"/> property.</param>
+        /// <param name="status">Sets the <see cref="DocumentStatus.Status"/> property.</param>
+        /// <param name="translatedTo">Sets the <see cref="DocumentStatus.TranslatedTo"/> property.</param>
+        /// <param name="progress">Sets the <see cref="DocumentStatus.Progress"/> property.</param>
+        /// <param name="id">Sets the <see cref="DocumentStatus.Id"/> property.</param>
+        /// <returns>A new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.</returns>
+        /// /// <exception cref="ArgumentNullException"> <paramref name="sourceDocumentUri"/>, <paramref name="translatedTo"/>, or <paramref name="id"/> is null. </exception>
+        public static DocumentStatus DocumentStatus(
+            Uri sourceDocumentUri,
+            DateTimeOffset createdOn,
+            DateTimeOffset lastModified,
+            DocumentTranslationStatus status,
+            string translatedTo,
+            float progress,
+            string id
+            )
+        {
+            return new DocumentStatus(default, sourceDocumentUri, createdOn, lastModified, status, translatedTo,default, progress, id, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.
+        /// </summary>
+        /// <param name="translatedDocumentUri">Sets the <see cref="DocumentStatus.TranslatedDocumentUri"/> property.</param>
+        /// <param name="sourceDocumentUri">Sets the <see cref="DocumentStatus.SourceDocumentUri"/> property.</param>
+        /// <param name="createdOn">Sets the <see cref="DocumentStatus.CreatedOn"/> property.</param>
+        /// <param name="lastModified">Sets the <see cref="DocumentStatus.LastModified"/> property.</param>
+        /// <param name="status">Sets the <see cref="DocumentStatus.Status"/> property.</param>
+        /// <param name="translatedTo">Sets the <see cref="DocumentStatus.TranslatedTo"/> property.</param>
+        /// <param name="error">Sets the <see cref="DocumentStatus.Error"/> property.</param>
+        /// <param name="progress">Sets the <see cref="DocumentStatus.Progress"/> property.</param>
+        /// <param name="id">Sets the <see cref="DocumentStatus.Id"/> property.</param>
+        /// <param name="charactersCharged">Sets the <see cref="DocumentStatus.CharactersCharged"/> property.</param>
+        /// <returns>A new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.</returns>
+        public static DocumentStatus DocumentStatus(
+            Uri translatedDocumentUri,
+            Uri sourceDocumentUri,
+            DateTimeOffset createdOn,
+            DateTimeOffset lastModified,
+            DocumentTranslationStatus status,
+            string translatedTo,
+            DocumentTranslationError error,
+            float progress,
+            string id,
+            long charactersCharged
+            )
+        {
+            return new DocumentStatus(translatedDocumentUri, sourceDocumentUri, createdOn, lastModified, status, translatedTo,error, progress, id, charactersCharged);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="Document.TranslationStatus"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TranslationStatus.Id"/> property.</param>
+        /// <param name="createdOn">Sets the <see cref="TranslationStatus.CreatedOn"/> property.</param>
+        /// <param name="lastModified">Sets the <see cref="TranslationStatus.LastModified"/> property.</param>
+        /// <param name="status">Sets the <see cref="TranslationStatus.Status"/> property.</param>
+        /// <param name="total">Sets the <see cref="StatusSummary.Total"/> and the <see cref="TranslationStatus.DocumentsTotal"/> properties.</param>
+        /// <param name="failed">Sets the <see cref="StatusSummary.Failed"/> and the <see cref="TranslationStatus.DocumentsFailed"/> properties.</param>
+        /// <param name="success">Sets the <see cref="StatusSummary.Success"/> and the <see cref="TranslationStatus.DocumentsSucceeded"/> properties.</param>
+        /// <param name="inProgress">Sets the <see cref="StatusSummary.InProgress"/> and the <see cref="TranslationStatus.DocumentsInProgress"/> properties.</param>
+        /// <param name="notYetStarted">Sets the <see cref="StatusSummary.NotYetStarted"/> and the <see cref="TranslationStatus.DocumentsNotStarted"/> properties.</param>
+        /// <param name="cancelled">Sets the <see cref="StatusSummary.Cancelled"/> and the <see cref="TranslationStatus.DocumentsCancelled"/> properties.</param>
+        /// <param name="totalCharacterCharged">Sets the <see cref="StatusSummary.TotalCharacterCharged"/> and the <see cref="TranslationStatus.TotalCharactersCharged"/> properties.</param>
+        /// <returns>A new instance of <see cref="Document.TranslationStatus"/> for mocking purposes.</returns>
+        public static TranslationStatus TranslationStatus(
+            string id,
+            DateTimeOffset createdOn,
+            DateTimeOffset lastModified,
+            DocumentTranslationStatus status,
+            int total,
+            int failed,
+            int success,
+            int inProgress,
+            int notYetStarted,
+            int cancelled,
+            long totalCharacterCharged
+            )
+        {
+            StatusSummary newSummary = new StatusSummary(total, failed, success, inProgress, notYetStarted, cancelled, totalCharacterCharged);
+            return new TranslationStatus(id, createdOn, lastModified, status, default, newSummary);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="Document.TranslationStatus"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TranslationStatus.Id"/> property.</param>
+        /// <param name="createdOn">Sets the <see cref="TranslationStatus.CreatedOn"/> property.</param>
+        /// <param name="lastModified">Sets the <see cref="TranslationStatus.LastModified"/> property.</param>
+        /// <param name="status">Sets the <see cref="TranslationStatus.Status"/> property.</param>
+        /// <param name="error">Sets the <see cref="TranslationStatus.Error"/> property.</param>
+        /// <param name="total">Sets the <see cref="StatusSummary.Total"/> and the <see cref="TranslationStatus.DocumentsTotal"/> properties.</param>
+        /// <param name="failed">Sets the <see cref="StatusSummary.Failed"/> and the <see cref="TranslationStatus.DocumentsFailed"/> properties.</param>
+        /// <param name="success">Sets the <see cref="StatusSummary.Success"/> and the <see cref="TranslationStatus.DocumentsSucceeded"/> properties.</param>
+        /// <param name="inProgress">Sets the <see cref="StatusSummary.InProgress"/> and the <see cref="TranslationStatus.DocumentsInProgress"/> properties.</param>
+        /// <param name="notYetStarted">Sets the <see cref="StatusSummary.NotYetStarted"/> and the <see cref="TranslationStatus.DocumentsNotStarted"/> properties.</param>
+        /// <param name="cancelled">Sets the <see cref="StatusSummary.Cancelled"/> and the <see cref="TranslationStatus.DocumentsCancelled"/> properties.</param>
+        /// <param name="totalCharacterCharged">Sets the <see cref="StatusSummary.TotalCharacterCharged"/> and the <see cref="TranslationStatus.TotalCharactersCharged"/> properties.</param>
+        /// <returns>A new instance of <see cref="Document.TranslationStatus"/> for mocking purposes.</returns>
+        public static TranslationStatus TranslationStatus(
+            string id,
+            DateTimeOffset createdOn,
+            DateTimeOffset lastModified,
+            DocumentTranslationStatus status,
+            DocumentTranslationError error,
+            int total,
+            int failed,
+            int success,
+            int inProgress,
+            int notYetStarted,
+            int cancelled,
+            long totalCharacterCharged
+            )
+        {
+            StatusSummary newSummary = new StatusSummary(total, failed, success, inProgress, notYetStarted, cancelled, totalCharacterCharged);
+            return new TranslationStatus(id, createdOn, lastModified, status, error, newSummary);
+        }
+        #endregion Stasuses
+    }
+}
