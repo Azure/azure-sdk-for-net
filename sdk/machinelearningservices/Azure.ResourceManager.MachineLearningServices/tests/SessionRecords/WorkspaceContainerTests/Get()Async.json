@@ -16,15 +16,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "468",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 23 Jul 2021 10:21:16 GMT",
+        "Date": "Sat, 24 Jul 2021 21:37:57 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c889879b-66e7-4fc2-92cb-583d8fa0272f",
-        "x-ms-ratelimit-remaining-subscription-reads": "11994",
-        "x-ms-request-id": "c889879b-66e7-4fc2-92cb-583d8fa0272f",
-        "x-ms-routing-request-id": "WESTUS:20210723T102116Z:c889879b-66e7-4fc2-92cb-583d8fa0272f"
+        "x-ms-correlation-request-id": "cce327ec-81c5-437f-8384-8f1964200bdb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "cce327ec-81c5-437f-8384-8f1964200bdb",
+        "x-ms-routing-request-id": "WESTUS:20210724T213757Z:cce327ec-81c5-437f-8384-8f1964200bdb"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -53,7 +53,7 @@
         "Authorization": "Sanitized",
         "Content-Length": "32",
         "Content-Type": "application/json",
-        "traceparent": "00-99c054d992ccb741873d4aa9ebf0f982-882d9c15dedc3547-00",
+        "traceparent": "00-150b7664df23e448aabad77bf48113e4-76e7feac33d54b43-00",
         "User-Agent": "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210713.2 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "3a8b31a5789db4a7d045fd5d1377ad9d",
         "x-ms-return-client-request-id": "true"
@@ -67,15 +67,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "228",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 23 Jul 2021 10:21:16 GMT",
+        "Date": "Sat, 24 Jul 2021 21:37:57 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "784a5181-be90-4a39-88f9-2767db50d3dc",
-        "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "784a5181-be90-4a39-88f9-2767db50d3dc",
-        "x-ms-routing-request-id": "WESTUS:20210723T102116Z:784a5181-be90-4a39-88f9-2767db50d3dc"
+        "x-ms-correlation-request-id": "3f3aa494-c27a-4c08-a6ed-c13c614e9a99",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "3f3aa494-c27a-4c08-a6ed-c13c614e9a99",
+        "x-ms-routing-request-id": "WESTUS:20210724T213758Z:3f3aa494-c27a-4c08-a6ed-c13c614e9a99"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg7142",
