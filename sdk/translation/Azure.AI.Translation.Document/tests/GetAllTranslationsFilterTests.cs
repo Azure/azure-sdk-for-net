@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Document.Tests
 {
     public partial class DocumentTranslationClientLiveTests
     {
-        private async Task<List<string>> CreateTranslationJobsAsync(DocumentTranslationClient client, int jobsCount = 1, int docsPerJob = 1, DocumentTranslationStatus jobTerminalStatus)
+        private async Task<List<string>> CreateTranslationJobsAsync(DocumentTranslationClient client, int jobsCount = 1, int docsPerJob = 1, DocumentTranslationStatus jobTerminalStatus = default)
         {
             // create source container
             if (jobTerminalStatus == DocumentTranslationStatus.Cancelled)
@@ -92,7 +92,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesFilterByCreatedAfter()
+        public async Task GetAllTranslationStatusesFilterByCreatedAfterTest()
         {
             // create client
             var client = GetClient();
@@ -114,7 +114,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesFilterByCreatedBefore()
+        public async Task GetAllTranslationStatusesFilterByCreatedBeforeTest()
         {
             // create client
             var client = GetClient();
@@ -136,7 +136,7 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        public async Task GetAllTranslationStatusesOrderByCreatedOn()
+        public async Task GetAllTranslationStatusesOrderByCreatedOnTest()
         {
             // create client
             var client = GetClient();

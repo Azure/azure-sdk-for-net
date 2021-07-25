@@ -14,6 +14,27 @@ namespace Azure.AI.Translation.Document
     public partial class DocumentFilter
     {
         /// <summary>
+        /// Initializes and instance of <see cref="DocumentFilter"/>.
+        /// </summary>
+        /// <param name="createdAfter">Filter documents by <see cref="DocumentStatus.CreatedOn"/>. Get documents created AFTER a certain datetime.</param>
+        /// <param name="createdBefore">Filter documents by <see cref="DocumentStatus.CreatedOn"/>. Get documents created BEFORE a certain datetime.</param>
+        /// <param name="ids">Filter results by <see cref="DocumentStatus.Id"/>. Get documents with certain IDs.</param>
+        /// <param name="orderBy">Defines sorting options for the result. <see cref="DocumentFilterOrder"/> for more info on which sorting options to use.</param>
+        /// <param name="statuses">Filter results by <see cref="DocumentStatus.Status"/>.</param>
+        public DocumentFilter(
+            DateTimeOffset createdAfter = default,
+            DateTimeOffset createdBefore = default,
+            IList<string> ids = null,
+            IList<DocumentFilterOrder> orderBy = null,
+            IList<DocumentTranslationStatus> statuses = null)
+        {
+            CreatedAfter = createdAfter;
+            CreatedBefore = createdBefore;
+            Ids = ids;
+            OrderBy = orderBy;
+            Statuses = statuses;
+        }
+        /// <summary>
         /// Filter results by <see cref="DocumentStatus.CreatedOn"/>.
         /// Get documents created AFTER a certain datetime.
         /// </summary>
