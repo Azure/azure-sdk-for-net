@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Perf", "perf\Azu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{96E9F605-9C38-4D77-96F4-679EF8B9390F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Core", "..\..\resourcemanager\Azure.ResourceManager.Core\src\Azure.ResourceManager.Core.csproj", "{8E60A748-3973-471A-B103-EC9406BB3313}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj", "{8E60A748-3973-471A-B103-EC9406BB3313}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

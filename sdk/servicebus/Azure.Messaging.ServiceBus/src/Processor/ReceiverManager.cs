@@ -158,13 +158,13 @@ namespace Azure.Messaging.ServiceBus
 
                 try
                 {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, message.SequenceNumber);
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, message.SequenceNumber, message.LockTokenGuid);
                     await OnMessageHandler(message, cancellationToken).ConfigureAwait(false);
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, message.SequenceNumber);
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, message.SequenceNumber, message.LockTokenGuid);
                 }
                 catch (Exception ex)
                 {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(Processor.Identifier, message.SequenceNumber, ex.ToString());
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(Processor.Identifier, message.SequenceNumber, ex.ToString(), message.LockTokenGuid);
                     throw;
                 }
 
