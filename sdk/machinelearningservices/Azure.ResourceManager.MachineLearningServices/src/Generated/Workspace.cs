@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.MachineLearningServices
     /// <summary> A Class representing a Workspace along with the instance operations that can be performed on it. </summary>
     public class Workspace : WorkspaceOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "Workspace"/> class for mocking. </summary>
+        protected Workspace() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "Workspace"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets or sets the WorkspaceData. </summary>
-        public WorkspaceData Data { get; private set; }
+        public virtual WorkspaceData Data { get; private set; }
     }
 }

@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="interactionEndpoints">
         /// List of JobEndpoints.
-        /// 
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="jobInstructions"> Labeling instructions of the job. </param>
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="progressMetrics"> Progress metrics of the job. </param>
         /// <param name="projectId"> Internal id of the job(Previously called project). </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="provisioningState"> . </param>
+        /// <param name="provisioningState"></param>
         /// <param name="status"> Status of the job. </param>
         /// <param name="statusMessages"> Status messages of the job. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -75,7 +74,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Description { get; set; }
         /// <summary>
         /// List of JobEndpoints.
-        /// 
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </summary>
         public IReadOnlyDictionary<string, JobEndpoint> InteractionEndpoints { get; }

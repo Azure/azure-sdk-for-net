@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ManualScaleSettings. </summary>
-        /// <param name="maxInstances"> . </param>
-        /// <param name="minInstances"> . </param>
-        /// <param name="scaleType"> . </param>
-        /// <param name="instanceCount"> . </param>
+        /// <param name="maxInstances"></param>
+        /// <param name="minInstances"></param>
+        /// <param name="scaleType"></param>
+        /// <param name="instanceCount"></param>
         internal ManualScaleSettings(int? maxInstances, int? minInstances, ScaleType scaleType, int? instanceCount) : base(maxInstances, minInstances, scaleType)
         {
             InstanceCount = instanceCount;

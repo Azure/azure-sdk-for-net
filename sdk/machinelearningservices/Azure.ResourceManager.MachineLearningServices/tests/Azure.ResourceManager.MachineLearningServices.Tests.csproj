@@ -9,6 +9,6 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.MachineLearningServices.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Core" />
+    <PackageReference Include="Azure.ResourceManager" />
   </ItemGroup>
 </Project>

@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of AutoScaleSettings. </summary>
-        /// <param name="maxInstances"> . </param>
-        /// <param name="minInstances"> . </param>
-        /// <param name="scaleType"> . </param>
+        /// <param name="maxInstances"></param>
+        /// <param name="minInstances"></param>
+        /// <param name="scaleType"></param>
         /// <param name="pollingInterval"> The polling interval in ISO 8691 format. Only supports duration with precision as low as Seconds. </param>
-        /// <param name="targetUtilizationPercentage"> . </param>
+        /// <param name="targetUtilizationPercentage"></param>
         internal AutoScaleSettings(int? maxInstances, int? minInstances, ScaleType scaleType, TimeSpan? pollingInterval, int? targetUtilizationPercentage) : base(maxInstances, minInstances, scaleType)
         {
             PollingInterval = pollingInterval;

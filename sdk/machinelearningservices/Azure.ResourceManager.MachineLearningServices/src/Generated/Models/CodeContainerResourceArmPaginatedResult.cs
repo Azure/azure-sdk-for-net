@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of CodeContainerResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> . </param>
+        /// <param name="nextLink"></param>
         /// <param name="value"> An array of objects of type CodeContainer. </param>
         internal CodeContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<CodeContainerResourceData> value)
         {

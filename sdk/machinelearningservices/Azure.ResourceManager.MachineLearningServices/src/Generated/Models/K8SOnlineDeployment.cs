@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="endpointComputeType"> The compute type of the endpoint. </param>
         /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
-        /// <param name="livenessProbe"> . </param>
+        /// <param name="livenessProbe"></param>
         /// <param name="model"> Reference to the model asset for the endpoint deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
-        /// <param name="requestSettings"> . </param>
-        /// <param name="scaleSettings"> . </param>
+        /// <param name="requestSettings"></param>
+        /// <param name="scaleSettings"></param>
         /// <param name="containerResourceRequirements"> The resource requirements for the container (cpu and memory). </param>
         internal K8SOnlineDeployment(bool? appInsightsEnabled, CodeConfiguration codeConfiguration, string description, EndpointComputeType endpointComputeType, string environmentId, IDictionary<string, string> environmentVariables, ProbeSettings livenessProbe, AssetReferenceBase model, IDictionary<string, string> properties, DeploymentProvisioningState? provisioningState, OnlineRequestSettings requestSettings, OnlineScaleSettings scaleSettings, ContainerResourceRequirements containerResourceRequirements) : base(appInsightsEnabled, codeConfiguration, description, endpointComputeType, environmentId, environmentVariables, livenessProbe, model, properties, provisioningState, requestSettings, scaleSettings)
         {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of TensorFlow. </summary>
         /// <param name="distributionType"> Specifies the type of distribution framework. </param>
-        /// <param name="parameterServerCount"> . </param>
+        /// <param name="parameterServerCount"></param>
         /// <param name="workerCount"> Number of workers. Overwrites the node count in compute binding. </param>
         internal TensorFlow(DistributionType distributionType, int? parameterServerCount, int? workerCount) : base(distributionType)
         {

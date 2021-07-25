@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -391,7 +393,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of Workspace for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="Workspace" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -414,7 +416,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Filters the list of Workspace for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="Workspace" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -429,146 +431,6 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var filters = new ResourceFilterCollection(WorkspaceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
                 return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListWorkspaceKeysResult>> ListKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListKeys");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.ListKeysAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListWorkspaceKeysResult> ListKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListKeys");
-            scope.Start();
-            try
-            {
-                var response = _restClient.ListKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> return notebook access token and refresh token. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotebookAccessTokenResult>> ListNotebookAccessTokenAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListNotebookAccessToken");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.ListNotebookAccessTokenAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> return notebook access token and refresh token. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotebookAccessTokenResult> ListNotebookAccessToken(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListNotebookAccessToken");
-            scope.Start();
-            try
-            {
-                var response = _restClient.ListNotebookAccessToken(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListStorageAccountKeysResult>> ListStorageAccountKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListStorageAccountKeys");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.ListStorageAccountKeysAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListStorageAccountKeysResult> ListStorageAccountKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListStorageAccountKeys");
-            scope.Start();
-            try
-            {
-                var response = _restClient.ListStorageAccountKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListNotebookKeysResult>> ListNotebookKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListNotebookKeys");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.ListNotebookKeysAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListNotebookKeysResult> ListNotebookKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListNotebookKeys");
-            scope.Start();
-            try
-            {
-                var response = _restClient.ListNotebookKeys(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

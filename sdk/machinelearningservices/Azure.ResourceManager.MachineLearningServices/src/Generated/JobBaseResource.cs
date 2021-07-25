@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.MachineLearningServices
     /// <summary> A Class representing a JobBaseResource along with the instance operations that can be performed on it. </summary>
     public class JobBaseResource : JobBaseResourceOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "JobBaseResource"/> class for mocking. </summary>
+        protected JobBaseResource() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "JobBaseResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets or sets the JobBaseResourceData. </summary>
-        public JobBaseResourceData Data { get; private set; }
+        public virtual JobBaseResourceData Data { get; private set; }
     }
 }

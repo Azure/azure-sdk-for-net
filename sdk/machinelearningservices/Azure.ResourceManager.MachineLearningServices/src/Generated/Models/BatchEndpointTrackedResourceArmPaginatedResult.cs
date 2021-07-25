@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of BatchEndpointTrackedResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> . </param>
+        /// <param name="nextLink"></param>
         /// <param name="value"> An array of objects of type BatchEndpoint. </param>
         internal BatchEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<BatchEndpointTrackedResourceData> value)
         {

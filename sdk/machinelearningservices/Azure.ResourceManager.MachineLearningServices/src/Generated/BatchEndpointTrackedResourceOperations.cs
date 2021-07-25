@@ -11,7 +11,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -85,14 +88,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary> Delete Batch Inference Endpoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.Delete");
             scope.Start();
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete Batch Inference Endpoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.Delete");
             scope.Start();
@@ -128,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete Batch Inference Endpoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<BatchEndpointsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<BatchEndpointsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.StartDelete");
             scope.Start();
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete Batch Inference Endpoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public BatchEndpointsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual BatchEndpointsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.StartDelete");
             scope.Start();
@@ -167,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public async Task<Response<BatchEndpointTrackedResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<BatchEndpointTrackedResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -196,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public Response<BatchEndpointTrackedResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<BatchEndpointTrackedResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -224,7 +227,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public async Task<Response<BatchEndpointTrackedResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<BatchEndpointTrackedResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
@@ -253,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public Response<BatchEndpointTrackedResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<BatchEndpointTrackedResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
@@ -282,7 +285,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public async Task<Response<BatchEndpointTrackedResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<BatchEndpointTrackedResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -310,7 +313,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public Response<BatchEndpointTrackedResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<BatchEndpointTrackedResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -326,6 +329,91 @@ namespace Azure.ResourceManager.MachineLearningServices
                 TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new BatchEndpointTrackedResource(this, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary> Update a batch inference endpoint. </summary>
+        /// <param name="body"> Mutable batch inference endpoint definition object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<BatchEndpointTrackedResourceData>> UpdateAsync(PartialBatchEndpointPartialTrackedResource body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.Update");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a batch inference endpoint. </summary>
+        /// <param name="body"> Mutable batch inference endpoint definition object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<BatchEndpointTrackedResourceData> Update(PartialBatchEndpointPartialTrackedResource body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.Update");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists batch Inference Endpoint keys. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<EndpointAuthKeys>> ListKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.ListKeys");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.ListKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists batch Inference Endpoint keys. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<EndpointAuthKeys> ListKeys(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.ListKeys");
+            scope.Start();
+            try
+            {
+                var response = _restClient.ListKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

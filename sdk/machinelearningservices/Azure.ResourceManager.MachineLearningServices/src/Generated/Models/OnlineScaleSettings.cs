@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of OnlineScaleSettings. </summary>
-        /// <param name="maxInstances"> . </param>
-        /// <param name="minInstances"> . </param>
-        /// <param name="scaleType"> . </param>
+        /// <param name="maxInstances"></param>
+        /// <param name="minInstances"></param>
+        /// <param name="scaleType"></param>
         internal OnlineScaleSettings(int? maxInstances, int? minInstances, ScaleType scaleType)
         {
             MaxInstances = maxInstances;

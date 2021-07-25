@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of EnvironmentContainerResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> . </param>
+        /// <param name="nextLink"></param>
         /// <param name="value"> An array of objects of type EnvironmentContainer. </param>
         internal EnvironmentContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<EnvironmentContainerResourceData> value)
         {

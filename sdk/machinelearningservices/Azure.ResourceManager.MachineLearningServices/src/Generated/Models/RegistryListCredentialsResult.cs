@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of RegistryListCredentialsResult. </summary>
-        /// <param name="location"> . </param>
-        /// <param name="username"> . </param>
-        /// <param name="passwords"> . </param>
+        /// <param name="location"></param>
+        /// <param name="username"></param>
+        /// <param name="passwords"></param>
         internal RegistryListCredentialsResult(string location, string username, IReadOnlyList<Password> passwords)
         {
             Location = location;

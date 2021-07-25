@@ -15,8 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of DockerImage. </summary>
         /// <param name="dockerImageUri">
         /// Image name of a custom base image.
-        /// 
-        /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;.
+        /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dockerImageUri"/> is null. </exception>
         public DockerImage(string dockerImageUri)
@@ -35,8 +34,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="platform"> The platform information of the docker image. </param>
         /// <param name="dockerImageUri">
         /// Image name of a custom base image.
-        /// 
-        /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;.
+        /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;
         /// </param>
         internal DockerImage(DockerSpecificationType dockerSpecificationType, DockerImagePlatform platform, string dockerImageUri) : base(dockerSpecificationType, platform)
         {
@@ -46,8 +44,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary>
         /// Image name of a custom base image.
-        /// 
-        /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;.
+        /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;
         /// </summary>
         public string DockerImageUri { get; set; }
     }

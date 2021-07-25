@@ -15,8 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of DockerBuild. </summary>
         /// <param name="dockerfile">
         /// Docker command line instructions to assemble an image.
-        /// 
-        /// &lt;seealso href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#dockerfile-advanced-environments&quot; /&gt;.
+        /// &lt;seealso href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#dockerfile-advanced-environments&quot; /&gt;
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dockerfile"/> is null. </exception>
         public DockerBuild(string dockerfile)
@@ -35,15 +34,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="platform"> The platform information of the docker image. </param>
         /// <param name="context">
         /// Path to a snapshot of the Docker Context. This property is only valid if Dockerfile is specified.
-        /// 
         /// The path is relative to the asset path which must contain a single Blob URI value.
-        /// 
-        /// &lt;seealso href=&quot;https://docs.docker.com/engine/context/working-with-contexts/&quot; /&gt;.
+        /// &lt;seealso href=&quot;https://docs.docker.com/engine/context/working-with-contexts/&quot; /&gt;
         /// </param>
         /// <param name="dockerfile">
         /// Docker command line instructions to assemble an image.
-        /// 
-        /// &lt;seealso href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#dockerfile-advanced-environments&quot; /&gt;.
+        /// &lt;seealso href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#dockerfile-advanced-environments&quot; /&gt;
         /// </param>
         internal DockerBuild(DockerSpecificationType dockerSpecificationType, DockerImagePlatform platform, string context, string dockerfile) : base(dockerSpecificationType, platform)
         {
@@ -54,16 +50,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary>
         /// Path to a snapshot of the Docker Context. This property is only valid if Dockerfile is specified.
-        /// 
         /// The path is relative to the asset path which must contain a single Blob URI value.
-        /// 
-        /// &lt;seealso href=&quot;https://docs.docker.com/engine/context/working-with-contexts/&quot; /&gt;.
+        /// &lt;seealso href=&quot;https://docs.docker.com/engine/context/working-with-contexts/&quot; /&gt;
         /// </summary>
         public string Context { get; set; }
         /// <summary>
         /// Docker command line instructions to assemble an image.
-        /// 
-        /// &lt;seealso href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#dockerfile-advanced-environments&quot; /&gt;.
+        /// &lt;seealso href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#dockerfile-advanced-environments&quot; /&gt;
         /// </summary>
         public string Dockerfile { get; set; }
     }

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ListNotebookKeysResult. </summary>
-        /// <param name="primaryAccessKey"> . </param>
-        /// <param name="secondaryAccessKey"> . </param>
+        /// <param name="primaryAccessKey"></param>
+        /// <param name="secondaryAccessKey"></param>
         internal ListNotebookKeysResult(string primaryAccessKey, string secondaryAccessKey)
         {
             PrimaryAccessKey = primaryAccessKey;

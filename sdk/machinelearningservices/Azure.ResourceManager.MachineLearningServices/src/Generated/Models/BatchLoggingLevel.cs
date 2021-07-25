@@ -12,9 +12,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary>
     /// Log verbosity for batch inferencing.
-    /// 
     /// Increasing verbosity order for logging is : Warning, Info and Debug.
-    /// 
     /// The default value is Info.
     /// </summary>
     public readonly partial struct BatchLoggingLevel : IEquatable<BatchLoggingLevel>

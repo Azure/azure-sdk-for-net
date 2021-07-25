@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.MachineLearningServices
     /// <summary> A Class representing a WorkspaceConnection along with the instance operations that can be performed on it. </summary>
     public class WorkspaceConnection : WorkspaceConnectionOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "WorkspaceConnection"/> class for mocking. </summary>
+        protected WorkspaceConnection() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "WorkspaceConnection"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets or sets the WorkspaceConnectionData. </summary>
-        public WorkspaceConnectionData Data { get; private set; }
+        public virtual WorkspaceConnectionData Data { get; private set; }
     }
 }

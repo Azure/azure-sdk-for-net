@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.
-        /// 
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
         /// </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
@@ -36,8 +35,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
         /// <param name="target">
         /// ARM resource ID of the compute if it exists.
-        /// 
-        /// optional.
+        /// optional
         /// </param>
         /// <param name="traffic"> Traffic rules on how the traffic will be routed across deployments. </param>
         internal OnlineEndpoint(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, EndpointProvisioningState? provisioningState, string scoringUri, string swaggerUri, string target, IDictionary<string, int> traffic)
@@ -59,7 +57,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Description { get; set; }
         /// <summary>
         /// EndpointAuthKeys to set initially on an Endpoint.
-        /// 
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
         /// </summary>
         public EndpointAuthKeys Keys { get; set; }
@@ -73,8 +70,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string SwaggerUri { get; }
         /// <summary>
         /// ARM resource ID of the compute if it exists.
-        /// 
-        /// optional.
+        /// optional
         /// </summary>
         public string Target { get; set; }
         /// <summary> Traffic rules on how the traffic will be routed across deployments. </summary>

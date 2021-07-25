@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.MachineLearningServices
     /// <summary> A Class representing a ModelContainerResource along with the instance operations that can be performed on it. </summary>
     public class ModelContainerResource : ModelContainerResourceOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "ModelContainerResource"/> class for mocking. </summary>
+        protected ModelContainerResource() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "ModelContainerResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets or sets the ModelContainerResourceData. </summary>
-        public ModelContainerResourceData Data { get; private set; }
+        public virtual ModelContainerResourceData Data { get; private set; }
     }
 }

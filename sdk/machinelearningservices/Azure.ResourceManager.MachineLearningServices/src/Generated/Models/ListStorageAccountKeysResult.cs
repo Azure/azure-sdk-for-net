@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ListStorageAccountKeysResult. </summary>
-        /// <param name="userStorageKey"> . </param>
+        /// <param name="userStorageKey"></param>
         internal ListStorageAccountKeysResult(string userStorageKey)
         {
             UserStorageKey = userStorageKey;

@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.MachineLearningServices
     /// <summary> A Class representing a LabelingJobResource along with the instance operations that can be performed on it. </summary>
     public class LabelingJobResource : LabelingJobResourceOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "LabelingJobResource"/> class for mocking. </summary>
+        protected LabelingJobResource() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "LabelingJobResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets or sets the LabelingJobResourceData. </summary>
-        public LabelingJobResourceData Data { get; private set; }
+        public virtual LabelingJobResourceData Data { get; private set; }
     }
 }

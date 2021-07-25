@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of OnlineRequestSettings. </summary>
-        /// <param name="maxConcurrentRequestsPerInstance"> . </param>
+        /// <param name="maxConcurrentRequestsPerInstance"></param>
         /// <param name="maxQueueWait"> The maximum queue wait time in ISO 8601 format. Supports millisecond precision. </param>
         /// <param name="requestTimeout"> The request timeout in ISO 8601 format. Supports millisecond precision. </param>
         internal OnlineRequestSettings(int? maxConcurrentRequestsPerInstance, TimeSpan? maxQueueWait, TimeSpan? requestTimeout)

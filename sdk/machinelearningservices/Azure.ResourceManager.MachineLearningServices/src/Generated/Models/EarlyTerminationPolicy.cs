@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of EarlyTerminationPolicy. </summary>
-        /// <param name="delayEvaluation"> . </param>
-        /// <param name="evaluationInterval"> . </param>
+        /// <param name="delayEvaluation"></param>
+        /// <param name="evaluationInterval"></param>
         /// <param name="policyType"> Name of policy configuration. </param>
         internal EarlyTerminationPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType)
         {

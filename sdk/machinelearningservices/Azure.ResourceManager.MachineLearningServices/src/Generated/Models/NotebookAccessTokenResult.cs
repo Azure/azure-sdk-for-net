@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of NotebookAccessTokenResult. </summary>
-        /// <param name="notebookResourceId"> . </param>
-        /// <param name="hostName"> . </param>
-        /// <param name="publicDns"> . </param>
-        /// <param name="accessToken"> . </param>
-        /// <param name="tokenType"> . </param>
-        /// <param name="expiresIn"> . </param>
-        /// <param name="refreshToken"> . </param>
-        /// <param name="scope"> . </param>
+        /// <param name="notebookResourceId"></param>
+        /// <param name="hostName"></param>
+        /// <param name="publicDns"></param>
+        /// <param name="accessToken"></param>
+        /// <param name="tokenType"></param>
+        /// <param name="expiresIn"></param>
+        /// <param name="refreshToken"></param>
+        /// <param name="scope"></param>
         internal NotebookAccessTokenResult(string notebookResourceId, string hostName, string publicDns, string accessToken, string tokenType, int? expiresIn, string refreshToken, string scope)
         {
             NotebookResourceId = notebookResourceId;

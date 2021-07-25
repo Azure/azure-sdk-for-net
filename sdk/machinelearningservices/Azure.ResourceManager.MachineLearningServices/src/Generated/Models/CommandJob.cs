@@ -42,12 +42,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="interactionEndpoints">
         /// List of JobEndpoints.
-        /// 
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="jobType"> Specifies the type of job. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="provisioningState"> . </param>
+        /// <param name="provisioningState"></param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
         /// <param name="command"> The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, or null.
-        /// 
         /// Defaults to AmlToken if null.
         /// </param>
         /// <param name="inputDataBindings"> Mapping of input data bindings used in the job. </param>
@@ -67,7 +65,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="parameters"> Input parameters. </param>
         /// <param name="priority">
         /// Job priority for scheduling policy. Only applies to AMLCompute.
-        /// 
         /// Private preview feature and only available to users on the allow list.
         /// </param>
         /// <param name="status"> Status of the job. </param>
@@ -108,7 +105,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string ExperimentName { get; set; }
         /// <summary>
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, or null.
-        /// 
         /// Defaults to AmlToken if null.
         /// </summary>
         public IdentityConfiguration Identity { get; set; }
@@ -122,7 +118,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public IReadOnlyDictionary<string, object> Parameters { get; }
         /// <summary>
         /// Job priority for scheduling policy. Only applies to AMLCompute.
-        /// 
         /// Private preview feature and only available to users on the allow list.
         /// </summary>
         public int? Priority { get; set; }

@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.MachineLearningServices
     /// <summary> A Class representing a OnlineEndpointTrackedResource along with the instance operations that can be performed on it. </summary>
     public class OnlineEndpointTrackedResource : OnlineEndpointTrackedResourceOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "OnlineEndpointTrackedResource"/> class for mocking. </summary>
+        protected OnlineEndpointTrackedResource() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "OnlineEndpointTrackedResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets or sets the OnlineEndpointTrackedResourceData. </summary>
-        public OnlineEndpointTrackedResourceData Data { get; private set; }
+        public virtual OnlineEndpointTrackedResourceData Data { get; private set; }
     }
 }

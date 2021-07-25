@@ -7,7 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="location"> The location. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="identity"> Service identity associated with a resource. </param>
-        /// <param name="kind"> . </param>
+        /// <param name="kind"></param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="systemData"> System data associated with resource provider. </param>
         internal OnlineDeploymentTrackedResourceData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, ResourceIdentity identity, string kind, OnlineDeployment properties, SystemData systemData) : base(id, name, type, location, tags)

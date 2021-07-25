@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of DatastorePropertiesResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> . </param>
+        /// <param name="nextLink"></param>
         /// <param name="value"> An array of objects of type DatastoreProperties. </param>
         internal DatastorePropertiesResourceArmPaginatedResult(string nextLink, IReadOnlyList<DatastorePropertiesResourceData> value)
         {

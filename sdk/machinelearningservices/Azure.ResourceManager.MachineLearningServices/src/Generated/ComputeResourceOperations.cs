@@ -10,9 +10,12 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -78,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -86,14 +89,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary> Deletes specified Machine Learning compute. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Delete");
             scope.Start();
@@ -111,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Deletes specified Machine Learning compute. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Delete");
             scope.Start();
@@ -129,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Deletes specified Machine Learning compute. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ComputeDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ComputeDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartDelete");
             scope.Start();
@@ -147,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Deletes specified Machine Learning compute. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ComputeDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual ComputeDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartDelete");
             scope.Start();
@@ -162,6 +165,42 @@ namespace Azure.ResourceManager.MachineLearningServices
                 throw;
             }
         }
+        /// <summary> Gets secrets related to Machine Learning compute (storage keys, service credentials, etc). </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ComputeSecrets>> ListKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.ListKeys");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.ListKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets secrets related to Machine Learning compute (storage keys, service credentials, etc). </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ComputeSecrets> ListKeys(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.ListKeys");
+            scope.Start();
+            try
+            {
+                var response = _restClient.ListKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Posts a restart action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RestartAsync(CancellationToken cancellationToken = default)
@@ -236,10 +275,86 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
+        /// <summary> Get the details (e.g IP address, port etc) of all the compute nodes in the compute. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AmlComputeNodeInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AmlComputeNodeInformation> ListNodes(CancellationToken cancellationToken = default)
+        {
+            Page<AmlComputeNodeInformation> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.ListNodes");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.ListNodes(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Nodes, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<AmlComputeNodeInformation> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.ListNodes");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.ListNodesNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Nodes, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Get the details (e.g IP address, port etc) of all the compute nodes in the compute. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AmlComputeNodeInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AmlComputeNodeInformation> ListNodesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<AmlComputeNodeInformation>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.ListNodes");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.ListNodesAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Nodes, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<AmlComputeNodeInformation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.ListNodes");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.ListNodesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Nodes, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
         /// <summary> Updates properties of a compute. This call will overwrite a compute if it exists. This is a nonrecoverable operation. </summary>
         /// <param name="scaleSettings"> Desired scale settings for the amlCompute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ComputeResource>> UpdateAsync(ScaleSettings scaleSettings = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ComputeResource>> UpdateAsync(ScaleSettings scaleSettings = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Update");
             scope.Start();
@@ -258,7 +373,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Updates properties of a compute. This call will overwrite a compute if it exists. This is a nonrecoverable operation. </summary>
         /// <param name="scaleSettings"> Desired scale settings for the amlCompute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ComputeResource> Update(ScaleSettings scaleSettings = null, CancellationToken cancellationToken = default)
+        public virtual Response<ComputeResource> Update(ScaleSettings scaleSettings = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Update");
             scope.Start();
@@ -277,7 +392,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Updates properties of a compute. This call will overwrite a compute if it exists. This is a nonrecoverable operation. </summary>
         /// <param name="scaleSettings"> Desired scale settings for the amlCompute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ComputeUpdateOperation> StartUpdateAsync(ScaleSettings scaleSettings = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ComputeUpdateOperation> StartUpdateAsync(ScaleSettings scaleSettings = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartUpdate");
             scope.Start();
@@ -296,7 +411,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Updates properties of a compute. This call will overwrite a compute if it exists. This is a nonrecoverable operation. </summary>
         /// <param name="scaleSettings"> Desired scale settings for the amlCompute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ComputeUpdateOperation StartUpdate(ScaleSettings scaleSettings = null, CancellationToken cancellationToken = default)
+        public virtual ComputeUpdateOperation StartUpdate(ScaleSettings scaleSettings = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartUpdate");
             scope.Start();
@@ -314,7 +429,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Posts a start action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> StartAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> StartAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Start");
             scope.Start();
@@ -332,7 +447,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Posts a start action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Start(CancellationToken cancellationToken = default)
+        public virtual Response Start(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Start");
             scope.Start();
@@ -350,7 +465,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Posts a start action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ComputeStartOperation> StartStartAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ComputeStartOperation> StartStartAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartStart");
             scope.Start();
@@ -368,7 +483,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Posts a start action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ComputeStartOperation StartStart(CancellationToken cancellationToken = default)
+        public virtual ComputeStartOperation StartStart(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartStart");
             scope.Start();
@@ -386,7 +501,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Posts a stop action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> StopAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> StopAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Stop");
             scope.Start();
@@ -404,7 +519,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Posts a stop action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Stop(CancellationToken cancellationToken = default)
+        public virtual Response Stop(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.Stop");
             scope.Start();
@@ -422,7 +537,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Posts a stop action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ComputeStopOperation> StartStopAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ComputeStopOperation> StartStopAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartStop");
             scope.Start();
@@ -440,7 +555,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Posts a stop action to a compute instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ComputeStopOperation StartStop(CancellationToken cancellationToken = default)
+        public virtual ComputeStopOperation StartStop(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.StartStop");
             scope.Start();

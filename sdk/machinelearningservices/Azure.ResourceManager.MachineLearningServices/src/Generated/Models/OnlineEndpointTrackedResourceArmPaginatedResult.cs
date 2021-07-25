@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of OnlineEndpointTrackedResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> . </param>
+        /// <param name="nextLink"></param>
         /// <param name="value"> An array of objects of type OnlineEndpoint. </param>
         internal OnlineEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<OnlineEndpointTrackedResourceData> value)
         {

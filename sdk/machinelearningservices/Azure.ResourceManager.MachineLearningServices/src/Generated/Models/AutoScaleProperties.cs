@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of AutoScaleProperties. </summary>
-        /// <param name="minNodeCount"> . </param>
-        /// <param name="enabled"> . </param>
-        /// <param name="maxNodeCount"> . </param>
+        /// <param name="minNodeCount"></param>
+        /// <param name="enabled"></param>
+        /// <param name="maxNodeCount"></param>
         internal AutoScaleProperties(int? minNodeCount, bool? enabled, int? maxNodeCount)
         {
             MinNodeCount = minNodeCount;

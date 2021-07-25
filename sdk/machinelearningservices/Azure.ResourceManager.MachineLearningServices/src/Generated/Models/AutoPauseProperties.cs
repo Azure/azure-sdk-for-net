@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of AutoPauseProperties. </summary>
-        /// <param name="delayInMinutes"> . </param>
-        /// <param name="enabled"> . </param>
+        /// <param name="delayInMinutes"></param>
+        /// <param name="enabled"></param>
         internal AutoPauseProperties(int? delayInMinutes, bool? enabled)
         {
             DelayInMinutes = delayInMinutes;

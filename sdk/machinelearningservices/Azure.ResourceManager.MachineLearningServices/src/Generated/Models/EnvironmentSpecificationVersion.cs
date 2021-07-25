@@ -12,8 +12,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary>
     /// Environment specification version details.
-    /// 
-    /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/specification.html&quot; /&gt;.
+    /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/specification.html&quot; /&gt;
     /// </summary>
     public partial class EnvironmentSpecificationVersion
     {
@@ -27,15 +26,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of EnvironmentSpecificationVersion. </summary>
         /// <param name="condaFile">
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
-        /// 
-        /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;.
+        /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;
         /// </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="docker"> Configuration settings for Docker. </param>
         /// <param name="environmentSpecificationType">
         /// Environment specification is either user managed or curated by the Azure ML service
-        /// 
-        /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;.
+        /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;
         /// </param>
         /// <param name="inferenceContainerProperties"> Defines configuration specific to inference. </param>
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
@@ -55,8 +52,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary>
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
-        /// 
-        /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;.
+        /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;
         /// </summary>
         public string CondaFile { get; set; }
         /// <summary> The asset description text. </summary>
@@ -65,8 +61,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public DockerSpecification Docker { get; set; }
         /// <summary>
         /// Environment specification is either user managed or curated by the Azure ML service
-        /// 
-        /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;.
+        /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;
         /// </summary>
         public EnvironmentSpecificationType? EnvironmentSpecificationType { get; }
         /// <summary> Defines configuration specific to inference. </summary>

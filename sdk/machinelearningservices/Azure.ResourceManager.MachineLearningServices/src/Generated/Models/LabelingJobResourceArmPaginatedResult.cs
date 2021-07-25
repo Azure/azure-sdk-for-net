@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of LabelingJobResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> . </param>
+        /// <param name="nextLink"></param>
         /// <param name="value"> An array of objects of type LabelingJob. </param>
         internal LabelingJobResourceArmPaginatedResult(string nextLink, IReadOnlyList<LabelingJobResourceData> value)
         {

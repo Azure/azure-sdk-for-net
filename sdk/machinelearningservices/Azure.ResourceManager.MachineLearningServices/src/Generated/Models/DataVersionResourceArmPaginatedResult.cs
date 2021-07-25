@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of DataVersionResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> . </param>
+        /// <param name="nextLink"></param>
         /// <param name="value"> An array of objects of type DataVersion. </param>
         internal DataVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<DataVersionResourceData> value)
         {

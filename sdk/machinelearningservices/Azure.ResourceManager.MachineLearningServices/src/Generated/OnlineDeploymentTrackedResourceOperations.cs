@@ -11,8 +11,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -78,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -86,14 +88,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary> Delete Inference Endpoint Deployment (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceOperations.Delete");
             scope.Start();
@@ -111,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete Inference Endpoint Deployment (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceOperations.Delete");
             scope.Start();
@@ -129,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete Inference Endpoint Deployment (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<OnlineDeploymentsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<OnlineDeploymentsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceOperations.StartDelete");
             scope.Start();
@@ -147,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete Inference Endpoint Deployment (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public OnlineDeploymentsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual OnlineDeploymentsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceOperations.StartDelete");
             scope.Start();
@@ -168,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public async Task<Response<OnlineDeploymentTrackedResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<OnlineDeploymentTrackedResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -197,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag added. </returns>
-        public Response<OnlineDeploymentTrackedResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<OnlineDeploymentTrackedResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -225,7 +227,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public async Task<Response<OnlineDeploymentTrackedResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<OnlineDeploymentTrackedResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
@@ -254,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tags replaced. </returns>
-        public Response<OnlineDeploymentTrackedResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<OnlineDeploymentTrackedResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
             {
@@ -283,7 +285,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public async Task<Response<OnlineDeploymentTrackedResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<OnlineDeploymentTrackedResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -311,7 +313,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="key"> The key of the tag to remove. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The updated resource with the tag removed. </returns>
-        public Response<OnlineDeploymentTrackedResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<OnlineDeploymentTrackedResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -366,6 +368,106 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = _restClient.GetLogs(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, containerType, tail, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update Online Deployment (asynchronous). </summary>
+        /// <param name="body"> Online Endpoint entity to apply during operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async virtual Task<Response<OnlineDeploymentTrackedResource>> UpdateAsync(PartialOnlineDeploymentPartialTrackedResource body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = await StartUpdateAsync(body, cancellationToken).ConfigureAwait(false);
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update Online Deployment (asynchronous). </summary>
+        /// <param name="body"> Online Endpoint entity to apply during operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<OnlineDeploymentTrackedResource> Update(PartialOnlineDeploymentPartialTrackedResource body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceOperations.Update");
+            scope.Start();
+            try
+            {
+                var operation = StartUpdate(body, cancellationToken);
+                return operation.WaitForCompletion(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update Online Deployment (asynchronous). </summary>
+        /// <param name="body"> Online Endpoint entity to apply during operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async virtual Task<OnlineDeploymentsUpdateOperation> StartUpdateAsync(PartialOnlineDeploymentPartialTrackedResource body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                return new OnlineDeploymentsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.ResourceGroupName, Id.Name, body).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update Online Deployment (asynchronous). </summary>
+        /// <param name="body"> Online Endpoint entity to apply during operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual OnlineDeploymentsUpdateOperation StartUpdate(PartialOnlineDeploymentPartialTrackedResource body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceOperations.StartUpdate");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.Parent.Parent.Name, Id.Parent.Name, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                return new OnlineDeploymentsUpdateOperation(this, _clientDiagnostics, Pipeline, _restClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.ResourceGroupName, Id.Name, body).Request, response);
             }
             catch (Exception e)
             {

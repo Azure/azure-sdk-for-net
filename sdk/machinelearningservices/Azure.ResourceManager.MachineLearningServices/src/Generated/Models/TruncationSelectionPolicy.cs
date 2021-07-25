@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of TruncationSelectionPolicy. </summary>
-        /// <param name="delayEvaluation"> . </param>
-        /// <param name="evaluationInterval"> . </param>
+        /// <param name="delayEvaluation"></param>
+        /// <param name="evaluationInterval"></param>
         /// <param name="policyType"> Name of policy configuration. </param>
-        /// <param name="truncationPercentage"> . </param>
+        /// <param name="truncationPercentage"></param>
         internal TruncationSelectionPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, int? truncationPercentage) : base(delayEvaluation, evaluationInterval, policyType)
         {
             TruncationPercentage = truncationPercentage;

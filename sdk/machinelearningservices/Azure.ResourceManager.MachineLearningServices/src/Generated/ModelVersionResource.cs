@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.MachineLearningServices
     /// <summary> A Class representing a ModelVersionResource along with the instance operations that can be performed on it. </summary>
     public class ModelVersionResource : ModelVersionResourceOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "ModelVersionResource"/> class for mocking. </summary>
+        protected ModelVersionResource() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "ModelVersionResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets or sets the ModelVersionResourceData. </summary>
-        public ModelVersionResourceData Data { get; private set; }
+        public virtual ModelVersionResourceData Data { get; private set; }
     }
 }

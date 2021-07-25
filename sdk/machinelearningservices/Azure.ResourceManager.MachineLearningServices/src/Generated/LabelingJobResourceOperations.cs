@@ -11,8 +11,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -79,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
         /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<LabelingJobResource>> GetAsync(bool? includeJobInstructions, bool? includeLabelCategories, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<LabelingJobResource>> GetAsync(bool? includeJobInstructions, bool? includeLabelCategories, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.Get");
             scope.Start();
@@ -99,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
         /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<LabelingJobResource> Get(bool? includeJobInstructions, bool? includeLabelCategories, CancellationToken cancellationToken = default)
+        public virtual Response<LabelingJobResource> Get(bool? includeJobInstructions, bool? includeLabelCategories, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.Get");
             scope.Start();
@@ -118,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -126,14 +128,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary> Delete a labeling job. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.Delete");
             scope.Start();
@@ -151,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete a labeling job. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.Delete");
             scope.Start();
@@ -169,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete a labeling job. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<LabelingJobsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<LabelingJobsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.StartDelete");
             scope.Start();
@@ -187,7 +189,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete a labeling job. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public LabelingJobsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual LabelingJobsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.StartDelete");
             scope.Start();
@@ -242,7 +244,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> The export summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<ExportSummary>> ExportLabelsAsync(ExportSummary body, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ExportSummary>> ExportLabelsAsync(ExportSummary body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -267,7 +269,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> The export summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<ExportSummary> ExportLabels(ExportSummary body, CancellationToken cancellationToken = default)
+        public virtual Response<ExportSummary> ExportLabels(ExportSummary body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -292,7 +294,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> The export summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<LabelingJobsExportLabelsOperation> StartExportLabelsAsync(ExportSummary body, CancellationToken cancellationToken = default)
+        public async virtual Task<LabelingJobsExportLabelsOperation> StartExportLabelsAsync(ExportSummary body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -317,7 +319,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> The export summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public LabelingJobsExportLabelsOperation StartExportLabels(ExportSummary body, CancellationToken cancellationToken = default)
+        public virtual LabelingJobsExportLabelsOperation StartExportLabels(ExportSummary body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -340,7 +342,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Resume a labeling job (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> ResumeAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> ResumeAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.Resume");
             scope.Start();
@@ -358,7 +360,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Resume a labeling job (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Resume(CancellationToken cancellationToken = default)
+        public virtual Response Resume(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.Resume");
             scope.Start();
@@ -376,7 +378,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Resume a labeling job (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<LabelingJobsResumeOperation> StartResumeAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<LabelingJobsResumeOperation> StartResumeAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.StartResume");
             scope.Start();
@@ -394,7 +396,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Resume a labeling job (asynchronous). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public LabelingJobsResumeOperation StartResume(CancellationToken cancellationToken = default)
+        public virtual LabelingJobsResumeOperation StartResume(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.StartResume");
             scope.Start();

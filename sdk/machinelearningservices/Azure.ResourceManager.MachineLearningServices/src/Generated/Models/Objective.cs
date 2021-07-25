@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         /// <summary> Initializes a new instance of Objective. </summary>
         /// <param name="goal"> Defines supported metric goals for hyperparameter tuning. </param>
-        /// <param name="primaryMetric"> . </param>
+        /// <param name="primaryMetric"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryMetric"/> is null. </exception>
         public Objective(Goal goal, string primaryMetric)
         {

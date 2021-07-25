@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of DataContainerResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> . </param>
+        /// <param name="nextLink"></param>
         /// <param name="value"> An array of objects of type DataContainer. </param>
         internal DataContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<DataContainerResourceData> value)
         {

@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -403,7 +405,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of OnlineEndpointTrackedResource for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="OnlineEndpointTrackedResource" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -426,7 +428,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <summary> Filters the list of OnlineEndpointTrackedResource for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="OnlineEndpointTrackedResource" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -441,42 +443,6 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var filters = new ResourceFilterCollection(OnlineEndpointTrackedResourceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
                 return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List EndpointAuthKeys for an Endpoint using Key-based authentication. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EndpointAuthKeys>> ListKeysAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.ListKeys");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.ListKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List EndpointAuthKeys for an Endpoint using Key-based authentication. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EndpointAuthKeys> ListKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceContainer.ListKeys");
-            scope.Start();
-            try
-            {
-                var response = _restClient.ListKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

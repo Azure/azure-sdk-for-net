@@ -11,7 +11,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -85,14 +88,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary> Delete datastore. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceOperations.Delete");
             scope.Start();
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete datastore. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceOperations.Delete");
             scope.Start();
@@ -128,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete datastore. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<DatastoresDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<DatastoresDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceOperations.StartDelete");
             scope.Start();
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Delete datastore. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public DatastoresDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual DatastoresDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceOperations.StartDelete");
             scope.Start();
@@ -154,6 +157,41 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var response = _restClient.Delete(Id.Parent.Name, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return new DatastoresDeleteOperation(response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary> Get datastore secrets. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DatastoreSecrets>> ListSecretsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceOperations.ListSecrets");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.ListSecretsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get datastore secrets. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DatastoreSecrets> ListSecrets(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceOperations.ListSecrets");
+            scope.Start();
+            try
+            {
+                var response = _restClient.ListSecrets(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

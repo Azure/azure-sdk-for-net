@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of BanditPolicy. </summary>
-        /// <param name="delayEvaluation"> . </param>
-        /// <param name="evaluationInterval"> . </param>
+        /// <param name="delayEvaluation"></param>
+        /// <param name="evaluationInterval"></param>
         /// <param name="policyType"> Name of policy configuration. </param>
-        /// <param name="slackAmount"> . </param>
-        /// <param name="slackFactor"> . </param>
+        /// <param name="slackAmount"></param>
+        /// <param name="slackFactor"></param>
         internal BanditPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, float? slackAmount, float? slackFactor) : base(delayEvaluation, evaluationInterval, policyType)
         {
             SlackAmount = slackAmount;

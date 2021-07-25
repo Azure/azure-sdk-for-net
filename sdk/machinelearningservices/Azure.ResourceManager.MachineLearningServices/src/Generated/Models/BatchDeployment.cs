@@ -29,21 +29,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="errorThreshold">
         /// Error threshold, if the error count for the entire input goes above this value,
-        /// 
         /// the batch inference will be aborted. Range is [-1, int.MaxValue].
-        /// 
         /// For FileDataset, this value is the count of file failures.
-        /// 
         /// For TabularDataset, this value is the count of record failures.
-        /// 
         /// If set to -1 (the lower bound), all failures during batch inference will be ignored.
         /// </param>
         /// <param name="loggingLevel"> Logging level for batch inference operation. </param>
         /// <param name="miniBatchSize">
         /// Size of the mini-batch passed to each batch invocation.
-        /// 
         /// For FileDataset, this is the number of files per mini-batch.
-        /// 
         /// For TabularDataset, this is the size of the records in bytes, per mini-batch.
         /// </param>
         /// <param name="model"> Reference to the model asset for the endpoint deployment. </param>
@@ -80,13 +74,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public IDictionary<string, string> EnvironmentVariables { get; }
         /// <summary>
         /// Error threshold, if the error count for the entire input goes above this value,
-        /// 
         /// the batch inference will be aborted. Range is [-1, int.MaxValue].
-        /// 
         /// For FileDataset, this value is the count of file failures.
-        /// 
         /// For TabularDataset, this value is the count of record failures.
-        /// 
         /// If set to -1 (the lower bound), all failures during batch inference will be ignored.
         /// </summary>
         public int? ErrorThreshold { get; set; }
@@ -94,9 +84,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public BatchLoggingLevel? LoggingLevel { get; set; }
         /// <summary>
         /// Size of the mini-batch passed to each batch invocation.
-        /// 
         /// For FileDataset, this is the number of files per mini-batch.
-        /// 
         /// For TabularDataset, this is the size of the records in bytes, per mini-batch.
         /// </summary>
         public long? MiniBatchSize { get; set; }

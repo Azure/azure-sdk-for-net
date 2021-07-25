@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.MachineLearningServices
     /// <summary> A Class representing a BatchEndpointTrackedResource along with the instance operations that can be performed on it. </summary>
     public class BatchEndpointTrackedResource : BatchEndpointTrackedResourceOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "BatchEndpointTrackedResource"/> class for mocking. </summary>
+        protected BatchEndpointTrackedResource() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "BatchEndpointTrackedResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets or sets the BatchEndpointTrackedResourceData. </summary>
-        public BatchEndpointTrackedResourceData Data { get; private set; }
+        public virtual BatchEndpointTrackedResourceData Data { get; private set; }
     }
 }

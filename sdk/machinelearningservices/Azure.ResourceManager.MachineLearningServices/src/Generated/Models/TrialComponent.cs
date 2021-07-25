@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="outputDataBindings"> Mapping of output data bindings used in the job. </param>
         /// <param name="timeout">
         /// The max run duration in ISO 8601 format, after which the trial component will be cancelled.
-        /// 
         /// Only supports duration with precision as low as Seconds.
         /// </param>
         internal TrialComponent(string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, InputDataBinding> inputDataBindings, IDictionary<string, OutputDataBinding> outputDataBindings, TimeSpan? timeout)
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public IDictionary<string, OutputDataBinding> OutputDataBindings { get; }
         /// <summary>
         /// The max run duration in ISO 8601 format, after which the trial component will be cancelled.
-        /// 
         /// Only supports duration with precision as low as Seconds.
         /// </summary>
         public TimeSpan? Timeout { get; set; }

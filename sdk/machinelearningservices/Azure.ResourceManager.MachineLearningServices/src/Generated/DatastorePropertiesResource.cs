@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.MachineLearningServices
     /// <summary> A Class representing a DatastorePropertiesResource along with the instance operations that can be performed on it. </summary>
     public class DatastorePropertiesResource : DatastorePropertiesResourceOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "DatastorePropertiesResource"/> class for mocking. </summary>
+        protected DatastorePropertiesResource() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "DatastorePropertiesResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -22,6 +27,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets or sets the DatastorePropertiesResourceData. </summary>
-        public DatastorePropertiesResourceData Data { get; private set; }
+        public virtual DatastorePropertiesResourceData Data { get; private set; }
     }
 }

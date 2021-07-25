@@ -4,13 +4,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.MachineLearningServices;
 using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using ResourceIdentityType = Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityType;
-using Sku = Azure.ResourceManager.Core.Sku;
+using Sku = Azure.ResourceManager.Resources.Models.Sku;
 
 namespace Azure.ResourceManager.MachineLearningServices.Tests
 {

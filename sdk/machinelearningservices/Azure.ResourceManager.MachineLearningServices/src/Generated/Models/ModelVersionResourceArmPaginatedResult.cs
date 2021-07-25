@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Initializes a new instance of ModelVersionResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> . </param>
+        /// <param name="nextLink"></param>
         /// <param name="value"> An array of objects of type ModelVersion. </param>
         internal ModelVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<ModelVersionResourceData> value)
         {

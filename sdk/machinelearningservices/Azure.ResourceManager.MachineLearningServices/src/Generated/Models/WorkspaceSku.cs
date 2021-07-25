@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="locations"> The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). </param>
         /// <param name="locationInfo"> A list of locations and availability zones in those locations where the SKU is available. </param>
         /// <param name="tier"> Sku Tier like Basic or Enterprise. </param>
-        /// <param name="resourceType"> . </param>
-        /// <param name="name"> . </param>
+        /// <param name="resourceType"></param>
+        /// <param name="name"></param>
         /// <param name="capabilities"> List of features/user capabilities associated with the sku. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
         internal WorkspaceSku(IReadOnlyList<string> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, string tier, string resourceType, string name, IReadOnlyList<SKUCapability> capabilities, IReadOnlyList<Restriction> restrictions)

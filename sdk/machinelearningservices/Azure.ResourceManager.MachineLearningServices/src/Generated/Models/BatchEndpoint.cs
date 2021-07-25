@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.
-        /// 
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
         /// </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string Description { get; set; }
         /// <summary>
         /// EndpointAuthKeys to set initially on an Endpoint.
-        /// 
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
         /// </summary>
         public EndpointAuthKeys Keys { get; set; }

@@ -13,8 +13,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return new WorkspacesRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
         }
 
-        /// <summary> Lists the Workspaces for this SubscriptionOperations. </summary>
+        /// <summary> Lists the Workspaces for this <see cref="SubscriptionOperations" />. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -55,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
                 async Task<Page<Workspace>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("WorkspaceOperations.ListWorkspaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListWorkspaces");
                     scope.Start();
                     try
                     {
@@ -73,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             );
         }
 
-        /// <summary> Lists the Workspaces for this SubscriptionOperations. </summary>
+        /// <summary> Lists the Workspaces for this <see cref="SubscriptionOperations" />. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
                 Page<Workspace> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("WorkspaceOperations.ListWorkspaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListWorkspaces");
                     scope.Start();
                     try
                     {
@@ -119,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             );
         }
 
-        /// <summary> Filters the list of Workspaces for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
+        /// <summary> Filters the list of Workspaces for a <see cref="SubscriptionOperations" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
@@ -133,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return ResourceListOperations.ListAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of Workspaces for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
+        /// <summary> Filters the list of Workspaces for a <see cref="SubscriptionOperations" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
@@ -154,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return new QuotasRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
         }
 
-        /// <summary> Lists the ResourceQuotas for this SubscriptionOperations. </summary>
+        /// <summary> Lists the ResourceQuotas for this <see cref="SubscriptionOperations" />. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -206,7 +208,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             );
         }
 
-        /// <summary> Lists the ResourceQuotas for this SubscriptionOperations. </summary>
+        /// <summary> Lists the ResourceQuotas for this <see cref="SubscriptionOperations" />. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -334,7 +336,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return new WorkspaceSkusRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
         }
 
-        /// <summary> Lists the WorkspaceSkus for this SubscriptionOperations. </summary>
+        /// <summary> Lists the WorkspaceSkus for this <see cref="SubscriptionOperations" />. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
@@ -379,7 +381,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             );
         }
 
-        /// <summary> Lists the WorkspaceSkus for this SubscriptionOperations. </summary>
+        /// <summary> Lists the WorkspaceSkus for this <see cref="SubscriptionOperations" />. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>

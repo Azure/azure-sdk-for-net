@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of SweepJob. </summary>
         /// <param name="algorithm"> Type of the hyperparameter sampling algorithms. </param>
         /// <param name="compute"> Compute binding for the job. </param>
-        /// <param name="objective"> . </param>
+        /// <param name="objective"></param>
         /// <param name="searchSpace"> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="compute"/>, <paramref name="objective"/>, or <paramref name="searchSpace"/> is null. </exception>
         public SweepJob(SamplingAlgorithm algorithm, ComputeConfiguration compute, Objective objective, IDictionary<string, object> searchSpace)
@@ -45,12 +45,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="interactionEndpoints">
         /// List of JobEndpoints.
-        /// 
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="jobType"> Specifies the type of job. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="provisioningState"> . </param>
+        /// <param name="provisioningState"></param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="algorithm"> Type of the hyperparameter sampling algorithms. </param>
         /// <param name="compute"> Compute binding for the job. </param>
@@ -58,16 +57,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the &quot;Default&quot; experiment. </param>
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity or null.
-        /// 
         /// Defaults to AmlToken if null.
         /// </param>
-        /// <param name="maxConcurrentTrials"> . </param>
-        /// <param name="maxTotalTrials"> . </param>
-        /// <param name="objective"> . </param>
+        /// <param name="maxConcurrentTrials"></param>
+        /// <param name="maxTotalTrials"></param>
+        /// <param name="objective"></param>
         /// <param name="output"> Location of the job output logs and artifacts. </param>
         /// <param name="priority">
         /// Job priority for scheduling policy. Only applies to AMLCompute.
-        /// 
         /// Private preview feature and only available to users on the allow list.
         /// </param>
         /// <param name="searchSpace"> A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
@@ -103,7 +100,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string ExperimentName { get; set; }
         /// <summary>
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity or null.
-        /// 
         /// Defaults to AmlToken if null.
         /// </summary>
         public IdentityConfiguration Identity { get; set; }
@@ -114,7 +110,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public JobOutput Output { get; }
         /// <summary>
         /// Job priority for scheduling policy. Only applies to AMLCompute.
-        /// 
         /// Private preview feature and only available to users on the allow list.
         /// </summary>
         public int? Priority { get; set; }
