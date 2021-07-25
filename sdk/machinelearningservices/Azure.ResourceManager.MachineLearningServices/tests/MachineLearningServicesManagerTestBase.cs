@@ -5,8 +5,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.MachineLearningServices;
+using Azure.ResourceManager.MachineLearningServices.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using ResourceIdentityType = Azure.ResourceManager.MachineLearningServices.Models.ResourceIdentityType;
+using Sku = Azure.ResourceManager.Core.Sku;
 
 namespace Azure.ResourceManager.MachineLearningServices.Tests
 {
@@ -62,6 +66,31 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests
             Client = GetArmClient();
         }
 
+        protected async Task<Workspace> CreateMLWorkspaceAsync(ResourceGroup rg, string workspaceNameOverride = default)
+        {
+            var mlWorkspaceData = GenerateWorkspaceData();
+
+            return await rg
+                .GetWorkspaces()
+                .CreateOrUpdateAsync(
+                    workspaceNameOverride ?? Recording.GenerateAssetName("test-ml-workspace"),
+                    mlWorkspaceData);
+        }
+
+        protected WorkspaceData GenerateWorkspaceData()
+        {
+            return new WorkspaceData
+            {
+                Location = Location.WestUS2,
+                ApplicationInsights = CommonAppInsightId,
+                ContainerRegistry = CommonAcrId,
+                StorageAccount = CommonStorageId,
+                KeyVault = CommonKeyVaultId,
+                Identity = new Models.Identity { Type = ResourceIdentityType.SystemAssigned }
+            };
+        }
+
+        #region Dependency Resource Creation with GlobalClient
         protected void CreateStorage()
         {
             var id = CommonResourceGroupId.AppendProviderResource(
@@ -163,5 +192,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests
                 .ConfigureAwait(false).GetAwaiter().GetResult();
             CommonAcrId = id;
         }
+        #endregion
     }
 }
