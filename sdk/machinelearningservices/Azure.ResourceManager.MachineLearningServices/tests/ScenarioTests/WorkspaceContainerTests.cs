@@ -43,24 +43,28 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 
         //public Task TryGet();
 
+        [TestCase]
+        [RecordedTest]
         public async Task CreateOrUpdate()
         {
             ResourceGroup rg = await CreateTestResourceGroup();
             var workspaceName = Recording.GenerateAssetName("testmlCreate");
             var workspace = await CreateMLWorkspaceAsync(rg, workspaceName);
 
-            Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{workspaceName}", workspace.Data.Id.ToString());
+            Assert.AreEqual(rg.Id.AppendProviderResource("Microsoft.MachineLearningServices", "workspaces",workspaceName).ToString(), workspace.Data.Id.ToString());
             Assert.AreEqual(workspaceName, workspace.Data.Name);
             Assert.AreEqual(WorkspaceOperations.ResourceType, workspace.Data.Type);
         }
 
+        [TestCase]
+        [RecordedTest]
         public async Task StartCreateOrUpdate()
         {
             ResourceGroup rg = await CreateTestResourceGroup();
             var workspaceName = Recording.GenerateAssetName("testmlCreate");
             Workspace workspace = await (await rg.GetWorkspaces().StartCreateOrUpdateAsync(workspaceName, GenerateWorkspaceData())).WaitForCompletionAsync();
 
-            Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{workspaceName}", workspace.Data.Id.ToString());
+            Assert.AreEqual(rg.Id.AppendProviderResource("Microsoft.MachineLearningServices", "workspaces", workspaceName), workspace.Data.Id.ToString());
             Assert.AreEqual(workspaceName, workspace.Data.Name);
             Assert.AreEqual(WorkspaceOperations.ResourceType, workspace.Data.Type);
         }
