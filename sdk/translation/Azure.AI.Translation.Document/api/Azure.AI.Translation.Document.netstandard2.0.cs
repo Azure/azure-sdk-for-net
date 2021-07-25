@@ -200,6 +200,11 @@ namespace Azure.AI.Translation.Document.Models
 {
     public static partial class BatchDocumentTranslationModelFactory
     {
+        public static Azure.AI.Translation.Document.DocumentStatus DocumentStatus(System.Uri sourceDocumentUri, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, string translatedTo, float progress, string id) { throw null; }
+        public static Azure.AI.Translation.Document.DocumentStatus DocumentStatus(System.Uri translatedDocumentUri, System.Uri sourceDocumentUri, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, string translatedTo, Azure.AI.Translation.Document.DocumentTranslationError error, float progress, string id, long charactersCharged) { throw null; }
+        public static Azure.AI.Translation.Document.DocumentTranslationError DocumentTranslationError(Azure.AI.Translation.Document.DocumentTranslationErrorCode errorCode, string message, string target) { throw null; }
         public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IEnumerable<string> fileExtensions = null, System.Collections.Generic.IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IEnumerable<string> formatVersions = null) { throw null; }
+        public static Azure.AI.Translation.Document.TranslationStatus TranslationStatus(string id, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, Azure.AI.Translation.Document.DocumentTranslationError error, int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, long totalCharacterCharged) { throw null; }
+        public static Azure.AI.Translation.Document.TranslationStatus TranslationStatus(string id, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, long totalCharacterCharged) { throw null; }
     }
 }
