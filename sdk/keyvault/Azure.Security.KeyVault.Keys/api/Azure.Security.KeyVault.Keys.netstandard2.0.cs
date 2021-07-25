@@ -127,8 +127,8 @@ namespace Azure.Security.KeyVault.Keys
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Keys.KeyProperties> GetPropertiesOfKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Security.KeyVault.Keys.KeyProperties> GetPropertiesOfKeyVersions(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Keys.KeyProperties> GetPropertiesOfKeyVersionsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<byte[]> GetRandomBytes(int count, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<byte[]>> GetRandomBytesAsync(int count, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Keys.RandomBytes> GetRandomBytes(int count, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.RandomBytes>> GetRandomBytesAsync(int count, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> ImportKey(Azure.Security.KeyVault.Keys.ImportKeyOptions importKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> ImportKey(string name, Azure.Security.KeyVault.Keys.JsonWebKey keyMaterial, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> ImportKeyAsync(Azure.Security.KeyVault.Keys.ImportKeyOptions importKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -184,6 +184,7 @@ namespace Azure.Security.KeyVault.Keys
         public static Azure.Security.KeyVault.Keys.KeyProperties KeyProperties(System.Uri id, System.Uri vaultUri, string name, string version, bool managed, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, string recoveryLevel) { throw null; }
         public static Azure.Security.KeyVault.Keys.KeyProperties KeyProperties(System.Uri id = null, System.Uri vaultUri = null, string name = null, string version = null, bool managed = false, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string recoveryLevel = null, int? recoverableDays = default(int?)) { throw null; }
         public static Azure.Security.KeyVault.Keys.KeyVaultKey KeyVaultKey(Azure.Security.KeyVault.Keys.KeyProperties properties, Azure.Security.KeyVault.Keys.JsonWebKey key) { throw null; }
+        public static Azure.Security.KeyVault.Keys.RandomBytes RandomBytes(byte[] value) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyOperation : System.IEquatable<Azure.Security.KeyVault.Keys.KeyOperation>
@@ -275,6 +276,11 @@ namespace Azure.Security.KeyVault.Keys
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+    }
+    public partial class RandomBytes
+    {
+        internal RandomBytes() { }
+        public byte[] Value { get { throw null; } }
     }
     public partial class RecoverDeletedKeyOperation : Azure.Operation<Azure.Security.KeyVault.Keys.KeyVaultKey>
     {

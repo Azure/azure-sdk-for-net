@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-preview.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-preview.4 (2021-07-22)
 
 - Consumes new service metadata capability

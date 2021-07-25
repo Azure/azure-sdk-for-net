@@ -1,5 +1,18 @@
 # Release History
 
+## 12.7.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.7.0-beta.2 (2021-07-23)
+- This release contains bug fixes to improve quality.
+
 ## 12.7.0-beta.1 (2021-07-22)
 - Added support for service version 2020-10-02.
 - TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
