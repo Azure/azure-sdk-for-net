@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Document.Models
     [CodeGenType(nameof(BatchDocumentTranslationModelFactory))]
     public static partial class BatchDocumentTranslationModelFactory
     {
-        #region errors
+        #region Errors
         /// <summary>
         /// Initializes a new instance of <see cref="Document.DocumentTranslationError"/> for mocking purposes.
         /// </summary>
@@ -29,7 +29,7 @@ namespace Azure.AI.Translation.Document.Models
         {
             return new DocumentTranslationError(errorCode, message, target, default);
         }
-        #endregion errors
+        #endregion Errors
 
         #region Statuses
         /// <summary>
@@ -154,6 +154,6 @@ namespace Azure.AI.Translation.Document.Models
             StatusSummary newSummary = new StatusSummary(total, failed, success, inProgress, notYetStarted, cancelled, totalCharacterCharged);
             return new TranslationStatus(id, createdOn, lastModified, status, error, newSummary);
         }
-        #endregion Stasuses
+        #endregion Statuses
     }
 }
