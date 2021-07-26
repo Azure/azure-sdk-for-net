@@ -138,7 +138,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Adds the FROM clause and its argument to the query via the Clauses component.
         /// </summary>
-        /// <param name="collection">An enum different collections that users can query from.</param>
+        /// <param name="collection">Collection that can be used as query source.</param>
         /// <returns> ADT query a from clause. </returns>
         public DigitalTwinsQueryBuilder From(AdtCollection collection)
         {
