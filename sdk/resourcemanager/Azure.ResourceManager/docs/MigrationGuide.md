@@ -169,7 +169,7 @@ string nsgName =  vmName + "_nsg";
  _ = await resourceGroup.GetNetworkSecurityGroups().Construct(80).CreateOrUpdateAsync(nsgName);
 ```
 
-> There is no need for network security group parameters when creating a new network security group.
+Creating a Network security group does not longer require a `NetworkSecurityGroup` object as a parameter.
 
 ### Create a Network Interface
 #### Old
