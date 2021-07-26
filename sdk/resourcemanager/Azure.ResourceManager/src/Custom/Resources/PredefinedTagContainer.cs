@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Resources
         /// Initializes a new instance of the <see cref="PredefinedTagContainer"/> class.
         /// </summary>
         /// <param name="clientContext">Current client context. </param>
-        /// <param name="subscription">The parent subscription. </param>
-        internal PredefinedTagContainer(ClientContext clientContext, SubscriptionResourceIdentifier subscription)
-            : base(clientContext, new SubscriptionResourceIdentifier(subscription))
+        /// <param name="parentId"> The parent subscription id. </param>
+        internal PredefinedTagContainer(ClientContext clientContext, ResourceIdentifier parentId)
+            : base(clientContext, parentId)
         {
-            RestClient = new TagRestOperations(Diagnostics, Pipeline, subscription.SubscriptionId, BaseUri);
+            RestClient = new TagRestOperations(Diagnostics, Pipeline, parentId.SubscriptionId, BaseUri);
         }
 
         /// <summary>

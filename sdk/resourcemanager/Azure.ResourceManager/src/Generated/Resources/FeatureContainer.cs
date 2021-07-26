@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of FeatureContainer and their operations over a Feature.
     /// </summary>
-    public class FeatureContainer : ResourceContainerBase<SubscriptionProviderIdentifier, Feature, FeatureData>
+    public class FeatureContainer : ResourceContainerBase<Feature, FeatureData>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private FeaturesRestOperations _restClient { get; }
@@ -45,11 +45,6 @@ namespace Azure.ResourceManager.Resources
 
         /// <inheritdoc />
         protected override ResourceType ValidResourceType => ProviderOperations.ResourceType;
-
-        /// <summary>
-        /// Gets the resource identifier.
-        /// </summary>
-        public new SubscriptionProviderIdentifier Id => base.Id as SubscriptionProviderIdentifier;
 
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

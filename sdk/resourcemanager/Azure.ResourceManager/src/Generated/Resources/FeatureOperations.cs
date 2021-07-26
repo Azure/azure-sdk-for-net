@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific Feature.
     /// </summary>
-    public class FeatureOperations : ResourceOperationsBase<SubscriptionProviderIdentifier, Feature>
+    public class FeatureOperations : ResourceOperationsBase<Feature>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private FeaturesRestOperations _restClient { get; }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The id of the feature to use. </param>
-        protected FeatureOperations(ResourceOperationsBase options, SubscriptionProviderIdentifier id)
+        protected FeatureOperations(ResourceOperationsBase options, ResourceIdentifier id)
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="featureName"> The name of the feature to use. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         internal FeatureOperations(string featureName, ProviderOperations options)
-            : base(options, new SubscriptionProviderIdentifier(options.Id.Parent as SubscriptionResourceIdentifier, "Microsoft.Features").AppendProviderResource(options.Id.Provider, ResourceType.Type, featureName))
+            : base(options, options.Id.Parent.AppendProviderResource(options.Id.Provider, ResourceType.Type, featureName))
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);

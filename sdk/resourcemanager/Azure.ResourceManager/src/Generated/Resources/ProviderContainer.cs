@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    public class ProviderContainer : ResourceContainerBase<SubscriptionProviderIdentifier, Provider, ProviderData>
+    public class ProviderContainer : ResourceContainerBase<Provider, ProviderData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderContainer"/> class for mocking.
@@ -34,11 +34,6 @@ namespace Azure.ResourceManager.Resources
 
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
-
-        /// <summary>
-        /// Gets the resource identifier.
-        /// </summary>
-        public new SubscriptionResourceIdentifier Id => base.Id as SubscriptionResourceIdentifier;
 
         private ProviderRestOperations RestClient
         {

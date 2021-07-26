@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Resource provider information. </summary>
-    public partial class ProviderData : SubResource<SubscriptionProviderIdentifier>
+    public partial class ProviderData : SubResource
     {
         /// <summary> Initializes a new instance of Provider. </summary>
         internal ProviderData()

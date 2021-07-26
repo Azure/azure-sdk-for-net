@@ -1,14 +1,14 @@
 ﻿using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
-    public class TestTrackedResource<TIdentifier> : TrackedResource<TIdentifier> where TIdentifier : TenantResourceIdentifier
+    public class TestTrackedResource : TrackedResource
     {
-        public TestTrackedResource(TIdentifier id) : this(id, Location.Default)
+        public TestTrackedResource(ResourceIdentifier id) : this(id, Location.Default)
         {
         }
 
-        public TestTrackedResource(TIdentifier id, string location)
+        public TestTrackedResource(ResourceIdentifier id, string location)
             :base(id, id.Name, id.ResourceType, location, null)
         {
         }

@@ -10,12 +10,11 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary>
     /// Generic representation of a tracked resource.  All tracked resources should extend this class
     /// </summary>
-    [ReferenceType(typeof(TenantResourceIdentifier))]
-    public abstract partial class TrackedResource<TIdentifier> : Resource<TIdentifier>
-        where TIdentifier : TenantResourceIdentifier
+    [ReferenceType]
+    public abstract partial class TrackedResource : Resource
     {
         /// <summary>
-        /// Initializes an empty instance of <see cref="TrackedResource{TIdentifier}"/> for mocking.
+        /// Initializes an empty instance of <see cref="TrackedResource"/> for mocking.
         /// </summary>
         protected TrackedResource()
         {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary>
-        /// Initializes an empty instance of <see cref="TrackedResource{TIdentifier}"/>.
+        /// Initializes an empty instance of <see cref="TrackedResource"/>.
         /// </summary>
         [InitializationConstructor]
         protected TrackedResource(Location location)
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrackedResource{TIdentifier}"/> class for deserialization.
+        /// Initializes a new instance of the <see cref="TrackedResource"/> class for deserialization.
         /// </summary>
         /// <param name="id"> The id of the resource. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="tags"> The tags for the resource. </param>
         /// <param name="location"> The location of the resource. </param>
         [SerializationConstructor]
-        protected internal TrackedResource(TIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags)
+        protected internal TrackedResource(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags)
             : base(id, name, type)
         {
             Tags = tags ?? new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
