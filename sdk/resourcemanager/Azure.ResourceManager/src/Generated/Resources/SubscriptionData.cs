@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the subscription data model.
     /// </summary>
-    public partial class SubscriptionData : TrackedResource<SubscriptionResourceIdentifier>
+    public partial class SubscriptionData : TrackedResource
     {
         /// <summary> Initializes a new instance of <see cref="SubscriptionData"/> class. </summary>
         /// <param name="id"> The subscription id. </param>

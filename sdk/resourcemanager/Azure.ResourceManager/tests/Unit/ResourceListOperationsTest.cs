@@ -4,7 +4,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
     public class ResourceListOperationsTest
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Core.Tests
             string managedBy,
             string location)
         {
-            TenantResourceIdentifier id = $"/subscriptions/{Guid.NewGuid().ToString()}/resourceGroups/myResourceGroup/providers/Microsoft.Widgets/widgets/myWidget";
+            ResourceIdentifier id = $"/subscriptions/{Guid.NewGuid().ToString()}/resourceGroups/myResourceGroup/providers/Microsoft.Widgets/widgets/myWidget";
             return new GenericResourceData(id, id.Name, id.ResourceType, location, tags, plan, null, kind, managedBy, sku, null);
         }
     }

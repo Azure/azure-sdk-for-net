@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    public class GenericResourceContainer : ResourceContainerBase<TenantResourceIdentifier, GenericResource, GenericResourceData>
+    public class GenericResourceContainer : ResourceContainerBase<GenericResource, GenericResourceData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceContainer"/> class for mocking.
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="clientContext"> The client context to use. </param>
         /// <param name="id"> The id for the subscription that owns this container. </param>
-        internal GenericResourceContainer(ClientContext clientContext, SubscriptionResourceIdentifier id)
+        internal GenericResourceContainer(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
         }

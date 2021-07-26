@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific ArmResource.
     /// </summary>
-    public class GenericResourceOperations : ResourceOperationsBase<TenantResourceIdentifier, GenericResource>
+    public class GenericResourceOperations : ResourceOperationsBase<GenericResource>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class for mocking.
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="operations"> The operation to get the client properties from. </param>
         /// <param name="id"> The id of the resource. </param>
-        internal GenericResourceOperations(OperationsBase operations, TenantResourceIdentifier id)
+        internal GenericResourceOperations(OperationsBase operations, ResourceIdentifier id)
             : base(operations, id)
         {
         }

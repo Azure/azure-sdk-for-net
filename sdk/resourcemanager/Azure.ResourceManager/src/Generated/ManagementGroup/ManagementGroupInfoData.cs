@@ -10,7 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Management
 {
     /// <summary> The management group resource. </summary>
-    public partial class ManagementGroupInfoData : Resource<TenantResourceIdentifier>
+    public partial class ManagementGroupInfoData : Resource
     {
         /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>
         internal ManagementGroupInfoData()
