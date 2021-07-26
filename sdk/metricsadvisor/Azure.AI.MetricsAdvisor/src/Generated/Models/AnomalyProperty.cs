@@ -24,9 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="anomalyStatus">
         /// anomaly status
         /// 
-        /// 
-        /// 
-        /// only return for alerting anomaly result.
+        /// only return for alerting anomaly result
         /// </param>
         /// <param name="value"> value of the anomaly. </param>
         /// <param name="expectedValue"> expected value of the anomaly given by smart detector. </param>
@@ -43,9 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// anomaly status
         /// 
-        /// 
-        /// 
-        /// only return for alerting anomaly result.
+        /// only return for alerting anomaly result
         /// </summary>
         public AnomalyStatus? AnomalyStatus { get; }
         /// <summary> value of the anomaly. </summary>

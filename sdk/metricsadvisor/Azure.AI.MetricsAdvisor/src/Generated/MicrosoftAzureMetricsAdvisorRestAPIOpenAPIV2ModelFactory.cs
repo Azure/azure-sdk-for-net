@@ -21,9 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="crossMetricsOperator">
         /// cross metrics operator
         /// 
-        /// 
-        /// 
-        /// should be specified when setting up multiple metric alerting configurations.
+        /// should be specified when setting up multiple metric alerting configurations
         /// </param>
         /// <param name="dimensionsToSplitAlert"> dimensions used to split alert. </param>
         /// <param name="idsOfHooksToAlert"> hook unique ids. </param>
@@ -54,7 +52,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="name"> anomaly detection configuration name. </param>
         /// <param name="description"> anomaly detection configuration description. </param>
         /// <param name="metricId"> metric unique id. </param>
-        /// <param name="wholeSeriesDetectionConditions"> . </param>
+        /// <param name="wholeSeriesDetectionConditions"></param>
         /// <param name="seriesGroupDetectionConditions"> detection configuration for series group. </param>
         /// <param name="seriesDetectionConditions"> detection configuration for specific series. </param>
         /// <returns> A new <see cref="Models.AnomalyDetectionConfiguration"/> instance for mocking. </returns>
@@ -67,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of IncidentRootCause. </summary>
-        /// <param name="seriesKey"> . </param>
+        /// <param name="seriesKey"></param>
         /// <param name="paths"> drilling down path from query anomaly to root cause. </param>
         /// <param name="contributionScore"> score of the root cause. </param>
         /// <param name="description"> description of the root cause. </param>
@@ -103,13 +101,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of DataFeedIngestionProgress. </summary>
         /// <param name="latestSuccessTimestamp">
         /// the timestamp of latest success ingestion job.
-        /// 
-        /// null indicates not available.
+        /// null indicates not available
         /// </param>
         /// <param name="latestActiveTimestamp">
         /// the timestamp of latest ingestion job with status update.
-        /// 
-        /// null indicates not available.
+        /// null indicates not available
         /// </param>
         /// <returns> A new <see cref="Models.DataFeedIngestionProgress"/> instance for mocking. </returns>
         public static DataFeedIngestionProgress DataFeedIngestionProgress(DateTimeOffset? latestSuccessTimestamp = null, DateTimeOffset? latestActiveTimestamp = null)

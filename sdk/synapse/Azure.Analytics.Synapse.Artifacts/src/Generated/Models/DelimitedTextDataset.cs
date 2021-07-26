@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="columnDelimiter"> The column delimiter. Type: string (or Expression with resultType string). </param>
         /// <param name="rowDelimiter"> The row delimiter. Type: string (or Expression with resultType string). </param>
         /// <param name="encodingName"> The code page name of the preferred encoding. If miss, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </param>
-        /// <param name="compressionCodec"> . </param>
+        /// <param name="compressionCodec"></param>
         /// <param name="compressionLevel"> The data compression method used for DelimitedText. </param>
         /// <param name="quoteChar"> The quote character. Type: string (or Expression with resultType string). </param>
         /// <param name="escapeChar"> The escape character. Type: string (or Expression with resultType string). </param>

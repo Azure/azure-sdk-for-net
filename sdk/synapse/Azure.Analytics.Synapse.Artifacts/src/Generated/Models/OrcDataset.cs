@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="location"> The location of the ORC data storage. </param>
-        /// <param name="orcCompressionCodec"> . </param>
+        /// <param name="orcCompressionCodec"></param>
         internal OrcDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, DatasetLocation location, OrcCompressionCodec? orcCompressionCodec) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
