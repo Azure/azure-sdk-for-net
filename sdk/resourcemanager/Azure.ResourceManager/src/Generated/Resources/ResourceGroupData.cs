@@ -8,7 +8,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the ResourceGroup data model. </summary>
-    public partial class ResourceGroupData : TrackedResource<ResourceGroupResourceIdentifier>
+    public partial class ResourceGroupData : TrackedResource
     {
         /// <summary> Initializes a new instance of ResourceGroupData. </summary>
         /// <param name="location"> The location of the resource group. It cannot be changed after the resource group has been created. It must be one of the supported Azure locations. </param>

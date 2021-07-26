@@ -5,7 +5,7 @@ using Azure.ResourceManager.Resources;
 #endregion
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests.Samples
+namespace Azure.ResourceManager.Tests.Samples
 {
     class Sample1_HelloWorld
     {

@@ -10,7 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Previewed feature information. </summary>
-    public partial class FeatureData : Resource<SubscriptionProviderIdentifier>
+    public partial class FeatureData : Resource
     {
         /// <summary> Initializes a new instance of FeatureResult. </summary>
         internal FeatureData()

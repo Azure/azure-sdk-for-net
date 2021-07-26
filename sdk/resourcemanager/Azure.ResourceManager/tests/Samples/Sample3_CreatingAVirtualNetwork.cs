@@ -4,7 +4,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests.Samples
+namespace Azure.ResourceManager.Tests.Samples
 {
     class Sample3_CreatingAVirtualNetwork
     {

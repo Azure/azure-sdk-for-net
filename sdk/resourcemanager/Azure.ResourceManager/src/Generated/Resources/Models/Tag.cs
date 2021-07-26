@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> A dictionary of name and value pairs. </summary>
-    public partial class Tag : Resource<TenantResourceIdentifier>
+    public partial class Tag : Resource
     {
         /// <summary> Initializes a new instance of TagsData. </summary>
         public Tag()

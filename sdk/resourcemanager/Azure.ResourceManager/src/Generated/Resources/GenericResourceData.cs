@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Resource information. </summary>
-    public partial class GenericResourceData : TrackedResource<TenantResourceIdentifier>
+    public partial class GenericResourceData : TrackedResource
     {
         /// <summary> Initializes a new instance of GenericResource. </summary>
         public GenericResourceData()

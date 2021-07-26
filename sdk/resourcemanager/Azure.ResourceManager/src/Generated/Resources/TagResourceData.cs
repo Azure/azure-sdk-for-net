@@ -7,7 +7,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> Wrapper resource for tags API requests and responses. </summary>
-    public partial class TagResourceData : Resource<TenantResourceIdentifier>
+    public partial class TagResourceData : Resource
     {
         /// <summary> Initializes a new instance of TagsResourceData. </summary>
         /// <param name="properties"> The set of tags. </param>

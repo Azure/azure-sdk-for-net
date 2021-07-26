@@ -1,17 +1,17 @@
 using NUnit.Framework;
 using System;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
-    public class SubscriptionProviderIdentifierTests
+    public class SubscriptionProviderIdentifierTests : ResourceIdentifierTests
     {
         [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Insights")]
         public void ImplicitConstructorWithProvider(string resourceProviderID)
         {
             string x = resourceProviderID;
             string y;
-            SubscriptionProviderIdentifier z = x;
+            ResourceIdentifier z = x;
             y = z;
 
             Assert.AreEqual("Microsoft.Insights", z.Provider);
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.Core.Tests
         {
             string x = resourceProviderID;
             string y;
-            SubscriptionProviderIdentifier z = x;
+            ResourceIdentifier z = x;
             y = z;
 
             Assert.AreEqual("Microsoft.Insights", z.Provider);
             Assert.AreEqual("Microsoft.Network/virtualNetworks/subnets", z.ResourceType.ToString());
-            Assert.AreEqual("Microsoft.Insights", (z.Parent as SubscriptionProviderIdentifier).Provider);
-            Assert.AreEqual("Microsoft.Insights", (z.Parent.Parent as SubscriptionProviderIdentifier).Provider);
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Provider);
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Parent.Provider);
             Assert.AreEqual("Microsoft.Network/virtualNetworks/subnets", z.ResourceType.ToString());
             Assert.AreEqual("Microsoft.Network/virtualNetworks", z.Parent.ResourceType.ToString());
             Assert.AreEqual("testvnet", z.Parent.Name);
@@ -62,22 +62,22 @@ namespace Azure.ResourceManager.Core.Tests
             }
         }
 
-        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Insights/providers/Microsoft.Network/virtualNetworks/testvnet/")]
+        [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Insights/providers/Microsoft.Network/virtualNetworks/testvnet")]
         public void ImplicitConstructorWithVNet(string resourceProviderID)
         {
             string x = resourceProviderID;
             string y;
-            SubscriptionProviderIdentifier z = x;
+            ResourceIdentifier z = x;
             y = z;
 
             Assert.AreEqual("Microsoft.Insights", z.Provider);
             Assert.AreEqual("Microsoft.Network/virtualNetworks", z.ResourceType.ToString());
-            Assert.AreEqual("Microsoft.Insights", (z.Parent as SubscriptionProviderIdentifier).Provider);
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Provider);
             Assert.AreEqual("Microsoft.Network/virtualNetworks", z.ResourceType.ToString());
             Assert.AreEqual("testvnet", z.Name);
-            Assert.AreEqual("Microsoft.Insights", (z.Parent as SubscriptionProviderIdentifier).Provider);
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Provider);
             Assert.AreEqual("Microsoft.Resources/providers", z.Parent.ResourceType.ToString());
-            Assert.IsNull(z.Parent.Name);
+            Assert.AreEqual("Microsoft.Insights", z.Parent.Name);
             Assert.AreEqual("Microsoft.Resources/subscriptions", z.Parent.Parent.ResourceType.ToString());
             Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", z.Parent.Parent.Name);
 
