@@ -289,10 +289,9 @@ In addition to passing strings as a query parameter, it is possible to pass in a
 // This code snippet demonstrates querying digital twin results using an AdtQueryBuilder, an object that allows for 
 // fluent-style query construction that makes it easier to write queries.
 AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilder = client.QueryAsync<BasicDigitalTwin>(
-    new AdtQueryBuilder()
+    new DigitalTwinsQueryBuilder()
         .Select("*")
-        .From(AdtCollection.DigitalTwins)
-        .Build());
+        .From(AdtCollection.DigitalTwins));
 ```
 
 ### Build ADT Queries
@@ -301,37 +300,41 @@ Build an [Azure DigitalTwins Query Store Language](https://docs.microsoft.com/az
 
 ```C# Snippet:DigitalTwinsQueryBuilder
 // SELECT * FROM DIGITALTWINS
-DigitalTwinsQueryBuilder simplestQuery = new DigitalTwinsQueryBuilder().Select("*").From(AdtCollection.DigitalTwins);
+DigitalTwinsQueryBuilder simplestQuery = new DigitalTwinsQueryBuilder().Select("*").From(AdtCollection.DigitalTwins).Build();
 
 // SELECT * FROM DIGITALTWINS
 // Note that the this is the same as the previous query, just with the prebuilt SelectAll() method that can be used
 // interchangeably with Select("*")
-DigitalTwinsQueryBuilder simplestQuerySelectAll = new DigitalTwinsQueryBuilder().SelectAll().From(AdtCollection.DigitalTwins);
+DigitalTwinsQueryBuilder simplestQuerySelectAll = new DigitalTwinsQueryBuilder().SelectAll().From(AdtCollection.DigitalTwins).Build();
 
 // SELECT TOP(3) FROM DIGITALTWINS
 // Note that if no property is specfied, the SelectTopAll() method can be used instead of SelectTop()
 DigitalTwinsQueryBuilder queryWithSelectTop = new DigitalTwinsQueryBuilder()
     .SelectTopAll(3)
-    .From(AdtCollection.DigitalTwins);
+    .From(AdtCollection.DigitalTwins)
+    .Build();
 
 
 // SELECT TOP(3) Temperature, Humidity FROM DIGITALTWINS
 DigitalTwinsQueryBuilder queryWithSelectTopProperty = new DigitalTwinsQueryBuilder()
     .SelectTop(3, "Temperature", "Humidity")
-    .From(AdtCollection.DigitalTwins);
+    .From(AdtCollection.DigitalTwins)
+    .Build();
 
 
 // SELECT COUNT() FROM RELATIONSHIPS
 DigitalTwinsQueryBuilder queryWithSelectRelationships = new DigitalTwinsQueryBuilder()
     .SelectCount()
-    .From(AdtCollection.Relationships);
+    .From(AdtCollection.Relationships)
+    .Build();
 
 
 // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("dtmi:example:room;1")
 DigitalTwinsQueryBuilder queryWithIsOfModel = new DigitalTwinsQueryBuilder()
     .Select("*")
     .From(AdtCollection.DigitalTwins)
-    .Where(q => q.IsOfModel("dtmi:example:room;1"));
+    .Where(q => q.IsOfModel("dtmi:example:room;1"))
+    .Build();
 ```
 
 Clauses can also be manually overridden with strings:
@@ -340,7 +343,8 @@ Clauses can also be manually overridden with strings:
 // SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
 new DigitalTwinsQueryBuilder()
 .SelectCustom("TOP(3) Room, Temperature")
-.From(AdtCollection.DigitalTwins);
+.From(AdtCollection.DigitalTwins)
+.Build();
 ```
 
 For queries with multiple conditions, use logical operators or nested conditions.
@@ -355,7 +359,8 @@ DigitalTwinsQueryBuilder logicalOps_MultipleOr = new DigitalTwinsQueryBuilder()
         .Or()
         .IsOfModel("dtmi:example:room;1", true)
         .Or()
-        .IsOfType("Temperature", AdtDataType.AdtNumber));
+        .IsOfType("Temperature", AdtDataType.AdtNumber))
+    .Build();
 
 // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
 // OR (IS_OF_MODEL("dtmi:example:hvac;1") AND IS_NULL(Occupants))
@@ -363,15 +368,16 @@ DigitalTwinsQueryBuilder logicalOpsNested = new DigitalTwinsQueryBuilder()
     .SelectAll()
     .From(AdtCollection.DigitalTwins)
     .Where(q => q
-    .Parenthetical(q => q
-        .IsOfType("Humidity", AdtDataType.AdtNumber)
-        .Or()
-        .IsDefined("Humidity"))
+        .Parenthetical(q => q
+            .IsOfType("Humidity", AdtDataType.AdtNumber)
+            .Or()
+            .IsDefined("Humidity"))
     .And()
     .Parenthetical(q => q
         .IsOfModel("dtmi:example:hvac;1")
         .And()
-        .IsNull("Occupants")));
+        .IsNull("Occupants")))
+    .Build();
 ```
 
 Using nested conditions is a workaround for subjective queries that could be interpreted in multiple ways:
@@ -386,7 +392,8 @@ DigitalTwinsQueryBuilder subjectiveLogicalOps = new DigitalTwinsQueryBuilder()
         .Or()
         .IsOfModel("dtmi:example:room;1", true)
         .And()
-        .IsOfType("Temperature", AdtDataType.AdtNumber));
+        .IsOfType("Temperature", AdtDataType.AdtNumber))
+    .Build();
 
 DigitalTwinsQueryBuilder objectiveLogicalOps = new DigitalTwinsQueryBuilder()
     .SelectAll()
@@ -397,7 +404,8 @@ DigitalTwinsQueryBuilder objectiveLogicalOps = new DigitalTwinsQueryBuilder()
         .Or()
         .IsOfModel("dtmi:example:room;1", true))
     .And()
-    .IsOfType("Temperature", AdtDataType.AdtNumber));
+    .IsOfType("Temperature", AdtDataType.AdtNumber))
+    .Build();
 ```
 
 Use aliasing to form more complicated queries by renaming selectable properties or queryable collections:
@@ -407,26 +415,30 @@ Use aliasing to form more complicated queries by renaming selectable properties 
 DigitalTwinsQueryBuilder selectAsSample = new DigitalTwinsQueryBuilder()
     .SelectAs("Temperature", "Temp")
     .SelectAs("Humidity", "Hum")
-    .From(AdtCollection.DigitalTwins);
+    .From(AdtCollection.DigitalTwins)
+    .Build();
 
 
 // SELECT Temperature, Humidity AS Hum FROM DigitalTwins
 DigitalTwinsQueryBuilder selectAndSelectAs = new DigitalTwinsQueryBuilder()
     .Select("Temperature")
     .SelectAs("Humidity", "Hum")
-    .From(AdtCollection.DigitalTwins);
+    .From(AdtCollection.DigitalTwins)
+    .Build();
 
 
 // SELECT T FROM DigitalTwins T
 DigitalTwinsQueryBuilder anotherSelectAsSample = new DigitalTwinsQueryBuilder()
     .Select("T")
-    .From(AdtCollection.DigitalTwins, "T");
+    .From(AdtCollection.DigitalTwins, "T")
+    .Build();
 
 
 // SELECT T.Temperature, T.Humdity FROM DigitalTwins T
 DigitalTwinsQueryBuilder collectionAliasing = new DigitalTwinsQueryBuilder()
     .Select("T.Temperature", "T.Humidity")
-    .From(AdtCollection.DigitalTwins);
+    .From(AdtCollection.DigitalTwins)
+    .Build();
 
 
 // SELECT T.Temperature AS Temp, T.Humidity AS Hum FROM DigitalTwins T
@@ -436,9 +448,10 @@ DigitalTwinsQueryBuilder bothAliasingTypes = new DigitalTwinsQueryBuilder()
     .SelectAs("T.Humidity", "Hum")
     .From(AdtCollection.DigitalTwins, "T")
     .Where(q => q
-      .Compare("T.Temperature", QueryComparisonOperator.Equal, 50)
+        .Compare("T.Temperature", QueryComparisonOperator.Equal, 50)
         .And()
-        .Compare("T.Humidity", QueryComparisonOperator.Equal, 30));
+        .Compare("T.Humidity", QueryComparisonOperator.Equal, 30))
+    .Build();
 ```
 
 Turn a `DigitalTwinsQueryBuilder` to a string by calling `GetQueryText()` after `Build()`:
@@ -447,6 +460,7 @@ Turn a `DigitalTwinsQueryBuilder` to a string by calling `GetQueryText()` after 
 string basicQueryStringFormat = new DigitalTwinsQueryBuilder()
     .SelectAll()
     .From(AdtCollection.DigitalTwins)
+    .Build()
     .GetQueryText();
 ```
 

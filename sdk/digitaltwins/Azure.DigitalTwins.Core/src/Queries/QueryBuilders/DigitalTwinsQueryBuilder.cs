@@ -20,6 +20,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         private FromClause _fromClause;
         private WhereQuery _whereQuery;
 
+        private string _queryText;
+
         /// <summary>
         /// Create a Digital Twins query without automatically specifiying or aliasing a queryable collection.
         /// </summary>
@@ -172,7 +174,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Adds a WHERE clause to a query.
         /// </summary>
         /// <param name="whereLogic">Delgate that contains methods from the <see cref="WhereQuery"/> class.</param>
-        /// <returns></returns>
+        /// <returns> ADT query with a where clause. </returns>
         public DigitalTwinsQueryBuilder Where(Func<WhereQuery, WhereQuery> whereLogic)
         {
             whereLogic.Invoke(_whereQuery);
@@ -180,10 +182,10 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Gets the string representation of the built query.
+        /// Constructs the string representation of the built query.
         /// </summary>
-        /// <returns> String represenation of query. </returns>
-        public string GetQueryText()
+        /// <returns> DigitalTwinsQueryBuilder with an updated string representation. </returns>
+        public DigitalTwinsQueryBuilder Build()
         {
             var queryString = new StringBuilder();
 
@@ -257,7 +259,17 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
                 queryString.Append(whereClauseText);
             }
 
-            return queryString.ToString().Trim();
+            _queryText = queryString.ToString().Trim();
+            return this;
+        }
+
+        /// <summary>
+        /// Gets the string representation of the built query.
+        /// </summary>
+        /// <returns> String represenation of query. </returns>
+        public string GetQueryText()
+        {
+            return _queryText;
         }
     }
 }

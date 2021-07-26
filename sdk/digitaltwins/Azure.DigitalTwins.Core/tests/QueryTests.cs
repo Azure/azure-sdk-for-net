@@ -120,8 +120,9 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // Build query using AdtQueryBuilder helper object
                 DigitalTwinsQueryBuilder builtQuery = new DigitalTwinsQueryBuilder()
-                    .Select("*")
-                    .From(AdtCollection.DigitalTwins);
+                    .SelectAll()
+                    .From(AdtCollection.DigitalTwins)
+                    .Build();
 
                 // act
                 AsyncPageable<BasicDigitalTwin> asyncPageableResponse = client.QueryAsync<BasicDigitalTwin>(builtQuery);
