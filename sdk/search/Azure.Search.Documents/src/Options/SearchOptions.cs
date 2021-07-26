@@ -316,15 +316,19 @@ namespace Azure.Search.Documents
             destination.OrderBy = source.OrderBy;
             destination.QueryAnswer = source.QueryAnswer;
             destination.QueryAnswerCount = source.QueryAnswerCount;
+            destination.QueryCaption = source.QueryCaption;
+            destination.QueryCaptionHighlight = source.QueryCaptionHighlight;
             destination.QueryLanguage = source.QueryLanguage;
             destination.QuerySpeller = source.QuerySpeller;
             destination.QueryType = source.QueryType;
             destination.ScoringParameters = source.ScoringParameters;
             destination.ScoringProfile = source.ScoringProfile;
+            destination.ScoringStatistics = source.ScoringStatistics;
             destination.SearchFields = source.SearchFields;
             destination.SearchMode = source.SearchMode;
             destination.SearchText = source.SearchText;
             destination.Select = source.Select;
+            destination.SemanticFields = source.SemanticFields;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
         }
