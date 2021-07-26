@@ -17,7 +17,7 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
-        private readonly QuestionAnsweringKnowledgebaseRestClient _knowledgebaseRestClient;
+        private readonly QuestionAnsweringKnowledgeBaseRestClient _knowledgebaseRestClient;
         private readonly QuestionAnsweringTextRestClient _textRestClient;
 
         /// <summary>
@@ -83,12 +83,12 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectName"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual async Task<Response<KnowledgebaseAnswers>> QueryKnowledgebaseAsync(string projectName, KnowledgebaseQueryOptions options, string deploymentName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeBaseAnswers>> QueryKnowledgeBaseAsync(string projectName, QueryKnowledgeBaseOptions options, string deploymentName = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgebase)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgeBase)}");
             scope.AddAttribute("project", projectName);
             scope.Start();
 
@@ -110,12 +110,12 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectName"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<KnowledgebaseAnswers> QueryKnowledgebase(string projectName, KnowledgebaseQueryOptions options, string deploymentName = null, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeBaseAnswers> QueryKnowledgeBase(string projectName, QueryKnowledgeBaseOptions options, string deploymentName = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(options, nameof(options));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgebase)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringClient)}.{nameof(QueryKnowledgeBase)}");
             scope.AddAttribute("project", projectName);
             scope.Start();
 
@@ -135,7 +135,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual async Task<Response<TextAnswers>> QueryTextAsync(TextQueryOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAnswers>> QueryTextAsync(QueryTextOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -158,7 +158,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<TextAnswers> QueryText(TextQueryOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<TextAnswers> QueryText(QueryTextOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 

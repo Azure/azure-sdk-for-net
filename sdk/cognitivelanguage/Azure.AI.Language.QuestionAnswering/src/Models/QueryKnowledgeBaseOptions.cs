@@ -6,16 +6,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
-    [CodeGenModel("KnowledgebaseQueryParameters")]
-    public partial class KnowledgebaseQueryOptions
+    [CodeGenModel("KnowledgeBaseQueryOptions")]
+    public partial class QueryKnowledgeBaseOptions
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="KnowledgebaseQueryOptions"/> class with the specified <paramref name="question"/>.
+        /// Creates a new instance of the <see cref="QueryKnowledgeBaseOptions"/> class with the specified <paramref name="question"/>.
         /// </summary>
         /// <param name="question">The question to answer.</param>
         /// <exception cref="ArgumentException"><paramref name="question"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="question"/> is null.</exception>
-        public KnowledgebaseQueryOptions(string question)
+        public QueryKnowledgeBaseOptions(string question)
         {
             Argument.AssertNotNullOrEmpty(question, nameof(question));
 
@@ -23,14 +23,14 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="KnowledgebaseQueryOptions"/> class with an exact QnA ID.
+        /// Creates a new instance of the <see cref="QueryKnowledgeBaseOptions"/> class with an exact QnA ID.
         /// </summary>
-        public KnowledgebaseQueryOptions(int qnaId)
+        public QueryKnowledgeBaseOptions(int qnaId)
         {
             QnaId = qnaId;
         }
 
-        private KnowledgebaseQueryOptions()
+        private QueryKnowledgeBaseOptions()
         {
         }
 

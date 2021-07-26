@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
-    public partial class KnowledgebaseAnswerDialog
+    public partial class KnowledgeBaseAnswerDialog
     {
-        internal static KnowledgebaseAnswerDialog DeserializeKnowledgebaseAnswerDialog(JsonElement element)
+        internal static KnowledgeBaseAnswerDialog DeserializeKnowledgeBaseAnswerDialog(JsonElement element)
         {
             Optional<bool> isContextOnly = default;
-            Optional<IReadOnlyList<KnowledgebaseAnswerPrompt>> prompts = default;
+            Optional<IReadOnlyList<KnowledgeBaseAnswerPrompt>> prompts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isContextOnly"))
@@ -36,16 +36,16 @@ namespace Azure.AI.Language.QuestionAnswering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnowledgebaseAnswerPrompt> array = new List<KnowledgebaseAnswerPrompt>();
+                    List<KnowledgeBaseAnswerPrompt> array = new List<KnowledgeBaseAnswerPrompt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgebaseAnswerPrompt.DeserializeKnowledgebaseAnswerPrompt(item));
+                        array.Add(KnowledgeBaseAnswerPrompt.DeserializeKnowledgeBaseAnswerPrompt(item));
                     }
                     prompts = array;
                     continue;
                 }
             }
-            return new KnowledgebaseAnswerDialog(Optional.ToNullable(isContextOnly), Optional.ToList(prompts));
+            return new KnowledgeBaseAnswerDialog(Optional.ToNullable(isContextOnly), Optional.ToList(prompts));
         }
     }
 }

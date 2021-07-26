@@ -8,18 +8,18 @@
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
     /// <summary> Prompt for an answer. </summary>
-    public partial class KnowledgebaseAnswerPrompt
+    public partial class KnowledgeBaseAnswerPrompt
     {
-        /// <summary> Initializes a new instance of KnowledgebaseAnswerPrompt. </summary>
-        internal KnowledgebaseAnswerPrompt()
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswerPrompt. </summary>
+        internal KnowledgeBaseAnswerPrompt()
         {
         }
 
-        /// <summary> Initializes a new instance of KnowledgebaseAnswerPrompt. </summary>
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswerPrompt. </summary>
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
         /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
-        internal KnowledgebaseAnswerPrompt(int? displayOrder, int? qnaId, string displayText)
+        internal KnowledgeBaseAnswerPrompt(int? displayOrder, int? qnaId, string displayText)
         {
             DisplayOrder = displayOrder;
             QnaId = qnaId;

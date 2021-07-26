@@ -10,13 +10,13 @@ using System;
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
     /// <summary> Represent input text record to be queried. </summary>
-    public partial class TextInput
+    public partial class TextRecord
     {
-        /// <summary> Initializes a new instance of TextInput. </summary>
+        /// <summary> Initializes a new instance of TextRecord. </summary>
         /// <param name="id"> Unique identifier for the text record. </param>
         /// <param name="text"> Text contents of the record. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="text"/> is null. </exception>
-        public TextInput(string id, string text)
+        public TextRecord(string id, string text)
         {
             if (id == null)
             {

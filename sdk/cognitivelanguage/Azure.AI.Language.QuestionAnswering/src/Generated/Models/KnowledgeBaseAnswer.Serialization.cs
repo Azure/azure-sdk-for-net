@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
-    public partial class KnowledgebaseAnswer
+    public partial class KnowledgeBaseAnswer
     {
-        internal static KnowledgebaseAnswer DeserializeKnowledgebaseAnswer(JsonElement element)
+        internal static KnowledgeBaseAnswer DeserializeKnowledgeBaseAnswer(JsonElement element)
         {
             Optional<IReadOnlyList<string>> questions = default;
             Optional<string> answer = default;
@@ -21,7 +21,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
             Optional<int> id = default;
             Optional<string> source = default;
             Optional<IReadOnlyDictionary<string, string>> metadata = default;
-            Optional<KnowledgebaseAnswerDialog> dialog = default;
+            Optional<KnowledgeBaseAnswerDialog> dialog = default;
             Optional<AnswerSpan> answerSpan = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -92,7 +92,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dialog = KnowledgebaseAnswerDialog.DeserializeKnowledgebaseAnswerDialog(property.Value);
+                    dialog = KnowledgeBaseAnswerDialog.DeserializeKnowledgeBaseAnswerDialog(property.Value);
                     continue;
                 }
                 if (property.NameEquals("answerSpan"))
@@ -106,7 +106,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
                     continue;
                 }
             }
-            return new KnowledgebaseAnswer(Optional.ToList(questions), answer.Value, Optional.ToNullable(confidenceScore), Optional.ToNullable(id), source.Value, Optional.ToDictionary(metadata), dialog.Value, answerSpan.Value);
+            return new KnowledgeBaseAnswer(Optional.ToList(questions), answer.Value, Optional.ToNullable(confidenceScore), Optional.ToNullable(id), source.Value, Optional.ToDictionary(metadata), dialog.Value, answerSpan.Value);
         }
     }
 }
