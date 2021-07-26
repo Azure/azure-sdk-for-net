@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// The encryption algorithm to use to protected the exported key material.
+    /// The encryption algorithm used to protect the exported key material.
     /// </summary>
     public readonly struct KeyExportEncryptionAlgorithm : IEquatable<KeyExportEncryptionAlgorithm>
     {

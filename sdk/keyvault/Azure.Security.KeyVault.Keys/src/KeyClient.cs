@@ -1269,7 +1269,7 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, options, () => new ReleaseKeyResult(options?.Algorithm), cancellationToken, KeysPath, name, "/", version, "/release");
+                return _pipeline.SendRequest(RequestMethod.Post, options, () => new ReleaseKeyResult(), cancellationToken, KeysPath, name, "/", version, "/release");
             }
             catch (Exception e)
             {
@@ -1326,7 +1326,7 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, options, () => new ReleaseKeyResult(options?.Algorithm), cancellationToken, KeysPath, name, "/", version, "/release").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, options, () => new ReleaseKeyResult(), cancellationToken, KeysPath, name, "/", version, "/release").ConfigureAwait(false);
             }
             catch (Exception e)
             {

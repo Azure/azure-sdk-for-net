@@ -15,25 +15,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Initializes a new instance of the <see cref="ReleaseKeyResult"/> class.
         /// </summary>
-        /// <param name="algorithm">
-        /// The <see cref="KeyExportEncryptionAlgorithm"/> passed to <see cref="KeyClient.ReleaseKey(string, string, string, ReleaseKeyOptions, System.Threading.CancellationToken)"/>
-        /// or <see cref="KeyClient.ReleaseKeyAsync(string, string, string, ReleaseKeyOptions, System.Threading.CancellationToken)"/>.
-        /// </param>
-        internal ReleaseKeyResult(KeyExportEncryptionAlgorithm? algorithm)
+        internal ReleaseKeyResult()
         {
-            Algorithm = algorithm;
         }
 
         /// <summary>
         /// Gets a signed object containing the released key.
         /// </summary>
         public string Value { get; internal set; }
-
-        /// <summary>
-        /// Gets the <see cref="KeyExportEncryptionAlgorithm"/> passed to <see cref="KeyClient.ReleaseKey(string, string, string, ReleaseKeyOptions, System.Threading.CancellationToken)"/>
-        /// or <see cref="KeyClient.ReleaseKeyAsync(string, string, string, ReleaseKeyOptions, System.Threading.CancellationToken)"/>.
-        /// </summary>
-        public KeyExportEncryptionAlgorithm? Algorithm { get; private set; }
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {

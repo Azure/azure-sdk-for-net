@@ -210,7 +210,7 @@ namespace Azure.Security.KeyVault.Keys
         public static Azure.Security.KeyVault.Keys.KeyProperties KeyProperties(System.Uri id = null, System.Uri vaultUri = null, string name = null, string version = null, bool managed = false, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string recoveryLevel = null, int? recoverableDays = default(int?)) { throw null; }
         public static Azure.Security.KeyVault.Keys.KeyVaultKey KeyVaultKey(Azure.Security.KeyVault.Keys.KeyProperties properties, Azure.Security.KeyVault.Keys.JsonWebKey key) { throw null; }
         public static Azure.Security.KeyVault.Keys.RandomBytes RandomBytes(byte[] value) { throw null; }
-        public static Azure.Security.KeyVault.Keys.ReleaseKeyResult ReleaseKeyResult(string value, Azure.Security.KeyVault.Keys.KeyExportEncryptionAlgorithm? algorithm) { throw null; }
+        public static Azure.Security.KeyVault.Keys.ReleaseKeyResult ReleaseKeyResult(string value) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KeyOperation : System.IEquatable<Azure.Security.KeyVault.Keys.KeyOperation>
@@ -338,7 +338,6 @@ namespace Azure.Security.KeyVault.Keys
     public partial class ReleaseKeyResult
     {
         internal ReleaseKeyResult() { }
-        public Azure.Security.KeyVault.Keys.KeyExportEncryptionAlgorithm? Algorithm { get { throw null; } }
         public string Value { get { throw null; } }
     }
 }
