@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class VirtualMachineTestBase : ComputeTestBase
     {
         protected ResourceGroup _resourceGroup;
-        private GenericResourceContainer _genericResourceContainer;
+        protected GenericResourceContainer _genericResourceContainer;
 
         public VirtualMachineTestBase(bool isAsync) : base(isAsync)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return _resourceGroup.GetVirtualMachines();
         }
 
-        private async Task<GenericResource> CreateVirtualNetwork()
+        protected async Task<GenericResource> CreateVirtualNetwork()
         {
             var vnetName = Recording.GenerateAssetName("testVNet-");
             var subnetName = Recording.GenerateAssetName("testSubnet-");
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return await _genericResourceContainer.CreateOrUpdateAsync(vnetId, input);
         }
 
-        private ResourceGroupResourceIdentifier GetSubnetId(GenericResource vnet)
+        protected ResourceGroupResourceIdentifier GetSubnetId(GenericResource vnet)
         {
             var properties = vnet.Data.Properties as IDictionary<string, object>;
             var subnets = properties["subnets"] as IEnumerable<object>;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return await _genericResourceContainer.CreateOrUpdateAsync(nicId, input);
         }
 
-        protected async Task<GenericResource> CreateBasicDependenciesOfVirtualMachine()
+        protected async Task<GenericResource> CreateBasicDependenciesOfVirtualMachineAsync()
         {
             var vnet = await CreateVirtualNetwork();
             //var subnet = await CreateSubnet(vnet.Id as ResourceGroupResourceIdentifier);

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Tests
         private async Task<VirtualMachine> CreateVirtualMachineAsync(string vmName)
         {
             var container = await GetVirtualMachineContainerAsync();
-            var nic = await CreateBasicDependenciesOfVirtualMachine();
+            var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = VirtualMachineHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             return await container.CreateOrUpdateAsync(vmName, input);
         }
