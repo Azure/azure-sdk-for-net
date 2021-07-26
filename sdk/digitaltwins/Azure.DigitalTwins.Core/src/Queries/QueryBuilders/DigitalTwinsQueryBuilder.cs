@@ -68,11 +68,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-<<<<<<< HEAD
-        /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the Digital Twins query language. Same functionality as select
-=======
-        /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the ADT query language. Same functionality as <see cref="Select(params string[])"/>
->>>>>>> f103109dcd49792c7f630e7599016c66b325f29a
+        /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the ADT query language. Same functionality as select
         /// but inserts TOP() into the query structure as well as well as specific properties to select.
         /// </summary>
         /// <param name="count">The argument for TOP(), i.e. the number of instances to return.</param>
@@ -142,13 +138,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Adds the FROM clause and its argument to the query via the Clauses component.
         /// </summary>
-<<<<<<< HEAD
         /// <param name="collection">The collection being queried from.</param>
         /// <returns>Digital Twins query a from clause.</returns>
-=======
-        /// <param name="collection">Collection that can be used as query source.</param>
-        /// <returns> ADT query a from clause. </returns>
->>>>>>> f103109dcd49792c7f630e7599016c66b325f29a
         public DigitalTwinsQueryBuilder From(AdtCollection collection)
         {
             _fromClause = new FromClause(collection);
@@ -159,13 +150,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Adds the FROM clause, its argument, and an alias for its argument into the query.
         /// </summary>
         /// <param name="collection">The collection being queried from.</param>
-<<<<<<< HEAD
         /// <param name="alias">The alias being assigned to the collection being queried from.</param>
         /// <returns>Digital Twins query with a from clause.</returns>
-=======
-        /// <param name="alias">Collection alias.</param>
-        /// <returns> ADT query with a from clause. </returns>
->>>>>>> f103109dcd49792c7f630e7599016c66b325f29a
         public DigitalTwinsQueryBuilder From(AdtCollection collection, string alias)
         {
             _fromClause = new FromClause(collection, alias);

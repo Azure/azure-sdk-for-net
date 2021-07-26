@@ -290,8 +290,9 @@ In addition to passing strings as a query parameter, it is possible to pass in a
 // fluent-style query construction that makes it easier to write queries.
 AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilder = client.QueryAsync<BasicDigitalTwin>(
     new DigitalTwinsQueryBuilder()
-        .Select("*")
-        .From(AdtCollection.DigitalTwins));
+        .SelectAll()
+        .From(AdtCollection.DigitalTwins)
+        .Build());
 ```
 
 ### Build ADT Queries
@@ -359,7 +360,7 @@ DigitalTwinsQueryBuilder logicalOps_MultipleOr = new DigitalTwinsQueryBuilder()
         .Or()
         .IsOfModel("dtmi:example:room;1", true)
         .Or()
-        .IsOfType("Temperature", AdtDataType.AdtNumber))
+        .IsOfType("Temperature", AdtDataType.DigitalTwinsNumber))
     .Build();
 
 // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
@@ -369,7 +370,7 @@ DigitalTwinsQueryBuilder logicalOpsNested = new DigitalTwinsQueryBuilder()
     .From(AdtCollection.DigitalTwins)
     .Where(q => q
         .Parenthetical(q => q
-            .IsOfType("Humidity", AdtDataType.AdtNumber)
+            .IsOfType("Humidity", AdtDataType.DigitalTwinsNumber)
             .Or()
             .IsDefined("Humidity"))
     .And()
@@ -392,19 +393,19 @@ DigitalTwinsQueryBuilder subjectiveLogicalOps = new DigitalTwinsQueryBuilder()
         .Or()
         .IsOfModel("dtmi:example:room;1", true)
         .And()
-        .IsOfType("Temperature", AdtDataType.AdtNumber))
+        .IsOfType("Temperature", AdtDataType.DigitalTwinsNumber))
     .Build();
 
 DigitalTwinsQueryBuilder objectiveLogicalOps = new DigitalTwinsQueryBuilder()
     .SelectAll()
     .From(AdtCollection.DigitalTwins)
     .Where(q => q
-     .Parenthetical(q => q
-        .Compare("Temperature", QueryComparisonOperator.Equal, 50)
-        .Or()
-        .IsOfModel("dtmi:example:room;1", true))
+        .Parenthetical(q => q
+            .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+            .Or()
+            .IsOfModel("dtmi:example:room;1", true))
     .And()
-    .IsOfType("Temperature", AdtDataType.AdtNumber))
+    .IsOfType("Temperature", AdtDataType.DigitalTwinsNumber))
     .Build();
 ```
 

@@ -186,11 +186,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     }
     public enum AdtDataType
     {
-        AdtBool = 0,
-        AdtNumber = 1,
-        AdtString = 2,
-        AdtPrimitive = 3,
-        AdtObject = 4,
+        DigitalTwinsBool = 0,
+        DigitalTwinsNumber = 1,
+        DigitalTwinsString = 2,
+        DigitalTwinsPrimative = 3,
+        DigitalTwinsObject = 4,
     }
     public partial class DigitalTwinsQueryBuilder
     {
