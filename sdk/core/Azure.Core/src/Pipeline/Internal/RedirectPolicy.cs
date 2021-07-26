@@ -11,7 +11,9 @@ namespace Azure.Core.Pipeline
     {
         private readonly int _maxAutomaticRedirections;
 
-        public RedirectPolicy()
+        public static RedirectPolicy Shared { get; } = new RedirectPolicy();
+
+        private RedirectPolicy()
         {
             _maxAutomaticRedirections = 50;
         }
@@ -30,8 +32,8 @@ namespace Azure.Core.Pipeline
             uint redirectCount = 0;
             Uri? redirectUri;
 
-            var request = message.Request;
-            var response = message.Response;
+            Request request = message.Request;
+            Response response = message.Response;
 
             while ((redirectUri = GetUriForRedirect(request, message.Response)) != null)
             {
@@ -43,7 +45,7 @@ namespace Azure.Core.Pipeline
                     // then just return the 3xx response.
                     if (AzureCoreEventSource.Singleton.IsEnabled())
                     {
-                        AzureCoreEventSource.Singleton.RequestRedirect(request.ClientRequestId, request.Uri.ToString(), redirectUri.ToString(), response.Status);
+                        AzureCoreEventSource.Singleton.RequestRedirectCountExceeded(request.ClientRequestId, request.Uri.ToString(), redirectUri.ToString());
                     }
 
                     break;
@@ -127,7 +129,7 @@ namespace Azure.Core.Pipeline
             {
                 if (AzureCoreEventSource.Singleton.IsEnabled())
                 {
-                    AzureCoreEventSource.Singleton.RequestRedirectBlocked(request.ClientRequestId, requestUri.ToString(), requestUri.ToString());
+                    AzureCoreEventSource.Singleton.RequestRedirectBlocked(request.ClientRequestId, requestUri.ToString(), location.ToString());
                 }
 
                 return null;

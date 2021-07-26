@@ -624,6 +624,61 @@ namespace Azure.Core.Tests
             Assert.AreEqual(formData.Current.ContentDisposition, "form-data; name=LastName; filename=file_name.txt");
         }
 
+        [Test]
+        public async Task HandlesRedirects()
+        {
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            Uri testServerAddress = null;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    if (context.Request.Path.ToString().Contains("/redirected"))
+                    {
+                        context.Response.StatusCode = 200;
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 300;
+                        context.Response.Headers.Add("Location", testServerAddress + "/redirected");
+                    }
+                    return Task.CompletedTask;
+                });
+
+            testServerAddress = testServer.Address;
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            using Response response = await ExecuteRequest(request, httpPipeline);
+            Assert.AreEqual(response.Status, 200);
+        }
+
+        [Test]
+        public async Task StopsOnMaxRedirects()
+        {
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+            Uri testServerAddress = null;
+            int count = 0;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    Interlocked.Increment(ref count);
+                    context.Response.StatusCode = 300;
+                    context.Response.Headers.Add("Location", testServerAddress + "/redirected");
+                });
+
+            testServerAddress = testServer.Address;
+
+            using Request request = httpPipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+
+            using Response response = await ExecuteRequest(request, httpPipeline);
+            Assert.AreEqual(300, response.Status);
+            Assert.AreEqual(51, count);
+        }
+
         private class TestOptions : ClientOptions
         {
         }

@@ -14,6 +14,9 @@ namespace Azure.Core.Diagnostics
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
         private const int RequestContentTextEvent = 17;
+        private const int RequestRedirectEvent = 20;
+        private const int RequestRedirectBlockedEvent = 21;
+        private const int RequestRedirectCountExceededEvent = 22;
         private const int ResponseEvent = 5;
         private const int ResponseContentEvent = 6;
         private const int ResponseDelayEvent = 7;
@@ -27,9 +30,6 @@ namespace Azure.Core.Diagnostics
         private const int ErrorResponseContentTextBlockEvent = 16;
         private const int RequestRetryingEvent = 10;
         private const int ExceptionResponseEvent = 18;
-        private const int RequestRedirectEvent = 19;
-        private const int RequestRedirectBlockedEvent = 20;
-        private const int RequestRedirectCountExceededEvent = 21;
 
         private AzureCoreEventSource() : base(EventSourceName) { }
 
