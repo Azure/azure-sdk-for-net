@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.AzureStackHCI.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,23 +20,27 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
     /// <summary>
     /// Cluster details to update.
     /// </summary>
-    public partial class ClusterUpdate
+    [Rest.Serialization.JsonTransformation]
+    public partial class ClusterPatch
     {
         /// <summary>
-        /// Initializes a new instance of the ClusterUpdate class.
+        /// Initializes a new instance of the ClusterPatch class.
         /// </summary>
-        public ClusterUpdate()
+        public ClusterPatch()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ClusterUpdate class.
+        /// Initializes a new instance of the ClusterPatch class.
         /// </summary>
         /// <param name="tags">Resource tags.</param>
-        public ClusterUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="cloudManagementEndpoint">Endpoint configured for
+        /// management from the Azure portal</param>
+        public ClusterPatch(IDictionary<string, string> tags = default(IDictionary<string, string>), string cloudManagementEndpoint = default(string))
         {
             Tags = tags;
+            CloudManagementEndpoint = cloudManagementEndpoint;
             CustomInit();
         }
 
@@ -48,6 +54,13 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets endpoint configured for management from the Azure
+        /// portal
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.cloudManagementEndpoint")]
+        public string CloudManagementEndpoint { get; set; }
 
     }
 }

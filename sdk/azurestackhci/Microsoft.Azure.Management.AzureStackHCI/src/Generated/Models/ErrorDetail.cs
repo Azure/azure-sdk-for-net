@@ -16,27 +16,27 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
     using System.Linq;
 
     /// <summary>
-    /// The error object.
+    /// The error detail.
     /// </summary>
-    public partial class ErrorResponseError
+    public partial class ErrorDetail
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponseError class.
+        /// Initializes a new instance of the ErrorDetail class.
         /// </summary>
-        public ErrorResponseError()
+        public ErrorDetail()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponseError class.
+        /// Initializes a new instance of the ErrorDetail class.
         /// </summary>
         /// <param name="code">The error code.</param>
         /// <param name="message">The error message.</param>
         /// <param name="target">The error target.</param>
         /// <param name="details">The error details.</param>
         /// <param name="additionalInfo">The error additional info.</param>
-        public ErrorResponseError(string code = default(string), string message = default(string), string target = default(string), IList<ErrorResponse> details = default(IList<ErrorResponse>), IList<ErrorAdditionalInfo> additionalInfo = default(IList<ErrorAdditionalInfo>))
+        public ErrorDetail(string code = default(string), string message = default(string), string target = default(string), IList<ErrorDetail> details = default(IList<ErrorDetail>), IList<ErrorAdditionalInfo> additionalInfo = default(IList<ErrorAdditionalInfo>))
         {
             Code = code;
             Message = message;
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.AzureStackHCI.Models
         /// Gets the error details.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
-        public IList<ErrorResponse> Details { get; private set; }
+        public IList<ErrorDetail> Details { get; private set; }
 
         /// <summary>
         /// Gets the error additional info.
