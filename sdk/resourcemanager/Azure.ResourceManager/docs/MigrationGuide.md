@@ -67,7 +67,7 @@ string rgName = "QuickStartRG";
 ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName)
 ```
 
-In the new libraries, the Resource Group is created trought a container that came from the subscription. Also, public locations are provided trought the `Location` object, but it can be specified as a string as well. Additionaly, there's no need to create a `ResourceGroup` object to send parameters when creating a resource group, since tags can be added directly from the resource group variable and the location is specified in the `Construct()` method.
+In the new libraries, the Resource Group is created trought a container that came from the subscription. Also, public locations are provided trought the `Location` object, but it can be specified as a string as well. Additionally, there's no need to create a `ResourceGroup` object to send parameters when creating a resource group, since tags can be added directly from the resource group variable and the location is specified in the `Construct()` method.
 
 ### Create an Availability Set
 #### Old
@@ -149,7 +149,7 @@ var vnet = await resourceGroup.GetVirtualNetworks().Construct("10.0.0.0/16").Cre
 var subnet = await vnet.GetSubnets().Construct("10.0.0.0/24").CreateOrUpdateAsync(subnetName);
 ```
 
-The main difference here is that a virtual network object is no longer needed to create a virtual network. One similarity is that subnets are defined inside virtual networks, however, with the new sdk you can get a subnets container using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
+The main difference here is that a virtual network object is no longer needed to create a virtual network. One similarity is that subnets are defined inside virtual networks, however, with the new SDK you can get a subnets container using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
 
 ### Create a Security Group
 #### Old
@@ -283,5 +283,5 @@ Console.WriteLine("VM ID: " + vm.Id);
 
 Finally, as it can be seen here, with the new SDK a single virtual machine can be created in just a single line of code. No need to create a `VirtualMachine` object and set it up.
 
-## Next setps
+## Next steps
 Check out [more examples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
