@@ -71,7 +71,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the ADT query language. Same functionality as <see cref="Select(params string[])"/>
         /// but inserts TOP() into the query structure as well as well as specific properties to select.
         /// </summary>
-        /// <param name="count">The argument for TOP(), ie the number of instances to return.</param>
+        /// <param name="count">The argument for TOP(), i.e. the number of instances to return.</param>
         /// <param name="args">The arguments that can be optionally passed with top (e.g., property name).</param>
         /// <returns> Query that contains a select clause. </returns>
         public DigitalTwinsQueryBuilder SelectTop(int count, params string[] args)
