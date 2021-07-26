@@ -28,43 +28,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 case SendToAll sendToAll:
                     await _service.Client.SendToAllAsync(RequestContent.Create(sendToAll.Message),
-                        Utilities.GetContentType(sendToAll.DataType), sendToAll.Excluded, cancellationToken).ConfigureAwait(false);
+                        Utilities.GetContentType(sendToAll.DataType), sendToAll.Excluded).ConfigureAwait(false);
                     break;
                 case SendToConnection sendToConnection:
                     await _service.Client.SendToConnectionAsync(sendToConnection.ConnectionId, RequestContent.Create(sendToConnection.Message),
-                        Utilities.GetContentType(sendToConnection.DataType), cancellationToken).ConfigureAwait(false);
+                        Utilities.GetContentType(sendToConnection.DataType)).ConfigureAwait(false);
                     break;
                 case SendToUser sendToUser:
                     await _service.Client.SendToUserAsync(sendToUser.UserId, RequestContent.Create(sendToUser.Message),
-                        Utilities.GetContentType(sendToUser.DataType), cancellationToken).ConfigureAwait(false);
+                        Utilities.GetContentType(sendToUser.DataType)).ConfigureAwait(false);
                     break;
                 case SendToGroup sendToGroup:
                     await _service.Client.SendToGroupAsync(sendToGroup.Group, RequestContent.Create(sendToGroup.Message),
-                        Utilities.GetContentType(sendToGroup.DataType), sendToGroup.Excluded, cancellationToken).ConfigureAwait(false);
+                        Utilities.GetContentType(sendToGroup.DataType), sendToGroup.Excluded).ConfigureAwait(false);
                     break;
                 case AddUserToGroup addUserToGroup:
-                    await _service.Client.AddUserToGroupAsync(addUserToGroup.Group, addUserToGroup.UserId, cancellationToken).ConfigureAwait(false);
+                    await _service.Client.AddUserToGroupAsync(addUserToGroup.Group, addUserToGroup.UserId).ConfigureAwait(false);
                     break;
                 case RemoveUserFromGroup removeUserFromGroup:
-                    await _service.Client.RemoveUserFromGroupAsync(removeUserFromGroup.Group, removeUserFromGroup.UserId, cancellationToken).ConfigureAwait(false);
+                    await _service.Client.RemoveUserFromGroupAsync(removeUserFromGroup.Group, removeUserFromGroup.UserId).ConfigureAwait(false);
                     break;
                 case RemoveUserFromAllGroups removeUserFromAllGroups:
-                    await _service.Client.RemoveUserFromAllGroupsAsync(removeUserFromAllGroups.UserId, cancellationToken).ConfigureAwait(false);
+                    await _service.Client.RemoveUserFromAllGroupsAsync(removeUserFromAllGroups.UserId).ConfigureAwait(false);
                     break;
                 case AddConnectionToGroup addConnectionToGroup:
-                    await _service.Client.AddConnectionToGroupAsync(addConnectionToGroup.Group, addConnectionToGroup.ConnectionId, cancellationToken).ConfigureAwait(false);
+                    await _service.Client.AddConnectionToGroupAsync(addConnectionToGroup.Group, addConnectionToGroup.ConnectionId).ConfigureAwait(false);
                     break;
                 case RemoveConnectionFromGroup removeConnectionFromGroup:
-                    await _service.Client.RemoveConnectionFromGroupAsync(removeConnectionFromGroup.Group, removeConnectionFromGroup.ConnectionId, cancellationToken).ConfigureAwait(false);
+                    await _service.Client.RemoveConnectionFromGroupAsync(removeConnectionFromGroup.Group, removeConnectionFromGroup.ConnectionId).ConfigureAwait(false);
                     break;
                 case CloseClientConnection closeClientConnection:
-                    await _service.Client.CloseClientConnectionAsync(closeClientConnection.ConnectionId, closeClientConnection.Reason, cancellationToken).ConfigureAwait(false);
+                    await _service.Client.CloseConnectionAsync(closeClientConnection.ConnectionId, closeClientConnection.Reason).ConfigureAwait(false);
                     break;
                 case GrantGroupPermission grantGroupPermission:
-                    await _service.Client.GrantPermissionAsync(grantGroupPermission.Permission, grantGroupPermission.ConnectionId, grantGroupPermission.TargetName, cancellationToken).ConfigureAwait(false);
+                    await _service.Client.GrantPermissionAsync(grantGroupPermission.Permission, grantGroupPermission.ConnectionId, grantGroupPermission.TargetName).ConfigureAwait(false);
                     break;
                 case RevokeGroupPermission revokeGroupPermission:
-                    await _service.Client.RevokePermissionAsync(revokeGroupPermission.Permission, revokeGroupPermission.ConnectionId, revokeGroupPermission.TargetName, cancellationToken).ConfigureAwait(false);
+                    await _service.Client.RevokePermissionAsync(revokeGroupPermission.Permission, revokeGroupPermission.ConnectionId, revokeGroupPermission.TargetName).ConfigureAwait(false);
                     break;
                 default:
                     throw new ArgumentException("Not supported WebPubSubOperation");
