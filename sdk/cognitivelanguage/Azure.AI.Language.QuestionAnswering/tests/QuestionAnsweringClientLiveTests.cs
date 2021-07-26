@@ -80,10 +80,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         {
             QueryKnowledgeBaseOptions options = new(" ");
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>((AsyncTestDelegate)(async () =>
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await Client.QueryKnowledgeBaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
-            }));
+            });
 
             Assert.That(ex.Status, Is.EqualTo(400));
             Assert.That(ex.ErrorCode, Is.EqualTo("BadArgument"));

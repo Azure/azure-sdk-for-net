@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Language.QuestionAnswering.Models;
@@ -130,9 +131,54 @@ namespace Azure.AI.Language.QuestionAnswering
             }
         }
 
+        /// <summary>Answers the specified question using the text <paramref name="records"/>.</summary>
+        /// <param name="question">The question to answer.</param>
+        /// <param name="records">The text records to query.</param>
+        /// <param name="language">Optional language of the text <paramref name="records"/>.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual Task<Response<TextAnswers>> QueryTextAsync(string question, IEnumerable<string> records, string language = default, CancellationToken cancellationToken = default) =>
+            QueryTextAsync(QueryTextOptions.From(question, records, language), cancellationToken);
+
+        /// <summary>Answers the specified question using the text <paramref name="records"/>.</summary>
+        /// <param name="question">The question to answer.</param>
+        /// <param name="records">The text records to query.</param>
+        /// <param name="language">Optional language of the text <paramref name="records"/>.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual Response<TextAnswers> QueryText(string question, IEnumerable<string> records, string language = default, CancellationToken cancellationToken = default) =>
+            QueryText(QueryTextOptions.From(question, records, language), cancellationToken);
+
+        /// <summary>Answers the specified question using the text <paramref name="records"/>.</summary>
+        /// <param name="question">The question to answer.</param>
+        /// <param name="records">A collection of <see cref="TextRecord"/> to query.</param>
+        /// <param name="language">Optional language of the <paramref name="records"/>.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual Task<Response<TextAnswers>> QueryTextAsync(string question, IEnumerable<TextRecord> records, string language = default, CancellationToken cancellationToken = default) =>
+            QueryTextAsync(QueryTextOptions.From(question, records, language), cancellationToken);
+
+        /// <summary>Answers the specified question using the text <paramref name="records"/>.</summary>
+        /// <param name="question">The question to answer.</param>
+        /// <param name="records">A collection of <see cref="TextRecord"/> to query.</param>
+        /// <param name="language">Optional language of the <paramref name="records"/>.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual Response<TextAnswers> QueryText(string question, IEnumerable<TextRecord> records, string language = default, CancellationToken cancellationToken = default) =>
+            QueryText(QueryTextOptions.From(question, records, language), cancellationToken);
+
         /// <summary>Answers the specified question using the provided text in the body.</summary>
         /// <param name="options">The question to answer.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <returns><see cref="TextAnswers"/> containing answers to the <see cref="QueryTextOptions.Question"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual async Task<Response<TextAnswers>> QueryTextAsync(QueryTextOptions options, CancellationToken cancellationToken = default)
@@ -156,6 +202,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary>Answers the specified question using the provided text in the body.</summary>
         /// <param name="options">The question to answer.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <returns><see cref="TextAnswers"/> containing answers to the <see cref="QueryTextOptions.Question"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
         public virtual Response<TextAnswers> QueryText(QueryTextOptions options, CancellationToken cancellationToken = default)
