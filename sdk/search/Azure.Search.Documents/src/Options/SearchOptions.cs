@@ -14,6 +14,7 @@ namespace Azure.Search.Documents
     /// allow specifying filtering, sorting, faceting, paging, and other search
     /// query behaviors.
     /// </summary>
+    /// <seealso href="https://docs.microsoft.com/rest/api/searchservice/search-documents#query-parameters">Query Parameters.</seealso>
     [CodeGenModel("SearchRequest")]
     public partial class SearchOptions
     {
@@ -43,6 +44,7 @@ namespace Azure.Search.Documents
         /// use <see cref="SearchFilter.Create(FormattableString)"/> to help
         /// construct the filter expression.
         /// </summary>
+        /// <seealso href="https://docs.microsoft.com/azure/search/search-filters">Filters in Azure Cognitive Search</seealso>
         [CodeGenMember("filter")]
         public string Filter { get; set; }
 
@@ -157,6 +159,7 @@ namespace Azure.Search.Documents
         /// facet expression contains a field name, optionally followed by a
         /// comma-separated list of name:value pairs.
         /// </summary>
+        /// <seealso href="https://docs.microsoft.com/azure/search/search-filters-facets">How to build a facet filter in Azure Cognitive Search.</seealso>
         [CodeGenMember("facets")]
         public IList<string> Facets { get; internal set; } = new List<string>();
 
