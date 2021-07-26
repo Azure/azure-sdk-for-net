@@ -18,19 +18,19 @@ if ($ServiceDirectory -and ($ServiceDirectory -ne "*")) {
 
 if (-not (Test-Path env:TF_BUILD)) { $StrictMode = $true }
 
-nuget install SnippetGenerator -Source azure-sdk-tools@DevOps -PreRelease -OutputDirectory .
-$generatorAssembly = Resolve-Path -Path ".\SnippetGenerator*\tools\**\SnippetGenerator.dll"
+dotnet tool install Azure.Sdk.Tools.SnippetGenerator `
+-g --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v3/index.json" `
+--version 1.0.0-dev*
 
-if (Test-Path $generatorAssembly)
+try
 {
     if($StrictMode) {
-        Resolve-Path "$root" | %{ dotnet $generatorAssembly -b "$_" -sm}
+        Resolve-Path "$root" | %{ snippet-generator -b "$_" -sm}
     } else {
-        Resolve-Path "$root" | %{ dotnet $generatorAssembly -b "$_" }
+        Resolve-Path "$root" | %{ snippet-generator -b "$_" }
     }
-    git clean ".\SnippetGenerator*" -xfd
 }
-else
+catch
 {
     Write-Error "Could not find assembly at ${generatorAssembly}"
     exit 1
