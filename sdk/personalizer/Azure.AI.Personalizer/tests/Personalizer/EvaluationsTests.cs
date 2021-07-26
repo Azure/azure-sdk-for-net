@@ -21,8 +21,8 @@ namespace Azure.AI.Personalizer.Tests
             PersonalizerManagementClient client = GetPersonalizerManagementClient();
             List<PersonalizerEvaluation> evaluations = (List<PersonalizerEvaluation>)await client.GetPersonalizerEvaluationsAsync();
             Assert.True(evaluations.Count > 0);
-            Assert.AreEqual("Evaluation", evaluations[0].GetType().Name);
-            Assert.AreEqual("Azure.AI.Personalizer.Models.Evaluation", evaluations[0].GetType().FullName);
+            Assert.AreEqual("PersonalizerEvaluation", evaluations[0].GetType().Name);
+            Assert.AreEqual("Azure.AI.Personalizer.Models.PersonalizerEvaluation", evaluations[0].GetType().FullName);
             Assert.False(evaluations[0].Equals(evaluations[1]));
             var policyResult = evaluations[0].PolicyResults;
             Assert.AreEqual(1, policyResult.Count);

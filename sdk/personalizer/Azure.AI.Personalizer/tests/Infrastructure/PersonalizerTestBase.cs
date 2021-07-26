@@ -19,10 +19,7 @@ namespace Azure.AI.Personalizer.Tests
             var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
             var options = InstrumentClientOptions(new PersonalizerClientOptions());
             PersonalizerClient personalizerClient = new PersonalizerClient(TestEnvironment.Endpoint, credential, options);
-            personalizerClient.RankClient = InstrumentClient(personalizerClient.RankClient);
-            personalizerClient.EventsClient = InstrumentClient(personalizerClient.EventsClient);
-            personalizerClient.MultiSlotClient = InstrumentClient(personalizerClient.MultiSlotClient);
-            personalizerClient.MultiSlotEventsClient = InstrumentClient(personalizerClient.MultiSlotEventsClient);
+            personalizerClient = InstrumentClient(personalizerClient);
             return personalizerClient;
         }
 
@@ -31,11 +28,7 @@ namespace Azure.AI.Personalizer.Tests
             var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
             var options = InstrumentClientOptions(new PersonalizerClientOptions());
             PersonalizerManagementClient personalizerManagementClient = new PersonalizerManagementClient(TestEnvironment.Endpoint, credential, options);
-            personalizerManagementClient.LogClient = InstrumentClient(personalizerManagementClient.LogClient);
-            personalizerManagementClient.ModelClient = InstrumentClient(personalizerManagementClient.ModelClient);
-            personalizerManagementClient.PolicyClient = InstrumentClient(personalizerManagementClient.PolicyClient);
-            personalizerManagementClient.EvaluationsClient = InstrumentClient(personalizerManagementClient.EvaluationsClient);
-            personalizerManagementClient.ServiceConfigurationClient = InstrumentClient(personalizerManagementClient.ServiceConfigurationClient);
+            personalizerManagementClient = InstrumentClient(personalizerManagementClient);
             return personalizerManagementClient;
         }
     }

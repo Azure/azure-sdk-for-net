@@ -8,22 +8,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Personalizer.Models;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.Personalizer
 {
     /// <summary> The Personalizer service client for instance management; Evaluations, Configuration, Model, Policy and Logs. </summary>
     public class PersonalizerManagementClient
     {
-        /// <summary> The Log service client. </summary>
-        internal LogClient LogClient { get; set; }
-        /// <summary> The ServiceConfiguration service client. </summary>
-        internal ServiceConfigurationClient ServiceConfigurationClient { get; set; }
-        /// <summary> The Model service client. </summary>
-        internal ModelClient ModelClient { get; set; }
-        /// <summary> The Evaluations service client. </summary>
-        internal EvaluationsClient EvaluationsClient { get; set; }
-        /// <summary> The Policy service client. </summary>
-        internal PolicyClient PolicyClient { get; set; }
+        internal LogRestClient LogRestClient { get; set; }
+        internal ServiceConfigurationRestClient ServiceConfigurationRestClient { get; set; }
+        internal ModelRestClient ModelRestClient { get; set; }
+        internal EvaluationsRestClient EvaluationsRestClient { get; set; }
+        internal PolicyRestClient PolicyRestClient { get; set; }
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of Personalizer Client for mocking. </summary>
         protected PersonalizerManagementClient()
@@ -36,11 +34,25 @@ namespace Azure.AI.Personalizer
         /// <param name="options"> The options for configuring the client. </param>
         public PersonalizerManagementClient(Uri endpoint, TokenCredential credential, PersonalizerClientOptions options = null)
         {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+
+            options ??= new PersonalizerClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://cognitiveservices.azure.com/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
             string stringEndpoint = endpoint.ToString();
-            LogClient = new LogClient(stringEndpoint, credential, options);
-            ServiceConfigurationClient = new ServiceConfigurationClient(stringEndpoint, credential, options);
-            ModelClient = new ModelClient(stringEndpoint, credential, options);
-            PolicyClient = new PolicyClient(stringEndpoint, credential, options);
+            LogRestClient = new LogRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            ServiceConfigurationRestClient = new ServiceConfigurationRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            ModelRestClient = new ModelRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            EvaluationsRestClient = new EvaluationsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            PolicyRestClient = new PolicyRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
         }
 
         /// <summary> Initializes a new instance of PersonalizerClient. </summary>
@@ -49,39 +61,108 @@ namespace Azure.AI.Personalizer
         /// <param name="options"> The options for configuring the client. </param>
         public PersonalizerManagementClient(string endpoint, AzureKeyCredential credential, PersonalizerClientOptions options = null)
         {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+
+            options ??= new PersonalizerClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "Ocp-Apim-Subscription-Key"));
             string stringEndpoint = endpoint.ToString();
-            LogClient = new LogClient(stringEndpoint, credential, options);
-            ServiceConfigurationClient = new ServiceConfigurationClient(stringEndpoint, credential, options);
-            ModelClient = new ModelClient(stringEndpoint, credential, options);
-            PolicyClient = new PolicyClient(stringEndpoint, credential, options);
+            LogRestClient = new LogRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            ServiceConfigurationRestClient = new ServiceConfigurationRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            ModelRestClient = new ModelRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            EvaluationsRestClient = new EvaluationsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            PolicyRestClient = new PolicyRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+        }
+
+        /// <summary> Initializes a new instance of LogClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
+        internal PersonalizerManagementClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        {
+            string stringEndpoint = endpoint.ToString();
+            LogRestClient = new LogRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            ServiceConfigurationRestClient = new ServiceConfigurationRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            ModelRestClient = new ModelRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            EvaluationsRestClient = new EvaluationsRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            PolicyRestClient = new PolicyRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Delete all logs of Rank and Reward calls stored by Personalizer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeletePersonalizerLogsAsync(CancellationToken cancellationToken = default)
         {
-            return await LogClient.DeleteAsync(cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.DeletePersonalizerLogs");
+            scope.Start();
+            try
+            {
+                return await LogRestClient.DeleteAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete all logs of Rank and Reward calls stored by Personalizer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeletePersonalizerLogs(CancellationToken cancellationToken = default)
         {
-            return LogClient.Delete(cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.DeletePersonalizerLogs");
+            scope.Start();
+            try
+            {
+                return LogRestClient.Delete(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get properties of the Personalizer logs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PersonalizerLogProperties>> GetPersonalizerLogPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            return await LogClient.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerLogProperties");
+            scope.Start();
+            try
+            {
+                return await LogRestClient.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get properties of the Personalizer logs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PersonalizerLogProperties> GetPersonalizerLogProperties(CancellationToken cancellationToken = default)
         {
-            return LogClient.GetProperties(cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerLogProperties");
+            scope.Start();
+            try
+            {
+                return LogRestClient.GetProperties(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update the Personalizer service configuration. </summary>
@@ -89,7 +170,17 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PersonalizerServiceProperties >> UpdatePersonalizerConfigurationAsync(PersonalizerServiceProperties  config, CancellationToken cancellationToken = default)
         {
-            return await ServiceConfigurationClient.UpdateAsync(config, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.UpdatePersonalizerConfiguration");
+            scope.Start();
+            try
+            {
+                return await ServiceConfigurationRestClient.UpdateAsync(config, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update the Personalizer service configuration. </summary>
@@ -97,21 +188,51 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PersonalizerServiceProperties > UpdatePersonalizerConfiguration(PersonalizerServiceProperties  config, CancellationToken cancellationToken = default)
         {
-            return ServiceConfigurationClient.Update(config, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.UpdatePersonalizerConfiguration");
+            scope.Start();
+            try
+            {
+                return ServiceConfigurationRestClient.Update(config, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the Personalizer service configuration. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PersonalizerServiceProperties >> GetPersonalizerConfigurationAsync(CancellationToken cancellationToken = default)
         {
-            return await ServiceConfigurationClient.GetAsync(cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerConfiguration");
+            scope.Start();
+            try
+            {
+                return await ServiceConfigurationRestClient.GetAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the Personalizer service configuration. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PersonalizerServiceProperties > GetPersonalizerConfiguration(CancellationToken cancellationToken = default)
         {
-            return ServiceConfigurationClient.Get(cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerConfiguration");
+            scope.Start();
+            try
+            {
+                return ServiceConfigurationRestClient.Get(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Apply Learning Settings and model from a pre-existing Offline Evaluation, making them the current online Learning Settings and model and replacing the previous ones. </summary>
@@ -119,7 +240,17 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> ApplyPersonalizerEvaluationAsync(PersonalizerPolicyReferenceOptions body, CancellationToken cancellationToken = default)
         {
-            return await ServiceConfigurationClient.ApplyFromEvaluationAsync(body, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.ApplyPersonalizerEvaluation");
+            scope.Start();
+            try
+            {
+                return await ServiceConfigurationRestClient.ApplyFromEvaluationAsync(body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Apply Learning Settings and model from a pre-existing Offline Evaluation, making them the current online Learning Settings and model and replacing the previous ones. </summary>
@@ -127,63 +258,153 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response ApplyPersonalizerEvaluation(PersonalizerPolicyReferenceOptions body, CancellationToken cancellationToken = default)
         {
-            return ServiceConfigurationClient.ApplyFromEvaluation(body, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.ApplyPersonalizerEvaluation");
+            scope.Start();
+            try
+            {
+                return ServiceConfigurationRestClient.ApplyFromEvaluation(body, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the model file generated by Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Stream>> GetPersonalizerModelAsync(CancellationToken cancellationToken = default)
         {
-            return await ModelClient.GetAsync(cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerModel");
+            scope.Start();
+            try
+            {
+                return await ModelRestClient.GetAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the model file generated by Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Stream> GetPersonalizerModel(CancellationToken cancellationToken = default)
         {
-            return ModelClient.Get(cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerModel");
+            scope.Start();
+            try
+            {
+                return ModelRestClient.Get(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Resets the model file generated by Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> ResetPersonalizerModelAsync(CancellationToken cancellationToken = default)
         {
-            return await ModelClient.ResetAsync(cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.ResetPersonalizerModel");
+            scope.Start();
+            try
+            {
+                return await ModelRestClient.ResetAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Resets the model file generated by Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response ResetPersonalizerModel(CancellationToken cancellationToken = default)
         {
-            return ModelClient.Reset(cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.ResetPersonalizerModel");
+            scope.Start();
+            try
+            {
+                return ModelRestClient.Reset(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get properties of the model file generated by Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PersonalizerModelProperties>> GetPersonalizerModelPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            return await ModelClient.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerModelProperties");
+            scope.Start();
+            try
+            {
+                return await ModelRestClient.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get properties of the model file generated by Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PersonalizerModelProperties> GetPersonalizerModelProperties(CancellationToken cancellationToken = default)
         {
-            return ModelClient.GetProperties(cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerModelProperties");
+            scope.Start();
+            try
+            {
+                return ModelRestClient.GetProperties(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the Learning Settings currently used by the Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PersonalizerPolicyOptions>> GetPersonalizerPolicyAsync(CancellationToken cancellationToken = default)
         {
-            return await PolicyClient.GetAsync(cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerPolicy");
+            scope.Start();
+            try
+            {
+                return await PolicyRestClient.GetAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the Learning Settings currently used by the Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PersonalizerPolicyOptions> GetPersonalizerPolicy(CancellationToken cancellationToken = default)
         {
-            return PolicyClient.Get(cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerPolicy");
+            scope.Start();
+            try
+            {
+                return PolicyRestClient.Get(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update the Learning Settings that the Personalizer service will use to train models. </summary>
@@ -191,7 +412,17 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PersonalizerPolicyOptions>> UpdatePersonalizerPolicyAsync(PersonalizerPolicyOptions policy, CancellationToken cancellationToken = default)
         {
-            return await PolicyClient.UpdateAsync(policy, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.UpdatePersonalizerPolicy");
+            scope.Start();
+            try
+            {
+                return await PolicyRestClient.UpdateAsync(policy, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update the Learning Settings that the Personalizer service will use to train models. </summary>
@@ -199,21 +430,51 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PersonalizerPolicyOptions> UpdatePersonalizerPolicy(PersonalizerPolicyOptions policy, CancellationToken cancellationToken = default)
         {
-            return PolicyClient.Update(policy, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.UpdatePersonalizerPolicy");
+            scope.Start();
+            try
+            {
+                return PolicyRestClient.Update(policy, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Resets the learning settings of the Personalizer service to default. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PersonalizerPolicyOptions>> ResetPersonalizerPolicyAsync(CancellationToken cancellationToken = default)
         {
-            return await PolicyClient.ResetAsync(cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.ResetPersonalizerPolicy");
+            scope.Start();
+            try
+            {
+                return await PolicyRestClient.ResetAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Resets the learning settings of the Personalizer service to default. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PersonalizerPolicyOptions> ResetPersonalizerPolicy(CancellationToken cancellationToken = default)
         {
-            return PolicyClient.Reset(cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.ResetPersonalizerPolicy");
+            scope.Start();
+            try
+            {
+                return PolicyRestClient.Reset(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete the Offline Evaluation associated with the Id. </summary>
@@ -221,7 +482,17 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeletePersonalizerEvaluationAsync(string evaluationId, CancellationToken cancellationToken = default)
         {
-            return await EvaluationsClient.DeleteAsync(evaluationId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.DeletePersonalizerEvaluation");
+            scope.Start();
+            try
+            {
+                return await EvaluationsRestClient.DeleteAsync(evaluationId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete the Offline Evaluation associated with the Id. </summary>
@@ -229,7 +500,17 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeletePersonalizerEvaluation(string evaluationId, CancellationToken cancellationToken = default)
         {
-            return EvaluationsClient.Delete(evaluationId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.DeletePersonalizerEvaluation");
+            scope.Start();
+            try
+            {
+                return EvaluationsRestClient.Delete(evaluationId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the Offline Evaluation associated with the Id. </summary>
@@ -237,7 +518,17 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PersonalizerEvaluation>> GetPersonalizerEvaluationAsync(string evaluationId, CancellationToken cancellationToken = default)
         {
-            return await EvaluationsClient.GetAsync(evaluationId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerEvaluation");
+            scope.Start();
+            try
+            {
+                return await EvaluationsRestClient.GetAsync(evaluationId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the Offline Evaluation associated with the Id. </summary>
@@ -245,21 +536,51 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PersonalizerEvaluation> GetPersonalizerEvaluation(string evaluationId, CancellationToken cancellationToken = default)
         {
-            return EvaluationsClient.Get(evaluationId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerEvaluation");
+            scope.Start();
+            try
+            {
+                return EvaluationsRestClient.Get(evaluationId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List of all Offline Evaluations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IReadOnlyList<PersonalizerEvaluation>>> GetPersonalizerEvaluationsAsync(CancellationToken cancellationToken = default)
         {
-            return await EvaluationsClient.ListAsync(cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerEvaluations");
+            scope.Start();
+            try
+            {
+                return await EvaluationsRestClient.ListAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List of all Offline Evaluations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IReadOnlyList<PersonalizerEvaluation>> GetPersonalizerEvaluations(CancellationToken cancellationToken = default)
         {
-            return EvaluationsClient.List(cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerEvaluations");
+            scope.Start();
+            try
+            {
+                return EvaluationsRestClient.List(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Submit a new Offline Evaluation job. </summary>
@@ -267,7 +588,17 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PersonalizerEvaluation>> CreatePersonalizerEvaluationAsync(EvaluationContract evaluation, CancellationToken cancellationToken = default)
         {
-            return await EvaluationsClient.CreateAsync(evaluation, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.CreatePersonalizerEvaluation");
+            scope.Start();
+            try
+            {
+                return await EvaluationsRestClient.CreateAsync(evaluation, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Submit a new Offline Evaluation job. </summary>
@@ -275,7 +606,17 @@ namespace Azure.AI.Personalizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PersonalizerEvaluation> CreatePersonalizerEvaluation(EvaluationContract evaluation, CancellationToken cancellationToken = default)
         {
-            return EvaluationsClient.Create(evaluation, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.CreatePersonalizerEvaluation");
+            scope.Start();
+            try
+            {
+                return EvaluationsRestClient.Create(evaluation, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
