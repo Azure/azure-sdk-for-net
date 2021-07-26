@@ -70,6 +70,38 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// The number of lines to show from the tail of the container instance log. If
         /// not provided, all available logs are shown up to 4mb.
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// </return>
+        public async Task<AzureOperationResponse<Logs>> ListLogsWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, string containerName, int? tail = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return ListLogsWithHttpMessagesAsync(resourceGroupName, containerGroupName, containerName, tail: tail, timestamps: false, customHeaders: customHeaders, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the logs for a specified container instance.
+        /// </summary>
+        /// <remarks>
+        /// Get the logs for a specified container instance in a specified resource
+        /// group and container group.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='containerGroupName'>
+        /// The name of the container group.
+        /// </param>
+        /// <param name='containerName'>
+        /// The name of the container instance.
+        /// </param>
+        /// <param name='tail'>
+        /// The number of lines to show from the tail of the container instance log. If
+        /// not provided, all available logs are shown up to 4mb.
+        /// </param>
         /// <param name='timestamps'>
         /// If true, adds a timestamp at the beginning of every line of log output. If
         /// not provided, defaults to false.
@@ -178,7 +210,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
 
             if (customHeaders != null)
             {
-                foreach(var _header in customHeaders)
+                foreach (var _header in customHeaders)
                 {
                     if (_httpRequest.Headers.Contains(_header.Key))
                     {
@@ -216,7 +248,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody = Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex = new CloudException(_errorBody.Message);
@@ -395,7 +427,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
 
             if (customHeaders != null)
             {
-                foreach(var _header in customHeaders)
+                foreach (var _header in customHeaders)
                 {
                     if (_httpRequest.Headers.Contains(_header.Key))
                     {
@@ -407,11 +439,11 @@ namespace Microsoft.Azure.Management.ContainerInstance
 
             // Serialize Request
             string _requestContent = null;
-            if(containerExecRequest != null)
+            if (containerExecRequest != null)
             {
                 _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(containerExecRequest, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                _httpRequest.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
             // Set Credentials
             if (Client.Credentials != null)
@@ -439,7 +471,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody = Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex = new CloudException(_errorBody.Message);
@@ -610,7 +642,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
 
             if (customHeaders != null)
             {
-                foreach(var _header in customHeaders)
+                foreach (var _header in customHeaders)
                 {
                     if (_httpRequest.Headers.Contains(_header.Key))
                     {
@@ -648,7 +680,7 @@ namespace Microsoft.Azure.Management.ContainerInstance
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody = Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex = new CloudException(_errorBody.Message);
