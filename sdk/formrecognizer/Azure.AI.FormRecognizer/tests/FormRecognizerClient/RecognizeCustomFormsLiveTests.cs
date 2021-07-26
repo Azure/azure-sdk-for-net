@@ -589,7 +589,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/20961")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
         {
@@ -598,13 +598,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels);
 
-            var operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, invalidUri);
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, invalidUri));
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
-
-            Assert.AreEqual("2003", ex.ErrorCode);
-            Assert.True(operation.HasCompleted);
-            Assert.False(operation.HasValue);
+            Assert.AreEqual("2001", ex.ErrorCode);
         }
 
         [RecordedTest]

@@ -17,6 +17,11 @@ namespace Azure.AI.TextAnalytics
             Error = error != null ? Transforms.ConvertToError(error) : default;
         }
 
+        internal TextAnalyticsActionResult(DateTimeOffset completedOn)
+        {
+            CompletedOn = completedOn;
+        }
+
         /// <summary>
         /// Indicates the time at which the action was last updated on.
         /// </summary>

@@ -13,12 +13,12 @@ namespace Azure.Storage.Files.Shares.Models
     internal partial class ListFilesAndDirectoriesSegmentResponse
     {
         /// <summary> Initializes a new instance of ListFilesAndDirectoriesSegmentResponse. </summary>
-        /// <param name="serviceEndpoint"> . </param>
-        /// <param name="shareName"> . </param>
-        /// <param name="directoryPath"> . </param>
-        /// <param name="prefix"> . </param>
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="shareName"></param>
+        /// <param name="directoryPath"></param>
+        /// <param name="prefix"></param>
         /// <param name="segment"> Abstract for entries that can be listed from Directory. </param>
-        /// <param name="nextMarker"> . </param>
+        /// <param name="nextMarker"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="shareName"/>, <paramref name="directoryPath"/>, <paramref name="prefix"/>, <paramref name="segment"/>, or <paramref name="nextMarker"/> is null. </exception>
         internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string directoryPath, string prefix, FilesAndDirectoriesListSegment segment, string nextMarker)
         {
@@ -56,16 +56,17 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> Initializes a new instance of ListFilesAndDirectoriesSegmentResponse. </summary>
-        /// <param name="serviceEndpoint"> . </param>
-        /// <param name="shareName"> . </param>
-        /// <param name="shareSnapshot"> . </param>
-        /// <param name="directoryPath"> . </param>
-        /// <param name="prefix"> . </param>
-        /// <param name="marker"> . </param>
-        /// <param name="maxResults"> . </param>
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="shareName"></param>
+        /// <param name="shareSnapshot"></param>
+        /// <param name="directoryPath"></param>
+        /// <param name="prefix"></param>
+        /// <param name="marker"></param>
+        /// <param name="maxResults"></param>
         /// <param name="segment"> Abstract for entries that can be listed from Directory. </param>
-        /// <param name="nextMarker"> . </param>
-        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, string directoryPath, string prefix, string marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker)
+        /// <param name="nextMarker"></param>
+        /// <param name="directoryId"></param>
+        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, string directoryPath, string prefix, string marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker, string directoryId)
         {
             ServiceEndpoint = serviceEndpoint;
             ShareName = shareName;
@@ -76,6 +77,7 @@ namespace Azure.Storage.Files.Shares.Models
             MaxResults = maxResults;
             Segment = segment;
             NextMarker = nextMarker;
+            DirectoryId = directoryId;
         }
 
         public string ServiceEndpoint { get; }
@@ -88,5 +90,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Abstract for entries that can be listed from Directory. </summary>
         public FilesAndDirectoriesListSegment Segment { get; }
         public string NextMarker { get; }
+        public string DirectoryId { get; }
     }
 }

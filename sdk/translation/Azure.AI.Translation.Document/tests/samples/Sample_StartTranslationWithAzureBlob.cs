@@ -50,7 +50,6 @@ namespace Azure.AI.Translation.Document.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:StartTranslationWithAzureBlobAsync
             Uri storageEndpoint = new Uri(Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_ENDPOINT"));
             string storageAccountName = Environment.GetEnvironmentVariable("AZURE_STORAGE_ACCOUNT_NAME");
             string storageAccountKey = Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_KEY");
@@ -97,19 +96,17 @@ namespace Azure.AI.Translation.Document.Samples
             Console.WriteLine($"{operationResult.DocumentsFailed} failed");
             Console.WriteLine($"{operationResult.DocumentsSucceeded} succeeded");
 
-            await foreach (DocumentStatusResult document in operationResult.GetAllDocumentStatusesAsync())
+            await foreach (DocumentStatus document in operationResult.GetAllDocumentStatusesAsync())
             {
-                if (document.Status == TranslationStatus.Succeeded)
+                if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"Document at {document.SourceDocumentUri} was translated to {document.TranslatedTo} language.You can find translated document at {document.TranslatedDocumentUri}");
                 }
                 else
                 {
-                    Console.WriteLine($"Document ID: {document.DocumentId}, Error Code: {document.Error.ErrorCode}, Message: {document.Error.Message}");
+                    Console.WriteLine($"Document ID: {document.Id}, Error Code: {document.Error.ErrorCode}, Message: {document.Error.Message}");
                 }
             }
-
-            #endregion
         }
     }
 }

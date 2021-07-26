@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "https://seandevtest.queue.core.windows.net/test-queue-4073e30c-eade-accc-8c1a-fc9cd70bdf75",
@@ -61,7 +61,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seandevtest.queue.core.windows.net/?comp=list\u0026maxresults=1",
+      "RequestUri": "https://seandevtest.queue.core.windows.net/?comp=list&maxresults=1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -90,7 +90,7 @@
         "x-ms-request-id": "37c6ccc2-2003-0071-79d0-e37833000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seandevtest.queue.core.windows.net/\u0022\u003E\u003CMaxResults\u003E1\u003C/MaxResults\u003E\u003CQueues\u003E\u003CQueue\u003E\u003CName\u003E06ecc8095c76427a87e2cdacb0c246cb\u003C/Name\u003E\u003C/Queue\u003E\u003C/Queues\u003E\u003CNextMarker\u003E/seandevtest/0ce8503156a04835a8067df5df8894fc\u003C/NextMarker\u003E\u003C/EnumerationResults\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"https://seandevtest.queue.core.windows.net/\"><MaxResults>1</MaxResults><Queues><Queue><Name>06ecc8095c76427a87e2cdacb0c246cb</Name></Queue></Queues><NextMarker>/seandevtest/0ce8503156a04835a8067df5df8894fc</NextMarker></EnumerationResults>"
     },
     {
       "RequestUri": "https://seandevtest.queue.core.windows.net/test-queue-da8d9203-412f-c476-af10-e797b0b03e15",
@@ -155,6 +155,6 @@
   ],
   "Variables": {
     "RandomSeed": "716626463",
-    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttps://seandevtest.file.core.windows.net\nhttps://seandevtest.queue.core.windows.net\nhttps://seandevtest.table.core.windows.net\n\n\n\n\nhttps://seandevtest-secondary.blob.core.windows.net\nhttps://seandevtest-secondary.file.core.windows.net\nhttps://seandevtest-secondary.queue.core.windows.net\nhttps://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=https://seandevtest.queue.core.windows.net/;FileEndpoint=https://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=https://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Kg==;\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttps://seandevtest.file.core.windows.net\nhttps://seandevtest.queue.core.windows.net\nhttps://seandevtest.table.core.windows.net\n\n\n\n\nhttps://seandevtest-secondary.blob.core.windows.net\nhttps://seandevtest-secondary.file.core.windows.net\nhttps://seandevtest-secondary.queue.core.windows.net\nhttps://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=https://seandevtest.queue.core.windows.net/;FileEndpoint=https://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=https://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Kg==;\nseanscope1\n\n"
   }
 }

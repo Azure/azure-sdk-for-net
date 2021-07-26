@@ -9,7 +9,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The play audio result event.
     /// </summary>
-    [CodeGenModel("PlayAudioResultEvent", Usage = new string[] { "input, output" }, Formats = new string[] { "json" })]
+    [CodeGenModel("PlayAudioResultEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class PlayAudioResultEvent : CallingServerEventBase
     {
         /// <summary>

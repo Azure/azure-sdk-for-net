@@ -33,149 +33,149 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>end1</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>end2</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the relationship. </term>
+        ///     <term>The home ID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>label</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of relationship status. </term>
+        ///     <term>The enum of relationship status.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the relationship. </term>
+        ///     <term>The version of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasObjectId</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the object. </term>
+        ///     <term>The GUID of the object.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>uniqueAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The unique attributes of the object. </term>
+        ///     <term>The unique attributes of the object.</term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -201,149 +201,149 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>end1</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>end2</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the relationship. </term>
+        ///     <term>The home ID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>label</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of relationship status. </term>
+        ///     <term>The enum of relationship status.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the relationship. </term>
+        ///     <term>The version of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasObjectId</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the object. </term>
+        ///     <term>The GUID of the object.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>uniqueAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The unique attributes of the object. </term>
+        ///     <term>The unique attributes of the object.</term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Create(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response Create(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -366,9 +366,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="Create"/> and <see cref="CreateAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -380,7 +380,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -388,149 +388,149 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>end1</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>end2</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the relationship. </term>
+        ///     <term>The home ID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>label</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of relationship status. </term>
+        ///     <term>The enum of relationship status.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the relationship. </term>
+        ///     <term>The version of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasObjectId</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the object. </term>
+        ///     <term>The GUID of the object.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>uniqueAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The unique attributes of the object. </term>
+        ///     <term>The unique attributes of the object.</term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> UpdateAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateUpdateRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -556,149 +556,149 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>attributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
+        ///     <term>The attributes of the struct.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>end1</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>end2</term>
         ///     <term>AtlasObjectId</term>
         ///     <term></term>
-        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///     <term>Reference to an object-instance of an Atlas type - like entity.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the relationship. </term>
+        ///     <term>The GUID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>homeId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The home ID of the relationship. </term>
+        ///     <term>The home ID of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>label</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///     <term>Used to record the provenance of an instance of an entity or relationship</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of relationship status. </term>
+        ///     <term>The enum of relationship status.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the relationship. </term>
+        ///     <term>The version of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasObjectId</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the object. </term>
+        ///     <term>The GUID of the object.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>uniqueAttributes</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The unique attributes of the object. </term>
+        ///     <term>The unique attributes of the object.</term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Update(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response Update(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateUpdateRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -721,9 +721,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="Update"/> and <see cref="UpdateAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateUpdateRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateUpdateRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -735,30 +735,30 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string guid, bool? extendedInfo = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetAsync(string guid, bool? extendedInfo = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(guid, extendedInfo, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRequest(guid, extendedInfo, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Get");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -783,23 +783,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Get(string guid, bool? extendedInfo = null, RequestOptions requestOptions = null)
+        public virtual Response Get(string guid, bool? extendedInfo = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(guid, extendedInfo, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRequest(guid, extendedInfo, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Get");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -824,8 +824,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetRequest(string guid, bool? extendedInfo = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetRequest(string guid, bool? extendedInfo = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -846,23 +846,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a relationship between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteAsync(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -886,23 +886,23 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a relationship between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Delete(string guid, RequestOptions requestOptions = null)
+        public virtual Response Delete(string guid, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(guid, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(guid, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -926,8 +926,8 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(string guid, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteRequest(string guid, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

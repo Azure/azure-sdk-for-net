@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
@@ -102,6 +103,52 @@ namespace Azure.Core.Samples
             {
                 Console.WriteLine(secretProperties.Name);
             }
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task AsyncPageableSystemLinqAsyncToList()
+        {
+            // create a client
+            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+            #region Snippet:SystemLinqAsyncToList
+            AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
+
+            // ToListAsync would convert asynchronous enumerable into a List<T>
+            List<SecretProperties> secretList = await allSecretProperties.ToListAsync();
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task AsyncPageableSystemLinqAsyncTake()
+        {
+            // create a client
+            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+            #region Snippet:SystemLinqAsyncTake
+            AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
+
+            // Take would request enough pages to get 30 items
+            await foreach (var secretProperties in allSecretProperties.Take(30))
+            {
+                Console.WriteLine(secretProperties.Name);
+            }
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task AsyncPageableSystemLinqAsyncCount()
+        {
+            // create a client
+            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+            #region Snippet:SystemLinqAsyncCount
+            // DANGER! DO NOT COPY: CountAsync as used here fetches all the secrets locally to count them.
+            int expensiveSecretCount = await client.GetPropertiesOfSecretsAsync().CountAsync();
             #endregion
         }
 

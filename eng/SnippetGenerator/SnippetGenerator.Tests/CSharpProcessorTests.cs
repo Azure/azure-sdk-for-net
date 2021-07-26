@@ -1,26 +1,28 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NUnit.Framework;
-using SnippetGenerator;
 
 namespace SnippetGenerator.Tests
 {
     public class Tests
     {
         private const string Processed = "processed";
+        private const string ProcessedAgain = "processed again";
 
         [Test]
         [TestCaseSource(nameof(CodeInputs))]
-        public void CSharpProcsesorFindsCodeXMLDocs(string code, string expected)
+        public async Task CSharpProcsesorFindsCodeXMLDocs(string code, string expected)
         {
-            var actual = CSharpProcessor.Process(code, SnippetProvider);
+            var actual = await CSharpProcessor.ProcessAsync(code, SnippetProvider);
             Assert.AreEqual(expected, actual);
 
-            var reProcessed = CSharpProcessor.Process(actual, SnippetProvider);
-            Assert.AreEqual(expected, reProcessed);
+            var reProcessed = await CSharpProcessor.ProcessAsync(actual, SnippetProvider2);
+            Assert.AreEqual(expected.Replace(Processed, ProcessedAgain), reProcessed);
         }
 
-        private string SnippetProvider(string s) => Processed;
+        private ValueTask<string> SnippetProvider(string s) => new(Processed);
+        private ValueTask<string> SnippetProvider2(string s) => new(ProcessedAgain);
 
         public static IEnumerable<object[]> CodeInputs()
         {
@@ -31,7 +33,7 @@ namespace SnippetGenerator.Tests
                 "    foo" + Environment.NewLine +
                 "        {",
                 @"    /// </remarks>" + Environment.NewLine +
-                @"    /// <code snippet=""Snippet:A"">" + Environment.NewLine +
+                @"    /// <code snippet=""Snippet:A"" language=""csharp"">" + Environment.NewLine +
                 $"    /// {Processed} </code>" + Environment.NewLine +
                 "    foo" + Environment.NewLine +
                 "        {"
@@ -40,7 +42,7 @@ namespace SnippetGenerator.Tests
             yield return new[]
             {
                 @"/// <code snippet=""Snippet:B""></code>",
-                @"/// <code snippet=""Snippet:B"">" + Environment.NewLine +
+                @"/// <code snippet=""Snippet:B"" language=""csharp"">" + Environment.NewLine +
                 $"/// {Processed} </code>"
             };
 
@@ -50,7 +52,7 @@ namespace SnippetGenerator.Tests
                 @"    /// <code snippet=""Snippet:C""></code>" + Environment.NewLine +
                 "     foo",
                 @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
-                @"    /// <code snippet=""Snippet:C"">" + Environment.NewLine +
+                @"    /// <code snippet=""Snippet:C"" language=""csharp"">" + Environment.NewLine +
                 $"    /// {Processed} </code>" + Environment.NewLine +
                 "     foo"
             };
@@ -62,11 +64,19 @@ namespace SnippetGenerator.Tests
                 "     foo",
                 @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
                 @"    /// <example snippet=""Snippet:Example"">" + Environment.NewLine +
-                @"    /// <code>" + Environment.NewLine +
+                @"    /// <code language=""csharp"">" + Environment.NewLine +
                 $"    /// {Processed} </code>" + Environment.NewLine +
                 @"    /// </example>" + Environment.NewLine +
                 "     foo"
             };
+
+            yield return new[]
+            {
+                @"/// <code snippet=""Snippet:AcceptsAnyTagSuffix"" any string here></code>",
+                @"/// <code snippet=""Snippet:AcceptsAnyTagSuffix"" language=""csharp"">" + Environment.NewLine +
+                $"/// {Processed} </code>"
+            };
+
         }
     }
 }

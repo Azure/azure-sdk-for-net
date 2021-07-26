@@ -68,27 +68,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="imageFormats"> List of image formats to be filtered. </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListAsync(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> ListAsync(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.List");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -124,27 +123,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="imageFormats"> List of image formats to be filtered. </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response List(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        public virtual Response List(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.List");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -180,12 +178,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="imageFormats"> List of image formats to be filtered. </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateListRequest(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateListRequest(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -246,192 +243,184 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Farmer ID. </term>
+        ///     <term>Farmer ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>boundaryId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the boundary object for which satellite data is being fetched. </term>
+        ///     <term>The id of the boundary object for which satellite data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>startDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term>Yes</term>
-        ///     <term> Start Date. </term>
+        ///     <term>Start Date.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term>Yes</term>
-        ///     <term> End Date. </term>
+        ///     <term>End Date.</term>
         ///   </item>
         ///   <item>
         ///     <term>provider</term>
         ///     <term>&quot;Microsoft&quot;</term>
         ///     <term></term>
-        ///     <term> Provider of satellite data. </term>
+        ///     <term>Provider of satellite data.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>&quot;Sentinel_2_L2A&quot;</term>
         ///     <term></term>
-        ///     <term> Source of satellite data. </term>
+        ///     <term>Source of satellite data.</term>
         ///   </item>
         ///   <item>
         ///     <term>data</term>
         ///     <term>SatelliteData</term>
         ///     <term></term>
-        ///     <term> Data Model for SatelliteIngestionJobRequest. </term>
+        ///     <term>Data Model for SatelliteIngestionJobRequest.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>SatelliteData</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>imageNames</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> List of ImageNames. </term>
+        ///     <term>List of ImageNames.</term>
         ///   </item>
         ///   <item>
         ///     <term>imageFormats</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> List of ImageFormats. Available value: TIF. </term>
+        ///     <term>List of ImageFormats. Available value: TIF.</term>
         ///   </item>
         ///   <item>
         ///     <term>imageResolutions</term>
         ///     <term>number[]</term>
         ///     <term></term>
-        ///     <term> List of ImageResolutions in meters. Available values: 10, 20, 60. </term>
+        ///     <term>List of ImageResolutions in meters. Available values: 10, 20, 60.</term>
         ///   </item>
         /// </list>
         /// </remarks>
         /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateSatelliteDataIngestionJobAsync(string jobId, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Operation<BinaryData>> CreateSatelliteDataIngestionJobAsync(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateSatelliteDataIngestionJobRequest(jobId, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateSatelliteDataIngestionJobRequest(jobId, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.CreateSatelliteDataIngestionJob");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "ScenesClient.CreateSatelliteDataIngestionJob");
                         default:
                             throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "ScenesClient.CreateSatelliteDataIngestionJob");
                 }
             }
             catch (Exception e)
@@ -445,192 +434,184 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Farmer ID. </term>
+        ///     <term>Farmer ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>boundaryId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the boundary object for which satellite data is being fetched. </term>
+        ///     <term>The id of the boundary object for which satellite data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>startDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term>Yes</term>
-        ///     <term> Start Date. </term>
+        ///     <term>Start Date.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term>Yes</term>
-        ///     <term> End Date. </term>
+        ///     <term>End Date.</term>
         ///   </item>
         ///   <item>
         ///     <term>provider</term>
         ///     <term>&quot;Microsoft&quot;</term>
         ///     <term></term>
-        ///     <term> Provider of satellite data. </term>
+        ///     <term>Provider of satellite data.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>&quot;Sentinel_2_L2A&quot;</term>
         ///     <term></term>
-        ///     <term> Source of satellite data. </term>
+        ///     <term>Source of satellite data.</term>
         ///   </item>
         ///   <item>
         ///     <term>data</term>
         ///     <term>SatelliteData</term>
         ///     <term></term>
-        ///     <term> Data Model for SatelliteIngestionJobRequest. </term>
+        ///     <term>Data Model for SatelliteIngestionJobRequest.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>SatelliteData</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>imageNames</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> List of ImageNames. </term>
+        ///     <term>List of ImageNames.</term>
         ///   </item>
         ///   <item>
         ///     <term>imageFormats</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> List of ImageFormats. Available value: TIF. </term>
+        ///     <term>List of ImageFormats. Available value: TIF.</term>
         ///   </item>
         ///   <item>
         ///     <term>imageResolutions</term>
         ///     <term>number[]</term>
         ///     <term></term>
-        ///     <term> List of ImageResolutions in meters. Available values: 10, 20, 60. </term>
+        ///     <term>List of ImageResolutions in meters. Available values: 10, 20, 60.</term>
         ///   </item>
         /// </list>
         /// </remarks>
         /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateSatelliteDataIngestionJob(string jobId, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Operation<BinaryData> CreateSatelliteDataIngestionJob(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateSatelliteDataIngestionJobRequest(jobId, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateSatelliteDataIngestionJobRequest(jobId, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.CreateSatelliteDataIngestionJob");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "ScenesClient.CreateSatelliteDataIngestionJob");
                         default:
                             throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "ScenesClient.CreateSatelliteDataIngestionJob");
                 }
             }
             catch (Exception e)
@@ -642,9 +623,9 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Create Request for <see cref="CreateSatelliteDataIngestionJob"/> and <see cref="CreateSatelliteDataIngestionJobAsync"/> operations. </summary>
         /// <param name="jobId"> JobId provided by user. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateSatelliteDataIngestionJobRequest(string jobId, RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateSatelliteDataIngestionJobRequest(string jobId, RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -657,29 +638,29 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Get a satellite data ingestion job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetSatelliteDataIngestionJobDetailsAsync(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetSatelliteDataIngestionJobDetailsRequest(jobId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetSatelliteDataIngestionJobDetailsRequest(jobId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.GetSatelliteDataIngestionJobDetails");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -703,23 +684,23 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get a satellite data ingestion job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetSatelliteDataIngestionJobDetails(string jobId, RequestOptions requestOptions = null)
+        public virtual Response GetSatelliteDataIngestionJobDetails(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetSatelliteDataIngestionJobDetailsRequest(jobId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetSatelliteDataIngestionJobDetailsRequest(jobId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.GetSatelliteDataIngestionJobDetails");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -743,8 +724,8 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Create Request for <see cref="GetSatelliteDataIngestionJobDetails"/> and <see cref="GetSatelliteDataIngestionJobDetailsAsync"/> operations. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetSatelliteDataIngestionJobDetailsRequest(string jobId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetSatelliteDataIngestionJobDetailsRequest(string jobId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -761,23 +742,23 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Downloads and returns file stream as response for the given input filePath. </summary>
         /// <param name="filePath"> cloud storage path of scene file. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DownloadAsync(string filePath, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DownloadAsync(string filePath, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDownloadRequest(filePath, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDownloadRequest(filePath, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.Download");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -801,23 +782,23 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Downloads and returns file stream as response for the given input filePath. </summary>
         /// <param name="filePath"> cloud storage path of scene file. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Download(string filePath, RequestOptions requestOptions = null)
+        public virtual Response Download(string filePath, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDownloadRequest(filePath, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDownloadRequest(filePath, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("ScenesClient.Download");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -841,8 +822,8 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Create Request for <see cref="Download"/> and <see cref="DownloadAsync"/> operations. </summary>
         /// <param name="filePath"> cloud storage path of scene file. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDownloadRequest(string filePath, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDownloadRequest(string filePath, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

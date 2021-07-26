@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
     internal class UpdateQueueMessageVisibilityCommand : ITaskSeriesCommand
     {
         private readonly QueueClient _queue;
-        private readonly QueueMessage _message;
+        private volatile QueueMessage _message;
         private readonly TimeSpan _visibilityTimeout;
         private readonly IDelayStrategy _speedupStrategy;
         private readonly Action<UpdateReceipt> _onUpdateReceipt;
@@ -51,6 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             try
             {
                 UpdateReceipt updateReceipt = await _queue.UpdateMessageAsync(_message.MessageId, _message.PopReceipt, visibilityTimeout: _visibilityTimeout, cancellationToken: cancellationToken).ConfigureAwait(false);
+                _message = _message.Update(updateReceipt);
                 _onUpdateReceipt?.Invoke(updateReceipt);
                 // The next execution should occur after a normal delay.
                 delay = _speedupStrategy.GetNextDelay(executionSucceeded: true);

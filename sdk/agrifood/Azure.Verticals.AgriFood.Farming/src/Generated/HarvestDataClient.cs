@@ -83,7 +83,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -93,27 +92,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListByFarmerIdAsync(string farmerId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> ListByFarmerIdAsync(string farmerId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateListByFarmerIdRequest(farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListByFarmerIdRequest(farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.ListByFarmerId");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -164,7 +162,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -174,27 +171,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response ListByFarmerId(string farmerId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        public virtual Response ListByFarmerId(string farmerId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateListByFarmerIdRequest(farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListByFarmerIdRequest(farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.ListByFarmerId");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -245,7 +241,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -255,12 +250,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateListByFarmerIdRequest(string farmerId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateListByFarmerIdRequest(string farmerId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -436,7 +430,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -446,27 +439,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListAsync(double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> ListAsync(double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListRequest(minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.List");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -516,7 +508,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -526,27 +517,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response List(double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        public virtual Response List(double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListRequest(minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.List");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -596,7 +586,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
-        /// 
         /// eg. &quot;{testKey} eq {testValue}&quot;.
         /// </param>
         /// <param name="statuses"> Statuses of the resource. </param>
@@ -606,12 +595,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateListRequest(double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateListRequest(double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -760,23 +748,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Get a specified harvest data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAsync(string farmerId, string harvestDataId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetAsync(string farmerId, string harvestDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(farmerId, harvestDataId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRequest(farmerId, harvestDataId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.Get");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -801,23 +789,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Get a specified harvest data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Get(string farmerId, string harvestDataId, RequestOptions requestOptions = null)
+        public virtual Response Get(string farmerId, string harvestDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetRequest(farmerId, harvestDataId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRequest(farmerId, harvestDataId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.Get");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -842,8 +830,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetRequest(string farmerId, string harvestDataId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetRequest(string farmerId, string harvestDataId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -864,262 +852,254 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>totalYield</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgYield</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>totalWetMass</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgWetMass</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgMoisture</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgSpeed</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>harvestProductDetails</term>
         ///     <term>HarvestProductDetail[]</term>
         ///     <term></term>
-        ///     <term> Harvest product details. </term>
+        ///     <term>Harvest product details.</term>
         ///   </item>
         ///   <item>
         ///     <term>area</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Source of the operation data. </term>
+        ///     <term>Source of the operation data.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationModifiedDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term>
-        /// Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// 
-        /// Note: this will be specified by the source provider itself.
-        /// </term>
+        ///     <term>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationStartDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationEndDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>attachmentsLink</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Link for attachments. </term>
+        ///     <term>Link for attachments.</term>
         ///   </item>
         ///   <item>
         ///     <term>associatedBoundaryId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Optional boundary ID of the field for which operation was applied. </term>
+        ///     <term>Optional boundary ID of the field for which operation was applied.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationBoundaryId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Optional boundary ID of the actual area for which operation was applied inside the specified field. </term>
+        ///     <term>Optional boundary ID of the actual area for which operation was applied inside the specified field.</term>
         ///   </item>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Farmer ID which belongs to the operation data. </term>
+        ///     <term>Farmer ID which belongs to the operation data.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique resource ID. </term>
+        ///     <term>Unique resource ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>eTag</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The ETag value to implement optimistic concurrency. </term>
+        ///     <term>The ETag value to implement optimistic concurrency.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status of the resource. </term>
+        ///     <term>Status of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>modifiedDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>Measure</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>unit</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Data unit. </term>
+        ///     <term>Data unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>value</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Data value. </term>
+        ///     <term>Data value.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>HarvestProductDetail</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>productName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name of the product. </term>
+        ///     <term>Name of the product.</term>
         ///   </item>
         ///   <item>
         ///     <term>area</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>totalYield</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgYield</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgMoisture</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>totalWetMass</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgWetMass</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         /// </list>
         /// </remarks>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string harvestDataId, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string harvestDataId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, harvestDataId, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, harvestDataId, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1146,262 +1126,254 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>totalYield</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgYield</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>totalWetMass</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgWetMass</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgMoisture</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgSpeed</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>harvestProductDetails</term>
         ///     <term>HarvestProductDetail[]</term>
         ///     <term></term>
-        ///     <term> Harvest product details. </term>
+        ///     <term>Harvest product details.</term>
         ///   </item>
         ///   <item>
         ///     <term>area</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>source</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Source of the operation data. </term>
+        ///     <term>Source of the operation data.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationModifiedDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term>
-        /// Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// 
-        /// Note: this will be specified by the source provider itself.
-        /// </term>
+        ///     <term>Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        /// Note: this will be specified by the source provider itself.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationStartDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationEndDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>attachmentsLink</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Link for attachments. </term>
+        ///     <term>Link for attachments.</term>
         ///   </item>
         ///   <item>
         ///     <term>associatedBoundaryId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Optional boundary ID of the field for which operation was applied. </term>
+        ///     <term>Optional boundary ID of the field for which operation was applied.</term>
         ///   </item>
         ///   <item>
         ///     <term>operationBoundaryId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Optional boundary ID of the actual area for which operation was applied inside the specified field. </term>
+        ///     <term>Optional boundary ID of the actual area for which operation was applied inside the specified field.</term>
         ///   </item>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Farmer ID which belongs to the operation data. </term>
+        ///     <term>Farmer ID which belongs to the operation data.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique resource ID. </term>
+        ///     <term>Unique resource ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>eTag</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The ETag value to implement optimistic concurrency. </term>
+        ///     <term>The ETag value to implement optimistic concurrency.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status of the resource. </term>
+        ///     <term>Status of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>modifiedDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>Measure</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>unit</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Data unit. </term>
+        ///     <term>Data unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>value</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Data value. </term>
+        ///     <term>Data value.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>HarvestProductDetail</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>productName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name of the product. </term>
+        ///     <term>Name of the product.</term>
         ///   </item>
         ///   <item>
         ///     <term>area</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>totalYield</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgYield</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgMoisture</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>totalWetMass</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         ///   <item>
         ///     <term>avgWetMass</term>
         ///     <term>Measure</term>
         ///     <term></term>
-        ///     <term> Schema for storing measurement reading and unit. </term>
+        ///     <term>Schema for storing measurement reading and unit.</term>
         ///   </item>
         /// </list>
         /// </remarks>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdate(string farmerId, string harvestDataId, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdate(string farmerId, string harvestDataId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, harvestDataId, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateRequest(farmerId, harvestDataId, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1427,9 +1399,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateRequest(string farmerId, string harvestDataId, RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateRequest(string farmerId, string harvestDataId, RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1444,30 +1416,30 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Deletes a specified harvest data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="harvestDataId"> ID of the harvest data. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteAsync(string farmerId, string harvestDataId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteAsync(string farmerId, string harvestDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(farmerId, harvestDataId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(farmerId, harvestDataId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.Delete");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1492,23 +1464,23 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Deletes a specified harvest data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="harvestDataId"> ID of the harvest data. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Delete(string farmerId, string harvestDataId, RequestOptions requestOptions = null)
+        public virtual Response Delete(string farmerId, string harvestDataId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteRequest(farmerId, harvestDataId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(farmerId, harvestDataId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("HarvestDataClient.Delete");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -1533,8 +1505,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="harvestDataId"> ID of the harvest data. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteRequest(string farmerId, string harvestDataId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteRequest(string farmerId, string harvestDataId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

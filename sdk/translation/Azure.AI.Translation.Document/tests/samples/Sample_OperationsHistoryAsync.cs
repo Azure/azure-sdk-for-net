@@ -12,7 +12,6 @@ namespace Azure.AI.Translation.Document.Samples
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
-        [Ignore("Samples not working yet")]
         public async Task OperationsHistoryAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -28,11 +27,12 @@ namespace Azure.AI.Translation.Document.Samples
             int docsSucceeded = 0;
             int docsFailed = 0;
 
-            await foreach (TranslationStatusResult translationStatus in client.GetAllTranslationStatusesAsync())
+            await foreach (TranslationStatus translationStatus in client.GetAllTranslationStatusesAsync())
             {
-                if (!translationStatus.HasCompleted)
+                if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
+                    translationStatus.Status == DocumentTranslationStatus.Running)
                 {
-                    DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.TranslationId, client);
+                    DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
                     await operation.WaitForCompletionAsync();
                 }
 

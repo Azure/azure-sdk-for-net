@@ -3,9 +3,10 @@
 
 using System;
 using System.Threading;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
-namespace Azure.AI.MetricsAdvisor.Models
+namespace Azure.AI.MetricsAdvisor.Administration
 {
     /// <summary>
     /// Describes an InfluxDB data source which ingests data into a <see cref="DataFeed"/> for anomaly detection.
@@ -27,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"><paramref name="connectionString"/>, <paramref name="database"/>, <paramref name="username"/>, <paramref name="password"/>, or <paramref name="query"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="connectionString"/>, <paramref name="database"/>, <paramref name="username"/>, <paramref name="password"/>, or <paramref name="query"/> is empty.</exception>
         public InfluxDbDataFeedSource(string connectionString, string database, string username, string password, string query)
-            : base(DataFeedSourceType.InfluxDb)
+            : base(DataFeedSourceKind.InfluxDb)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNullOrEmpty(database, nameof(database));
@@ -43,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         internal InfluxDbDataFeedSource(InfluxDBParameter parameter)
-            : base(DataFeedSourceType.InfluxDb)
+            : base(DataFeedSourceKind.InfluxDb)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

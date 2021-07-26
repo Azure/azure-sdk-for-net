@@ -57,147 +57,139 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Farmer ID. </term>
+        ///     <term>Farmer ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>authProviderId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Authentication provider ID. </term>
+        ///     <term>Authentication provider ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>operations</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage. </term>
+        ///     <term>List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.</term>
         ///   </item>
         ///   <item>
         ///     <term>startYear</term>
         ///     <term>number</term>
         ///     <term>Yes</term>
-        ///     <term> Start Year (Minimum = 2000, Maximum = CurrentYear). </term>
+        ///     <term>Start Year (Minimum = 2000, Maximum = CurrentYear).</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
         /// <param name="jobId"> Job ID supplied by user. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateDataIngestionJobAsync(string jobId, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Operation<BinaryData>> CreateDataIngestionJobAsync(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("FarmClient.CreateDataIngestionJob");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "FarmClient.CreateDataIngestionJob");
                         default:
                             throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "FarmClient.CreateDataIngestionJob");
                 }
             }
             catch (Exception e)
@@ -211,147 +203,139 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Farmer ID. </term>
+        ///     <term>Farmer ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>authProviderId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Authentication provider ID. </term>
+        ///     <term>Authentication provider ID.</term>
         ///   </item>
         ///   <item>
         ///     <term>operations</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage. </term>
+        ///     <term>List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.</term>
         ///   </item>
         ///   <item>
         ///     <term>startYear</term>
         ///     <term>number</term>
         ///     <term>Yes</term>
-        ///     <term> Start Year (Minimum = 2000, Maximum = CurrentYear). </term>
+        ///     <term>Start Year (Minimum = 2000, Maximum = CurrentYear).</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
         /// <param name="jobId"> Job ID supplied by user. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateDataIngestionJob(string jobId, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Operation<BinaryData> CreateDataIngestionJob(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("FarmClient.CreateDataIngestionJob");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "FarmClient.CreateDataIngestionJob");
                         default:
                             throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "FarmClient.CreateDataIngestionJob");
                 }
             }
             catch (Exception e)
@@ -363,9 +347,9 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Create Request for <see cref="CreateDataIngestionJob"/> and <see cref="CreateDataIngestionJobAsync"/> operations. </summary>
         /// <param name="jobId"> Job ID supplied by user. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateDataIngestionJobRequest(string jobId, RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateDataIngestionJobRequest(string jobId, RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -378,29 +362,29 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Get a farm operation data ingestion job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("FarmClient.GetDataIngestionJobDetails");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -424,23 +408,23 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get a farm operation data ingestion job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetDataIngestionJobDetails(string jobId, RequestOptions requestOptions = null)
+        public virtual Response GetDataIngestionJobDetails(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("FarmClient.GetDataIngestionJobDetails");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -464,8 +448,8 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Create Request for <see cref="GetDataIngestionJobDetails"/> and <see cref="GetDataIngestionJobDetailsAsync"/> operations. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetDataIngestionJobDetailsRequest(string jobId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetDataIngestionJobDetailsRequest(string jobId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

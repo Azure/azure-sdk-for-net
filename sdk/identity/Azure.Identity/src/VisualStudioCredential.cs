@@ -29,6 +29,8 @@ namespace Azure.Identity
         private readonly string _tenantId;
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
+        private readonly bool _allowMultiTenantAuthentication;
+        private readonly bool _tenantIdOptionProvided;
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCredential"/>.
@@ -39,10 +41,15 @@ namespace Azure.Identity
         /// Creates a new instance of the <see cref="VisualStudioCredential"/> with the specified options.
         /// </summary>
         /// <param name="options">Options for configuring the credential.</param>
-        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default) { }
-
-        internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService)
+        public VisualStudioCredential(VisualStudioCredentialOptions options) : this(options?.TenantId, CredentialPipeline.GetInstance(options), default, default)
         {
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
+        }
+
+        internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService, VisualStudioCredentialOptions options = null)
+        {
+            _allowMultiTenantAuthentication = options?.AllowMultiTenantAuthentication ?? false;
+            _tenantIdOptionProvided = tenantId != null;
             _tenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
@@ -72,7 +79,7 @@ namespace Azure.Identity
                 var tokenProviders = GetTokenProviders(tokenProviderPath);
 
                 var resource = ScopeUtilities.ScopesToResource(requestContext.Scopes);
-                var processStartInfos = GetProcessStartInfos(tokenProviders, resource, cancellationToken);
+                var processStartInfos = GetProcessStartInfos(tokenProviders, resource, requestContext, cancellationToken);
 
                 if (processStartInfos.Count == 0)
                 {
@@ -141,10 +148,10 @@ namespace Azure.Identity
             }
         }
 
-        private List<ProcessStartInfo> GetProcessStartInfos(VisualStudioTokenProvider[] visualStudioTokenProviders, string resource, CancellationToken cancellationToken)
+        private List<ProcessStartInfo> GetProcessStartInfos(VisualStudioTokenProvider[] visualStudioTokenProviders, string resource, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            List<ProcessStartInfo> processStartInfos = new List<ProcessStartInfo>();
-            StringBuilder arguments = new StringBuilder();
+            List<ProcessStartInfo> processStartInfos = new();
+            StringBuilder arguments = new();
 
             foreach (VisualStudioTokenProvider tokenProvider in visualStudioTokenProviders)
             {
@@ -159,9 +166,10 @@ namespace Azure.Identity
                 arguments.Clear();
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
-                if (_tenantId != default)
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, _allowMultiTenantAuthentication);
+                if (tenantId != default)
                 {
-                    arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(_tenantId);
+                    arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);
                 }
 
                 // Add the arguments set in the token provider file.

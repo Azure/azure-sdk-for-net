@@ -57,116 +57,116 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>keywords</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The keywords applied to all searchable fields. </term>
+        ///     <term>The keywords applied to all searchable fields.</term>
         ///   </item>
         ///   <item>
         ///     <term>offset</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The offset. The default value is 0. </term>
+        ///     <term>The offset. The default value is 0.</term>
         ///   </item>
         ///   <item>
         ///     <term>limit</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The limit of the number of the search result. default value is 50; maximum value is 1000. </term>
+        ///     <term>The limit of the number of the search result. default value is 50; maximum value is 1000.</term>
         ///   </item>
         ///   <item>
         ///     <term>filter</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> The filter for the search. See examples for the usage of supported filters. </term>
+        ///     <term>The filter for the search. See examples for the usage of supported filters.</term>
         ///   </item>
         ///   <item>
         ///     <term>facets</term>
         ///     <term>SearchFacetItem[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>taxonomySetting</term>
         ///     <term>SearchRequestTaxonomySetting</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>SearchRequestTaxonomySetting</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>assetTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>facet</term>
         ///     <term>SearchFacetItem</term>
         ///     <term></term>
-        ///     <term> The content of a search facet result item. </term>
+        ///     <term>The content of a search facet result item.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>SearchFacetItem</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>count</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The count of the facet item. </term>
+        ///     <term>The count of the facet item.</term>
         ///   </item>
         ///   <item>
         ///     <term>facet</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the facet item. </term>
+        ///     <term>The name of the facet item.</term>
         ///   </item>
         ///   <item>
         ///     <term>sort</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> Any object. </term>
+        ///     <term>Any object</term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SearchAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> SearchAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSearchRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSearchRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -192,116 +192,116 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>keywords</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The keywords applied to all searchable fields. </term>
+        ///     <term>The keywords applied to all searchable fields.</term>
         ///   </item>
         ///   <item>
         ///     <term>offset</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The offset. The default value is 0. </term>
+        ///     <term>The offset. The default value is 0.</term>
         ///   </item>
         ///   <item>
         ///     <term>limit</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The limit of the number of the search result. default value is 50; maximum value is 1000. </term>
+        ///     <term>The limit of the number of the search result. default value is 50; maximum value is 1000.</term>
         ///   </item>
         ///   <item>
         ///     <term>filter</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> The filter for the search. See examples for the usage of supported filters. </term>
+        ///     <term>The filter for the search. See examples for the usage of supported filters.</term>
         ///   </item>
         ///   <item>
         ///     <term>facets</term>
         ///     <term>SearchFacetItem[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>taxonomySetting</term>
         ///     <term>SearchRequestTaxonomySetting</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>SearchRequestTaxonomySetting</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>assetTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>facet</term>
         ///     <term>SearchFacetItem</term>
         ///     <term></term>
-        ///     <term> The content of a search facet result item. </term>
+        ///     <term>The content of a search facet result item.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>SearchFacetItem</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>count</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The count of the facet item. </term>
+        ///     <term>The count of the facet item.</term>
         ///   </item>
         ///   <item>
         ///     <term>facet</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the facet item. </term>
+        ///     <term>The name of the facet item.</term>
         ///   </item>
         ///   <item>
         ///     <term>sort</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> Any object. </term>
+        ///     <term>Any object</term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Search(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response Search(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSearchRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSearchRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -324,9 +324,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="Search"/> and <see cref="SearchAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateSearchRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateSearchRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -339,7 +339,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -347,50 +347,50 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>keywords</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode. </term>
+        ///     <term>The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.</term>
         ///   </item>
         ///   <item>
         ///     <term>limit</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100. </term>
+        ///     <term>The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.</term>
         ///   </item>
         ///   <item>
         ///     <term>filter</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> The filter for the search. </term>
+        ///     <term>The filter for the search.</term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SuggestAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> SuggestAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSuggestRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSuggestRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -416,50 +416,50 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>keywords</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode. </term>
+        ///     <term>The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode.</term>
         ///   </item>
         ///   <item>
         ///     <term>limit</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100. </term>
+        ///     <term>The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100.</term>
         ///   </item>
         ///   <item>
         ///     <term>filter</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> The filter for the search. </term>
+        ///     <term>The filter for the search.</term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response Suggest(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response Suggest(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSuggestRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateSuggestRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -482,9 +482,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="Suggest"/> and <see cref="SuggestAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateSuggestRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateSuggestRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -497,7 +497,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -505,50 +505,50 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>keywords</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters. </term>
+        ///     <term>The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.</term>
         ///   </item>
         ///   <item>
         ///     <term>limit</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100. </term>
+        ///     <term>The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.</term>
         ///   </item>
         ///   <item>
         ///     <term>filter</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> The filter for the autocomplete request. </term>
+        ///     <term>The filter for the autocomplete request.</term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> AutoCompleteAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> AutoCompleteAsync(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAutoCompleteRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateAutoCompleteRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -574,50 +574,50 @@ namespace Azure.Analytics.Purview.Catalog
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>keywords</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters. </term>
+        ///     <term>The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters.</term>
         ///   </item>
         ///   <item>
         ///     <term>limit</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100. </term>
+        ///     <term>The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100.</term>
         ///   </item>
         ///   <item>
         ///     <term>filter</term>
         ///     <term>AnyObject</term>
         ///     <term></term>
-        ///     <term> The filter for the autocomplete request. </term>
+        ///     <term>The filter for the autocomplete request.</term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response AutoComplete(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response AutoComplete(RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateAutoCompleteRequest(requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateAutoCompleteRequest(content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -640,9 +640,9 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="AutoComplete"/> and <see cref="AutoCompleteAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateAutoCompleteRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateAutoCompleteRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -655,7 +655,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
@@ -666,23 +666,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.GetLineageGraph");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -711,23 +711,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetLineageGraph(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions requestOptions = null)
+        public virtual Response GetLineageGraph(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.GetLineageGraph");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -756,8 +756,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -795,23 +795,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.NextPageLineage");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -839,23 +839,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response NextPageLineage(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions requestOptions = null)
+        public virtual Response NextPageLineage(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.NextPageLineage");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -883,8 +883,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateNextPageLineageRequest(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateNextPageLineageRequest(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

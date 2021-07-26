@@ -23,7 +23,9 @@
         },
         "invokedBy": {
           "id": "80a01654a9d34ad18b3fcac5d5d76b67",
-          "name": "Manual"
+          "name": "Manual",
+          "pipelineName": "examplePipelineName",
+          "pipelineRunId": "examplePipelineRunId"
         },
         "runStart": "2018-06-16T00:37:44.6257014Z",
         "runEnd": "2018-06-16T00:38:12.7314495Z",

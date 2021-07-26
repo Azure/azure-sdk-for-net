@@ -2,16 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Amqp;
-using Azure.Messaging.ServiceBus.Plugins;
-using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -98,24 +93,47 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusSessionProcessor(
             ServiceBusConnection connection,
             string entityPath,
-            IList<ServiceBusPlugin> plugins,
             ServiceBusSessionProcessorOptions options)
         {
+            options ??= new ServiceBusSessionProcessorOptions();
             InnerProcessor = new ServiceBusProcessor(
                 connection,
                 entityPath,
                 true,
-                plugins,
                 options.ToProcessorOptions(),
                 options.SessionIds.ToArray(),
                 options.MaxConcurrentSessions,
-                options.MaxConcurrentCallsPerSession);
+                options.MaxConcurrentCallsPerSession,
+                this);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusSessionProcessor"/> class for mocking.
         /// </summary>
         protected ServiceBusSessionProcessor()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusSessionProcessor"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the processor.</param>
+        /// <param name="queueName">The queue to create a processor for.</param>
+        /// <param name="options">The set of options to use when configuring the processor.</param>
+        protected ServiceBusSessionProcessor(ServiceBusClient client, string queueName, ServiceBusSessionProcessorOptions options) :
+            this(client?.Connection, queueName,  options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusSessionProcessor"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the processor.</param>
+        /// <param name="topicName">The topic to create a processor for.</param>
+        /// <param name="subscriptionName">The subscription to create a processor for.</param>
+        /// <param name="options">The set of options to use when configuring the processor.</param>
+        protected ServiceBusSessionProcessor(ServiceBusClient client, string topicName, string subscriptionName, ServiceBusSessionProcessorOptions options) :
+            this(client?.Connection, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),  options)
         {
         }
 
@@ -130,7 +148,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <inheritdoc cref="ServiceBusProcessor.OnProcessErrorAsync(ProcessErrorEventArgs)"/>
-        protected internal async virtual Task OnProcessErrorAsync(ProcessErrorEventArgs args)
+        protected internal virtual async Task OnProcessErrorAsync(ProcessErrorEventArgs args)
         {
             await InnerProcessor.OnProcessErrorAsync(args).ConfigureAwait(false);
         }
@@ -212,8 +230,8 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Optional handler that can be set to be notified when a session is about to be closed for processing.
-        /// This means that the most recent <see cref="ServiceBusReceiver.ReceiveMessageAsync"/> call timed out,
-        /// so there are currently no messages available to be received for the session.
+        /// This means that the most recent <see cref="ServiceBusReceiver.ReceiveMessageAsync"/> call timed out, or
+        /// that <see cref="ProcessSessionMessageEventArgs.ReleaseSession"/> was called in the <see cref="ProcessMessageAsync"/> handler.
         /// </summary>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]

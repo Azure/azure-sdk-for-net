@@ -1,4 +1,4 @@
-﻿//Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.IO;
@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
     {
         private readonly Stream _stream;
 
-        public UploadBlob(StorageTransferOptionsOptions options) : base (options)
+        public UploadBlob(StorageTransferOptionsOptions options) : base(options)
         {
             _stream = RandomStream.Create(options.Size);
         }

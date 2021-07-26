@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.5/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Content-Length": "190",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2ec4d96b3730324d8b94eb740257e0fd-756a4cbec1648e4a-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210511.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-1d893b643f052a4ca0fe6cc9b99f40fb-6475e7b7b5408240-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210629.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "74826ca03adf5e0230955bc11a73f253",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,14 +29,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "817553dc-ac1d-466b-9dc8-909786176311",
+        "apim-request-id": "5ebe03c6-81bf-4383-8e02-73989009c9b2",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Tue, 11 May 2021 16:08:37 GMT",
+        "Date": "Tue, 29 Jun 2021 19:10:15 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "22"
+        "x-envoy-upstream-service-time": "26"
       },
       "ResponseBody": {
         "documents": [
@@ -48,7 +48,7 @@
                 "category": "Organization",
                 "offset": 0,
                 "length": 9,
-                "confidenceScore": 0.97
+                "confidenceScore": 1.0
               },
               {
                 "text": "Bill Gates",
@@ -62,7 +62,7 @@
                 "category": "Person",
                 "offset": 40,
                 "length": 10,
-                "confidenceScore": 0.99
+                "confidenceScore": 1.0
               }
             ],
             "warnings": []
@@ -75,14 +75,14 @@
                 "category": "Organization",
                 "offset": 0,
                 "length": 9,
-                "confidenceScore": 0.97
+                "confidenceScore": 1.0
               },
               {
                 "text": "Bill Gates",
                 "category": "Person",
                 "offset": 26,
                 "length": 10,
-                "confidenceScore": 0.99
+                "confidenceScore": 1.0
               },
               {
                 "text": "Paul Allen",
@@ -96,7 +96,7 @@
           }
         ],
         "errors": [],
-        "modelVersion": "2021-01-15"
+        "modelVersion": "2021-06-01"
       }
     }
   ],

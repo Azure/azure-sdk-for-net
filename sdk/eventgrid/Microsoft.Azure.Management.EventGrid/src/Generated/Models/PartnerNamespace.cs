@@ -49,14 +49,30 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// format:
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}.</param>
         /// <param name="endpoint">Endpoint for the partner namespace.</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource.</param>
-        public PartnerNamespace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string partnerRegistrationFullyQualifiedId = default(string), string endpoint = default(string), SystemData systemData = default(SystemData))
+        /// <param name="publicNetworkAccess">This determines if traffic is
+        /// allowed over public network. By default it is enabled.
+        /// You can further restrict to specific IPs by configuring &lt;seealso
+        /// cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PartnerNamespaceProperties.InboundIpRules"
+        /// /&gt;. Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="inboundIpRules">This can be used to restrict traffic
+        /// from specific IPs instead of all IPs. Note: These are considered
+        /// only if PublicNetworkAccess is enabled.</param>
+        /// <param name="disableLocalAuth">This boolean is used to enable or
+        /// disable local auth. Default value is false. When the property is
+        /// set to true, only AAD token will be used to authenticate if user is
+        /// allowed to publish to the partner namespace.</param>
+        /// <param name="systemData">The system metadata relating to Partner
+        /// Namespace resource.</param>
+        public PartnerNamespace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string partnerRegistrationFullyQualifiedId = default(string), string endpoint = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
+            PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             PartnerRegistrationFullyQualifiedId = partnerRegistrationFullyQualifiedId;
             Endpoint = endpoint;
+            PublicNetworkAccess = publicNetworkAccess;
+            InboundIpRules = inboundIpRules;
+            DisableLocalAuth = disableLocalAuth;
             SystemData = systemData;
             CustomInit();
         }
@@ -65,6 +81,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Gets provisioning state of the partner namespace. Possible values
@@ -90,7 +111,35 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string Endpoint { get; private set; }
 
         /// <summary>
-        /// Gets the system metadata relating to this resource.
+        /// Gets or sets this determines if traffic is allowed over public
+        /// network. By default it is enabled.
+        /// You can further restrict to specific IPs by configuring
+        /// &amp;lt;seealso
+        /// cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PartnerNamespaceProperties.InboundIpRules"
+        /// /&amp;gt;. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets this can be used to restrict traffic from specific IPs
+        /// instead of all IPs. Note: These are considered only if
+        /// PublicNetworkAccess is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inboundIpRules")]
+        public IList<InboundIpRule> InboundIpRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets this boolean is used to enable or disable local auth.
+        /// Default value is false. When the property is set to true, only AAD
+        /// token will be used to authenticate if user is allowed to publish to
+        /// the partner namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableLocalAuth")]
+        public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to Partner Namespace resource.
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }

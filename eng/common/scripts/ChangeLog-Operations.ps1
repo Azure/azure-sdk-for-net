@@ -5,6 +5,7 @@
 $RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+\s+(?<version>$([AzureEngSemanticVersion]::SEMVER_REGEX))(\s+(?<releaseStatus>\(.+\))))"
 $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
+$RecommendedSectionHeaders = @("Features Added", "Breaking Changes", "Bugs Fixed", "Other Changes")
 
 # Returns a Collection of changeLogEntry object containing changelog info for all version present in the gived CHANGELOG
 function Get-ChangeLogEntries {
@@ -109,7 +110,6 @@ function Get-ChangeLogEntryAsString {
   return ChangeLogEntryAsString $changeLogEntry
 }
 
-
 function ChangeLogEntryAsString($changeLogEntry) {
   if (!$changeLogEntry) {
     return "[Missing change log entry]"
@@ -141,13 +141,13 @@ function Confirm-ChangeLogEntry {
   Write-Host "-----"
 
   if ([System.String]::IsNullOrEmpty($changeLogEntry.ReleaseStatus)) {
-    LogError "Entry does not have a correct release status. Please ensure the status is set to a date '($CHANGELOG_DATE_FORMAT)' or '$CHANGELOG_UNRELEASED_STATUS' if not yet released."
+    LogError "Entry does not have a correct release status. Please ensure the status is set to a date '($CHANGELOG_DATE_FORMAT)' or '$CHANGELOG_UNRELEASED_STATUS' if not yet released. See https://aka.ms/azsdk/guideline/changelogs for more info."
     return $false
   }
 
   if ($ForRelease -eq $True) {
     if ($changeLogEntry.ReleaseStatus -eq $CHANGELOG_UNRELEASED_STATUS) {
-      LogError "Entry has no release date set. Please ensure to set a release date with format '$CHANGELOG_DATE_FORMAT'."
+      LogError "Entry has no release date set. Please ensure to set a release date with format '$CHANGELOG_DATE_FORMAT'. See https://aka.ms/azsdk/guideline/changelogs for more info."
       return $false
     }
     else {
@@ -156,24 +156,48 @@ function Confirm-ChangeLogEntry {
         $releaseDate = [DateTime]$status
         if ($status -ne ($releaseDate.ToString($CHANGELOG_DATE_FORMAT)))
         {
-          LogError "Date must be in the format $($CHANGELOG_DATE_FORMAT)"
+          LogError "Date must be in the format $($CHANGELOG_DATE_FORMAT). See https://aka.ms/azsdk/guideline/changelogs for more info."
           return $false
         }
         if (((Get-Date).AddMonths(-1) -gt $releaseDate) -or ($releaseDate -gt (Get-Date).AddMonths(1)))
         {
-          LogError "The date must be within +/- one month from today."
+          LogError "The date must be within +/- one month from today. See https://aka.ms/azsdk/guideline/changelogs for more info."
           return $false
         }
       }
       catch {
-          LogError "Invalid date [ $status ] passed as status for Version [$($changeLogEntry.ReleaseVersion)]."
+          LogError "Invalid date [ $status ] passed as status for Version [$($changeLogEntry.ReleaseVersion)]. See https://aka.ms/azsdk/guideline/changelogs for more info."
           return $false
       }
     }
 
     if ([System.String]::IsNullOrWhiteSpace($changeLogEntry.ReleaseContent)) {
-      LogError "Entry has no content. Please ensure to provide some content of what changed in this version."
+      LogError "Entry has no content. Please ensure to provide some content of what changed in this version. See https://aka.ms/azsdk/guideline/changelogs for more info."
       return $false
+    }
+
+    $foundRecomendedSection = $false
+    $emptySections = @()
+    foreach ($key in $changeLogEntry.Sections.Keys)
+    {
+      $sectionContent = $changeLogEntry.Sections[$key]
+      if ([System.String]::IsNullOrWhiteSpace(($sectionContent | Out-String)))
+      {
+        $emptySections += $key
+      }
+      if ($RecommendedSectionHeaders -contains $key)
+      {
+        $foundRecomendedSection = $true
+      }
+    }
+    if ($emptySections.Count -gt 0)
+    {
+      LogError "The changelog entry has the following sections with no content ($($emptySections -join ', ')). Please ensure to either remove the empty sections or add content to the section."
+      return $false
+    }
+    if (!$foundRecomendedSection)
+    {
+      LogWarning "The changelog entry did not contain any of the recommended sections ($($RecommendedSectionHeaders -join ', ')), pease add at least one. See https://aka.ms/azsdk/guideline/changelogs for more info."
     }
   }
   return $true
@@ -213,15 +237,12 @@ function New-ChangeLogEntry {
   if (!$Content) {
     $Content = @()
     $Content += ""
-    $Content += "### Features Added"
-    $Content += ""
-    $Content += "### Breaking Changes"
-    $Content += ""
-    $Content += "### Key Bugs Fixed"
-    $Content += ""
-    $Content += "### Fixed"
-    $Content += ""
-    $Content += ""
+
+    foreach ($recommendedHeader in $RecommendedSectionHeaders)
+    {
+      $Content += "### $recommendedHeader"
+      $Content += ""
+    }
   }
 
   $newChangeLogEntry = [pscustomobject]@{

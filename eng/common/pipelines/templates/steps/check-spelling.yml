@@ -2,7 +2,7 @@
 # and some ref (branch, tag, etc.) or commit hash. Only runs on PRs.
 # ContinueOnError   - true: Pipeline warns on spelling error 
 #                     false: Pipeline fails on spelling error
-# TargetBranch      - Target ref (e.g. master) to compare to create file change
+# TargetBranch      - Target ref (e.g. main) to compare to create file change
 #                     list.
 # CspellConfigPath  - Path to cspell.json config location
 

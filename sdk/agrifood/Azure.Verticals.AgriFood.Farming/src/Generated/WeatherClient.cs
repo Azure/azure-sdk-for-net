@@ -63,27 +63,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ListAsync(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> ListAsync(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -115,27 +114,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response List(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        public virtual Response List(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateListRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.List");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -167,12 +165,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateListRequest(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateListRequest(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -209,23 +206,23 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get weather ingestion job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -249,23 +246,23 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get weather ingestion job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetDataIngestionJobDetails(string jobId, RequestOptions requestOptions = null)
+        public virtual Response GetDataIngestionJobDetails(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetDataIngestionJobDetailsRequest(jobId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataIngestionJobDetails");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -289,8 +286,8 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Create Request for <see cref="GetDataIngestionJobDetails"/> and <see cref="GetDataIngestionJobDetailsAsync"/> operations. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetDataIngestionJobDetailsRequest(string jobId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetDataIngestionJobDetailsRequest(string jobId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -309,165 +306,157 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>boundaryId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the boundary object for which weather data is being fetched. </term>
+        ///     <term>The id of the boundary object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the farmer object for which weather data is being fetched. </term>
+        ///     <term>The id of the farmer object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the extension to be used for the providerInput. eg. DTN.ClearAg. </term>
+        ///     <term>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionApiName</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Extension api name to which request is to be made. </term>
+        ///     <term>Extension api name to which request is to be made.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionApiInput</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term>Yes</term>
-        ///     <term> Extension api input dictionary which would be used to feed request query/body/parameter information. </term>
+        ///     <term>Extension api input dictionary which would be used to feed request query/body/parameter information.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionDataProviderAppId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> App id of the weather data provider. </term>
+        ///     <term>App id of the weather data provider.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionDataProviderApiKey</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Api key of the weather data provider. </term>
+        ///     <term>Api key of the weather data provider.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
         /// <param name="jobId"> Job id supplied by user. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateDataIngestionJobAsync(string jobId, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Operation<BinaryData>> CreateDataIngestionJobAsync(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataIngestionJob");
                         default:
                             throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataIngestionJob");
                 }
             }
             catch (Exception e)
@@ -481,165 +470,157 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>boundaryId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the boundary object for which weather data is being fetched. </term>
+        ///     <term>The id of the boundary object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the farmer object for which weather data is being fetched. </term>
+        ///     <term>The id of the farmer object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the extension to be used for the providerInput. eg. DTN.ClearAg. </term>
+        ///     <term>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionApiName</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Extension api name to which request is to be made. </term>
+        ///     <term>Extension api name to which request is to be made.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionApiInput</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term>Yes</term>
-        ///     <term> Extension api input dictionary which would be used to feed request query/body/parameter information. </term>
+        ///     <term>Extension api input dictionary which would be used to feed request query/body/parameter information.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionDataProviderAppId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> App id of the weather data provider. </term>
+        ///     <term>App id of the weather data provider.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionDataProviderApiKey</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Api key of the weather data provider. </term>
+        ///     <term>Api key of the weather data provider.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
         /// <param name="jobId"> Job id supplied by user. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateDataIngestionJob(string jobId, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Operation<BinaryData> CreateDataIngestionJob(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataIngestionJob");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataIngestionJob");
                         default:
                             throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataIngestionJob");
                 }
             }
             catch (Exception e)
@@ -651,9 +632,9 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Create Request for <see cref="CreateDataIngestionJob"/> and <see cref="CreateDataIngestionJobAsync"/> operations. </summary>
         /// <param name="jobId"> Job id supplied by user. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateDataIngestionJobRequest(string jobId, RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateDataIngestionJobRequest(string jobId, RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -666,29 +647,29 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
 
         /// <summary> Get weather data delete job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetDataDeleteJobDetailsAsync(string jobId, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetDataDeleteJobDetailsAsync(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -712,23 +693,23 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get weather data delete job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetDataDeleteJobDetails(string jobId, RequestOptions requestOptions = null)
+        public virtual Response GetDataDeleteJobDetails(string jobId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetDataDeleteJobDetailsRequest(jobId, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDataDeleteJobDetails");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
@@ -752,8 +733,8 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Create Request for <see cref="GetDataDeleteJobDetails"/> and <see cref="GetDataDeleteJobDetailsAsync"/> operations. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetDataDeleteJobDetailsRequest(string jobId, RequestOptions requestOptions = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetDataDeleteJobDetailsRequest(string jobId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -772,165 +753,157 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>extensionId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the extension to be used for the providerInput. eg. DTN.ClearAg. </term>
+        ///     <term>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</term>
         ///   </item>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the farmer object for which weather data is being fetched. </term>
+        ///     <term>The id of the farmer object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>boundaryId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the boundary object for which weather data is being fetched. </term>
+        ///     <term>The id of the boundary object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>weatherDataType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;. </term>
+        ///     <term>Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>granularity</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;. </term>
+        ///     <term>Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>startDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
         /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateDataDeleteJobAsync(string jobId, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Operation<BinaryData>> CreateDataDeleteJobAsync(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
             try
             {
-                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataDeleteJob");
                         default:
                             throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataDeleteJob");
                 }
             }
             catch (Exception e)
@@ -944,165 +917,157 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>extensionId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the extension to be used for the providerInput. eg. DTN.ClearAg. </term>
+        ///     <term>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</term>
         ///   </item>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the farmer object for which weather data is being fetched. </term>
+        ///     <term>The id of the farmer object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>boundaryId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the boundary object for which weather data is being fetched. </term>
+        ///     <term>The id of the boundary object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>weatherDataType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;. </term>
+        ///     <term>Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>granularity</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;. </term>
+        ///     <term>Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>startDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
         /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateDataDeleteJob(string jobId, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Operation<BinaryData> CreateDataDeleteJob(string jobId, RequestContent content, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
-            requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, requestBody, requestOptions);
-            if (requestOptions.PerCallPolicy != null)
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, options);
+            if (options.PerCallPolicy != null)
             {
-                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
             }
             using var scope = _clientDiagnostics.CreateScope("WeatherClient.CreateDataDeleteJob");
             scope.Start();
             try
             {
-                Pipeline.Send(message, requestOptions.CancellationToken);
-                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
                 {
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataDeleteJob");
                         default:
                             throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "WeatherClient.CreateDataDeleteJob");
                 }
             }
             catch (Exception e)
@@ -1114,9 +1079,9 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Create Request for <see cref="CreateDataDeleteJob"/> and <see cref="CreateDataDeleteJobAsync"/> operations. </summary>
         /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateDataDeleteJobRequest(string jobId, RequestContent requestBody, RequestOptions requestOptions = null)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateDataDeleteJobRequest(string jobId, RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1129,7 +1094,7 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
+            request.Content = content;
             return message;
         }
     }

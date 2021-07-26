@@ -15,15 +15,20 @@ namespace Azure.Security.KeyVault.Administration.Tests
     /// <summary>
     /// Base class for recorded Administration tests.
     /// </summary>
+    [ClientTestFixture(
+        KeyVaultAdministrationClientOptions.ServiceVersion.V7_2,
+        KeyVaultAdministrationClientOptions.ServiceVersion.V7_3_Preview)]
     public abstract class AdministrationTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
         private readonly ConcurrentQueue<string> _keysToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _keysToPurge = new ConcurrentStack<string>();
+        private readonly KeyVaultAdministrationClientOptions.ServiceVersion _serviceVersion;
 
-        protected AdministrationTestBase(bool isAsync, RecordedTestMode? mode)
+        protected AdministrationTestBase(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, mode)
         {
+            _serviceVersion = serviceVersion;
         }
 
         /// <summary>

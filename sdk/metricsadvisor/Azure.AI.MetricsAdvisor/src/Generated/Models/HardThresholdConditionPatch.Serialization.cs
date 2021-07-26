@@ -12,30 +12,5 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class HardThresholdConditionPatch : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(LowerBound))
-            {
-                writer.WritePropertyName("lowerBound");
-                writer.WriteNumberValue(LowerBound.Value);
-            }
-            if (Optional.IsDefined(UpperBound))
-            {
-                writer.WritePropertyName("upperBound");
-                writer.WriteNumberValue(UpperBound.Value);
-            }
-            if (Optional.IsDefined(AnomalyDetectorDirection))
-            {
-                writer.WritePropertyName("anomalyDetectorDirection");
-                writer.WriteStringValue(AnomalyDetectorDirection.Value.ToString());
-            }
-            if (Optional.IsDefined(SuppressCondition))
-            {
-                writer.WritePropertyName("suppressCondition");
-                writer.WriteObjectValue(SuppressCondition);
-            }
-            writer.WriteEndObject();
-        }
     }
 }

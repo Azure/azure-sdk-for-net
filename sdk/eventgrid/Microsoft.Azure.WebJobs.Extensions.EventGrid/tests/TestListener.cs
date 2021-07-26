@@ -159,6 +159,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
         }
 
+        [Test]
+        public async Task ExecutionFailureMultipleEventsTest()
+        {
+            var ext = new EventGridExtensionConfigProvider(new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), NullLoggerFactory.Instance);
+            var host = TestHelpers.NewHost<MyProg3>(ext);
+            await host.StartAsync(); // add listener
+
+            JObject dummyPayload = JObject.Parse("{}");
+            var request = CreateDispatchRequest("EventGridThrowsExceptionMultiple", dummyPayload);
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+
+            string responseContent = await response.Content.ReadAsStringAsync();
+            Assert.AreEqual("Exception while executing function: EventGridThrowsExceptionMultiple", responseContent);
+            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
+        }
+
         private static HttpRequestMessage CreateEventSubscribeRequest(string funcName, string evt)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/?functionName=" + funcName);
@@ -219,6 +235,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             [FunctionName("EventGridThrowsException")]
             public void Run([EventGridTrigger] JObject value)
+            {
+                throw new InvalidOperationException($"failed with {value.ToString()}");
+            }
+        }
+
+        public class MyProg3
+        {
+            [FunctionName("EventGridThrowsExceptionMultiple")]
+            public void Run([EventGridTrigger] JObject[] value)
             {
                 throw new InvalidOperationException($"failed with {value.ToString()}");
             }
