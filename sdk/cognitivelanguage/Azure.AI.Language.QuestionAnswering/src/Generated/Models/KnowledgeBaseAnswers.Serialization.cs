@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
-    public partial class KnowledgebaseAnswers
+    public partial class KnowledgeBaseAnswers
     {
-        internal static KnowledgebaseAnswers DeserializeKnowledgebaseAnswers(JsonElement element)
+        internal static KnowledgeBaseAnswers DeserializeKnowledgeBaseAnswers(JsonElement element)
         {
-            Optional<IReadOnlyList<KnowledgebaseAnswer>> answers = default;
+            Optional<IReadOnlyList<KnowledgeBaseAnswer>> answers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("answers"))
@@ -25,16 +25,16 @@ namespace Azure.AI.Language.QuestionAnswering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnowledgebaseAnswer> array = new List<KnowledgebaseAnswer>();
+                    List<KnowledgeBaseAnswer> array = new List<KnowledgeBaseAnswer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgebaseAnswer.DeserializeKnowledgebaseAnswer(item));
+                        array.Add(KnowledgeBaseAnswer.DeserializeKnowledgeBaseAnswer(item));
                     }
                     answers = array;
                     continue;
                 }
             }
-            return new KnowledgebaseAnswers(Optional.ToList(answers));
+            return new KnowledgeBaseAnswers(Optional.ToList(answers));
         }
     }
 }

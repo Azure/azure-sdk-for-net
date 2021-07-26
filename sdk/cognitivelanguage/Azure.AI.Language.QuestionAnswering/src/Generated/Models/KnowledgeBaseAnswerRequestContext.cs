@@ -8,11 +8,11 @@
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
     /// <summary> Context object with previous QnA&apos;s information. </summary>
-    public partial class KnowledgebaseAnswerRequestContext
+    public partial class KnowledgeBaseAnswerRequestContext
     {
-        /// <summary> Initializes a new instance of KnowledgebaseAnswerRequestContext. </summary>
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswerRequestContext. </summary>
         /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
-        public KnowledgebaseAnswerRequestContext(int previousQnaId)
+        public KnowledgeBaseAnswerRequestContext(int previousQnaId)
         {
             PreviousQnaId = previousQnaId;
         }

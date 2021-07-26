@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
-    /// <summary> Represents Knowledgebase Answer. </summary>
-    public partial class KnowledgebaseAnswer
+    /// <summary> Represents knowledge base answer. </summary>
+    public partial class KnowledgeBaseAnswer
     {
-        /// <summary> Initializes a new instance of KnowledgebaseAnswer. </summary>
-        internal KnowledgebaseAnswer()
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>
+        internal KnowledgeBaseAnswer()
         {
             Questions = new ChangeTrackingList<string>();
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KnowledgebaseAnswer. </summary>
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>
         /// <param name="questions"> List of questions. </param>
         /// <param name="answer"> The Answer. </param>
         /// <param name="confidenceScore"> Answer confidence score, value ranges from 0 to 1. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         /// <param name="metadata"> Metadata associated with the answer, useful to categorize or filter question answers. </param>
         /// <param name="dialog"> Dialog associated with Answer. </param>
         /// <param name="answerSpan"> Answer span object of QnA with respect to user&apos;s question. </param>
-        internal KnowledgebaseAnswer(IReadOnlyList<string> questions, string answer, double? confidenceScore, int? id, string source, IReadOnlyDictionary<string, string> metadata, KnowledgebaseAnswerDialog dialog, AnswerSpan answerSpan)
+        internal KnowledgeBaseAnswer(IReadOnlyList<string> questions, string answer, double? confidenceScore, int? id, string source, IReadOnlyDictionary<string, string> metadata, KnowledgeBaseAnswerDialog dialog, AnswerSpan answerSpan)
         {
             Questions = questions;
             Answer = answer;
@@ -54,7 +54,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         /// <summary> Metadata associated with the answer, useful to categorize or filter question answers. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
         /// <summary> Dialog associated with Answer. </summary>
-        public KnowledgebaseAnswerDialog Dialog { get; }
+        public KnowledgeBaseAnswerDialog Dialog { get; }
         /// <summary> Answer span object of QnA with respect to user&apos;s question. </summary>
         public AnswerSpan AnswerSpan { get; }
     }

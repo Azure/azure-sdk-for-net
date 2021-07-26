@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
-    public partial class KnowledgebaseAnswerPrompt
+    public partial class KnowledgeBaseAnswerPrompt
     {
-        internal static KnowledgebaseAnswerPrompt DeserializeKnowledgebaseAnswerPrompt(JsonElement element)
+        internal static KnowledgeBaseAnswerPrompt DeserializeKnowledgeBaseAnswerPrompt(JsonElement element)
         {
             Optional<int> displayOrder = default;
             Optional<int> qnaId = default;
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
                     continue;
                 }
             }
-            return new KnowledgebaseAnswerPrompt(Optional.ToNullable(displayOrder), Optional.ToNullable(qnaId), displayText.Value);
+            return new KnowledgeBaseAnswerPrompt(Optional.ToNullable(displayOrder), Optional.ToNullable(qnaId), displayText.Value);
         }
     }
 }

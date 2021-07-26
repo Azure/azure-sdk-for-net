@@ -13,20 +13,20 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
     {
         [RecordedTest]
         [SyncOnly]
-        public void QueryKnowledgebase()
+        public void QueryKnowledgeBase()
         {
             QuestionAnsweringClient client = Client;
 
-            #region Snippet:QuestionAnsweringClient_QueryKnowledgebase
-            KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should my Surface battery last?");
+            #region Snippet:QuestionAnsweringClient_QueryKnowledgeBase
+            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should my Surface battery last?");
 
 #if SNIPPET
-            Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("FAQ", options);
+            Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
 #else
-            Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
+            Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
 #endif
 
-            foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+            foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
             {
                 Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
                 Console.WriteLine($"Source: {answer.Source}");
@@ -39,23 +39,23 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
         [RecordedTest]
         [AsyncOnly]
-        public async Task QueryKnowledgebaseAsync()
+        public async Task QueryKnowledgeBaseAsync()
         {
             QuestionAnsweringClient client = Client;
 
-            #region Snippet:QuestionAnsweringClient_QueryKnowledgebaseAsync
+            #region Snippet:QuestionAnsweringClient_QueryKnowledgeBaseAsync
 #if SNIPPET
             string projectName = "FAQ";
 #endif
-            KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should my Surface battery last?");
+            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should my Surface battery last?");
 
 #if SNIPPET
-            Response<KnowledgebaseAnswers> response = await client.QueryKnowledgebaseAsync(projectName, options);
+            Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(projectName, options);
 #else
-            Response<KnowledgebaseAnswers> response = await client.QueryKnowledgebaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
+            Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(TestEnvironment.ProjectName, options, TestEnvironment.DeploymentName);
 #endif
 
-            foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+            foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
             {
                 Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
                 Console.WriteLine($"Source: {answer.Source}");

@@ -16,20 +16,20 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    internal partial class QuestionAnsweringKnowledgebaseRestClient
+    internal partial class QuestionAnsweringKnowledgeBaseRestClient
     {
         private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of QuestionAnsweringKnowledgebaseRestClient. </summary>
+        /// <summary> Initializes a new instance of QuestionAnsweringKnowledgeBaseRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public QuestionAnsweringKnowledgebaseRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2021-05-01-preview")
+        public QuestionAnsweringKnowledgeBaseRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2021-05-01-preview")
         {
             if (endpoint == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.QuestionAnswering
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateQueryRequest(string projectName, KnowledgebaseQueryOptions knowledgebaseQueryParameters, string deploymentName)
+        internal HttpMessage CreateQueryRequest(string projectName, QueryKnowledgeBaseOptions knowledgeBaseQueryOptions, string deploymentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,37 +65,37 @@ namespace Azure.AI.Language.QuestionAnswering
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(knowledgebaseQueryParameters);
+            content.JsonWriter.WriteObjectValue(knowledgeBaseQueryOptions);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Answers the specified question using your knowledgebase. </summary>
+        /// <summary> Answers the specified question using your knowledge base. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="knowledgebaseQueryParameters"> Post body of the request. </param>
+        /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="knowledgebaseQueryParameters"/> is null. </exception>
-        public async Task<Response<KnowledgebaseAnswers>> QueryAsync(string projectName, KnowledgebaseQueryOptions knowledgebaseQueryParameters, string deploymentName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
+        public async Task<Response<KnowledgeBaseAnswers>> QueryAsync(string projectName, QueryKnowledgeBaseOptions knowledgeBaseQueryOptions, string deploymentName = null, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
             {
                 throw new ArgumentNullException(nameof(projectName));
             }
-            if (knowledgebaseQueryParameters == null)
+            if (knowledgeBaseQueryOptions == null)
             {
-                throw new ArgumentNullException(nameof(knowledgebaseQueryParameters));
+                throw new ArgumentNullException(nameof(knowledgeBaseQueryOptions));
             }
 
-            using var message = CreateQueryRequest(projectName, knowledgebaseQueryParameters, deploymentName);
+            using var message = CreateQueryRequest(projectName, knowledgeBaseQueryOptions, deploymentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        KnowledgebaseAnswers value = default;
+                        KnowledgeBaseAnswers value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KnowledgebaseAnswers.DeserializeKnowledgebaseAnswers(document.RootElement);
+                        value = KnowledgeBaseAnswers.DeserializeKnowledgeBaseAnswers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -103,32 +103,32 @@ namespace Azure.AI.Language.QuestionAnswering
             }
         }
 
-        /// <summary> Answers the specified question using your knowledgebase. </summary>
+        /// <summary> Answers the specified question using your knowledge base. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="knowledgebaseQueryParameters"> Post body of the request. </param>
+        /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="knowledgebaseQueryParameters"/> is null. </exception>
-        public Response<KnowledgebaseAnswers> Query(string projectName, KnowledgebaseQueryOptions knowledgebaseQueryParameters, string deploymentName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
+        public Response<KnowledgeBaseAnswers> Query(string projectName, QueryKnowledgeBaseOptions knowledgeBaseQueryOptions, string deploymentName = null, CancellationToken cancellationToken = default)
         {
             if (projectName == null)
             {
                 throw new ArgumentNullException(nameof(projectName));
             }
-            if (knowledgebaseQueryParameters == null)
+            if (knowledgeBaseQueryOptions == null)
             {
-                throw new ArgumentNullException(nameof(knowledgebaseQueryParameters));
+                throw new ArgumentNullException(nameof(knowledgeBaseQueryOptions));
             }
 
-            using var message = CreateQueryRequest(projectName, knowledgebaseQueryParameters, deploymentName);
+            using var message = CreateQueryRequest(projectName, knowledgeBaseQueryOptions, deploymentName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        KnowledgebaseAnswers value = default;
+                        KnowledgeBaseAnswers value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KnowledgebaseAnswers.DeserializeKnowledgebaseAnswers(document.RootElement);
+                        value = KnowledgeBaseAnswers.DeserializeKnowledgeBaseAnswers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -22,6 +22,6 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Metadata { get; }
         /// <summary> (Optional) Set to &apos;OR&apos; for joining metadata using &apos;OR&apos; operation. </summary>
-        public CompoundOperationType? CompoundOperation { get; set; }
+        public CompoundOperationKind? CompoundOperation { get; set; }
     }
 }
