@@ -47,8 +47,33 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PolicySetDefinition(this, response.Value), response.GetRawResponse());
+                if (Id.GetType() == typeof(TenantResourceIdentifier))
+                {
+                    var parent = Id;
+                    while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
+                    {
+                        parent = parent.Parent as TenantResourceIdentifier;
+                    }
+                    if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                    {
+                        var response = await _restClient.GetAtManagementGroupAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                        return Response.FromValue(new PolicySetDefinition(this, response.Value), response.GetRawResponse());
+                    }
+                    else
+                    {
+                        var response = await _restClient.GetBuiltInAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                        return Response.FromValue(new PolicySetDefinition(this, response.Value), response.GetRawResponse());
+                    }
+                }
+                else if (Id.GetType() == typeof(SubscriptionResourceIdentifier))
+                {
+                    var response = await _restClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new PolicySetDefinition(this, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    throw new ArgumentException($"Invalid Id: {Id}.");
+                }
             }
             catch (Exception e)
             {
@@ -64,8 +89,33 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new PolicySetDefinition(this, response.Value), response.GetRawResponse());
+                if (Id.GetType() == typeof(TenantResourceIdentifier))
+                {
+                    var parent = Id;
+                    while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
+                    {
+                        parent = parent.Parent as TenantResourceIdentifier;
+                    }
+                    if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                    {
+                        var response = _restClient.GetAtManagementGroup(Id.Parent.Name, Id.Name, cancellationToken);
+                        return Response.FromValue(new PolicySetDefinition(this, response.Value), response.GetRawResponse());
+                    }
+                    else
+                    {
+                        var response = _restClient.GetBuiltIn(Id.Name, cancellationToken);
+                        return Response.FromValue(new PolicySetDefinition(this, response.Value), response.GetRawResponse());
+                    }
+                }
+                else if (Id.GetType() == typeof(SubscriptionResourceIdentifier))
+                {
+                    var response = _restClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new PolicySetDefinition(this, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    throw new ArgumentException($"Invalid Id: {Id}.");
+                }
             }
             catch (Exception e)
             {
@@ -134,8 +184,32 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new PolicySetDefinitionsDeleteOperation(response);
+                if (Id.GetType() == typeof(TenantResourceIdentifier))
+                {
+                    var parent = Id;
+                    while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
+                    {
+                        parent = parent.Parent as TenantResourceIdentifier;
+                    }
+                    if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                    {
+                        var response = await _restClient.DeleteAtManagementGroupAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                        return new PolicySetDefinitionsDeleteOperation(response);
+                    }
+                    else
+                    {
+                        throw new ArgumentException($"Invalid Id: {Id}.");
+                    }
+                }
+                else if (Id.GetType() == typeof(SubscriptionResourceIdentifier))
+                {
+                    var response = await _restClient.DeleteAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return new PolicySetDefinitionsDeleteOperation(response);
+                }
+                else
+                {
+                    throw new ArgumentException($"Invalid Id: {Id}.");
+                }
             }
             catch (Exception e)
             {
@@ -152,115 +226,32 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.Parent.Name, Id.Name, cancellationToken);
-                return new PolicySetDefinitionsDeleteOperation(response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-        /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicySetDefinitionData>> GetBuiltInAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionOperations.GetBuiltIn");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetBuiltInAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> This operation retrieves the built-in policy set definition with the given name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicySetDefinitionData> GetBuiltIn(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionOperations.GetBuiltIn");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetBuiltIn(Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> This operation deletes the policy set definition in the given management group with the given name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAtManagementGroupAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionOperations.DeleteAtManagementGroup");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.DeleteAtManagementGroupAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> This operation deletes the policy set definition in the given management group with the given name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteAtManagementGroup(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionOperations.DeleteAtManagementGroup");
-            scope.Start();
-            try
-            {
-                var response = _restClient.DeleteAtManagementGroup(Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> This operation retrieves the policy set definition in the given management group with the given name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicySetDefinitionData>> GetAtManagementGroupAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionOperations.GetAtManagementGroup");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAtManagementGroupAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> This operation retrieves the policy set definition in the given management group with the given name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicySetDefinitionData> GetAtManagementGroup(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionOperations.GetAtManagementGroup");
-            scope.Start();
-            try
-            {
-                var response = _restClient.GetAtManagementGroup(Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
+                if (Id.GetType() == typeof(TenantResourceIdentifier))
+                {
+                    var parent = Id;
+                    while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
+                    {
+                        parent = parent.Parent as TenantResourceIdentifier;
+                    }
+                    if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                    {
+                        var response = _restClient.DeleteAtManagementGroup(Id.Parent.Name, Id.Name, cancellationToken);
+                        return new PolicySetDefinitionsDeleteOperation(response);
+                    }
+                    else
+                    {
+                        throw new ArgumentException($"Invalid Id: {Id}.");
+                    }
+                }
+                else if (Id.GetType() == typeof(SubscriptionResourceIdentifier))
+                {
+                    var response = _restClient.Delete(Id.Parent.Name, Id.Name, cancellationToken);
+                    return new PolicySetDefinitionsDeleteOperation(response);
+                }
+                else
+                {
+                    throw new ArgumentException($"Invalid Id: {Id}.");
+                }
             }
             catch (Exception e)
             {

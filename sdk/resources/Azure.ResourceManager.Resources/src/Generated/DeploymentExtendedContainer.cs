@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Verify that the input resource Id is a valid container for this type. </summary>
         /// <param name="identifier"> The input resource Id to check. </param>
-        protected override void Validate(ResourceIdentifier identifier)
+        protected override void ValidateResourceType(ResourceIdentifier identifier)
         {
         }
 

@@ -333,5 +333,42 @@ namespace Azure.ResourceManager.Resources
                 throw;
             }
         }
+        /// <summary> Updates the JIT request. </summary>
+        /// <param name="tags"> Jit request tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<JitRequestDefinitionData>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionOperations.Update");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates the JIT request. </summary>
+        /// <param name="tags"> Jit request tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<JitRequestDefinitionData> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionOperations.Update");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Update(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

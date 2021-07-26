@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Resources
                             List<JitAuthorizationPolicies> array = new List<JitAuthorizationPolicies>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Sample.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item));
+                                array.Add(Resources.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item));
                             }
                             jitAuthorizationPolicies = array;
                             continue;

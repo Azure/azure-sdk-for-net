@@ -312,88 +312,6 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Filters the list of <see cref="JitRequestDefinition" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<ResourceManager.Core.GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.ListAsGenericResource");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(JitRequestDefinitionOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="JitRequestDefinition" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<ResourceManager.Core.GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.ListAsGenericResource");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(JitRequestDefinitionOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves all JIT requests within the subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<JitRequestDefinition>>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.ListBySubscription");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.ListBySubscriptionAsync(cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(data => new JitRequestDefinition(Parent, data)).ToArray() as IReadOnlyList<JitRequestDefinition>, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves all JIT requests within the subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<JitRequestDefinition>> ListBySubscription(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.ListBySubscription");
-            scope.Start();
-            try
-            {
-                var response = _restClient.ListBySubscription(cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(data => new JitRequestDefinition(Parent, data)).ToArray() as IReadOnlyList<JitRequestDefinition>, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Retrieves all JIT requests within the resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IReadOnlyList<JitRequestDefinition>>> ListByResourceGroupAsync(CancellationToken cancellationToken = default)
@@ -422,6 +340,52 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _restClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken);
                 return Response.FromValue(response.Value.Value.Select(data => new JitRequestDefinition(Parent, data)).ToArray() as IReadOnlyList<JitRequestDefinition>, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Filters the list of <see cref="JitRequestDefinition" /> for this resource group represented as generic resources. </summary>
+        /// <param name="nameFilter"> The filter used in this operation. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
+        /// <param name="top"> The number of results to return. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
+        public Pageable<Core.GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.ListAsGenericResource");
+            scope.Start();
+            try
+            {
+                var filters = new ResourceFilterCollection(JitRequestDefinitionOperations.ResourceType);
+                filters.SubstringFilter = nameFilter;
+                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Filters the list of <see cref="JitRequestDefinition" /> for this resource group represented as generic resources. </summary>
+        /// <param name="nameFilter"> The filter used in this operation. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
+        /// <param name="top"> The number of results to return. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
+        public AsyncPageable<Core.GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("JitRequestDefinitionContainer.ListAsGenericResource");
+            scope.Start();
+            try
+            {
+                var filters = new ResourceFilterCollection(JitRequestDefinitionOperations.ResourceType);
+                filters.SubstringFilter = nameFilter;
+                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

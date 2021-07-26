@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources
             _pipeline = pipeline;
         }
 
-        internal Core.HttpMessage CreateGetRequest(string resourceGroupName, string applicationDefinitionName)
+        internal Azure.Core.HttpMessage CreateGetRequest(string resourceGroupName, string applicationDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateDeleteRequest(string resourceGroupName, string applicationDefinitionName)
+        internal Azure.Core.HttpMessage CreateDeleteRequest(string resourceGroupName, string applicationDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string applicationDefinitionName, ApplicationDefinitionData parameters)
+        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string applicationDefinitionName, ApplicationDefinitionData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
+        internal Azure.Core.HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
+        internal Azure.Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

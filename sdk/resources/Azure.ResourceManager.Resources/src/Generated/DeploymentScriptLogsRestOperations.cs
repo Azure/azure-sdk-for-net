@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources
             _pipeline = pipeline;
         }
 
-        internal Core.HttpMessage CreateGetLogsRequest(string resourceGroupName, string scriptName)
+        internal Azure.Core.HttpMessage CreateGetLogsRequest(string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetLogsDefaultRequest(string resourceGroupName, string scriptName, int? tail)
+        internal Azure.Core.HttpMessage CreateGetLogsDefaultRequest(string resourceGroupName, string scriptName, int? tail)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

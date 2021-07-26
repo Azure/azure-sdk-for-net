@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
             _pipeline = pipeline;
         }
 
-        internal Core.HttpMessage CreateDeleteAtScopeRequest(string scope, string deploymentName)
+        internal Azure.Core.HttpMessage CreateDeleteAtScopeRequest(string scope, string deploymentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateCheckExistenceAtScopeRequest(string scope, string deploymentName)
+        internal Azure.Core.HttpMessage CreateCheckExistenceAtScopeRequest(string scope, string deploymentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, string deploymentName, Deployment parameters)
+        internal Azure.Core.HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, string deploymentName, Deployment parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetAtScopeRequest(string scope, string deploymentName)
+        internal Azure.Core.HttpMessage CreateGetAtScopeRequest(string scope, string deploymentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateCancelAtScopeRequest(string scope, string deploymentName)
+        internal Azure.Core.HttpMessage CreateCancelAtScopeRequest(string scope, string deploymentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateValidateAtScopeRequest(string scope, string deploymentName, Deployment parameters)
+        internal Azure.Core.HttpMessage CreateValidateAtScopeRequest(string scope, string deploymentName, Deployment parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateExportTemplateAtScopeRequest(string scope, string deploymentName)
+        internal Azure.Core.HttpMessage CreateExportTemplateAtScopeRequest(string scope, string deploymentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtScopeRequest(string scope, string filter, int? top)
+        internal Azure.Core.HttpMessage CreateListAtScopeRequest(string scope, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateWhatIfAtTenantScopeRequest(string deploymentName, string location, DeploymentWhatIfProperties properties)
+        internal Azure.Core.HttpMessage CreateWhatIfAtTenantScopeRequest(string deploymentName, string location, DeploymentWhatIfProperties properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateWhatIfAtManagementGroupScopeRequest(string groupId, string deploymentName, string location, DeploymentWhatIfProperties properties)
+        internal Azure.Core.HttpMessage CreateWhatIfAtManagementGroupScopeRequest(string groupId, string deploymentName, string location, DeploymentWhatIfProperties properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateWhatIfAtSubscriptionScopeRequest(string subscriptionId, string deploymentName, DeploymentWhatIfProperties properties, string location)
+        internal Azure.Core.HttpMessage CreateWhatIfAtSubscriptionScopeRequest(string subscriptionId, string deploymentName, DeploymentWhatIfProperties properties, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateWhatIfRequest(string subscriptionId, string resourceGroupName, string deploymentName, DeploymentWhatIfProperties properties, string location)
+        internal Azure.Core.HttpMessage CreateWhatIfRequest(string subscriptionId, string resourceGroupName, string deploymentName, DeploymentWhatIfProperties properties, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateCalculateTemplateHashRequest(object template)
+        internal Azure.Core.HttpMessage CreateCalculateTemplateHashRequest(object template)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1132,7 +1132,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListAtScopeNextPageRequest(string nextLink, string scope, string filter, int? top)
+        internal Azure.Core.HttpMessage CreateListAtScopeNextPageRequest(string nextLink, string scope, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

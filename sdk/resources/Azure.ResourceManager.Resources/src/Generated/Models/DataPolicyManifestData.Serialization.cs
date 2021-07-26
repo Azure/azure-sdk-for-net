@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources
                             List<ResourceTypeAliases> array = new List<ResourceTypeAliases>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Sample.ResourceTypeAliases.DeserializeResourceTypeAliases(item));
+                                array.Add(Resources.ResourceTypeAliases.DeserializeResourceTypeAliases(item));
                             }
                             resourceTypeAliases = array;
                             continue;

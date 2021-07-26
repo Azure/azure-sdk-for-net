@@ -31,6 +31,12 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
 
+        /// <summary> Verify that the input resource Id is a valid container for this type. </summary>
+        /// <param name="identifier"> The input resource Id to check. </param>
+        protected override void ValidateResourceType(ResourceIdentifier identifier)
+        {
+        }
+
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Represents the REST operations. </summary>
@@ -127,7 +133,7 @@ namespace Azure.ResourceManager.Resources
                 if (Id.GetType() == typeof(TenantResourceIdentifier))
                 {
                     var parent = Id;
-                    while (parent.Parent != null)
+                    while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
                     {
                         parent = parent.Parent as TenantResourceIdentifier;
                     }
@@ -181,7 +187,7 @@ namespace Azure.ResourceManager.Resources
                 if (Id.GetType() == typeof(TenantResourceIdentifier))
                 {
                     var parent = Id;
-                    while (parent.Parent != null)
+                    while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
                     {
                         parent = parent.Parent as TenantResourceIdentifier;
                     }
@@ -229,7 +235,7 @@ namespace Azure.ResourceManager.Resources
                 if (Id.GetType() == typeof(TenantResourceIdentifier))
                 {
                     var parent = Id;
-                    while (parent.Parent != null)
+                    while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
                     {
                         parent = parent.Parent as TenantResourceIdentifier;
                     }
@@ -278,7 +284,7 @@ namespace Azure.ResourceManager.Resources
                 if (Id.GetType() == typeof(TenantResourceIdentifier))
                 {
                     var parent = Id;
-                    while (parent.Parent != null)
+                    while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
                     {
                         parent = parent.Parent as TenantResourceIdentifier;
                     }
@@ -423,8 +429,33 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.Name, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    if (Id.GetType() == typeof(TenantResourceIdentifier))
+                    {
+                        var parent = Id;
+                        while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
+                        {
+                            parent = parent.Parent as TenantResourceIdentifier;
+                        }
+                        if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                        {
+                            var response = _restClient.ListByManagementGroup(Id.Name, filter, top, cancellationToken: cancellationToken);
+                            return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        }
+                        else
+                        {
+                            var response = _restClient.ListBuiltIn(filter, top, cancellationToken: cancellationToken);
+                            return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        }
+                    }
+                    else if (Id.GetType() == typeof(SubscriptionResourceIdentifier))
+                    {
+                        var response = _restClient.List(Id.Name, filter, top, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    else
+                    {
+                        throw new ArgumentException($"Invalid Id: {Id}.");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -438,8 +469,33 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    if (Id.GetType() == typeof(TenantResourceIdentifier))
+                    {
+                        var parent = Id;
+                        while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
+                        {
+                            parent = parent.Parent as TenantResourceIdentifier;
+                        }
+                        if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                        {
+                            var response = _restClient.ListByManagementGroupNextPage(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken);
+                            return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        }
+                        else
+                        {
+                            var response = _restClient.ListBuiltInNextPage(nextLink, filter, top, cancellationToken: cancellationToken);
+                            return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        }
+                    }
+                    else if (Id.GetType() == typeof(SubscriptionResourceIdentifier))
+                    {
+                        var response = _restClient.ListNextPage(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken);
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    else
+                    {
+                        throw new ArgumentException($"Invalid Id: {Id}.");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -463,8 +519,33 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    if (Id.GetType() == typeof(TenantResourceIdentifier))
+                    {
+                        var parent = Id;
+                        while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
+                        {
+                            parent = parent.Parent as TenantResourceIdentifier;
+                        }
+                        if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                        {
+                            var response = await _restClient.ListByManagementGroupAsync(Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                            return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        }
+                        else
+                        {
+                            var response = await _restClient.ListBuiltInAsync(filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                            return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        }
+                    }
+                    else if (Id.GetType() == typeof(SubscriptionResourceIdentifier))
+                    {
+                        var response = await _restClient.ListAsync(Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    else
+                    {
+                        throw new ArgumentException($"Invalid Id: {Id}.");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -478,8 +559,33 @@ namespace Azure.ResourceManager.Resources
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    if (Id.GetType() == typeof(TenantResourceIdentifier))
+                    {
+                        var parent = Id;
+                        while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
+                        {
+                            parent = parent.Parent as TenantResourceIdentifier;
+                        }
+                        if (parent.ResourceType.Equals(ManagementGroupOperations.ResourceType))
+                        {
+                            var response = await _restClient.ListByManagementGroupNextPageAsync(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                            return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        }
+                        else
+                        {
+                            var response = await _restClient.ListBuiltInNextPageAsync(nextLink, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                            return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                        }
+                    }
+                    else if (Id.GetType() == typeof(SubscriptionResourceIdentifier))
+                    {
+                        var response = await _restClient.ListNextPageAsync(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicySetDefinition(Parent, value)), response.Value.NextLink, response.GetRawResponse());
+                    }
+                    else
+                    {
+                        throw new ArgumentException($"Invalid Id: {Id}.");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -488,52 +594,6 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="PolicySetDefinition" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<ResourceManager.Core.GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionContainer.ListAsGenericResource");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(PolicySetDefinitionOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Filters the list of <see cref="PolicySetDefinition" /> for this resource group represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<ResourceManager.Core.GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PolicySetDefinitionContainer.ListAsGenericResource");
-            scope.Start();
-            try
-            {
-                var filters = new ResourceFilterCollection(PolicySetDefinitionOperations.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         // Builders.

@@ -12,13 +12,23 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to ManagementGroup. </summary>
     public static partial class ManagementGroupExtensions
     {
-        #region DeploymentExtended
-        /// <summary> Gets an object representing a DeploymentExtendedContainer along with the instance operations that can be performed on it. </summary>
+        #region PolicyDefinition
+        /// <summary> Gets an object representing a PolicyDefinitionContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="managementGroup"> The <see cref="ManagementGroupOperations" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DeploymentExtendedContainer" /> object. </returns>
-        public static DeploymentExtendedContainer GetDeploymentExtendedContainer(this ManagementGroupOperations managementGroup)
+        /// <returns> Returns a <see cref="PolicyDefinitionContainer" /> object. </returns>
+        public static PolicyDefinitionContainer GetPolicyDefinitionContainer(this ManagementGroupOperations managementGroup)
         {
-            return new DeploymentExtendedContainer(managementGroup);
+            return new PolicyDefinitionContainer(managementGroup);
+        }
+        #endregion
+
+        #region PolicySetDefinition
+        /// <summary> Gets an object representing a PolicySetDefinitionContainer along with the instance operations that can be performed on it. </summary>
+        /// <param name="managementGroup"> The <see cref="ManagementGroupOperations" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="PolicySetDefinitionContainer" /> object. </returns>
+        public static PolicySetDefinitionContainer GetPolicySetDefinitionContainer(this ManagementGroupOperations managementGroup)
+        {
+            return new PolicySetDefinitionContainer(managementGroup);
         }
         #endregion
     }

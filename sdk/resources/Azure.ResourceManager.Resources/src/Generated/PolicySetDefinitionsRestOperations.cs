@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
             _pipeline = pipeline;
         }
 
-        internal Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string policySetDefinitionName, PolicySetDefinitionData parameters)
+        internal Azure.Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string policySetDefinitionName, PolicySetDefinitionData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateDeleteRequest(string subscriptionId, string policySetDefinitionName)
+        internal Azure.Core.HttpMessage CreateDeleteRequest(string subscriptionId, string policySetDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetRequest(string subscriptionId, string policySetDefinitionName)
+        internal Azure.Core.HttpMessage CreateGetRequest(string subscriptionId, string policySetDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetBuiltInRequest(string policySetDefinitionName)
+        internal Azure.Core.HttpMessage CreateGetBuiltInRequest(string policySetDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListRequest(string subscriptionId, string filter, int? top)
+        internal Azure.Core.HttpMessage CreateListRequest(string subscriptionId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListBuiltInRequest(string filter, int? top)
+        internal Azure.Core.HttpMessage CreateListBuiltInRequest(string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateCreateOrUpdateAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData parameters)
+        internal Azure.Core.HttpMessage CreateCreateOrUpdateAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateDeleteAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName)
+        internal Azure.Core.HttpMessage CreateDeleteAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateGetAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName)
+        internal Azure.Core.HttpMessage CreateGetAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListByManagementGroupRequest(string managementGroupId, string filter, int? top)
+        internal Azure.Core.HttpMessage CreateListByManagementGroupRequest(string managementGroupId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, int? top)
+        internal Azure.Core.HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListBuiltInNextPageRequest(string nextLink, string filter, int? top)
+        internal Azure.Core.HttpMessage CreateListBuiltInNextPageRequest(string nextLink, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListByManagementGroupNextPageRequest(string nextLink, string managementGroupId, string filter, int? top)
+        internal Azure.Core.HttpMessage CreateListByManagementGroupNextPageRequest(string nextLink, string managementGroupId, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources
             _pipeline = pipeline;
         }
 
-        internal Core.HttpMessage CreateGetByPolicyModeRequest(string policyMode)
+        internal Azure.Core.HttpMessage CreateGetByPolicyModeRequest(string policyMode)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListRequest(string filter)
+        internal Azure.Core.HttpMessage CreateListRequest(string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Core.HttpMessage CreateListNextPageRequest(string nextLink, string filter)
+        internal Azure.Core.HttpMessage CreateListNextPageRequest(string nextLink, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

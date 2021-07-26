@@ -92,13 +92,13 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteAtScopeAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.DeleteAtScope");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.Delete");
             scope.Start();
             try
             {
-                var operation = await StartDeleteAtScopeAsync(cancellationToken).ConfigureAwait(false);
+                var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteAtScope(CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.DeleteAtScope");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.Delete");
             scope.Start();
             try
             {
-                var operation = StartDeleteAtScope(cancellationToken);
+                var operation = StartDelete(cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DeploymentsDeleteAtScopeOperation> StartDeleteAtScopeAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<DeploymentsDeleteAtScopeOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.StartDeleteAtScope");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.StartDelete");
             scope.Start();
             try
             {
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DeploymentsDeleteAtScopeOperation StartDeleteAtScope(CancellationToken cancellationToken = default)
+        public virtual DeploymentsDeleteAtScopeOperation StartDelete(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.StartDeleteAtScope");
+            using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedOperations.StartDelete");
             scope.Start();
             try
             {
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Resources
                 if (Id.GetType() == typeof(TenantResourceIdentifier))
                 {
                     var parent = Id;
-                    while (parent.Parent != null)
+                    while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
                     {
                         parent = parent.Parent as TenantResourceIdentifier;
                     }
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Resources
                 if (Id.GetType() == typeof(TenantResourceIdentifier))
                 {
                     var parent = Id;
-                    while (parent.Parent != null)
+                    while (parent.Parent != ResourceIdentifier.RootResourceIdentifier)
                     {
                         parent = parent.Parent as TenantResourceIdentifier;
                     }
