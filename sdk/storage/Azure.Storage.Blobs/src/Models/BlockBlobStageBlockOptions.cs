@@ -2,26 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Models;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Optional parameters for Append Blob Open Write.
+    /// Optional paratmers for staging a block for a block blob.
     /// </summary>
-    public class AppendBlobOpenWriteOptions
+    public class BlockBlobStageBlockOptions
     {
         /// <summary>
-        /// The size of the buffer to use.  Default is 4 MB,
-        /// max is 4 MB. See <see cref="AppendBlobClient.AppendBlobMaxAppendBlockBytes"/>.
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on the upload of this Block Blob.
         /// </summary>
-        public long? BufferSize { get; set; }
-
-        /// <summary>
-        /// Access conditions used to open the write stream.
-        /// </summary>
-        public AppendBlobRequestConditions OpenConditions { get; set; }
+        public BlobRequestConditions Conditions { get; set; }
 
         /// <summary>
         /// Optional <see cref="IProgress{Long}"/> to provide

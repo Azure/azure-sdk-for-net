@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -69,5 +70,11 @@ namespace Azure.Storage.Blobs.Models
         /// has immutable storage with versioning enabled.
         /// </summary>
         public bool? LegalHold { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
+        /// hashing on uploads.
+        /// </summary>
+        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }

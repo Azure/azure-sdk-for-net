@@ -19,6 +19,6 @@ namespace Azure.Storage.Models
         /// recalculating. This hash will be ignored if the upload splits into
         /// multiple REST calls and new ones will be calculated.
         /// </summary>
-        public byte PrecalculatedHash { get; set; }
+        public byte[] PrecalculatedHash { get; set; }
     }
 }
