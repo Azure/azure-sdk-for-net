@@ -150,7 +150,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Adds the FROM clause, its argument, and an alias for its argument into the query.
         /// </summary>
         /// <param name="collection">The collection being queried from.</param>
-        /// <param name="alias">The alias being assigned to the collection being queried from.</param>
+        /// <param name="alias">Collection alias.</param>
         /// <returns> ADT query with a from clause. </returns>
         public DigitalTwinsQueryBuilder From(AdtCollection collection, string alias)
         {
