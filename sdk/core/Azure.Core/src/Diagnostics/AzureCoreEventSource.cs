@@ -143,7 +143,7 @@ namespace Azure.Core.Diagnostics
             WriteEvent(RequestRedirectEvent, requestId, from, to, status);
         }
 
-        [Event(RequestRedirectBlockedEvent, Level = EventLevel.Warning, Message = "Request [{0}] Insecure HTTPS to HTTP redirect from {1} to {2} blocked.")]
+        [Event(RequestRedirectBlockedEvent, Level = EventLevel.Warning, Message = "Request [{0}] Insecure HTTPS to HTTP redirect from {1} to {2} was blocked.")]
         public void RequestRedirectBlocked(string requestId, string from, string to)
         {
             WriteEvent(RequestRedirectBlockedEvent, requestId, from, to);
