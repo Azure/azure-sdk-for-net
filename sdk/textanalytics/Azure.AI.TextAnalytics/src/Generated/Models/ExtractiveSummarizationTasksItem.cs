@@ -11,21 +11,21 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasksExtractiveSummarizationTasksItem. </summary>
-    internal partial class TasksStateTasksExtractiveSummarizationTasksItem : TaskState
+    internal partial class ExtractiveSummarizationTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksExtractiveSummarizationTasksItem. </summary>
+        /// <summary> Initializes a new instance of ExtractiveSummarizationTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        internal TasksStateTasksExtractiveSummarizationTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
+        internal ExtractiveSummarizationTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksExtractiveSummarizationTasksItem. </summary>
+        /// <summary> Initializes a new instance of ExtractiveSummarizationTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="taskName"> . </param>
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
-        internal TasksStateTasksExtractiveSummarizationTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, ExtractiveSummarizationResult results) : base(lastUpdateDateTime, taskName, status)
+        internal ExtractiveSummarizationTasksItem(DateTimeOffset lastUpdateDateTime, string taskName, TextAnalyticsOperationStatus status, ExtractiveSummarizationResult results) : base(lastUpdateDateTime, taskName, status)
         {
             Results = results;
         }

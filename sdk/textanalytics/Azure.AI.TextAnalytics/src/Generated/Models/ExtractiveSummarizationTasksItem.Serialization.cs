@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TasksStateTasksExtractiveSummarizationTasksItem
+    internal partial class ExtractiveSummarizationTasksItem
     {
-        internal static TasksStateTasksExtractiveSummarizationTasksItem DeserializeTasksStateTasksExtractiveSummarizationTasksItem(JsonElement element)
+        internal static ExtractiveSummarizationTasksItem DeserializeExtractiveSummarizationTasksItem(JsonElement element)
         {
             Optional<ExtractiveSummarizationResult> results = default;
             DateTimeOffset lastUpdateDateTime = default;
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new TasksStateTasksExtractiveSummarizationTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
+            return new ExtractiveSummarizationTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
         }
     }
 }

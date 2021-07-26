@@ -810,6 +810,11 @@ namespace Azure.AI.TextAnalytics.Tests
                         ""code"": ""InvalidRequest"",
                         ""message"": ""Some error"",
                         ""target"": ""#/tasks/sentimentAnalysisTasks/0""
+                      },
+                      {
+                        ""code"": ""InvalidRequest"",
+                        ""message"": ""Some error"",
+                        ""target"": ""#/tasks/extractiveSummarizationTasks/0""
                       }
                     ],
                     ""tasks"": {
@@ -818,9 +823,9 @@ namespace Azure.AI.TextAnalytics.Tests
                         ""lastUpdateDateTime"": ""2021-03-03T22:39:37Z""
                       },
                       ""completed"": 0,
-                      ""failed"": 5,
+                      ""failed"": 6,
                       ""inProgress"": 0,
-                      ""total"": 5,
+                      ""total"": 6,
                       ""entityRecognitionTasks"": [
                         {
                           ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
@@ -855,6 +860,13 @@ namespace Azure.AI.TextAnalytics.Tests
                           ""taskName"": ""something"",
                           ""state"": ""failed""
                         }
+                      ],
+                      ""extractiveSummarizationTasks"": [
+                        {
+                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
+                          ""taskName"": ""something"",
+                          ""state"": ""failed""
+                        }
                       ]
                     }
                 }"));
@@ -877,16 +889,17 @@ namespace Azure.AI.TextAnalytics.Tests
                 RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { new RecognizePiiEntitiesAction() },
                 RecognizeLinkedEntitiesActions = new List<RecognizeLinkedEntitiesAction>() { new RecognizeLinkedEntitiesAction() },
                 AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() },
+                ExtractSummaryActions = new List<ExtractSummaryAction>() { new ExtractSummaryAction() },
                 DisplayName = "AnalyzeOperationBatchWithErrorTest"
             };
 
             var operation = new AnalyzeActionsOperation("75d521bc-c2aa-4d8a-aabe-713e72d53a2d", client);
             await operation.UpdateStatusAsync();
 
-            Assert.AreEqual(5, operation.ActionsFailed);
+            Assert.AreEqual(6, operation.ActionsFailed);
             Assert.AreEqual(0, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(5, operation.ActionsTotal);
+            Assert.AreEqual(6, operation.ActionsTotal);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -896,6 +909,7 @@ namespace Azure.AI.TextAnalytics.Tests
             RecognizePiiEntitiesActionResult piiActionsResults = resultCollection.RecognizePiiEntitiesResults.FirstOrDefault();
             RecognizeLinkedEntitiesActionResult entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults.FirstOrDefault();
             AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults.FirstOrDefault();
+            ExtractSummaryActionResult extractSummaryActionsResults = resultCollection.ExtractSummaryResults.FirstOrDefault();
 
             Assert.IsTrue(entitiesActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
@@ -911,6 +925,9 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(analyzeSentimentActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => analyzeSentimentActionsResults.DocumentsResults.GetType());
+
+            Assert.IsTrue(extractSummaryActionsResults.HasError);
+            Assert.Throws<InvalidOperationException>(() => extractSummaryActionsResults.DocumentsResults.GetType());
         }
 
         [Test]

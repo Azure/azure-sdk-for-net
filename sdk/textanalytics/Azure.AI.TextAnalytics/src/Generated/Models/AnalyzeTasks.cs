@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
             KeyPhraseExtractionTasks = new ChangeTrackingList<KeyPhraseExtractionTasksItem>();
             EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTasksItem>();
             SentimentAnalysisTasks = new ChangeTrackingList<SentimentAnalysisTasksItem>();
-            ExtractiveSummarizationTasks = new ChangeTrackingList<TasksStateTasksExtractiveSummarizationTasksItem>();
+            ExtractiveSummarizationTasks = new ChangeTrackingList<ExtractiveSummarizationTasksItem>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="entityLinkingTasks"> . </param>
         /// <param name="sentimentAnalysisTasks"> . </param>
         /// <param name="extractiveSummarizationTasks"> . </param>
-        internal AnalyzeTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<SentimentAnalysisTasksItem> sentimentAnalysisTasks, IReadOnlyList<TasksStateTasksExtractiveSummarizationTasksItem> extractiveSummarizationTasks)
+        internal AnalyzeTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks, IReadOnlyList<SentimentAnalysisTasksItem> sentimentAnalysisTasks, IReadOnlyList<ExtractiveSummarizationTasksItem> extractiveSummarizationTasks)
         {
             Completed = completed;
             Failed = failed;
@@ -66,6 +66,6 @@ namespace Azure.AI.TextAnalytics.Models
         public IReadOnlyList<KeyPhraseExtractionTasksItem> KeyPhraseExtractionTasks { get; }
         public IReadOnlyList<EntityLinkingTasksItem> EntityLinkingTasks { get; }
         public IReadOnlyList<SentimentAnalysisTasksItem> SentimentAnalysisTasks { get; }
-        public IReadOnlyList<TasksStateTasksExtractiveSummarizationTasksItem> ExtractiveSummarizationTasks { get; }
+        public IReadOnlyList<ExtractiveSummarizationTasksItem> ExtractiveSummarizationTasks { get; }
     }
 }
