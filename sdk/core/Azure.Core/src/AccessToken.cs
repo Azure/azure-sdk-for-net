@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Core
 {
@@ -32,6 +33,7 @@ namespace Azure.Core
         public DateTimeOffset ExpiresOn { get; }
 
         /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object? obj)
         {
             if (obj is AccessToken accessToken)
@@ -43,6 +45,7 @@ namespace Azure.Core
         }
 
         /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return HashCodeBuilder.Combine(Token, ExpiresOn);
