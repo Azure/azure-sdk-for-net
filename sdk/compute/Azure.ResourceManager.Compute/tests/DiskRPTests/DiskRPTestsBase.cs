@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             // or copy in which casethe resource group will be created with the original disk.
             if (diskCreateOption != DiskCreateOption.Import && diskCreateOption != DiskCreateOption.Copy)
             {
-                await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(DiskRPLocation));
+                await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(DiskRPLocation));
             }
 
             // **********
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             // SETUP
             // **********
             // Create resource group
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(DiskRPLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(DiskRPLocation));
 
             // Put disk
             Disk diskOut = await WaitForCompletionAsync(await DisksOperations.StartCreateOrUpdateAsync(rgName, diskName, sourceDisk));
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             var rgName = Recording.GenerateAssetName(TestPrefix);
             var desName = Recording.GenerateAssetName(DiskNamePrefix);
             DiskEncryptionSet des = GenerateDefaultDiskEncryptionSet(DiskRPLocation);
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(DiskRPLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(DiskRPLocation));
 
             // Put DiskEncryptionSet
             DiskEncryptionSet desOut = await WaitForCompletionAsync(await DiskEncryptionSetsOperations.StartCreateOrUpdateAsync(rgName, desName, des));
@@ -251,8 +251,8 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             // Create resource groups, unless create option is import in which case resource group will be created with vm
             if (diskCreateOption != DiskCreateOption.Import)
             {
-                await ResourceGroupsOperations.CreateOrUpdateAsync(rgName1, new ResourceGroup(DiskRPLocation));
-                await ResourceGroupsOperations.CreateOrUpdateAsync(rgName2, new ResourceGroup(DiskRPLocation));
+                await ResourceGroupsOperations.CreateOrUpdateAsync(rgName1, new Resources.Models.ResourceGroup(DiskRPLocation));
+                await ResourceGroupsOperations.CreateOrUpdateAsync(rgName2, new Resources.Models.ResourceGroup(DiskRPLocation));
             }
 
             // Put 4 disks, 2 in each resource group
@@ -302,8 +302,8 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             // SETUP
             // **********
             // Create resource groups
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName1, new ResourceGroup(DiskRPLocation));
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName2, new ResourceGroup(DiskRPLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName1, new Resources.Models.ResourceGroup(DiskRPLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName2, new Resources.Models.ResourceGroup(DiskRPLocation));
 
             // Put 4 disks, 2 in each resource group
             Disk diskOut11 = await WaitForCompletionAsync(await DisksOperations.StartCreateOrUpdateAsync(rgName1, diskName1, disk1));
@@ -363,8 +363,8 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             // SETUP
             // **********
             // Create resource groups
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName1, new ResourceGroup(DiskRPLocation));
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName2, new ResourceGroup(DiskRPLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName1, new Resources.Models.ResourceGroup(DiskRPLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName2, new Resources.Models.ResourceGroup(DiskRPLocation));
 
             // Put 4 diskEncryptionSets, 2 in each resource group
             await WaitForCompletionAsync(await DiskEncryptionSetsOperations.StartCreateOrUpdateAsync(rgName1, desName1, des1));
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             Disk disk = await GenerateDefaultDisk(DiskCreateOption.Empty.ToString(), rgName, 10);
             disk.Location = location;
 
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(location));
             // Get DiskEncryptionSet
             DiskEncryptionSet desOut = await DiskEncryptionSetsOperations.GetAsync("longrunningrg-southeastasia", desName);
             Assert.NotNull(desOut);
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             var desName = "longlivedSwaggerDES";
             Disk disk = await GenerateDefaultDisk(DiskCreateOption.Empty.ToString(), rgName, 10);
             disk.Location = location;
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(location));
             // Put Disk with PlatformManagedKey
             await WaitForCompletionAsync(await DisksOperations.StartCreateOrUpdateAsync(rgName, diskName, disk));
             Disk diskOut = await DisksOperations.GetAsync(rgName, diskName);
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
         {
             // Create an empty disk
             Disk originalDisk = await GenerateDefaultDisk("Empty", rgName, diskSizeGB: diskSizeGB);
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(location));
             Disk diskOut = await WaitForCompletionAsync((await DisksOperations.StartCreateOrUpdateAsync(rgName, Recording.GenerateAssetName(DiskNamePrefix + "_original"), originalDisk)));
 
             Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id);

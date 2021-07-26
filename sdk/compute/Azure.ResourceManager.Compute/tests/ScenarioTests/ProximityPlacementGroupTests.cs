@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Tests
             await CleanupResourceGroupsAsync();
         }
 
-        public ResourceGroup m_resourceGroup1;
+        public Resources.Models.ResourceGroup m_resourceGroup1;
         public string m_baseResourceGroupName;
         public string m_resourceGroup1Name;
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             m_resourceGroup1 = await ResourceGroupsOperations.CreateOrUpdateAsync(
                 m_resourceGroup1Name,
-                new ResourceGroup(m_location)
+                new Resources.Models.ResourceGroup(m_location)
                 {
                     Tags = { { m_resourceGroup1Name, Recording.UtcNow.ToString("u") } }
                 });
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             await ResourceGroupsOperations.CreateOrUpdateAsync(
                 resourceGroup2Name,
-                new ResourceGroup(m_location)
+                new Resources.Models.ResourceGroup(m_location)
                 {
                     Tags = { { resourceGroup2Name, Recording.UtcNow.ToString("u") } }
                 });

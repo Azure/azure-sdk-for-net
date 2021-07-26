@@ -18,4 +18,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj" />
+  </ItemGroup>
 </Project>

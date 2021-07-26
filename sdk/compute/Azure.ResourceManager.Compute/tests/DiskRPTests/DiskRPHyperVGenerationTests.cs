@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             Disk disk = await GenerateDefaultDisk(DiskCreateOption.Empty.ToString(), rgName, 10);
             disk.HyperVGeneration = HyperVGeneration.V1;
             disk.Location = DiskRPLocation;
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(DiskRPLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(DiskRPLocation));
             //put disk
             await WaitForCompletionAsync(await DisksOperations.StartCreateOrUpdateAsync(rgName, diskName, disk));
             Disk diskOut = await DisksOperations.GetAsync(rgName, diskName);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             Disk disk = await GenerateDefaultDisk(DiskCreateOption.Empty.ToString(), rgName, 10);
             disk.HyperVGeneration = HyperVGeneration.V2;
             disk.Location = DiskRPLocation;
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(DiskRPLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(DiskRPLocation));
             //put disk
             await WaitForCompletionAsync(await DisksOperations.StartCreateOrUpdateAsync(rgName, diskName, disk));
             Disk diskOut = await DisksOperations.GetAsync(rgName, diskName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             var diskName = Recording.GenerateAssetName(DiskNamePrefix);
             Disk disk = await GenerateDefaultDisk(DiskCreateOption.Empty.ToString(), rgName, 10);
             disk.Location = DiskRPLocation;
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(DiskRPLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(DiskRPLocation));
             //put disk
             await WaitForCompletionAsync(await DisksOperations.StartCreateOrUpdateAsync(rgName, diskName, disk));
             Disk diskOut = await DisksOperations.GetAsync(rgName, diskName);

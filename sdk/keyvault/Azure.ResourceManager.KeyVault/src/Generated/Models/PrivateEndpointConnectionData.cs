@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {

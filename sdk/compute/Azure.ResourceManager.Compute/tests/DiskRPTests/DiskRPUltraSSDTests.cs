@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
                 disk.DiskMBpsReadOnly = 8;
                 disk.MaxShares = 2;
             }
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(location));
 
             // Put
             Disk diskOut = await WaitForCompletionAsync(await DisksOperations.StartCreateOrUpdateAsync(rgName, diskName, disk));

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var resourceGroup = await ResourceGroupsOperations.CreateOrUpdateAsync(
                 rgName,
-                new ResourceGroup(m_location));
+                new Resources.Models.ResourceGroup(m_location));
             var inputContainerService = CreateDefaultContainerServiceInput(rgName, masterDnsPrefix, agentPoolDnsPrefix);
             if (containerServiceCustomizer != null)
             {

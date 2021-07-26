@@ -12,6 +12,11 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A Class representing a Vault along with the instance operations that can be performed on it. </summary>
     public class Vault : VaultOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "Vault"/> class for mocking. </summary>
+        protected Vault() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "Vault"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -21,6 +26,6 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets or sets the VaultData. </summary>
-        public VaultData Data { get; private set; }
+        public virtual VaultData Data { get; private set; }
     }
 }

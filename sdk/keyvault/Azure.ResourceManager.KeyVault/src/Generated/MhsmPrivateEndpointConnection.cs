@@ -12,6 +12,11 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A Class representing a MhsmPrivateEndpointConnection along with the instance operations that can be performed on it. </summary>
     public class MhsmPrivateEndpointConnection : MhsmPrivateEndpointConnectionOperations
     {
+        /// <summary> Initializes a new instance of the <see cref = "MhsmPrivateEndpointConnection"/> class for mocking. </summary>
+        protected MhsmPrivateEndpointConnection() : base()
+        {
+        }
+
         /// <summary> Initializes a new instance of the <see cref = "MhsmPrivateEndpointConnection"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -21,6 +26,6 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets or sets the MhsmPrivateEndpointConnectionData. </summary>
-        public MhsmPrivateEndpointConnectionData Data { get; private set; }
+        public virtual MhsmPrivateEndpointConnectionData Data { get; private set; }
     }
 }

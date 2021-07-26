@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             var diskName = Recording.GenerateAssetName(DiskNamePrefix);
             Disk disk = await GenerateDefaultDisk(DiskCreateOption.Upload.ToString(), rgName, 32767);
             disk.Location = DiskRPLocation;
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(DiskRPLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(DiskRPLocation));
             //put disk
             await WaitForCompletionAsync(await DisksOperations.StartCreateOrUpdateAsync(rgName, diskName, disk));
             Disk diskOut = await DisksOperations.GetAsync(rgName, diskName);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             Disk disk = GenerateBaseDisk(DiskCreateOption.FromImage.ToString());
             disk.Location = DiskRPLocation;
             disk.CreationData.GalleryImageReference = new ImageDiskReference("/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourceGroups/swaggertests/providers/Microsoft.Compute/galleries/swaggergallery/images/lunexample2/versions/1.0.0", 1);
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(DiskRPLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(DiskRPLocation));
             //put disk
             await WaitForCompletionAsync(await DisksOperations.StartCreateOrUpdateAsync(rgName, diskName, disk));
             Disk diskOut = await DisksOperations.GetAsync(rgName, diskName);

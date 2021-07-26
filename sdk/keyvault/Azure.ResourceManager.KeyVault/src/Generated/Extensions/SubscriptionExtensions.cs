@@ -12,7 +12,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -25,7 +27,7 @@ namespace Azure.ResourceManager.KeyVault
             return new VaultsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
         }
 
-        /// <summary> Lists the Vaults for this SubscriptionOperations. </summary>
+        /// <summary> Lists the Vaults for this <see cref="SubscriptionOperations" />. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 async Task<Page<Vault>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("VaultOperations.ListVaults");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListVaults");
                     scope.Start();
                     try
                     {
@@ -71,7 +73,7 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
 
-        /// <summary> Lists the Vaults for this SubscriptionOperations. </summary>
+        /// <summary> Lists the Vaults for this <see cref="SubscriptionOperations" />. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -99,7 +101,7 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 Page<Vault> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("VaultOperations.ListVaults");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListVaults");
                     scope.Start();
                     try
                     {
@@ -117,7 +119,7 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
 
-        /// <summary> Filters the list of Vaults for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
+        /// <summary> Filters the list of Vaults for a <see cref="SubscriptionOperations" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
@@ -131,7 +133,7 @@ namespace Azure.ResourceManager.KeyVault
             return ResourceListOperations.ListAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of Vaults for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
+        /// <summary> Filters the list of Vaults for a <see cref="SubscriptionOperations" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
@@ -161,7 +163,7 @@ namespace Azure.ResourceManager.KeyVault
             return new ManagedHsmsRestOperations(clientDiagnostics, pipeline, subscriptionId, endpoint);
         }
 
-        /// <summary> Lists the ManagedHsms for this SubscriptionOperations. </summary>
+        /// <summary> Lists the ManagedHsms for this <see cref="SubscriptionOperations" />. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -189,7 +191,7 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 async Task<Page<ManagedHsm>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ManagedHsmOperations.ListManagedHsms");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListManagedHsms");
                     scope.Start();
                     try
                     {
@@ -207,7 +209,7 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
 
-        /// <summary> Lists the ManagedHsms for this SubscriptionOperations. </summary>
+        /// <summary> Lists the ManagedHsms for this <see cref="SubscriptionOperations" />. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -235,7 +237,7 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 Page<ManagedHsm> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ManagedHsmOperations.ListManagedHsms");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListManagedHsms");
                     scope.Start();
                     try
                     {
@@ -253,7 +255,7 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
 
-        /// <summary> Filters the list of ManagedHsms for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
+        /// <summary> Filters the list of ManagedHsms for a <see cref="SubscriptionOperations" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
@@ -267,7 +269,7 @@ namespace Azure.ResourceManager.KeyVault
             return ResourceListOperations.ListAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
-        /// <summary> Filters the list of ManagedHsms for a Azure.ResourceManager.Core.SubscriptionOperations represented as generic resources. </summary>
+        /// <summary> Filters the list of ManagedHsms for a <see cref="SubscriptionOperations" /> represented as generic resources. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="filter"> The string to filter the list. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
