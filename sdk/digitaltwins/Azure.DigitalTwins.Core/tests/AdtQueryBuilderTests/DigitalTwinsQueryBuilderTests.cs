@@ -7,37 +7,57 @@ using NUnit.Framework;
 
 namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
 {
-    public class AdtQueryBuilderTests
+    public class DigitalTwinsQueryBuilderTests
     {
         [Test]
-        public void AdtQueryBuilder_Select_AllSimple()
+        public void DigitalTwinsQueryBuilder_Select_AllSimple()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .BuildLogic()
+                .Build()
                 .GetQueryText()
                 .Should()
                 .Be("SELECT * FROM DigitalTwins");
         }
 
         [Test]
-        public void AdtQueryBuilder_Select_SingleProperty()
+        public void DigitalTwinsQueryBuilder_Select_SingleProperty()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .Select("Room")
                 .From(AdtCollection.DigitalTwins)
                 .Build()
                 .GetQueryText()
                 .Should()
                 .Be("SELECT Room FROM DigitalTwins");
-    }
+        }
 
         [Test]
-        public void AdtQueryBuilder_Select_MultipleProperties()
+        public void DigitalTwinsQueryBuilder_Select_AliasedConstructor()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder(AdtCollection.DigitalTwins, "T")
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT T FROM DigitalTwins T");
+        }
+
+        [Test]
+        public void DigitalTwinsQueryBuilder_Select_AliasedConstructorWithSelectArgs()
+        {
+            new DigitalTwinsQueryBuilder(AdtCollection.DigitalTwins, "T")
+                .Select("T.Temperature", "T.Humidity")
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT T.Temperature, T.Humidity FROM DigitalTwins T");
+        }
+
+        [Test]
+        public void DigitalTwinsQueryBuilder_Select_MultipleProperties()
+        {
+            new DigitalTwinsQueryBuilder()
                 .Select("Room", "Factory", "Temperature", "Humidity")
                 .From(AdtCollection.DigitalTwins)
                 .Build()
@@ -47,9 +67,9 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Select_Aggregates_Top_All()
+        public void DigitalTwinsQueryBuilder_Select_Aggregates_Top_All()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectTopAll(5)
                 .From(AdtCollection.DigitalTwins)
                 .Build()
@@ -59,9 +79,9 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Select_Aggregates_Top_Properties()
+        public void DigitalTwinsQueryBuilder_Select_Aggregates_Top_Properties()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectTop(3, "Temperature", "Humidity")
                 .From(AdtCollection.DigitalTwins)
                 .Build()
@@ -70,9 +90,9 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
                 .Be("SELECT TOP(3) Temperature, Humidity FROM DigitalTwins");
         }
 
-        public void AdtQueryBuilder_Select_Aggregates_Count()
+        public void DigitalTwinsQueryBuilder_Select_Aggregates_Count()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectCount()
                 .From(AdtCollection.DigitalTwins)
                 .Build()
@@ -82,9 +102,9 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Select_Override()
+        public void DigitalTwinsQueryBuilder_Select_Override()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectCustom("TOP(3) Room, Temperature")
                 .From(AdtCollection.DigitalTwins)
                 .Build()
@@ -94,9 +114,9 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Select_SelectAs()
+        public void DigitalTwinsQueryBuilder_Select_SelectAs()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAs("Temperature", "Temp")
                 .SelectAs("Humidity", "Hum")
                 .From(AdtCollection.DigitalTwins)
@@ -107,9 +127,9 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Select_SelectAsChainedWithSelect()
+        public void DigitalTwinsQueryBuilder_Select_SelectAsChainedWithSelect()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .Select("Occupants", "T")
                 .SelectAs("Temperature", "Temp")
                 .SelectAs("Humidity", "Hum")
@@ -121,9 +141,9 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Select_SelectAs_CustomFrom()
+        public void DigitalTwinsQueryBuilder_Select_SelectAs_CustomFrom()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAs("T.Temperature", "Temp")
                 .FromCustom("DigitalTwins T")
                 .Build()
@@ -133,14 +153,13 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Select_SelectAs_FromAlias()
+        public void DigitalTwinsQueryBuilder_Select_SelectAs_FromAlias()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .Select("T.Temperature")
                 .SelectAs("T.Humidity", "Hum")
                 .From(AdtCollection.DigitalTwins, "T")
-                .Where()
-                .Compare("T.Temperature", QueryComparisonOperator.GreaterOrEqual, 50)
+                .Where(q => q.Compare("T.Temperature", QueryComparisonOperator.GreaterOrEqual, 50))
                 .Build()
                 .GetQueryText()
                 .Should()
@@ -148,13 +167,25 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Where_Comparison()
+        public void DigitalTwinsQueryBuilder_From_MultipleFrom()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
+                .SelectAll()
+                .From(AdtCollection.DigitalTwins)
+                .From(AdtCollection.Relationships)
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM Relationships");
+        }
+
+        [Test]
+        public void DigitalTwinsQueryBuilder_Where_Comparison()
+        {
+            new DigitalTwinsQueryBuilder()
                 .Select("*")
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .Compare("Temperature", QueryComparisonOperator.GreaterOrEqual, 50)
+                .Where(q => q.Compare("Temperature", QueryComparisonOperator.GreaterOrEqual, 50))
                 .Build()
                 .GetQueryText()
                 .Should()
@@ -162,13 +193,12 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Where_Contains()
+        public void DigitalTwinsQueryBuilder_Where_Contains()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .NotContains("Location", new string[] { "Paris", "Tokyo", "Madrid", "Prague" })
+                .Where(q => q.NotContains("Location", new string[] { "Paris", "Tokyo", "Madrid", "Prague" }))
                 .Build()
                 .GetQueryText()
                 .Should()
@@ -176,13 +206,12 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Where_Override()
+        public void DigitalTwinsQueryBuilder_Where_Override()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .CustomClause("IS_OF_MODEL('dtmi:example:room;1', exact)")
+                .Where(q => q.Custom("IS_OF_MODEL('dtmi:example:room;1', exact)"))
                 .Build()
                 .GetQueryText()
                 .Should()
@@ -190,13 +219,12 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Where_IsOfModel()
+        public void DigitalTwinsQueryBuilder_Where_IsOfModel()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .IsOfModel("dtmi:example:room;1", true)
+                .Where(q => q.IsOfModel("dtmi:example:room;1", true))
                 .Build()
                 .GetQueryText()
                 .Should()
@@ -204,13 +232,12 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Where_IsBool()
+        public void DigitalTwinsQueryBuilder_Where_IsBool()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.Relationships)
-                .Where()
-                .IsOfType("isOccupied", AdtDataType.AdtBool)
+                .Where(q => q.IsOfType("isOccupied", AdtDataType.DigitalTwinsBool))
                 .Build()
                 .GetQueryText()
                 .Should()
@@ -218,15 +245,15 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Where_MultipleWhere()
+        public void DigitalTwinsQueryBuilder_Where_MultipleWhere()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .Select("Temperature")
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .IsDefined("Humidity")
-                .And()
-                .CustomClause("Occupants < 10")
+                .Where(q => q
+                    .IsDefined("Humidity")
+                    .And()
+                    .Custom("Occupants < 10"))
                 .Build()
                 .GetQueryText()
                 .Should()
@@ -234,31 +261,67 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_MultipleNested()
+        public void DigitalTwinsQueryBuilder_MultipleNested()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .Parenthetical(q => q
-                    .IsOfType("Humidity", AdtDataType.AdtNumber)
+                .Where(q => q
+                    .Parenthetical(q => q
+                        .IsOfType("Humidity", AdtDataType.DigitalTwinsNumber)
+                        .Or()
+                        .IsOfType("Humidity", AdtDataType.DigitalTwinsPrimative))
                     .Or()
-                    .IsOfType("Humidity", AdtDataType.AdtPrimative))
-                .Or()
-                .Parenthetical(q => q
-                    .IsOfType("Temperature", AdtDataType.AdtNumber)
-                    .Or()
-                    .IsOfType("Temperature", AdtDataType.AdtPrimative))
+                    .Parenthetical(q => q
+                        .IsOfType("Temperature", AdtDataType.DigitalTwinsNumber)
+                        .Or()
+                        .IsOfType("Temperature", AdtDataType.DigitalTwinsPrimative)))
                 .Build()
                 .GetQueryText()
                 .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE (IS_NUMBER(Humidity) OR IS_PRIMATIVE(Humidity)) OR (IS_NUMBER(Temperature) OR IS_PRIMATIVE(Temperature))");
+                .Be("SELECT * FROM DigitalTwins WHERE (IS_NUMBER(Humidity) OR IS_PRIMITIVE(Humidity)) OR (IS_NUMBER(Temperature) OR IS_PRIMITIVE(Temperature))");
         }
 
         [Test]
-        public void AdtQueryBuilder_Select_Null()
+        public void DigitalTwinsQueryBuilder_NestedAnd()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
+                .SelectAll()
+                .From(AdtCollection.DigitalTwins)
+                .Where(q => q
+                    .IsOfModel("dtmi:example:room;1")
+                    .And(q => q
+                        .IsDefined("Temperature")
+                        .And()
+                        .Compare("Temperature", QueryComparisonOperator.Equal, 30)))
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT * FROM DigitalTwins WHERE IS_OF_MODEL('dtmi:example:room;1') AND (IS_DEFINED(Temperature) AND Temperature = 30)");
+        }
+
+        [Test]
+        public void DigitalTwinsQueryBuilder_NestedOr()
+        {
+            new DigitalTwinsQueryBuilder()
+                .SelectCount()
+                .From(AdtCollection.DigitalTwins)
+                .Where(q => q
+                    .Custom("Humidity < 10")
+                    .Or(q => q
+                        .Compare("Temperature", QueryComparisonOperator.LessThan, 40)
+                        .And()
+                        .IsOfType("Temperature", AdtDataType.DigitalTwinsNumber)))
+                .Build()
+                .GetQueryText()
+                .Should()
+                .Be("SELECT COUNT() FROM DigitalTwins WHERE Humidity < 10 OR (Temperature < 40 AND IS_NUMBER(Temperature))");
+        }
+
+        [Test]
+        public void DigitalTwinsQueryBuilder_Select_Null()
+        {
+            new DigitalTwinsQueryBuilder()
                 .Select(null)
                 .From(AdtCollection.DigitalTwins)
                 .Build()
@@ -268,9 +331,9 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_Select_EmptyString()
+        public void DigitalTwinsQueryBuilder_Select_EmptyString()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .Select("")
                 .From(AdtCollection.DigitalTwins)
                 .Build()
@@ -280,9 +343,9 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_FromCustom_Null()
+        public void DigitalTwinsQueryBuilder_FromCustom_Null()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .FromCustom(null)
                 .Build()
@@ -292,9 +355,9 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_FromCustom_EmptyString()
+        public void DigitalTwinsQueryBuilder_FromCustom_EmptyString()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .FromCustom("")
                 .Build()
@@ -304,13 +367,12 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_WhereLogic_Null()
+        public void DigitalTwinsQueryBuilder_WhereLogic_Null()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .IsOfModel(null)
+                .Where(q => q.IsOfModel(null))
                 .Build()
                 .GetQueryText()
                 .Should()
@@ -318,13 +380,12 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_WhereLogic_Is_Of_Type()
+        public void DigitalTwinsQueryBuilder_WhereLogic_Is_Of_Type()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .IsOfType(null, AdtDataType.AdtBool)
+                .Where(q => q.IsOfType(null, AdtDataType.DigitalTwinsBool))
                 .Build()
                 .GetQueryText()
                 .Should()
@@ -332,13 +393,12 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_WhereLogic_StartsEndsWith_Null()
+        public void DigitalTwinsQueryBuilder_WhereLogic_StartsEndsWith_Null()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .StartsWith(null, null)
+                .Where(q => q.StartsWith(null, null))
                 .Build()
                 .GetQueryText()
                 .Should()
@@ -346,31 +406,29 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void AdtQueryBuilder_WhereLogic_ContainsNotContains_Null()
+        public void DigitalTwinsQueryBuilder_WhereLogic_ContainsNotContains_Null()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .Contains(null, null)
+                .Where(q => q.Contains(null, null))
                 .Build()
                 .GetQueryText()
                 .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE  IN []");
+                .Be("SELECT * FROM DigitalTwins WHERE IN []");
         }
 
         [Test]
-        public void AdtQueryBuilder_WhereLogic_Compare_Null()
+        public void DigitalTwinsQueryBuilder_WhereLogic_Compare_Null()
         {
-            new AdtQueryBuilder()
+            new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
-                .Where()
-                .Compare(null, QueryComparisonOperator.Equal, 10)
+                .Where(q => q.Compare(null, QueryComparisonOperator.Equal, 10))
                 .Build()
                 .GetQueryText()
                 .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE  = 10");
+                .Be("SELECT * FROM DigitalTwins WHERE = 10");
         }
     }
 }
