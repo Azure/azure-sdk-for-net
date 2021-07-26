@@ -191,7 +191,7 @@ namespace Azure.AI.Personalizer
         /// <summary> Submit a new Offline Evaluation job. </summary>
         /// <param name="evaluation"> The Offline Evaluation job definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerEvaluation>> CreateAsync(EvaluationContract evaluation, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerEvaluation>> CreateAsync(PersonalizerEvaluationOptions evaluation, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("EvaluationsClient.Create");
             scope.Start();
@@ -209,7 +209,7 @@ namespace Azure.AI.Personalizer
         /// <summary> Submit a new Offline Evaluation job. </summary>
         /// <param name="evaluation"> The Offline Evaluation job definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerEvaluation> Create(EvaluationContract evaluation, CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerEvaluation> Create(PersonalizerEvaluationOptions evaluation, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("EvaluationsClient.Create");
             scope.Start();

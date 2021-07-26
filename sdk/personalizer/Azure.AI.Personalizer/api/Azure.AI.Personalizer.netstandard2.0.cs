@@ -41,8 +41,8 @@ namespace Azure.AI.Personalizer
         public PersonalizerManagementClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
         public virtual Azure.Response ApplyPersonalizerEvaluation(Azure.AI.Personalizer.Models.PersonalizerPolicyReferenceOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ApplyPersonalizerEvaluationAsync(Azure.AI.Personalizer.Models.PersonalizerPolicyReferenceOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Personalizer.Models.PersonalizerEvaluation> CreatePersonalizerEvaluation(Azure.AI.Personalizer.Models.EvaluationContract evaluation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerEvaluation>> CreatePersonalizerEvaluationAsync(Azure.AI.Personalizer.Models.EvaluationContract evaluation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.Personalizer.Models.CreatePersonalizerEvaluationOperation CreatePersonalizerEvaluation(Azure.AI.Personalizer.Models.PersonalizerEvaluationOptions evaluation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.Personalizer.Models.CreatePersonalizerEvaluationOperation> CreatePersonalizerEvaluationAsync(Azure.AI.Personalizer.Models.PersonalizerEvaluationOptions evaluation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeletePersonalizerEvaluation(string evaluationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeletePersonalizerEvaluationAsync(string evaluationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeletePersonalizerLogs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -51,8 +51,8 @@ namespace Azure.AI.Personalizer
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerServiceProperties>> GetPersonalizerConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Personalizer.Models.PersonalizerEvaluation> GetPersonalizerEvaluation(string evaluationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerEvaluation>> GetPersonalizerEvaluationAsync(string evaluationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Personalizer.Models.PersonalizerEvaluation>> GetPersonalizerEvaluations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Personalizer.Models.PersonalizerEvaluation>>> GetPersonalizerEvaluationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.Personalizer.Models.PersonalizerEvaluation> GetPersonalizerEvaluations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.Personalizer.Models.PersonalizerEvaluation> GetPersonalizerEvaluationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Personalizer.Models.PersonalizerLogProperties> GetPersonalizerLogProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerLogProperties>> GetPersonalizerLogPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.IO.Stream> GetPersonalizerModel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -73,14 +73,19 @@ namespace Azure.AI.Personalizer
 }
 namespace Azure.AI.Personalizer.Models
 {
-    public partial class EvaluationContract
+    public partial class CreatePersonalizerEvaluationOperation : Azure.Operation<Azure.AI.Personalizer.Models.PersonalizerEvaluation>
     {
-        public EvaluationContract(string name, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PersonalizerPolicyOptions> policies) { }
-        public bool? EnableOfflineExperimentation { get { throw null; } set { } }
-        public System.DateTimeOffset EndTime { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.Personalizer.Models.PersonalizerPolicyOptions> Policies { get { throw null; } }
-        public System.DateTimeOffset StartTime { get { throw null; } }
+        protected CreatePersonalizerEvaluationOperation() { }
+        public CreatePersonalizerEvaluationOperation(string evaluationId, Azure.AI.Personalizer.PersonalizerManagementClient client) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.AI.Personalizer.Models.PersonalizerEvaluation Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerEvaluation>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerEvaluation>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EvaluationJobStatus : System.IEquatable<Azure.AI.Personalizer.Models.EvaluationJobStatus>
@@ -143,6 +148,15 @@ namespace Azure.AI.Personalizer.Models
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Personalizer.Models.PersonalizerPolicyResult> PolicyResults { get { throw null; } }
         public System.DateTimeOffset? StartTime { get { throw null; } }
         public Azure.AI.Personalizer.Models.EvaluationJobStatus? Status { get { throw null; } }
+    }
+    public partial class PersonalizerEvaluationOptions
+    {
+        public PersonalizerEvaluationOptions(string name, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PersonalizerPolicyOptions> policies) { }
+        public bool? EnableOfflineExperimentation { get { throw null; } set { } }
+        public System.DateTimeOffset EndTime { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Personalizer.Models.PersonalizerPolicyOptions> Policies { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PersonalizerLearningMode : System.IEquatable<Azure.AI.Personalizer.Models.PersonalizerLearningMode>

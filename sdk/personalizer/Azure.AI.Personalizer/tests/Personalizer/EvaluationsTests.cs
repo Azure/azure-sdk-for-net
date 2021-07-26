@@ -19,36 +19,54 @@ namespace Azure.AI.Personalizer.Tests
         public async Task GetEvaluations()
         {
             PersonalizerManagementClient client = GetPersonalizerManagementClient();
-            List<PersonalizerEvaluation> evaluations = (List<PersonalizerEvaluation>)await client.GetPersonalizerEvaluationsAsync();
-            Assert.True(evaluations.Count > 0);
-            Assert.AreEqual("PersonalizerEvaluation", evaluations[0].GetType().Name);
-            Assert.AreEqual("Azure.AI.Personalizer.Models.PersonalizerEvaluation", evaluations[0].GetType().FullName);
-            Assert.False(evaluations[0].Equals(evaluations[1]));
-            var policyResult = evaluations[0].PolicyResults;
+            AsyncPageable<PersonalizerEvaluation> evaluations = client.GetPersonalizerEvaluationsAsync();
+            int numEvaluations = 0;
+            PersonalizerEvaluation eval0 = null;
+            PersonalizerEvaluation eval1 = null;
+            await foreach (PersonalizerEvaluation evaluation in evaluations)
+            {
+                numEvaluations++;
+                if (numEvaluations == 1)
+                {
+                    eval0 = evaluation;
+                }
+                else if (numEvaluations == 2)
+                {
+                    eval1 = evaluation;
+                    break;
+                }
+            }
+            Assert.NotNull(eval0);
+            Assert.NotNull(eval1);
+            Assert.AreEqual("PersonalizerEvaluation", eval0.GetType().Name);
+            Assert.AreEqual("Azure.AI.Personalizer.Models.PersonalizerEvaluation", eval0.GetType().FullName);
+            Assert.False(evaluations.Equals(eval1));
+            var policyResult = eval0.PolicyResults;
             Assert.AreEqual(1, policyResult.Count);
             Assert.AreEqual("Custom Policy 1", policyResult[0].Name);
             Assert.AreEqual(0, policyResult[0].Summary.Count);
             Assert.AreEqual(85, policyResult[0].Arguments.Length);
             Assert.Null(policyResult[0].PolicySource);
             Assert.Null(policyResult[0].TotalSummary);
-            Assert.AreEqual("myFirstEvaluation", evaluations[0].Name);
+            Assert.AreEqual("myFirstEvaluation", eval0.Name);
         }
 
         [Test]
         public async Task CreateEvaluation()
         {
             PersonalizerManagementClient client = GetPersonalizerManagementClient();
-            var evaluation = new EvaluationContract(
-                name: "myFirstEvaluation",
-                startTime: new DateTime(2018, 12, 19),
-                endTime: new DateTime(2019, 1, 19),
+            var evaluation = new PersonalizerEvaluationOptions(
+                name: "sdkTestEvaluation",
+                startTime: new DateTime(2021, 06, 01),
+                endTime: new DateTime(2021, 06, 30),
                 policies: new PersonalizerPolicyOptions[]
                 {
                     new PersonalizerPolicyOptions(name: "Custom Policy 1", arguments: "--cb_explore_adf --epsilon 0.2 --dsjson --cb_type ips -l 0.5 --l1 1E-07 --power_t 0.5")
                 });
             evaluation.EnableOfflineExperimentation = true;
-            PersonalizerEvaluation createdEvaluation = await client.CreatePersonalizerEvaluationAsync(evaluation);
-            Assert.AreEqual(evaluation.Name, createdEvaluation.Name);
+            CreatePersonalizerEvaluationOperation createdEvaluation = await client.CreatePersonalizerEvaluationAsync(evaluation);
+            await createdEvaluation.WaitForCompletionAsync();
+            Assert.AreEqual(evaluation.Name, createdEvaluation.Value.Name);
         }
 
         [Test]

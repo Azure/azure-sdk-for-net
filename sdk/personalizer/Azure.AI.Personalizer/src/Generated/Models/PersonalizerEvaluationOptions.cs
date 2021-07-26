@@ -12,15 +12,15 @@ using System.Linq;
 namespace Azure.AI.Personalizer.Models
 {
     /// <summary> A counterfactual evaluation. </summary>
-    public partial class EvaluationContract
+    public partial class PersonalizerEvaluationOptions
     {
-        /// <summary> Initializes a new instance of EvaluationContract. </summary>
+        /// <summary> Initializes a new instance of PersonalizerEvaluationOptions. </summary>
         /// <param name="name"> The name of the evaluation. </param>
         /// <param name="startTime"> The start time of the evaluation. </param>
         /// <param name="endTime"> The end time of the evaluation. </param>
         /// <param name="policies"> Additional learning settings to evaluate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="policies"/> is null. </exception>
-        public EvaluationContract(string name, DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<PersonalizerPolicyOptions> policies)
+        public PersonalizerEvaluationOptions(string name, DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<PersonalizerPolicyOptions> policies)
         {
             if (name == null)
             {

@@ -30,12 +30,7 @@ namespace Azure.AI.Personalizer
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public EvaluationsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-
-            this.endpoint = endpoint;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -231,7 +226,7 @@ namespace Azure.AI.Personalizer
             }
         }
 
-        internal HttpMessage CreateCreateRequest(EvaluationContract evaluation)
+        internal HttpMessage CreateCreateRequest(PersonalizerEvaluationOptions evaluation)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -253,7 +248,7 @@ namespace Azure.AI.Personalizer
         /// <param name="evaluation"> The Offline Evaluation job definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PersonalizerEvaluation, EvaluationsCreateHeaders>> CreateAsync(EvaluationContract evaluation, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PersonalizerEvaluation, EvaluationsCreateHeaders>> CreateAsync(PersonalizerEvaluationOptions evaluation, CancellationToken cancellationToken = default)
         {
             if (evaluation == null)
             {
@@ -281,7 +276,7 @@ namespace Azure.AI.Personalizer
         /// <param name="evaluation"> The Offline Evaluation job definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        public ResponseWithHeaders<PersonalizerEvaluation, EvaluationsCreateHeaders> Create(EvaluationContract evaluation, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PersonalizerEvaluation, EvaluationsCreateHeaders> Create(PersonalizerEvaluationOptions evaluation, CancellationToken cancellationToken = default)
         {
             if (evaluation == null)
             {

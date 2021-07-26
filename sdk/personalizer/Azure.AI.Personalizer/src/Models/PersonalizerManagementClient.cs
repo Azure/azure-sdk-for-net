@@ -551,30 +551,67 @@ namespace Azure.AI.Personalizer
 
         /// <summary> List of all Offline Evaluations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<PersonalizerEvaluation>>> GetPersonalizerEvaluationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PersonalizerEvaluation> GetPersonalizerEvaluationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerEvaluations");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
             {
-                return await EvaluationsRestClient.ListAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerEvaluations");
+                scope.Start();
+                try
+                {
+                    if (continuationToken != null)
+                    {
+                        throw new NotSupportedException("A continuation token is unsupported.");
+                    }
+
+                    Response<IReadOnlyList<PersonalizerEvaluation>> result = await EvaluationsRestClient.ListAsync(cancellationToken).ConfigureAwait(false);
+                    return Page<PersonalizerEvaluation>.FromValues(result.Value, null, result.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            });
         }
 
         /// <summary> List of all Offline Evaluations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<PersonalizerEvaluation>> GetPersonalizerEvaluations(CancellationToken cancellationToken = default)
+        public virtual Pageable<PersonalizerEvaluation> GetPersonalizerEvaluations(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerEvaluations");
+            return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
+            {
+                using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.GetPersonalizerEvaluations");
+                scope.Start();
+                try
+                {
+                    if (continuationToken != null)
+                    {
+                        throw new NotSupportedException("A continuation token is unsupported.");
+                    }
+
+                    Response<IReadOnlyList<PersonalizerEvaluation>> result = EvaluationsRestClient.List(cancellationToken);
+                    return Page<PersonalizerEvaluation>.FromValues(result.Value, null, result.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            });
+        }
+
+        /// <summary> Submit a new Offline Evaluation job. </summary>
+        /// <param name="evaluation"> The Offline Evaluation job definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<CreatePersonalizerEvaluationOperation> CreatePersonalizerEvaluationAsync(PersonalizerEvaluationOptions evaluation, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.CreatePersonalizerEvaluation");
             scope.Start();
             try
             {
-                return EvaluationsRestClient.List(cancellationToken);
+                Response<PersonalizerEvaluation> result = await EvaluationsRestClient.CreateAsync(evaluation, cancellationToken).ConfigureAwait(false);
+                return new CreatePersonalizerEvaluationOperation(this, result.Value.Id, result.GetRawResponse(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -586,31 +623,14 @@ namespace Azure.AI.Personalizer
         /// <summary> Submit a new Offline Evaluation job. </summary>
         /// <param name="evaluation"> The Offline Evaluation job definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerEvaluation>> CreatePersonalizerEvaluationAsync(EvaluationContract evaluation, CancellationToken cancellationToken = default)
+        public virtual CreatePersonalizerEvaluationOperation CreatePersonalizerEvaluation(PersonalizerEvaluationOptions evaluation, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.CreatePersonalizerEvaluation");
             scope.Start();
             try
             {
-                return await EvaluationsRestClient.CreateAsync(evaluation, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Submit a new Offline Evaluation job. </summary>
-        /// <param name="evaluation"> The Offline Evaluation job definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerEvaluation> CreatePersonalizerEvaluation(EvaluationContract evaluation, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.CreatePersonalizerEvaluation");
-            scope.Start();
-            try
-            {
-                return EvaluationsRestClient.Create(evaluation, cancellationToken);
+                Response<PersonalizerEvaluation> result = EvaluationsRestClient.Create(evaluation, cancellationToken);
+                return new CreatePersonalizerEvaluationOperation(this, result.Value.Id, result.GetRawResponse(), cancellationToken);
             }
             catch (Exception e)
             {

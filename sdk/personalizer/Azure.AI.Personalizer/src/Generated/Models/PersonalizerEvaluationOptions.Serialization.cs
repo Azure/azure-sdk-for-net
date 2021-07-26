@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Personalizer.Models
 {
-    public partial class EvaluationContract : IUtf8JsonSerializable
+    public partial class PersonalizerEvaluationOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
