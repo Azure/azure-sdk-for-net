@@ -9,12 +9,12 @@ using System.Text;
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
-    /// Azure DigitalTwins Query builder that facilitates writing queries against ADT instances.
+    /// Azure DigitalTwins Query builder that facilitates writing queries against Digital Twins instances.
     /// </summary>
     public class DigitalTwinsQueryBuilder
     {
-        private List<SelectClause> _selectClauses;
-        private List<string> _selectAsClauses;
+        private readonly List<SelectClause> _selectClauses;
+        private readonly List<string> _selectAsClauses;
         private readonly string _alias;
 
         private FromClause _fromClause;
@@ -35,8 +35,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Create a Digital Twins query and automatically specify a queryable collection and (optionally) specify a collection alias.
         /// </summary>
-        /// <param name="collection"> Collection to query from. </param>
-         /// <param name="alias"> Alias for queryable collection. </param>
+        /// <param name="collection">The collection being queried from.</param>
+        /// <param name="alias">Alias for queryable collection.</param>
         public DigitalTwinsQueryBuilder(AdtCollection collection, string alias = null)
         {
             _selectClauses = new List<SelectClause>();
@@ -50,7 +50,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Specifies the list of columns that the query will return.
         /// </summary>
         /// <param name="args">The arguments that can be queried (e.g., *, somePropertyName, etc.)</param>
-        /// <returns> Query that contains a select clause. </returns>
+        /// <returns>Query that contains a select clause.</returns>
         public DigitalTwinsQueryBuilder Select(params string[] args)
         {
             _selectClauses.Add(new SelectClause(args));
@@ -60,7 +60,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Specifies the list of all possible columns to return.
         /// </summary>
-        /// <returns> Query that contains a select clause. </returns>
+        /// <returns>Query that contains a select clause.</returns>
         public DigitalTwinsQueryBuilder SelectAll()
         {
             _selectClauses.Add(new SelectClause(new string[] { "*" }));
@@ -68,12 +68,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the ADT query language. Same functionality as select
+        /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the Digital Twins query language. Same functionality as select
         /// but inserts TOP() into the query structure as well as well as specific properties to select.
         /// </summary>
         /// <param name="count">The argument for TOP(), ie the number of instances to return.</param>
         /// <param name="args">The arguments that can be optionally passed with top (e.g., property name).</param>
-        /// <returns> Query that contains a select clause. </returns>
+        /// <returns>Query that contains a select clause.</returns>
         public DigitalTwinsQueryBuilder SelectTop(int count, params string[] args)
         {
             var topArg = new StringBuilder().Append($"{QueryConstants.Top}({count})").Append(' ');
@@ -86,11 +86,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the ADT query language. Same functionality as select
+        /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-top">TOP()</see> aggregate from the Digital Twins query language. Same functionality as select
         /// but inserts TOP() into the query structure as well.
         /// </summary>
         /// <param name="count">The argument for TOP(), i.e. the number of results to return.</param>
-        /// <returns> Query that contains a select clause. </returns>
+        /// <returns>Query that contains a select clause.</returns>
         public DigitalTwinsQueryBuilder SelectTopAll(int count)
         {
             // turn into correct format -- eg. SELECT TOP(3)
@@ -101,9 +101,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-count">COUNT()</see> aggregate from the ADT query language.
+        /// Used when applying the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-clause-select#select-count">COUNT()</see> aggregate from the Digital Twins query language.
         /// </summary>
-        /// <returns> Query that contains a select clause. </returns>
+        /// <returns>Query that contains a select clause.</returns>
         public DigitalTwinsQueryBuilder SelectCount()
         {
             string countArg = $"{QueryConstants.Count}()";
@@ -116,7 +116,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Used when overriding the query builder with the literal query string.
         /// </summary>
         /// <param name="customQuery">Query in string format.</param>
-        /// <returns> Query that contains a select clause. </returns>
+        /// <returns>Query that contains a select clause.</returns>
         public DigitalTwinsQueryBuilder SelectCustom(string customQuery)
         {
             _selectClauses.Add(new SelectClause(new string[] { customQuery }));
@@ -126,9 +126,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Used to select properties with the desired alias.
         /// </summary>
-        /// <param name="field">The proper name for the selectable property in the ADT Query Language.</param>
+        /// <param name="field">The proper name for the selectable property in the Digital Twins Query Language.</param>
         /// <param name="alias">The alias to be assigned to the return contents in the query response.</param>
-        /// <returns> Query that contains an aliased select clause. </returns>
+        /// <returns>Query that contains an aliased select clause.</returns>
         public DigitalTwinsQueryBuilder SelectAs(string field, string alias)
         {
             _selectAsClauses.Add($"{field} {QueryConstants.As} {alias}");
@@ -138,8 +138,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Adds the FROM clause and its argument to the query via the Clauses component.
         /// </summary>
-        /// <param name="collection">An enum different collections that users can query from.</param>
-        /// <returns> ADT query a from clause. </returns>
+        /// <param name="collection">The collection being queried from.</param>
+        /// <returns>Digital Twins query a from clause.</returns>
         public DigitalTwinsQueryBuilder From(AdtCollection collection)
         {
             _fromClause = new FromClause(collection);
@@ -151,7 +151,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="collection">The collection being queried from.</param>
         /// <param name="alias">The alias being assigned to the collection being queried from.</param>
-        /// <returns> ADT query with a from clause. </returns>
+        /// <returns>Digital Twins query with a from clause.</returns>
         public DigitalTwinsQueryBuilder From(AdtCollection collection, string alias)
         {
             _fromClause = new FromClause(collection, alias);
@@ -162,8 +162,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// An overloaded alternative to passing in a Collection that allows for simply passing in the string name of the collection
         /// that is being queried.
         /// </summary>
-        /// <param name="collection">The name of the collection.</param>
-        /// <returns> ADT query with a from clause. </returns>
+        /// <param name="collection">The collection being queried from.</param>
+        /// <returns>Digital Twins query with a from clause.</returns>
         public DigitalTwinsQueryBuilder FromCustom(string collection)
         {
             _fromClause = new FromClause(collection);
@@ -174,7 +174,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Adds a WHERE clause to a query.
         /// </summary>
         /// <param name="whereLogic">Delgate that contains methods from the <see cref="WhereQuery"/> class.</param>
-        /// <returns> ADT query with a where clause. </returns>
+        /// <returns>Digital Twins query with a where clause.</returns>
         public DigitalTwinsQueryBuilder Where(Func<WhereQuery, WhereQuery> whereLogic)
         {
             whereLogic.Invoke(_whereQuery);
@@ -184,7 +184,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Constructs the string representation of the built query.
         /// </summary>
-        /// <returns> DigitalTwinsQueryBuilder with an updated string representation. </returns>
+        /// <returns>DigitalTwinsQueryBuilder with an updated string representation.</returns>
         public DigitalTwinsQueryBuilder Build()
         {
             var queryString = new StringBuilder();
@@ -266,7 +266,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Gets the string representation of the built query.
         /// </summary>
-        /// <returns> String represenation of query. </returns>
+        /// <returns>String represenation of query.</returns>
         public string GetQueryText()
         {
             return _queryText;

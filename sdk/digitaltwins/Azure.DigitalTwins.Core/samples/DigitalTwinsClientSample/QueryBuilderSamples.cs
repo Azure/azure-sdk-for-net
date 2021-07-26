@@ -116,7 +116,7 @@ namespace Azure.DigitalTwins.Core.Samples
                     .Or()
                     .IsOfModel("dtmi:example:room;1", true)
                     .Or()
-                    .IsOfType("Temperature", AdtDataType.AdtNumber))
+                    .IsOfType("Temperature", AdtDataType.DigitalTwinsNumber))
                 .Build();
 
             // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
@@ -126,7 +126,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 .From(AdtCollection.DigitalTwins)
                 .Where(q => q
                     .Parenthetical(q => q
-                        .IsOfType("Humidity", AdtDataType.AdtNumber)
+                        .IsOfType("Humidity", AdtDataType.DigitalTwinsNumber)
                         .Or()
                         .IsDefined("Humidity"))
                 .And()
@@ -157,19 +157,19 @@ namespace Azure.DigitalTwins.Core.Samples
                     .Or()
                     .IsOfModel("dtmi:example:room;1", true)
                     .And()
-                    .IsOfType("Temperature", AdtDataType.AdtNumber))
+                    .IsOfType("Temperature", AdtDataType.DigitalTwinsNumber))
                 .Build();
 
             DigitalTwinsQueryBuilder objectiveLogicalOps = new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(AdtCollection.DigitalTwins)
                 .Where(q => q
-                 .Parenthetical(q => q
-                    .Compare("Temperature", QueryComparisonOperator.Equal, 50)
-                    .Or()
-                    .IsOfModel("dtmi:example:room;1", true))
+                    .Parenthetical(q => q
+                        .Compare("Temperature", QueryComparisonOperator.Equal, 50)
+                        .Or()
+                        .IsOfModel("dtmi:example:room;1", true))
                 .And()
-                .IsOfType("Temperature", AdtDataType.AdtNumber))
+                .IsOfType("Temperature", AdtDataType.DigitalTwinsNumber))
                 .Build();
 
             #endregion

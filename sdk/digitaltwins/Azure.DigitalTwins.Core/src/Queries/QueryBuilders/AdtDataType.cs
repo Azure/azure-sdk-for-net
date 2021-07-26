@@ -11,26 +11,26 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Boolean type in the ADT query language.
         /// </summary>
-        AdtBool,
+        DigitalTwinsBool,
 
         /// <summary>
         /// Numeric type in the ADT query language.
         /// </summary>
-        AdtNumber,
+        DigitalTwinsNumber,
 
         /// <summary>
         /// String in the ADT query language.
         /// </summary>
-        AdtString,
+        DigitalTwinsString,
 
         /// <summary>
         /// Primative type (string, numeric, boolean, or null) in the ADT query language.
         /// </summary>
-        AdtPrimitive,
+        DigitalTwinsPrimative,
 
         /// <summary>
         /// Object in the ADT query language.
         /// </summary>
-        AdtObject
+        DigitalTwinsObject
     }
 }

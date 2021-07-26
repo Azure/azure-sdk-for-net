@@ -219,7 +219,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Gets the string reperesentation of a WhereQuery.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A Digital Twin query's WHERE clause in string format.</returns>
         public string GetQueryText()
         {
             var whereClauseString = new StringBuilder();

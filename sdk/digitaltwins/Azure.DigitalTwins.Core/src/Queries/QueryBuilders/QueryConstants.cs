@@ -29,11 +29,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
         public static readonly IReadOnlyDictionary<AdtDataType, string> DataTypeToFunctionNameMap = new Dictionary<AdtDataType, string>()
         {
-            { AdtDataType.AdtBool, "IS_BOOL" },
-            { AdtDataType.AdtNumber, "IS_NUMBER" },
-            { AdtDataType.AdtString, "IS_STRING" },
-            { AdtDataType.AdtPrimitive, "IS_PRIMITIVE" },
-            { AdtDataType.AdtObject, "IS_OBJECT" }
+            { AdtDataType.DigitalTwinsBool, "IS_BOOL" },
+            { AdtDataType.DigitalTwinsNumber, "IS_NUMBER" },
+            { AdtDataType.DigitalTwinsString, "IS_STRING" },
+            { AdtDataType.DigitalTwinsPrimative, "IS_PRIMITIVE" },
+            { AdtDataType.DigitalTwinsObject, "IS_OBJECT" }
         };
 
         // Maps comparison operators represented alphabetically to respective symbolic representations.
