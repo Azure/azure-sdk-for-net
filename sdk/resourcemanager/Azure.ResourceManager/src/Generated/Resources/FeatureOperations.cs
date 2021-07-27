@@ -65,7 +65,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary> Gets the current Feature from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Feature> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FeatureOperations.Get");
@@ -82,7 +83,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary> Gets the current Feature from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Feature>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FeatureOperations.Get");

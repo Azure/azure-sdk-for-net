@@ -203,7 +203,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary> Gets the current ResourceGroup from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceGroup> Get(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Get");
@@ -221,7 +222,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary> Gets the current ResourceGroup from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ResourceGroup>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Get");

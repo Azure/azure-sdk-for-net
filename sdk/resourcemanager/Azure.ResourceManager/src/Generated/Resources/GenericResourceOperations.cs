@@ -204,7 +204,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary> Gets the current GenericResource from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GenericResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.Get");
@@ -222,7 +223,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary> Gets the current GenericResource from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GenericResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.Get");

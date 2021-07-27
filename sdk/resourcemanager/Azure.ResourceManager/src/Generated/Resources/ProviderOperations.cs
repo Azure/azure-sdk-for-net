@@ -137,7 +137,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary> Gets the current Provider from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Provider> Get(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
@@ -155,7 +156,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary> Gets the current Provider from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Provider>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProvidersOperations.Get");

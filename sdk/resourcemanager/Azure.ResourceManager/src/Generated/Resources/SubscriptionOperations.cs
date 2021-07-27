@@ -99,7 +99,8 @@ namespace Azure.ResourceManager.Resources
             return new ProviderContainer(this);
         }
 
-        /// <inheritdoc/>
+        /// <summary> Gets the current Subscription from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Subscription> Get(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("SubscriptionOperations.Get");
@@ -116,7 +117,8 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary> Gets the current Subscription from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("SubscriptionOperations.Get");
