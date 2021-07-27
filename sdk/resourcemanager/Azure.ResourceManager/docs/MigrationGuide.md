@@ -16,10 +16,11 @@ using Microsoft.Rest;
 using System;
 using System.Threading.Tasks;
 ```
-#### New (Azure.Azure.ResourceManager._ Preview)
+#### New (Azure.ResourceManager._ Preview)
 ```C#
 using Azure.Identity;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Network;
 using System;
@@ -120,21 +121,12 @@ var vnet = new VirtualNetwork()
                     "10.0.0.0/16",
                 }
     },
-    DhcpOptions = !addDnsServer ? null : new DhcpOptions()
-    {
-        DnsServers = new List<string>()
-                {
-                    "10.1.1.1",
-                    "10.1.2.4"
-                }
-    },
     Subnets = new List<Subnet>()
             {
                 new Subnet()
                 {
                     Name = subnetName,
                     AddressPrefix = "10.0.0.0/24",
-                    PrivateEndpointNetworkPolicies = disablePEPolicies ? "Disabled" : null
                 }
             }
 };
