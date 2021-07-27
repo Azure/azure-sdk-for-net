@@ -3,8 +3,8 @@ namespace Azure.AI.Personalizer
     public partial class PersonalizerClient
     {
         protected PersonalizerClient() { }
-        public PersonalizerClient(string endpoint, Azure.AzureKeyCredential credential) { }
-        public PersonalizerClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
+        public PersonalizerClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public PersonalizerClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
         public PersonalizerClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public PersonalizerClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
         public virtual Azure.Response Activate(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -37,7 +37,7 @@ namespace Azure.AI.Personalizer
     public partial class PersonalizerManagementClient
     {
         protected PersonalizerManagementClient() { }
-        public PersonalizerManagementClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
+        public PersonalizerManagementClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
         public PersonalizerManagementClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
         public virtual Azure.Response ApplyPersonalizerEvaluation(Azure.AI.Personalizer.Models.PersonalizerPolicyReferenceOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ApplyPersonalizerEvaluationAsync(Azure.AI.Personalizer.Models.PersonalizerPolicyReferenceOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

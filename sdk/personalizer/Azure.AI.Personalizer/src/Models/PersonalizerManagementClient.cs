@@ -47,7 +47,7 @@ namespace Azure.AI.Personalizer
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://cognitiveservices.azure.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            string stringEndpoint = endpoint.ToString();
+            string stringEndpoint = endpoint.AbsoluteUri;
             LogRestClient = new LogRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             ServiceConfigurationRestClient = new ServiceConfigurationRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             ModelRestClient = new ModelRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
@@ -59,7 +59,7 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public PersonalizerManagementClient(string endpoint, AzureKeyCredential credential, PersonalizerClientOptions options = null)
+        public PersonalizerManagementClient(Uri endpoint, AzureKeyCredential credential, PersonalizerClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -73,7 +73,7 @@ namespace Azure.AI.Personalizer
             options ??= new PersonalizerClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "Ocp-Apim-Subscription-Key"));
-            string stringEndpoint = endpoint.ToString();
+            string stringEndpoint = endpoint.AbsoluteUri;
             LogRestClient = new LogRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             ServiceConfigurationRestClient = new ServiceConfigurationRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             ModelRestClient = new ModelRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
@@ -87,7 +87,7 @@ namespace Azure.AI.Personalizer
         /// <param name="endpoint"> Supported Cognitive Services endpoint. </param>
         internal PersonalizerManagementClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
-            string stringEndpoint = endpoint.ToString();
+            string stringEndpoint = endpoint.AbsoluteUri;
             LogRestClient = new LogRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             ServiceConfigurationRestClient = new ServiceConfigurationRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
             ModelRestClient = new ModelRestClient(_clientDiagnostics, _pipeline, stringEndpoint);
