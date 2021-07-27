@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Common resource representation. </summary>
-    public partial class Resource : WritableSubResource<ResourceGroupResourceIdentifier>
+    public partial class Resource : WritableSubResource
     {
         /// <summary> Initializes a new instance of Resource. </summary>
         public Resource()

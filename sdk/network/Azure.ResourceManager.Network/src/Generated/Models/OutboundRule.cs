@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Outbound rule of the load balancer. </summary>
-    public partial class OutboundRule : WritableSubResource<ResourceIdentifier>
+    public partial class OutboundRule : WritableSubResource
     {
         /// <summary> Initializes a new instance of OutboundRule. </summary>
         public OutboundRule()

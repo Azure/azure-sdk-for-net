@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration of an Azure Firewall. </summary>
-    public partial class AzureFirewallIPConfiguration : WritableSubResource<ResourceIdentifier>
+    public partial class AzureFirewallIPConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of AzureFirewallIPConfiguration. </summary>
         public AzureFirewallIPConfiguration()

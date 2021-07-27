@@ -11,13 +11,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific ConnectionMonitor. </summary>
-    public partial class ConnectionMonitorOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, ConnectionMonitor>
+    public partial class ConnectionMonitorOperations : ResourceOperationsBase<ConnectionMonitor>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ConnectionMonitorsRestOperations _restClient { get; }
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="ConnectionMonitorOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ConnectionMonitorOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal ConnectionMonitorOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ConnectionMonitorsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -165,14 +167,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Update tags of the specified connection monitor. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConnectionMonitorData>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionMonitor>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorOperations.UpdateTags");
             scope.Start();
             try
             {
                 var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,14 +186,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Update tags of the specified connection monitor. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConnectionMonitorData> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual Response<ConnectionMonitor> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorOperations.UpdateTags");
             scope.Start();
             try
             {
                 var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Parent.Name, Id.Name, tags, cancellationToken);
-                return response;
+                return Response.FromValue(new ConnectionMonitor(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

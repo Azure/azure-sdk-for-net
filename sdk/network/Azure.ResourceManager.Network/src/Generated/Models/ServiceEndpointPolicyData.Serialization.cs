@@ -8,9 +8,10 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
     public partial class ServiceEndpointPolicyData : IUtf8JsonSerializable
     {
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             Optional<IList<ServiceEndpointPolicyDefinitionData>> serviceEndpointPolicyDefinitions = default;
             Optional<IReadOnlyList<SubnetData>> subnets = default;
             Optional<string> resourceGuid = default;

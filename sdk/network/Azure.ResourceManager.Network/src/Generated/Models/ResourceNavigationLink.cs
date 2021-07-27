@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ResourceNavigationLink resource. </summary>
-    public partial class ResourceNavigationLink : WritableSubResource<ResourceIdentifier>
+    public partial class ResourceNavigationLink : WritableSubResource
     {
         /// <summary> Initializes a new instance of ResourceNavigationLink. </summary>
         public ResourceNavigationLink()

@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Frontend port of an application gateway. </summary>
-    public partial class ApplicationGatewayFrontendPort : WritableSubResource<ResourceIdentifier>
+    public partial class ApplicationGatewayFrontendPort : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendPort. </summary>
         public ApplicationGatewayFrontendPort()

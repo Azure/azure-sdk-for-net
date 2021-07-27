@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Inbound NAT pool of the load balancer. </summary>
-    public partial class InboundNatPool : WritableSubResource<ResourceIdentifier>
+    public partial class InboundNatPool : WritableSubResource
     {
         /// <summary> Initializes a new instance of InboundNatPool. </summary>
         public InboundNatPool()

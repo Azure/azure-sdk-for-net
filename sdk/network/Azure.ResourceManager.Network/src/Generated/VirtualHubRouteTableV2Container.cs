@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VirtualHubRouteTableV2 and their operations over a VirtualHub. </summary>
-    public partial class VirtualHubRouteTableV2Container : ResourceContainerBase<ResourceGroupResourceIdentifier, VirtualHubRouteTableV2, VirtualHubRouteTableV2Data>
+    public partial class VirtualHubRouteTableV2Container : ResourceContainerBase<VirtualHubRouteTableV2, VirtualHubRouteTableV2Data>
     {
         /// <summary> Initializes a new instance of the <see cref="VirtualHubRouteTableV2Container"/> class for mocking. </summary>
         protected VirtualHubRouteTableV2Container()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private VirtualHubRouteTableV2SRestOperations _restClient => new VirtualHubRouteTableV2SRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => VirtualHubOperations.ResourceType;
@@ -436,6 +435,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, VirtualHubRouteTableV2, VirtualHubRouteTableV2Data> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, VirtualHubRouteTableV2, VirtualHubRouteTableV2Data> Construct() { }
     }
 }

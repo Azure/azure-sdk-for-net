@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VirtualNetworkPeering and their operations over a VirtualNetwork. </summary>
-    public partial class VirtualNetworkPeeringContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, VirtualNetworkPeering, VirtualNetworkPeeringData>
+    public partial class VirtualNetworkPeeringContainer : ResourceContainerBase<VirtualNetworkPeering, VirtualNetworkPeeringData>
     {
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkPeeringContainer"/> class for mocking. </summary>
         protected VirtualNetworkPeeringContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private VirtualNetworkPeeringsRestOperations _restClient => new VirtualNetworkPeeringsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => VirtualNetworkOperations.ResourceType;
@@ -440,6 +439,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, VirtualNetworkPeering, VirtualNetworkPeeringData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, VirtualNetworkPeering, VirtualNetworkPeeringData> Construct() { }
     }
 }

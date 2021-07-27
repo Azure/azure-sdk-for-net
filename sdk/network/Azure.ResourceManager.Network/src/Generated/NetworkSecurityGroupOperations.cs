@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific NetworkSecurityGroup. </summary>
-    public partial class NetworkSecurityGroupOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, NetworkSecurityGroup>
+    public partial class NetworkSecurityGroupOperations : ResourceOperationsBase<NetworkSecurityGroup>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private NetworkSecurityGroupsRestOperations _restClient { get; }
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="NetworkSecurityGroupOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal NetworkSecurityGroupOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal NetworkSecurityGroupOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NetworkSecurityGroupsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -206,14 +208,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a network security group tags. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetworkSecurityGroupData>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkSecurityGroup>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupOperations.UpdateTags");
             scope.Start();
             try
             {
                 var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,14 +227,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a network security group tags. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkSecurityGroupData> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkSecurityGroup> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkSecurityGroupOperations.UpdateTags");
             scope.Start();
             try
             {
                 var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return response;
+                return Response.FromValue(new NetworkSecurityGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,7 +282,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all default security rules in a network security group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityRuleData" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<SecurityRuleData> ListDefaultSecurityRules(CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityRuleData> ListDefaultSecurityRules(CancellationToken cancellationToken = default)
         {
             Page<SecurityRuleData> FirstPageFunc(int? pageSizeHint)
             {
@@ -318,7 +320,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all default security rules in a network security group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityRuleData" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<SecurityRuleData> ListDefaultSecurityRulesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityRuleData> ListDefaultSecurityRulesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SecurityRuleData>> FirstPageFunc(int? pageSizeHint)
             {

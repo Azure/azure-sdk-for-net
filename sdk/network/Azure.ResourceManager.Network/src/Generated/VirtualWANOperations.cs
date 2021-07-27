@@ -11,13 +11,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific VirtualWAN. </summary>
-    public partial class VirtualWANOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VirtualWAN>
+    public partial class VirtualWANOperations : ResourceOperationsBase<VirtualWAN>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private VirtualWansRestOperations _restClient { get; }
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="VirtualWANOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal VirtualWANOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal VirtualWANOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new VirtualWansRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -173,14 +175,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a VirtualWAN tags. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualWANData>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWAN>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualWANOperations.UpdateTags");
             scope.Start();
             try
             {
                 var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,14 +194,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a VirtualWAN tags. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualWANData> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWAN> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualWANOperations.UpdateTags");
             scope.Start();
             try
             {
                 var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return response;
+                return Response.FromValue(new VirtualWAN(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

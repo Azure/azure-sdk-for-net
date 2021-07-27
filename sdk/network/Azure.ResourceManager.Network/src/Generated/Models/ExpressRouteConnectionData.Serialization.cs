@@ -7,9 +7,10 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteConnectionData : IUtf8JsonSerializable
     {
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static ExpressRouteConnectionData DeserializeExpressRouteConnectionData(JsonElement element)
         {
             string name = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<ExpressRouteCircuitPeeringId> expressRouteCircuitPeering = default;
             Optional<string> authorizationKey = default;

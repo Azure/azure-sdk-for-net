@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Backend Address Pool of an application gateway. </summary>
-    public partial class ApplicationGatewayBackendAddressPool : WritableSubResource<ResourceIdentifier>
+    public partial class ApplicationGatewayBackendAddressPool : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayBackendAddressPool. </summary>
         public ApplicationGatewayBackendAddressPool()

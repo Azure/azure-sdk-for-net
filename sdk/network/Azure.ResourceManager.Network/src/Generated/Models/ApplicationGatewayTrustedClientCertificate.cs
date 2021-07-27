@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Trusted client certificates of an application gateway. </summary>
-    public partial class ApplicationGatewayTrustedClientCertificate : WritableSubResource<ResourceIdentifier>
+    public partial class ApplicationGatewayTrustedClientCertificate : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayTrustedClientCertificate. </summary>
         public ApplicationGatewayTrustedClientCertificate()

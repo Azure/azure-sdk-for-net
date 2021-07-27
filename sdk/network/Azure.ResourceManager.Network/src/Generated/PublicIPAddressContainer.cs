@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of PublicIPAddress and their operations over a ResourceGroup. </summary>
-    public partial class PublicIPAddressContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, PublicIPAddress, PublicIPAddressData>
+    public partial class PublicIPAddressContainer : ResourceContainerBase<PublicIPAddress, PublicIPAddressData>
     {
         /// <summary> Initializes a new instance of the <see cref="PublicIPAddressContainer"/> class for mocking. </summary>
         protected PublicIPAddressContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private PublicIPAddressesRestOperations _restClient => new PublicIPAddressesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -442,6 +441,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, PublicIPAddress, PublicIPAddressData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, PublicIPAddress, PublicIPAddressData> Construct() { }
     }
 }

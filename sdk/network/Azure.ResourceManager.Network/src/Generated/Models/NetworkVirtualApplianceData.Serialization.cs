@@ -8,9 +8,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
     public partial class NetworkVirtualApplianceData : IUtf8JsonSerializable
     {
@@ -94,17 +96,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             Optional<VirtualApplianceSkuProperties> nvaSku = default;
             Optional<string> addressPrefix = default;
             Optional<IList<string>> bootStrapConfigurationBlobs = default;
-            Optional<SubResource> virtualHub = default;
+            Optional<Models.SubResource> virtualHub = default;
             Optional<IList<string>> cloudInitConfigurationBlobs = default;
             Optional<string> cloudInitConfiguration = default;
             Optional<long> virtualApplianceAsn = default;
             Optional<IReadOnlyList<VirtualApplianceNicProperties>> virtualApplianceNics = default;
-            Optional<IReadOnlyList<SubResource>> virtualApplianceSites = default;
-            Optional<IReadOnlyList<SubResource>> inboundSecurityRules = default;
+            Optional<IReadOnlyList<Models.SubResource>> virtualApplianceSites = default;
+            Optional<IReadOnlyList<Models.SubResource>> inboundSecurityRules = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -204,7 +206,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualHub = SubResource.DeserializeSubResource(property0.Value);
+                            virtualHub = Models.SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cloudInitConfigurationBlobs"))
@@ -259,10 +261,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<Models.SubResource> array = new List<Models.SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(Models.SubResource.DeserializeSubResource(item));
                             }
                             virtualApplianceSites = array;
                             continue;
@@ -274,10 +276,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<Models.SubResource> array = new List<Models.SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(Models.SubResource.DeserializeSubResource(item));
                             }
                             inboundSecurityRules = array;
                             continue;

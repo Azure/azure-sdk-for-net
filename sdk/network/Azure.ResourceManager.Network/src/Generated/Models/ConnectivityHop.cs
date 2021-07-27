@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Information about a hop between the source and the destination. </summary>
-    public partial class ConnectivityHop : SubResource<ResourceIdentifier>
+    public partial class ConnectivityHop : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of ConnectivityHop. </summary>
         internal ConnectivityHop()

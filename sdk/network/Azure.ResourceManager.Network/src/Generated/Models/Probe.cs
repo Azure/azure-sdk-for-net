@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A load balancer probe. </summary>
-    public partial class Probe : WritableSubResource<ResourceIdentifier>
+    public partial class Probe : WritableSubResource
     {
         /// <summary> Initializes a new instance of Probe. </summary>
         public Probe()

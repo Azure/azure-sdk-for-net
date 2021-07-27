@@ -11,13 +11,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific NatGateway. </summary>
-    public partial class NatGatewayOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, NatGateway>
+    public partial class NatGatewayOperations : ResourceOperationsBase<NatGateway>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private NatGatewaysRestOperations _restClient { get; }
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="NatGatewayOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal NatGatewayOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal NatGatewayOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NatGatewaysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -203,14 +205,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates nat gateway tags. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NatGatewayData>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NatGateway>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NatGatewayOperations.UpdateTags");
             scope.Start();
             try
             {
                 var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(new NatGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +224,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates nat gateway tags. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NatGatewayData> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual Response<NatGateway> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NatGatewayOperations.UpdateTags");
             scope.Start();
             try
             {
                 var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return response;
+                return Response.FromValue(new NatGateway(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

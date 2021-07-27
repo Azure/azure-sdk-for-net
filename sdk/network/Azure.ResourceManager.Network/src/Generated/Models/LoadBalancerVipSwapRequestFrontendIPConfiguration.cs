@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VIP swap request&apos;s frontend IP configuration object. </summary>
-    public partial class LoadBalancerVipSwapRequestFrontendIPConfiguration : WritableSubResource<ResourceIdentifier>
+    public partial class LoadBalancerVipSwapRequestFrontendIPConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of LoadBalancerVipSwapRequestFrontendIPConfiguration. </summary>
         public LoadBalancerVipSwapRequestFrontendIPConfiguration()

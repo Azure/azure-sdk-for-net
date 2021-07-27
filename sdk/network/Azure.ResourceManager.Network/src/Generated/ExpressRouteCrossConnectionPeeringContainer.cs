@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteCrossConnectionPeering and their operations over a ExpressRouteCrossConnection. </summary>
-    public partial class ExpressRouteCrossConnectionPeeringContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, ExpressRouteCrossConnectionPeering, ExpressRouteCrossConnectionPeeringData>
+    public partial class ExpressRouteCrossConnectionPeeringContainer : ResourceContainerBase<ExpressRouteCrossConnectionPeering, ExpressRouteCrossConnectionPeeringData>
     {
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionPeeringContainer"/> class for mocking. </summary>
         protected ExpressRouteCrossConnectionPeeringContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private ExpressRouteCrossConnectionPeeringsRestOperations _restClient => new ExpressRouteCrossConnectionPeeringsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ExpressRouteCrossConnectionOperations.ResourceType;
@@ -436,6 +435,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, ExpressRouteCrossConnectionPeering, ExpressRouteCrossConnectionPeeringData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, ExpressRouteCrossConnectionPeering, ExpressRouteCrossConnectionPeeringData> Construct() { }
     }
 }

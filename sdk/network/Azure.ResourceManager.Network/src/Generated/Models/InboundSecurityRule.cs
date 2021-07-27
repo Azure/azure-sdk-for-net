@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> NVA Inbound Security Rule resource. </summary>
-    public partial class InboundSecurityRule : WritableSubResource<ResourceIdentifier>
+    public partial class InboundSecurityRule : WritableSubResource
     {
         /// <summary> Initializes a new instance of InboundSecurityRule. </summary>
         public InboundSecurityRule()

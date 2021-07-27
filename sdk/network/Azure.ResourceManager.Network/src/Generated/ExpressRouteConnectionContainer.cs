@@ -12,13 +12,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteConnection and their operations over a ExpressRouteGateway. </summary>
-    public partial class ExpressRouteConnectionContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, ExpressRouteConnection, ExpressRouteConnectionData>
+    public partial class ExpressRouteConnectionContainer : ResourceContainerBase<ExpressRouteConnection, ExpressRouteConnectionData>
     {
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteConnectionContainer"/> class for mocking. </summary>
         protected ExpressRouteConnectionContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private ExpressRouteConnectionsRestOperations _restClient => new ExpressRouteConnectionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ExpressRouteGatewayOperations.ResourceType;
@@ -396,6 +395,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, ExpressRouteConnection, ExpressRouteConnectionData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, ExpressRouteConnection, ExpressRouteConnectionData> Construct() { }
     }
 }

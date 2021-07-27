@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The network resource topology information for the given resource group. </summary>
-    public partial class TopologyResource : SubResource<ResourceIdentifier>
+    public partial class TopologyResource : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of TopologyResource. </summary>
         internal TopologyResource()

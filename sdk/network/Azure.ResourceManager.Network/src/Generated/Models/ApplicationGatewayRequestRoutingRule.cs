@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Request routing rule of an application gateway. </summary>
-    public partial class ApplicationGatewayRequestRoutingRule : WritableSubResource<ResourceIdentifier>
+    public partial class ApplicationGatewayRequestRoutingRule : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayRequestRoutingRule. </summary>
         public ApplicationGatewayRequestRoutingRule()

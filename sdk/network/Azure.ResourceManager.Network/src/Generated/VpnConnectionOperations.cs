@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific VpnConnection. </summary>
-    public partial class VpnConnectionOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VpnConnection>
+    public partial class VpnConnectionOperations : ResourceOperationsBase<VpnConnection>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private VpnConnectionsRestOperations _restClient { get; }
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="VpnConnectionOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal VpnConnectionOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal VpnConnectionOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new VpnConnectionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -171,7 +173,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnSiteLinkConnection" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<VpnSiteLinkConnection> ListVpnLinkConnectionsByVpnConnection(CancellationToken cancellationToken = default)
+        public virtual Pageable<VpnSiteLinkConnection> ListVpnLinkConnectionsByVpnConnection(CancellationToken cancellationToken = default)
         {
             Page<VpnSiteLinkConnection> FirstPageFunc(int? pageSizeHint)
             {
@@ -209,7 +211,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnSiteLinkConnection" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VpnSiteLinkConnection> ListVpnLinkConnectionsByVpnConnectionAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VpnSiteLinkConnection> ListVpnLinkConnectionsByVpnConnectionAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VpnSiteLinkConnection>> FirstPageFunc(int? pageSizeHint)
             {

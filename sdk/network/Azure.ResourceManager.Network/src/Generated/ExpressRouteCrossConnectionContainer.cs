@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteCrossConnection and their operations over a ResourceGroup. </summary>
-    public partial class ExpressRouteCrossConnectionContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, ExpressRouteCrossConnection, ExpressRouteCrossConnectionData>
+    public partial class ExpressRouteCrossConnectionContainer : ResourceContainerBase<ExpressRouteCrossConnection, ExpressRouteCrossConnectionData>
     {
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionContainer"/> class for mocking. </summary>
         protected ExpressRouteCrossConnectionContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private ExpressRouteCrossConnectionsRestOperations _restClient => new ExpressRouteCrossConnectionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -320,7 +319,7 @@ namespace Azure.ResourceManager.Network
         {
             Page<ExpressRouteCrossConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.List");
                 scope.Start();
                 try
                 {
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<ExpressRouteCrossConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.List");
                 scope.Start();
                 try
                 {
@@ -358,7 +357,7 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<ExpressRouteCrossConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.List");
                 scope.Start();
                 try
                 {
@@ -373,7 +372,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<ExpressRouteCrossConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.List");
                 scope.Start();
                 try
                 {
@@ -436,6 +435,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, ExpressRouteCrossConnection, ExpressRouteCrossConnectionData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, ExpressRouteCrossConnection, ExpressRouteCrossConnectionData> Construct() { }
     }
 }

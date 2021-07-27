@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of PacketCapture and their operations over a NetworkWatcher. </summary>
-    public partial class PacketCaptureContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, PacketCapture, PacketCaptureData>
+    public partial class PacketCaptureContainer : ResourceContainerBase<PacketCapture, PacketCaptureData>
     {
         /// <summary> Initializes a new instance of the <see cref="PacketCaptureContainer"/> class for mocking. </summary>
         protected PacketCaptureContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private PacketCapturesRestOperations _restClient => new PacketCapturesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => NetworkWatcherOperations.ResourceType;
@@ -406,6 +405,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, PacketCapture, PacketCaptureData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, PacketCapture, PacketCaptureData> Construct() { }
     }
 }

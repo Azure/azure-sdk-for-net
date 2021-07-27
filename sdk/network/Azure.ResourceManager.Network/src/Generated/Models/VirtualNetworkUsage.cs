@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Usage details for subnet. </summary>
-    public partial class VirtualNetworkUsage : SubResource<ResourceIdentifier>
+    public partial class VirtualNetworkUsage : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of VirtualNetworkUsage. </summary>
         internal VirtualNetworkUsage()

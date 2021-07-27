@@ -10,13 +10,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of DdosCustomPolicy and their operations over a ResourceGroup. </summary>
-    public partial class DdosCustomPolicyContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, DdosCustomPolicy, DdosCustomPolicyData>
+    public partial class DdosCustomPolicyContainer : ResourceContainerBase<DdosCustomPolicy, DdosCustomPolicyData>
     {
         /// <summary> Initializes a new instance of the <see cref="DdosCustomPolicyContainer"/> class for mocking. </summary>
         protected DdosCustomPolicyContainer()
@@ -34,9 +36,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private DdosCustomPoliciesRestOperations _restClient => new DdosCustomPoliciesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -358,6 +357,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, DdosCustomPolicy, DdosCustomPolicyData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, DdosCustomPolicy, DdosCustomPolicyData> Construct() { }
     }
 }

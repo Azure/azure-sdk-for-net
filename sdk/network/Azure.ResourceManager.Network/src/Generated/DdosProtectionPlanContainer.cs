@@ -13,13 +13,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of DdosProtectionPlan and their operations over a ResourceGroup. </summary>
-    public partial class DdosProtectionPlanContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, DdosProtectionPlan, DdosProtectionPlanData>
+    public partial class DdosProtectionPlanContainer : ResourceContainerBase<DdosProtectionPlan, DdosProtectionPlanData>
     {
         /// <summary> Initializes a new instance of the <see cref="DdosProtectionPlanContainer"/> class for mocking. </summary>
         protected DdosProtectionPlanContainer()
@@ -37,9 +39,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private DdosProtectionPlansRestOperations _restClient => new DdosProtectionPlansRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -309,7 +308,7 @@ namespace Azure.ResourceManager.Network
         {
             Page<DdosProtectionPlan> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanContainer.List");
                 scope.Start();
                 try
                 {
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<DdosProtectionPlan> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanContainer.List");
                 scope.Start();
                 try
                 {
@@ -347,7 +346,7 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<DdosProtectionPlan>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanContainer.List");
                 scope.Start();
                 try
                 {
@@ -362,7 +361,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<DdosProtectionPlan>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanContainer.List");
                 scope.Start();
                 try
                 {
@@ -425,6 +424,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, DdosProtectionPlan, DdosProtectionPlanData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, DdosProtectionPlan, DdosProtectionPlanData> Construct() { }
     }
 }

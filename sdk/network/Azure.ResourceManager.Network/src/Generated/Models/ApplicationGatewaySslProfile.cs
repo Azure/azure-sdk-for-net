@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SSL profile of an application gateway. </summary>
-    public partial class ApplicationGatewaySslProfile : WritableSubResource<ResourceIdentifier>
+    public partial class ApplicationGatewaySslProfile : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewaySslProfile. </summary>
         public ApplicationGatewaySslProfile()

@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific ExpressRouteCircuitPeering. </summary>
-    public partial class ExpressRouteCircuitPeeringOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, ExpressRouteCircuitPeering>
+    public partial class ExpressRouteCircuitPeeringOperations : ResourceOperationsBase<ExpressRouteCircuitPeering>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ExpressRouteCircuitPeeringsRestOperations _restClient { get; }
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitPeeringOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ExpressRouteCircuitPeeringOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal ExpressRouteCircuitPeeringOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ExpressRouteCircuitPeeringsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -204,7 +206,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all global reach peer connections associated with a private peering in an express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeerExpressRouteCircuitConnection" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<PeerExpressRouteCircuitConnection> ListPeerExpressRouteCircuitConnections(CancellationToken cancellationToken = default)
+        public virtual Pageable<PeerExpressRouteCircuitConnection> ListPeerExpressRouteCircuitConnections(CancellationToken cancellationToken = default)
         {
             Page<PeerExpressRouteCircuitConnection> FirstPageFunc(int? pageSizeHint)
             {
@@ -242,7 +244,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all global reach peer connections associated with a private peering in an express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeerExpressRouteCircuitConnection" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<PeerExpressRouteCircuitConnection> ListPeerExpressRouteCircuitConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PeerExpressRouteCircuitConnection> ListPeerExpressRouteCircuitConnectionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PeerExpressRouteCircuitConnection>> FirstPageFunc(int? pageSizeHint)
             {

@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> PrivateLink Resource of an application gateway. </summary>
-    public partial class ApplicationGatewayPrivateLinkResource : WritableSubResource<ResourceIdentifier>
+    public partial class ApplicationGatewayPrivateLinkResource : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkResource. </summary>
         public ApplicationGatewayPrivateLinkResource()

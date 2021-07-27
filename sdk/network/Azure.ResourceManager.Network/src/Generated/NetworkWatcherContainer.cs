@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of NetworkWatcher and their operations over a ResourceGroup. </summary>
-    public partial class NetworkWatcherContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, NetworkWatcher, NetworkWatcherData>
+    public partial class NetworkWatcherContainer : ResourceContainerBase<NetworkWatcher, NetworkWatcherData>
     {
         /// <summary> Initializes a new instance of the <see cref="NetworkWatcherContainer"/> class for mocking. </summary>
         protected NetworkWatcherContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private NetworkWatchersRestOperations _restClient => new NetworkWatchersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -406,6 +405,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, NetworkWatcher, NetworkWatcherData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, NetworkWatcher, NetworkWatcherData> Construct() { }
     }
 }

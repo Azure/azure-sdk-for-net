@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of HubIpConfiguration and their operations over a VirtualHub. </summary>
-    public partial class HubIpConfigurationContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, HubIpConfiguration, HubIpConfigurationData>
+    public partial class HubIpConfigurationContainer : ResourceContainerBase<HubIpConfiguration, HubIpConfigurationData>
     {
         /// <summary> Initializes a new instance of the <see cref="HubIpConfigurationContainer"/> class for mocking. </summary>
         protected HubIpConfigurationContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private VirtualHubIpConfigurationRestOperations _restClient => new VirtualHubIpConfigurationRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => VirtualHubOperations.ResourceType;
@@ -436,6 +435,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, HubIpConfiguration, HubIpConfigurationData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, HubIpConfiguration, HubIpConfigurationData> Construct() { }
     }
 }

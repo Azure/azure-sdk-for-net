@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Endpoint service. </summary>
-    public partial class EndpointServiceResult : WritableSubResource<ResourceIdentifier>
+    public partial class EndpointServiceResult : WritableSubResource
     {
         /// <summary> Initializes a new instance of EndpointServiceResult. </summary>
         public EndpointServiceResult()

@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VPN client revoked certificate of virtual network gateway. </summary>
-    public partial class VpnClientRevokedCertificate : WritableSubResource<ResourceIdentifier>
+    public partial class VpnClientRevokedCertificate : WritableSubResource
     {
         /// <summary> Initializes a new instance of VpnClientRevokedCertificate. </summary>
         public VpnClientRevokedCertificate()

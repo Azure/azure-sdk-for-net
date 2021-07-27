@@ -5,12 +5,13 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration profile child resource. </summary>
-    public partial class IPConfigurationProfile : WritableSubResource<ResourceIdentifier>
+    public partial class IPConfigurationProfile : WritableSubResource
     {
         /// <summary> Initializes a new instance of IPConfigurationProfile. </summary>
         public IPConfigurationProfile()

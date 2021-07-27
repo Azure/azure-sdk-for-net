@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A load balancing rule for a load balancer. </summary>
-    public partial class LoadBalancingRule : WritableSubResource<ResourceIdentifier>
+    public partial class LoadBalancingRule : WritableSubResource
     {
         /// <summary> Initializes a new instance of LoadBalancingRule. </summary>
         public LoadBalancingRule()

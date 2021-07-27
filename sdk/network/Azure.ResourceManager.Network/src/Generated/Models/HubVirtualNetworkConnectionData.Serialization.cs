@@ -7,9 +7,10 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
     public partial class HubVirtualNetworkConnectionData : IUtf8JsonSerializable
     {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             Optional<SubResource> remoteVirtualNetwork = default;
             Optional<bool> allowHubToRemoteVnetTransit = default;
             Optional<bool> allowRemoteVnetToUseHubVnetGateways = default;

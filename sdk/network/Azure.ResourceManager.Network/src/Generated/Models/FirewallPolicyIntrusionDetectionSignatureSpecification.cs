@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Intrusion detection signatures specification states. </summary>
-    public partial class FirewallPolicyIntrusionDetectionSignatureSpecification : WritableSubResource<ResourceIdentifier>
+    public partial class FirewallPolicyIntrusionDetectionSignatureSpecification : WritableSubResource
     {
         /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionSignatureSpecification. </summary>
         public FirewallPolicyIntrusionDetectionSignatureSpecification()

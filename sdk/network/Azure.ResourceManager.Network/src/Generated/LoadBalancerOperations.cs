@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific LoadBalancer. </summary>
-    public partial class LoadBalancerOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, LoadBalancer>
+    public partial class LoadBalancerOperations : ResourceOperationsBase<LoadBalancer>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private LoadBalancersRestOperations _restClient { get; }
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="LoadBalancerOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal LoadBalancerOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal LoadBalancerOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -214,14 +216,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a load balancer tags. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LoadBalancerData>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadBalancer>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.UpdateTags");
             scope.Start();
             try
             {
                 var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,14 +235,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a load balancer tags. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LoadBalancerData> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual Response<LoadBalancer> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.UpdateTags");
             scope.Start();
             try
             {
                 var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return response;
+                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -288,7 +290,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancer frontend IP configurations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontendIPConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<FrontendIPConfiguration> ListLoadBalancerFrontendIPConfigurations(CancellationToken cancellationToken = default)
+        public virtual Pageable<FrontendIPConfiguration> ListLoadBalancerFrontendIPConfigurations(CancellationToken cancellationToken = default)
         {
             Page<FrontendIPConfiguration> FirstPageFunc(int? pageSizeHint)
             {
@@ -326,7 +328,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancer frontend IP configurations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FrontendIPConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<FrontendIPConfiguration> ListLoadBalancerFrontendIPConfigurationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FrontendIPConfiguration> ListLoadBalancerFrontendIPConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<FrontendIPConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
@@ -399,7 +401,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancing rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancingRule" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<LoadBalancingRule> ListLoadBalancerLoadBalancingRules(CancellationToken cancellationToken = default)
+        public virtual Pageable<LoadBalancingRule> ListLoadBalancerLoadBalancingRules(CancellationToken cancellationToken = default)
         {
             Page<LoadBalancingRule> FirstPageFunc(int? pageSizeHint)
             {
@@ -437,7 +439,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancing rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadBalancingRule" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<LoadBalancingRule> ListLoadBalancerLoadBalancingRulesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LoadBalancingRule> ListLoadBalancerLoadBalancingRulesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<LoadBalancingRule>> FirstPageFunc(int? pageSizeHint)
             {
@@ -510,7 +512,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the outbound rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OutboundRule" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<OutboundRule> ListLoadBalancerOutboundRules(CancellationToken cancellationToken = default)
+        public virtual Pageable<OutboundRule> ListLoadBalancerOutboundRules(CancellationToken cancellationToken = default)
         {
             Page<OutboundRule> FirstPageFunc(int? pageSizeHint)
             {
@@ -548,7 +550,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the outbound rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OutboundRule" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<OutboundRule> ListLoadBalancerOutboundRulesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OutboundRule> ListLoadBalancerOutboundRulesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<OutboundRule>> FirstPageFunc(int? pageSizeHint)
             {
@@ -586,7 +588,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets associated load balancer network interfaces. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkInterfaceData" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<NetworkInterfaceData> ListLoadBalancerNetworkInterfaces(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkInterfaceData> ListLoadBalancerNetworkInterfaces(CancellationToken cancellationToken = default)
         {
             Page<NetworkInterfaceData> FirstPageFunc(int? pageSizeHint)
             {
@@ -624,7 +626,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets associated load balancer network interfaces. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkInterfaceData" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<NetworkInterfaceData> ListLoadBalancerNetworkInterfacesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkInterfaceData> ListLoadBalancerNetworkInterfacesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<NetworkInterfaceData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -697,7 +699,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancer probes. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Probe" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<Probe> ListLoadBalancerProbes(CancellationToken cancellationToken = default)
+        public virtual Pageable<Probe> ListLoadBalancerProbes(CancellationToken cancellationToken = default)
         {
             Page<Probe> FirstPageFunc(int? pageSizeHint)
             {
@@ -735,7 +737,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancer probes. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Probe" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<Probe> ListLoadBalancerProbesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Probe> ListLoadBalancerProbesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<Probe>> FirstPageFunc(int? pageSizeHint)
             {

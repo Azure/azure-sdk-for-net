@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Probe of the application gateway. </summary>
-    public partial class ApplicationGatewayProbe : WritableSubResource<ResourceIdentifier>
+    public partial class ApplicationGatewayProbe : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayProbe. </summary>
         public ApplicationGatewayProbe()

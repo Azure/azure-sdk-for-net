@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Details the service to which the subnet is delegated. </summary>
-    public partial class Delegation : WritableSubResource<ResourceIdentifier>
+    public partial class Delegation : WritableSubResource
     {
         /// <summary> Initializes a new instance of Delegation. </summary>
         public Delegation()

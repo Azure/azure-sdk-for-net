@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ApplicationGateway and their operations over a ResourceGroup. </summary>
-    public partial class ApplicationGatewayContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, ApplicationGateway, ApplicationGatewayData>
+    public partial class ApplicationGatewayContainer : ResourceContainerBase<ApplicationGateway, ApplicationGatewayData>
     {
         /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayContainer"/> class for mocking. </summary>
         protected ApplicationGatewayContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private ApplicationGatewaysRestOperations _restClient => new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -436,6 +435,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, ApplicationGateway, ApplicationGatewayData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, ApplicationGateway, ApplicationGatewayData> Construct() { }
     }
 }

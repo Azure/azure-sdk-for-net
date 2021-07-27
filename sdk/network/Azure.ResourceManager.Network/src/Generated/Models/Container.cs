@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Reference to container resource in remote resource provider. </summary>
-    public partial class Container : WritableSubResource<ResourceIdentifier>
+    public partial class Container : WritableSubResource
     {
         /// <summary> Initializes a new instance of Container. </summary>
         public Container()

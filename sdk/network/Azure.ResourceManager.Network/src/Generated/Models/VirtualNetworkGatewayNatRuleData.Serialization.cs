@@ -8,9 +8,10 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkGatewayNatRuleData : IUtf8JsonSerializable
     {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<VpnNatRuleType> type0 = default;
             Optional<VpnNatRuleMode> mode = default;

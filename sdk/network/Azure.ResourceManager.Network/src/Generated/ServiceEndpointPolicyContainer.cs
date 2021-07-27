@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ServiceEndpointPolicy and their operations over a ResourceGroup. </summary>
-    public partial class ServiceEndpointPolicyContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, ServiceEndpointPolicy, ServiceEndpointPolicyData>
+    public partial class ServiceEndpointPolicyContainer : ResourceContainerBase<ServiceEndpointPolicy, ServiceEndpointPolicyData>
     {
         /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicyContainer"/> class for mocking. </summary>
         protected ServiceEndpointPolicyContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private ServiceEndpointPoliciesRestOperations _restClient => new ServiceEndpointPoliciesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -326,7 +325,7 @@ namespace Azure.ResourceManager.Network
         {
             Page<ServiceEndpointPolicy> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyContainer.List");
                 scope.Start();
                 try
                 {
@@ -341,7 +340,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<ServiceEndpointPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyContainer.List");
                 scope.Start();
                 try
                 {
@@ -364,7 +363,7 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<ServiceEndpointPolicy>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyContainer.List");
                 scope.Start();
                 try
                 {
@@ -379,7 +378,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<ServiceEndpointPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyContainer.List");
                 scope.Start();
                 try
                 {
@@ -442,6 +441,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, ServiceEndpointPolicy, ServiceEndpointPolicyData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, ServiceEndpointPolicy, ServiceEndpointPolicyData> Construct() { }
     }
 }

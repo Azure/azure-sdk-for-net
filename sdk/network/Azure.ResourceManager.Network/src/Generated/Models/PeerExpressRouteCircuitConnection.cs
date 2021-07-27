@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Peer Express Route Circuit Connection in an ExpressRouteCircuitPeering resource. </summary>
-    public partial class PeerExpressRouteCircuitConnection : WritableSubResource<ResourceIdentifier>
+    public partial class PeerExpressRouteCircuitConnection : WritableSubResource
     {
         /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnection. </summary>
         public PeerExpressRouteCircuitConnection()

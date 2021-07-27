@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Http listener of an application gateway. </summary>
-    public partial class ApplicationGatewayHttpListener : WritableSubResource<ResourceIdentifier>
+    public partial class ApplicationGatewayHttpListener : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
         public ApplicationGatewayHttpListener()

@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Frontend IP configuration of an application gateway. </summary>
-    public partial class ApplicationGatewayFrontendIPConfiguration : WritableSubResource<ResourceIdentifier>
+    public partial class ApplicationGatewayFrontendIPConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
         public ApplicationGatewayFrontendIPConfiguration()

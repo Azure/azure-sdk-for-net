@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VpnSiteLink Resource. </summary>
-    public partial class VpnSiteLink : WritableSubResource<ResourceIdentifier>
+    public partial class VpnSiteLink : WritableSubResource
     {
         /// <summary> Initializes a new instance of VpnSiteLink. </summary>
         public VpnSiteLink()

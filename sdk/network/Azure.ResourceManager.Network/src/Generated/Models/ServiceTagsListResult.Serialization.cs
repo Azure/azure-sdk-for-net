@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> cloud = default;
             Optional<IReadOnlyList<ServiceTagInformation>> values = default;
             Optional<string> nextLink = default;
-            TenantResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             foreach (var property in element.EnumerateObject())

@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VirtualApplianceSite and their operations over a NetworkVirtualAppliance. </summary>
-    public partial class VirtualApplianceSiteContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, VirtualApplianceSite, VirtualApplianceSiteData>
+    public partial class VirtualApplianceSiteContainer : ResourceContainerBase<VirtualApplianceSite, VirtualApplianceSiteData>
     {
         /// <summary> Initializes a new instance of the <see cref="VirtualApplianceSiteContainer"/> class for mocking. </summary>
         protected VirtualApplianceSiteContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private VirtualApplianceSitesRestOperations _restClient => new VirtualApplianceSitesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => NetworkVirtualApplianceOperations.ResourceType;
@@ -436,6 +435,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, VirtualApplianceSite, VirtualApplianceSiteData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, VirtualApplianceSite, VirtualApplianceSiteData> Construct() { }
     }
 }

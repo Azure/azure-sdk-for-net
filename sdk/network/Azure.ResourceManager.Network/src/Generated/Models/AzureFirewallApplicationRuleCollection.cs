@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Application rule collection resource. </summary>
-    public partial class AzureFirewallApplicationRuleCollection : WritableSubResource<ResourceIdentifier>
+    public partial class AzureFirewallApplicationRuleCollection : WritableSubResource
     {
         /// <summary> Initializes a new instance of AzureFirewallApplicationRuleCollection. </summary>
         public AzureFirewallApplicationRuleCollection()

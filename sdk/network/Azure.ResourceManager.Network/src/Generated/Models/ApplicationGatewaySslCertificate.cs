@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SSL certificates of an application gateway. </summary>
-    public partial class ApplicationGatewaySslCertificate : WritableSubResource<ResourceIdentifier>
+    public partial class ApplicationGatewaySslCertificate : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewaySslCertificate. </summary>
         public ApplicationGatewaySslCertificate()

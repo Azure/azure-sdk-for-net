@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific VirtualNetwork. </summary>
-    public partial class VirtualNetworkOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VirtualNetwork>
+    public partial class VirtualNetworkOperations : ResourceOperationsBase<VirtualNetwork>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private VirtualNetworksRestOperations _restClient { get; }
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal VirtualNetworkOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal VirtualNetworkOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new VirtualNetworksRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -204,14 +206,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a virtual network tags. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualNetworkData>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualNetwork>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkOperations.UpdateTags");
             scope.Start();
             try
             {
                 var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(new VirtualNetwork(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,14 +225,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Updates a virtual network tags. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualNetworkData> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualNetwork> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkOperations.UpdateTags");
             scope.Start();
             try
             {
                 var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return response;
+                return Response.FromValue(new VirtualNetwork(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -292,7 +294,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists usage stats. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkUsage" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<VirtualNetworkUsage> ListUsage(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualNetworkUsage> ListUsage(CancellationToken cancellationToken = default)
         {
             Page<VirtualNetworkUsage> FirstPageFunc(int? pageSizeHint)
             {
@@ -330,7 +332,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists usage stats. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkUsage" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VirtualNetworkUsage> ListUsageAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualNetworkUsage> ListUsageAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualNetworkUsage>> FirstPageFunc(int? pageSizeHint)
             {

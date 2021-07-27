@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ServiceEndpointPolicyDefinition and their operations over a ServiceEndpointPolicy. </summary>
-    public partial class ServiceEndpointPolicyDefinitionContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, ServiceEndpointPolicyDefinition, ServiceEndpointPolicyDefinitionData>
+    public partial class ServiceEndpointPolicyDefinitionContainer : ResourceContainerBase<ServiceEndpointPolicyDefinition, ServiceEndpointPolicyDefinitionData>
     {
         /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicyDefinitionContainer"/> class for mocking. </summary>
         protected ServiceEndpointPolicyDefinitionContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private ServiceEndpointPolicyDefinitionsRestOperations _restClient => new ServiceEndpointPolicyDefinitionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ServiceEndpointPolicyOperations.ResourceType;
@@ -320,7 +319,7 @@ namespace Azure.ResourceManager.Network
         {
             Page<ServiceEndpointPolicyDefinition> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionContainer.List");
                 scope.Start();
                 try
                 {
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<ServiceEndpointPolicyDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionContainer.List");
                 scope.Start();
                 try
                 {
@@ -358,7 +357,7 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<ServiceEndpointPolicyDefinition>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionContainer.List");
                 scope.Start();
                 try
                 {
@@ -373,7 +372,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<ServiceEndpointPolicyDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ServiceEndpointPolicyDefinitionContainer.List");
                 scope.Start();
                 try
                 {
@@ -436,6 +435,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, ServiceEndpointPolicyDefinition, ServiceEndpointPolicyDefinitionData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, ServiceEndpointPolicyDefinition, ServiceEndpointPolicyDefinitionData> Construct() { }
     }
 }

@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of IpGroup and their operations over a ResourceGroup. </summary>
-    public partial class IpGroupContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, IpGroup, IpGroupData>
+    public partial class IpGroupContainer : ResourceContainerBase<IpGroup, IpGroupData>
     {
         /// <summary> Initializes a new instance of the <see cref="IpGroupContainer"/> class for mocking. </summary>
         protected IpGroupContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private IpGroupsRestOperations _restClient => new IpGroupsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -326,7 +325,7 @@ namespace Azure.ResourceManager.Network
         {
             Page<IpGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("IpGroupContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("IpGroupContainer.List");
                 scope.Start();
                 try
                 {
@@ -341,7 +340,7 @@ namespace Azure.ResourceManager.Network
             }
             Page<IpGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("IpGroupContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("IpGroupContainer.List");
                 scope.Start();
                 try
                 {
@@ -364,7 +363,7 @@ namespace Azure.ResourceManager.Network
         {
             async Task<Page<IpGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("IpGroupContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("IpGroupContainer.List");
                 scope.Start();
                 try
                 {
@@ -379,7 +378,7 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<IpGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("IpGroupContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("IpGroupContainer.List");
                 scope.Start();
                 try
                 {
@@ -442,6 +441,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, IpGroup, IpGroupData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, IpGroup, IpGroupData> Construct() { }
     }
 }

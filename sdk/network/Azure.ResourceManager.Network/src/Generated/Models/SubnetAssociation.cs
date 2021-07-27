@@ -7,12 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Subnet and it&apos;s custom security rules. </summary>
-    public partial class SubnetAssociation : SubResource<ResourceIdentifier>
+    public partial class SubnetAssociation : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of SubnetAssociation. </summary>
         internal SubnetAssociation()

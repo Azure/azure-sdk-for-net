@@ -12,13 +12,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteGateway and their operations over a ResourceGroup. </summary>
-    public partial class ExpressRouteGatewayContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, ExpressRouteGateway, ExpressRouteGatewayData>
+    public partial class ExpressRouteGatewayContainer : ResourceContainerBase<ExpressRouteGateway, ExpressRouteGatewayData>
     {
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteGatewayContainer"/> class for mocking. </summary>
         protected ExpressRouteGatewayContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private ExpressRouteGatewaysRestOperations _restClient => new ExpressRouteGatewaysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -315,9 +314,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists ExpressRoute gateways in a given resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<ExpressRouteGateway>>> ListByResourceGroupAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<ExpressRouteGateway>>> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.ListByResourceGroup");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.List");
             scope.Start();
             try
             {
@@ -333,9 +332,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists ExpressRoute gateways in a given resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<ExpressRouteGateway>> ListByResourceGroup(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<ExpressRouteGateway>> List(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.ListByResourceGroup");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.List");
             scope.Start();
             try
             {
@@ -396,6 +395,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, ExpressRouteGateway, ExpressRouteGatewayData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, ExpressRouteGateway, ExpressRouteGatewayData> Construct() { }
     }
 }

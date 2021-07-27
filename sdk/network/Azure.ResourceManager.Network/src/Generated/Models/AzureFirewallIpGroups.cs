@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IpGroups associated with azure firewall. </summary>
-    public partial class AzureFirewallIpGroups : SubResource<ResourceIdentifier>
+    public partial class AzureFirewallIpGroups : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of AzureFirewallIpGroups. </summary>
         internal AzureFirewallIpGroups()

@@ -11,13 +11,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific Subnet. </summary>
-    public partial class SubnetOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, Subnet>
+    public partial class SubnetOperations : ResourceOperationsBase<Subnet>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private SubnetsRestOperations _restClient { get; }
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="SubnetOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal SubnetOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal SubnetOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new SubnetsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);

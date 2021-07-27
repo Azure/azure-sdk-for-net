@@ -7,12 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network interface and its custom security rules. </summary>
-    public partial class NetworkInterfaceAssociation : SubResource<ResourceIdentifier>
+    public partial class NetworkInterfaceAssociation : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of NetworkInterfaceAssociation. </summary>
         internal NetworkInterfaceAssociation()

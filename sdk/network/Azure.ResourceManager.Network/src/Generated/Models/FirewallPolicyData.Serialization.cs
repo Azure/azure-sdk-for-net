@@ -8,9 +8,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
     public partial class FirewallPolicyData : IUtf8JsonSerializable
     {
@@ -99,12 +101,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceGroupResourceIdentifier id = default;
-            Optional<IReadOnlyList<SubResource>> ruleCollectionGroups = default;
+            ResourceIdentifier id = default;
+            Optional<IReadOnlyList<Models.SubResource>> ruleCollectionGroups = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<SubResource> basePolicy = default;
-            Optional<IReadOnlyList<SubResource>> firewalls = default;
-            Optional<IReadOnlyList<SubResource>> childPolicies = default;
+            Optional<Models.SubResource> basePolicy = default;
+            Optional<IReadOnlyList<Models.SubResource>> firewalls = default;
+            Optional<IReadOnlyList<Models.SubResource>> childPolicies = default;
             Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
             Optional<FirewallPolicyThreatIntelWhitelist> threatIntelWhitelist = default;
             Optional<FirewallPolicyInsights> insights = default;
@@ -181,10 +183,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<Models.SubResource> array = new List<Models.SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(Models.SubResource.DeserializeSubResource(item));
                             }
                             ruleCollectionGroups = array;
                             continue;
@@ -206,7 +208,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            basePolicy = SubResource.DeserializeSubResource(property0.Value);
+                            basePolicy = Models.SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("firewalls"))
@@ -216,10 +218,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<Models.SubResource> array = new List<Models.SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(Models.SubResource.DeserializeSubResource(item));
                             }
                             firewalls = array;
                             continue;
@@ -231,10 +233,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResource> array = new List<SubResource>();
+                            List<Models.SubResource> array = new List<Models.SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResource.DeserializeSubResource(item));
+                                array.Add(Models.SubResource.DeserializeSubResource(item));
                             }
                             childPolicies = array;
                             continue;

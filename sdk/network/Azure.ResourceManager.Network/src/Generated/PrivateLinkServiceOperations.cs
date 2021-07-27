@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific PrivateLinkService. </summary>
-    public partial class PrivateLinkServiceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, PrivateLinkService>
+    public partial class PrivateLinkServiceOperations : ResourceOperationsBase<PrivateLinkService>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private PrivateLinkServicesRestOperations _restClient { get; }
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="PrivateLinkServiceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal PrivateLinkServiceOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal PrivateLinkServiceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new PrivateLinkServicesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -292,7 +294,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all private end point connections for a specific private link service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<PrivateEndpointConnection> ListPrivateEndpointConnections(CancellationToken cancellationToken = default)
+        public virtual Pageable<PrivateEndpointConnection> ListPrivateEndpointConnections(CancellationToken cancellationToken = default)
         {
             Page<PrivateEndpointConnection> FirstPageFunc(int? pageSizeHint)
             {
@@ -330,7 +332,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all private end point connections for a specific private link service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<PrivateEndpointConnection> ListPrivateEndpointConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PrivateEndpointConnection> ListPrivateEndpointConnectionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PrivateEndpointConnection>> FirstPageFunc(int? pageSizeHint)
             {
@@ -368,7 +370,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<AutoApprovedPrivateLinkService> ListAutoApprovedPrivateLinkServicesByResourceGroup(CancellationToken cancellationToken = default)
+        public virtual Pageable<AutoApprovedPrivateLinkService> ListAutoApprovedPrivateLinkServicesByResourceGroup(CancellationToken cancellationToken = default)
         {
             Page<AutoApprovedPrivateLinkService> FirstPageFunc(int? pageSizeHint)
             {
@@ -406,7 +408,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<AutoApprovedPrivateLinkService> ListAutoApprovedPrivateLinkServicesByResourceGroupAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AutoApprovedPrivateLinkService> ListAutoApprovedPrivateLinkServicesByResourceGroupAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AutoApprovedPrivateLinkService>> FirstPageFunc(int? pageSizeHint)
             {

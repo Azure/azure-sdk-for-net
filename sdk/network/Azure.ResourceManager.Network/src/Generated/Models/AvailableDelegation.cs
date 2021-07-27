@@ -7,12 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The serviceName of an AvailableDelegation indicates a possible delegation for a subnet. </summary>
-    public partial class AvailableDelegation : Resource<TenantResourceIdentifier>
+    public partial class AvailableDelegation : Resources.Models.Resource
     {
         /// <summary> Initializes a new instance of AvailableDelegation. </summary>
         internal AvailableDelegation()
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> The type. </param>
         /// <param name="serviceName"> The name of the service and resource. </param>
         /// <param name="actions"> The actions permitted to the service upon delegation. </param>
-        internal AvailableDelegation(TenantResourceIdentifier id, string name, ResourceType type, string serviceName, IReadOnlyList<string> actions) : base(id, name, type)
+        internal AvailableDelegation(ResourceIdentifier id, string name, ResourceType type, string serviceName, IReadOnlyList<string> actions) : base(id, name, type)
         {
             ServiceName = serviceName;
             Actions = actions;

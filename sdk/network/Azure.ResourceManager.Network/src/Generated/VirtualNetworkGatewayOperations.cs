@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific VirtualNetworkGateway. </summary>
-    public partial class VirtualNetworkGatewayOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VirtualNetworkGateway>
+    public partial class VirtualNetworkGatewayOperations : ResourceOperationsBase<VirtualNetworkGateway>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private VirtualNetworkGatewaysRestOperations _restClient { get; }
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkGatewayOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal VirtualNetworkGatewayOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal VirtualNetworkGatewayOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new VirtualNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -252,7 +254,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the connections in a virtual network gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkGatewayConnectionListEntity" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<VirtualNetworkGatewayConnectionListEntity> ListConnections(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualNetworkGatewayConnectionListEntity> ListConnections(CancellationToken cancellationToken = default)
         {
             Page<VirtualNetworkGatewayConnectionListEntity> FirstPageFunc(int? pageSizeHint)
             {
@@ -290,7 +292,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the connections in a virtual network gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkGatewayConnectionListEntity" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VirtualNetworkGatewayConnectionListEntity> ListConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualNetworkGatewayConnectionListEntity> ListConnectionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualNetworkGatewayConnectionListEntity>> FirstPageFunc(int? pageSizeHint)
             {

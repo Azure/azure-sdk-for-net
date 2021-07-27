@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP Configuration of a VPN Gateway Resource. </summary>
-    public partial class VpnGatewayIpConfiguration : SubResource<ResourceIdentifier>
+    public partial class VpnGatewayIpConfiguration : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of VpnGatewayIpConfiguration. </summary>
         internal VpnGatewayIpConfiguration()

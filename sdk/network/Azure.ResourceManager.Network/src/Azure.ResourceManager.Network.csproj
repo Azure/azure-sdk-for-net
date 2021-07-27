@@ -26,4 +26,8 @@
     <NoWarn>$(NoWarn);AZC0008</NoWarn>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager" VersionOverride="1.0.0-alpha.20210726.2" />
+  </ItemGroup>
+
 </Project>

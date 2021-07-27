@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ConnectionMonitor and their operations over a NetworkWatcher. </summary>
-    public partial class ConnectionMonitorContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, ConnectionMonitor, ConnectionMonitorData>
+    public partial class ConnectionMonitorContainer : ResourceContainerBase<ConnectionMonitor, ConnectionMonitorData>
     {
         /// <summary> Initializes a new instance of the <see cref="ConnectionMonitorContainer"/> class for mocking. </summary>
         protected ConnectionMonitorContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private ConnectionMonitorsRestOperations _restClient => new ConnectionMonitorsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => NetworkWatcherOperations.ResourceType;
@@ -410,6 +409,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, ConnectionMonitor, ConnectionMonitorData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, ConnectionMonitor, ConnectionMonitorData> Construct() { }
     }
 }

@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of Route and their operations over a RouteTable. </summary>
-    public partial class RouteContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, Route, RouteData>
+    public partial class RouteContainer : ResourceContainerBase<Route, RouteData>
     {
         /// <summary> Initializes a new instance of the <see cref="RouteContainer"/> class for mocking. </summary>
         protected RouteContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private RoutesRestOperations _restClient => new RoutesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => RouteTableOperations.ResourceType;
@@ -436,6 +435,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, Route, RouteData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, Route, RouteData> Construct() { }
     }
 }

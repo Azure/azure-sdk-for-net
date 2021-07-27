@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of FirewallPolicyRuleCollectionGroup and their operations over a FirewallPolicy. </summary>
-    public partial class FirewallPolicyRuleCollectionGroupContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, FirewallPolicyRuleCollectionGroup, FirewallPolicyRuleCollectionGroupData>
+    public partial class FirewallPolicyRuleCollectionGroupContainer : ResourceContainerBase<FirewallPolicyRuleCollectionGroup, FirewallPolicyRuleCollectionGroupData>
     {
         /// <summary> Initializes a new instance of the <see cref="FirewallPolicyRuleCollectionGroupContainer"/> class for mocking. </summary>
         protected FirewallPolicyRuleCollectionGroupContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private FirewallPolicyRuleCollectionGroupsRestOperations _restClient => new FirewallPolicyRuleCollectionGroupsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => FirewallPolicyOperations.ResourceType;
@@ -436,6 +435,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, FirewallPolicyRuleCollectionGroup, FirewallPolicyRuleCollectionGroupData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, FirewallPolicyRuleCollectionGroup, FirewallPolicyRuleCollectionGroupData> Construct() { }
     }
 }

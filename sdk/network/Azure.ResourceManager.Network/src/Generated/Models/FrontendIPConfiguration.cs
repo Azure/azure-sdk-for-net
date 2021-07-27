@@ -7,12 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Frontend IP address of the load balancer. </summary>
-    public partial class FrontendIPConfiguration : WritableSubResource<ResourceIdentifier>
+    public partial class FrontendIPConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of FrontendIPConfiguration. </summary>
         public FrontendIPConfiguration()

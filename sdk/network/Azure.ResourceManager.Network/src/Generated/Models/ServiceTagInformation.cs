@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The service tag information. </summary>
-    public partial class ServiceTagInformation : SubResource<ResourceIdentifier>
+    public partial class ServiceTagInformation : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of ServiceTagInformation. </summary>
         internal ServiceTagInformation()

@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of SecurityRule and their operations over a NetworkSecurityGroup. </summary>
-    public partial class SecurityRuleContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, SecurityRule, SecurityRuleData>
+    public partial class SecurityRuleContainer : ResourceContainerBase<SecurityRule, SecurityRuleData>
     {
         /// <summary> Initializes a new instance of the <see cref="SecurityRuleContainer"/> class for mocking. </summary>
         protected SecurityRuleContainer()
@@ -36,9 +38,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Represents the REST operations. </summary>
         private SecurityRulesRestOperations _restClient => new SecurityRulesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => NetworkSecurityGroupOperations.ResourceType;
@@ -436,6 +435,6 @@ namespace Azure.ResourceManager.Network
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, SecurityRule, SecurityRuleData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, SecurityRule, SecurityRuleData> Construct() { }
     }
 }

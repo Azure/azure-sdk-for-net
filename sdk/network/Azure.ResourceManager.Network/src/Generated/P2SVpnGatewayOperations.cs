@@ -11,13 +11,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific P2SVpnGateway. </summary>
-    public partial class P2SVpnGatewayOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, P2SVpnGateway>
+    public partial class P2SVpnGatewayOperations : ResourceOperationsBase<P2SVpnGateway>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private P2SVpnGatewaysRestOperations _restClient { get; }
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="P2SVpnGatewayOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal P2SVpnGatewayOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal P2SVpnGatewayOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new P2SVpnGatewaysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);

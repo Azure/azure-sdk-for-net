@@ -6,12 +6,12 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The network resource usage. </summary>
-    public partial class Usage : SubResource<ResourceIdentifier>
+    public partial class Usage : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of Usage. </summary>
         /// <param name="unit"> An enum describing the unit of measurement. </param>

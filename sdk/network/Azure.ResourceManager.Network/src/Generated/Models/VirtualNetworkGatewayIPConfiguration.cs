@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration for virtual network gateway. </summary>
-    public partial class VirtualNetworkGatewayIPConfiguration : WritableSubResource<ResourceIdentifier>
+    public partial class VirtualNetworkGatewayIPConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayIPConfiguration. </summary>
         public VirtualNetworkGatewayIPConfiguration()

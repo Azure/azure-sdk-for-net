@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An Ssl predefined policy. </summary>
-    public partial class ApplicationGatewaySslPredefinedPolicy : WritableSubResource<ResourceIdentifier>
+    public partial class ApplicationGatewaySslPredefinedPolicy : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicy. </summary>
         public ApplicationGatewaySslPredefinedPolicy()

@@ -5,12 +5,13 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The private link service ip configuration. </summary>
-    public partial class PrivateLinkServiceIpConfiguration : WritableSubResource<ResourceIdentifier>
+    public partial class PrivateLinkServiceIpConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of PrivateLinkServiceIpConfiguration. </summary>
         public PrivateLinkServiceIpConfiguration()

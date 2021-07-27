@@ -5,12 +5,13 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> PrivateEndpointConnection resource. </summary>
-    public partial class PrivateEndpointConnection : WritableSubResource<ResourceIdentifier>
+    public partial class PrivateEndpointConnection : WritableSubResource
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnection. </summary>
         public PrivateEndpointConnection()

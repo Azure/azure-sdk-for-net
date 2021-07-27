@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network interface and all its associated security rules. </summary>
-    public partial class SecurityGroupNetworkInterface : SubResource<ResourceIdentifier>
+    public partial class SecurityGroupNetworkInterface : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of SecurityGroupNetworkInterface. </summary>
         internal SecurityGroupNetworkInterface()

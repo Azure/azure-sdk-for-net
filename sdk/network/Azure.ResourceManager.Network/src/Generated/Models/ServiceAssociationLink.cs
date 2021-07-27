@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ServiceAssociationLink resource. </summary>
-    public partial class ServiceAssociationLink : WritableSubResource<ResourceIdentifier>
+    public partial class ServiceAssociationLink : WritableSubResource
     {
         /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
         public ServiceAssociationLink()

@@ -11,12 +11,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific VirtualNetworkGatewayNatRule. </summary>
-    public partial class VirtualNetworkGatewayNatRuleOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VirtualNetworkGatewayNatRule>
+    public partial class VirtualNetworkGatewayNatRuleOperations : ResourceOperationsBase<VirtualNetworkGatewayNatRule>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private VirtualNetworkGatewayNatRulesRestOperations _restClient { get; }
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkGatewayNatRuleOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal VirtualNetworkGatewayNatRuleOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal VirtualNetworkGatewayNatRuleOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new VirtualNetworkGatewayNatRulesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);

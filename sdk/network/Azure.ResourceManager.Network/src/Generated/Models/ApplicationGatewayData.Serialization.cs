@@ -8,9 +8,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
     public partial class ApplicationGatewayData : IUtf8JsonSerializable
     {
@@ -285,7 +287,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             Optional<ApplicationGatewaySku> sku = default;
             Optional<ApplicationGatewaySslPolicy> sslPolicy = default;
             Optional<ApplicationGatewayOperationalState> operationalState = default;
@@ -306,7 +308,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<ApplicationGatewayRewriteRuleSet>> rewriteRuleSets = default;
             Optional<IList<ApplicationGatewayRedirectConfiguration>> redirectConfigurations = default;
             Optional<ApplicationGatewayWebApplicationFirewallConfiguration> webApplicationFirewallConfiguration = default;
-            Optional<SubResource> firewallPolicy = default;
+            Optional<Models.SubResource> firewallPolicy = default;
             Optional<bool> enableHttp2 = default;
             Optional<bool> enableFips = default;
             Optional<ApplicationGatewayAutoscaleConfiguration> autoscaleConfiguration = default;
@@ -679,7 +681,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firewallPolicy = SubResource.DeserializeSubResource(property0.Value);
+                            firewallPolicy = Models.SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableHttp2"))

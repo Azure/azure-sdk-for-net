@@ -7,12 +7,13 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListServiceTags API service call. </summary>
-    public partial class ServiceTagsListResult : Resource<TenantResourceIdentifier>
+    public partial class ServiceTagsListResult : Resources.Models.Resource
     {
         /// <summary> Initializes a new instance of ServiceTagsListResult. </summary>
         internal ServiceTagsListResult()
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="cloud"> The name of the cloud. </param>
         /// <param name="values"> The list of service tag information resources. </param>
         /// <param name="nextLink"> The URL to get next page of service tag information resources. </param>
-        internal ServiceTagsListResult(TenantResourceIdentifier id, string name, ResourceType type, string changeNumber, string cloud, IReadOnlyList<ServiceTagInformation> values, string nextLink) : base(id, name, type)
+        internal ServiceTagsListResult(ResourceIdentifier id, string name, ResourceType type, string changeNumber, string cloud, IReadOnlyList<ServiceTagInformation> values, string nextLink) : base(id, name, type)
         {
             ChangeNumber = changeNumber;
             Cloud = cloud;

@@ -7,12 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Information gained from troubleshooting of specified resource. </summary>
-    public partial class TroubleshootingDetails : SubResource<ResourceIdentifier>
+    public partial class TroubleshootingDetails : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of TroubleshootingDetails. </summary>
         internal TroubleshootingDetails()

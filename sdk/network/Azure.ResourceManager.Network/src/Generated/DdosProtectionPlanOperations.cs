@@ -11,12 +11,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific DdosProtectionPlan. </summary>
-    public partial class DdosProtectionPlanOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, DdosProtectionPlan>
+    public partial class DdosProtectionPlanOperations : ResourceOperationsBase<DdosProtectionPlan>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private DdosProtectionPlansRestOperations _restClient { get; }
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="DdosProtectionPlanOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal DdosProtectionPlanOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal DdosProtectionPlanOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DdosProtectionPlansRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -326,6 +329,43 @@ namespace Azure.ResourceManager.Network
                 TagContainer.CreateOrUpdate(originalTags.Value.Data, cancellationToken);
                 var originalResponse = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new DdosProtectionPlan(this, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary> Update a DDoS protection plan tags. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DdosProtectionPlan>> UpdateTagsAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanOperations.UpdateTags");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update a DDoS protection plan tags. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DdosProtectionPlan> UpdateTags(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("DdosProtectionPlanOperations.UpdateTags");
+            scope.Start();
+            try
+            {
+                var response = _restClient.UpdateTags(Id.ResourceGroupName, Id.Name, tags, cancellationToken);
+                return Response.FromValue(new DdosProtectionPlan(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

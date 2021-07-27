@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The application gateway private link ip configuration. </summary>
-    public partial class ApplicationGatewayPrivateLinkIpConfiguration : WritableSubResource<ResourceIdentifier>
+    public partial class ApplicationGatewayPrivateLinkIpConfiguration : WritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkIpConfiguration. </summary>
         public ApplicationGatewayPrivateLinkIpConfiguration()

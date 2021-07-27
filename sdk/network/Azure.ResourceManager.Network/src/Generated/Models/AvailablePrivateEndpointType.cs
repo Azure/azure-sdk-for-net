@@ -5,12 +5,13 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The information of an AvailablePrivateEndpointType. </summary>
-    public partial class AvailablePrivateEndpointType : Resource<TenantResourceIdentifier>
+    public partial class AvailablePrivateEndpointType : Resources.Models.Resource
     {
         /// <summary> Initializes a new instance of AvailablePrivateEndpointType. </summary>
         internal AvailablePrivateEndpointType()
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> The type. </param>
         /// <param name="resourceName"> The name of the service and resource. </param>
         /// <param name="displayName"> Display name of the resource. </param>
-        internal AvailablePrivateEndpointType(TenantResourceIdentifier id, string name, ResourceType type, string resourceName, string displayName) : base(id, name, type)
+        internal AvailablePrivateEndpointType(ResourceIdentifier id, string name, ResourceType type, string resourceName, string displayName) : base(id, name, type)
         {
             ResourceName = resourceName;
             DisplayName = displayName;

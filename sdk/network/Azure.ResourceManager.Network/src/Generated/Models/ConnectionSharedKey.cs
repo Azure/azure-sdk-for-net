@@ -6,12 +6,12 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for GetConnectionSharedKey API service call. </summary>
-    public partial class ConnectionSharedKey : WritableSubResource<ResourceIdentifier>
+    public partial class ConnectionSharedKey : WritableSubResource
     {
         /// <summary> Initializes a new instance of ConnectionSharedKey. </summary>
         /// <param name="value"> The virtual network connection shared key value. </param>

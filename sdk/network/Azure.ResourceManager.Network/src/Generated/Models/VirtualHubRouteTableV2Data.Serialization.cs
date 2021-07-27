@@ -8,9 +8,10 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
     public partial class VirtualHubRouteTableV2Data : IUtf8JsonSerializable
     {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             Optional<IList<VirtualHubRouteV2>> routes = default;
             Optional<IList<string>> attachedConnections = default;
             Optional<ProvisioningState> provisioningState = default;
