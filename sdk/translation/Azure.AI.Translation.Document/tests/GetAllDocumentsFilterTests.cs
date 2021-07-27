@@ -31,7 +31,7 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetClient();
 
             // create translation job
-            var operation = await CreateSingleTranslationJobAsync(client, docsCount: 10);
+            var operation = await CreateSingleTranslationJobAsync(client, docsCount: 3);
             await operation.WaitForCompletionAsync();
 
             // list docs
@@ -54,9 +54,9 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetClient();
 
             // create translation job
-            var operation = await CreateSingleTranslationJobAsync(client, docsCount: 10);
+            var operation = await CreateSingleTranslationJobAsync(client, docsCount: 3);
             await operation.WaitForCompletionAsync();
-            var testIds = operation.GetAllDocumentStatuses().Select(d => d.Id).ToList().GetRange(0, 5);
+            var testIds = operation.GetAllDocumentStatuses().Select(d => d.Id).ToList().GetRange(0, 1);
 
             // list docs
             var filter = new DocumentFilter(
@@ -87,7 +87,7 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetClient();
 
             // create translation job
-            var operation = await CreateSingleTranslationJobAsync(client, docsCount: 10);
+            var operation = await CreateSingleTranslationJobAsync(client, docsCount: 3);
             await operation.WaitForCompletionAsync();
 
             // list docs
