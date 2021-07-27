@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Tests
             await _client.DefaultSubscription
                 .GetResourceGroups().Construct(Location.WestUS)
                 .CreateOrUpdateAsync(_rgName);
-            await foreach (var rg in _client.DefaultSubscription.GetResourceGroups().ListAsync())
+            await foreach (var rg in _client.DefaultSubscription.GetResourceGroups().GetAllAsync())
             {
                 Assert.AreEqual(rg.Pipeline.GetHashCode(), _client.DefaultSubscription.Pipeline.GetHashCode());
             }

@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Feature> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Feature> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeatureContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("FeatureContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeatureContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("FeatureContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the preview features in a provider namespace that are available through AFEC for the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Feature> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<Feature> GetAll(CancellationToken cancellationToken = default)
         {
             Page<Feature> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeatureContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("FeatureContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FeatureContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("FeatureContainer.GetAll");
                 scope.Start();
                 try
                 {

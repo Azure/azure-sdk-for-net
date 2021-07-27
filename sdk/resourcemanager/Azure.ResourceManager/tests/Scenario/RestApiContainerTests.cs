@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Tests
         {
             bool foundVirtualMachine = false;
             var restApiContainer = Client.GetRestApis("Microsoft.Compute");
-            await foreach (var restApi in restApiContainer.ListAsync())
+            await foreach (var restApi in restApiContainer.GetAllAsync())
             {
                 if (restApi.Resource == "Virtual Machines")
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Tests
         {
             bool foundPrivateEndpoint = false;
             var restApiContainer = Client.GetRestApis("Microsoft.Network");
-            await foreach (var restApi in restApiContainer.ListAsync())
+            await foreach (var restApi in restApiContainer.GetAllAsync())
             {
                 if (restApi.Resource == "Private Endpoint")
                 {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Tests
         public async Task List()
         {
             int count = 0;
-            await foreach (var rg in Client.GetSubscriptions().ListAsync())
+            await foreach (var rg in Client.GetSubscriptions().GetAllAsync())
             {
                 count++;
             }
