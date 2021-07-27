@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Tests
         public async Task ListAvailableLocations()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            var locations = await rg.ListAvailableLocationsAsync();
+            var locations = await rg.GetAvailableLocationsAsync();
             int count = 0;
             foreach (var location in locations)
             {

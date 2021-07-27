@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Tests
         {
             ManagementGroup mgmtGroup = await Client.GetManagementGroupOperations(_mgmtGroup.Id).GetAsync();
             DescendantInfo descendant = null;
-            await foreach(var desc in mgmtGroup.ListDescendantsAsync())
+            await foreach(var desc in mgmtGroup.GetDescendantsAsync())
             {
                 descendant = desc;
                 break;

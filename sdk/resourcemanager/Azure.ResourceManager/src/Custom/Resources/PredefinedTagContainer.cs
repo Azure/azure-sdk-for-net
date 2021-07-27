@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<PredefinedTag> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PredefinedTag> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PredefinedTag>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PredefinedTagContainer.List");
+                using var scope0 = Diagnostics.CreateScope("PredefinedTagContainer.GetAll");
                 scope0.Start();
                 try
                 {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<PredefinedTag>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PredefinedTagContainer.List");
+                using var scope0 = Diagnostics.CreateScope("PredefinedTagContainer.GetAll");
                 scope0.Start();
                 try
                 {
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation performs a union of predefined tags, resource tags, resource group tags and subscription tags, and returns a summary of usage for each tag name and value under the given subscription. In case of a large number of tags, this operation may return a previously cached result. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<PredefinedTag> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<PredefinedTag> GetAll(CancellationToken cancellationToken = default)
         {
             Page<PredefinedTag> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PredefinedTagContainer.List");
+                using var scope0 = Diagnostics.CreateScope("PredefinedTagContainer.GetAll");
                 scope0.Start();
                 try
                 {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<PredefinedTag> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = Diagnostics.CreateScope("PredefinedTagContainer.List");
+                using var scope0 = Diagnostics.CreateScope("PredefinedTagContainer.GetAll");
                 scope0.Start();
                 try
                 {
