@@ -85,9 +85,9 @@ namespace Azure.Core.Pipeline
                         break;
                 }
             }
-            catch (NotSupportedException)
+            catch (NotImplementedException)
             {
-                // Some platforms might throw NotSupportedException
+                // Some platforms (like Unity) might throw NotImplementedException
                 // when accessing handler options
             }
         }
