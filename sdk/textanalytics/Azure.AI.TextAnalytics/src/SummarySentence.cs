@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
     /// operation. The service attributes a rank score to it for measuring how relevant
     /// the sentence is to the input document.
     /// </summary>
-    public class SummarySentence
+    public readonly struct SummarySentence
     {
         internal SummarySentence(ExtractedSummarySentence sentence)
         {
