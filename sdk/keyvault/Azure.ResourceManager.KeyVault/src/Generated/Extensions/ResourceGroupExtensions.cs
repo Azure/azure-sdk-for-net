@@ -5,14 +5,14 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region Vault
+        #region Vaults
         /// <summary> Gets an object representing a VaultContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="VaultContainer" /> object. </returns>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault
         }
         #endregion
 
-        #region ManagedHsm
+        #region ManagedHsms
         /// <summary> Gets an object representing a ManagedHsmContainer along with the instance operations that can be performed on it. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="ManagedHsmContainer" /> object. </returns>

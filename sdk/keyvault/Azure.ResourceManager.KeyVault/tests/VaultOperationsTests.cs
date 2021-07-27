@@ -325,25 +325,24 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Assert.IsTrue(deletedVault.Value.Data.Name.Equals(createdVault.Data.Name));
             }
 
-            //TODO: Generate error
-            //var deletedVaults = DeletedVaultContainer.ListAsync().ToEnumerableAsync().Result;
-            //Assert.NotNull(deletedVaults);
+            var deletedVaults = DeletedVaultContainer.ListAsync().ToEnumerableAsync().Result;
+            Assert.NotNull(deletedVaults);
 
-            //foreach (var v in deletedVaults)
-            //{
-            //    var exists = resourceIds.Remove(v.Data.Properties.VaultId);
+            foreach (var v in deletedVaults)
+            {
+                var exists = resourceIds.Remove(v.Data.Properties.VaultId);
 
-            //    if (exists)
-            //    {
-            //        // Purge vault
-            //        await v.StartPurgeAsync().ConfigureAwait(false);
-            //        Assert.ThrowsAsync<RequestFailedException>(async () => await DeletedVaultContainer.GetAsync(Location));
-            //    }
-            //    if (resourceIds.Count == 0)
-            //        break;
-            //}
+                if (exists)
+                {
+                    // Purge vault
+                    await v.StartPurgeAsync().ConfigureAwait(false);
+                    Assert.ThrowsAsync<RequestFailedException>(async () => await DeletedVaultContainer.GetAsync(Location));
+                }
+                if (resourceIds.Count == 0)
+                    break;
+            }
 
-            //Assert.True(resourceIds.Count == 0);
+            Assert.True(resourceIds.Count == 0);
         }
 
         private void ValidateVault(

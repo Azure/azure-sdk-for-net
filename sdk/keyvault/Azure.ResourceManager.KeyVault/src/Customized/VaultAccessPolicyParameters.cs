@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.KeyVault
 {

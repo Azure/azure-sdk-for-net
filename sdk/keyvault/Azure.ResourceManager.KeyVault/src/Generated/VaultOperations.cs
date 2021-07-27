@@ -11,9 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -81,7 +79,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -89,14 +87,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary> Deletes the specified Azure key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VaultOperations.Delete");
             scope.Start();
@@ -114,7 +112,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified Azure key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
+        public Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VaultOperations.Delete");
             scope.Start();
@@ -132,7 +130,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified Azure key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VaultsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<VaultsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VaultOperations.StartDelete");
             scope.Start();
@@ -150,7 +148,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified Azure key vault. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VaultsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public VaultsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VaultOperations.StartDelete");
             scope.Start();

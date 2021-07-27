@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute.Tests
     [AsyncOnly]
     public class AvailabilitySetTests : VMTestBase
     {
-        public Resources.Models.ResourceGroup resourceGroup1;
-        public Resources.Models.ResourceGroup resourceGroup2;
+        public ResourceGroup resourceGroup1;
+        public ResourceGroup resourceGroup2;
 
         public string subId;
         public string baseResourceGroupName;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             resourceGroup2 = (await ResourceGroupsOperations.CreateOrUpdateAsync(
                 resourceGroup2Name,
-                new Resources.Models.ResourceGroup(TestEnvironment.Location)
+                new ResourceGroup(TestEnvironment.Location)
                 {
                     Tags = { { resourceGroup2Name, Recording.UtcNow.ToString("u") } }
                 })).Value;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             resourceGroup1 = await ResourceGroupsOperations.CreateOrUpdateAsync(
                 resourceGroup1Name,
-                new Resources.Models.ResourceGroup(TestEnvironment.Location)
+                new ResourceGroup(TestEnvironment.Location)
                 {
                     Tags = { { resourceGroup1Name, Recording.UtcNow.ToString("u") } }
                 });

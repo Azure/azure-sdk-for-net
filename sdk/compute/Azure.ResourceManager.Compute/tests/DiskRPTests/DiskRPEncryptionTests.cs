@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             Disk disk = await GenerateDefaultDisk(DiskCreateOption.Empty.ToString(), rgName, 10);
             disk.EncryptionSettingsCollection = GetDiskEncryptionSettings(testVaultId, encryptionKeyUri, secretUri, encryptionSettingsVersion: encryptionSettingsVersion);
             disk.Location = DiskRPLocation;
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(DiskRPLocation));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(DiskRPLocation));
             //put disk
             await WaitForCompletionAsync((await DisksOperations.StartCreateOrUpdateAsync(rgName, diskName, disk)));
             Disk diskOut = await DisksOperations.GetAsync(rgName, diskName);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Tests.DiskRPTests
             try
             {
                 await ResourceGroupsOperations.CreateOrUpdateAsync(rgName,
-                    new Resources.Models.ResourceGroup(DiskRPLocation));
+                    new ResourceGroup(DiskRPLocation));
                 await WaitForCompletionAsync((await DisksOperations.StartCreateOrUpdateAsync(rgName, diskName, disk)));
                 Disk diskOut = await DisksOperations.GetAsync(rgName, diskName);
                 Validate(disk, diskOut, disk.Location);

@@ -40,7 +40,7 @@ directive:
       transform: delete $['x-ms-client-default']
     - from: swagger-document
       where: $['paths']['/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults']['get']
-      transform: $.operationId = 'DeletedVaults_List'
+      transform: $.operationId = 'DeletedVaults_ListBySubscription'
     - from: swagger-document
       where: $['paths']['/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}']['get']
       transform: $.operationId = 'DeletedVaults_Get'

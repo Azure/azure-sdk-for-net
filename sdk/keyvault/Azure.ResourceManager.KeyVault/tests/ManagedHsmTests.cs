@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Core;
 using System.Threading;
 
 namespace Azure.ResourceManager.KeyVault.Tests

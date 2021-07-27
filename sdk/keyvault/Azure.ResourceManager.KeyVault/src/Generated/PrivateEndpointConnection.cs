@@ -12,11 +12,6 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A Class representing a PrivateEndpointConnection along with the instance operations that can be performed on it. </summary>
     public class PrivateEndpointConnection : PrivateEndpointConnectionOperations
     {
-        /// <summary> Initializes a new instance of the <see cref = "PrivateEndpointConnection"/> class for mocking. </summary>
-        protected PrivateEndpointConnection() : base()
-        {
-        }
-
         /// <summary> Initializes a new instance of the <see cref = "PrivateEndpointConnection"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
@@ -26,6 +21,6 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets or sets the PrivateEndpointConnectionData. </summary>
-        public virtual PrivateEndpointConnectionData Data { get; private set; }
+        public PrivateEndpointConnectionData Data { get; private set; }
     }
 }

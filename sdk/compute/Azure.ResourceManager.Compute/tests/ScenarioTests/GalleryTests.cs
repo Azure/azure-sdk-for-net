@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Tests
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
             string rgName2 = rgName + "New";
 
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(LocationEastUs2));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(LocationEastUs2));
             Trace.TraceInformation("Created the resource group: " + rgName);
 
             string galleryName = Recording.GenerateAssetName(GalleryNamePrefix);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             Trace.TraceInformation("Listing galleries.");
             string galleryName2 = galleryName + "New";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName2, new Resources.Models.ResourceGroup(LocationEastUs2));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName2, new ResourceGroup(LocationEastUs2));
             Trace.TraceInformation("Created the resource group: " + rgName2);
             WaitSeconds(10);
             await WaitForCompletionAsync(await GalleriesOperations.StartCreateOrUpdateAsync(rgName2, galleryName2, galleryIn));
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Tests
             EnsureClientsInitialized(LocationEastUs2);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
 
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(LocationEastUs2));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(LocationEastUs2));
             Trace.TraceInformation("Created the resource group: " + rgName);
             string galleryName = Recording.GenerateAssetName(GalleryNamePrefix);
             Gallery gallery = GetTestInputGallery();
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Compute.Tests
             EnsureClientsInitialized(location);
             string rgName = Recording.GenerateAssetName(ResourceGroupPrefix);
 
-            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new Resources.Models.ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(rgName, new ResourceGroup(location));
             Trace.TraceInformation("Created the resource group: " + rgName);
             string galleryName = Recording.GenerateAssetName(GalleryNamePrefix);
             Gallery gallery = GetTestInputGallery();

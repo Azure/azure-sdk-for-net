@@ -11,9 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -81,7 +79,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -89,14 +87,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary> Deletes the specified managed HSM Pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmOperations.Delete");
             scope.Start();
@@ -114,7 +112,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified managed HSM Pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
+        public Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmOperations.Delete");
             scope.Start();
@@ -132,7 +130,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified managed HSM Pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagedHsmsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<ManagedHsmsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmOperations.StartDelete");
             scope.Start();
@@ -150,7 +148,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified managed HSM Pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagedHsmsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public ManagedHsmsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmOperations.StartDelete");
             scope.Start();
@@ -241,7 +239,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="parameters"> Parameters to patch the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<ManagedHsm>> UpdateAsync(ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedHsm>> UpdateAsync(ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -266,7 +264,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="parameters"> Parameters to patch the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<ManagedHsm> Update(ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public Response<ManagedHsm> Update(ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -291,7 +289,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="parameters"> Parameters to patch the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedHsmsUpdateOperation> StartUpdateAsync(ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public async Task<ManagedHsmsUpdateOperation> StartUpdateAsync(ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -316,7 +314,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="parameters"> Parameters to patch the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedHsmsUpdateOperation StartUpdate(ManagedHsmData parameters, CancellationToken cancellationToken = default)
+        public ManagedHsmsUpdateOperation StartUpdate(ManagedHsmData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -339,7 +337,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Permanently deletes the specified managed HSM. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> PurgeDeletedAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> PurgeDeletedAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmOperations.PurgeDeleted");
             scope.Start();
@@ -357,7 +355,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Permanently deletes the specified managed HSM. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PurgeDeleted(CancellationToken cancellationToken = default)
+        public Response PurgeDeleted(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmOperations.PurgeDeleted");
             scope.Start();
@@ -375,7 +373,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Permanently deletes the specified managed HSM. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagedHsmsPurgeDeletedOperation> StartPurgeDeletedAsync(CancellationToken cancellationToken = default)
+        public async Task<ManagedHsmsPurgeDeletedOperation> StartPurgeDeletedAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmOperations.StartPurgeDeleted");
             scope.Start();
@@ -393,7 +391,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Permanently deletes the specified managed HSM. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagedHsmsPurgeDeletedOperation StartPurgeDeleted(CancellationToken cancellationToken = default)
+        public ManagedHsmsPurgeDeletedOperation StartPurgeDeleted(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedHsmOperations.StartPurgeDeleted");
             scope.Start();

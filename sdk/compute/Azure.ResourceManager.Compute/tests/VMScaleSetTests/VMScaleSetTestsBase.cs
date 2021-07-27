@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Compute.Tests
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = await ResourceGroupsOperations.CreateOrUpdateAsync(
                 rgName,
-                new Resources.Models.ResourceGroup(m_location));
+                new ResourceGroup(m_location));
 
             var getPublicIpAddressResponse = createWithPublicIpAddress ? null : await CreatePublicIP(rgName);
 
