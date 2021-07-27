@@ -8,7 +8,7 @@ using Azure.Core.TestFramework;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class ClientContextTests : ResourceManagerTestBase
     {

@@ -9,36 +9,34 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    /// <typeparam name="TIdentifier"> The type of the resource identifier. </typeparam>
     /// <typeparam name="TOperations"> The type of the class containing operations for the underlying resource. </typeparam>
     /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
-    public abstract class ResourceContainerBase<TIdentifier, TOperations, TResource> : ContainerBase
-        where TIdentifier : ResourceIdentifier
-        where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
+    public abstract class ResourceContainerBase<TOperations, TResource> : ContainerBase
+        where TOperations : ResourceOperationsBase<TOperations>
         where TResource : class
     {
         private readonly object _parentLock = new object();
         private object _parentResource;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceContainerBase{TIdentifier, TOperations, TResource}"/> class for mocking.
+        /// Initializes a new instance of the <see cref="ResourceContainerBase{TOperations, TResource}"/> class for mocking.
         /// </summary>
         protected ResourceContainerBase()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceContainerBase{TIdentifier, TOperations, TResource}"/> class.
+        /// Initializes a new instance of the <see cref="ResourceContainerBase{TOperations, TResource}"/> class.
         /// </summary>
         /// <param name="clientContext"> The client context to use. </param>
         /// <param name="parentId"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceContainerBase(ClientContext clientContext, TIdentifier parentId)
+        internal ResourceContainerBase(ClientContext clientContext, ResourceIdentifier parentId)
             : base(clientContext, parentId)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceContainerBase{TIdentifier, TOperations, TData}"/> class.
+        /// Initializes a new instance of the <see cref="ResourceContainerBase{TOperations, TData}"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         protected ResourceContainerBase(OperationsBase parent)
@@ -61,13 +59,11 @@ namespace Azure.ResourceManager.Core
         /// Gets the location of the parent object.
         /// </summary>
         /// <typeparam name="TParent"> The type of the parents full resource object. </typeparam>
-        /// <typeparam name="TParentId"> The type of the parents resource id. </typeparam>
         /// <typeparam name="TParentOperations"> The type of the parents operations object. </typeparam>
         /// <returns> The <see cref="Location"/> associated with the parent object. </returns>
-        protected TParent GetParentResource<TParent, TParentId, TParentOperations>()
+        protected TParent GetParentResource<TParent, TParentOperations>()
             where TParent : TParentOperations
-            where TParentOperations : ResourceOperationsBase<TParentId, TParent>
-            where TParentId : ResourceIdentifier
+            where TParentOperations : ResourceOperationsBase<TParent>
         {
             if (_parentResource is null)
             {

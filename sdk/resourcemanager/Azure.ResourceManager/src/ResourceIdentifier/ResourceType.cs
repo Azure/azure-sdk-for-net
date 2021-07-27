@@ -53,6 +53,8 @@ namespace Azure.ResourceManager
         {
         }
 
+        internal string LastType => Types[Types.Count - 1];
+
         /// <summary>
         /// Gets the resource type Namespace.
         /// </summary>

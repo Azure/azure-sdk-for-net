@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// The resource type for subscription
         /// </summary>
-        public static readonly ResourceType ResourceType = ResourceType.RootResourceType;
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/tenants";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class.

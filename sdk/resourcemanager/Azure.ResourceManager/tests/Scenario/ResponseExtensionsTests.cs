@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class ResponseExtensionsTests : ResourceManagerTestBase
     {

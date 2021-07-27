@@ -2,7 +2,7 @@
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class TenantContainerTests : ResourceManagerTestBase
     {

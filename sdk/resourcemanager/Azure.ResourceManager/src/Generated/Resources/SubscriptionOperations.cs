@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific subscription.
     /// </summary>
-    public class SubscriptionOperations : ResourceOperationsBase<SubscriptionResourceIdentifier, Subscription>
+    public class SubscriptionOperations : ResourceOperationsBase<Subscription>
     {
         /// <summary>
         /// The resource type for subscription
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="clientContext"></param>
         /// <param name="subscriptionGuid"> The Guid of the subscription. </param>
         internal SubscriptionOperations(ClientContext clientContext, string subscriptionGuid)
-            : base(clientContext, new SubscriptionResourceIdentifier(subscriptionGuid))
+            : base(clientContext,  new ResourceIdentifier(ResourceIdentifier.RootResourceIdentifier, ResourceType, subscriptionGuid))
         {
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="operations"> The resource operations to copy the options from. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionOperations(OperationsBase operations, TenantResourceIdentifier id)
+        protected SubscriptionOperations(OperationsBase operations, ResourceIdentifier id)
             : base(operations, id)
         {
         }

@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Tests
         /// <summary>
         /// Gets a <see cref="Uri"/> to Key Vault.
         /// </summary>
-        public Uri VaultUri => new Uri(KeyVaultUrl, UriKind.Absolute);
+        public Uri VaultUri => new(KeyVaultUrl, UriKind.Absolute);
 
         /// <summary>
         /// Gets the URI to Managed HSM.
@@ -71,6 +71,11 @@ namespace Azure.Security.KeyVault.Tests
         /// Test preparation was previously successfully creating premium SKUs (not available in every cloud), so assume premium.
         /// </remarks>
         public string Sku => GetOptionalVariable("SKU") ?? "premium";
+
+        /// <summary>
+        /// Gets the value of the "AZURE_KEYVAULT_ATTESTATION_URL" variable.
+        /// </summary>
+        public Uri AttestationUri => new(GetRecordedVariable("AZURE_KEYVAULT_ATTESTATION_URL"), UriKind.Absolute);
 
         /// <summary>
         /// Throws an <see cref="IgnoreException"/> if <see cref="ManagedHsmUrl"/> is not defined.

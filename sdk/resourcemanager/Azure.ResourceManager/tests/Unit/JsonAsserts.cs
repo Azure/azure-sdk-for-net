@@ -4,7 +4,7 @@ using System.Text.Json;
 using Azure.Core;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     internal static class JsonAsserts
     {

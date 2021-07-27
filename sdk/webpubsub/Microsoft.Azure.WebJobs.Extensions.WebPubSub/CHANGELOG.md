@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2021-07-26)
+
+### Other Changes
+- Upgrade dependency package `Azure.Messaging.WebPubSub` to 1.0.0-beta.2.
 
 ## 1.0.0-beta.2 (2021-07-16)
 
