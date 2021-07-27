@@ -11,19 +11,19 @@ namespace Azure.AI.TextAnalytics
     public class AnalyzeActionsResult
     {
         internal AnalyzeActionsResult(
-            IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult,
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
             IReadOnlyCollection<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
-            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults,
-            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionsResults,
-            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionsResults)
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
+            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
+            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults)
         {
-            ExtractKeyPhrasesResults = extractKeyPhrasesActionResult;
+            ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
             RecognizeEntitiesResults = recognizeEntitiesActionResults;
             RecognizePiiEntitiesResults = recognizePiiEntitiesActionResults;
-            RecognizeLinkedEntitiesResults = recognizeLinkedEntitiesActionsResults;
-            AnalyzeSentimentResults = analyzeSentimentActionsResults;
-            ExtractSummaryResults = extractSummaryActionsResults;
+            RecognizeLinkedEntitiesResults = recognizeLinkedEntitiesActionResults;
+            AnalyzeSentimentResults = analyzeSentimentActionResults;
+            ExtractSummaryResults = extractSummaryActionResults;
         }
 
         /// <summary>
