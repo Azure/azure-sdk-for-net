@@ -57,8 +57,10 @@ namespace Compute.Tests
                 //Assert.Null(nonUltraSSDSupportingSku.LocationInfo[0].ZoneDetails);
                 Assert.Equal(0, nonUltraSSDSupportingSku.LocationInfo[0].ZoneDetails.Count);
 
-                // Test that we also see extendedlocations in the response, for a supported sku
-                Assert.True(vmSkusInEastUS2Euap.Where(s => s.Name == "Standard_D4s_v3").First().LocationInfo.Where(info => info.ExtendedLocations != null).First().ExtendedLocations.Any());
+                // Validate that extendedlocations are included for a supported sku
+                Assert.NotEmpty(vmSkusInEastUS2Euap.Where(s => s.Name == "Standard_D4s_v3").First().LocationInfo.Where(info => info.ExtendedLocations != null));
+                // Validate that extendedlocations are not included for an unsupported sku
+                Assert.Empty(vmSkusInEastUS2Euap.Where(s => s.Name == "Basic_A0").First().LocationInfo.Where(info => info.ExtendedLocations != null));
             }
         }
     }
