@@ -2409,15 +2409,24 @@ namespace Azure.Storage.Files.Shares
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions);
+            var downloader = GetPartitionedDownloader(
+                transferOptions: transferOptions,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(DownloadTo)}");
 
             if (async)
             {
-                return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
+                return await downloader.DownloadToAsync(
+                    destination,
+                    conditions,
+                    cancellationToken)
+                    .ConfigureAwait(false);
             }
             else
             {
-                return downloader.DownloadTo(destination, conditions, cancellationToken);
+                return downloader.DownloadTo(
+                    destination,
+                    conditions,
+                    cancellationToken);
             }
         }
         #endregion Parallel Download
@@ -6124,6 +6133,68 @@ namespace Azure.Storage.Files.Shares
                 Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
             };
             return sasUri.ToUri();
+        }
+        #endregion
+
+        #region PartitionedDownloader
+        internal PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> GetPartitionedDownloader(
+            StorageTransferOptions transferOptions,
+            string operationName = null)
+            => new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
+                GetPartitionedDownloaderBehaviors(this),
+                transferOptions,
+                operationName);
+
+        internal static PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>.Behaviors GetPartitionedDownloaderBehaviors(ShareFileClient client)
+        {
+            return new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>.Behaviors
+            {
+                Download = async (range, args, rangeGetContentHash, async, cancellationToken)
+                    => await client.DownloadInternal(
+                        range,
+                        rangeGetContentHash,
+                        args,
+                        async,
+                        cancellationToken).ConfigureAwait(false),
+                CopyToAsync = async (result, destination, cancellationToken)
+                    =>
+                {
+                    using Stream source = result.Content;
+
+                    await source.CopyToAsync(
+                        destination,
+                        Constants.DefaultDownloadCopyBufferSize,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                CopyTo = (result, destination, cancellationToken)
+                    =>
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
+                    result.Content.Dispose();
+                },
+                CheckForEtagChange = (response, etag)
+                    =>
+                {
+                    // Make sure the ETag for this chunk matches the originally
+                    // recorded one
+                    if (etag != response.GetRawResponse().Headers.ETag)
+                    {
+                        ContentRangeHeaderValue range = ContentRangeHeaderValue.Parse(response.Value.Details.ContentRange);
+                        throw new ShareFileModifiedException(
+                            "File has been modified concurrently",
+                            client.Uri,
+                            etag,
+                            response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                            new HttpRange(
+                                range.From.GetValueOrDefault(),
+                                range.To.GetValueOrDefault() - range.From.GetValueOrDefault())); // TODO: Refactor ContentRange logic out from Blob models?
+                    }
+                },
+                Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
+                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(Shares)}.{nameof(ShareFileClient)}.{nameof(Storage.Files.Shares.ShareFileClient.DownloadTo)}")
+            };
         }
         #endregion
     }

@@ -2017,7 +2017,9 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions);
+            var downloader = GetPartitionedDownloader(
+                transferOptions: transferOptions,
+                operationName: $"{nameof(BlobBaseClient)}.{nameof(DownloadTo)}");
 
             if (UsingClientSideEncryption)
             {
@@ -2025,11 +2027,18 @@ namespace Azure.Storage.Blobs.Specialized
             }
             if (async)
             {
-                return await downloader.DownloadToAsync(destination, conditions, cancellationToken).ConfigureAwait(false);
+                return await downloader.DownloadToAsync(
+                    destination,
+                    conditions,
+                    cancellationToken)
+                    .ConfigureAwait(false);
             }
             else
             {
-                return downloader.DownloadTo(destination, conditions, cancellationToken);
+                return downloader.DownloadTo(
+                    destination,
+                    conditions,
+                    cancellationToken);
             }
         }
         #endregion Parallel Download
@@ -5790,6 +5799,52 @@ namespace Azure.Storage.Blobs.Specialized
             }
 
             return _parentBlobContainerClient;
+        }
+        #endregion
+        #region PartitionedDownloader
+        internal PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult> GetPartitionedDownloader(
+            StorageTransferOptions transferOptions,
+            string operationName = null)
+            => new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>(
+                GetPartitionedDownloaderBehaviors(this),
+                transferOptions,
+                operationName);
+
+        internal static PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>.Behaviors GetPartitionedDownloaderBehaviors(BlobBaseClient client)
+        {
+            return new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>.Behaviors
+            {
+                Download = async (range, args, rangeGetContentHash, async, cancellationToken)
+                    => await client.DownloadStreamingInternal(
+                        range,
+                        args,
+                        rangeGetContentHash,
+                        $"{nameof(BlobBaseClient)}.{nameof(DownloadTo)}",
+                        async,
+                        cancellationToken).ConfigureAwait(false),
+                CopyToAsync = async (result, destination, cancellationToken)
+                    =>
+                {
+                    using Stream source = result.Content;
+
+                    await source.CopyToAsync(
+                        destination,
+                        Constants.DefaultDownloadCopyBufferSize,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                CopyTo = (result, destination, cancellationToken)
+                    =>
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
+                    result.Content.Dispose();
+                },
+                ModifyConditions = (args, etag)
+                    => args?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag },
+            Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
+                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}")
+            };
         }
         #endregion
     }
