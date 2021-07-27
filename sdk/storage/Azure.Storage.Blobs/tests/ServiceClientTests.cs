@@ -745,8 +745,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             Response<BlobContainerClient> response = await service.UndeleteBlobContainerAsync(
                 containerItem.Name,
-                containerItem.VersionId,
-                GetNewContainerName());
+                containerItem.VersionId);
 
             // Assert
             await response.Value.GetPropertiesAsync();
@@ -792,6 +791,53 @@ namespace Azure.Storage.Blobs.Test
 
             // Cleanup
             await newContainer.DeleteAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        [TestCase(nameof(BlobRequestConditions.IfModifiedSince))]
+        [TestCase(nameof(BlobRequestConditions.IfUnmodifiedSince))]
+        [TestCase(nameof(BlobRequestConditions.TagConditions))]
+        [TestCase(nameof(BlobRequestConditions.IfMatch))]
+        [TestCase(nameof(BlobRequestConditions.IfNoneMatch))]
+        public async Task RenameBlobContainerAsync_InvalidSourceRequestConditions(string invalidSourceCondition)
+        {
+            // Arrange
+            Uri uri = new Uri("https://www.doesntmatter.com");
+            BlobServiceClient serviceClient = new BlobServiceClient(uri, GetOptions());
+
+            BlobRequestConditions sourceConditions = new BlobRequestConditions();
+
+            switch (invalidSourceCondition)
+            {
+                case nameof(BlobRequestConditions.IfModifiedSince):
+                    sourceConditions.IfModifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(BlobRequestConditions.IfUnmodifiedSince):
+                    sourceConditions.IfUnmodifiedSince = new DateTimeOffset();
+                    break;
+                case nameof(BlobRequestConditions.TagConditions):
+                    sourceConditions.TagConditions = string.Empty;
+                    break;
+                case nameof(BlobRequestConditions.IfMatch):
+                    sourceConditions.IfMatch = new ETag();
+                    break;
+                case nameof(BlobRequestConditions.IfNoneMatch):
+                    sourceConditions.IfNoneMatch = new ETag();
+                    break;
+            }
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                serviceClient.RenameBlobContainerAsync(
+                    sourceContainerName: "sourceContainerName",
+                    destinationContainerName: "destinationContainerName",
+                    sourceConditions: sourceConditions),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains($"RenameBlobContainer does not support the {invalidSourceCondition} condition(s)."));
+                    Assert.IsTrue(e.Message.Contains("sourceConditions"));
+                });
         }
 
         [RecordedTest]

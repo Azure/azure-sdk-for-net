@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>CloudNative CloudEvents support for Azure.Messaging.EventGrid library</AssemblyTitle>
     <Description>This library allows the CloudEvent model from CloudNative.CloudEvents to be published using the Azure Event Grid client library.</Description>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.3</Version>
     <PackageTags>Microsoft Azure SDK CloudNative CloudEvents</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -14,6 +14,9 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <PackageReference Include="Azure.Messaging.EventGrid" />
     <PackageReference Include="CloudNative.CloudEvents" />
-    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="CloudNative.CloudEvents.SystemTextJson" />
+<!-- This is required to prevent version conflict stemming from The CloudNative.CloudEvents.SystemTestJson depending on -->
+<!-- version 5.0.0.-->
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="5.0.0" />
   </ItemGroup>
 </Project>

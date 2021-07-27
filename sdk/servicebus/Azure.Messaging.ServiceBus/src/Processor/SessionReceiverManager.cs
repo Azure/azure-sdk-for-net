@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -33,32 +32,33 @@ namespace Azure.Messaging.ServiceBus
         private ServiceBusSessionReceiver _receiver;
         private CancellationTokenSource _sessionLockRenewalCancellationSource;
         private Task _sessionLockRenewalTask;
-        private CancellationTokenSource _sessionCancellationSource = new CancellationTokenSource();
-        private bool _receiveTimeout;
+        private CancellationTokenSource _sessionCancellationSource;
+        private volatile bool _receiveTimeout;
 
         protected override ServiceBusReceiver Receiver => _receiver;
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+        private readonly ServiceBusSessionProcessor _sessionProcessor;
 
         public SessionReceiverManager(
-            ServiceBusProcessor processor,
+            ServiceBusSessionProcessor sessionProcessor,
             string sessionId,
             SemaphoreSlim concurrentAcceptSessionsSemaphore,
             EntityScopeFactory scopeFactory,
-            IList<ServiceBusPlugin> plugins,
             int maxCallsPerSession,
             bool keepOpenOnReceiveTimeout)
-            : base(processor, scopeFactory, plugins)
+            : base(sessionProcessor.InnerProcessor, scopeFactory)
         {
             _concurrentAcceptSessionsSemaphore = concurrentAcceptSessionsSemaphore;
             _maxCallsPerSession = maxCallsPerSession;
             _sessionReceiverOptions = new ServiceBusSessionReceiverOptions
             {
-                ReceiveMode = processor.Options.ReceiveMode,
-                PrefetchCount = processor.Options.PrefetchCount,
+                ReceiveMode = sessionProcessor.InnerProcessor.Options.ReceiveMode,
+                PrefetchCount = sessionProcessor.InnerProcessor.Options.PrefetchCount,
             };
             _sessionId = sessionId;
             _keepOpenOnReceiveTimeout = keepOpenOnReceiveTimeout;
+            _sessionProcessor = sessionProcessor;
         }
 
         private async Task<bool> EnsureCanProcess(CancellationToken cancellationToken)
@@ -73,7 +73,10 @@ namespace Azure.Messaging.ServiceBus
                 // if we don't intend to leave the receiver open on receive timeouts. This
                 // will help ensure other sessions get a chance to be processed.
                 if (_threadCount >= _maxCallsPerSession ||
-                    (_receiveTimeout && !_keepOpenOnReceiveTimeout))
+                    (_receiveTimeout && !_keepOpenOnReceiveTimeout) ||
+                    // If cancellation was requested but the receiver has not been closed yet,
+                    // do not initiate new processing.
+                    (_receiver != null && _sessionCancellationSource.IsCancellationRequested))
                 {
                     return false;
                 }
@@ -112,7 +115,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken processorCancellationToken)
         {
             await CreateReceiver(processorCancellationToken).ConfigureAwait(false);
-            _sessionCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(processorCancellationToken);
+            _sessionCancellationSource = new CancellationTokenSource();
 
             if (AutoRenewLock)
             {
@@ -138,10 +141,10 @@ namespace Azure.Messaging.ServiceBus
                 _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                     entityPath: Processor.EntityPath,
                     connection: Processor.Connection,
-                    plugins: _plugins,
                     options: _sessionReceiverOptions,
                     sessionId: _sessionId,
-                    cancellationToken: processorCancellationToken).ConfigureAwait(false);
+                    cancellationToken: processorCancellationToken,
+                    isProcessor: true).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
@@ -178,11 +181,17 @@ namespace Azure.Messaging.ServiceBus
                     return;
                 }
                 _threadCount--;
-                if (_threadCount == 0 && !processorCancellationToken.IsCancellationRequested)
+
+                if (_threadCount == 0)
                 {
+                    // Even if there are no current receive tasks, we should leave the
+                    // receiver open if _keepOpenOnReceiveTimeout is true - which happens
+                    // when a list of session Ids is specified and this list is less than the
+                    // MaxConcurrentSessions.
                     if ((_receiveTimeout && !_keepOpenOnReceiveTimeout) ||
-                        !AutoRenewLock ||
-                        _sessionLockRenewalCancellationSource.IsCancellationRequested)
+                        // if the session is cancelled we should still close the receiver
+                        // as this means the session lock was lost or the user requested to close the session.
+                        _sessionCancellationSource.IsCancellationRequested)
                     {
                         await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
                     }
@@ -255,13 +264,18 @@ namespace Azure.Messaging.ServiceBus
                     // so simply return and allow this to be tried again on next thread
                     return;
                 }
+
+                using var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(processorCancellationToken, _sessionCancellationSource.Token);
                 // loop within the context of this thread
-                while (!_sessionCancellationSource.Token.IsCancellationRequested)
+                while (!linkedTokenSource.Token.IsCancellationRequested)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
-                    ServiceBusReceivedMessage message = await _receiver.ReceiveMessageAsync(
-                        _maxReceiveWaitTime,
-                        _sessionCancellationSource.Token).ConfigureAwait(false);
+                    IReadOnlyList<ServiceBusReceivedMessage> messages = await Receiver.ReceiveMessagesAsync(
+                        maxMessages: 1,
+                        maxWaitTime: _maxReceiveWaitTime,
+                        isProcessor: true,
+                        cancellationToken: linkedTokenSource.Token).ConfigureAwait(false);
+                    ServiceBusReceivedMessage message = messages.Count == 0 ? null : messages[0];
                     if (message == null)
                     {
                         // Break out of the loop to allow a new session to
@@ -272,21 +286,21 @@ namespace Azure.Messaging.ServiceBus
                     await ProcessOneMessageWithinScopeAsync(
                         message,
                         DiagnosticProperty.ProcessSessionMessageActivityName,
-                        _sessionCancellationSource.Token).ConfigureAwait(false);
+                        linkedTokenSource.Token).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
             when (!(ex is TaskCanceledException) ||
             // If the user manually throws a TCE, then we should log it.
             (!_sessionCancellationSource.IsCancellationRequested &&
-            // Even though the _sessionCancellationSource is linked to processorCancellationToken,
-            // we need to check both here in case the processor token gets cancelled before the
-            // session token is linked.
-            !processorCancellationToken.IsCancellationRequested))
+             !processorCancellationToken.IsCancellationRequested))
             {
-                if (ex is ServiceBusException sbException && sbException.ProcessorErrorSource.HasValue)
+                if (ex is ServiceBusException sbException)
                 {
-                    errorSource = sbException.ProcessorErrorSource.Value;
+                    if (sbException.ProcessorErrorSource.HasValue)
+                    {
+                        errorSource = sbException.ProcessorErrorSource.Value;
+                    }
 
                     // Signal cancellation so user event handlers can stop whatever processing they are doing
                     // as soon as we know the session lock has been lost. Note, we don't have analogous handling
@@ -366,8 +380,27 @@ namespace Azure.Messaging.ServiceBus
             var args = new ProcessSessionMessageEventArgs(
                 message,
                 _receiver,
+                this,
                 cancellationToken);
-            await Processor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
+            await _sessionProcessor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
+        }
+
+        protected override async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
+        {
+            try
+            {
+                await _sessionProcessor.OnProcessErrorAsync(eventArgs).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                // don't bubble up exceptions raised from customer exception handler
+                ServiceBusEventSource.Log.ProcessorErrorHandlerThrewException(exception.ToString());
+            }
+        }
+
+        internal void ReleaseSession()
+        {
+            _sessionCancellationSource.Cancel();
         }
     }
 }

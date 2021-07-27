@@ -17,6 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -54,5 +55,4 @@
     </Compile>
   </ItemGroup>
 
-  <Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" />
 </Project>

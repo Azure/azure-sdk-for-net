@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// An action group resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ActionGroupResource : Resource
+    public partial class ActionGroupResource : AzureResource
     {
         /// <summary>
         /// Initializes a new instance of the ActionGroupResource class.
@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="id">Azure resource Id</param>
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
+        /// <param name="kind">Azure resource kind</param>
+        /// <param name="identity">Azure resource identity</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="emailReceivers">The list of email receivers that are
         /// part of this action group.</param>
@@ -66,8 +68,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="armRoleReceivers">The list of ARM role receivers that
         /// are part of this action group. Roles are Azure RBAC roles and only
         /// built-in roles are supported.</param>
-        public ActionGroupResource(string location, string groupShortName, bool enabled, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<EmailReceiver> emailReceivers = default(IList<EmailReceiver>), IList<SmsReceiver> smsReceivers = default(IList<SmsReceiver>), IList<WebhookReceiver> webhookReceivers = default(IList<WebhookReceiver>), IList<ItsmReceiver> itsmReceivers = default(IList<ItsmReceiver>), IList<AzureAppPushReceiver> azureAppPushReceivers = default(IList<AzureAppPushReceiver>), IList<AutomationRunbookReceiver> automationRunbookReceivers = default(IList<AutomationRunbookReceiver>), IList<VoiceReceiver> voiceReceivers = default(IList<VoiceReceiver>), IList<LogicAppReceiver> logicAppReceivers = default(IList<LogicAppReceiver>), IList<AzureFunctionReceiver> azureFunctionReceivers = default(IList<AzureFunctionReceiver>), IList<ArmRoleReceiver> armRoleReceivers = default(IList<ArmRoleReceiver>))
-            : base(location, id, name, type, tags)
+        public ActionGroupResource(string location, string groupShortName, bool enabled, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string identity = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<EmailReceiver> emailReceivers = default(IList<EmailReceiver>), IList<SmsReceiver> smsReceivers = default(IList<SmsReceiver>), IList<WebhookReceiver> webhookReceivers = default(IList<WebhookReceiver>), IList<ItsmReceiver> itsmReceivers = default(IList<ItsmReceiver>), IList<AzureAppPushReceiver> azureAppPushReceivers = default(IList<AzureAppPushReceiver>), IList<AutomationRunbookReceiver> automationRunbookReceivers = default(IList<AutomationRunbookReceiver>), IList<VoiceReceiver> voiceReceivers = default(IList<VoiceReceiver>), IList<LogicAppReceiver> logicAppReceivers = default(IList<LogicAppReceiver>), IList<AzureFunctionReceiver> azureFunctionReceivers = default(IList<AzureFunctionReceiver>), IList<ArmRoleReceiver> armRoleReceivers = default(IList<ArmRoleReceiver>))
+            : base(location, id, name, type, kind, identity, tags)
         {
             GroupShortName = groupShortName;
             Enabled = enabled;

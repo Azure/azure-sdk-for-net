@@ -44,12 +44,15 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// resource</param>
         /// <param name="requiredZoneNames">Required private DNS zone
         /// names</param>
-        public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), string groupId = default(string), IList<string> requiredMembers = default(IList<string>), IList<string> requiredZoneNames = default(IList<string>))
+        /// <param name="shareablePrivateLinkResourceTypes">The list of
+        /// resources that are onboarded to private link service</param>
+        public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), string groupId = default(string), IList<string> requiredMembers = default(IList<string>), IList<string> requiredZoneNames = default(IList<string>), IList<ShareablePrivateLinkResourceType> shareablePrivateLinkResourceTypes = default(IList<ShareablePrivateLinkResourceType>))
             : base(id, name, type)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
+            ShareablePrivateLinkResourceTypes = shareablePrivateLinkResourceTypes;
             CustomInit();
         }
 
@@ -75,6 +78,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.requiredZoneNames")]
         public IList<string> RequiredZoneNames { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of resources that are onboarded to private
+        /// link service
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.shareablePrivateLinkResourceTypes")]
+        public IList<ShareablePrivateLinkResourceType> ShareablePrivateLinkResourceTypes { get; set; }
 
     }
 }

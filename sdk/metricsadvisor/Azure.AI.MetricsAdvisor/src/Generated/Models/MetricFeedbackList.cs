@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -20,8 +21,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of MetricFeedbackList. </summary>
-        /// <param name="nextLink"> . </param>
-        /// <param name="value"> . </param>
+        /// <param name="nextLink"></param>
+        /// <param name="value"></param>
         internal MetricFeedbackList(string nextLink, IReadOnlyList<MetricFeedback> value)
         {
             NextLink = nextLink;

@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Security.KeyVault.Administration.Models;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests

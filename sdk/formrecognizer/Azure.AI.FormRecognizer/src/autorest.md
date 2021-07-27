@@ -6,9 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: release_2_1_preview.3
+tag: release_2_1
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/5a260d47021d8278c26dd6f946f4e6b97e0cd023/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/7043b48f4be1fdd40757b9ef372b65f054daf48f/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
 ```
 
 ### Make the API version parameterized so we generate a multi-versioned API

@@ -22,6 +22,54 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class StaticSitesOperationsExtensions
     {
             /// <summary>
+            /// Generates a preview workflow file for the static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Generates a preview workflow file for the static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Location where you plan to create the static site.
+            /// </param>
+            /// <param name='staticSitesWorkflowPreviewRequest'>
+            /// A JSON representation of the StaticSitesWorkflowPreviewRequest properties.
+            /// See example.
+            /// </param>
+            public static StaticSitesWorkflowPreview PreviewWorkflow(this IStaticSitesOperations operations, string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest)
+            {
+                return operations.PreviewWorkflowAsync(location, staticSitesWorkflowPreviewRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generates a preview workflow file for the static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Generates a preview workflow file for the static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Location where you plan to create the static site.
+            /// </param>
+            /// <param name='staticSitesWorkflowPreviewRequest'>
+            /// A JSON representation of the StaticSitesWorkflowPreviewRequest properties.
+            /// See example.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StaticSitesWorkflowPreview> PreviewWorkflowAsync(this IStaticSitesOperations operations, string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PreviewWorkflowWithHttpMessagesAsync(location, staticSitesWorkflowPreviewRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get all Static Sites for a subscription.
             /// </summary>
             /// <remarks>
@@ -528,12 +576,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the static site.
             /// </param>
-            /// <param name='prId'>
+            /// <param name='environmentName'>
             /// The stage site identifier.
             /// </param>
-            public static StaticSiteBuildARMResource GetStaticSiteBuild(this IStaticSitesOperations operations, string resourceGroupName, string name, string prId)
+            public static StaticSiteBuildARMResource GetStaticSiteBuild(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName)
             {
-                return operations.GetStaticSiteBuildAsync(resourceGroupName, name, prId).GetAwaiter().GetResult();
+                return operations.GetStaticSiteBuildAsync(resourceGroupName, name, environmentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -551,15 +599,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the static site.
             /// </param>
-            /// <param name='prId'>
+            /// <param name='environmentName'>
             /// The stage site identifier.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StaticSiteBuildARMResource> GetStaticSiteBuildAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string prId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StaticSiteBuildARMResource> GetStaticSiteBuildAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetStaticSiteBuildWithHttpMessagesAsync(resourceGroupName, name, prId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetStaticSiteBuildWithHttpMessagesAsync(resourceGroupName, name, environmentName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -580,12 +628,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the static site.
             /// </param>
-            /// <param name='prId'>
+            /// <param name='environmentName'>
             /// The stage site identifier.
             /// </param>
-            public static void DeleteStaticSiteBuild(this IStaticSitesOperations operations, string resourceGroupName, string name, string prId)
+            public static void DeleteStaticSiteBuild(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName)
             {
-                operations.DeleteStaticSiteBuildAsync(resourceGroupName, name, prId).GetAwaiter().GetResult();
+                operations.DeleteStaticSiteBuildAsync(resourceGroupName, name, environmentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -603,15 +651,73 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the static site.
             /// </param>
-            /// <param name='prId'>
+            /// <param name='environmentName'>
             /// The stage site identifier.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteStaticSiteBuildAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string prId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteStaticSiteBuildAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteStaticSiteBuildWithHttpMessagesAsync(resourceGroupName, name, prId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteStaticSiteBuildWithHttpMessagesAsync(resourceGroupName, name, environmentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Creates or updates the app settings of a static site build.
+            /// </summary>
+            /// <remarks>
+            /// Description for Creates or updates the app settings of a static site build.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='appSettings'>
+            /// The dictionary containing the static site app settings to update.
+            /// </param>
+            public static StringDictionary CreateOrUpdateStaticSiteBuildAppSettings(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, StringDictionary appSettings)
+            {
+                return operations.CreateOrUpdateStaticSiteBuildAppSettingsAsync(resourceGroupName, name, environmentName, appSettings).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates the app settings of a static site build.
+            /// </summary>
+            /// <remarks>
+            /// Description for Creates or updates the app settings of a static site build.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='appSettings'>
+            /// The dictionary containing the static site app settings to update.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StringDictionary> CreateOrUpdateStaticSiteBuildAppSettingsAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, StringDictionary appSettings, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateStaticSiteBuildAppSettingsWithHttpMessagesAsync(resourceGroupName, name, environmentName, appSettings, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -630,14 +736,15 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the static site.
             /// </param>
-            /// <param name='prId'>
+            /// <param name='environmentName'>
             /// The stage site identifier.
             /// </param>
             /// <param name='appSettings'>
+            /// The dictionary containing the static site function app settings to update.
             /// </param>
-            public static StringDictionary CreateOrUpdateStaticSiteBuildFunctionAppSettings(this IStaticSitesOperations operations, string resourceGroupName, string name, string prId, StringDictionary appSettings)
+            public static StringDictionary CreateOrUpdateStaticSiteBuildFunctionAppSettings(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, StringDictionary appSettings)
             {
-                return operations.CreateOrUpdateStaticSiteBuildFunctionAppSettingsAsync(resourceGroupName, name, prId, appSettings).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateStaticSiteBuildFunctionAppSettingsAsync(resourceGroupName, name, environmentName, appSettings).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -656,17 +763,18 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the static site.
             /// </param>
-            /// <param name='prId'>
+            /// <param name='environmentName'>
             /// The stage site identifier.
             /// </param>
             /// <param name='appSettings'>
+            /// The dictionary containing the static site function app settings to update.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StringDictionary> CreateOrUpdateStaticSiteBuildFunctionAppSettingsAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string prId, StringDictionary appSettings, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StringDictionary> CreateOrUpdateStaticSiteBuildFunctionAppSettingsAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, StringDictionary appSettings, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateStaticSiteBuildFunctionAppSettingsWithHttpMessagesAsync(resourceGroupName, name, prId, appSettings, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateStaticSiteBuildFunctionAppSettingsWithHttpMessagesAsync(resourceGroupName, name, environmentName, appSettings, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -687,12 +795,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the static site.
             /// </param>
-            /// <param name='prId'>
+            /// <param name='environmentName'>
             /// The stage site identifier.
             /// </param>
-            public static IPage<StaticSiteFunctionOverviewARMResource> ListStaticSiteBuildFunctions(this IStaticSitesOperations operations, string resourceGroupName, string name, string prId)
+            public static IPage<StaticSiteFunctionOverviewARMResource> ListStaticSiteBuildFunctions(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName)
             {
-                return operations.ListStaticSiteBuildFunctionsAsync(resourceGroupName, name, prId).GetAwaiter().GetResult();
+                return operations.ListStaticSiteBuildFunctionsAsync(resourceGroupName, name, environmentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -710,25 +818,25 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the static site.
             /// </param>
-            /// <param name='prId'>
+            /// <param name='environmentName'>
             /// The stage site identifier.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<StaticSiteFunctionOverviewARMResource>> ListStaticSiteBuildFunctionsAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string prId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<StaticSiteFunctionOverviewARMResource>> ListStaticSiteBuildFunctionsAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListStaticSiteBuildFunctionsWithHttpMessagesAsync(resourceGroupName, name, prId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListStaticSiteBuildFunctionsWithHttpMessagesAsync(resourceGroupName, name, environmentName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets the application settings of a static site.
+            /// Gets the application settings of a static site build.
             /// </summary>
             /// <remarks>
-            /// Description for Gets the application settings of a static site.
+            /// Description for Gets the application settings of a static site build.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -739,19 +847,19 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the static site.
             /// </param>
-            /// <param name='prId'>
+            /// <param name='environmentName'>
             /// The stage site identifier.
             /// </param>
-            public static StringDictionary ListStaticSiteBuildFunctionAppSettings(this IStaticSitesOperations operations, string resourceGroupName, string name, string prId)
+            public static StringDictionary ListStaticSiteBuildAppSettings(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName)
             {
-                return operations.ListStaticSiteBuildFunctionAppSettingsAsync(resourceGroupName, name, prId).GetAwaiter().GetResult();
+                return operations.ListStaticSiteBuildAppSettingsAsync(resourceGroupName, name, environmentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the application settings of a static site.
+            /// Gets the application settings of a static site build.
             /// </summary>
             /// <remarks>
-            /// Description for Gets the application settings of a static site.
+            /// Description for Gets the application settings of a static site build.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -762,15 +870,433 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the static site.
             /// </param>
-            /// <param name='prId'>
+            /// <param name='environmentName'>
             /// The stage site identifier.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StringDictionary> ListStaticSiteBuildFunctionAppSettingsAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string prId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StringDictionary> ListStaticSiteBuildAppSettingsAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListStaticSiteBuildFunctionAppSettingsWithHttpMessagesAsync(resourceGroupName, name, prId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListStaticSiteBuildAppSettingsWithHttpMessagesAsync(resourceGroupName, name, environmentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the application settings of a static site build.
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the application settings of a static site build.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            public static StringDictionary ListStaticSiteBuildFunctionAppSettings(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName)
+            {
+                return operations.ListStaticSiteBuildFunctionAppSettingsAsync(resourceGroupName, name, environmentName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the application settings of a static site build.
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the application settings of a static site build.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StringDictionary> ListStaticSiteBuildFunctionAppSettingsAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListStaticSiteBuildFunctionAppSettingsWithHttpMessagesAsync(resourceGroupName, name, environmentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the details of the user provided function apps registered with a
+            /// static site build
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the details of the user provided function apps
+            /// registered with a static site build
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            public static IPage<StaticSiteUserProvidedFunctionAppARMResource> GetUserProvidedFunctionAppsForStaticSiteBuild(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName)
+            {
+                return operations.GetUserProvidedFunctionAppsForStaticSiteBuildAsync(resourceGroupName, name, environmentName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the details of the user provided function apps registered with a
+            /// static site build
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the details of the user provided function apps
+            /// registered with a static site build
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<StaticSiteUserProvidedFunctionAppARMResource>> GetUserProvidedFunctionAppsForStaticSiteBuildAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetUserProvidedFunctionAppsForStaticSiteBuildWithHttpMessagesAsync(resourceGroupName, name, environmentName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the details of the user provided function app registered with a static
+            /// site build
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the details of the user provided function app
+            /// registered with a static site build
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app registered with the static site build.
+            /// </param>
+            public static StaticSiteUserProvidedFunctionAppARMResource GetUserProvidedFunctionAppForStaticSiteBuild(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, string functionAppName)
+            {
+                return operations.GetUserProvidedFunctionAppForStaticSiteBuildAsync(resourceGroupName, name, environmentName, functionAppName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the details of the user provided function app registered with a static
+            /// site build
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the details of the user provided function app
+            /// registered with a static site build
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app registered with the static site build.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StaticSiteUserProvidedFunctionAppARMResource> GetUserProvidedFunctionAppForStaticSiteBuildAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, string functionAppName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetUserProvidedFunctionAppForStaticSiteBuildWithHttpMessagesAsync(resourceGroupName, name, environmentName, functionAppName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Register a user provided function app with a static site build
+            /// </summary>
+            /// <remarks>
+            /// Description for Register a user provided function app with a static site
+            /// build
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app to register with the static site build.
+            /// </param>
+            /// <param name='staticSiteUserProvidedFunctionEnvelope'>
+            /// A JSON representation of the user provided function app properties. See
+            /// example.
+            /// </param>
+            /// <param name='isForced'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth
+            /// configuration on the function app even if an AzureStaticWebApps provider is
+            /// already configured on the function app. The default is
+            /// &lt;code&gt;false&lt;/code&gt;.
+            /// </param>
+            public static StaticSiteUserProvidedFunctionAppARMResource RegisterUserProvidedFunctionAppWithStaticSiteBuild(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppARMResource staticSiteUserProvidedFunctionEnvelope, bool? isForced = default(bool?))
+            {
+                return operations.RegisterUserProvidedFunctionAppWithStaticSiteBuildAsync(resourceGroupName, name, environmentName, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Register a user provided function app with a static site build
+            /// </summary>
+            /// <remarks>
+            /// Description for Register a user provided function app with a static site
+            /// build
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app to register with the static site build.
+            /// </param>
+            /// <param name='staticSiteUserProvidedFunctionEnvelope'>
+            /// A JSON representation of the user provided function app properties. See
+            /// example.
+            /// </param>
+            /// <param name='isForced'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth
+            /// configuration on the function app even if an AzureStaticWebApps provider is
+            /// already configured on the function app. The default is
+            /// &lt;code&gt;false&lt;/code&gt;.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StaticSiteUserProvidedFunctionAppARMResource> RegisterUserProvidedFunctionAppWithStaticSiteBuildAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppARMResource staticSiteUserProvidedFunctionEnvelope, bool? isForced = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RegisterUserProvidedFunctionAppWithStaticSiteBuildWithHttpMessagesAsync(resourceGroupName, name, environmentName, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Detach the user provided function app from the static site build
+            /// </summary>
+            /// <remarks>
+            /// Description for Detach the user provided function app from the static site
+            /// build
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app registered with the static site build.
+            /// </param>
+            public static void DetachUserProvidedFunctionAppFromStaticSiteBuild(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, string functionAppName)
+            {
+                operations.DetachUserProvidedFunctionAppFromStaticSiteBuildAsync(resourceGroupName, name, environmentName, functionAppName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detach the user provided function app from the static site build
+            /// </summary>
+            /// <remarks>
+            /// Description for Detach the user provided function app from the static site
+            /// build
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app registered with the static site build.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DetachUserProvidedFunctionAppFromStaticSiteBuildAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, string functionAppName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DetachUserProvidedFunctionAppFromStaticSiteBuildWithHttpMessagesAsync(resourceGroupName, name, environmentName, functionAppName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Deploys zipped content to a specific environment of a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deploys zipped content to a specific environment of a
+            /// static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// Name of the environment.
+            /// </param>
+            /// <param name='staticSiteZipDeploymentEnvelope'>
+            /// A JSON representation of the StaticSiteZipDeployment properties. See
+            /// example.
+            /// </param>
+            public static void CreateZipDeploymentForStaticSiteBuild(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope)
+            {
+                operations.CreateZipDeploymentForStaticSiteBuildAsync(resourceGroupName, name, environmentName, staticSiteZipDeploymentEnvelope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deploys zipped content to a specific environment of a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deploys zipped content to a specific environment of a
+            /// static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// Name of the environment.
+            /// </param>
+            /// <param name='staticSiteZipDeploymentEnvelope'>
+            /// A JSON representation of the StaticSiteZipDeployment properties. See
+            /// example.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task CreateZipDeploymentForStaticSiteBuildAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.CreateZipDeploymentForStaticSiteBuildWithHttpMessagesAsync(resourceGroupName, name, environmentName, staticSiteZipDeploymentEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Creates or updates the app settings of a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Creates or updates the app settings of a static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='appSettings'>
+            /// The dictionary containing the static site app settings to update.
+            /// </param>
+            public static StringDictionary CreateOrUpdateStaticSiteAppSettings(this IStaticSitesOperations operations, string resourceGroupName, string name, StringDictionary appSettings)
+            {
+                return operations.CreateOrUpdateStaticSiteAppSettingsAsync(resourceGroupName, name, appSettings).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates the app settings of a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Creates or updates the app settings of a static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='appSettings'>
+            /// The dictionary containing the static site app settings to update.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StringDictionary> CreateOrUpdateStaticSiteAppSettingsAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, StringDictionary appSettings, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateStaticSiteAppSettingsWithHttpMessagesAsync(resourceGroupName, name, appSettings, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -793,6 +1319,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the static site.
             /// </param>
             /// <param name='appSettings'>
+            /// The dictionary containing the static site function app settings to update.
             /// </param>
             public static StringDictionary CreateOrUpdateStaticSiteFunctionAppSettings(this IStaticSitesOperations operations, string resourceGroupName, string name, StringDictionary appSettings)
             {
@@ -816,6 +1343,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the static site.
             /// </param>
             /// <param name='appSettings'>
+            /// The dictionary containing the static site function app settings to update.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -927,12 +1455,11 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
-            /// Creates a new static site custom domain in an existing resource group and
-            /// static site.
+            /// Gets an existing custom domain for a particular static site.
             /// </summary>
             /// <remarks>
-            /// Description for Creates a new static site custom domain in an existing
-            /// resource group and static site.
+            /// Description for Gets an existing custom domain for a particular static
+            /// site.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -941,14 +1468,44 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the resource group to which the resource belongs.
             /// </param>
             /// <param name='name'>
-            /// Name of the static site.
+            /// Name of the static site resource to search in.
             /// </param>
             /// <param name='domainName'>
-            /// The custom domain to create.
+            /// The custom domain name.
             /// </param>
-            public static StaticSiteCustomDomainOverviewARMResource CreateOrUpdateStaticSiteCustomDomain(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName)
+            public static StaticSiteCustomDomainOverviewARMResource GetStaticSiteCustomDomain(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName)
             {
-                return operations.CreateOrUpdateStaticSiteCustomDomainAsync(resourceGroupName, name, domainName).GetAwaiter().GetResult();
+                return operations.GetStaticSiteCustomDomainAsync(resourceGroupName, name, domainName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets an existing custom domain for a particular static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets an existing custom domain for a particular static
+            /// site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site resource to search in.
+            /// </param>
+            /// <param name='domainName'>
+            /// The custom domain name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StaticSiteCustomDomainOverviewARMResource> GetStaticSiteCustomDomainAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetStaticSiteCustomDomainWithHttpMessagesAsync(resourceGroupName, name, domainName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -971,12 +1528,45 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='domainName'>
             /// The custom domain to create.
             /// </param>
+            /// <param name='staticSiteCustomDomainRequestPropertiesEnvelope'>
+            /// A JSON representation of the static site custom domain request properties.
+            /// See example.
+            /// </param>
+            public static StaticSiteCustomDomainOverviewARMResource CreateOrUpdateStaticSiteCustomDomain(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope)
+            {
+                return operations.CreateOrUpdateStaticSiteCustomDomainAsync(resourceGroupName, name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a new static site custom domain in an existing resource group and
+            /// static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Creates a new static site custom domain in an existing
+            /// resource group and static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='domainName'>
+            /// The custom domain to create.
+            /// </param>
+            /// <param name='staticSiteCustomDomainRequestPropertiesEnvelope'>
+            /// A JSON representation of the static site custom domain request properties.
+            /// See example.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StaticSiteCustomDomainOverviewARMResource> CreateOrUpdateStaticSiteCustomDomainAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StaticSiteCustomDomainOverviewARMResource> CreateOrUpdateStaticSiteCustomDomainAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateStaticSiteCustomDomainWithHttpMessagesAsync(resourceGroupName, name, domainName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateStaticSiteCustomDomainWithHttpMessagesAsync(resourceGroupName, name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1050,9 +1640,13 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='domainName'>
             /// The custom domain to validate.
             /// </param>
-            public static void ValidateCustomDomainCanBeAddedToStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName)
+            /// <param name='staticSiteCustomDomainRequestPropertiesEnvelope'>
+            /// A JSON representation of the static site custom domain request properties.
+            /// See example.
+            /// </param>
+            public static void ValidateCustomDomainCanBeAddedToStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope)
             {
-                operations.ValidateCustomDomainCanBeAddedToStaticSiteAsync(resourceGroupName, name, domainName).GetAwaiter().GetResult();
+                operations.ValidateCustomDomainCanBeAddedToStaticSiteAsync(resourceGroupName, name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1074,12 +1668,16 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='domainName'>
             /// The custom domain to validate.
             /// </param>
+            /// <param name='staticSiteCustomDomainRequestPropertiesEnvelope'>
+            /// A JSON representation of the static site custom domain request properties.
+            /// See example.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ValidateCustomDomainCanBeAddedToStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ValidateCustomDomainCanBeAddedToStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ValidateCustomDomainCanBeAddedToStaticSiteWithHttpMessagesAsync(resourceGroupName, name, domainName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ValidateCustomDomainCanBeAddedToStaticSiteWithHttpMessagesAsync(resourceGroupName, name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1186,6 +1784,98 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the static site.
             /// </param>
+            public static StringDictionary ListStaticSiteAppSettings(this IStaticSitesOperations operations, string resourceGroupName, string name)
+            {
+                return operations.ListStaticSiteAppSettingsAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the application settings of a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the application settings of a static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StringDictionary> ListStaticSiteAppSettingsAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListStaticSiteAppSettingsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the roles configured for the static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Lists the roles configured for the static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            public static StringList ListStaticSiteConfiguredRoles(this IStaticSitesOperations operations, string resourceGroupName, string name)
+            {
+                return operations.ListStaticSiteConfiguredRolesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the roles configured for the static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Lists the roles configured for the static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StringList> ListStaticSiteConfiguredRolesAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListStaticSiteConfiguredRolesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the application settings of a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the application settings of a static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
             public static StringDictionary ListStaticSiteFunctionAppSettings(this IStaticSitesOperations operations, string resourceGroupName, string name)
             {
                 return operations.ListStaticSiteFunctionAppSettingsAsync(resourceGroupName, name).GetAwaiter().GetResult();
@@ -1264,6 +1954,262 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the list of private endpoint connections associated with a static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            public static IPage<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionList(this IStaticSitesOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetPrivateEndpointConnectionListAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionListAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionListWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource GetPrivateEndpointConnection(this IStaticSitesOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            {
+                return operations.GetPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// Request body.
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource ApproveOrRejectPrivateEndpointConnection(this IStaticSitesOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper)
+            {
+                return operations.ApproveOrRejectPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// Request body.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> ApproveOrRejectPrivateEndpointConnectionAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            public static object DeletePrivateEndpointConnection(this IStaticSitesOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            {
+                return operations.DeletePrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> DeletePrivateEndpointConnectionAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeletePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the private link resources
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the private link resources
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            public static PrivateLinkResourcesWrapper GetPrivateLinkResources(this IStaticSitesOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetPrivateLinkResourcesAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the private link resources
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the private link resources
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the site.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateLinkResourcesWrapper> GetPrivateLinkResourcesAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateLinkResourcesWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Resets the api key for an existing static site.
             /// </summary>
             /// <remarks>
@@ -1308,6 +2254,1019 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task ResetStaticSiteApiKeyAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, StaticSiteResetPropertiesARMResource resetPropertiesEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ResetStaticSiteApiKeyWithHttpMessagesAsync(resourceGroupName, name, resetPropertiesEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the details of the user provided function apps registered with a
+            /// static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the details of the user provided function apps
+            /// registered with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            public static IPage<StaticSiteUserProvidedFunctionAppARMResource> GetUserProvidedFunctionAppsForStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetUserProvidedFunctionAppsForStaticSiteAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the details of the user provided function apps registered with a
+            /// static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the details of the user provided function apps
+            /// registered with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<StaticSiteUserProvidedFunctionAppARMResource>> GetUserProvidedFunctionAppsForStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetUserProvidedFunctionAppsForStaticSiteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the details of the user provided function app registered with a static
+            /// site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the details of the user provided function app
+            /// registered with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app registered with the static site.
+            /// </param>
+            public static StaticSiteUserProvidedFunctionAppARMResource GetUserProvidedFunctionAppForStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name, string functionAppName)
+            {
+                return operations.GetUserProvidedFunctionAppForStaticSiteAsync(resourceGroupName, name, functionAppName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the details of the user provided function app registered with a static
+            /// site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the details of the user provided function app
+            /// registered with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app registered with the static site.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StaticSiteUserProvidedFunctionAppARMResource> GetUserProvidedFunctionAppForStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string functionAppName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetUserProvidedFunctionAppForStaticSiteWithHttpMessagesAsync(resourceGroupName, name, functionAppName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Register a user provided function app with a static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Register a user provided function app with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app to register with the static site.
+            /// </param>
+            /// <param name='staticSiteUserProvidedFunctionEnvelope'>
+            /// A JSON representation of the user provided function app properties. See
+            /// example.
+            /// </param>
+            /// <param name='isForced'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth
+            /// configuration on the function app even if an AzureStaticWebApps provider is
+            /// already configured on the function app. The default is
+            /// &lt;code&gt;false&lt;/code&gt;.
+            /// </param>
+            public static StaticSiteUserProvidedFunctionAppARMResource RegisterUserProvidedFunctionAppWithStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppARMResource staticSiteUserProvidedFunctionEnvelope, bool? isForced = default(bool?))
+            {
+                return operations.RegisterUserProvidedFunctionAppWithStaticSiteAsync(resourceGroupName, name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Register a user provided function app with a static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Register a user provided function app with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app to register with the static site.
+            /// </param>
+            /// <param name='staticSiteUserProvidedFunctionEnvelope'>
+            /// A JSON representation of the user provided function app properties. See
+            /// example.
+            /// </param>
+            /// <param name='isForced'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth
+            /// configuration on the function app even if an AzureStaticWebApps provider is
+            /// already configured on the function app. The default is
+            /// &lt;code&gt;false&lt;/code&gt;.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StaticSiteUserProvidedFunctionAppARMResource> RegisterUserProvidedFunctionAppWithStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppARMResource staticSiteUserProvidedFunctionEnvelope, bool? isForced = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RegisterUserProvidedFunctionAppWithStaticSiteWithHttpMessagesAsync(resourceGroupName, name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Detach the user provided function app from the static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Detach the user provided function app from the static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app registered with the static site.
+            /// </param>
+            public static void DetachUserProvidedFunctionAppFromStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name, string functionAppName)
+            {
+                operations.DetachUserProvidedFunctionAppFromStaticSiteAsync(resourceGroupName, name, functionAppName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detach the user provided function app from the static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Detach the user provided function app from the static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app registered with the static site.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DetachUserProvidedFunctionAppFromStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string functionAppName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DetachUserProvidedFunctionAppFromStaticSiteWithHttpMessagesAsync(resourceGroupName, name, functionAppName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Deploys zipped content to a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deploys zipped content to a static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='staticSiteZipDeploymentEnvelope'>
+            /// A JSON representation of the StaticSiteZipDeployment properties. See
+            /// example.
+            /// </param>
+            public static void CreateZipDeploymentForStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope)
+            {
+                operations.CreateZipDeploymentForStaticSiteAsync(resourceGroupName, name, staticSiteZipDeploymentEnvelope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deploys zipped content to a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deploys zipped content to a static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='staticSiteZipDeploymentEnvelope'>
+            /// A JSON representation of the StaticSiteZipDeployment properties. See
+            /// example.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task CreateZipDeploymentForStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.CreateZipDeploymentForStaticSiteWithHttpMessagesAsync(resourceGroupName, name, staticSiteZipDeploymentEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Creates a new static site in an existing resource group, or updates an
+            /// existing static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Creates a new static site in an existing resource group, or
+            /// updates an existing static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site to create or update.
+            /// </param>
+            /// <param name='staticSiteEnvelope'>
+            /// A JSON representation of the staticsite properties. See example.
+            /// </param>
+            public static StaticSiteARMResource BeginCreateOrUpdateStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name, StaticSiteARMResource staticSiteEnvelope)
+            {
+                return operations.BeginCreateOrUpdateStaticSiteAsync(resourceGroupName, name, staticSiteEnvelope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a new static site in an existing resource group, or updates an
+            /// existing static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Creates a new static site in an existing resource group, or
+            /// updates an existing static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site to create or update.
+            /// </param>
+            /// <param name='staticSiteEnvelope'>
+            /// A JSON representation of the staticsite properties. See example.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StaticSiteARMResource> BeginCreateOrUpdateStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, StaticSiteARMResource staticSiteEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateStaticSiteWithHttpMessagesAsync(resourceGroupName, name, staticSiteEnvelope, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site to delete.
+            /// </param>
+            public static void BeginDeleteStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name)
+            {
+                operations.BeginDeleteStaticSiteAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site to delete.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteStaticSiteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Deletes a static site build.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a static site build.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            public static void BeginDeleteStaticSiteBuild(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName)
+            {
+                operations.BeginDeleteStaticSiteBuildAsync(resourceGroupName, name, environmentName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a static site build.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a static site build.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteStaticSiteBuildAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteStaticSiteBuildWithHttpMessagesAsync(resourceGroupName, name, environmentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Register a user provided function app with a static site build
+            /// </summary>
+            /// <remarks>
+            /// Description for Register a user provided function app with a static site
+            /// build
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app to register with the static site build.
+            /// </param>
+            /// <param name='staticSiteUserProvidedFunctionEnvelope'>
+            /// A JSON representation of the user provided function app properties. See
+            /// example.
+            /// </param>
+            /// <param name='isForced'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth
+            /// configuration on the function app even if an AzureStaticWebApps provider is
+            /// already configured on the function app. The default is
+            /// &lt;code&gt;false&lt;/code&gt;.
+            /// </param>
+            public static StaticSiteUserProvidedFunctionAppARMResource BeginRegisterUserProvidedFunctionAppWithStaticSiteBuild(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppARMResource staticSiteUserProvidedFunctionEnvelope, bool? isForced = default(bool?))
+            {
+                return operations.BeginRegisterUserProvidedFunctionAppWithStaticSiteBuildAsync(resourceGroupName, name, environmentName, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Register a user provided function app with a static site build
+            /// </summary>
+            /// <remarks>
+            /// Description for Register a user provided function app with a static site
+            /// build
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// The stage site identifier.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app to register with the static site build.
+            /// </param>
+            /// <param name='staticSiteUserProvidedFunctionEnvelope'>
+            /// A JSON representation of the user provided function app properties. See
+            /// example.
+            /// </param>
+            /// <param name='isForced'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth
+            /// configuration on the function app even if an AzureStaticWebApps provider is
+            /// already configured on the function app. The default is
+            /// &lt;code&gt;false&lt;/code&gt;.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StaticSiteUserProvidedFunctionAppARMResource> BeginRegisterUserProvidedFunctionAppWithStaticSiteBuildAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppARMResource staticSiteUserProvidedFunctionEnvelope, bool? isForced = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRegisterUserProvidedFunctionAppWithStaticSiteBuildWithHttpMessagesAsync(resourceGroupName, name, environmentName, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deploys zipped content to a specific environment of a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deploys zipped content to a specific environment of a
+            /// static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// Name of the environment.
+            /// </param>
+            /// <param name='staticSiteZipDeploymentEnvelope'>
+            /// A JSON representation of the StaticSiteZipDeployment properties. See
+            /// example.
+            /// </param>
+            public static void BeginCreateZipDeploymentForStaticSiteBuild(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope)
+            {
+                operations.BeginCreateZipDeploymentForStaticSiteBuildAsync(resourceGroupName, name, environmentName, staticSiteZipDeploymentEnvelope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deploys zipped content to a specific environment of a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deploys zipped content to a specific environment of a
+            /// static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='environmentName'>
+            /// Name of the environment.
+            /// </param>
+            /// <param name='staticSiteZipDeploymentEnvelope'>
+            /// A JSON representation of the StaticSiteZipDeployment properties. See
+            /// example.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginCreateZipDeploymentForStaticSiteBuildAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string environmentName, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginCreateZipDeploymentForStaticSiteBuildWithHttpMessagesAsync(resourceGroupName, name, environmentName, staticSiteZipDeploymentEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Creates a new static site custom domain in an existing resource group and
+            /// static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Creates a new static site custom domain in an existing
+            /// resource group and static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='domainName'>
+            /// The custom domain to create.
+            /// </param>
+            /// <param name='staticSiteCustomDomainRequestPropertiesEnvelope'>
+            /// A JSON representation of the static site custom domain request properties.
+            /// See example.
+            /// </param>
+            public static StaticSiteCustomDomainOverviewARMResource BeginCreateOrUpdateStaticSiteCustomDomain(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope)
+            {
+                return operations.BeginCreateOrUpdateStaticSiteCustomDomainAsync(resourceGroupName, name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a new static site custom domain in an existing resource group and
+            /// static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Creates a new static site custom domain in an existing
+            /// resource group and static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='domainName'>
+            /// The custom domain to create.
+            /// </param>
+            /// <param name='staticSiteCustomDomainRequestPropertiesEnvelope'>
+            /// A JSON representation of the static site custom domain request properties.
+            /// See example.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StaticSiteCustomDomainOverviewARMResource> BeginCreateOrUpdateStaticSiteCustomDomainAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateStaticSiteCustomDomainWithHttpMessagesAsync(resourceGroupName, name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a custom domain.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a custom domain.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='domainName'>
+            /// The custom domain to delete.
+            /// </param>
+            public static void BeginDeleteStaticSiteCustomDomain(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName)
+            {
+                operations.BeginDeleteStaticSiteCustomDomainAsync(resourceGroupName, name, domainName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a custom domain.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a custom domain.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='domainName'>
+            /// The custom domain to delete.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteStaticSiteCustomDomainAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteStaticSiteCustomDomainWithHttpMessagesAsync(resourceGroupName, name, domainName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Validates a particular custom domain can be added to a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Validates a particular custom domain can be added to a
+            /// static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='domainName'>
+            /// The custom domain to validate.
+            /// </param>
+            /// <param name='staticSiteCustomDomainRequestPropertiesEnvelope'>
+            /// A JSON representation of the static site custom domain request properties.
+            /// See example.
+            /// </param>
+            public static void BeginValidateCustomDomainCanBeAddedToStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope)
+            {
+                operations.BeginValidateCustomDomainCanBeAddedToStaticSiteAsync(resourceGroupName, name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Validates a particular custom domain can be added to a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Validates a particular custom domain can be added to a
+            /// static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='domainName'>
+            /// The custom domain to validate.
+            /// </param>
+            /// <param name='staticSiteCustomDomainRequestPropertiesEnvelope'>
+            /// A JSON representation of the static site custom domain request properties.
+            /// See example.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginValidateCustomDomainCanBeAddedToStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainRequestPropertiesARMResource staticSiteCustomDomainRequestPropertiesEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginValidateCustomDomainCanBeAddedToStaticSiteWithHttpMessagesAsync(resourceGroupName, name, domainName, staticSiteCustomDomainRequestPropertiesEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Detaches a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Detaches a static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site to detach.
+            /// </param>
+            public static void BeginDetachStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name)
+            {
+                operations.BeginDetachStaticSiteAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detaches a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Detaches a static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site to detach.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDetachStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDetachStaticSiteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// Request body.
+            /// </param>
+            public static RemotePrivateEndpointConnectionARMResource BeginApproveOrRejectPrivateEndpointConnection(this IStaticSitesOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper)
+            {
+                return operations.BeginApproveOrRejectPrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Approves or rejects a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Approves or rejects a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='privateEndpointWrapper'>
+            /// Request body.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RemotePrivateEndpointConnectionARMResource> BeginApproveOrRejectPrivateEndpointConnectionAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            public static object BeginDeletePrivateEndpointConnection(this IStaticSitesOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName)
+            {
+                return operations.BeginDeletePrivateEndpointConnectionAsync(resourceGroupName, name, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Description for Deletes a private endpoint connection
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// Name of the private endpoint connection.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> BeginDeletePrivateEndpointConnectionAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDeletePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, name, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Register a user provided function app with a static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Register a user provided function app with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app to register with the static site.
+            /// </param>
+            /// <param name='staticSiteUserProvidedFunctionEnvelope'>
+            /// A JSON representation of the user provided function app properties. See
+            /// example.
+            /// </param>
+            /// <param name='isForced'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth
+            /// configuration on the function app even if an AzureStaticWebApps provider is
+            /// already configured on the function app. The default is
+            /// &lt;code&gt;false&lt;/code&gt;.
+            /// </param>
+            public static StaticSiteUserProvidedFunctionAppARMResource BeginRegisterUserProvidedFunctionAppWithStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppARMResource staticSiteUserProvidedFunctionEnvelope, bool? isForced = default(bool?))
+            {
+                return operations.BeginRegisterUserProvidedFunctionAppWithStaticSiteAsync(resourceGroupName, name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Register a user provided function app with a static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Register a user provided function app with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='functionAppName'>
+            /// Name of the function app to register with the static site.
+            /// </param>
+            /// <param name='staticSiteUserProvidedFunctionEnvelope'>
+            /// A JSON representation of the user provided function app properties. See
+            /// example.
+            /// </param>
+            /// <param name='isForced'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth
+            /// configuration on the function app even if an AzureStaticWebApps provider is
+            /// already configured on the function app. The default is
+            /// &lt;code&gt;false&lt;/code&gt;.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StaticSiteUserProvidedFunctionAppARMResource> BeginRegisterUserProvidedFunctionAppWithStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppARMResource staticSiteUserProvidedFunctionEnvelope, bool? isForced = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRegisterUserProvidedFunctionAppWithStaticSiteWithHttpMessagesAsync(resourceGroupName, name, functionAppName, staticSiteUserProvidedFunctionEnvelope, isForced, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deploys zipped content to a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deploys zipped content to a static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='staticSiteZipDeploymentEnvelope'>
+            /// A JSON representation of the StaticSiteZipDeployment properties. See
+            /// example.
+            /// </param>
+            public static void BeginCreateZipDeploymentForStaticSite(this IStaticSitesOperations operations, string resourceGroupName, string name, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope)
+            {
+                operations.BeginCreateZipDeploymentForStaticSiteAsync(resourceGroupName, name, staticSiteZipDeploymentEnvelope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deploys zipped content to a static site.
+            /// </summary>
+            /// <remarks>
+            /// Description for Deploys zipped content to a static site.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the static site.
+            /// </param>
+            /// <param name='staticSiteZipDeploymentEnvelope'>
+            /// A JSON representation of the StaticSiteZipDeployment properties. See
+            /// example.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginCreateZipDeploymentForStaticSiteAsync(this IStaticSitesOperations operations, string resourceGroupName, string name, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginCreateZipDeploymentForStaticSiteWithHttpMessagesAsync(resourceGroupName, name, staticSiteZipDeploymentEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1511,6 +3470,50 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Gets the details of the user provided function apps registered with a
+            /// static site build
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the details of the user provided function apps
+            /// registered with a static site build
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<StaticSiteUserProvidedFunctionAppARMResource> GetUserProvidedFunctionAppsForStaticSiteBuildNext(this IStaticSitesOperations operations, string nextPageLink)
+            {
+                return operations.GetUserProvidedFunctionAppsForStaticSiteBuildNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the details of the user provided function apps registered with a
+            /// static site build
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the details of the user provided function apps
+            /// registered with a static site build
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<StaticSiteUserProvidedFunctionAppARMResource>> GetUserProvidedFunctionAppsForStaticSiteBuildNextAsync(this IStaticSitesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetUserProvidedFunctionAppsForStaticSiteBuildNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all static site custom domains for a particular static site.
             /// </summary>
             /// <remarks>
@@ -1587,6 +3590,92 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<StaticSiteFunctionOverviewARMResource>> ListStaticSiteFunctionsNextAsync(this IStaticSitesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListStaticSiteFunctionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<RemotePrivateEndpointConnectionARMResource> GetPrivateEndpointConnectionListNext(this IStaticSitesOperations operations, string nextPageLink)
+            {
+                return operations.GetPrivateEndpointConnectionListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of private endpoint connections associated with a static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the list of private endpoint connections associated
+            /// with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionListNextAsync(this IStaticSitesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the details of the user provided function apps registered with a
+            /// static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the details of the user provided function apps
+            /// registered with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<StaticSiteUserProvidedFunctionAppARMResource> GetUserProvidedFunctionAppsForStaticSiteNext(this IStaticSitesOperations operations, string nextPageLink)
+            {
+                return operations.GetUserProvidedFunctionAppsForStaticSiteNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the details of the user provided function apps registered with a
+            /// static site
+            /// </summary>
+            /// <remarks>
+            /// Description for Gets the details of the user provided function apps
+            /// registered with a static site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<StaticSiteUserProvidedFunctionAppARMResource>> GetUserProvidedFunctionAppsForStaticSiteNextAsync(this IStaticSitesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetUserProvidedFunctionAppsForStaticSiteNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

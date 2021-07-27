@@ -664,9 +664,12 @@ namespace Azure.Security.KeyVault.Storage
                 RegenerationPeriod = regenerationPeriod,
                 StorageAccountAttributes = storageAccountAttributes
             };
-            foreach (var value in tags)
+            if (tags != null)
             {
-                storageAccountCreateParameters.Tags.Add(value);
+                foreach (var value in tags)
+                {
+                    storageAccountCreateParameters.Tags.Add(value);
+                }
             }
             var model = storageAccountCreateParameters;
             var content = new Utf8JsonRequestContent();
@@ -777,9 +780,12 @@ namespace Azure.Security.KeyVault.Storage
                 RegenerationPeriod = regenerationPeriod,
                 StorageAccountAttributes = storageAccountAttributes
             };
-            foreach (var value in tags)
+            if (tags != null)
             {
-                storageAccountUpdateParameters.Tags.Add(value);
+                foreach (var value in tags)
+                {
+                    storageAccountUpdateParameters.Tags.Add(value);
+                }
             }
             var model = storageAccountUpdateParameters;
             var content = new Utf8JsonRequestContent();
@@ -1433,9 +1439,12 @@ namespace Azure.Security.KeyVault.Storage
             {
                 SasDefinitionAttributes = sasDefinitionAttributes
             };
-            foreach (var value in tags)
+            if (tags != null)
             {
-                sasDefinitionCreateParameters.Tags.Add(value);
+                foreach (var value in tags)
+                {
+                    sasDefinitionCreateParameters.Tags.Add(value);
+                }
             }
             var model = sasDefinitionCreateParameters;
             var content = new Utf8JsonRequestContent();
@@ -1556,9 +1565,12 @@ namespace Azure.Security.KeyVault.Storage
                 ValidityPeriod = validityPeriod,
                 SasDefinitionAttributes = sasDefinitionAttributes
             };
-            foreach (var value in tags)
+            if (tags != null)
             {
-                sasDefinitionUpdateParameters.Tags.Add(value);
+                foreach (var value in tags)
+                {
+                    sasDefinitionUpdateParameters.Tags.Add(value);
+                }
             }
             var model = sasDefinitionUpdateParameters;
             var content = new Utf8JsonRequestContent();

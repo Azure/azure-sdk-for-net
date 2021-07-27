@@ -127,7 +127,7 @@ namespace Azure.Security.KeyVault
                 responseAsPage.Deserialize(response.ContentStream);
 
                 // convert from the Page<T> to PageResponse<T>
-                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
+                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.AbsoluteUri, response);
             }
             catch (Exception e)
             {
@@ -158,7 +158,7 @@ namespace Azure.Security.KeyVault
                 responseAsPage.Deserialize(response.ContentStream);
 
                 // convert from the Page<T> to PageResponse<T>
-                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.ToString(), response);
+                return Page<T>.FromValues(responseAsPage.Items.ToArray(), responseAsPage.NextLink?.AbsoluteUri, response);
             }
             catch (Exception e)
             {

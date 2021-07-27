@@ -15,8 +15,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString");
-            writer.WriteStringValue(ConnectionString);
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString");
+                writer.WriteStringValue(ConnectionString);
+            }
             writer.WritePropertyName("consumerGroup");
             writer.WriteStringValue(ConsumerGroup);
             writer.WriteEndObject();
@@ -24,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureEventHubsParameter DeserializeAzureEventHubsParameter(JsonElement element)
         {
-            string connectionString = default;
+            Optional<string> connectionString = default;
             string consumerGroup = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureEventHubsParameter(connectionString, consumerGroup);
+            return new AzureEventHubsParameter(connectionString.Value, consumerGroup);
         }
     }
 }

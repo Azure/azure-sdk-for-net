@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public RoleDefinitionsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.2-preview")
+        public RoleDefinitionsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.2")
         {
             if (apiVersion == null)
             {
@@ -62,7 +62,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleDefinitionName"/> is null. </exception>
-        public async Task<Response<KeyVaultRoleDefinition>> DeleteAsync(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -82,12 +82,8 @@ namespace Azure.Security.KeyVault.Administration
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        KeyVaultRoleDefinition value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 404:
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -99,7 +95,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, or <paramref name="roleDefinitionName"/> is null. </exception>
-        public Response<KeyVaultRoleDefinition> Delete(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        public Response Delete(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             if (vaultBaseUrl == null)
             {
@@ -119,12 +115,8 @@ namespace Azure.Security.KeyVault.Administration
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        KeyVaultRoleDefinition value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 404:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

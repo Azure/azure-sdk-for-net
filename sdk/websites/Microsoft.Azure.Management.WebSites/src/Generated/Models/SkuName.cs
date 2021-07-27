@@ -23,7 +23,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public const string Premium = "Premium";
         public const string Dynamic = "Dynamic";
         public const string Isolated = "Isolated";
+        public const string IsolatedV2 = "IsolatedV2";
         public const string PremiumV2 = "PremiumV2";
+        public const string PremiumV3 = "PremiumV3";
+        public const string PremiumContainer = "PremiumContainer";
         public const string ElasticPremium = "ElasticPremium";
         public const string ElasticIsolated = "ElasticIsolated";
     }

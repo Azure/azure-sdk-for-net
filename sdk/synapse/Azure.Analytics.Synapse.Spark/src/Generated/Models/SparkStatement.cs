@@ -11,17 +11,17 @@ namespace Azure.Analytics.Synapse.Spark.Models
     public partial class SparkStatement
     {
         /// <summary> Initializes a new instance of SparkStatement. </summary>
-        /// <param name="id"> . </param>
+        /// <param name="id"></param>
         internal SparkStatement(int id)
         {
             Id = id;
         }
 
         /// <summary> Initializes a new instance of SparkStatement. </summary>
-        /// <param name="id"> . </param>
-        /// <param name="code"> . </param>
-        /// <param name="state"> . </param>
-        /// <param name="output"> . </param>
+        /// <param name="id"></param>
+        /// <param name="code"></param>
+        /// <param name="state"></param>
+        /// <param name="output"></param>
         internal SparkStatement(int id, string code, string state, SparkStatementOutput output)
         {
             Id = id;

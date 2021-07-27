@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of HdfsReadSettings. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="wildcardFolderPath"> HDFS wildcardFolderPath. Type: string (or Expression with resultType string). </param>
         /// <param name="wildcardFileName"> HDFS wildcardFileName. Type: string (or Expression with resultType string). </param>

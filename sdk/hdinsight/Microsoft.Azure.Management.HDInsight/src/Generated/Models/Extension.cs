@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     using System.Linq;
 
     /// <summary>
-    /// Cluster monitoring extensions
+    /// Cluster monitoring extensions.
     /// </summary>
     public partial class Extension
     {

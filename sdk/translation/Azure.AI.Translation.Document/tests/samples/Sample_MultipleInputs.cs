@@ -22,7 +22,6 @@ namespace Azure.AI.Translation.Document.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:MultipleInputs
             Uri source1SasUriUri = new Uri("<source1 SAS URI>");
             Uri source2SasUri = new Uri("<source2 SAS URI>");
             Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
@@ -75,14 +74,14 @@ namespace Azure.AI.Translation.Document.Samples
                 }
             }
 
-            foreach (DocumentStatusResult document in operation.GetValues())
+            foreach (DocumentStatus document in operation.GetValues())
             {
-                Console.WriteLine($"Document with Id: {document.DocumentId}");
+                Console.WriteLine($"Document with Id: {document.Id}");
                 Console.WriteLine($"  Status:{document.Status}");
-                if (document.Status == TranslationStatus.Succeeded)
+                if (document.Status == DocumentTranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
-                    Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
+                    Console.WriteLine($"  Translated to language: {document.TranslatedTo}.");
                     Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
                 }
                 else
@@ -92,8 +91,6 @@ namespace Azure.AI.Translation.Document.Samples
                     Console.WriteLine($"  Message: {document.Error.Message}");
                 }
             }
-
-            #endregion
         }
     }
 }

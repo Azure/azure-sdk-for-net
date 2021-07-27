@@ -26,10 +26,4 @@
     <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared" />
   </ItemGroup>
 
-  <!-- TODO: revert when Azure.Core ships -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
-  <!--  end TODO-->
-
 </Project>

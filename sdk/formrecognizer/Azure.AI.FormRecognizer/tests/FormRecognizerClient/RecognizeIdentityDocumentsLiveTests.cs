@@ -18,7 +18,7 @@ using NUnit.Framework;
 /// </remarks>
 namespace Azure.AI.FormRecognizer.Tests
 {
-    [ClientTestFixture(FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+    [ClientTestFixture(FormRecognizerClientOptions.ServiceVersion.V2_1)]
     public class RecognizeIdentityDocumentsLiveTests : FormRecognizerLiveTestBase
     {
         public RecognizeIdentityDocumentsLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
@@ -92,7 +92,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.NotNull(form.Fields);
 
             Assert.True(form.Fields.ContainsKey("Address"));
-            Assert.True(form.Fields.ContainsKey("Country"));
+            Assert.True(form.Fields.ContainsKey("CountryRegion"));
             Assert.True(form.Fields.ContainsKey("DateOfBirth"));
             Assert.True(form.Fields.ContainsKey("DateOfExpiration"));
             Assert.True(form.Fields.ContainsKey("DocumentNumber"));
@@ -102,13 +102,13 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.True(form.Fields.ContainsKey("Sex"));
 
             Assert.AreEqual("123 STREET ADDRESS YOUR CITY WA 99999-1234", form.Fields["Address"].Value.AsString());
-            Assert.AreEqual("LICWDLACD5DG", form.Fields["DocumentNumber"].Value.AsString());
+            Assert.AreEqual("WDLABCD456DG", form.Fields["DocumentNumber"].Value.AsString());
             Assert.AreEqual("LIAM R.", form.Fields["FirstName"].Value.AsString());
             Assert.AreEqual("TALBOT", form.Fields["LastName"].Value.AsString());
             Assert.AreEqual("Washington", form.Fields["Region"].Value.AsString());
+            Assert.AreEqual("M", form.Fields["Sex"].Value.AsString());
 
-            Assert.That(form.Fields["Country"].Value.AsCountryCode(), Is.EqualTo("USA"));
-            Assert.That(form.Fields["Sex"].Value.AsGender(), Is.EqualTo(FieldValueGender.M));
+            Assert.That(form.Fields["CountryRegion"].Value.AsCountryRegion(), Is.EqualTo("USA"));
 
             var dateOfBirth = form.Fields["DateOfBirth"].Value.AsDate();
             Assert.AreEqual(6, dateOfBirth.Day);

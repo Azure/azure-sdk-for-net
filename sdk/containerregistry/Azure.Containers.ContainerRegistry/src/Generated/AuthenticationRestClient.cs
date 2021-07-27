@@ -121,7 +121,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateExchangeAcrRefreshTokenForAcrAccessTokenRequest(string service, string scope, string refreshToken)
+        internal HttpMessage CreateExchangeAcrRefreshTokenForAcrAccessTokenRequest(string service, string scope, string refreshToken, TokenGrantType grantType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -133,10 +133,10 @@ namespace Azure.Containers.ContainerRegistry
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
             var content = new FormUrlEncodedContent();
-            content.Add("grant_type", "refresh_token");
             content.Add("service", service);
             content.Add("scope", scope);
             content.Add("refresh_token", refreshToken);
+            content.Add("grant_type", grantType.ToSerialString());
             request.Content = content;
             return message;
         }
@@ -145,9 +145,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
         /// <param name="scope"> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </param>
         /// <param name="refreshToken"> Must be a valid ACR refresh token. </param>
+        /// <param name="grantType"> Grant type is expected to be refresh_token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="refreshToken"/> is null. </exception>
-        public async Task<Response<AcrAccessToken>> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(string service, string scope, string refreshToken, CancellationToken cancellationToken = default)
+        public async Task<Response<AcrAccessToken>> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(string service, string scope, string refreshToken, TokenGrantType grantType = TokenGrantType.RefreshToken, CancellationToken cancellationToken = default)
         {
             if (service == null)
             {
@@ -162,7 +163,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(refreshToken));
             }
 
-            using var message = CreateExchangeAcrRefreshTokenForAcrAccessTokenRequest(service, scope, refreshToken);
+            using var message = CreateExchangeAcrRefreshTokenForAcrAccessTokenRequest(service, scope, refreshToken, grantType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -182,9 +183,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
         /// <param name="scope"> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </param>
         /// <param name="refreshToken"> Must be a valid ACR refresh token. </param>
+        /// <param name="grantType"> Grant type is expected to be refresh_token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="refreshToken"/> is null. </exception>
-        public Response<AcrAccessToken> ExchangeAcrRefreshTokenForAcrAccessToken(string service, string scope, string refreshToken, CancellationToken cancellationToken = default)
+        public Response<AcrAccessToken> ExchangeAcrRefreshTokenForAcrAccessToken(string service, string scope, string refreshToken, TokenGrantType grantType = TokenGrantType.RefreshToken, CancellationToken cancellationToken = default)
         {
             if (service == null)
             {
@@ -199,7 +201,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(refreshToken));
             }
 
-            using var message = CreateExchangeAcrRefreshTokenForAcrAccessTokenRequest(service, scope, refreshToken);
+            using var message = CreateExchangeAcrRefreshTokenForAcrAccessTokenRequest(service, scope, refreshToken, grantType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

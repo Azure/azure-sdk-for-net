@@ -18,7 +18,7 @@ using NUnit.Framework;
 /// </remarks>
 namespace Azure.AI.FormRecognizer.Tests
 {
-    [ClientTestFixture(FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+    [ClientTestFixture(FormRecognizerClientOptions.ServiceVersion.V2_1)]
 
     public class RecognizeBusinessCardsLiveTests : FormRecognizerLiveTestBase
     {

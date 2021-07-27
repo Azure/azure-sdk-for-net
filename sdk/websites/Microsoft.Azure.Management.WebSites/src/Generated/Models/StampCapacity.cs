@@ -38,8 +38,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="computeMode">Shared/dedicated workers. Possible values
         /// include: 'Shared', 'Dedicated', 'Dynamic'</param>
         /// <param name="workerSize">Size of the machines. Possible values
-        /// include: 'Small', 'Medium', 'Large', 'D1', 'D2', 'D3',
-        /// 'NestedSmall', 'Default'</param>
+        /// include: 'Small', 'Medium', 'Large', 'D1', 'D2', 'D3', 'SmallV3',
+        /// 'MediumV3', 'LargeV3', 'NestedSmall', 'NestedSmallLinux',
+        /// 'Default'</param>
         /// <param name="workerSizeId">Size ID of machines:
         /// 0 - Small
         /// 1 - Medium
@@ -109,8 +110,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Gets or sets size of the machines. Possible values include:
-        /// 'Small', 'Medium', 'Large', 'D1', 'D2', 'D3', 'NestedSmall',
-        /// 'Default'
+        /// 'Small', 'Medium', 'Large', 'D1', 'D2', 'D3', 'SmallV3',
+        /// 'MediumV3', 'LargeV3', 'NestedSmall', 'NestedSmallLinux', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "workerSize")]
         public WorkerSizeOptions? WorkerSize { get; set; }

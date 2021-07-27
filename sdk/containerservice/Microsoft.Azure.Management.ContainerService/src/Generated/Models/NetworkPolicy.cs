@@ -16,7 +16,19 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     /// </summary>
     public static class NetworkPolicy
     {
+        /// <summary>
+        /// Use Calico network policies. See [differences between Azure and
+        /// Calico
+        /// policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities)
+        /// for more information.
+        /// </summary>
         public const string Calico = "calico";
+        /// <summary>
+        /// Use Azure network policies. See [differences between Azure and
+        /// Calico
+        /// policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities)
+        /// for more information.
+        /// </summary>
         public const string Azure = "azure";
     }
 }

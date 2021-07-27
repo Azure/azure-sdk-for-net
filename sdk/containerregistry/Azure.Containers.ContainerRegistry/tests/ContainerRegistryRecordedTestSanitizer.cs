@@ -15,44 +15,31 @@ namespace Azure.Containers.ContainerRegistry.Tests
     public class ContainerRegistryRecordedTestSanitizer : RecordedTestSanitizer
     {
         public List<string> FormEncodedBodySanitizers { get; } = new List<string>();
-        public List<string> JwtValues { get; } = new List<string>();
-
-        private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
-        {
-            DateParseHandling = DateParseHandling.None
-        };
 
         public ContainerRegistryRecordedTestSanitizer()
-            : base()
         {
-            JsonPathSanitizers.Add("$..access_token");
-            JsonPathSanitizers.Add("$..refresh_token");
+            DateTimeOffset expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromDays(365 * 30); // Never expire in software years
+            string encodedBody = Base64Url.EncodeString($"{{\"exp\":{expiresOn.ToUnixTimeSeconds()}}}");
+
+            var jwtSanitizedValue = $"{SanitizeValue}.{encodedBody}.{SanitizeValue}";
+
+            AddJsonPathSanitizer("$..refresh_token", _ => JToken.FromObject(jwtSanitizedValue));
 
             FormEncodedBodySanitizers.Add("access_token");
             FormEncodedBodySanitizers.Add("refresh_token");
-
-            JwtValues.Add("$..refresh_token");
         }
 
         public override string SanitizeTextBody(string contentType, string body)
         {
-            string jsonSanitizedBody = SanitizeJsonTextBody(contentType, body);
-
-            if (FormEncodedBodySanitizers.Count == 0)
-            {
-                return jsonSanitizedBody;
-            }
-
+            string jsonSanitizedBody = base.SanitizeTextBody(contentType, body);
             try
             {
                 if (contentType == "application/x-www-form-urlencoded")
                 {
-                    string urlEncodedSanitizedBody = string.Empty;
-
                     NameValueCollection queryParams = HttpUtility.ParseQueryString(jsonSanitizedBody);
                     for (int i = 0; i < queryParams.Keys.Count; i++)
                     {
-                        string key = queryParams.Keys[i].ToString();
+                        string key = queryParams.Keys[i];
                         foreach (string paramToSanitize in FormEncodedBodySanitizers)
                         {
                             if (key == paramToSanitize)
@@ -71,48 +58,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 return jsonSanitizedBody;
             }
-        }
-
-        private string SanitizeJsonTextBody(string contentType, string body)
-        {
-            if (JsonPathSanitizers.Count == 0)
-                return body;
-            try
-            {
-                JToken jsonO;
-                // Prevent default behavior where JSON.NET will convert DateTimeOffset
-                // into a DateTime.
-                if (!LegacyConvertJsonDateTokens)
-                {
-                    jsonO = JsonConvert.DeserializeObject<JToken>(body, SerializerSettings);
-                }
-                else
-                {
-                    jsonO = JToken.Parse(body);
-                }
-
-                foreach (string jsonPath in JsonPathSanitizers)
-                {
-                    foreach (JToken token in jsonO.SelectTokens(jsonPath))
-                    {
-                        string value = token.ToString();
-                        token.Replace(JToken.FromObject(JwtValues.Contains(jsonPath) ? SanitizeJwt(value) : SanitizeValue));
-                    }
-                }
-                return JsonConvert.SerializeObject(jsonO, SerializerSettings);
-            }
-            catch
-            {
-                return body;
-            }
-        }
-
-        private string SanitizeJwt(string value)
-        {
-            DateTimeOffset expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromDays(365 * 30); // Never expire in software years
-            string encodedBody = Base64Url.EncodeString($"{{\"exp\":{expiresOn.ToUnixTimeSeconds()}}}");
-
-            return $"{SanitizeValue}.{encodedBody}.{SanitizeValue}";
         }
     }
 }

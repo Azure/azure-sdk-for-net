@@ -150,7 +150,7 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public string ClientSecret => GetVariable("CLIENT_SECRET");
 
-        public TokenCredential Credential
+        public virtual TokenCredential Credential
         {
             get
             {
@@ -177,7 +177,7 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
-        /// Returns whether environment is ready to use. Should be overriden to provide service specific sampling scenario.
+        /// Returns whether environment is ready to use. Should be overridden to provide service specific sampling scenario.
         /// The test framework will wait until this returns true before starting tests.
         /// Use this place to hook up logic that polls if eventual consistency has happened.
         ///
@@ -312,6 +312,11 @@ namespace Azure.Core.TestFramework
             if (value == null)
             {
                 value = Environment.GetEnvironmentVariable(name);
+            }
+
+            if (value == null)
+            {
+                value = Environment.GetEnvironmentVariable($"AZURE_{name}");
             }
 
             if (value == null)

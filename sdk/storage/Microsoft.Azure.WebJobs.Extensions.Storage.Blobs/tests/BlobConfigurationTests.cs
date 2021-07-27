@@ -66,7 +66,41 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"CustomConnection:serviceUri", account.Endpoint },
+                        {"CustomConnection:serviceUri", account.BlobEndpoint },
+                        {"blobPath", "endpointcontainer/endpointblob" }
+                    });
+                })
+                .ConfigureDefaultTestHost(prog, builder =>
+                {
+                    SetupAzurite(builder);
+                    builder.AddAzureStorageBlobs();
+                })
+                .Build();
+
+            var jobHost = host.GetJobHost<BindToCloudBlockBlobProgram>();
+            await jobHost.CallAsync(nameof(BindToCloudBlockBlobProgram.Run));
+
+            var result = prog.Result;
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.AreEqual("endpointblob", result.Name);
+            Assert.AreEqual("endpointcontainer", result.BlobContainerName);
+            Assert.NotNull(result.BlobContainerName);
+            Assert.False(await result.ExistsAsync());
+        }
+
+        [Test]
+        public async Task BlobClient_CanConnect_BlobServiceUri()
+        {
+            var account = azuriteFixture.GetAzureAccount();
+            var prog = new BindToCloudBlockBlobProgram();
+            IHost host = new HostBuilder()
+                .ConfigureAppConfiguration(cb =>
+                {
+                    cb.AddInMemoryCollection(new Dictionary<string, string>()
+                    {
+                        {"CustomConnection:blobServiceUri", account.BlobEndpoint },
                         {"blobPath", "endpointcontainer/endpointblob" }
                     });
                 })

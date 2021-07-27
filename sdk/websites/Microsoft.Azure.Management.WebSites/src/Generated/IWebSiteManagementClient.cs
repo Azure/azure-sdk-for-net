@@ -80,6 +80,11 @@ namespace Microsoft.Azure.Management.WebSites
         IAppServiceCertificateOrdersOperations AppServiceCertificateOrders { get; }
 
         /// <summary>
+        /// Gets the ICertificateOrdersDiagnosticsOperations.
+        /// </summary>
+        ICertificateOrdersDiagnosticsOperations CertificateOrdersDiagnostics { get; }
+
+        /// <summary>
         /// Gets the ICertificateRegistrationProviderOperations.
         /// </summary>
         ICertificateRegistrationProviderOperations CertificateRegistrationProvider { get; }
@@ -115,6 +120,11 @@ namespace Microsoft.Azure.Management.WebSites
         IDiagnosticsOperations Diagnostics { get; }
 
         /// <summary>
+        /// Gets the IGlobalModelOperations.
+        /// </summary>
+        IGlobalModelOperations GlobalModel { get; }
+
+        /// <summary>
         /// Gets the IProviderOperations.
         /// </summary>
         IProviderOperations Provider { get; }
@@ -148,6 +158,27 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the IResourceHealthMetadataOperations.
         /// </summary>
         IResourceHealthMetadataOperations ResourceHealthMetadata { get; }
+
+        /// <summary>
+        /// Exchange code for GitHub access token for AppService CLI
+        /// </summary>
+        /// <remarks>
+        /// Description for Exchange code for GitHub access token for
+        /// AppService CLI
+        /// </remarks>
+        /// <param name='code'>
+        /// Code string to exchange for Github Access token
+        /// </param>
+        /// <param name='state'>
+        /// State string used for verification.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<AppserviceGithubToken>> GenerateGithubAccessTokenForAppserviceCLIAsyncWithHttpMessagesAsync(string code, string state, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets publishing user
@@ -302,7 +333,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='sku'>
         /// Name of SKU used to filter the regions. Possible values include:
         /// 'Free', 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic',
-        /// 'Isolated', 'PremiumV2', 'ElasticPremium', 'ElasticIsolated'
+        /// 'Isolated', 'IsolatedV2', 'PremiumV2', 'PremiumV3',
+        /// 'PremiumContainer', 'ElasticPremium', 'ElasticIsolated'
         /// </param>
         /// <param name='linuxWorkersEnabled'>
         /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only

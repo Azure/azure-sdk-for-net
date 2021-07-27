@@ -3,7 +3,6 @@
 
 using Azure.Communication.Identity;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests
 {
@@ -11,16 +10,6 @@ namespace Azure.Communication.Chat.Tests
     {
         public ChatLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new ChatRecordedTestSanitizer();
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            if (TestEnvironment.ShouldIgnoreTests)
-            {
-                Assert.Ignore("Chat tests are skipped " +
-                    "because chat package is not included in the TEST_PACKAGES_ENABLED variable");
-            }
-        }
 
         /// <summary>
         /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
@@ -30,8 +19,8 @@ namespace Azure.Communication.Chat.Tests
         protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.ConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    TestEnvironment.LiveTestDynamicConnectionString,
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         /// <summary>
         /// Creates a <see cref="ChatClient" /> with a static token and instruments it to make use of
@@ -46,7 +35,7 @@ namespace Azure.Communication.Chat.Tests
             }
 
             CommunicationTokenCredential communicationTokenCredential = new CommunicationTokenCredential(token);
-            return InstrumentClient(new ChatClient(TestEnvironment.Endpoint, communicationTokenCredential,
+            return InstrumentClient(new ChatClient(TestEnvironment.LiveTestDynamicEndpoint, communicationTokenCredential,
                 CreateChatClientOptionsWithCorrelationVectorLogs()));
         }
 

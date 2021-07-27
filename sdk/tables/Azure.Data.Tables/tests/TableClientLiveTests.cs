@@ -27,6 +27,31 @@ namespace Azure.Data.Tables.Tests
             endpointType /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
+        [RecordedTest]
+        public async Task UpsertAndQueryWithSingleQuoteNames([Values(true, false)] bool expressionQuery)
+        {
+            List<TableEntity> entityResults;
+            string partitionKeyValue = "PartitionWithi''singleQuote";
+            string rowKeyValue = "01''";
+            TableEntity entityToCreate = CreateTableEntities(partitionKeyValue, 1).First();
+            entityToCreate.RowKey = rowKeyValue;
+
+            // Create the new entities.
+            await client.UpsertEntityAsync(entityToCreate);
+
+            if (expressionQuery)
+            {
+                // Query the entities with expression.
+                entityResults = await client.QueryAsync<TableEntity>(e => e.PartitionKey == partitionKeyValue && e.RowKey == rowKeyValue).ToEnumerableAsync().ConfigureAwait(false);
+            }
+            else
+            {
+                // Query the entities with string filter.
+                entityResults = await client.QueryAsync<TableEntity>(TableOdataFilter.Create($"PartitionKey eq {partitionKeyValue} and RowKey eq {rowKeyValue}")).ToEnumerableAsync().ConfigureAwait(false);
+            }
+            Assert.AreEqual(1, entityResults.Count, "The entity result count should match the created count");
+        }
+
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
@@ -90,40 +115,32 @@ namespace Azure.Data.Tables.Tests
         public void ValidateSasCredentials()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
-
             var credential = new TableSharedKeyCredential(AccountName, AccountKey);
 
             // Build a shared access signature with only Read permissions.
-
             TableSasBuilder sas = client.GetSasBuilder(TableSasPermissions.Read, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                sas.Version = "2017-07-29";
-            }
-
             string token = sas.Sign(credential);
 
             // Create the TableServiceClient using the SAS URI.
             TableClient sasTableclient =
-                InstrumentClient(new TableClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TablesClientOptions())));
+                InstrumentClient(new TableClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are able to query the table from the service.
 
             Assert.That(async () => await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false), Throws.Nothing);
 
             // Validate that we are not able to upsert an entity to the table.
-
             var ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () =>
                     await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
             Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            if (_endpointType == TableEndpointType.Storage)
+            if (_endpointType == TableEndpointType.CosmosTable)
             {
-                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             }
             else
             {
-                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
             }
         }
 
@@ -134,26 +151,19 @@ namespace Azure.Data.Tables.Tests
         public void ValidateSasCredentialsDuplicateTokenInUriAndCred()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
-
             var credential = new TableSharedKeyCredential(AccountName, AccountKey);
 
             // Build a shared access signature with only Read permissions.
-
             TableSasBuilder sas = client.GetSasBuilder(TableSasPermissions.Read, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                sas.Version = "2017-07-29";
-            }
-
             string token = sas.Sign(credential);
 
-            // Build SAS Uri.
+            // Build SAS Uri. Add the table name to the ServiceUri to validate it will be handled properly.
             UriBuilder sasUri = new UriBuilder(ServiceUri) { Query = token };
 
             // Create the TableServiceClient using the SAS URI.
             // Intentionally add the SAS to the endpoint arg as well as the credential to validate de-duping
             TableClient sasTableclient =
-                InstrumentClient(new TableClient(sasUri.Uri, new AzureSasCredential(token), InstrumentClientOptions(new TablesClientOptions())));
+                InstrumentClient(new TableClient(sasUri.Uri, new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are able to query the table from the service.
 
@@ -165,14 +175,46 @@ namespace Azure.Data.Tables.Tests
                 async () =>
                     await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
             Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            if (_endpointType == TableEndpointType.Storage)
-            {
-                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
-            }
-            else
+            if (_endpointType == TableEndpointType.CosmosTable)
             {
                 Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             }
+            else
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+            }
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public void TableClientRemovesTableNameFromEndpointUri()
+        {
+            var endpointWithTableName = ServiceUri + "/" + tableName;
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+            var credential = new TableSharedKeyCredential(AccountName, AccountKey);
+
+            // Build a shared access signature with only Read permissions.
+            TableSasBuilder sas = client.GetSasBuilder(TableSasPermissions.Read, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            string token = sas.Sign(credential);
+
+            // Build SAS Uri. Add the table name to the ServiceUri to validate it will be handled properly.
+            UriBuilder sasUri = new UriBuilder(endpointWithTableName) { Query = token };
+
+            // Create the TableServiceClient using the SAS URI.
+            // Intentionally add the SAS to the endpoint arg as well as the credential to validate de-duping
+            TableClient sasTableclient =
+                InstrumentClient(new TableClient(sasUri.Uri, new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are able to query the table from the service.
+            Assert.That(async () => await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false), Throws.Nothing);
+
+            var sharedKeyClient =
+                InstrumentClient(new TableClient(new Uri(ServiceUri), tableName, new TableSharedKeyCredential(AccountName, AccountKey), InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are able to query the table from the service.
+            Assert.That(async () => await sharedKeyClient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false), Throws.Nothing);
         }
 
         /// <summary>
@@ -197,16 +239,11 @@ namespace Azure.Data.Tables.Tests
             sas.RowKeyStart = entitiesToCreate[0].RowKey;
             sas.RowKeyEnd = entitiesToCreate[0].RowKey;
 
-            if (_endpointType == TableEndpointType.CosmosTable)
-            {
-                sas.Version = "2017-07-29";
-            }
-
             string token = sas.Sign(credential);
 
             // Create the TableServiceClient using the SAS URI.
             var sasAuthedService =
-                InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TablesClientOptions())));
+                InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
             var sasTableclient = sasAuthedService.GetTableClient(tableName);
 
             // Insert the entities
@@ -251,6 +288,30 @@ namespace Azure.Data.Tables.Tests
             entityResults = await client.QueryAsync<TableEntity>(maxPerPage: pageCount).ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
+            entityResults.Clear();
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public async Task CreateEntityWithETagProperty()
+        {
+            List<TableEntity> entityResults;
+            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue,1);
+            entitiesToCreate[0]["ETag"] = "foo";
+
+            // Create the new entities.
+
+            await CreateTestEntities(entitiesToCreate).ConfigureAwait(false);
+
+            // Query the entities.
+
+            entityResults = await client.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false);
+
+            Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
+            Assert.AreEqual("foo", entityResults[0]["ETag"]);
+            Assert.AreNotEqual(entityResults[0]["ETag"], entityResults[0].ETag);
             entityResults.Clear();
         }
 
@@ -520,6 +581,18 @@ namespace Azure.Data.Tables.Tests
             Assert.That(mergedEntity[propertyName], Is.EqualTo(originalValue));
         }
 
+        [RecordedTest]
+        public async Task DeleteEntityWithConnectionStringCtor()
+        {
+            var entity = new TableEntity("TestPartitionKey", "testRowKey")
+            {
+                { "Product", "Marker Set" }
+            };
+            await connectionStringClient.AddEntityAsync(entity);
+            entity = await connectionStringClient.GetEntityAsync<TableEntity>("TestPartitionKey", "testRowKey");
+            await connectionStringClient.DeleteEntityAsync(entity.PartitionKey, entity.RowKey);
+        }
+
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
@@ -616,12 +689,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entityResults.First()[GuidTypePropertyName], Is.TypeOf<Guid>(), "The entity property should be of type Guid");
             Assert.That(entityResults.First()[BinaryTypePropertyName], Is.TypeOf<byte[]>(), "The entity property should be of type byte[]");
             Assert.That(entityResults.First()[Int64TypePropertyName], Is.TypeOf<long>(), "The entity property should be of type int64");
-            //TODO: Remove conditional after fixing https://github.com/Azure/azure-sdk-for-net/issues/13552
-            if (_endpointType != TableEndpointType.CosmosTable)
-            {
-                Assert.That(entityResults.First()[DoubleTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
-            }
-
+            Assert.That(entityResults.First()[DoubleTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
             Assert.That(entityResults.First()[DoubleDecimalTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
             Assert.That(entityResults.First()[IntTypePropertyName], Is.TypeOf<int>(), "The entity property should be of type int");
         }
@@ -650,12 +718,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entityResults.First()[GuidTypePropertyName], Is.TypeOf<Guid>(), "The entity property should be of type Guid");
             Assert.That(entityResults.First()[BinaryTypePropertyName], Is.TypeOf<byte[]>(), "The entity property should be of type byte[]");
             Assert.That(entityResults.First()[Int64TypePropertyName], Is.TypeOf<long>(), "The entity property should be of type int64");
-            //TODO: Remove conditional after fixing https://github.com/Azure/azure-sdk-for-net/issues/13552
-            if (_endpointType != TableEndpointType.CosmosTable)
-            {
-                Assert.That(entityResults.First()[DoubleTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
-            }
-
+            Assert.That(entityResults.First()[DoubleTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
             Assert.That(entityResults.First()[DoubleDecimalTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
             Assert.That(entityResults.First()[IntTypePropertyName], Is.TypeOf<int>(), "The entity property should be of type int");
         }
@@ -1256,6 +1319,7 @@ namespace Azure.Data.Tables.Tests
             Assert.AreEqual(entitiesToCreate[ex.FailedTransactionActionIndex.Value].RowKey, entitiesToCreate.Last().RowKey);
             Assert.That(ex.Message.Contains(nameof(TableTransactionFailedException.FailedTransactionActionIndex)));
 
+            // Cosmos allows batches larger than 100.
             if (_endpointType != TableEndpointType.CosmosTable)
             {
                 // Try submitting a batch larger than 100 items

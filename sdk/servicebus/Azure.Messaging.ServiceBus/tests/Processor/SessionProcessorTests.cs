@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
 
@@ -20,7 +19,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var processor = new ServiceBusSessionProcessor(
                 GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             Assert.That(() => processor.ProcessMessageAsync += null, Throws.InstanceOf<ArgumentNullException>());
@@ -35,7 +33,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var processor = new ServiceBusSessionProcessor(
                 GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>());
@@ -47,7 +44,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var processor = new ServiceBusSessionProcessor(
                 GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
@@ -61,7 +57,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var processor = new ServiceBusSessionProcessor(
                 GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
@@ -81,7 +76,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var processor = new ServiceBusSessionProcessor(
                 GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             // First scenario: no handler has been set.
@@ -110,7 +104,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var processor = new ServiceBusSessionProcessor(
                 GetMockedReceiverConnection(),
                 "entityPath",
-                new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
 
             Func<ProcessSessionMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
@@ -378,13 +371,32 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.IsTrue(sessionOpenCalled);
             Assert.IsTrue(sessionCloseCalled);
         }
+
+        [Test]
+        public async Task CloseRespectsCancellationToken()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor>() {CallBase = true};
+            var mockSessionProcessor = new Mock<ServiceBusSessionProcessor>() {CallBase = true};
+
+            mockSessionProcessor.Setup(
+                p => p.InnerProcessor).Returns(mockProcessor.Object);
+            mockProcessor.Setup(
+                p => p.IsProcessing).Returns(true);
+            var cts = new CancellationTokenSource();
+
+            // mutate the cancellation token to distinguish it from CancellationToken.None
+            cts.CancelAfter(100);
+
+            await mockSessionProcessor.Object.CloseAsync(cts.Token);
+            mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
+        }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type
     internal class MockSessionProcessor : ServiceBusSessionProcessor
 #pragma warning restore SA1402 // File may only contain a single type
     {
-        protected override ServiceBusProcessor InnerProcessor { get; } = new MockProcessor();
+        protected internal override ServiceBusProcessor InnerProcessor { get; } = new MockProcessor();
 
         public MockSessionProcessor() : base()
         {

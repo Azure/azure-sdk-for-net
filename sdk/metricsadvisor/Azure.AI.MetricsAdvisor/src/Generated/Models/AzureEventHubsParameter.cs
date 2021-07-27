@@ -13,27 +13,30 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AzureEventHubsParameter
     {
         /// <summary> Initializes a new instance of AzureEventHubsParameter. </summary>
-        /// <param name="connectionString"> Azure Event Hubs connection string. </param>
-        /// <param name="consumerGroup"> Azure Event Hubs consumer group. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="consumerGroup"/> is null. </exception>
-        public AzureEventHubsParameter(string connectionString, string consumerGroup)
+        /// <param name="consumerGroup"> The consumer group to be used in this data feed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="consumerGroup"/> is null. </exception>
+        public AzureEventHubsParameter(string consumerGroup)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
             if (consumerGroup == null)
             {
                 throw new ArgumentNullException(nameof(consumerGroup));
             }
 
+            ConsumerGroup = consumerGroup;
+        }
+
+        /// <summary> Initializes a new instance of AzureEventHubsParameter. </summary>
+        /// <param name="connectionString"> The connection string of this Azure Event Hubs. </param>
+        /// <param name="consumerGroup"> The consumer group to be used in this data feed. </param>
+        internal AzureEventHubsParameter(string connectionString, string consumerGroup)
+        {
             ConnectionString = connectionString;
             ConsumerGroup = consumerGroup;
         }
 
-        /// <summary> Azure Event Hubs connection string. </summary>
+        /// <summary> The connection string of this Azure Event Hubs. </summary>
         public string ConnectionString { get; set; }
-        /// <summary> Azure Event Hubs consumer group. </summary>
+        /// <summary> The consumer group to be used in this data feed. </summary>
         public string ConsumerGroup { get; set; }
     }
 }

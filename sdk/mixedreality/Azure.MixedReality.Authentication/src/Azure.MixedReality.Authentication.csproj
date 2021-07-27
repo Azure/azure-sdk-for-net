@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Mixed Reality STS Client</AssemblyTitle>
     <Version>1.1.0-beta.1</Version>
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <PackageTags>Azure MixedReality</PackageTags>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <Authors>Microsoft</Authors>
@@ -11,7 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+    <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -30,7 +32,5 @@
     <Compile Include="$(AzureMixedRealityAuthenticationSharedSources)\AuthenticationEndpoint.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureMixedRealityAuthenticationSharedSources)\MixedRealityAccountKeyCredential.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
-
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
 </Project>

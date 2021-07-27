@@ -44,10 +44,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="recoveryMode">Defines whether the current recovery
         /// mode is file restore or database restore. Possible values include:
         /// 'Invalid', 'FileRecovery', 'WorkloadRecovery'</param>
+        /// <param name="targetVirtualMachineId">This is the complete ARM Id of
+        /// the target VM
+        /// For e.g.
+        /// /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}</param>
         /// <param name="recoveryPointRehydrationInfo">RP Rehydration
         /// Info</param>
-        public AzureWorkloadSAPHanaRestoreWithRehydrateRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryMode = default(string), RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default(RecoveryPointRehydrationInfo))
-            : base(recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode)
+        public AzureWorkloadSAPHanaRestoreWithRehydrateRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryMode = default(string), string targetVirtualMachineId = default(string), RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default(RecoveryPointRehydrationInfo))
+            : base(recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId)
         {
             RecoveryPointRehydrationInfo = recoveryPointRehydrationInfo;
             CustomInit();

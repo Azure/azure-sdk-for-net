@@ -123,12 +123,15 @@ namespace Azure.Core.Tests
             Assert.Throws<InvalidOperationException>(() => { BinaryData d = response.Content; });
         }
 
-        public void ContentPropertyThrowsForNotExposableMemoryStream()
+        [Test]
+        public void ContentPropertyWorksForMemoryStreamsWithPrivateBuffers()
         {
             var response = new MockResponse(200);
-            response.ContentStream = new MemoryStream(new byte[100], 0, 100, writable: false, publiclyVisible: false);
+            var responseBody = new byte[100];
+            response.ContentStream = new MemoryStream(responseBody, 0, responseBody.Length, writable: false, publiclyVisible: false);
 
-            Assert.Throws<InvalidOperationException>(() => { BinaryData d = response.Content; });
+            Assert.DoesNotThrow(() => { BinaryData d = response.Content; });
+            CollectionAssert.AreEqual(responseBody, response.Content.ToArray());
         }
 
         internal class TestPayload

@@ -9,19 +9,23 @@
 
   <!-- Nuget properties -->
   <PropertyGroup>
-    <PackageTags>IoT;ModelsRepository;Pnp;DigitalTwins$(PackageCommonTags)</PackageTags>
+    <PackageTags>IoT;ModelsRepository;Pnp;DigitalTwins;$(PackageCommonTags)</PackageTags>
     <Description>SDK for the Azure IoT Models Repository</Description>
-    <Version>1.0.0-preview.4</Version>
+    <Version>1.0.0-preview.5</Version>
   </PropertyGroup>
 
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- Common source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
+    <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs">
@@ -53,5 +57,4 @@
     </Compile>
   </ItemGroup>
 
-  <Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" />
 </Project>

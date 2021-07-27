@@ -119,6 +119,26 @@ function MergeHashes([hashtable] $source, [psvariable] $dest) {
     }
 }
 
+function BuildBicepFile([System.IO.FileSystemInfo] $file) {
+    if (!(Get-Command bicep -ErrorAction Ignore)) {
+        Write-Error "A bicep file was found at '$($file.FullName)' but the Azure Bicep CLI is not installed. See https://aka.ms/install-bicep-pwsh"
+        throw
+    }
+
+    $tmp = $env:TEMP ? $env:TEMP : [System.IO.Path]::GetTempPath()
+    $templateFilePath = Join-Path $tmp "test-resources.$(New-Guid).compiled.json"
+
+    # Az can deploy bicep files natively, but by compiling here it becomes easier to parse the
+    # outputted json for mismatched parameter declarations.
+    bicep build $file.FullName --outfile $templateFilePath
+    if ($LASTEXITCODE) {
+        Write-Error "Failure building bicep file '$($file.FullName)'"
+        throw
+    }
+
+    return $templateFilePath
+}
+
 # Support actions to invoke on exit.
 $exitActions = @({
     if ($exitActions.Count -gt 1) {
@@ -140,15 +160,18 @@ try {
     # Enumerate test resources to deploy. Fail if none found.
     $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
     $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
-    $templateFileName = 'test-resources.json'
     $templateFiles = @()
 
-    Write-Verbose "Checking for '$templateFileName' files under '$root'"
-    Get-ChildItem -Path $root -Filter $templateFileName -Recurse | ForEach-Object {
-        $templateFile = $_.FullName
-
-        Write-Verbose "Found template '$templateFile'"
-        $templateFiles += $templateFile
+    'test-resources.json', 'test-resources.bicep' | ForEach-Object {
+        Write-Verbose "Checking for '$_' files under '$root'"
+        Get-ChildItem -Path $root -Filter "$_" -Recurse | ForEach-Object {
+            Write-Verbose "Found template '$($_.FullName)'"
+            if ($_.Extension -eq '.bicep') {
+                $templateFiles += (BuildBicepFile $_)
+            } else {
+                $templateFiles += $_.FullName
+            }
+        }
     }
 
     if (!$templateFiles) {
@@ -555,6 +578,11 @@ try {
         if (Test-Path $postDeploymentScript) {
             Log "Invoking post-deployment script '$postDeploymentScript'"
             &$postDeploymentScript -ResourceGroupName $ResourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
+        }
+
+        if ($templateFile.EndsWith('.compiled.json')) {
+            Write-Verbose "Removing compiled bicep file $templateFile"
+            Remove-Item $templateFile
         }
     }
 

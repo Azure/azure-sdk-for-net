@@ -7,19 +7,27 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>6.2.0</Version>
+		<Version>7.0.0</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 This release contains the bellow change:
-- Add property "PrivateIPAddress" in the class ApplicationGetEndpoint.
-- Add property "PrivateIPAddress" in the class ConnectivityEndpoint.
-- Add properties "VmSizesWithEncryptionAtHost" and "VmSizeProperties" in the class BillingResponseListResult.
-- Add properties "ClusterHdpVersion", "StorageProfile" and "ExcludedServicesConfig" in the class ClusterGetProperties.
-- Add property "TenantId" in the class ClusterIdentityUserAssignedIdentitiesValue.
-- Add properties "Recommend" and "Default" in the class FilterMode.
-- Add property "EncryptDataDisks" in the class Role.
-- Add new classes Dimension, ExcludedServicesConfig, MetricSpecifications, OperationProperties, ServiceSpecification and VmSizeProperty.
+Support new features:
+- Support the API UpdateIdentityCertificate under Cluster Operation
+- Support EnableAzureMonitor, DisableAzureMonitor, GetAzureMonitorStatus under Extension Operation
+- Support CheckNameAvailability, ValidateClusterCreateRequest under Location Operation
+
+Add properties:
+- Add property PrivateIPAddress in ApplicationGetHttpsEndpoint.cs
+- Add property ConfigurationOverride in KafkaRestProperties.cs
+- Add property VMGroupName in Role.cs
+- Add properties Saskey and Fileshare in StorageAccount.cs
+- Add properties OsType, ESPApplied and ComputeIsolationSupported in VmSizeCompatibilityFilter.cs
+
+Properties change:
+- Change property VmSizes to Vmsizes, VmSizeFilters to VmsizeFilters in CapabilitiesResult.cs 
+- Change property CurrentValue and Limit from type int? to long? in Usage.cs
+- Change property IsDefault from type string to bool? in VersionSpec.cs
       ]]>
 		</PackageReleaseNotes>
     

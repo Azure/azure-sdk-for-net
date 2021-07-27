@@ -30,6 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             _operation = new OperationInternals<SqlScriptResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SqlScriptCreateOrUpdateSqlScriptOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

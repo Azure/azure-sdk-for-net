@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.Azure.Management.ContainerRegistry.Fluent" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
+    <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,15 +18,7 @@
     <ProjectReference Include="..\src\Azure.Containers.ContainerRegistry.csproj" />
   </ItemGroup>
 
-  <!-- TODO: revert when Azure.Core ships -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-  </ItemGroup>
-  <!--  end TODO-->
-
-  <ItemGroup>
-    <Reference Include="System.Web">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7\System.Web.dll</HintPath>
-    </Reference>
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System.Web" />
   </ItemGroup>
 </Project>

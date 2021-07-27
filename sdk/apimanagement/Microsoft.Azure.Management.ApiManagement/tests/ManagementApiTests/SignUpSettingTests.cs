@@ -15,7 +15,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class SignUpSettingTests : TestBase
     {
         [Fact]
-        [Trait("owner", "vifedo")]
+        [Trait("owner", "sasolank")]
         public async Task CreateUpdateReset()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");

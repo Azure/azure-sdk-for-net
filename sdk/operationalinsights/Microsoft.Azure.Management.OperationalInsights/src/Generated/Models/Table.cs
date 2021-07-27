@@ -39,22 +39,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="retentionInDays">The data table data retention in
-        /// days, between 7 and 730. Setting this property to null will default
-        /// to the workspace retention.</param>
-        /// <param name="isTroubleshootingAllowed">Specifies if
-        /// IsTroubleshootingEnabled property can be set for this
-        /// table.</param>
-        /// <param name="isTroubleshootEnabled">Enable or disable troubleshoot
-        /// for this table.</param>
-        /// <param name="lastTroubleshootDate">Last time when troubleshooting
-        /// was set for this table.</param>
-        public Table(string id = default(string), string name = default(string), string type = default(string), int? retentionInDays = default(int?), bool? isTroubleshootingAllowed = default(bool?), bool? isTroubleshootEnabled = default(bool?), string lastTroubleshootDate = default(string))
+        /// days, between 30 and 730. Setting this property to null will
+        /// default to the workspace retention.</param>
+        public Table(string id = default(string), string name = default(string), string type = default(string), int? retentionInDays = default(int?))
             : base(id, name, type)
         {
             RetentionInDays = retentionInDays;
-            IsTroubleshootingAllowed = isTroubleshootingAllowed;
-            IsTroubleshootEnabled = isTroubleshootEnabled;
-            LastTroubleshootDate = lastTroubleshootDate;
             CustomInit();
         }
 
@@ -64,31 +54,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the data table data retention in days, between 7 and
+        /// Gets or sets the data table data retention in days, between 30 and
         /// 730. Setting this property to null will default to the workspace
         /// retention.
         /// </summary>
         [JsonProperty(PropertyName = "properties.retentionInDays")]
         public int? RetentionInDays { get; set; }
-
-        /// <summary>
-        /// Gets specifies if IsTroubleshootingEnabled property can be set for
-        /// this table.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.isTroubleshootingAllowed")]
-        public bool? IsTroubleshootingAllowed { get; private set; }
-
-        /// <summary>
-        /// Gets or sets enable or disable troubleshoot for this table.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.isTroubleshootEnabled")]
-        public bool? IsTroubleshootEnabled { get; set; }
-
-        /// <summary>
-        /// Gets last time when troubleshooting was set for this table.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.lastTroubleshootDate")]
-        public string LastTroubleshootDate { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -102,9 +73,9 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "RetentionInDays", 730);
             }
-            if (RetentionInDays < 7)
+            if (RetentionInDays < 30)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "RetentionInDays", 7);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RetentionInDays", 30);
             }
         }
     }

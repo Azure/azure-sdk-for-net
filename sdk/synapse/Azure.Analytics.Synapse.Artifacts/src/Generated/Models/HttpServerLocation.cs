@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="relativeUrl"> Specify the relativeUrl of http server. Type: string (or Expression with resultType string). </param>
         internal HttpServerLocation(string type, object folderPath, object fileName, IDictionary<string, object> additionalProperties, object relativeUrl) : base(type, folderPath, fileName, additionalProperties)
         {

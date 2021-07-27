@@ -2,7 +2,7 @@ trigger: none
 pr:
   branches:
     include:
-    - master
+    - main
     - '*-preview'
     - 'feature/cplat*'
   paths:
@@ -64,6 +64,7 @@ pr:
     - sdk/datalake-analytics/Microsoft.Azure.Management.DataLake.Analytics
     - sdk/datalake-store/Microsoft.Azure.Management.DataLake.Store
     - sdk/datamigration/Microsoft.Azure.Management.DataMigration
+    - sdk/dataprotection/Microsoft.Azure.Management.DataProtection
     - sdk/datashare/Microsoft.Azure.Management.DataShare
     - sdk/deploymentmanager/Microsoft.Azure.Management.DeploymentManager
     - sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices

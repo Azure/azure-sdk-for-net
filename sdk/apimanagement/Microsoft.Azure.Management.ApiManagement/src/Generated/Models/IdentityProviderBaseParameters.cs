@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -125,5 +126,49 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "passwordResetPolicyName")]
         public string PasswordResetPolicyName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (AllowedTenants != null)
+            {
+                if (AllowedTenants.Count > 32)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "AllowedTenants", 32);
+                }
+            }
+            if (SignupPolicyName != null)
+            {
+                if (SignupPolicyName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SignupPolicyName", 1);
+                }
+            }
+            if (SigninPolicyName != null)
+            {
+                if (SigninPolicyName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SigninPolicyName", 1);
+                }
+            }
+            if (ProfileEditingPolicyName != null)
+            {
+                if (ProfileEditingPolicyName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ProfileEditingPolicyName", 1);
+                }
+            }
+            if (PasswordResetPolicyName != null)
+            {
+                if (PasswordResetPolicyName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "PasswordResetPolicyName", 1);
+                }
+            }
+        }
     }
 }

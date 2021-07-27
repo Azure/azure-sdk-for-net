@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -59,7 +60,7 @@ namespace Azure.Communication.Sms
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new SendMessageRequest(@from, smsRecipients, message)
+            var model = new SendMessageRequest(@from, smsRecipients.ToList(), message)
             {
                 SmsSendOptions = smsSendOptions
             };

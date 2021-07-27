@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<KeyVaultRoleAssignmentPropertiesWithScope> properties = default;
+            Optional<KeyVaultRoleAssignmentProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Administration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = KeyVaultRoleAssignmentPropertiesWithScope.DeserializeKeyVaultRoleAssignmentPropertiesWithScope(property.Value);
+                    properties = KeyVaultRoleAssignmentProperties.DeserializeKeyVaultRoleAssignmentProperties(property.Value);
                     continue;
                 }
             }

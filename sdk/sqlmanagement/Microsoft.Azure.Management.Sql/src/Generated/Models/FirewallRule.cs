@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a server firewall rule.
+    /// A server firewall rule.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class FirewallRule : ProxyResource
+    public partial class FirewallRule : ProxyResourceWithWritableName
     {
         /// <summary>
         /// Initializes a new instance of the FirewallRule class.
@@ -32,25 +32,19 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the FirewallRule class.
         /// </summary>
-        /// <param name="startIpAddress">The start IP address of the firewall
-        /// rule. Must be IPv4 format. Use value '0.0.0.0' to represent all
-        /// Azure-internal IP addresses.</param>
-        /// <param name="endIpAddress">The end IP address of the firewall rule.
-        /// Must be IPv4 format. Must be greater than or equal to
-        /// startIpAddress. Use value '0.0.0.0' to represent all Azure-internal
-        /// IP addresses.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="kind">Kind of server that contains this firewall
-        /// rule.</param>
-        /// <param name="location">Location of the server that contains this
-        /// firewall rule.</param>
-        public FirewallRule(string startIpAddress, string endIpAddress, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string location = default(string))
+        /// <param name="startIpAddress">The start IP address of the firewall
+        /// rule. Must be IPv4 format. Use value '0.0.0.0' for all
+        /// Azure-internal IP addresses.</param>
+        /// <param name="endIpAddress">The end IP address of the firewall rule.
+        /// Must be IPv4 format. Must be greater than or equal to
+        /// startIpAddress. Use value '0.0.0.0' for all Azure-internal IP
+        /// addresses.</param>
+        public FirewallRule(string id = default(string), string name = default(string), string type = default(string), string startIpAddress = default(string), string endIpAddress = default(string))
             : base(id, name, type)
         {
-            Kind = kind;
-            Location = location;
             StartIpAddress = startIpAddress;
             EndIpAddress = endIpAddress;
             CustomInit();
@@ -62,20 +56,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets kind of server that contains this firewall rule.
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; private set; }
-
-        /// <summary>
-        /// Gets location of the server that contains this firewall rule.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; private set; }
-
-        /// <summary>
         /// Gets or sets the start IP address of the firewall rule. Must be
-        /// IPv4 format. Use value '0.0.0.0' to represent all Azure-internal IP
+        /// IPv4 format. Use value '0.0.0.0' for all Azure-internal IP
         /// addresses.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startIpAddress")]
@@ -84,27 +66,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets the end IP address of the firewall rule. Must be IPv4
         /// format. Must be greater than or equal to startIpAddress. Use value
-        /// '0.0.0.0' to represent all Azure-internal IP addresses.
+        /// '0.0.0.0' for all Azure-internal IP addresses.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endIpAddress")]
         public string EndIpAddress { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (StartIpAddress == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "StartIpAddress");
-            }
-            if (EndIpAddress == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "EndIpAddress");
-            }
-        }
     }
 }

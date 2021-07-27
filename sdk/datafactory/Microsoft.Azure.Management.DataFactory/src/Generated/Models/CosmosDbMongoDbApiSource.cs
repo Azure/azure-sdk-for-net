@@ -41,6 +41,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="filter">Specifies selection filter using query
         /// operators. To return all documents in a collection, omit this
         /// parameter or pass an empty document ({}). Type: string (or
@@ -59,8 +62,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="additionalColumns">Specifies the additional columns to
         /// be added to source data. Type: array of objects (or Expression with
         /// resultType array of objects).</param>
-        public CosmosDbMongoDbApiSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object filter = default(object), MongoDbCursorMethodsProperties cursorMethods = default(MongoDbCursorMethodsProperties), object batchSize = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        public CosmosDbMongoDbApiSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object filter = default(object), MongoDbCursorMethodsProperties cursorMethods = default(MongoDbCursorMethodsProperties), object batchSize = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             Filter = filter;
             CursorMethods = cursorMethods;

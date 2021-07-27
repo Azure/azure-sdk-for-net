@@ -13,10 +13,12 @@ namespace Microsoft.Azure.Management.Sql.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Contains information about a database Threat Detection policy.
+    /// A database security alert policy.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class DatabaseSecurityAlertPolicy : ProxyResource
@@ -34,41 +36,36 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the DatabaseSecurityAlertPolicy
         /// class.
         /// </summary>
-        /// <param name="state">Specifies the state of the policy. If state is
-        /// Enabled, storageEndpoint and storageAccountAccessKey are required.
-        /// Possible values include: 'New', 'Enabled', 'Disabled'</param>
+        /// <param name="state">Specifies the state of the policy, whether it
+        /// is enabled or disabled or a policy has not been applied yet on the
+        /// specific database. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
-        /// <param name="kind">Resource kind.</param>
-        /// <param name="disabledAlerts">Specifies the semicolon-separated list
-        /// of alerts that are disabled, or empty string to disable no alerts.
-        /// Possible values: Sql_Injection; Sql_Injection_Vulnerability;
-        /// Access_Anomaly; Data_Exfiltration; Unsafe_Action.</param>
-        /// <param name="emailAddresses">Specifies the semicolon-separated list
-        /// of e-mail addresses to which the alert is sent.</param>
+        /// <param name="systemData">SystemData of
+        /// SecurityAlertPolicyResource.</param>
+        /// <param name="disabledAlerts">Specifies an array of alerts that are
+        /// disabled. Allowed values are: Sql_Injection,
+        /// Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration,
+        /// Unsafe_Action, Brute_Force</param>
+        /// <param name="emailAddresses">Specifies an array of e-mail addresses
+        /// to which the alert is sent.</param>
         /// <param name="emailAccountAdmins">Specifies that the alert is sent
-        /// to the account administrators. Possible values include: 'Enabled',
-        /// 'Disabled'</param>
+        /// to the account administrators.</param>
         /// <param name="storageEndpoint">Specifies the blob storage endpoint
         /// (e.g. https://MyAccount.blob.core.windows.net). This blob storage
-        /// will hold all Threat Detection audit logs. If state is Enabled,
-        /// storageEndpoint is required.</param>
+        /// will hold all Threat Detection audit logs.</param>
         /// <param name="storageAccountAccessKey">Specifies the identifier key
-        /// of the Threat Detection audit storage account. If state is Enabled,
-        /// storageAccountAccessKey is required.</param>
+        /// of the Threat Detection audit storage account.</param>
         /// <param name="retentionDays">Specifies the number of days to keep in
         /// the Threat Detection audit logs.</param>
-        /// <param name="useServerDefault">Specifies whether to use the default
-        /// server policy. Possible values include: 'Enabled',
-        /// 'Disabled'</param>
-        public DatabaseSecurityAlertPolicy(SecurityAlertPolicyState state, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string kind = default(string), string disabledAlerts = default(string), string emailAddresses = default(string), SecurityAlertPolicyEmailAccountAdmins? emailAccountAdmins = default(SecurityAlertPolicyEmailAccountAdmins?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), SecurityAlertPolicyUseServerDefault? useServerDefault = default(SecurityAlertPolicyUseServerDefault?))
+        /// <param name="creationTime">Specifies the UTC creation time of the
+        /// policy.</param>
+        public DatabaseSecurityAlertPolicy(SecurityAlertsPolicyState state, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IList<string> disabledAlerts = default(IList<string>), IList<string> emailAddresses = default(IList<string>), bool? emailAccountAdmins = default(bool?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), System.DateTime? creationTime = default(System.DateTime?))
             : base(id, name, type)
         {
-            Location = location;
-            Kind = kind;
+            SystemData = systemData;
             State = state;
             DisabledAlerts = disabledAlerts;
             EmailAddresses = emailAddresses;
@@ -76,7 +73,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
             RetentionDays = retentionDays;
-            UseServerDefault = useServerDefault;
+            CreationTime = creationTime;
             CustomInit();
         }
 
@@ -86,61 +83,52 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the geo-location where the resource lives
+        /// Gets systemData of SecurityAlertPolicyResource.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
-        /// Gets resource kind.
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; private set; }
-
-        /// <summary>
-        /// Gets or sets specifies the state of the policy. If state is
-        /// Enabled, storageEndpoint and storageAccountAccessKey are required.
-        /// Possible values include: 'New', 'Enabled', 'Disabled'
+        /// Gets or sets specifies the state of the policy, whether it is
+        /// enabled or disabled or a policy has not been applied yet on the
+        /// specific database. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public SecurityAlertPolicyState State { get; set; }
+        public SecurityAlertsPolicyState State { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the semicolon-separated list of alerts that
-        /// are disabled, or empty string to disable no alerts. Possible
-        /// values: Sql_Injection; Sql_Injection_Vulnerability; Access_Anomaly;
-        /// Data_Exfiltration; Unsafe_Action.
+        /// Gets or sets specifies an array of alerts that are disabled.
+        /// Allowed values are: Sql_Injection, Sql_Injection_Vulnerability,
+        /// Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force
         /// </summary>
         [JsonProperty(PropertyName = "properties.disabledAlerts")]
-        public string DisabledAlerts { get; set; }
+        public IList<string> DisabledAlerts { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the semicolon-separated list of e-mail
-        /// addresses to which the alert is sent.
+        /// Gets or sets specifies an array of e-mail addresses to which the
+        /// alert is sent.
         /// </summary>
         [JsonProperty(PropertyName = "properties.emailAddresses")]
-        public string EmailAddresses { get; set; }
+        public IList<string> EmailAddresses { get; set; }
 
         /// <summary>
         /// Gets or sets specifies that the alert is sent to the account
-        /// administrators. Possible values include: 'Enabled', 'Disabled'
+        /// administrators.
         /// </summary>
         [JsonProperty(PropertyName = "properties.emailAccountAdmins")]
-        public SecurityAlertPolicyEmailAccountAdmins? EmailAccountAdmins { get; set; }
+        public bool? EmailAccountAdmins { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the blob storage endpoint (e.g.
         /// https://MyAccount.blob.core.windows.net). This blob storage will
-        /// hold all Threat Detection audit logs. If state is Enabled,
-        /// storageEndpoint is required.
+        /// hold all Threat Detection audit logs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageEndpoint")]
         public string StorageEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the identifier key of the Threat Detection
-        /// audit storage account. If state is Enabled, storageAccountAccessKey
-        /// is required.
+        /// audit storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccountAccessKey")]
         public string StorageAccountAccessKey { get; set; }
@@ -153,11 +141,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         public int? RetentionDays { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies whether to use the default server policy.
-        /// Possible values include: 'Enabled', 'Disabled'
+        /// Gets specifies the UTC creation time of the policy.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.useServerDefault")]
-        public SecurityAlertPolicyUseServerDefault? UseServerDefault { get; set; }
+        [JsonProperty(PropertyName = "properties.creationTime")]
+        public System.DateTime? CreationTime { get; private set; }
 
         /// <summary>
         /// Validate the object.

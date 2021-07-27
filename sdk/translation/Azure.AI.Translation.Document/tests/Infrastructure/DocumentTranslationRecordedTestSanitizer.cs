@@ -10,8 +10,8 @@ namespace Azure.AI.Translation.Document.Tests
         public DocumentTranslationRecordedTestSanitizer()
             : base()
         {
-            JsonPathSanitizers.Add("$..sourceUrl");
-            JsonPathSanitizers.Add("$..targetUrl");
+            AddJsonPathSanitizer("$..sourceUrl");
+            AddJsonPathSanitizer("$..targetUrl");
             SanitizedHeaders.Add(Constants.AuthorizationHeader);
         }
     }

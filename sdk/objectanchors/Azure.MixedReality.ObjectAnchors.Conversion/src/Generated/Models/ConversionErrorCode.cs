@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
+namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
     /// <summary> The ConversionErrorCode. </summary>
     public readonly partial struct ConversionErrorCode : IEquatable<ConversionErrorCode>

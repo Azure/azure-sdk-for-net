@@ -5,23 +5,20 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureSQLConnectionStringParam. </summary>
     internal partial class AzureSQLConnectionStringParam
     {
         /// <summary> Initializes a new instance of AzureSQLConnectionStringParam. </summary>
-        /// <param name="connectionString"> The connection string to access the Azure SQL. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public AzureSQLConnectionStringParam(string connectionString)
+        public AzureSQLConnectionStringParam()
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
+        }
 
+        /// <summary> Initializes a new instance of AzureSQLConnectionStringParam. </summary>
+        /// <param name="connectionString"> The connection string to access the Azure SQL. </param>
+        internal AzureSQLConnectionStringParam(string connectionString)
+        {
             ConnectionString = connectionString;
         }
 

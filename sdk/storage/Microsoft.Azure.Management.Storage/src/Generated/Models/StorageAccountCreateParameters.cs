@@ -99,7 +99,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// true.</param>
         /// <param name="enableNfsV3">NFS 3.0 protocol support enabled if set
         /// to true.</param>
-        public StorageAccountCreateParameters(Sku sku, string kind, string location, ExtendedLocation extendedLocation = default(ExtendedLocation), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?))
+        /// <param name="allowCrossTenantReplication">Allow or disallow cross
+        /// AAD tenant object replication. The default interpretation is true
+        /// for this property.</param>
+        public StorageAccountCreateParameters(Sku sku, string kind, string location, ExtendedLocation extendedLocation = default(ExtendedLocation), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?), bool? allowCrossTenantReplication = default(bool?))
         {
             Sku = sku;
             Kind = kind;
@@ -122,6 +125,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             MinimumTlsVersion = minimumTlsVersion;
             AllowSharedKeyAccess = allowSharedKeyAccess;
             EnableNfsV3 = enableNfsV3;
+            AllowCrossTenantReplication = allowCrossTenantReplication;
             CustomInit();
         }
 
@@ -288,6 +292,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isNfsV3Enabled")]
         public bool? EnableNfsV3 { get; set; }
+
+        /// <summary>
+        /// Gets or sets allow or disallow cross AAD tenant object replication.
+        /// The default interpretation is true for this property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowCrossTenantReplication")]
+        public bool? AllowCrossTenantReplication { get; set; }
 
         /// <summary>
         /// Validate the object.

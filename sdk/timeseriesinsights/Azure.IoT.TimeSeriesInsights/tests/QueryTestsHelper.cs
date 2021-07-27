@@ -50,7 +50,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         internal static IDictionary<string, object> BuildMessageBase(TimeSeriesIdProperty[] timeSeriesIdProperties, TimeSeriesId tsiId)
         {
             var messageBase = new Dictionary<string, object>();
-            string[] tsiIdArray = tsiId.ToArray();
+            string[] tsiIdArray = tsiId.ToStringArray();
             for (int i = 0; i < timeSeriesIdProperties.Count(); i++)
             {
                 TimeSeriesIdProperty idProperty = timeSeriesIdProperties[i];

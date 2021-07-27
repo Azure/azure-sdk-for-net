@@ -16,8 +16,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
         /// <param name="scope"> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </param>
         /// <param name="acrRefreshToken"> Must be a valid ACR refresh token. </param>
+        /// <param name="grantType"> Grant type is expected to be refresh_token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="acrRefreshToken"/> is null. </exception>
-        internal PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema(string service, string scope, string acrRefreshToken)
+        internal PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema(string service, string scope, string acrRefreshToken, TokenGrantType grantType = TokenGrantType.RefreshToken)
         {
             if (service == null)
             {
@@ -32,19 +33,19 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(acrRefreshToken));
             }
 
-            GrantType = "refresh_token";
             Service = service;
             Scope = scope;
             AcrRefreshToken = acrRefreshToken;
+            GrantType = grantType;
         }
 
-        /// <summary> Grant type is expected to be refresh_token. </summary>
-        public string GrantType { get; }
         /// <summary> Indicates the name of your Azure container registry. </summary>
         public string Service { get; }
         /// <summary> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </summary>
         public string Scope { get; }
         /// <summary> Must be a valid ACR refresh token. </summary>
         public string AcrRefreshToken { get; }
+        /// <summary> Grant type is expected to be refresh_token. </summary>
+        public TokenGrantType GrantType { get; }
     }
 }

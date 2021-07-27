@@ -19,7 +19,7 @@ using NUnit.Framework;
 /// </remarks>
 namespace Azure.AI.FormRecognizer.Tests
 {
-    [ClientTestFixture(FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+    [ClientTestFixture(FormRecognizerClientOptions.ServiceVersion.V2_1)]
 
     public class RecognizeInvoicesLiveTests : FormRecognizerLiveTestBase
     {
@@ -168,13 +168,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             // TODO: add validation for Tax which currently don't have `valuenumber` properties.
             // Issue: https://github.com/Azure/azure-sdk-for-net/issues/20014
-            // TODO: add validation for Unit which currently is set as type `number` but should be `string`.
-            // Issue: https://github.com/Azure/azure-sdk-for-net/issues/20015
-            var expectedItems = new List<(float? Amount, DateTime Date, string Description, string ProductCode, float? Quantity, float? UnitPrice)>()
+
+            var expectedItems = new List<(float? Amount, DateTime Date, string Description, string ProductCode, float? Quantity, string Unit, float? UnitPrice)>()
             {
-                (60f, DateTime.Parse("2021-03-04 00:00:00"), "Consulting Services", "A123", 2f, 30f),
-                (30f, DateTime.Parse("2021-03-05 00:00:00"), "Document Fee", "B456", 3f, 10f),
-                (10f, DateTime.Parse("2021-03-06 00:00:00"), "Printing Fee", "C789", 10f, 1f)
+                (60f, DateTime.Parse("2021-03-04 00:00:00"), "Consulting Services", "A123", 2f, "hours", 30f),
+                (30f, DateTime.Parse("2021-03-05 00:00:00"), "Document Fee", "B456", 3f, null, 10f),
+                (10f, DateTime.Parse("2021-03-06 00:00:00"), "Printing Fee", "C789", 10f, "pages", 1f)
             };
 
             // Include a bit of tolerance when comparing float types.
@@ -193,12 +192,14 @@ namespace Azure.AI.FormRecognizer.Tests
                 receiptItemInfo.TryGetValue("ProductCode", out var productCodeField);
                 receiptItemInfo.TryGetValue("Quantity", out var quantityField);
                 receiptItemInfo.TryGetValue("UnitPrice", out var unitPricefield);
+                receiptItemInfo.TryGetValue("Unit", out var unitfield);
 
                 float? amount = amountField.Value.AsFloat();
                 string description = descriptionField.Value.AsString();
                 string productCode = productCodeField.Value.AsString();
                 float? quantity = quantityField?.Value.AsFloat();
                 float? unitPrice = unitPricefield.Value.AsFloat();
+                string unit = unitfield?.Value.AsString();
 
                 Assert.IsNotNull(dateField);
                 DateTime date = dateField.Value.AsDate();
@@ -209,6 +210,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(expectedItem.Date, date, $"Date mismatch in item with index {itemIndex}.");
                 Assert.AreEqual(expectedItem.Description, description, $"Description mismatch in item with index {itemIndex}.");
                 Assert.AreEqual(expectedItem.ProductCode, productCode, $"ProductCode mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Unit, unit, $"Unit mismatch in item with index {itemIndex}.");
                 Assert.That(quantity, Is.EqualTo(expectedItem.Quantity).Within(0.0001), $"Quantity mismatch in item with index {itemIndex}.");
                 Assert.That(unitPrice, Is.EqualTo(expectedItem.UnitPrice).Within(0.0001), $"UnitPrice price mismatch in item with index {itemIndex}.");
             }
@@ -390,7 +392,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var receiptPage = invoice.Pages.Single();
 
             Assert.Greater(receiptPage.Lines.Count, 0);
-            Assert.AreEqual(0, receiptPage.SelectionMarks.Count);
+            Assert.AreEqual(1, receiptPage.SelectionMarks.Count);
             Assert.AreEqual(2, receiptPage.Tables.Count);
         }
 

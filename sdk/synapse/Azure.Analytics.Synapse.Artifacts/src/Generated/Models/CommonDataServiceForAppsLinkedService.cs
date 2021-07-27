@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="deploymentType"> The deployment type of the Common Data Service for Apps instance. &apos;Online&apos; for Common Data Service for Apps Online and &apos;OnPremisesWithIfd&apos; for Common Data Service for Apps on-premises with Ifd. Type: string (or Expression with resultType string). </param>
         /// <param name="hostName"> The host name of the on-premises Common Data Service for Apps server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string). </param>
         /// <param name="port"> The port of on-premises Common Data Service for Apps server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0. </param>

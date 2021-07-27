@@ -101,6 +101,7 @@ namespace System.Net.Http.Tests
         [TestCase("foo:Pass$!#\\.$@127.0.0.1:3128", "127.0.0.1", "3128", "foo", "Pass$!#\\.$")]
         [TestCase("[::1]", "[::1]", "80", null, null)]
         [TestCase("domain\\foo:bar@1.1.1.1", "1.1.1.1", "80", "foo", "bar")]
+        // cspell:disable-next-line
         [TestCase("domain%5Cfoo:bar@1.1.1.1", "1.1.1.1", "80", "foo", "bar")]
         [TestCase("HTTP://ABC.COM/", "abc.com", "80", null, null)]
         [TestCase("http://10.30.62.64:7890/", "10.30.62.64", "7890", null, null)]

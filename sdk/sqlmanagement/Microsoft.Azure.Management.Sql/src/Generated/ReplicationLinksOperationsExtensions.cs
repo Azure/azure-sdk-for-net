@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Sql
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -75,7 +73,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a database replication link.
+            /// Gets a replication link.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -88,10 +86,10 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database to get the link for.
+            /// The name of the database.
             /// </param>
             /// <param name='linkId'>
-            /// The replication link ID to be retrieved.
+            /// The name of the replication link.
             /// </param>
             public static ReplicationLink Get(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId)
             {
@@ -99,7 +97,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a database replication link.
+            /// Gets a replication link.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -112,10 +110,10 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database to get the link for.
+            /// The name of the database.
             /// </param>
             /// <param name='linkId'>
-            /// The replication link ID to be retrieved.
+            /// The name of the replication link.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -292,7 +290,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Lists a database's replication links.
+            /// Gets a list of replication links on database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -305,15 +303,15 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database to retrieve links for.
+            /// The name of the database.
             /// </param>
-            public static IEnumerable<ReplicationLink> ListByDatabase(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName)
+            public static IPage<ReplicationLink> ListByDatabase(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
                 return operations.ListByDatabaseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists a database's replication links.
+            /// Gets a list of replication links on database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -326,14 +324,56 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database to retrieve links for.
+            /// The name of the database.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<ReplicationLink>> ListByDatabaseAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ReplicationLink>> ListByDatabaseAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of replication links.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static IPage<ReplicationLink> ListByServer(this IReplicationLinksOperations operations, string resourceGroupName, string serverName)
+            {
+                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of replication links.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ReplicationLink>> ListByServerAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -500,6 +540,74 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task BeginUnlinkAsync(this IReplicationLinksOperations operations, string resourceGroupName, string serverName, string databaseName, string linkId, UnlinkParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginUnlinkWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, linkId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets a list of replication links on database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ReplicationLink> ListByDatabaseNext(this IReplicationLinksOperations operations, string nextPageLink)
+            {
+                return operations.ListByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of replication links on database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ReplicationLink>> ListByDatabaseNextAsync(this IReplicationLinksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of replication links.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ReplicationLink> ListByServerNext(this IReplicationLinksOperations operations, string nextPageLink)
+            {
+                return operations.ListByServerNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of replication links.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ReplicationLink>> ListByServerNextAsync(this IReplicationLinksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByServerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

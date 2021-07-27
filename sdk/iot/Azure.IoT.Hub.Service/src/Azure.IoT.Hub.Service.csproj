@@ -2,6 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>Azure IoT Hub Service Client SDK</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
   </PropertyGroup>
 
   <!-- Nuget properties -->
@@ -12,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -49,5 +51,4 @@
     </Compile>
   </ItemGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>

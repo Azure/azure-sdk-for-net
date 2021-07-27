@@ -50,12 +50,12 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackupsList>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<Backup>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get Backup for a Netapp Account
         /// </summary>
         /// <remarks>
-        /// Get Backup for a Netapp Account
+        /// Gets the specified backup for a Netapp Account
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// Delete Backup for a Netapp Account
         /// </summary>
         /// <remarks>
-        /// Delete Backup for a Netapp Account
+        /// Delete the specified Backup for a Netapp Account
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// Delete Backup for a Netapp Account
         /// </summary>
         /// <remarks>
-        /// Delete Backup for a Netapp Account
+        /// Delete the specified Backup for a Netapp Account
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

@@ -1,7 +1,36 @@
 # Release History
 
-## 4.2.0-beta.6 (Unreleased)
+## 4.3.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Key Bugs Fixed
+
+### Fixed
+
+- The default service version is now "7.3-preview".
+
+## 4.2.0 (2021-06-15)
+
+### Features Added
+
+- Changed default service version to "7.2".
+- Added `KeyVaultCertificateIdentifier` to parse certificate URIs.
+- Added `CertificateClient.DownloadCertificate` and `DownloadCertificateAsync` to download an `X509Certificate2` with private key.
+
+## 4.2.0-beta.6 (2021-05-11)
+
+### Changed
+
+- Updated dependency versions
+
+## 4.1.1 (2021-05-04)
+
+### Changed
+
+- Updated dependency versions
 
 ## 4.2.0-beta.5 (2021-03-09)
 

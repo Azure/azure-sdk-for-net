@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -29,6 +30,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='azureRegion'>
         /// Azure region to hit Api
         /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -44,6 +48,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AADPropertiesResource>> GetWithHttpMessagesAsync(string azureRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AADPropertiesResource>> GetWithHttpMessagesAsync(string azureRegion, ODataQuery<BMSAADPropertiesQueryObject> odataQuery = default(ODataQuery<BMSAADPropertiesQueryObject>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

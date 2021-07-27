@@ -78,12 +78,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='tableName'>
             /// The name of the table.
             /// </param>
-            /// <param name='parameters'>
-            /// The parameters required to update table properties.
+            /// <param name='retentionInDays'>
+            /// The data table data retention in days, between 30 and 730. Setting this
+            /// property to null will default to the workspace retention.
             /// </param>
-            public static Table Update(this ITablesOperations operations, string resourceGroupName, string workspaceName, string tableName, Table parameters)
+            public static Table Update(this ITablesOperations operations, string resourceGroupName, string workspaceName, string tableName, int? retentionInDays = default(int?))
             {
-                return operations.UpdateAsync(resourceGroupName, workspaceName, tableName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, workspaceName, tableName, retentionInDays).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -101,15 +102,16 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='tableName'>
             /// The name of the table.
             /// </param>
-            /// <param name='parameters'>
-            /// The parameters required to update table properties.
+            /// <param name='retentionInDays'>
+            /// The data table data retention in days, between 30 and 730. Setting this
+            /// property to null will default to the workspace retention.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Table> UpdateAsync(this ITablesOperations operations, string resourceGroupName, string workspaceName, string tableName, Table parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Table> UpdateAsync(this ITablesOperations operations, string resourceGroupName, string workspaceName, string tableName, int? retentionInDays = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, tableName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, tableName, retentionInDays, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

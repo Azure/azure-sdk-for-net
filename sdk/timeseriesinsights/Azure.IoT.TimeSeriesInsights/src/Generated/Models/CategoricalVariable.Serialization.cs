@@ -48,7 +48,7 @@ namespace Azure.IoT.TimeSeriesInsights
         internal static CategoricalVariable DeserializeCategoricalVariable(JsonElement element)
         {
             TimeSeriesExpression value = default;
-            Optional<InterpolationOperation> interpolation = default;
+            Optional<TimeSeriesInterpolation> interpolation = default;
             Optional<IList<TimeSeriesAggregateCategory>> categories = default;
             TimeSeriesDefaultCategory defaultCategory = default;
             string kind = default;
@@ -67,7 +67,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    interpolation = InterpolationOperation.DeserializeInterpolationOperation(property.Value);
+                    interpolation = TimeSeriesInterpolation.DeserializeTimeSeriesInterpolation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("categories"))

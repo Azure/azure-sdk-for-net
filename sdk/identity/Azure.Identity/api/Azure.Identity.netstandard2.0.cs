@@ -30,9 +30,15 @@ namespace Azure.Identity
     {
         protected AuthorizationCodeCredential() { }
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode) { }
+        public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, Azure.Identity.AuthorizationCodeCredentialOptions options) { }
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, Azure.Identity.TokenCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AuthorizationCodeCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public AuthorizationCodeCredentialOptions() { }
+        public System.Uri RedirectUri { get { throw null; } set { } }
     }
     public static partial class AzureAuthorityHosts
     {
@@ -44,8 +50,14 @@ namespace Azure.Identity
     public partial class AzureCliCredential : Azure.Core.TokenCredential
     {
         public AzureCliCredential() { }
+        public AzureCliCredential(Azure.Identity.AzureCliCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AzureCliCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public AzureCliCredentialOptions() { }
+        public string TenantId { get { throw null; } set { } }
     }
     public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
     {
@@ -57,7 +69,7 @@ namespace Azure.Identity
     public partial class AzurePowerShellCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public AzurePowerShellCredentialOptions() { }
-        public bool UseLegacyPowerShell { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
     {
@@ -80,6 +92,7 @@ namespace Azure.Identity
     public partial class ClientCertificateCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ClientCertificateCredentialOptions() { }
+        public Azure.Identity.RegionalAuthority? RegionalAuthority { get { throw null; } set { } }
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
@@ -95,6 +108,7 @@ namespace Azure.Identity
     public partial class ClientSecretCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ClientSecretCredentialOptions() { }
+        public Azure.Identity.RegionalAuthority? RegionalAuthority { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
@@ -125,7 +139,6 @@ namespace Azure.Identity
         public string ManagedIdentityClientId { get { throw null; } set { } }
         public string SharedTokenCacheTenantId { get { throw null; } set { } }
         public string SharedTokenCacheUsername { get { throw null; } set { } }
-        public bool UseLegacyPowerShell { get { throw null; } set { } }
         public string VisualStudioCodeTenantId { get { throw null; } set { } }
         public string VisualStudioTenantId { get { throw null; } set { } }
     }
@@ -200,6 +213,7 @@ namespace Azure.Identity
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
+        public string LoginHint { get { throw null; } set { } }
         public System.Uri RedirectUri { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
@@ -210,6 +224,75 @@ namespace Azure.Identity
         public ManagedIdentityCredential(string clientId = null, Azure.Identity.TokenCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RegionalAuthority : System.IEquatable<Azure.Identity.RegionalAuthority>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RegionalAuthority(string value) { throw null; }
+        public static Azure.Identity.RegionalAuthority AsiaEast { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority AsiaSouthEast { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority AustraliaCentral { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority AustraliaCentral2 { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority AustraliaEast { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority AustraliaSouthEast { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority AutoDiscoverRegion { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority BrazilSouth { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority CanadaCentral { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority CanadaEast { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority ChinaEast { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority ChinaEast2 { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority ChinaNorth { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority ChinaNorth2 { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority EuropeNorth { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority EuropeWest { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority FranceCentral { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority FranceSouth { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority GermanyCentral { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority GermanyNorth { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority GermanyNorthEast { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority GermanyWestCentral { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority GovernmentUSArizona { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority GovernmentUSDodCentral { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority GovernmentUSDodEast { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority GovernmentUSIowa { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority GovernmentUSTexas { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority GovernmentUSVirginia { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority IndiaCentral { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority IndiaSouth { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority IndiaWest { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority JapanEast { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority JapanWest { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority KoreaCentral { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority KoreaSouth { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority NorwayEast { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority NorwayWest { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority SouthAfricaNorth { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority SouthAfricaWest { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority SwitzerlandNorth { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority SwitzerlandWest { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority UAECentral { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority UAENorth { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority UKSouth { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority UKWest { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority USCentral { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority USEast { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority USEast2 { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority USNorthCentral { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority USSouthCentral { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority USWest { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority USWest2 { get { throw null; } }
+        public static Azure.Identity.RegionalAuthority USWestCentral { get { throw null; } }
+        public bool Equals(Azure.Identity.RegionalAuthority other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Identity.RegionalAuthority left, Azure.Identity.RegionalAuthority right) { throw null; }
+        public static implicit operator Azure.Identity.RegionalAuthority (string value) { throw null; }
+        public static bool operator !=(Azure.Identity.RegionalAuthority left, Azure.Identity.RegionalAuthority right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SharedTokenCacheCredential : Azure.Core.TokenCredential
     {
@@ -245,6 +328,7 @@ namespace Azure.Identity
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
+        public bool AllowMultiTenantAuthentication { get { throw null; } set { } }
         public System.Uri AuthorityHost { get { throw null; } set { } }
     }
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions

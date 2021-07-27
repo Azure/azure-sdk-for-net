@@ -69,10 +69,12 @@ namespace Azure.Core
             // Instead validate it ourselves and then quote it.
             Argument.AssertNotNullOrWhiteSpace(boundary, nameof(boundary));
 
+            // cspell:disable
             // RFC 2046 Section 5.1.1
             // boundary := 0*69<bchars> bcharsnospace
             // bchars := bcharsnospace / " "
             // bcharsnospace := DIGIT / ALPHA / "'" / "(" / ")" / "+" / "_" / "," / "-" / "." / "/" / ":" / "=" / "?"
+            // cspell:enable
             if (boundary.Length > 70)
             {
                 throw new ArgumentOutOfRangeException(nameof(boundary), boundary, $"The field cannot be longer than {70} characters.");

@@ -5,23 +5,20 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DataLakeGen2SharedKeyParam. </summary>
     internal partial class DataLakeGen2SharedKeyParam
     {
         /// <summary> Initializes a new instance of DataLakeGen2SharedKeyParam. </summary>
-        /// <param name="accountKey"> The account key to access the Azure Data Lake Storage Gen2. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountKey"/> is null. </exception>
-        public DataLakeGen2SharedKeyParam(string accountKey)
+        public DataLakeGen2SharedKeyParam()
         {
-            if (accountKey == null)
-            {
-                throw new ArgumentNullException(nameof(accountKey));
-            }
+        }
 
+        /// <summary> Initializes a new instance of DataLakeGen2SharedKeyParam. </summary>
+        /// <param name="accountKey"> The account key to access the Azure Data Lake Storage Gen2. </param>
+        internal DataLakeGen2SharedKeyParam(string accountKey)
+        {
             AccountKey = accountKey;
         }
 

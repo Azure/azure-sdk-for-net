@@ -9,10 +9,10 @@ namespace Azure.Communication.Sms.Tests
     {
         public SmsClientRecordedTestSanitizer()
         {
-            JsonPathSanitizers.Add("$..from");
-            JsonPathSanitizers.Add("$..to");
-            JsonPathSanitizers.Add("$..repeatabilityRequestId");
-            JsonPathSanitizers.Add("$..repeatabilityFirstSent");
+            AddJsonPathSanitizer("$..from");
+            AddJsonPathSanitizer("$..to");
+            AddJsonPathSanitizer("$..repeatabilityRequestId");
+            AddJsonPathSanitizer("$..repeatabilityFirstSent");
         }
 
         public override string SanitizeVariable(string variableName, string environmentVariableValue)

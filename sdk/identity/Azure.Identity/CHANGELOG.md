@@ -1,6 +1,42 @@
 # Release History
 
-## 1.4.0-beta.6 (2021-05-11)
+## 1.5.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.5.0-beta.2 (2021-07-12)
+
+### New Features
+
+- Added support to `ManagedIdentityCredential` for Bridge to Kubernetes local development authentication.
+- TenantId values returned from service challenge responses can now be used to request tokens from the correct tenantId. To support this feature, there is a new `AllowMultiTenantAuthentication` option on `TokenCredentialOptions`.
+  - By default, `AllowMultiTenantAuthentication` is false. When this option property is false and the tenant Id configured in the credential options differs from the tenant Id set in the `TokenRequestContext` sent to a credential, an `AuthorizationFailedException` will be thrown. This is potentially breaking change as it could be a different exception than what was thrown previously. This exception behavior can be overridden by either setting an `AppContext` switch named "Azure.Identity.EnableLegacyTenantSelection" to `true` or by setting the environment variable "AZURE_IDENTITY_ENABLE_LEGACY_TENANT_SELECTION" to "true". Note: AppContext switches can also be configured via configuration like below:
+
+```xml  
+<ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Identity.EnableLegacyTenantSelection" Value="true" />
+</ItemGroup> 
+  ```
+  
+## 1.5.0-beta.1 (2021-06-08)
+
+### New Features
+- Added regional STS support to client credential types
+  - Added `RegionalAuthority` extensible enum
+  - Added `RegionalAuthority` property to `ClientSecretCredentialOptions` and `ClientCertificateCredentialOptions`
+
+### Fixes and improvements
+
+- Added `LoginHint` property to `InteractiveBrowserCredentialOptions` which allows a user name to be pre-selected for interactive logins. Setting this option skips the account selection prompt and immediately attempts to login with the specified account.
+- Added `AuthorizationCodeCredentialOptions` which allows for configuration of a ReplyUri.
+
+## 1.4.0 (2021-05-12)
 
 ### New Features
 
@@ -13,6 +49,10 @@ This indicates to AAD that your application is CAE ready and can handle the CAE 
     <RuntimeHostConfigurationOption Include="Azure.Identity.DisableCP1" Value="true" />
 </ItemGroup> 
   ```
+### Fixes and improvements
+
+- The Microsoft Authentication Library (MSAL) dependency versions have been updated to the latest
+    - Microsoft.Identity.Client version 4.30.1, Microsoft.Identity.Client.Extensions.Msal version 2.18.4.
 
 ## 1.4.0-beta.5 (2021-04-06)
 
@@ -28,7 +68,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 ### Fixes and improvements
 
-- When logging is enabled, the log output from MSAL is also logged.
+- When logging is enabled, the log output from Microsoft Authentication Library (MSAL) is also logged.
 - Fixed an issue where an account credential fails to load from the cache when EnableGuestTenantAuthentication is true and the account found in the cache has multiple matching tenantIds ([#18276](https://github.com/Azure/azure-sdk-for-net/issues/18276)).
 - Fixed deadlock issue in `InteractiveBrowserCredential` when running in a UI application ([#18418](https://github.com/Azure/azure-sdk-for-net/issues/18418)).
 
@@ -44,7 +84,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 ### Breaking Changes
 
-- Update the default value of `ExcludeSharedTokenCacheCredential` on `DefaultAzureCredentialsOptions` to true, to exclude the `SharedTokenCacheCredential` from the `DefaultAzureCredential` by default. See [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#140)
+- Update the default value of `ExcludeSharedTokenCacheCredential` on `DefaultAzureCredentialsOptions` to true, to exclude the `SharedTokenCacheCredential` from the `DefaultAzureCredential` by default. See [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#140)
 
 ## 1.4.0-beta.3 (2021-02-09)
 
@@ -376,4 +416,4 @@ information about preview releases of other Azure SDK libraries, please visit ht
 - Managed Identity Authentication
     - Added `ManagedIdentityCredential` class
 
-See the [documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md) for more details. User authentication will be added in an upcoming preview release.
+See the [documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md) for more details. User authentication will be added in an upcoming preview release.

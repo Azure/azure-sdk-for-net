@@ -1,11 +1,25 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.1 (2021-07-22)
+### Added
+- Added support for metadata in messages.
+- Added new overloads for sendmessage and updatemessage operations with options : SendChatMessageOptions and UpdateChatMessageOptions. 
+- Added support for user display name in typing notifications.
+- Added new overloads for sendtypingnotification operation with options : TypingNotificationOptions. 
 
 ## 1.0.1 (2021-05-11)
 
-### Added
-Bug fixes:
+### Bug Fixes
 - Changed DateTime.MinValue to DateTimeOffset.MinValue in sample code
 - Fixed the bug where Message type is defaulting to text
 
@@ -68,6 +82,6 @@ This is the first release of Azure Communication Services for chat. For more inf
 This is a Public Preview version, so breaking changes are possible in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 <!-- LINKS -->
-[read_me]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Chat/README.md
+[read_me]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Chat/README.md
 [documentation]: https://docs.microsoft.com/azure/communication-services/quickstarts/chat/get-started?pivots=programming-language-csharp
 

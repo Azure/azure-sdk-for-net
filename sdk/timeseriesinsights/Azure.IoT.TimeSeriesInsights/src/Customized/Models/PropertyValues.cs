@@ -12,7 +12,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// Values of a single property corresponding to the timestamps.
     /// </summary>
     [CodeGenModel("PropertyValues")]
-    public partial class PropertyValues : EventProperty
+    public partial class PropertyValues : TimeSeriesInsightsEventProperty
     {
         // This class has been customized and overriden to change the property Values into a JsonElement. Changing it into a JsonElement
         // allows lazy load of the values. Only when Values is accesssed, we will deseialize the JsonElement into a TimeSeriesValue array.
@@ -24,7 +24,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary>
         /// Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property.
         /// </summary>
-        public TimeSeriesValue[] Values => _values ??= CreateValues();
+        public IReadOnlyList<TimeSeriesValue> Values => _values ??= CreateValues();
 
         private TimeSeriesValue[] CreateValues()
         {
@@ -32,27 +32,27 @@ namespace Azure.IoT.TimeSeriesInsights
 
             foreach (JsonElement item in ValuesInternal.EnumerateArray())
             {
-                if (Type == PropertyTypes.Bool)
+                if (PropertyValueType == TimeSeriesPropertyType.Bool)
                 {
                     values.Add(new TimeSeriesValue((bool?)item.GetObject()));
                 }
-                else if (Type == PropertyTypes.DateTime)
+                else if (PropertyValueType == TimeSeriesPropertyType.DateTime)
                 {
                     values.Add(new TimeSeriesValue((DateTimeOffset?)item.GetObject()));
                 }
-                else if (Type == PropertyTypes.Double)
+                else if (PropertyValueType == TimeSeriesPropertyType.Double)
                 {
                     values.Add(new TimeSeriesValue((double?)item.GetObject()));
                 }
-                else if (Type == PropertyTypes.Long)
+                else if (PropertyValueType == TimeSeriesPropertyType.Long)
                 {
                     values.Add(new TimeSeriesValue((int?)item.GetObject()));
                 }
-                else if (Type == PropertyTypes.String)
+                else if (PropertyValueType == TimeSeriesPropertyType.String)
                 {
                     values.Add(new TimeSeriesValue(item.GetString()));
                 }
-                else if (Type == PropertyTypes.TimeSpan)
+                else if (PropertyValueType == TimeSeriesPropertyType.TimeSpan)
                 {
                     values.Add(new TimeSeriesValue((TimeSpan?)item.GetObject()));
                 }

@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <remarks>
         ///   This pattern is specific to the prefix used by the Azure Functions extension.  The legacy
         ///   <c>EventProcessorHost</c> allowed this value to be specified as an option, defaulting to
-        ///   an empty prefix.  <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Microsoft.Azure.EventHubs.Processor/src/EventProcessorHost.cs#L64">EventProcessorHost constructor</see>
+        ///   an empty prefix.  <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Microsoft.Azure.EventHubs.Processor/src/EventProcessorHost.cs#L64">EventProcessorHost constructor</see>
         ///
         ///   For this to be general-purpose, it will need to be refactored into an option with this
         ///   pattern passed by the Functions extension.

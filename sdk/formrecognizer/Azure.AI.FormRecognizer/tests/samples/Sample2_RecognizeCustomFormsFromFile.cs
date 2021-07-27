@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Samples
             // Firstly, create a trained model we can use to recognize the custom form. Please note that
             // models can also be trained using a graphical user interface such as the Form Recognizer
             // Labeling Tool found here:
-            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
 
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             CustomFormModel model = await trainingClient.StartTrainingAsync(new Uri(trainingFileUrl), useTrainingLabels: false, "My Model").WaitForCompletionAsync();

@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             TemplateSpecs = new TemplateSpecsOperations(this);
             TemplateSpecVersions = new TemplateSpecVersionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-03-01-preview";
+            ApiVersion = "2021-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

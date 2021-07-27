@@ -320,6 +320,7 @@ namespace Storage.Tests
                 {
                     string containerName = TestUtilities.GenerateName("container");
                     BlobContainer blobContainer = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName, new BlobContainer());
+
                     Assert.Null(blobContainer.Metadata);
                     Assert.Null(blobContainer.PublicAccess);
 
@@ -1160,12 +1161,26 @@ namespace Storage.Tests
                 {
                     Location = "eastus2euap",
                     Kind = Kind.StorageV2,
-                    Sku = new Sku { Name = SkuName.StandardLRS }
+                    Sku = new Sku { Name = SkuName.StandardLRS },
+                    AllowCrossTenantReplication = false
                 };
                 var sourceAccount = storageMgmtClient.StorageAccounts.Create(rgName, sourceAccountName, parameters);
                 var destAccount = storageMgmtClient.StorageAccounts.Create(rgName, destAccountName, parameters);
                 Assert.Equal(SkuName.StandardLRS, sourceAccount.Sku.Name);
                 Assert.Equal(SkuName.StandardLRS, destAccount.Sku.Name);
+                Assert.False(sourceAccount.AllowCrossTenantReplication);
+                Assert.False(destAccount.AllowCrossTenantReplication);
+
+                // update account
+                var updateparameter = new StorageAccountUpdateParameters
+                {
+                    AllowCrossTenantReplication = true,
+                    EnableHttpsTrafficOnly = true
+                };
+                sourceAccount = storageMgmtClient.StorageAccounts.Update(rgName, sourceAccountName, updateparameter);
+                destAccount = storageMgmtClient.StorageAccounts.Update(rgName, destAccountName, updateparameter);
+                Assert.True(sourceAccount.AllowCrossTenantReplication);
+                Assert.True(destAccount.AllowCrossTenantReplication);
 
                 // implement case
                 try
@@ -1227,8 +1242,8 @@ namespace Storage.Tests
                     //New policy
                     ObjectReplicationPolicy policy = new ObjectReplicationPolicy()
                     {
-                        SourceAccount = sourceAccountName,
-                        DestinationAccount = destAccountName,
+                        SourceAccount = sourceAccount.Id,
+                        DestinationAccount = destAccount.Id,
                         Rules = rules,                      
                     };
 
@@ -1333,6 +1348,68 @@ namespace Storage.Tests
                 else
                 {
                     Assert.NotNull(getrule.RuleId);
+                }
+            }
+        }
+
+
+        // version level worm
+        [Fact]
+        public void BlobContainersVLW()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "eastus2euap",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS }
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+
+                // implement case
+                try
+                {
+                    //enable Blob Versioning
+                    BlobServiceProperties properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
+                    properties.IsVersioningEnabled = true;
+                    storageMgmtClient.BlobServices.SetServiceProperties(rgName, accountName, properties);
+                    properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
+                    Assert.True(properties.IsVersioningEnabled);
+
+                    // create container with VLW
+                    string containerName = TestUtilities.GenerateName("container");
+                    BlobContainer blobContainer = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName,
+                        new BlobContainer(immutableStorageWithVersioning: new ImmutableStorageWithVersioning(true)));
+                    Assert.True(blobContainer.ImmutableStorageWithVersioning.Enabled);
+                    Assert.Null(blobContainer.ImmutableStorageWithVersioning.MigrationState);
+
+                    // update container to enalbed  Immutability Policy                 
+                    string containerName2 = TestUtilities.GenerateName("container2");
+                    BlobContainer blobContainer2 = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName2,
+                        new BlobContainer());
+                    storageMgmtClient.BlobContainers.CreateOrUpdateImmutabilityPolicy(rgName, accountName, containerName2, immutabilityPeriodSinceCreationInDays: 1);
+
+                    // migrate contaienr to VLW and check the result
+                    storageMgmtClient.BlobContainers.ObjectLevelWorm(rgName, accountName, containerName2);
+                    blobContainer2 = storageMgmtClient.BlobContainers.Get(rgName, accountName, containerName2);
+                    Assert.True(blobContainer2.ImmutableStorageWithVersioning.Enabled);
+                    Assert.Equal("Completed", blobContainer2.ImmutableStorageWithVersioning.MigrationState);
+                }
+                finally
+                {
+                    // clean up is skiped since VLW will block container/account/resourceGroup deletion. 
                 }
             }
         }

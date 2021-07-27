@@ -25,11 +25,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
             var name = "hookName";
-            var endpoint = "http://fakeendpoint.com";
+            var endpoint = new Uri("http://fakeendpoint.com");
 
-            var genericHook = new NotificationHook() { Name = name };
-            var emailHook = new EmailNotificationHook() { Name = null, EmailsToAlert = { "fake@email.com" } };
-            var webHook = new WebNotificationHook() { Name = null, Endpoint = endpoint };
+            var emailHook = new EmailNotificationHook(name) { Name = null, EmailsToAlert = { "fake@email.com" } };
+            var webHook = new WebNotificationHook(name, endpoint) { Name = null };
 
             Assert.That(() => adminClient.CreateHookAsync(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.CreateHook(null), Throws.InstanceOf<ArgumentNullException>());
@@ -41,29 +40,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(() => adminClient.CreateHookAsync(emailHook), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => adminClient.CreateHook(emailHook), Throws.InstanceOf<ArgumentException>());
 
-            emailHook.Name = name;
-            emailHook.EmailsToAlert.Clear();
-            Assert.That(() => adminClient.CreateHookAsync(emailHook), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.CreateHook(emailHook), Throws.InstanceOf<ArgumentException>());
-
             Assert.That(() => adminClient.CreateHookAsync(webHook), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => adminClient.CreateHook(webHook), Throws.InstanceOf<ArgumentNullException>());
 
             webHook.Name = "";
             Assert.That(() => adminClient.CreateHookAsync(webHook), Throws.InstanceOf<ArgumentException>());
             Assert.That(() => adminClient.CreateHook(webHook), Throws.InstanceOf<ArgumentException>());
-
-            webHook.Name = name;
-            webHook.Endpoint = null;
-            Assert.That(() => adminClient.CreateHookAsync(webHook), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.CreateHook(webHook), Throws.InstanceOf<ArgumentNullException>());
-
-            webHook.Endpoint = "";
-            Assert.That(() => adminClient.CreateHookAsync(webHook), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.CreateHook(webHook), Throws.InstanceOf<ArgumentException>());
-
-            Assert.That(() => adminClient.CreateHookAsync(genericHook), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.CreateHook(genericHook), Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]
@@ -71,9 +53,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var hook = new EmailNotificationHook()
+            var hook = new EmailNotificationHook("hookName")
             {
-                Name = "hookName",
                 EmailsToAlert = { "fake@email.com" }
             };
 
@@ -89,17 +70,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var hook = new EmailNotificationHook();
+            Assert.That(() => adminClient.UpdateHookAsync(null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateHook(null), Throws.InstanceOf<ArgumentNullException>());
 
-            Assert.That(() => adminClient.UpdateHookAsync(null, hook), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateHookAsync("", hook), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.UpdateHookAsync("hookId", hook), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => adminClient.UpdateHookAsync(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            var hookWithNullId = new EmailNotificationHook("hookName");
 
-            Assert.That(() => adminClient.UpdateHook(null, hook), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => adminClient.UpdateHook("", hook), Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => adminClient.UpdateHook("hookId", hook), Throws.InstanceOf<ArgumentException>().With.InnerException.TypeOf(typeof(FormatException)));
-            Assert.That(() => adminClient.UpdateHook(FakeGuid, null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateHookAsync(hookWithNullId), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => adminClient.UpdateHook(hookWithNullId), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -107,13 +84,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
 
-            var hook = new EmailNotificationHook();
+            var hook = new EmailNotificationHook(default, FakeGuid, default, default, default, new List<string>(), new EmailHookParameter(new List<string>()));
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(() => adminClient.UpdateHookAsync(FakeGuid, hook, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
-            Assert.That(() => adminClient.UpdateHook(FakeGuid, hook, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateHookAsync(hook, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(() => adminClient.UpdateHook(hook, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
         }
 
         [Test]

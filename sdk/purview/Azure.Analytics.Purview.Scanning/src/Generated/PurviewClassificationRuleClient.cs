@@ -6,13 +6,10 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-
-#pragma warning disable AZC0007
 
 namespace Azure.Analytics.Purview.Scanning
 {
@@ -22,9 +19,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
         private string classificationRuleName;
         private readonly string apiVersion;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of PurviewClassificationRuleClient for mocking. </summary>
         protected PurviewClassificationRuleClient()
@@ -52,30 +51,96 @@ namespace Azure.Analytics.Purview.Scanning
             }
 
             options ??= new PurviewScanningServiceClientOptions();
-            Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             this.classificationRuleName = classificationRuleName;
             apiVersion = options.Version;
         }
 
         /// <summary> Get a classification rule. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetPropertiesAsync(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetPropertiesRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetPropertiesRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get a classification rule. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetProperties(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetProperties(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetPropertiesRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetPropertiesRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetProperties"/> and <see cref="GetPropertiesAsync"/> operations. </summary>
-        private Request CreateGetPropertiesRequest()
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetPropertiesRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -87,88 +152,153 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Creates or Updates a classification rule. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>kind</term>
         ///     <term>&quot;System&quot; | &quot;Custom&quot;</term>
         ///     <term>Yes</term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateOrUpdateRequest(requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 201:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates or Updates a classification rule. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>kind</term>
         ///     <term>&quot;System&quot; | &quot;Custom&quot;</term>
         ///     <term>Yes</term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateOrUpdate(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdate(RequestContent content, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateOrUpdateRequest(requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 201:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        private Request CreateCreateOrUpdateRequest(RequestContent requestBody)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -181,28 +311,95 @@ namespace Azure.Analytics.Purview.Scanning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
-            return request;
+            request.Content = content;
+            return message;
         }
 
         /// <summary> Deletes a classification rule. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteAsync(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a classification rule. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response Delete(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
-        private Request CreateDeleteRequest()
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -214,27 +411,90 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Lists the rule versions of a classification rule. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetVersionsAsync(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetVersionsAsync(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetVersionsRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetVersionsRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetVersions");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the rule versions of a classification rule. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetVersions(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetVersions(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetVersionsRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetVersionsRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetVersions");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetVersions"/> and <see cref="GetVersionsAsync"/> operations. </summary>
-        private Request CreateGetVersionsRequest()
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetVersionsRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -247,33 +507,96 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Sets Classification Action on a specific classification rule version. </summary>
         /// <param name="classificationRuleVersion"> The Integer to use. </param>
         /// <param name="action"> The ClassificationAction to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateTagVersionRequest(classificationRuleVersion, action);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateTagVersionRequest(classificationRuleVersion, action, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Sets Classification Action on a specific classification rule version. </summary>
         /// <param name="classificationRuleVersion"> The Integer to use. </param>
         /// <param name="action"> The ClassificationAction to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response TagVersion(int classificationRuleVersion, string action, CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response TagVersion(int classificationRuleVersion, string action, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateTagVersionRequest(classificationRuleVersion, action);
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateTagVersionRequest(classificationRuleVersion, action, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewClassificationRuleClient.TagVersion");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="TagVersion"/> and <see cref="TagVersionAsync"/> operations. </summary>
         /// <param name="classificationRuleVersion"> The Integer to use. </param>
         /// <param name="action"> The ClassificationAction to use. </param>
-        private Request CreateTagVersionRequest(int classificationRuleVersion, string action)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateTagVersionRequest(int classificationRuleVersion, string action, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -289,7 +612,7 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
     }
 }

@@ -27,6 +27,7 @@ namespace Azure.Core.TestFramework
             var type = invocation.Method.ReturnType;
 
             var isAsyncEnumerable = false;
+            // cspell:ignore iface
             foreach (var iface in type.GetInterfaces())
             {
                 if (iface.IsGenericType && iface.GetGenericTypeDefinition() == typeof(IAsyncEnumerable<>))
@@ -79,7 +80,7 @@ namespace Azure.Core.TestFramework
 
         internal static void WrapAsyncResultCore<T>(IInvocation invocation, Type genericType, AsyncCallInterceptor<T> wrap)
         {
-            // All this ceremony is not to await the returned Task/ValueTask syncronously
+            // All this ceremony is not to await the returned Task/ValueTask synchronously
             // instead we are replacing the invocation.ReturnValue with the ValidateDiagnosticScope task
             // but we need to make sure the types match
             if (genericType == typeof(Task<>))
@@ -154,7 +155,7 @@ namespace Azure.Core.TestFramework
             var expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
             bool strict = !methodInfo.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
 
-            bool expectFailure = false;
+            Exception lastException = null;
             bool skipChecks = false;
             T result;
 
@@ -165,7 +166,7 @@ namespace Azure.Core.TestFramework
             }
             catch (Exception ex)
             {
-                expectFailure = true;
+                lastException = ex;
 
                 if (ex is ArgumentException)
                 {
@@ -197,9 +198,9 @@ namespace Azure.Core.TestFramework
                             throw new InvalidOperationException($"All diagnostic scopes should have 'az.namespace' attribute, make sure the assembly containing **ClientOptions type is marked with the AzureResourceProviderNamespace attribute specifying the appropriate provider. This attribute should be included in AssemblyInfo, and can be included by pulling in AzureResourceProviderNamespaceAttribute.cs using the AzureCoreSharedSources alias.");
                         }
 
-                        if (expectFailure && !e.IsFailed)
+                        if (lastException != null && !e.IsFailed)
                         {
-                            throw new InvalidOperationException($"Expected scope {expectedName} to be marked as failed but it succeeded");
+                            throw new InvalidOperationException($"Expected scope {expectedName} to be marked as failed but it succeeded{Environment.NewLine}Exception: {lastException}");
                         }
                     }
                     else
@@ -220,6 +221,11 @@ namespace Azure.Core.TestFramework
             private readonly AsyncPageable<T> _pageable;
             private readonly MethodInfo _methodInfo;
             private readonly bool _overridesGetAsyncEnumerator;
+
+            //for mocking
+            protected DiagnosticScopeValidatingAsyncEnumerable()
+            {
+            }
 
             public DiagnosticScopeValidatingAsyncEnumerable(AsyncPageable<T> pageable, MethodInfo methodInfo)
             {

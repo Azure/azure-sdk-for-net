@@ -49,6 +49,7 @@ param(
 Set-StrictMode -Version 3
 
 . ${PSScriptRoot}\common.ps1
+. ${PSScriptRoot}\Helpers\ApiView-Helpers.ps1
 
 function Get-ReleaseDay($baseDate)
 {
@@ -136,6 +137,31 @@ if ($null -eq $newVersionParsed)
   -packageType $packageProperties.SDKType `
   -packageNewLibrary $packageProperties.IsNewSDK
 
+if ($LASTEXITCODE -ne 0) {
+  Write-Error "Updating of the Devops Release WorkItem failed."
+  exit 1
+}
+
+# Check API status if version is GA
+if (!$newVersionParsed.IsPrerelease)
+{ 
+  try
+  {
+    az account show *> $null
+    if (!$?) {
+      Write-Host 'Running az login...'
+      az login *> $null
+    }
+    $url = az keyvault secret show --name "APIURL" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
+    $apiKey = az keyvault secret show --name "APIKEY" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
+    Check-ApiReviewStatus -PackageName $packageProperties.Name -packageVersion $newVersion -Language $LanguageDisplayName -url $url -apiKey $apiKey
+  }
+  catch
+  {
+    Write-Warning "Failed to get APIView URL and API Key from Keyvault AzureSDKPrepRelease-KV. Please check and ensure you have access to this Keyvault as reader."
+  }
+}
+
 if ($releaseTrackingOnly)
 {
   Write-Host
@@ -154,7 +180,7 @@ else
 {
   LogError "The function 'SetPackageVersion' was not found.`
     Make sure it is present in eng/scripts/Language-Settings.ps1.`
-    See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
+    See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
   exit 1
 }
 

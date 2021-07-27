@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> description = default;
             IList<SearchIndexerSkill> skills = default;
             Optional<CognitiveServicesAccount> cognitiveServices = default;
-            Optional<SearchIndexerKnowledgeStore> knowledgeStore = default;
+            Optional<KnowledgeStore> knowledgeStore = default;
             Optional<string> odataEtag = default;
             Optional<SearchResourceEncryptionKey> encryptionKey = default;
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    knowledgeStore = SearchIndexerKnowledgeStore.DeserializeSearchIndexerKnowledgeStore(property.Value);
+                    knowledgeStore = KnowledgeStore.DeserializeKnowledgeStore(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"))

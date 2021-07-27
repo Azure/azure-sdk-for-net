@@ -14,7 +14,7 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V1_0_preview_1;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when making requests
@@ -30,13 +30,14 @@ namespace Azure.AI.Translation.Document
         public DocumentTranslationClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
+            AddLoggedHeadersAndQueryParameters();
         }
 
         internal string GetVersionString()
         {
             return Version switch
             {
-                ServiceVersion.V1_0_preview_1 => "1.0-preview.1",
+                ServiceVersion.V1_0 => "1.0",
                 _ => throw new ArgumentException(Version.ToString()),
             };
         }
@@ -48,9 +49,35 @@ namespace Azure.AI.Translation.Document
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// Version 1.0-preview.1
+            /// Version 1.0 .
             /// </summary>
-            V1_0_preview_1 = 1
+            V1_0 = 1
+        }
+
+        /// <summary>
+        /// Add headers and query parameters that are considered safe for logging or including in
+        /// error messages by default.
+        /// </summary>
+        private void AddLoggedHeadersAndQueryParameters()
+        {
+            Diagnostics.LoggedHeaderNames.Add("Operation-Location");
+            Diagnostics.LoggedHeaderNames.Add("Content-Encoding");
+            Diagnostics.LoggedHeaderNames.Add("Vary");
+            Diagnostics.LoggedHeaderNames.Add("apim-request-id");
+            Diagnostics.LoggedHeaderNames.Add("X-RequestId");
+            Diagnostics.LoggedHeaderNames.Add("Set-Cookie");
+            Diagnostics.LoggedHeaderNames.Add("X-Powered-By");
+            Diagnostics.LoggedHeaderNames.Add("Strict-Transport-Security");
+            Diagnostics.LoggedHeaderNames.Add("x-content-type-options");
+
+            Diagnostics.LoggedQueryParameters.Add("$top");
+            Diagnostics.LoggedQueryParameters.Add("$skip");
+            Diagnostics.LoggedQueryParameters.Add("$maxpagesize");
+            Diagnostics.LoggedQueryParameters.Add("ids");
+            Diagnostics.LoggedQueryParameters.Add("statuses");
+            Diagnostics.LoggedQueryParameters.Add("createdDateTimeUtcStart");
+            Diagnostics.LoggedQueryParameters.Add("createdDateTimeUtcEnd");
+            Diagnostics.LoggedQueryParameters.Add("$orderBy");
         }
     }
 }

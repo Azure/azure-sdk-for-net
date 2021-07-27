@@ -31,75 +31,31 @@
       }
     }
   },
-  "variables": {
-    "mgmtApiVersion": "2019-04-01",
-    "location": "[resourceGroup().location]",
-    "primaryAccountName": "[parameters('baseName')]",
-    "encryption": {
-      "services": {
-        "file": {
-          "enabled": true
-        },
-        "blob": {
-          "enabled": true
-        }
-      },
-      "keySource": "Microsoft.Storage"
-    },
-    "networkAcls": {
-      "bypass": "AzureServices",
-      "virtualNetworkRules": [],
-      "ipRules": [],
-      "defaultAction": "Allow"
-    }
-  },
   "resources": [
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "[variables('mgmtApiVersion')]",
-      "name": "[variables('primaryAccountName')]",
-      "location": "[variables('location')]",
-      "sku": {
-        "name": "Standard_RAGRS",
-        "tier": "Standard"
-      },
-      "kind": "StorageV2",
-      "properties": {
-        "networkAcls": "[variables('networkAcls')]",
-        "supportsHttpsTrafficOnly": true,
-        "encryption": "[variables('encryption')]",
-        "accessTier": "Hot"
-      }
-    },
     {
       "type": "Microsoft.ConfidentialLedger/ledgers",
       "apiVersion": "2020-12-01-preview",
       "name": "[parameters('baseName')]",
-      "location": "[parameters('location')]",
+      "location": "EASTUS",
       "properties": {
-        "ledgerStorageAccount": "[variables('primaryAccountName')]",
         "ledgerType": "Public",
         "aadBasedSecurityPrincipals": [
           {
             "principalId": "[parameters('testApplicationOid')]",
-            "tenantId": "[parameters('tenantId')]",
             "ledgerRoleName": "Administrator"
           }
         ]
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName'))]"
-      ]
+      }
     }
   ],
   "outputs": {
     "CONFIDENTIALLEDGER_URL": {
       "type": "string",
-      "value": "[format('https://{0}.{1}.cloudapp.azure.com', parameters('baseName'), parameters('location'))]"
+      "value": "[format('https://{0}.confidential-ledger.azure.com', parameters('baseName'))]"
     },
     "CONFIDENTIALLEDGER_IDENTITY_URL": {
       "type": "string",
-      "value": "[format('https://identity.accledger.azure.com/ledgerIdentity/{0}', parameters('baseName'))]"
+      "value": "https://identity.accledger.azure.com/"
     },
     "CONFIDENTIALLEDGER_CLIENT_OBJECTID": {
       "type": "string",

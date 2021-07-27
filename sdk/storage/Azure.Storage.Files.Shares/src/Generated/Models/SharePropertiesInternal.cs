@@ -13,9 +13,9 @@ namespace Azure.Storage.Files.Shares.Models
     internal partial class SharePropertiesInternal
     {
         /// <summary> Initializes a new instance of SharePropertiesInternal. </summary>
-        /// <param name="lastModified"> . </param>
-        /// <param name="etag"> . </param>
-        /// <param name="quota"> . </param>
+        /// <param name="lastModified"></param>
+        /// <param name="etag"></param>
+        /// <param name="quota"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
         internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota)
         {
@@ -30,23 +30,23 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> Initializes a new instance of SharePropertiesInternal. </summary>
-        /// <param name="lastModified"> . </param>
-        /// <param name="etag"> . </param>
-        /// <param name="quota"> . </param>
-        /// <param name="provisionedIops"> . </param>
-        /// <param name="provisionedIngressMBps"> . </param>
-        /// <param name="provisionedEgressMBps"> . </param>
-        /// <param name="nextAllowedQuotaDowngradeTime"> . </param>
-        /// <param name="deletedTime"> . </param>
-        /// <param name="remainingRetentionDays"> . </param>
-        /// <param name="accessTier"> . </param>
-        /// <param name="accessTierChangeTime"> . </param>
-        /// <param name="accessTierTransitionState"> . </param>
+        /// <param name="lastModified"></param>
+        /// <param name="etag"></param>
+        /// <param name="quota"></param>
+        /// <param name="provisionedIops"></param>
+        /// <param name="provisionedIngressMBps"></param>
+        /// <param name="provisionedEgressMBps"></param>
+        /// <param name="nextAllowedQuotaDowngradeTime"></param>
+        /// <param name="deletedTime"></param>
+        /// <param name="remainingRetentionDays"></param>
+        /// <param name="accessTier"></param>
+        /// <param name="accessTierChangeTime"></param>
+        /// <param name="accessTierTransitionState"></param>
         /// <param name="leaseStatus"> The current lease status of the share. </param>
         /// <param name="leaseState"> Lease state of the share. </param>
         /// <param name="leaseDuration"> When a share is leased, specifies whether the lease is of infinite or fixed duration. </param>
-        /// <param name="enabledProtocols"> . </param>
-        /// <param name="rootSquash"> . </param>
+        /// <param name="enabledProtocols"></param>
+        /// <param name="rootSquash"></param>
         internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash)
         {
             LastModified = lastModified;

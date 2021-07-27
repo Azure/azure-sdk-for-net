@@ -41,14 +41,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="disableMetricsCollection">If true, disable data store
+        /// metrics collection. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).</param>
         /// <param name="recursive">If true, files under the folder path will
         /// be read recursively. Default is true. Type: boolean (or Expression
         /// with resultType boolean).</param>
         /// <param name="additionalColumns">Specifies the additional columns to
         /// be added to source data. Type: array of objects (or Expression with
         /// resultType array of objects).</param>
-        public FileSystemSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object recursive = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        public FileSystemSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object recursive = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             Recursive = recursive;
             AdditionalColumns = additionalColumns;

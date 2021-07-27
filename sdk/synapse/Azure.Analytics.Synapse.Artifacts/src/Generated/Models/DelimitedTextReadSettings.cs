@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of DelimitedTextReadSettings. </summary>
         /// <param name="type"> The read setting type. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="skipLineCount"> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </param>
         /// <param name="compressionProperties"> Compression settings. </param>
         internal DelimitedTextReadSettings(string type, IDictionary<string, object> additionalProperties, object skipLineCount, CompressionReadSettings compressionProperties) : base(type, additionalProperties)

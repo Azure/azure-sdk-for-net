@@ -75,8 +75,8 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// the Big Data pool has. Possible values include: 'None', 'Small',
         /// 'Medium', 'Large', 'XLarge', 'XXLarge', 'XXXLarge'</param>
         /// <param name="nodeSizeFamily">The kind of nodes that the Big Data
-        /// pool provides. Possible values include: 'None',
-        /// 'MemoryOptimized'</param>
+        /// pool provides. Possible values include: 'None', 'MemoryOptimized',
+        /// 'HardwareAcceleratedFPGA', 'HardwareAcceleratedGPU'</param>
         /// <param name="lastSucceededTimestamp">The time when the Big Data
         /// pool was updated successfully.</param>
         public BigDataPoolResourceInfo(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), AutoScaleProperties autoScale = default(AutoScaleProperties), System.DateTime? creationDate = default(System.DateTime?), AutoPauseProperties autoPause = default(AutoPauseProperties), bool? isComputeIsolationEnabled = default(bool?), bool? sessionLevelPackagesEnabled = default(bool?), int? cacheSize = default(int?), DynamicExecutorAllocation dynamicExecutorAllocation = default(DynamicExecutorAllocation), string sparkEventsFolder = default(string), int? nodeCount = default(int?), LibraryRequirements libraryRequirements = default(LibraryRequirements), IList<LibraryInfo> customLibraries = default(IList<LibraryInfo>), LibraryRequirements sparkConfigProperties = default(LibraryRequirements), string sparkVersion = default(string), string defaultSparkLogFolder = default(string), string nodeSize = default(string), string nodeSizeFamily = default(string), System.DateTime? lastSucceededTimestamp = default(System.DateTime?))
@@ -210,7 +210,8 @@ namespace Microsoft.Azure.Management.Synapse.Models
 
         /// <summary>
         /// Gets or sets the kind of nodes that the Big Data pool provides.
-        /// Possible values include: 'None', 'MemoryOptimized'
+        /// Possible values include: 'None', 'MemoryOptimized',
+        /// 'HardwareAcceleratedFPGA', 'HardwareAcceleratedGPU'
         /// </summary>
         [JsonProperty(PropertyName = "properties.nodeSizeFamily")]
         public string NodeSizeFamily { get; set; }

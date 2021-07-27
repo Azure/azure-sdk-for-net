@@ -95,9 +95,9 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server key to be operated on (updated or created).
         /// The key name is required to be in the format of
         /// 'vault_key_version'. For example, if the keyId is
-        /// https://YourVaultName.vault.azure.net/keys/YourKeyName/01234567890123456789012345678901,
+        /// https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion,
         /// then the server key name should be formatted as:
-        /// YourVaultName_YourKeyName_01234567890123456789012345678901
+        /// YourVaultName_YourKeyName_YourKeyVersion
         /// </param>
         /// <param name='parameters'>
         /// The requested server key resource state.
@@ -160,9 +160,9 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server key to be operated on (updated or created).
         /// The key name is required to be in the format of
         /// 'vault_key_version'. For example, if the keyId is
-        /// https://YourVaultName.vault.azure.net/keys/YourKeyName/01234567890123456789012345678901,
+        /// https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion,
         /// then the server key name should be formatted as:
-        /// YourVaultName_YourKeyName_01234567890123456789012345678901
+        /// YourVaultName_YourKeyName_YourKeyVersion
         /// </param>
         /// <param name='parameters'>
         /// The requested server key resource state.

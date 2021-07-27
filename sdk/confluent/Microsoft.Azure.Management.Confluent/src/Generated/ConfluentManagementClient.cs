@@ -87,6 +87,11 @@ namespace Microsoft.Azure.Management.Confluent
         public virtual IOrganizationOperationsOperations Organization { get; private set; }
 
         /// <summary>
+        /// Gets the IValidationsOperations.
+        /// </summary>
+        public virtual IValidationsOperations Validations { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the ConfluentManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -330,8 +335,9 @@ namespace Microsoft.Azure.Management.Confluent
             MarketplaceAgreements = new MarketplaceAgreementsOperations(this);
             OrganizationOperations = new OrganizationOperations(this);
             Organization = new OrganizationOperationsOperations(this);
+            Validations = new ValidationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-03-01";
+            ApiVersion = "2021-03-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

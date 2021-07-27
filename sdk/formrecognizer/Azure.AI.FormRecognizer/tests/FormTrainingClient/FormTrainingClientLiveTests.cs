@@ -109,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task CheckFormTypeinSubmodelAndRecognizedForm(bool labeled)
         {
             var client = CreateFormTrainingClient();
@@ -152,7 +152,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartCreateComposedModel(bool useTokenCredential)
         {
             var client = CreateFormTrainingClient(useTokenCredential);
@@ -221,7 +221,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartCreateComposedModelFailsWithInvalidId()
         {
             var client = CreateFormTrainingClient();
@@ -264,7 +264,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartTrainingWithLabelsModelName()
         {
             var client = CreateFormTrainingClient();
@@ -280,7 +280,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task StartTrainingWithNoLabelsModelName()
         {
             var client = CreateFormTrainingClient();
@@ -296,18 +296,14 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        public async Task StartTrainingError()
+        public void StartTrainingError()
         {
             var client = CreateFormTrainingClient();
 
             var containerUrl = new Uri("https://someUrl");
 
-            TrainingOperation operation = await client.StartTrainingAsync(containerUrl, useTrainingLabels: false);
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
-            Assert.AreEqual("2001", ex.ErrorCode);
-
-            Assert.False(operation.HasValue);
-            Assert.Throws<RequestFailedException>(() => operation.Value.GetType());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartTrainingAsync(containerUrl, useTrainingLabels: false));
+            Assert.AreEqual("2011", ex.ErrorCode);
         }
 
         [RecordedTest]
@@ -422,7 +418,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task CopyModelWithLabelsAndModelName()
         {
             var sourceClient = CreateFormTrainingClient();
@@ -453,7 +449,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task CopyComposedModel(bool useTokenCredential)
         {
             var sourceClient = CreateFormTrainingClient(useTokenCredential);
@@ -491,7 +487,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task CopyModelWithoutLabelsAndModelName()
         {
             var sourceClient = CreateFormTrainingClient();
@@ -541,7 +537,24 @@ namespace Azure.AI.FormRecognizer.Tests
             var sourceClient = CreateFormTrainingClient();
             var targetClient = CreateFormTrainingClient();
             var resourceId = TestEnvironment.TargetResourceId;
-            var wrongRegion = TestEnvironment.TargetResourceRegion == "westcentralus" ? "eastus2" : "westcentralus";
+            var regionA = "regionA";
+            var regionB = "regionB";
+            switch (TestEnvironment.AuthorityHostUrl)
+            {
+                case "https://login.microsoftonline.com/":
+                    regionA = "westcentralus";
+                    regionB = "eastus2";
+                    break;
+                case "https://login.microsoftonline.us/":
+                    regionA = "usgovarizona";
+                    regionB = "usgovvirginia";
+                    break;
+                default:
+                    regionA = "westcentralus";
+                    regionB = "eastus2";
+                    break;
+            }
+            var wrongRegion = TestEnvironment.TargetResourceRegion == regionA ? regionB : regionA;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, wrongRegion);

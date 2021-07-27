@@ -10,9 +10,8 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
+using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
 using Microsoft.Azure.WebJobs.ServiceBus.Triggers;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -82,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             context
                 .AddConverter(new MessageToStringConverter())
                 .AddConverter(new MessageToByteArrayConverter())
-                .AddOpenConverter<ServiceBusReceivedMessage, OpenType.Poco>(typeof(MessageToPocoConverter<>));
+                .AddOpenConverter<ServiceBusReceivedMessage, OpenType.Poco>(typeof(MessageToPocoConverter<>), _options.JsonSerializerSettings);
 
             // register our trigger binding provider
             ServiceBusTriggerAttributeBindingProvider triggerBindingProvider = new ServiceBusTriggerAttributeBindingProvider(_nameResolver, _options, _messagingProvider, _loggerFactory, _converterManager, _clientFactory);
@@ -99,7 +98,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             try
             {
                 var errorSource = e.ErrorSource;
-                var logger = loggerFactory?.CreateLogger(LogCategories.Executor);
+                var logger = loggerFactory?.CreateLogger<ServiceBusListener>();
                 //TODO new SDK does not expose client ID in event args or on clients
                 string message = $"Message processing error (Action={errorSource}, EntityPath={e.EntityPath}, Endpoint={e.FullyQualifiedNamespace})";
 

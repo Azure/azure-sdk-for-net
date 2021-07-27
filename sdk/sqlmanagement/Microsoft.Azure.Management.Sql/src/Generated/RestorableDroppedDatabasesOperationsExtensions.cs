@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Sql
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -24,7 +22,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class RestorableDroppedDatabasesOperationsExtensions
     {
             /// <summary>
-            /// Gets a deleted database that can be restored
+            /// Gets a list of restorable dropped databases.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,17 +34,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='restorableDroppededDatabaseId'>
-            /// The id of the deleted database in the form of
-            /// databaseName,deletionTimeInFileTimeFormat
-            /// </param>
-            public static RestorableDroppedDatabase Get(this IRestorableDroppedDatabasesOperations operations, string resourceGroupName, string serverName, string restorableDroppededDatabaseId)
+            public static IPage<RestorableDroppedDatabase> ListByServer(this IRestorableDroppedDatabasesOperations operations, string resourceGroupName, string serverName)
             {
-                return operations.GetAsync(resourceGroupName, serverName, restorableDroppededDatabaseId).GetAwaiter().GetResult();
+                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a deleted database that can be restored
+            /// Gets a list of restorable dropped databases.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -57,24 +51,20 @@ namespace Microsoft.Azure.Management.Sql
             /// </param>
             /// <param name='serverName'>
             /// The name of the server.
-            /// </param>
-            /// <param name='restorableDroppededDatabaseId'>
-            /// The id of the deleted database in the form of
-            /// databaseName,deletionTimeInFileTimeFormat
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RestorableDroppedDatabase> GetAsync(this IRestorableDroppedDatabasesOperations operations, string resourceGroupName, string serverName, string restorableDroppededDatabaseId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RestorableDroppedDatabase>> ListByServerAsync(this IRestorableDroppedDatabasesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, restorableDroppededDatabaseId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets a list of deleted databases that can be restored
+            /// Gets a restorable dropped database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -86,13 +76,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            public static IEnumerable<RestorableDroppedDatabase> ListByServer(this IRestorableDroppedDatabasesOperations operations, string resourceGroupName, string serverName)
+            /// <param name='restorableDroppedDatabaseId'>
+            /// </param>
+            public static RestorableDroppedDatabase Get(this IRestorableDroppedDatabasesOperations operations, string resourceGroupName, string serverName, string restorableDroppedDatabaseId)
             {
-                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serverName, restorableDroppedDatabaseId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of deleted databases that can be restored
+            /// Gets a restorable dropped database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -103,13 +95,49 @@ namespace Microsoft.Azure.Management.Sql
             /// </param>
             /// <param name='serverName'>
             /// The name of the server.
+            /// </param>
+            /// <param name='restorableDroppedDatabaseId'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<RestorableDroppedDatabase>> ListByServerAsync(this IRestorableDroppedDatabasesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RestorableDroppedDatabase> GetAsync(this IRestorableDroppedDatabasesOperations operations, string resourceGroupName, string serverName, string restorableDroppedDatabaseId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, restorableDroppedDatabaseId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of restorable dropped databases.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<RestorableDroppedDatabase> ListByServerNext(this IRestorableDroppedDatabasesOperations operations, string nextPageLink)
+            {
+                return operations.ListByServerNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of restorable dropped databases.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RestorableDroppedDatabase>> ListByServerNextAsync(this IRestorableDroppedDatabasesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByServerNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

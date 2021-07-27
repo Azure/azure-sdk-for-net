@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// resource.</param>
         /// <param name="description">Policy description.</param>
         /// <param name="scope">Binary OR value of the Snippet scope.</param>
-        public PolicyDescriptionContract(string id = default(string), string name = default(string), string type = default(string), string description = default(string), int? scope = default(int?))
+        public PolicyDescriptionContract(string id = default(string), string name = default(string), string type = default(string), string description = default(string), long? scope = default(long?))
             : base(id, name, type)
         {
             Description = description;
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets binary OR value of the Snippet scope.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scope")]
-        public int? Scope { get; private set; }
+        public long? Scope { get; private set; }
 
     }
 }

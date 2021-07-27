@@ -152,11 +152,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IOperationOperations Operation { get; private set; }
 
         /// <summary>
-        /// Gets the IApiExportOperations.
-        /// </summary>
-        public virtual IApiExportOperations ApiExport { get; private set; }
-
-        /// <summary>
         /// Gets the IApiVersionSetOperations.
         /// </summary>
         public virtual IApiVersionSetOperations ApiVersionSet { get; private set; }
@@ -180,6 +175,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the ICertificateOperations.
         /// </summary>
         public virtual ICertificateOperations Certificate { get; private set; }
+
+        /// <summary>
+        /// Gets the IContentTypeOperations.
+        /// </summary>
+        public virtual IContentTypeOperations ContentType { get; private set; }
+
+        /// <summary>
+        /// Gets the IContentItemOperations.
+        /// </summary>
+        public virtual IContentItemOperations ContentItem { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeletedServicesOperations.
+        /// </summary>
+        public virtual IDeletedServicesOperations DeletedServices { get; private set; }
 
         /// <summary>
         /// Gets the IApiManagementOperations.
@@ -220,6 +230,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IGatewayApiOperations.
         /// </summary>
         public virtual IGatewayApiOperations GatewayApi { get; private set; }
+
+        /// <summary>
+        /// Gets the IGatewayCertificateAuthorityOperations.
+        /// </summary>
+        public virtual IGatewayCertificateAuthorityOperations GatewayCertificateAuthority { get; private set; }
 
         /// <summary>
         /// Gets the IGroupOperations.
@@ -287,6 +302,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IPolicyDescriptionOperations PolicyDescription { get; private set; }
 
         /// <summary>
+        /// Gets the IPortalRevisionOperations.
+        /// </summary>
+        public virtual IPortalRevisionOperations PortalRevision { get; private set; }
+
+        /// <summary>
+        /// Gets the IPortalSettingsOperations.
+        /// </summary>
+        public virtual IPortalSettingsOperations PortalSettings { get; private set; }
+
+        /// <summary>
         /// Gets the ISignInSettingsOperations.
         /// </summary>
         public virtual ISignInSettingsOperations SignInSettings { get; private set; }
@@ -347,6 +372,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IReportsOperations Reports { get; private set; }
 
         /// <summary>
+        /// Gets the ITenantSettingsOperations.
+        /// </summary>
+        public virtual ITenantSettingsOperations TenantSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IApiManagementSkusOperations.
+        /// </summary>
+        public virtual IApiManagementSkusOperations ApiManagementSkus { get; private set; }
+
+        /// <summary>
         /// Gets the ISubscriptionOperations.
         /// </summary>
         public virtual ISubscriptionOperations Subscription { get; private set; }
@@ -395,6 +430,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IUserConfirmationPasswordOperations.
         /// </summary>
         public virtual IUserConfirmationPasswordOperations UserConfirmationPassword { get; private set; }
+
+        /// <summary>
+        /// Gets the IApiExportOperations.
+        /// </summary>
+        public virtual IApiExportOperations ApiExport { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ApiManagementClient class.
@@ -652,12 +692,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             ApiIssueAttachment = new ApiIssueAttachmentOperations(this);
             ApiTagDescription = new ApiTagDescriptionOperations(this);
             Operation = new OperationOperations(this);
-            ApiExport = new ApiExportOperations(this);
             ApiVersionSet = new ApiVersionSetOperations(this);
             AuthorizationServer = new AuthorizationServerOperations(this);
             Backend = new BackendOperations(this);
             Cache = new CacheOperations(this);
             Certificate = new CertificateOperations(this);
+            ContentType = new ContentTypeOperations(this);
+            ContentItem = new ContentItemOperations(this);
+            DeletedServices = new DeletedServicesOperations(this);
             ApiManagementOperations = new ApiManagementOperations(this);
             ApiManagementServiceSkus = new ApiManagementServiceSkusOperations(this);
             ApiManagementService = new ApiManagementServiceOperations(this);
@@ -666,6 +708,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             Gateway = new GatewayOperations(this);
             GatewayHostnameConfiguration = new GatewayHostnameConfigurationOperations(this);
             GatewayApi = new GatewayApiOperations(this);
+            GatewayCertificateAuthority = new GatewayCertificateAuthorityOperations(this);
             Group = new GroupOperations(this);
             GroupUser = new GroupUserOperations(this);
             IdentityProvider = new IdentityProviderOperations(this);
@@ -679,6 +722,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             OpenIdConnectProvider = new OpenIdConnectProviderOperations(this);
             Policy = new PolicyOperations(this);
             PolicyDescription = new PolicyDescriptionOperations(this);
+            PortalRevision = new PortalRevisionOperations(this);
+            PortalSettings = new PortalSettingsOperations(this);
             SignInSettings = new SignInSettingsOperations(this);
             SignUpSettings = new SignUpSettingsOperations(this);
             DelegationSettings = new DelegationSettingsOperations(this);
@@ -691,6 +736,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             QuotaByPeriodKeys = new QuotaByPeriodKeysOperations(this);
             Region = new RegionOperations(this);
             Reports = new ReportsOperations(this);
+            TenantSettings = new TenantSettingsOperations(this);
+            ApiManagementSkus = new ApiManagementSkusOperations(this);
             Subscription = new SubscriptionOperations(this);
             TagResource = new TagResourceOperations(this);
             TenantAccess = new TenantAccessOperations(this);
@@ -701,8 +748,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             UserSubscription = new UserSubscriptionOperations(this);
             UserIdentities = new UserIdentitiesOperations(this);
             UserConfirmationPassword = new UserConfirmationPasswordOperations(this);
+            ApiExport = new ApiExportOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-12-01";
+            ApiVersion = "2020-12-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

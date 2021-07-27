@@ -33,13 +33,29 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// repository.</param>
         /// <param name="apiLocation">The path to the api code within the
         /// repository.</param>
-        /// <param name="appArtifactLocation">The path of the app artifacts
-        /// after building.</param>
-        public StaticSiteBuildProperties(string appLocation = default(string), string apiLocation = default(string), string appArtifactLocation = default(string))
+        /// <param name="appArtifactLocation">Deprecated: The path of the app
+        /// artifacts after building (deprecated in favor of
+        /// OutputLocation)</param>
+        /// <param name="outputLocation">The output path of the app after
+        /// building.</param>
+        /// <param name="appBuildCommand">A custom command to run during
+        /// deployment of the static content application.</param>
+        /// <param name="apiBuildCommand">A custom command to run during
+        /// deployment of the Azure Functions API application.</param>
+        /// <param name="skipGithubActionWorkflowGeneration">Skip Github Action
+        /// workflow generation.</param>
+        /// <param name="githubActionSecretNameOverride">Github Action secret
+        /// name override.</param>
+        public StaticSiteBuildProperties(string appLocation = default(string), string apiLocation = default(string), string appArtifactLocation = default(string), string outputLocation = default(string), string appBuildCommand = default(string), string apiBuildCommand = default(string), bool? skipGithubActionWorkflowGeneration = default(bool?), string githubActionSecretNameOverride = default(string))
         {
             AppLocation = appLocation;
             ApiLocation = apiLocation;
             AppArtifactLocation = appArtifactLocation;
+            OutputLocation = outputLocation;
+            AppBuildCommand = appBuildCommand;
+            ApiBuildCommand = apiBuildCommand;
+            SkipGithubActionWorkflowGeneration = skipGithubActionWorkflowGeneration;
+            GithubActionSecretNameOverride = githubActionSecretNameOverride;
             CustomInit();
         }
 
@@ -61,10 +77,43 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string ApiLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets the path of the app artifacts after building.
+        /// Gets or sets deprecated: The path of the app artifacts after
+        /// building (deprecated in favor of OutputLocation)
         /// </summary>
         [JsonProperty(PropertyName = "appArtifactLocation")]
         public string AppArtifactLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the output path of the app after building.
+        /// </summary>
+        [JsonProperty(PropertyName = "outputLocation")]
+        public string OutputLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets a custom command to run during deployment of the
+        /// static content application.
+        /// </summary>
+        [JsonProperty(PropertyName = "appBuildCommand")]
+        public string AppBuildCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets a custom command to run during deployment of the Azure
+        /// Functions API application.
+        /// </summary>
+        [JsonProperty(PropertyName = "apiBuildCommand")]
+        public string ApiBuildCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets skip Github Action workflow generation.
+        /// </summary>
+        [JsonProperty(PropertyName = "skipGithubActionWorkflowGeneration")]
+        public bool? SkipGithubActionWorkflowGeneration { get; set; }
+
+        /// <summary>
+        /// Gets or sets github Action secret name override.
+        /// </summary>
+        [JsonProperty(PropertyName = "githubActionSecretNameOverride")]
+        public string GithubActionSecretNameOverride { get; set; }
 
     }
 }

@@ -30,6 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             _operation = new OperationInternals<NotebookResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebookCreateOrUpdateNotebookOperation");
         }
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IRestorableDroppedDatabasesOperations
     {
         /// <summary>
-        /// Gets a deleted database that can be restored
+        /// Gets a list of restorable dropped databases.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -33,10 +33,6 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
-        /// </param>
-        /// <param name='restorableDroppededDatabaseId'>
-        /// The id of the deleted database in the form of
-        /// databaseName,deletionTimeInFileTimeFormat
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -53,9 +49,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RestorableDroppedDatabase>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string restorableDroppededDatabaseId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<RestorableDroppedDatabase>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of deleted databases that can be restored
+        /// Gets a restorable dropped database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -64,6 +60,8 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
+        /// </param>
+        /// <param name='restorableDroppedDatabaseId'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -80,6 +78,28 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<RestorableDroppedDatabase>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RestorableDroppedDatabase>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string restorableDroppedDatabaseId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of restorable dropped databases.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<RestorableDroppedDatabase>>> ListByServerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

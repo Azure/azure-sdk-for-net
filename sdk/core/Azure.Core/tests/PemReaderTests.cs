@@ -43,6 +43,7 @@ $"57plO69TCN+QQICUcGB47/RSSBnKQq8VpFAPS0/DYZ660RX6CJBGN1voXHef8ylL{lineEnding}" 
 $"g0uFtPoHfnUG/jSQYk4R18vucCrVGaqDdzaBR7zxEQKBgCEqovhMGJ1xOrkzetBB{lineEnding}" +
 $"+zgh5zJbAWx5DQk5ZdmAcAnEeqconM2yhFB636wC07UbeAZaQmhB5kQYMOuiCstt{lineEnding}" +
 $"30sdQlNG9EGdqNsoVn/363Cg1iKJy4JU5uW/5kjh4UfBZG6DDwjLK88ZWh0OHPRV{lineEnding}" +
+// cspell:disable-next-line
 $"h8q0or9YnvqnVrELMR8cjUkZ{lineEnding}" +
 $"-----END PRIVATE KEY-----";
 
@@ -276,7 +277,7 @@ pn29yMivL7r48dlo";
         [Test]
         public void LoadECDsaCertificate()
         {
-#if NET461 || NETCOREAPP2_1
+#if NET461
             // Compatible with previous release. Goes through the LightweightPkcs8Decoder.DecodeRSAPkcs8().
             Assert.Throws<InvalidDataException>(() => PemReader.LoadCertificate(ECDsaCertificate.AsSpan(), keyType: PemReader.KeyType.RSA));
 #else

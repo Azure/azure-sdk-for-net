@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var client = new ServiceBusClient("Endpoint = sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=");
             var processor = client.CreateProcessor("test-entity");
             processor.ProcessErrorAsync += ExceptionReceivedHandler;
-            _processor = new MessageProcessor(processor, client.CreateReceiver("test-entity"));
+            _processor = new MessageProcessor(processor);
         }
 
         [Test]

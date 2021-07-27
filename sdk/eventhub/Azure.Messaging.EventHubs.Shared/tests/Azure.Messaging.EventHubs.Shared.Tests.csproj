@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Microsoft.Azure.Management.EventHub" />
@@ -29,9 +30,6 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
-  <!-- Import the Azure.Core reference -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
-
   <!-- Import Event Hubs shared source -->
   <Import Project="..\src\Azure.Messaging.EventHubs.Shared.Authorization.projitems" Label="Authorization" />
   <Import Project="..\src\Azure.Messaging.EventHubs.Shared.BlobCheckpointStore.projitems" Label="CheckpointStore" />
@@ -44,6 +42,7 @@
   <!-- Import Azure.Core shared source -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="SharedSource\Azure.Core" />
   </ItemGroup>
 
   <!--Embed the shared resources -->

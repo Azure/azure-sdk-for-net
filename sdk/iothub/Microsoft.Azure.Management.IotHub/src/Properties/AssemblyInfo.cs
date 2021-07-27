@@ -3,10 +3,9 @@
 
 using System.Reflection;
 using System.Resources;
-using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Microsoft Azure IotHub Management Library")]
-[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure IotHub Resources.")]
+[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Iot Hub Resources.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
@@ -14,5 +13,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
-[assembly: AssemblyVersion("3.0.1.0")]
-[assembly: AssemblyFileVersion("3.0.1.0")]
+[assembly: AssemblyVersion("4.0.0.0")]
+[assembly: AssemblyFileVersion("4.0.0.0")]

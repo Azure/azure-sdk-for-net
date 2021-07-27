@@ -36,6 +36,7 @@ namespace Azure.Containers.ContainerRegistry
         private readonly IContainerRegistryAuthenticationClient _authenticationClient;
         private readonly ContainerRegistryRefreshTokenCache _refreshTokenCache;
         private readonly string[] _aadScopes;
+        private readonly bool _anonymousAccess;
 
         public ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, IContainerRegistryAuthenticationClient authenticationClient)
             : this(credential, aadScope, authenticationClient, null, null)
@@ -51,6 +52,7 @@ namespace Azure.Containers.ContainerRegistry
             _authenticationClient = authenticationClient;
             _refreshTokenCache = new ContainerRegistryRefreshTokenCache(credential, authenticationClient, tokenRefreshOffset, tokenRefreshRetryDelay);
             _aadScopes = new[] { aadScope };
+            _anonymousAccess = credential is ContainerRegistryAnonymousAccessCredential;
         }
 
         // Since we'll not cache the AAD access token or set an auth header on the initial request,
@@ -84,11 +86,19 @@ namespace Azure.Containers.ContainerRegistry
             var service = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "service");
             var scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "scope");
 
-            // Step 3: Exchange AAD Access Token for ACR Refresh Token, or get the cached value instead.
-            string acrRefreshToken = await _refreshTokenCache.GetAcrRefreshTokenAsync(message, context, service, async).ConfigureAwait(false);
+            string acrAccessToken;
+            if (_anonymousAccess)
+            {
+                acrAccessToken = await GetAnonymousAcrAccessTokenAsync(service, scope, async, message.CancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                // Step 3: Exchange AAD Access Token for ACR Refresh Token, or get the cached value instead.
+                string acrRefreshToken = await _refreshTokenCache.GetAcrRefreshTokenAsync(message, context, service, async).ConfigureAwait(false);
 
-            // Step 4: Send in acrRefreshToken and get back acrAccessToken
-            string acrAccessToken = await ExchangeAcrRefreshTokenForAcrAccessTokenAsync(acrRefreshToken, service, scope, async, message.CancellationToken).ConfigureAwait(false);
+                // Step 4: Send in acrRefreshToken and get back acrAccessToken
+                acrAccessToken = await ExchangeAcrRefreshTokenForAcrAccessTokenAsync(acrRefreshToken, service, scope, async, message.CancellationToken).ConfigureAwait(false);
+            }
 
             // Step 5 - Authorize Request.  Note, we don't use SetAuthorizationHeader from the base class here, because it
             // sets an AAD access token header, and at this point we're done with AAD and using an ACR access token.
@@ -102,11 +112,26 @@ namespace Azure.Containers.ContainerRegistry
             Response<AcrAccessToken> acrAccessToken = null;
             if (async)
             {
-                acrAccessToken = await _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, acrRefreshToken, cancellationToken).ConfigureAwait(false);
+                acrAccessToken = await _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, acrRefreshToken, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                acrAccessToken = _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken(service, scope, acrRefreshToken, cancellationToken);
+                acrAccessToken = _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken(service, scope, acrRefreshToken, cancellationToken: cancellationToken);
+            }
+
+            return acrAccessToken.Value.AccessToken;
+        }
+
+        private async Task<string> GetAnonymousAcrAccessTokenAsync(string service, string scope, bool async, CancellationToken cancellationToken)
+        {
+            Response<AcrAccessToken> acrAccessToken = null;
+            if (async)
+            {
+                acrAccessToken = await _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, string.Empty, TokenGrantType.Password, cancellationToken ).ConfigureAwait(false);
+            }
+            else
+            {
+                acrAccessToken = _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken(service, scope, string.Empty, TokenGrantType.Password, cancellationToken);
             }
 
             return acrAccessToken.Value.AccessToken;

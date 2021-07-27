@@ -15,14 +15,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
-                writer.WritePropertyName("connectionString");
-                writer.WriteStringValue(ConnectionString);
-            }
-            else
-            {
-                writer.WriteNull("connectionString");
+                if (ConnectionString != null)
+                {
+                    writer.WritePropertyName("connectionString");
+                    writer.WriteStringValue(ConnectionString);
+                }
+                else
+                {
+                    writer.WriteNull("connectionString");
+                }
             }
             if (SqlQuery != null)
             {
@@ -56,7 +59,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureCosmosDBParameter DeserializeAzureCosmosDBParameter(JsonElement element)
         {
-            string connectionString = default;
+            Optional<string> connectionString = default;
             string sqlQuery = default;
             string database = default;
             string collectionId = default;
@@ -103,7 +106,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureCosmosDBParameter(connectionString, sqlQuery, database, collectionId);
+            return new AzureCosmosDBParameter(connectionString.Value, sqlQuery, database, collectionId);
         }
     }
 }

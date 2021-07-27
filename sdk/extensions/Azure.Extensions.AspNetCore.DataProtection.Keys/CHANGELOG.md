@@ -3,6 +3,12 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 
+## 1.0.3 (2021-05-14)
+
+### Changes
+
+- Dependency versions updated.
+
 ## 1.0.2 (2020-09-01)
 
 ### Fixed
@@ -24,6 +30,6 @@
 - Package renamed to Azure.Extensions.AspNetCore.DataProtection.Keys
 - Default overload of ProtectKeysWithAzureKeyVault now takes a Uri to be consistent with other extension methods and KeyVault clients.  
 
-## 1.0.0-preview.1 (2020)
+## 1.0.0-preview.1 (2020-03-02)
 
 - Initial preview of the Azure.AspNetCore.DataProtection.Keys library

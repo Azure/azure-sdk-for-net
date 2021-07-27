@@ -140,6 +140,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
         IWorkspacePurgeOperations WorkspacePurge { get; }
 
         /// <summary>
+        /// Gets the ITablesOperations.
+        /// </summary>
+        ITablesOperations Tables { get; }
+
+        /// <summary>
         /// Gets the IClustersOperations.
         /// </summary>
         IClustersOperations Clusters { get; }
@@ -148,11 +153,6 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the ITablesOperations.
-        /// </summary>
-        ITablesOperations Tables { get; }
 
         /// <summary>
         /// Gets the IWorkspacesOperations.

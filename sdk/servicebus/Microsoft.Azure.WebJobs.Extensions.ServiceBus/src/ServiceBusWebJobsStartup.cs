@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus
 {
-    public class ServiceBusWebJobsStartup : IWebJobsStartup
+    internal class ServiceBusWebJobsStartup : IWebJobsStartup
     {
         public void Configure(IWebJobsBuilder builder)
         {

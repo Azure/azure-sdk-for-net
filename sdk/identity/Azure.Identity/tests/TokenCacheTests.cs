@@ -106,7 +106,6 @@ namespace Azure.Identity.Tests
 
             mockWrapper.Verify(m => m.InitializeAsync(
                 It.Is<StorageCreationProperties>(p =>
-                    p.ClientId == TokenCache.s_msalCacheClientId &&
                     p.CacheFileName == cacheName &&
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
@@ -123,7 +122,6 @@ namespace Azure.Identity.Tests
 
             mockWrapper.Verify(m => m.InitializeAsync(
                 It.Is<StorageCreationProperties>(p =>
-                    p.ClientId == TokenCache.s_msalCacheClientId &&
                     p.CacheFileName == Constants.DefaultMsalTokenCacheName &&
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
@@ -141,7 +139,6 @@ namespace Azure.Identity.Tests
 
             mockWrapper.Verify(m => m.InitializeAsync(
                 It.Is<StorageCreationProperties>(p =>
-                    p.ClientId == TokenCache.s_msalCacheClientId &&
                     p.CacheFileName == Constants.DefaultMsalTokenCacheName &&
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
@@ -180,7 +177,6 @@ namespace Azure.Identity.Tests
 
             mockWrapper.Verify(m => m.InitializeAsync(
                 It.Is<StorageCreationProperties>(p =>
-                    p.ClientId == TokenCache.s_msalCacheClientId &&
                     p.CacheFileName == Constants.DefaultMsalTokenCacheName &&
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.KeyringCollection == Constants.DefaultMsalTokenCacheKeyringCollection),
@@ -211,7 +207,6 @@ namespace Azure.Identity.Tests
 
             mockWrapper.Verify(m => m.InitializeAsync(
                 It.Is<StorageCreationProperties>(p =>
-                    p.ClientId == TokenCache.s_msalCacheClientId &&
                     p.CacheFileName == Constants.DefaultMsalTokenCacheName &&
                     p.MacKeyChainServiceName == Constants.DefaultMsalTokenCacheKeychainService &&
                     p.UseLinuxUnencryptedFallback),

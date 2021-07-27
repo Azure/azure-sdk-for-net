@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyze?includeTextDetails=false",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1/prebuilt/businessCard/analyze?includeTextDetails=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "22",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c94a7a6fc15cdb45bbbc2d36df793c5a-0dd6e1ff6b469641-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-9025cd2ea48dc043b7cf0eb7e791ca2b-551989d12ea89441-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210510.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "3557ac817a8e74aafd0b74f8279d3ac1",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,19 +18,19 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "eebb4cfd-7db6-488c-96c4-1233ad5b774e",
+        "apim-request-id": "46307443-37cb-418c-841b-2d6fd9988deb",
         "Content-Length": "161",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 31 Mar 2021 17:38:06 GMT",
+        "Date": "Mon, 10 May 2021 18:50:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "3144"
+        "x-envoy-upstream-service-time": "3627"
       },
       "ResponseBody": {
         "error": {
           "code": "FailedToDownloadImage",
           "innerError": {
-            "requestId": "eebb4cfd-7db6-488c-96c4-1233ad5b774e"
+            "requestId": "46307443-37cb-418c-841b-2d6fd9988deb"
           },
           "message": "Failed to download image from input URL."
         }

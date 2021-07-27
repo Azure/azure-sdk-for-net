@@ -376,7 +376,7 @@ namespace Azure.Core.Extensions.Tests
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddAzureClients(builder =>
-                builder.AddClient<TestClientWithCredentials, TestClientOptions>((credential, options) => new TestClientWithCredentials(new Uri("http://localhost/"), credential, options))
+                builder.AddClient<TestClientWithCredentials, TestClientOptions>((options, credential) => new TestClientWithCredentials(new Uri("http://localhost/"), credential, options))
             );
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
@@ -392,7 +392,7 @@ namespace Azure.Core.Extensions.Tests
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddSingleton("conn str");
             serviceCollection.AddAzureClients(builder =>
-                builder.AddClient<TestClient, TestClientOptions>((p, options) => new TestClient(p.GetService<string>(),  options))
+                builder.AddClient<TestClient, TestClientOptions>((options, p) => new TestClient(p.GetService<string>(),  options))
             );
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClient client = provider.GetService<TestClient>();
@@ -407,7 +407,7 @@ namespace Azure.Core.Extensions.Tests
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddSingleton(new Uri("http://localhost/"));
             serviceCollection.AddAzureClients(builder =>
-                builder.AddClient<TestClientWithCredentials, TestClientOptions>((p, credential, options) => new TestClientWithCredentials(p.GetService<Uri>(), credential, options))
+                builder.AddClient<TestClientWithCredentials, TestClientOptions>((options, credential, p) => new TestClientWithCredentials(p.GetService<Uri>(), credential, options))
             );
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();

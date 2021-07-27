@@ -11,11 +11,18 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AzureApplicationInsightsParameter
     {
         /// <summary> Initializes a new instance of AzureApplicationInsightsParameter. </summary>
-        /// <param name="azureCloud"> Azure cloud environment. </param>
-        /// <param name="applicationId"> Azure Application Insights ID. </param>
-        /// <param name="apiKey"> API Key. </param>
-        /// <param name="query"> Query. </param>
-        public AzureApplicationInsightsParameter(string azureCloud, string applicationId, string apiKey, string query)
+        /// <param name="query"> The statement to query this Azure Application Insights. </param>
+        public AzureApplicationInsightsParameter(string query)
+        {
+            Query = query;
+        }
+
+        /// <summary> Initializes a new instance of AzureApplicationInsightsParameter. </summary>
+        /// <param name="azureCloud"> The Azure cloud that this Azure Application Insights in. </param>
+        /// <param name="applicationId"> The application id of this Azure Application Insights. </param>
+        /// <param name="apiKey"> The API Key that can access this Azure Application Insights. </param>
+        /// <param name="query"> The statement to query this Azure Application Insights. </param>
+        internal AzureApplicationInsightsParameter(string azureCloud, string applicationId, string apiKey, string query)
         {
             AzureCloud = azureCloud;
             ApplicationId = applicationId;
@@ -23,13 +30,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             Query = query;
         }
 
-        /// <summary> Azure cloud environment. </summary>
+        /// <summary> The Azure cloud that this Azure Application Insights in. </summary>
         public string AzureCloud { get; set; }
-        /// <summary> Azure Application Insights ID. </summary>
+        /// <summary> The application id of this Azure Application Insights. </summary>
         public string ApplicationId { get; set; }
-        /// <summary> API Key. </summary>
+        /// <summary> The API Key that can access this Azure Application Insights. </summary>
         public string ApiKey { get; set; }
-        /// <summary> Query. </summary>
+        /// <summary> The statement to query this Azure Application Insights. </summary>
         public string Query { get; set; }
     }
 }

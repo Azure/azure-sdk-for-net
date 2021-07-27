@@ -22,22 +22,62 @@ namespace Microsoft.Azure.Management.SignalR
     public static partial class SignalRPrivateEndpointConnectionsOperationsExtensions
     {
             /// <summary>
-            /// Get the specified private endpoint connection associated with a SignalR
-            /// resource.
+            /// List private endpoint connections
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='privateEndpointConnectionName'>
-            /// The name of the private endpoint connection associated with the SignalR
-            /// resource.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group that contains the resource. You can obtain
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='resourceName'>
-            /// The name of the SignalR resource.
+            /// The name of the resource.
+            /// </param>
+            public static IPage<PrivateEndpointConnection> List(this ISignalRPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName)
+            {
+                return operations.ListAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List private endpoint connections
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PrivateEndpointConnection>> ListAsync(this ISignalRPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the specified private endpoint connection
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the resource.
             /// </param>
             public static PrivateEndpointConnection Get(this ISignalRPrivateEndpointConnectionsOperations operations, string privateEndpointConnectionName, string resourceGroupName, string resourceName)
             {
@@ -45,22 +85,20 @@ namespace Microsoft.Azure.Management.SignalR
             }
 
             /// <summary>
-            /// Get the specified private endpoint connection associated with a SignalR
-            /// resource.
+            /// Get the specified private endpoint connection
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
-            /// The name of the private endpoint connection associated with the SignalR
-            /// resource.
+            /// The name of the private endpoint connection
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group that contains the resource. You can obtain
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='resourceName'>
-            /// The name of the SignalR resource.
+            /// The name of the resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -74,80 +112,74 @@ namespace Microsoft.Azure.Management.SignalR
             }
 
             /// <summary>
-            /// Update the state of specified private endpoint connection associated with a
-            /// SignalR resource.
+            /// Update the state of specified private endpoint connection
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
-            /// The name of the private endpoint connection associated with the SignalR
-            /// resource.
+            /// The name of the private endpoint connection
+            /// </param>
+            /// <param name='parameters'>
+            /// The resource of private endpoint and its properties
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group that contains the resource. You can obtain
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='resourceName'>
-            /// The name of the SignalR resource.
+            /// The name of the resource.
             /// </param>
-            /// <param name='parameters'>
-            /// The resource of private endpoint and its properties.
-            /// </param>
-            public static PrivateEndpointConnection Update(this ISignalRPrivateEndpointConnectionsOperations operations, string privateEndpointConnectionName, string resourceGroupName, string resourceName, PrivateEndpointConnection parameters = default(PrivateEndpointConnection))
+            public static PrivateEndpointConnection Update(this ISignalRPrivateEndpointConnectionsOperations operations, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string resourceGroupName, string resourceName)
             {
-                return operations.UpdateAsync(privateEndpointConnectionName, resourceGroupName, resourceName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(privateEndpointConnectionName, parameters, resourceGroupName, resourceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Update the state of specified private endpoint connection associated with a
-            /// SignalR resource.
+            /// Update the state of specified private endpoint connection
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
-            /// The name of the private endpoint connection associated with the SignalR
-            /// resource.
+            /// The name of the private endpoint connection
+            /// </param>
+            /// <param name='parameters'>
+            /// The resource of private endpoint and its properties
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group that contains the resource. You can obtain
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='resourceName'>
-            /// The name of the SignalR resource.
-            /// </param>
-            /// <param name='parameters'>
-            /// The resource of private endpoint and its properties.
+            /// The name of the resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnection> UpdateAsync(this ISignalRPrivateEndpointConnectionsOperations operations, string privateEndpointConnectionName, string resourceGroupName, string resourceName, PrivateEndpointConnection parameters = default(PrivateEndpointConnection), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateEndpointConnection> UpdateAsync(this ISignalRPrivateEndpointConnectionsOperations operations, string privateEndpointConnectionName, PrivateEndpointConnection parameters, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(privateEndpointConnectionName, resourceGroupName, resourceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(privateEndpointConnectionName, parameters, resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete the specified private endpoint connection associated with a SignalR
-            /// resource.
+            /// Delete the specified private endpoint connection
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
-            /// The name of the private endpoint connection associated with the SignalR
-            /// resource.
+            /// The name of the private endpoint connection
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group that contains the resource. You can obtain
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='resourceName'>
-            /// The name of the SignalR resource.
+            /// The name of the resource.
             /// </param>
             public static void Delete(this ISignalRPrivateEndpointConnectionsOperations operations, string privateEndpointConnectionName, string resourceGroupName, string resourceName)
             {
@@ -155,22 +187,20 @@ namespace Microsoft.Azure.Management.SignalR
             }
 
             /// <summary>
-            /// Delete the specified private endpoint connection associated with a SignalR
-            /// resource.
+            /// Delete the specified private endpoint connection
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
-            /// The name of the private endpoint connection associated with the SignalR
-            /// resource.
+            /// The name of the private endpoint connection
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group that contains the resource. You can obtain
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='resourceName'>
-            /// The name of the SignalR resource.
+            /// The name of the resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -181,22 +211,20 @@ namespace Microsoft.Azure.Management.SignalR
             }
 
             /// <summary>
-            /// Delete the specified private endpoint connection associated with a SignalR
-            /// resource.
+            /// Delete the specified private endpoint connection
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
-            /// The name of the private endpoint connection associated with the SignalR
-            /// resource.
+            /// The name of the private endpoint connection
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group that contains the resource. You can obtain
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='resourceName'>
-            /// The name of the SignalR resource.
+            /// The name of the resource.
             /// </param>
             public static void BeginDelete(this ISignalRPrivateEndpointConnectionsOperations operations, string privateEndpointConnectionName, string resourceGroupName, string resourceName)
             {
@@ -204,22 +232,20 @@ namespace Microsoft.Azure.Management.SignalR
             }
 
             /// <summary>
-            /// Delete the specified private endpoint connection associated with a SignalR
-            /// resource.
+            /// Delete the specified private endpoint connection
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='privateEndpointConnectionName'>
-            /// The name of the private endpoint connection associated with the SignalR
-            /// resource.
+            /// The name of the private endpoint connection
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group that contains the resource. You can obtain
             /// this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='resourceName'>
-            /// The name of the SignalR resource.
+            /// The name of the resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -227,6 +253,40 @@ namespace Microsoft.Azure.Management.SignalR
             public static async Task BeginDeleteAsync(this ISignalRPrivateEndpointConnectionsOperations operations, string privateEndpointConnectionName, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(privateEndpointConnectionName, resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// List private endpoint connections
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PrivateEndpointConnection> ListNext(this ISignalRPrivateEndpointConnectionsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List private endpoint connections
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PrivateEndpointConnection>> ListNextAsync(this ISignalRPrivateEndpointConnectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

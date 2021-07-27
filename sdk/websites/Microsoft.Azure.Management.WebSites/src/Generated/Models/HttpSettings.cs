@@ -15,6 +15,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the HTTP requests for authentication and
+    /// authorization requests made against App Service
+    /// Authentication/Authorization.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class HttpSettings : ProxyOnlyResource
     {
@@ -33,6 +38,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
+        /// <param name="requireHttps">&lt;code&gt;false&lt;/code&gt; if the
+        /// authentication/authorization responses not having the HTTPS scheme
+        /// are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;.</param>
+        /// <param name="routes">The configuration settings of the paths HTTP
+        /// requests.</param>
+        /// <param name="forwardProxy">The configuration settings of a forward
+        /// proxy used to make the requests.</param>
         public HttpSettings(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? requireHttps = default(bool?), HttpSettingsRoutes routes = default(HttpSettingsRoutes), ForwardProxy forwardProxy = default(ForwardProxy))
             : base(id, name, kind, type)
         {
@@ -48,16 +60,23 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; if the
+        /// authentication/authorization responses not having the HTTPS scheme
+        /// are permissible; otherwise,
+        /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;.
         /// </summary>
         [JsonProperty(PropertyName = "properties.requireHttps")]
         public bool? RequireHttps { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of the paths HTTP requests.
         /// </summary>
         [JsonProperty(PropertyName = "properties.routes")]
         public HttpSettingsRoutes Routes { get; set; }
 
         /// <summary>
+        /// Gets or sets the configuration settings of a forward proxy used to
+        /// make the requests.
         /// </summary>
         [JsonProperty(PropertyName = "properties.forwardProxy")]
         public ForwardProxy ForwardProxy { get; set; }

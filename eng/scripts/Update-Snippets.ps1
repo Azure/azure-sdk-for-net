@@ -2,7 +2,10 @@
 param (
     [Parameter(Position=0)]
     [ValidateNotNullOrEmpty()]
-    [string] $ServiceDirectory
+    [string] $ServiceDirectory,
+
+    [Parameter()]
+    [switch] $StrictMode
 )
 
 $generatorProject = "$PSScriptRoot/../SnippetGenerator/SnippetGenerator.csproj";
@@ -14,4 +17,10 @@ if ($ServiceDirectory -and ($ServiceDirectory -ne "*")) {
     $root += '/' + $ServiceDirectory
 }
 
-Resolve-Path "$root" | %{ dotnet run -p $generatorProject -b "$_" -c Release }
+if (-not (Test-Path env:TF_BUILD)) { $StrictMode = $true }
+
+if($StrictMode) {
+    Resolve-Path "$root" | %{ dotnet run -p $generatorProject -b "$_" -sm -c Release }
+} else {
+    Resolve-Path "$root" | %{ dotnet run -p $generatorProject -b "$_" -c Release }
+}

@@ -3,7 +3,6 @@
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    // TODO: expose it as part of 1.0.0-beta.4
     internal readonly partial struct AuthenticationTypeEnum
     {
     }

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class QueryResultPage
+    internal partial class QueryResultPage
     {
         internal static QueryResultPage DeserializeQueryResultPage(JsonElement element)
         {

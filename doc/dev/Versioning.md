@@ -1,6 +1,6 @@
 # Azure SDK .NET - Versioning
 
-This document covers the basic versioning strategy and which properties to use. It is based on the rules outlined in our [Azure SDK Releases doc](https://github.com/Azure/azure-sdk/blob/master/docs/policies/releases.md#net) and it closely matches the [.NET versioning rules](https://github.com/dotnet/arcade/blob/master/Documentation/CorePackages/Versioning.md) but simplified to only include the parts necessary for our libraries.
+This document covers the basic versioning strategy and which properties to use. It is based on the rules outlined in our [Azure SDK Releases doc](https://github.com/Azure/azure-sdk/blob/main/docs/policies/releases.md#net) and it closely matches the [.NET versioning rules](https://github.com/dotnet/arcade/blob/master/Documentation/CorePackages/Versioning.md) but simplified to only include the parts necessary for our libraries.
 
 ## Package Versioning
 
@@ -23,7 +23,7 @@ be passed as `true` to the packaging command.
 
 ## Incrementing the version
 
-See [Incrementing after release](https://github.com/Azure/azure-sdk/blob/master/docs/policies/releases.md#incrementing-after-release) for general guidance but at a
+See [Incrementing after release](https://github.com/Azure/azure-sdk/blob/main/docs/policies/releases.md#incrementing-after-release) for general guidance but at a
 high level we will do the following versioning changes:
 
 - After a beta release we bump the number after the beta. `1.0.0-beta.1` -> `1.0.0-beta.2`

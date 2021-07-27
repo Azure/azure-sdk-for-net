@@ -16,8 +16,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             AnomalySeverity maxSeverity = default;
             AnomalyIncidentStatus incidentStatus = default;
-            Optional<double> valueOfRootNode = default;
-            Optional<double> expectedValueOfRootNode = default;
+            double valueOfRootNode = default;
+            Optional<double?> expectedValueOfRootNode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxSeverity"))
@@ -32,11 +32,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 if (property.NameEquals("valueOfRootNode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     valueOfRootNode = property.Value.GetDouble();
                     continue;
                 }
@@ -44,14 +39,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        expectedValueOfRootNode = null;
                         continue;
                     }
                     expectedValueOfRootNode = property.Value.GetDouble();
                     continue;
                 }
             }
-            return new IncidentProperty(maxSeverity, incidentStatus, Optional.ToNullable(valueOfRootNode), Optional.ToNullable(expectedValueOfRootNode));
+            return new IncidentProperty(maxSeverity, incidentStatus, valueOfRootNode, Optional.ToNullable(expectedValueOfRootNode));
         }
     }
 }

@@ -28,7 +28,49 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [EnumMember(Value = "TimeSeries")]
         TimeSeries,
         [EnumMember(Value = "TimeSeriesPerInstance")]
-        TimeSeriesPerInstance
+        TimeSeriesPerInstance,
+        [EnumMember(Value = "PieChart")]
+        PieChart,
+        [EnumMember(Value = "DataSummary")]
+        DataSummary,
+        [EnumMember(Value = "Email")]
+        Email,
+        [EnumMember(Value = "Insights")]
+        Insights,
+        [EnumMember(Value = "DynamicInsight")]
+        DynamicInsight,
+        [EnumMember(Value = "Markdown")]
+        Markdown,
+        [EnumMember(Value = "Detector")]
+        Detector,
+        [EnumMember(Value = "DropDown")]
+        DropDown,
+        [EnumMember(Value = "Card")]
+        Card,
+        [EnumMember(Value = "Solution")]
+        Solution,
+        [EnumMember(Value = "Guage")]
+        Guage,
+        [EnumMember(Value = "Form")]
+        Form,
+        [EnumMember(Value = "ChangeSets")]
+        ChangeSets,
+        [EnumMember(Value = "ChangeAnalysisOnboarding")]
+        ChangeAnalysisOnboarding,
+        [EnumMember(Value = "ChangesView")]
+        ChangesView,
+        [EnumMember(Value = "AppInsight")]
+        AppInsight,
+        [EnumMember(Value = "DependencyGraph")]
+        DependencyGraph,
+        [EnumMember(Value = "DownTime")]
+        DownTime,
+        [EnumMember(Value = "SummaryCard")]
+        SummaryCard,
+        [EnumMember(Value = "SearchComponent")]
+        SearchComponent,
+        [EnumMember(Value = "AppInsightEnablement")]
+        AppInsightEnablement
     }
     internal static class RenderingTypeEnumExtension
     {
@@ -49,6 +91,48 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return "TimeSeries";
                 case RenderingType.TimeSeriesPerInstance:
                     return "TimeSeriesPerInstance";
+                case RenderingType.PieChart:
+                    return "PieChart";
+                case RenderingType.DataSummary:
+                    return "DataSummary";
+                case RenderingType.Email:
+                    return "Email";
+                case RenderingType.Insights:
+                    return "Insights";
+                case RenderingType.DynamicInsight:
+                    return "DynamicInsight";
+                case RenderingType.Markdown:
+                    return "Markdown";
+                case RenderingType.Detector:
+                    return "Detector";
+                case RenderingType.DropDown:
+                    return "DropDown";
+                case RenderingType.Card:
+                    return "Card";
+                case RenderingType.Solution:
+                    return "Solution";
+                case RenderingType.Guage:
+                    return "Guage";
+                case RenderingType.Form:
+                    return "Form";
+                case RenderingType.ChangeSets:
+                    return "ChangeSets";
+                case RenderingType.ChangeAnalysisOnboarding:
+                    return "ChangeAnalysisOnboarding";
+                case RenderingType.ChangesView:
+                    return "ChangesView";
+                case RenderingType.AppInsight:
+                    return "AppInsight";
+                case RenderingType.DependencyGraph:
+                    return "DependencyGraph";
+                case RenderingType.DownTime:
+                    return "DownTime";
+                case RenderingType.SummaryCard:
+                    return "SummaryCard";
+                case RenderingType.SearchComponent:
+                    return "SearchComponent";
+                case RenderingType.AppInsightEnablement:
+                    return "AppInsightEnablement";
             }
             return null;
         }
@@ -65,6 +149,48 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return RenderingType.TimeSeries;
                 case "TimeSeriesPerInstance":
                     return RenderingType.TimeSeriesPerInstance;
+                case "PieChart":
+                    return RenderingType.PieChart;
+                case "DataSummary":
+                    return RenderingType.DataSummary;
+                case "Email":
+                    return RenderingType.Email;
+                case "Insights":
+                    return RenderingType.Insights;
+                case "DynamicInsight":
+                    return RenderingType.DynamicInsight;
+                case "Markdown":
+                    return RenderingType.Markdown;
+                case "Detector":
+                    return RenderingType.Detector;
+                case "DropDown":
+                    return RenderingType.DropDown;
+                case "Card":
+                    return RenderingType.Card;
+                case "Solution":
+                    return RenderingType.Solution;
+                case "Guage":
+                    return RenderingType.Guage;
+                case "Form":
+                    return RenderingType.Form;
+                case "ChangeSets":
+                    return RenderingType.ChangeSets;
+                case "ChangeAnalysisOnboarding":
+                    return RenderingType.ChangeAnalysisOnboarding;
+                case "ChangesView":
+                    return RenderingType.ChangesView;
+                case "AppInsight":
+                    return RenderingType.AppInsight;
+                case "DependencyGraph":
+                    return RenderingType.DependencyGraph;
+                case "DownTime":
+                    return RenderingType.DownTime;
+                case "SummaryCard":
+                    return RenderingType.SummaryCard;
+                case "SearchComponent":
+                    return RenderingType.SearchComponent;
+                case "AppInsightEnablement":
+                    return RenderingType.AppInsightEnablement;
             }
             return null;
         }

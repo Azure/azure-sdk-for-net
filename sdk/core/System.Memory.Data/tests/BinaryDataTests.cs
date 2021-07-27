@@ -98,9 +98,9 @@ namespace System.Tests
             byte[] buffer = Encoding.UTF8.GetBytes("some data");
             BinaryData data = BinaryData.FromBytes(buffer);
             Stream stream = data.ToStream();
-            buffer[0] = (byte)'z';
+            buffer[0] = (byte)'t';
             StreamReader sr = new StreamReader(stream);
-            Assert.Equal("zome data", await sr.ReadToEndAsync());
+            Assert.Equal("tome data", await sr.ReadToEndAsync());
         }
 
         [Fact]

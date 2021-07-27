@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -59,7 +60,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new CheckPrincipalAccessRequest(subject, actions, scope);
+            var model = new CheckPrincipalAccessRequest(subject, actions.ToList(), scope);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;

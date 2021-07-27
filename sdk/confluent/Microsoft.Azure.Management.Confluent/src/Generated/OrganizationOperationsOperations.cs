@@ -881,6 +881,10 @@ namespace Microsoft.Azure.Management.Confluent
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "organizationName");
             }
+            if (body != null)
+            {
+                body.Validate();
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

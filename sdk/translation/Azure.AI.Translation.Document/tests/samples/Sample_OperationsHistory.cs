@@ -13,15 +13,12 @@ namespace Azure.AI.Translation.Document.Samples
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
-        [Ignore("Samples not working yet")]
         public void OperationsHistory()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-
-            #region Snippet:OperationsHistory
 
             int operationsCount = 0;
             int totalDocs = 0;
@@ -31,11 +28,12 @@ namespace Azure.AI.Translation.Document.Samples
 
             TimeSpan pollingInterval = new(1000);
 
-            foreach (TranslationStatusResult translationStatus in client.GetTranslations())
+            foreach (TranslationStatus translationStatus in client.GetAllTranslationStatuses())
             {
-                if (!translationStatus.HasCompleted)
+                if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
+                    translationStatus.Status == DocumentTranslationStatus.Running)
                 {
-                    DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.TranslationId, client);
+                    DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
 
                     while (!operation.HasCompleted)
                     {
@@ -61,8 +59,6 @@ namespace Azure.AI.Translation.Document.Samples
             Console.WriteLine($"Succeeded Document: {docsSucceeded}");
             Console.WriteLine($"Failed Document: {docsFailed}");
             Console.WriteLine($"Cancelled Documents: {docsCancelled}");
-
-            #endregion
         }
     }
 }

@@ -97,23 +97,6 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        public async Task CreateUserAndTokenWithNullScopeShouldThrow()
-        {
-            try
-            {
-                CommunicationIdentityClient client = CreateClientWithConnectionString();
-                Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: null);
-            }
-            catch (NullReferenceException ex)
-            {
-                Assert.NotNull(ex.Message);
-                Console.WriteLine(ex.Message);
-                return;
-            }
-            Assert.Fail("CreateUserAndTokenAsync should have thrown an exception.");
-        }
-
-        [Test]
         public async Task DeleteUserWithNullUserShouldThrow()
         {
             try
@@ -145,6 +128,91 @@ namespace Azure.Communication.Identity.Tests
                 return;
             }
             Assert.Fail("RevokeTokensAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task ExchangeTeamsTokenWithValidToken()
+        {
+            if (TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest) {
+                Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
+            }
+
+            string token = await generateTeamsToken();
+
+            CommunicationIdentityClient client = CreateClientWithConnectionString();
+            Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(token);
+            Assert.IsNotNull(tokenResponse.Value);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
+        }
+
+        [Test]
+        public async Task ExchangeTeamsTokenWithEmptyTokenShouldThrow()
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync("");
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Assert.True(ex.Message.Contains("401"));
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown.");
+        }
+
+        [Test]
+        public async Task ExchangeTeamsTokenWithNullTokenShouldThrow()
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(null);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("token", ex.ParamName);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown.");
+        }
+
+        [Test]
+        public async Task ExchangeTeamsTokenWithInvalidTokenShouldThrow()
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync("invalid");
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Assert.True(ex.Message.Contains("401"));
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown.");
+        }
+
+        [Test]
+        public async Task ExchangeTeamsTokenWithExpiredTokenShouldThrow()
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<AccessToken> tokenResponse = await client.ExchangeTeamsTokenAsync(TestEnvironment.CommunicationExpiredTeamsToken);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Assert.True(ex.Message.Contains("401"));
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown.");
         }
     }
 }

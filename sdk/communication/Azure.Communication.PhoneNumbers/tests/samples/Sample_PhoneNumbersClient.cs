@@ -100,7 +100,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             if (SkipPhoneNumberLiveTests)
                 Assert.Ignore("Skip phone number live tests flag is on.");
 
-            var connectionString = TestEnvironment.LiveTestConnectionString;
+            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
 
             #region Snippet:CreatePhoneNumbersClient
             // Get a connection string to our Azure Communication resource.

@@ -8,7 +8,8 @@
         "Content-Length": "169",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-8fbef2607c7a0441ab04af9131701382-390135f1aa78634c-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "09d01c2b3e286c9e5e1372a5ce786a87",
         "x-ms-return-client-request-id": "true"
@@ -16,14 +17,14 @@
       "RequestBody": "{\u0022startTime\u0022:\u00222020-10-01T00:00:00Z\u0022,\u0022endTime\u0022:\u00222020-10-31T00:00:00Z\u0022,\u0022filter\u0022:{\u0022dimensionFilter\u0022:[{\u0022dimension\u0022:{\u0022city\u0022:\u0022__SUM__\u0022,\u0022category\u0022:\u0022Grocery \u0026 Gourmet Food\u0022}}]}}",
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f01c2a81-bd26-4170-95d4-d3f292e5af7d",
-        "Content-Length": "1108",
+        "apim-request-id": "187c90ea-3d86-446b-b8c7-fca09ce556ed",
+        "Content-Length": "1402",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Dec 2020 01:34:37 GMT",
+        "Date": "Wed, 12 May 2021 23:59:45 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "224",
-        "x-request-id": "f01c2a81-bd26-4170-95d4-d3f292e5af7d"
+        "x-envoy-upstream-service-time": "379",
+        "x-request-id": "187c90ea-3d86-446b-b8c7-fca09ce556ed"
       },
       "ResponseBody": {
         "value": [
@@ -39,7 +40,9 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 63.400000000000006,
+              "expectedValueOfRootNode": 48.22158178606567
             }
           },
           {
@@ -54,7 +57,9 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 71.000000000000028,
+              "expectedValueOfRootNode": 61.915694193472881
             }
           },
           {
@@ -69,7 +74,9 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 75.800000000000026,
+              "expectedValueOfRootNode": 64.1102219457623
             }
           },
           {
@@ -84,11 +91,12 @@
             },
             "property": {
               "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Active",
+              "valueOfRootNode": 82.6,
+              "expectedValueOfRootNode": 65.562350570350375
             }
           }
-        ],
-        "@nextLink": null
+        ]
       }
     },
     {
@@ -97,7 +105,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-52d295e2298c6b4aabd838dd64eb608b-777295ac89dd0d43-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210512.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "603b1ca0f9cb9cd3a1e422c02c8dda64",
         "x-ms-return-client-request-id": "true"
@@ -105,14 +114,14 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c49f06ff-831c-46fa-8f43-85d56436e376",
-        "Content-Length": "1631",
+        "apim-request-id": "3950db43-bcd0-47e6-847b-9ce53300bad0",
+        "Content-Length": "1630",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Dec 2020 01:34:38 GMT",
+        "Date": "Wed, 12 May 2021 23:59:45 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "225",
-        "x-request-id": "c49f06ff-831c-46fa-8f43-85d56436e376"
+        "x-envoy-upstream-service-time": "345",
+        "x-request-id": "3950db43-bcd0-47e6-847b-9ce53300bad0"
       },
       "ResponseBody": {
         "value": [
@@ -126,7 +135,7 @@
             "path": [
               "city"
             ],
-            "score": 0.093254247542794544,
+            "score": 0.093254247542794377,
             "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Houston"
           },
           {
@@ -139,7 +148,7 @@
             "path": [
               "city"
             ],
-            "score": 0.070565102895706944,
+            "score": 0.070565102895706833,
             "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Manila"
           },
           {
@@ -152,7 +161,7 @@
             "path": [
               "city"
             ],
-            "score": 0.034323946263572935,
+            "score": 0.03432394626357288,
             "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Tianjin"
           },
           {
@@ -165,7 +174,7 @@
             "path": [
               "city"
             ],
-            "score": 0.032546005599616623,
+            "score": 0.032546005599616568,
             "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Shanghai"
           },
           {

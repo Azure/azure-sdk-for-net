@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
-        /// <param name="additionalProperties"> . </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <param name="blobPathBeginsWith"> The blob path must begin with the pattern provided for trigger to fire. For example, &apos;/records/blobs/december/&apos; will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </param>
         /// <param name="blobPathEndsWith"> The blob path must end with the pattern provided for trigger to fire. For example, &apos;december/boxes.csv&apos; will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </param>

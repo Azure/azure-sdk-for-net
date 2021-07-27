@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Plugins;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -103,11 +102,6 @@ namespace Azure.Messaging.ServiceBus
         private readonly EntityScopeFactory _scopeFactory;
 
         /// <summary>
-        /// The list of plugins to apply to incoming messages.
-        /// </summary>
-        private readonly IList<ServiceBusPlugin> _plugins;
-
-        /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
@@ -120,19 +114,18 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="entityPath"></param>
         /// <param name="isSessionEntity"></param>
-        /// <param name="plugins">The plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
         /// <param name="sessionId">An optional session Id to scope the receiver to. If not specified,
-        /// the next available session returned from the service will be used.</param>
+        ///     the next available session returned from the service will be used.</param>
+        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">The cancellation token to use when opening the receiver link.</param>
-        ///
         internal ServiceBusReceiver(
             ServiceBusConnection connection,
             string entityPath,
             bool isSessionEntity,
-            IList<ServiceBusPlugin> plugins,
             ServiceBusReceiverOptions options,
             string sessionId = default,
+            bool isProcessor = default,
             CancellationToken cancellationToken = default)
         {
             Type type = GetType();
@@ -166,9 +159,9 @@ namespace Azure.Messaging.ServiceBus
                     identifier: Identifier,
                     sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver,
+                    isProcessor: isProcessor,
                     cancellationToken: cancellationToken);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
-                _plugins = plugins;
                 if (!isSessionEntity)
                 {
                     // don't log client completion for session receiver here as it is not complete until
@@ -190,12 +183,34 @@ namespace Azure.Messaging.ServiceBus
         protected ServiceBusReceiver() { }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the receiver.</param>
+        /// <param name="queueName">The name of the queue to receive from.</param>
+        /// <param name="options">The set of options to use when configuring the receiver.</param>
+        protected ServiceBusReceiver(ServiceBusClient client, string queueName, ServiceBusReceiverOptions options) :
+            this(client?.Connection, queueName, false,  options)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the receiver.</param>
+        /// <param name="topicName">The topic to create a receiver for.</param>
+        /// <param name="subscriptionName">The subscription to create a receiver for.</param>
+        /// <param name="options">The set of options to use when configuring the receiver.</param>
+        protected ServiceBusReceiver(ServiceBusClient client, string topicName, string subscriptionName, ServiceBusReceiverOptions options) :
+            this(client?.Connection, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), false,  options)
+        {
+        }
+
+        /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiver" />.
         /// </summary>
         /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
-        public virtual async Task CloseAsync(
-            CancellationToken cancellationToken = default)
+        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             IsClosed = true;
             Type clientType = GetType();
@@ -203,7 +218,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.ClientCloseStart(clientType, Identifier);
             try
             {
-                await InnerReceiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                await InnerReceiver.CloseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -228,9 +243,16 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
-           int maxMessages,
-           TimeSpan? maxWaitTime = default,
-           CancellationToken cancellationToken = default)
+            int maxMessages,
+            TimeSpan? maxWaitTime = default,
+            CancellationToken cancellationToken = default) =>
+            await ReceiveMessagesAsync(maxMessages, maxWaitTime, false, cancellationToken).ConfigureAwait(false);
+
+        internal async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
+            int maxMessages,
+            TimeSpan? maxWaitTime,
+            bool isProcessor,
+            CancellationToken cancellationToken)
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
@@ -262,7 +284,13 @@ namespace Azure.Messaging.ServiceBus
                     maxMessages,
                     maxWaitTime,
                     cancellationToken).ConfigureAwait(false);
-                await ApplyPlugins(messages).ConfigureAwait(false);
+            }
+            catch (TaskCanceledException ex)
+                when (isProcessor)
+            {
+                Logger.ProcessorStoppingReceiveCanceled(Identifier, ex.ToString());
+                scope.Failed(ex);
+                throw;
             }
             catch (Exception exception)
             {
@@ -271,7 +299,7 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            Logger.ReceiveMessageComplete(Identifier, messages.Count);
+            Logger.ReceiveMessageComplete(Identifier, messages);
             scope.SetMessageData(messages);
 
             return messages;
@@ -330,28 +358,6 @@ namespace Azure.Messaging.ServiceBus
                 return message;
             }
             return null;
-        }
-
-        private async Task ApplyPlugins(IReadOnlyList<ServiceBusReceivedMessage> messages)
-        {
-            foreach (ServiceBusPlugin plugin in _plugins)
-            {
-                string pluginType = plugin.GetType().Name;
-                foreach (ServiceBusReceivedMessage message in messages)
-                {
-                    try
-                    {
-                        Logger.PluginCallStarted(pluginType, message.MessageId);
-                        await plugin.AfterMessageReceiveAsync(message).ConfigureAwait(false);
-                        Logger.PluginCallCompleted(pluginType, message.MessageId);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.PluginCallException(pluginType, message.MessageId, ex.ToString());
-                        throw;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -457,9 +463,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Opens an AMQP link for use with receiver operations.
         /// </summary>
-        ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         internal async Task OpenLinkAsync(CancellationToken cancellationToken) =>
             await InnerReceiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
@@ -1104,9 +1108,13 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync() =>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
+            Justification = "This signature must match the IAsyncDisposable interface.")]
+        public virtual async ValueTask DisposeAsync()
+        {
             await CloseAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.

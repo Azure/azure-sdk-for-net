@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Sql.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ResourceIdentity class.
         /// </summary>
+        /// <param name="userAssignedIdentities">The resource ids of the user
+        /// assigned identities to use</param>
         /// <param name="principalId">The Azure Active Directory principal
         /// id.</param>
         /// <param name="type">The identity type. Set this to 'SystemAssigned'
@@ -37,8 +41,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'None', 'SystemAssigned', 'UserAssigned'</param>
         /// <param name="tenantId">The Azure Active Directory tenant
         /// id.</param>
-        public ResourceIdentity(System.Guid? principalId = default(System.Guid?), string type = default(string), System.Guid? tenantId = default(System.Guid?))
+        public ResourceIdentity(IDictionary<string, UserIdentity> userAssignedIdentities = default(IDictionary<string, UserIdentity>), System.Guid? principalId = default(System.Guid?), string type = default(string), System.Guid? tenantId = default(System.Guid?))
         {
+            UserAssignedIdentities = userAssignedIdentities;
             PrincipalId = principalId;
             Type = type;
             TenantId = tenantId;
@@ -49,6 +54,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the resource ids of the user assigned identities to
+        /// use
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserIdentity> UserAssignedIdentities { get; set; }
 
         /// <summary>
         /// Gets the Azure Active Directory principal id.

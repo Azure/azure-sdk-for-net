@@ -200,5 +200,79 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "properties.protocols")]
         public IList<Protocol?> Protocols { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ApiRevision != null)
+            {
+                if (ApiRevision.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ApiRevision", 100);
+                }
+                if (ApiRevision.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ApiRevision", 1);
+                }
+            }
+            if (ApiVersion != null)
+            {
+                if (ApiVersion.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ApiVersion", 100);
+                }
+            }
+            if (ApiRevisionDescription != null)
+            {
+                if (ApiRevisionDescription.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ApiRevisionDescription", 256);
+                }
+            }
+            if (ApiVersionDescription != null)
+            {
+                if (ApiVersionDescription.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ApiVersionDescription", 256);
+                }
+            }
+            if (DisplayName != null)
+            {
+                if (DisplayName.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 300);
+                }
+                if (DisplayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
+                }
+            }
+            if (ServiceUrl != null)
+            {
+                if (ServiceUrl.Length > 2000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ServiceUrl", 2000);
+                }
+                if (ServiceUrl.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ServiceUrl", 1);
+                }
+            }
+            if (Path != null)
+            {
+                if (Path.Length > 400)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Path", 400);
+                }
+                if (Path.Length < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Path", 0);
+                }
+            }
+        }
     }
 }

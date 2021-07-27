@@ -2,7 +2,6 @@
 trigger:
   branches:
     include:
-    - master
     - main
     - hotfix/*
     - release/*
@@ -13,7 +12,6 @@ trigger:
 pr:
   branches:
     include:
-    - master
     - main
     - feature/*
     - hotfix/*
@@ -28,6 +26,8 @@ extends:
     ServiceDirectory: communication
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Communication.CallingServer
+      safeName: AzureCommunicationCallingServer
     - name: Azure.Communication.Chat
       safeName: AzureCommunicationChat
     - name: Azure.Communication.Common
@@ -36,6 +36,8 @@ extends:
       safeName: AzureCommunicationSms
     - name: Azure.Communication.Identity
       safeName: AzureCommunicationIdentity
+    - name: Azure.Communication.NetworkTraversal
+      safeName: AzureCommunicationNetworkTraversal
     - name: Azure.Communication.PhoneNumbers
       safeName: AzureCommunicationPhoneNumbers
     - name: Azure.ResourceManager.Communication

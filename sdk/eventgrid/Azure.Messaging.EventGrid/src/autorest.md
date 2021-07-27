@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/a7292a40170e8ebb10ad12332022798c2fe72f8a/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/3b2879c18061233bdd0d69438f89137d86a5f0e4/specification/eventgrid/data-plane/readme.md
 
 ```
 
@@ -63,11 +63,14 @@ directive:
         $[path]["x-namespace"] = namespace;
       }
       if (path.endsWith("EventData") || 
-          path.endsWith("SubscriptionValidationResponse") || 
           path.includes("EventGridEvent") || 
          ($[path]["x-ms-client-name"] && $[path]["x-ms-client-name"].endsWith("EventData")))
       {
         $[path]["x-csharp-usage"] = "model,output,converter";
+      }
+      if (path.endsWith("SubscriptionValidationResponse"))
+      {
+        $[path]["x-csharp-usage"] = "model,input,output,converter";
       }
       $[path]["x-csharp-formats"] = "json";
       if (path.includes("WebAppServicePlanUpdatedEventData"))

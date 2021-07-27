@@ -25,10 +25,10 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(PropertyValueType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(PropertyValueType.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -37,7 +37,7 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             Optional<JsonElement> values = default;
             Optional<string> name = default;
-            Optional<PropertyTypes> type = default;
+            Optional<TimeSeriesPropertyType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"))
@@ -57,7 +57,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new PropertyTypes(property.Value.GetString());
+                    type = new TimeSeriesPropertyType(property.Value.GetString());
                     continue;
                 }
             }

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Tests.Config
 {
@@ -30,12 +31,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Tests.Config
                 new KeyValuePair<string, string>("ConnectionStrings:" + Constants.DefaultConnectionStringName, defaultConnectionString),
                 new KeyValuePair<string, string>(Constants.DefaultConnectionSettingStringName, defaultConnectionSettingString));
 
-            var mockProvider = new Mock<MessagingProvider>();
+            var mockProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(new ServiceBusOptions()));
             mockProvider.Setup(
-                p => p.CreateClient(expectedValue))
+                p => p.CreateClient(expectedValue, It.IsAny<ServiceBusClientOptions>()))
                 .Returns(Mock.Of<ServiceBusClient>());
 
-            var factory = new ServiceBusClientFactory(configuration, Mock.Of<AzureComponentFactory>(), mockProvider.Object, new AzureEventSourceLogForwarder(new NullLoggerFactory()));
+            var factory = new ServiceBusClientFactory(configuration, Mock.Of<AzureComponentFactory>(), mockProvider.Object, new AzureEventSourceLogForwarder(new NullLoggerFactory()), new OptionsWrapper<ServiceBusOptions>(new ServiceBusOptions()));
             if (expectedValue == null)
             {
                 Assert.That(

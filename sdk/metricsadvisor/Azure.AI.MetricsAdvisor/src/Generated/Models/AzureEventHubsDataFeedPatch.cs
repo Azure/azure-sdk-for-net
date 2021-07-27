@@ -13,9 +13,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of AzureEventHubsDataFeedPatch. </summary>
         public AzureEventHubsDataFeedPatch()
         {
-            DataSourceType = DataFeedSourceType.AzureEventHubs;
+            DataSourceType = DataFeedSourceKind.AzureEventHubs;
         }
 
-        public AzureEventHubsParameter DataSourceParameter { get; set; }
+        public AzureEventHubsParameterPatch DataSourceParameter { get; set; }
     }
 }

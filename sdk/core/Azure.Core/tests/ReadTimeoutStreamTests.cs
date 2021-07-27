@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
             var testStream = new TestStream();
             var timeoutStream = new ReadTimeoutStream(testStream, _defaultTimeout);
 
-            Assert.Throws<OperationCanceledException>(() => timeoutStream.Read(_buffer, 0, 1));
+            Assert.Throws<TaskCanceledException>(() => timeoutStream.Read(_buffer, 0, 1));
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Azure.Core.Tests
             var testStream = new TestStream(true);
             var timeoutStream = new ReadTimeoutStream(testStream, _defaultTimeout);
 
-            Assert.ThrowsAsync<OperationCanceledException>(() => timeoutStream.ReadAsync(_buffer, 0, 1));
+            Assert.ThrowsAsync<TaskCanceledException>(() => timeoutStream.ReadAsync(_buffer, 0, 1));
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace Azure.Core.Tests
             var testStream = new TestStream(true);
             var timeoutStream = new ReadTimeoutStream(testStream, _defaultTimeout);
 
-            Assert.ThrowsAsync<OperationCanceledException>(() => timeoutStream.ReadAsync(_buffer, 0, 1));
+            Assert.ThrowsAsync<TaskCanceledException>(() => timeoutStream.ReadAsync(_buffer, 0, 1));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Azure.Core.Tests
 
             var cancellationToken = cancellationTokenSource.Token;
 
-            Assert.ThrowsAsync<OperationCanceledException>(() => timeoutStream.ReadAsync(_buffer, 0, 1, cancellationToken));
+            Assert.ThrowsAsync<TaskCanceledException>(() => timeoutStream.ReadAsync(_buffer, 0, 1, cancellationToken));
         }
 
         [Test]

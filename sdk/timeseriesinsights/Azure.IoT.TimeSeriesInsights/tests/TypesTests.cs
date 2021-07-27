@@ -27,6 +27,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
+            TimeSeriesInsightsTypes typesClient = client.GetTypesClient();
             var timeSeriesTypes = new List<TimeSeriesType>();
             var tsiTypeNamePrefix = "type";
             var timeSeriesTypesName = Recording.GenerateAlphaNumericId(tsiTypeNamePrefix);
@@ -48,7 +49,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             timeSeriesTypes.Add(type);
 
             // Act and Assert
-            await TestTimeSeriesTypeWhereErrorIsExpected(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
+            await TestTimeSeriesTypeWhereErrorIsExpected(typesClient, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
         }
 
         [Test]
@@ -56,6 +57,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
+            TimeSeriesInsightsTypes typesClient = client.GetTypesClient();
             var timeSeriesTypes = new List<TimeSeriesType>();
             var tsiTypeNamePrefix = "type";
             var timeSeriesTypesName = Recording.GenerateAlphaNumericId(tsiTypeNamePrefix);
@@ -77,7 +79,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             timeSeriesTypes.Add(type);
 
             // Act and Assert
-            await TestTimeSeriesTypeWhereErrorIsExpected(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
+            await TestTimeSeriesTypeWhereErrorIsExpected(typesClient, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
         }
 
         [Test]
@@ -85,6 +87,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
+            TimeSeriesInsightsTypes typesClient = client.GetTypesClient();
             var timeSeriesTypes = new List<TimeSeriesType>();
             var tsiTypeNamePrefix = "type";
             int numOfTypesCreated = 0;
@@ -115,7 +118,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             try
             {
                 // Get all Time Series types in the environment
-                AsyncPageable<TimeSeriesType> getAllTypesResponse = client.Types.GetTypesAsync();
+                AsyncPageable<TimeSeriesType> getAllTypesResponse = typesClient.GetTypesAsync();
 
                 await foreach (TimeSeriesType tsiType in getAllTypesResponse)
                 {
@@ -123,8 +126,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 }
 
                 // Create Time Series types
-                Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
-                    .Types
+                Response<TimeSeriesTypeOperationResult[]> createTypesResult = await typesClient
                     .CreateOrReplaceAsync(timeSeriesTypes)
                     .ConfigureAwait(false);
 
@@ -136,8 +138,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 await TestRetryHelper.RetryAsync<Response<TimeSeriesTypeOperationResult[]>>(async () =>
                 {
                     // Get the created types by names
-                    getTypesByNamesResult = await client
-                        .Types
+                    getTypesByNamesResult = await typesClient
                         .GetByNameAsync(timeSeriesTypesProperties.Keys)
                         .ConfigureAwait(false);
 
@@ -160,8 +161,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     type.Description = "Description";
                 }
 
-                Response<TimeSeriesTypeOperationResult[]> updateTypesResult = await client
-                    .Types
+                Response<TimeSeriesTypeOperationResult[]> updateTypesResult = await typesClient
                     .CreateOrReplaceAsync(timeSeriesTypes)
                     .ConfigureAwait(false);
 
@@ -172,8 +172,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 await TestRetryHelper.RetryAsync<Response<TimeSeriesTypeOperationResult[]>>(async () =>
                 {
                     // Get type by Id
-                    Response<TimeSeriesTypeOperationResult[]> getTypeByIdResult = await client
-                        .Types
+                    Response<TimeSeriesTypeOperationResult[]> getTypeByIdResult = await typesClient
                         .GetByIdAsync(timeSeriesTypesProperties.Values)
                         .ConfigureAwait(false);
 
@@ -194,8 +193,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // clean up
                 try
                 {
-                    Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
-                        .Types
+                    Response<TimeSeriesOperationError[]> deleteTypesResponse = await typesClient
                         .DeleteByIdAsync(timeSeriesTypesProperties.Values)
                         .ConfigureAwait(false);
 
@@ -210,11 +208,10 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             }
         }
 
-        private static async Task TestTimeSeriesTypeWhereErrorIsExpected(TimeSeriesInsightsClient client, List<TimeSeriesType> timeSeriesTypes, string timeSeriesTypesName)
+        private static async Task TestTimeSeriesTypeWhereErrorIsExpected(TimeSeriesInsightsTypes typesClient, List<TimeSeriesType> timeSeriesTypes, string timeSeriesTypesName)
         {
             // create numeric type and expect failure due to invalid input expression
-            Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
-                .Types
+            Response<TimeSeriesTypeOperationResult[]> createTypesResult = await typesClient
                 .CreateOrReplaceAsync(timeSeriesTypes)
                 .ConfigureAwait(false);
 
@@ -222,15 +219,13 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error != null);
 
             // Get the type by name and expect error
-            Response<TimeSeriesTypeOperationResult[]> getTypesByNamesResult = await client
-                .Types
+            Response<TimeSeriesTypeOperationResult[]> getTypesByNamesResult = await typesClient
                 .GetByNameAsync(new string[] { timeSeriesTypesName })
                 .ConfigureAwait(false);
             getTypesByNamesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error != null);
 
             // Delete the type by name and expect error
-            Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
-                .Types
+            Response<TimeSeriesOperationError[]> deleteTypesResponse = await typesClient
                 .DeleteByNameAsync(new string[] { timeSeriesTypesName })
                 .ConfigureAwait(false);
 

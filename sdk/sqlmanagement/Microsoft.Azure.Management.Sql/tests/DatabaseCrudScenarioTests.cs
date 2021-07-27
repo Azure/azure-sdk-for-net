@@ -397,7 +397,7 @@ namespace Sql.Tests
                 }
             }
         }
-
+        
         [Fact]
         public void TestRemoveDatabaseFromPool()
         {
@@ -418,7 +418,6 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
                     DatabaseDtuMax = 5,
                     DatabaseDtuMin = 0
@@ -446,7 +445,7 @@ namespace Sql.Tests
                 Assert.Equal(null, dbResult.ElasticPoolName);
             }
         }
-
+        
         [Fact]
         public void TestDatabaseTransparentDataEncryptionConfiguration()
         {
@@ -474,10 +473,9 @@ namespace Sql.Tests
                 config.Status = TransparentDataEncryptionStatus.Disabled;
 
                 // Sometimes the config is still being updated from the previous PUT, so execute with retry
-
                 SqlManagementTestUtilities.ExecuteWithRetry(() =>
                 {
-                    config = sqlClient.TransparentDataEncryptions.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, config);
+                     config = sqlClient.TransparentDataEncryptions.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, config);
                 },
                 TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(5),
                 (CloudException e) =>

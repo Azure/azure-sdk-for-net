@@ -6,7 +6,6 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Security.KeyVault.Administration.Models;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
@@ -22,13 +21,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
         internal KeyVaultAccessControlClient client;
 #pragma warning restore IDE1006 // Naming Styles
 
-        internal const string RoleName = "Managed HSM Backup";
-        internal readonly Guid _roleAssignmentId = new Guid("e7ae2aff-eb17-4c9d-84f0-d12f7f468f16");
+        internal const string RoleName = "Managed HSM Backup User";
         internal string _roleDefinitionId;
         internal string _objectId;
 
-        public AccessControlTestBase(bool isAsync, RecordedTestMode? mode)
-            : base(isAsync, mode)
+        public AccessControlTestBase(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, serviceVersion, mode)
         { }
 
         internal KeyVaultAccessControlClient GetClient(TestRecording recording = null)
@@ -103,7 +101,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             {
                 using (Recording.DisableRecording())
                 {
-                    await Client.DeleteRoleDefinitionAsync(new Guid(assignment.Name), assignment.Scope.Value).ConfigureAwait(false);
+                    await Client.DeleteRoleDefinitionAsync(assignment.Scope.Value, new Guid(assignment.Name)).ConfigureAwait(false);
                 }
             }
             catch (RequestFailedException ex) when (ex.Status == 404)

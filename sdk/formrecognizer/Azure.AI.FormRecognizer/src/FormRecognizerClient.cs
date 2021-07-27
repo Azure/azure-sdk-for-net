@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer
         /// <remarks>
         /// Both the <paramref name="endpoint"/> URI string and the <paramref name="credential"/> <c>string</c> key
         /// can be found in the Azure Portal.
-        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
+        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
         /// </remarks>
         public FormRecognizerClient(Uri endpoint, AzureKeyCredential credential)
             : this(endpoint, credential, new FormRecognizerClientOptions())
@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer
         /// <remarks>
         /// Both the <paramref name="endpoint"/> URI string and the <paramref name="credential"/> <c>string</c> key
         /// can be found in the Azure Portal.
-        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
+        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
         /// </remarks>
         public FormRecognizerClient(Uri endpoint, AzureKeyCredential credential, FormRecognizerClientOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
         /// <remarks>
         /// The <paramref name="endpoint"/> URI string can be found in the Azure Portal.
-        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
+        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
         /// </remarks>
         public FormRecognizerClient(Uri endpoint, TokenCredential credential)
             : this(endpoint, credential, new FormRecognizerClientOptions())
@@ -83,7 +83,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <remarks>
         /// The <paramref name="endpoint"/> URI string can be found in the Azure Portal.
-        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
+        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
         /// </remarks>
         public FormRecognizerClient(Uri endpoint, TokenCredential credential, FormRecognizerClientOptions options)
         {
@@ -449,7 +449,7 @@ namespace Azure.AI.FormRecognizer
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
@@ -493,7 +493,7 @@ namespace Azure.AI.FormRecognizer
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
@@ -537,7 +537,7 @@ namespace Azure.AI.FormRecognizer
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
@@ -579,7 +579,7 @@ namespace Azure.AI.FormRecognizer
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
@@ -625,7 +625,7 @@ namespace Azure.AI.FormRecognizer
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
@@ -669,7 +669,7 @@ namespace Azure.AI.FormRecognizer
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
@@ -713,7 +713,7 @@ namespace Azure.AI.FormRecognizer
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
@@ -755,7 +755,7 @@ namespace Azure.AI.FormRecognizer
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
@@ -801,7 +801,7 @@ namespace Azure.AI.FormRecognizer
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         /// <returns>A <see cref="RecognizeIdentityDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdentityDocumentsOperation.Value"/> upon successful
         /// completion will contain the extracted identity document information.</returns>
@@ -845,7 +845,7 @@ namespace Azure.AI.FormRecognizer
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         /// <returns>A <see cref="RecognizeIdentityDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdentityDocumentsOperation.Value"/> upon successful
         /// completion will contain the extracted identity document information.</returns>
@@ -889,7 +889,7 @@ namespace Azure.AI.FormRecognizer
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         /// <returns>A <see cref="RecognizeIdentityDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdentityDocumentsOperation.Value"/> upon successful
         /// completion will contain the extracted identity document information.</returns>
@@ -931,7 +931,7 @@ namespace Azure.AI.FormRecognizer
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <remarks>
-        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         /// <returns>A <see cref="RecognizeIdentityDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdentityDocumentsOperation.Value"/> upon successful
         /// completion will contain the extracted identity document information.</returns>

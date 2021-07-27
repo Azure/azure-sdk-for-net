@@ -38,5 +38,36 @@ namespace Management.HDInsight.Tests
             Assert.False(monitoringStatus.ClusterMonitoringEnabled);
             Assert.Null(monitoringStatus.WorkspaceId);
         }
+
+        [Fact]
+        public void TestAzureMonitorOnRunningCluster()
+        {
+            TestInitialize();
+            CommonData.Location = "South Central US";
+
+            string clusterName = TestUtilities.GenerateName("hdisdk-azuremonitor");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            createParams.Properties.ClusterDefinition.Kind = "Spark";
+            createParams.Properties.ClusterVersion = "3.6";
+
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+            ValidateCluster(clusterName, createParams, cluster);
+
+            var request = new AzureMonitorRequest
+            {
+                WorkspaceId = "00000000-0000-0000-0000-000000000000",
+                PrimaryKey = "primarykey"
+            };
+
+            HDInsightClient.Extensions.EnableAzureMonitor(CommonData.ResourceGroupName, clusterName, request);
+            var azureMonitorStatus = HDInsightClient.Extensions.GetAzureMonitorStatus(CommonData.ResourceGroupName, clusterName);
+            Assert.True(azureMonitorStatus.ClusterMonitoringEnabled);
+            Assert.Equal(request.WorkspaceId, azureMonitorStatus.WorkspaceId);
+
+            HDInsightClient.Extensions.DisableAzureMonitor(CommonData.ResourceGroupName, clusterName);
+            azureMonitorStatus = HDInsightClient.Extensions.GetAzureMonitorStatus(CommonData.ResourceGroupName, clusterName);
+            Assert.False(azureMonitorStatus.ClusterMonitoringEnabled);
+            Assert.Null(azureMonitorStatus.WorkspaceId);
+        }
     }
 }

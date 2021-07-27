@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// An object representing the appearance of the text line.
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
         /// </remarks>
         public TextAppearance Appearance { get; }
 

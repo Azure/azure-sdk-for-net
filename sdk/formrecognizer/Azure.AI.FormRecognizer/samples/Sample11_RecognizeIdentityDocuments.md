@@ -44,12 +44,12 @@ if (identityDocument.Fields.TryGetValue("Address", out FormField addressField))
     }
 }
 
-if (identityDocument.Fields.TryGetValue("Country", out FormField countryField))
+if (identityDocument.Fields.TryGetValue("CountryRegion", out FormField countryRegionField))
 {
-    if (countryField.Value.ValueType == FieldValueType.Country)
+    if (countryRegionField.Value.ValueType == FieldValueType.CountryRegion)
     {
-        string country = countryField.Value.AsCountryCode();
-        Console.WriteLine($"Country: '{country}', with confidence {countryField.Confidence}");
+        string countryRegion = countryRegionField.Value.AsCountryRegion();
+        Console.WriteLine($"CountryRegion: '{countryRegion}', with confidence {countryRegionField.Confidence}");
     }
 }
 
@@ -104,6 +104,15 @@ if (identityDocument.Fields.TryGetValue("Region", out FormField regionfield))
     {
         string region = regionfield.Value.AsString();
         Console.WriteLine($"Region: '{region}', with confidence {regionfield.Confidence}");
+    }
+}
+
+if (identityDocument.Fields.TryGetValue("Sex", out FormField sexfield))
+{
+    if (sexfield.Value.ValueType == FieldValueType.String)
+    {
+        string sex = sexfield.Value.AsString();
+        Console.WriteLine($"Sex: '{sex}', with confidence {sexfield.Confidence}");
     }
 }
 ```
@@ -137,12 +146,12 @@ if (identityDocument.Fields.TryGetValue("Address", out FormField addressField))
     }
 }
 
-if (identityDocument.Fields.TryGetValue("Country", out FormField countryField))
+if (identityDocument.Fields.TryGetValue("CountryRegion", out FormField countryRegionField))
 {
-    if (countryField.Value.ValueType == FieldValueType.Country)
+    if (countryRegionField.Value.ValueType == FieldValueType.CountryRegion)
     {
-        string country = countryField.Value.AsCountryCode();
-        Console.WriteLine($"Country: '{country}', with confidence {countryField.Confidence}");
+        string countryRegion = countryRegionField.Value.AsCountryRegion();
+        Console.WriteLine($"CountryRegion: '{countryRegion}', with confidence {countryRegionField.Confidence}");
     }
 }
 
@@ -199,12 +208,21 @@ if (identityDocument.Fields.TryGetValue("Region", out FormField regionfield))
         Console.WriteLine($"Region: '{region}', with confidence {regionfield.Confidence}");
     }
 }
+
+if (identityDocument.Fields.TryGetValue("Sex", out FormField sexfield))
+{
+    if (sexfield.Value.ValueType == FieldValueType.String)
+    {
+        string sex = sexfield.Value.AsString();
+        Console.WriteLine($"Sex: '{sex}', with confidence {sexfield.Confidence}");
+    }
+}
 ```
 
 To see the full example source files, see:
 
-* [Recognize identity documents from URI](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample14_RecognizeIdentityDocumentsFromUri.cs)
-* [Recognize identity documents from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample14_RecognizeIdentityDocumentsFromFile.cs)
+* [Recognize identity documents from URI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample14_RecognizeIdentityDocumentsFromUri.cs)
+* [Recognize identity documents from file](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample14_RecognizeIdentityDocumentsFromFile.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
-[strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
+[strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md

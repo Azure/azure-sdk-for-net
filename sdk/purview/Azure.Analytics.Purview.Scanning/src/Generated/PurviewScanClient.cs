@@ -6,13 +6,10 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-
-#pragma warning disable AZC0007
 
 namespace Azure.Analytics.Purview.Scanning
 {
@@ -22,10 +19,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private Uri endpoint;
         private string dataSourceName;
         private string scanName;
         private readonly string apiVersion;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of PurviewScanClient for mocking. </summary>
         protected PurviewScanClient()
@@ -58,7 +57,10 @@ namespace Azure.Analytics.Purview.Scanning
             }
 
             options ??= new PurviewScanningServiceClientOptions();
-            Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _tokenCredential = credential;
+            var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new LowLevelCallbackPolicy() }, new HttpPipelinePolicy[] { authPolicy }, new ResponseClassifier());
             this.endpoint = endpoint;
             this.dataSourceName = dataSourceName;
             this.scanName = scanName;
@@ -66,23 +68,86 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get a filter. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetFilterAsync(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetFilterAsync(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetFilterRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetFilterRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get a filter. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetFilter(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetFilter(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetFilterRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetFilterRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetFilter");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetFilter"/> and <see cref="GetFilterAsync"/> operations. </summary>
-        private Request CreateGetFilterRequest()
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetFilterRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -97,130 +162,195 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Creates or updates a filter. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>FilterPropertiesAutoGenerated</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>FilterPropertiesAutoGenerated</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>excludeUriPrefixes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>includeUriPrefixes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateOrUpdateFilterAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateFilterAsync(RequestContent content, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateOrUpdateFilterRequest(requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateFilterRequest(content, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 201:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates or updates a filter. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>FilterPropertiesAutoGenerated</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>FilterPropertiesAutoGenerated</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>excludeUriPrefixes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>includeUriPrefixes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateOrUpdateFilter(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdateFilter(RequestContent content, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateOrUpdateFilterRequest(requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateFilterRequest(content, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateFilter");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 201:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="CreateOrUpdateFilter"/> and <see cref="CreateOrUpdateFilterAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        private Request CreateCreateOrUpdateFilterRequest(RequestContent requestBody)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateFilterRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -236,551 +366,616 @@ namespace Azure.Analytics.Purview.Scanning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
-            return request;
+            request.Content = content;
+            return message;
         }
 
         /// <summary> Creates an instance of a scan. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>kind</term>
         ///     <term>&quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;</term>
         ///     <term>Yes</term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>scanResults</term>
         ///     <term>ScanResult[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>ScanResult</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>parentId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>resourceId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>assetsDiscovered</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>assetsClassified</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>diagnostics</term>
         ///     <term>ScanResultDiagnostics</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>queuedTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>pipelineStartTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>scanRulesetVersion</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>scanRulesetType</term>
         ///     <term>&quot;Custom&quot; | &quot;System&quot;</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>scanLevelType</term>
         ///     <term>&quot;Full&quot; | &quot;Incremental&quot;</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>errorMessage</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>error</term>
         ///     <term>ScanResultError</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>runType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>dataSourceType</term>
         ///     <term>&quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>ScanResultDiagnostics</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>notifications</term>
         ///     <term>Notification[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>exceptionCountMap</term>
         ///     <term>Dictionary&lt;string, number&gt;</term>
         ///     <term></term>
-        ///     <term> Dictionary of &lt;integer&gt;. </term>
+        ///     <term>Dictionary of &lt;integer&gt;</term>
         ///   </item>
         /// </list>
         /// Schema for <c>ScanResultError</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>code</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>target</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>details</term>
         ///     <term>ErrorModel[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>Notification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>code</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>ErrorModel</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>code</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>target</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>details</term>
         ///     <term>ErrorModel[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateOrUpdateRequest(requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 201:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates an instance of a scan. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>kind</term>
         ///     <term>&quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;</term>
         ///     <term>Yes</term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>scanResults</term>
         ///     <term>ScanResult[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>ScanResult</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>parentId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>resourceId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>assetsDiscovered</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>assetsClassified</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>diagnostics</term>
         ///     <term>ScanResultDiagnostics</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>queuedTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>pipelineStartTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>scanRulesetVersion</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>scanRulesetType</term>
         ///     <term>&quot;Custom&quot; | &quot;System&quot;</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>scanLevelType</term>
         ///     <term>&quot;Full&quot; | &quot;Incremental&quot;</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>errorMessage</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>error</term>
         ///     <term>ScanResultError</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>runType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>dataSourceType</term>
         ///     <term>&quot;None&quot; | &quot;Collection&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>ScanResultDiagnostics</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>notifications</term>
         ///     <term>Notification[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>exceptionCountMap</term>
         ///     <term>Dictionary&lt;string, number&gt;</term>
         ///     <term></term>
-        ///     <term> Dictionary of &lt;integer&gt;. </term>
+        ///     <term>Dictionary of &lt;integer&gt;</term>
         ///   </item>
         /// </list>
         /// Schema for <c>ScanResultError</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>code</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>target</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>details</term>
         ///     <term>ErrorModel[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>Notification</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>code</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>ErrorModel</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>code</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>target</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>details</term>
         ///     <term>ErrorModel[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateOrUpdate(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdate(RequestContent content, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateOrUpdateRequest(requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateRequest(content, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 201:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        private Request CreateCreateOrUpdateRequest(RequestContent requestBody)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -795,28 +990,91 @@ namespace Azure.Analytics.Purview.Scanning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
-            return request;
+            request.Content = content;
+            return message;
         }
 
         /// <summary> Gets a scan information. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetPropertiesAsync(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetPropertiesRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetPropertiesRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets a scan information. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetProperties(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetProperties(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetPropertiesRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetPropertiesRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetProperties");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetProperties"/> and <see cref="GetPropertiesAsync"/> operations. </summary>
-        private Request CreateGetPropertiesRequest()
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetPropertiesRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -830,27 +1088,94 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Deletes the scan associated with the data source. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteAsync(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.Delete");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the scan associated with the data source. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response Delete(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.Delete");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
-        private Request CreateDeleteRequest()
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -864,33 +1189,96 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Runs the scan. </summary>
         /// <param name="runId"> The String to use. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RunScanAsync(string runId, string scanLevel = null, CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RunScanAsync(string runId, string scanLevel = null, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateRunScanRequest(runId, scanLevel);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateRunScanRequest(runId, scanLevel, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Runs the scan. </summary>
         /// <param name="runId"> The String to use. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RunScan(string runId, string scanLevel = null, CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response RunScan(string runId, string scanLevel = null, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateRunScanRequest(runId, scanLevel);
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateRunScanRequest(runId, scanLevel, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.RunScan");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="RunScan"/> and <see cref="RunScanAsync"/> operations. </summary>
         /// <param name="runId"> The String to use. </param>
         /// <param name="scanLevel"> The ScanLevelType to use. </param>
-        private Request CreateRunScanRequest(string runId, string scanLevel = null)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateRunScanRequest(string runId, string scanLevel = null, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -910,30 +1298,93 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Cancels a scan. </summary>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelScanAsync(string runId, CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CancelScanAsync(string runId, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCancelScanRequest(runId);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCancelScanRequest(runId, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Cancels a scan. </summary>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CancelScan(string runId, CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CancelScan(string runId, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCancelScanRequest(runId);
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCancelScanRequest(runId, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CancelScan");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="CancelScan"/> and <see cref="CancelScanAsync"/> operations. </summary>
         /// <param name="runId"> The String to use. </param>
-        private Request CreateCancelScanRequest(string runId)
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCancelScanRequest(string runId, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -950,27 +1401,90 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Lists the scan history of a scan. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetRunsAsync(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetRunsAsync(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetRunsRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRunsRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetRuns");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the scan history of a scan. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetRuns(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetRuns(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetRunsRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetRunsRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetRuns");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetRuns"/> and <see cref="GetRunsAsync"/> operations. </summary>
-        private Request CreateGetRunsRequest()
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetRunsRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -985,27 +1499,90 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Gets trigger information. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetTriggerAsync(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetTriggerAsync(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetTriggerRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetTriggerRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets trigger information. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetTrigger(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetTrigger(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetTriggerRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateGetTriggerRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.GetTrigger");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetTrigger"/> and <see cref="GetTriggerAsync"/> operations. </summary>
-        private Request CreateGetTriggerRequest()
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateGetTriggerRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1020,424 +1597,489 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Creates an instance of a trigger. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>TriggerPropertiesAutoGenerated</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>TriggerPropertiesAutoGenerated</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>recurrence</term>
         ///     <term>TriggerPropertiesRecurrence</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>recurrenceInterval</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>createdAt</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedAt</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>lastScheduled</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>scanLevel</term>
         ///     <term>&quot;Full&quot; | &quot;Incremental&quot;</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>incrementalScanStartTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>TriggerPropertiesRecurrence</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>frequency</term>
         ///     <term>&quot;Week&quot; | &quot;Month&quot;</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>interval</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>schedule</term>
         ///     <term>TriggerRecurrenceSchedule</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>TriggerRecurrenceSchedule</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>additionalProperties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> Dictionary of &lt;AnyObject&gt;. </term>
+        ///     <term>Dictionary of &lt;AnyObject&gt;</term>
         ///   </item>
         ///   <item>
         ///     <term>minutes</term>
         ///     <term>number[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>hours</term>
         ///     <term>number[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>weekDays</term>
         ///     <term>&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>monthDays</term>
         ///     <term>number[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>monthlyOccurrences</term>
         ///     <term>RecurrenceScheduleOccurrence[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>RecurrenceScheduleOccurrence</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>additionalProperties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> Dictionary of &lt;AnyObject&gt;. </term>
+        ///     <term>Dictionary of &lt;AnyObject&gt;</term>
         ///   </item>
         ///   <item>
         ///     <term>day</term>
         ///     <term>&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>occurrence</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateOrUpdateTriggerAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateOrUpdateTriggerAsync(RequestContent content, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateOrUpdateTriggerRequest(requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateTriggerRequest(content, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 201:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates an instance of a trigger. </summary>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>TriggerPropertiesAutoGenerated</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>TriggerPropertiesAutoGenerated</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>recurrence</term>
         ///     <term>TriggerPropertiesRecurrence</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>recurrenceInterval</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>createdAt</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedAt</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>lastScheduled</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>scanLevel</term>
         ///     <term>&quot;Full&quot; | &quot;Incremental&quot;</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>incrementalScanStartTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>TriggerPropertiesRecurrence</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>frequency</term>
         ///     <term>&quot;Week&quot; | &quot;Month&quot;</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>interval</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>schedule</term>
         ///     <term>TriggerRecurrenceSchedule</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>TriggerRecurrenceSchedule</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>additionalProperties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> Dictionary of &lt;AnyObject&gt;. </term>
+        ///     <term>Dictionary of &lt;AnyObject&gt;</term>
         ///   </item>
         ///   <item>
         ///     <term>minutes</term>
         ///     <term>number[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>hours</term>
         ///     <term>number[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>weekDays</term>
         ///     <term>&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>monthDays</term>
         ///     <term>number[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>monthlyOccurrences</term>
         ///     <term>RecurrenceScheduleOccurrence[]</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// Schema for <c>RecurrenceScheduleOccurrence</c>:
         /// <list type="table">
-        ///   <listeader>
+        ///   <listheader>
         ///     <term>Name</term>
         ///     <term>Type</term>
         ///     <term>Required</term>
         ///     <term>Description</term>
-        ///   </listeader>
+        ///   </listheader>
         ///   <item>
         ///     <term>additionalProperties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> Dictionary of &lt;AnyObject&gt;. </term>
+        ///     <term>Dictionary of &lt;AnyObject&gt;</term>
         ///   </item>
         ///   <item>
         ///     <term>day</term>
         ///     <term>&quot;Sunday&quot; | &quot;Monday&quot; | &quot;Tuesday&quot; | &quot;Wednesday&quot; | &quot;Thursday&quot; | &quot;Friday&quot; | &quot;Saturday&quot;</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>occurrence</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         /// </list>
         /// </remarks>
-        /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateOrUpdateTrigger(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateOrUpdateTrigger(RequestContent content, RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateOrUpdateTriggerRequest(requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateCreateOrUpdateTriggerRequest(content, options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.CreateOrUpdateTrigger");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                        case 201:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="CreateOrUpdateTrigger"/> and <see cref="CreateOrUpdateTriggerAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
-        private Request CreateCreateOrUpdateTriggerRequest(RequestContent requestBody)
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateCreateOrUpdateTriggerRequest(RequestContent content, RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1453,28 +2095,95 @@ namespace Azure.Analytics.Purview.Scanning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = requestBody;
-            return request;
+            request.Content = content;
+            return message;
         }
 
         /// <summary> Deletes the trigger associated with the scan. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteTriggerAsync(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteTriggerAsync(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteTriggerRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteTriggerRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, options.CancellationToken).ConfigureAwait(false);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the trigger associated with the scan. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteTrigger(CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteTrigger(RequestOptions options = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteTriggerRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
+            options ??= new RequestOptions();
+            HttpMessage message = CreateDeleteTriggerRequest(options);
+            if (options.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", options.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewScanClient.DeleteTrigger");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, options.CancellationToken);
+                if (options.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="DeleteTrigger"/> and <see cref="DeleteTriggerAsync"/> operations. </summary>
-        private Request CreateDeleteTriggerRequest()
+        /// <param name="options"> The request options. </param>
+        private HttpMessage CreateDeleteTriggerRequest(RequestOptions options = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1489,7 +2198,7 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
     }
 }

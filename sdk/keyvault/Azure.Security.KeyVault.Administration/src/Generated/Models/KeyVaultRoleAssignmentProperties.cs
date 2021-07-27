@@ -5,35 +5,32 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> Role assignment properties. </summary>
-    internal partial class KeyVaultRoleAssignmentProperties
+    /// <summary> Role assignment properties with scope. </summary>
+    public partial class KeyVaultRoleAssignmentProperties
     {
         /// <summary> Initializes a new instance of KeyVaultRoleAssignmentProperties. </summary>
-        /// <param name="roleDefinitionId"> The role definition ID used in the role assignment. </param>
-        /// <param name="principalId"> The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="principalId"/> is null. </exception>
-        public KeyVaultRoleAssignmentProperties(string roleDefinitionId, string principalId)
+        internal KeyVaultRoleAssignmentProperties()
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
-            if (principalId == null)
-            {
-                throw new ArgumentNullException(nameof(principalId));
-            }
+        }
 
+        /// <summary> Initializes a new instance of KeyVaultRoleAssignmentProperties. </summary>
+        /// <param name="scope"> The role scope. </param>
+        /// <param name="roleDefinitionId"> The role definition ID. </param>
+        /// <param name="principalId"> The principal ID. </param>
+        internal KeyVaultRoleAssignmentProperties(KeyVaultRoleScope? scope, string roleDefinitionId, string principalId)
+        {
+            Scope = scope;
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;
         }
 
-        /// <summary> The role definition ID used in the role assignment. </summary>
+        /// <summary> The role scope. </summary>
+        public KeyVaultRoleScope? Scope { get; }
+        /// <summary> The role definition ID. </summary>
         public string RoleDefinitionId { get; }
-        /// <summary> The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group. </summary>
+        /// <summary> The principal ID. </summary>
         public string PrincipalId { get; }
     }
 }
