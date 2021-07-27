@@ -229,11 +229,11 @@ namespace Azure.AI.Translation.Document
                 try
                 {
                     var response = _serviceRestClient.GetTranslationsStatus(
-                        ids: filter.Ids?.Select(id => new Guid(id)),
-                        statuses: filter.Statuses?.Select(status => status.ToString()),
-                        createdDateTimeUtcStart: filter.CreatedAfter,
-                        createdDateTimeUtcEnd: filter.CreatedBefore,
-                        orderBy: filter.OrderBy?.Select(order => order.ToString()),
+                        ids: filter?.Ids?.Select(id => new Guid(id)),
+                        statuses: filter?.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter?.CreatedAfter,
+                        createdDateTimeUtcEnd: filter?.CreatedBefore,
+                        orderBy: filter?.OrderBy?.Select(order => order.ToString()),
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -253,11 +253,11 @@ namespace Azure.AI.Translation.Document
                 {
                     var response = _serviceRestClient.GetTranslationsStatusNextPage(
                         nextLink,
-                        ids: filter.Ids?.Select(id => new Guid(id)),
-                        statuses: filter.Statuses?.Select(status => status.ToString()),
-                        createdDateTimeUtcStart: filter.CreatedAfter,
-                        createdDateTimeUtcEnd: filter.CreatedBefore,
-                        orderBy: filter.OrderBy?.Select(order => order.ToString()),
+                        ids: filter?.Ids?.Select(id => new Guid(id)),
+                        statuses: filter?.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter?.CreatedAfter,
+                        createdDateTimeUtcEnd: filter?.CreatedBefore,
+                        orderBy: filter?.OrderBy?.Select(order => order.ToString()),
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -286,11 +286,11 @@ namespace Azure.AI.Translation.Document
                 try
                 {
                     var response = await _serviceRestClient.GetTranslationsStatusAsync(
-                        ids: filter.Ids?.Select(id => new Guid(id)),
-                        statuses: filter.Statuses?.Select(status => status.ToString()),
-                        createdDateTimeUtcStart: filter.CreatedAfter,
-                        createdDateTimeUtcEnd: filter.CreatedBefore,
-                        orderBy: filter.OrderBy?.Select(order => order.ToString()),
+                        ids: filter?.Ids?.Select(id => new Guid(id)),
+                        statuses: filter?.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter?.CreatedAfter,
+                        createdDateTimeUtcEnd: filter?.CreatedBefore,
+                        orderBy: filter?.OrderBy?.Select(order => order.ToString()),
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
@@ -310,11 +310,11 @@ namespace Azure.AI.Translation.Document
                 {
                     var response = await _serviceRestClient.GetTranslationsStatusNextPageAsync(
                         nextLink,
-                        ids: filter.Ids?.Select(id => new Guid(id)),
-                        statuses: filter.Statuses?.Select(status => status.ToString()),
-                        createdDateTimeUtcStart: filter.CreatedAfter,
-                        createdDateTimeUtcEnd: filter.CreatedBefore,
-                        orderBy: filter.OrderBy?.Select(order => order.ToString()),
+                        ids: filter?.Ids?.Select(id => new Guid(id)),
+                        statuses: filter?.Statuses?.Select(status => status.ToString()),
+                        createdDateTimeUtcStart: filter?.CreatedAfter,
+                        createdDateTimeUtcEnd: filter?.CreatedBefore,
+                        orderBy: filter?.OrderBy?.Select(order => order.ToString()),
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
