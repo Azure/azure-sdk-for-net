@@ -676,34 +676,34 @@ namespace Azure.AI.TextAnalytics
                 recognizePiiEntitiesActionResults.ToList(),
                 recognizeLinkedEntitiesActionsResults.ToList(),
                 analyzeSentimentActionsResults.ToList(),
-                default);
+                new List<ExtractSummaryActionResult>());
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="extractKeyPhrasesActionResult">Sets the collection of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/>.</param>
+        /// <param name="extractKeyPhrasesActionResults">Sets the collection of <see cref="TextAnalytics.ExtractKeyPhrasesActionResult"/>.</param>
         /// <param name="recognizeEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeEntitiesActionResult"/>.</param>
         /// <param name="recognizePiiEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizePiiEntitiesActionResult"/>.</param>
-        /// <param name="recognizeLinkedEntitiesActionsResults">Sets the collection of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/>.</param>
-        /// <param name="analyzeSentimentActionsResults">Sets the collection of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/>.</param>
-        /// <param name="extractSummaryActionsResults">Sets the collection of <see cref="TextAnalytics.ExtractSummaryActionResult"/>.</param>
+        /// <param name="recognizeLinkedEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.RecognizeLinkedEntitiesActionResult"/>.</param>
+        /// <param name="analyzeSentimentActionResults">Sets the collection of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/>.</param>
+        /// <param name="extractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.ExtractSummaryActionResult"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
         public static AnalyzeActionsResult AnalyzeActionsResult(
-            IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult,
+            IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
             IEnumerable<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
             IEnumerable<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
-            IEnumerable<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults,
-            IEnumerable<AnalyzeSentimentActionResult> analyzeSentimentActionsResults,
-            IEnumerable<ExtractSummaryActionResult> extractSummaryActionsResults)
+            IEnumerable<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
+            IEnumerable<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
+            IEnumerable<ExtractSummaryActionResult> extractSummaryActionResults)
         {
             return new AnalyzeActionsResult(
-                extractKeyPhrasesActionResult.ToList(),
+                extractKeyPhrasesActionResults.ToList(),
                 recognizeEntitiesActionResults.ToList(),
                 recognizePiiEntitiesActionResults.ToList(),
-                recognizeLinkedEntitiesActionsResults.ToList(),
-                analyzeSentimentActionsResults.ToList(),
-                extractSummaryActionsResults.ToList());
+                recognizeLinkedEntitiesActionResults.ToList(),
+                analyzeSentimentActionResults.ToList(),
+                extractSummaryActionResults.ToList());
         }
 
         /// <summary>
