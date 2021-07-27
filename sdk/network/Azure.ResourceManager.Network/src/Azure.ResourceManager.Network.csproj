@@ -5,6 +5,9 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Nullable>annotations</Nullable>
     <IsMgmtLibrary>true</IsMgmtLibrary>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionSuffix>preview.3</VersionSuffix>
+    <Version>1.0.0-preview.3</Version>
   </PropertyGroup>
 
   <PropertyGroup>
