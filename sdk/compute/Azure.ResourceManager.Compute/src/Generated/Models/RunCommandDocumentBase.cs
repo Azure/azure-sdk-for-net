@@ -6,13 +6,12 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a Run Command metadata. </summary>
-    public partial class RunCommandDocumentBase : SubResource<ResourceIdentifier>
+    public partial class RunCommandDocumentBase : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of RunCommandDocumentBase. </summary>
         /// <param name="schema"> The VM run command schema. </param>

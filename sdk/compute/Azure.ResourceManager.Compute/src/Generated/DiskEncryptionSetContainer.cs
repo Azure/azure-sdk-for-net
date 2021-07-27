@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of DiskEncryptionSet and their operations over a ResourceGroup. </summary>
-    public partial class DiskEncryptionSetContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, DiskEncryptionSet, DiskEncryptionSetData>
+    public partial class DiskEncryptionSetContainer : ResourceContainerBase<DiskEncryptionSet, DiskEncryptionSetData>
     {
         /// <summary> Initializes a new instance of the <see cref="DiskEncryptionSetContainer"/> class for mocking. </summary>
         protected DiskEncryptionSetContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private DiskEncryptionSetsRestOperations _restClient => new DiskEncryptionSetsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -322,7 +319,7 @@ namespace Azure.ResourceManager.Compute
         {
             Page<DiskEncryptionSet> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.List");
                 scope.Start();
                 try
                 {
@@ -337,7 +334,7 @@ namespace Azure.ResourceManager.Compute
             }
             Page<DiskEncryptionSet> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.List");
                 scope.Start();
                 try
                 {
@@ -360,7 +357,7 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<DiskEncryptionSet>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.List");
                 scope.Start();
                 try
                 {
@@ -375,7 +372,7 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<DiskEncryptionSet>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.List");
                 scope.Start();
                 try
                 {
@@ -438,6 +435,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, DiskEncryptionSet, DiskEncryptionSetData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, DiskEncryptionSet, DiskEncryptionSetData> Construct() { }
     }
 }

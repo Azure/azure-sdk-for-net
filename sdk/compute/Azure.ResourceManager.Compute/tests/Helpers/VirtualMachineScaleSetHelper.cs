@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(vmss1.Name, vmss2.Name);
         }
 
-        public static VirtualMachineScaleSetData GetBasicLinuxVirtualMachineScaleSetData(Location location, string computerNamePrefix, ResourceGroupResourceIdentifier subnetId, int capacity = 2, string adminUsername = "adminuser")
+        public static VirtualMachineScaleSetData GetBasicLinuxVirtualMachineScaleSetData(Location location, string computerNamePrefix, ResourceIdentifier subnetId, int capacity = 2, string adminUsername = "adminuser")
         {
             return new VirtualMachineScaleSetData(location)
             {

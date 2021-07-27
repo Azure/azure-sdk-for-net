@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute

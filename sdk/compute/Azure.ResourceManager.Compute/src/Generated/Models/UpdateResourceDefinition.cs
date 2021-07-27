@@ -7,13 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Update Resource model definition. </summary>
-    public partial class UpdateResourceDefinition : Resource<TenantResourceIdentifier>
+    public partial class UpdateResourceDefinition : Resources.Models.Resource
     {
         /// <summary> Initializes a new instance of UpdateResourceDefinition. </summary>
         public UpdateResourceDefinition()

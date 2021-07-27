@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ExtendedLocation> extendedLocation = default;
-            SubscriptionResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))

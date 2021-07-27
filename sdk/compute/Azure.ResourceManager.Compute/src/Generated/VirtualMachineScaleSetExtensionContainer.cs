@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of VirtualMachineScaleSetExtension and their operations over a VirtualMachineScaleSet. </summary>
-    public partial class VirtualMachineScaleSetExtensionContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, VirtualMachineScaleSetExtension, VirtualMachineScaleSetExtensionData>
+    public partial class VirtualMachineScaleSetExtensionContainer : ResourceContainerBase<VirtualMachineScaleSetExtension, VirtualMachineScaleSetExtensionData>
     {
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSetExtensionContainer"/> class for mocking. </summary>
         protected VirtualMachineScaleSetExtensionContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private VirtualMachineScaleSetExtensionsRestOperations _restClient => new VirtualMachineScaleSetExtensionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => VirtualMachineScaleSetOperations.ResourceType;
@@ -444,6 +441,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, VirtualMachineScaleSetExtension, VirtualMachineScaleSetExtensionData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, VirtualMachineScaleSetExtension, VirtualMachineScaleSetExtensionData> Construct() { }
     }
 }

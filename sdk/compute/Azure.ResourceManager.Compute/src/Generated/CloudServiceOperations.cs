@@ -21,7 +21,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the operations that can be performed over a specific CloudService. </summary>
-    public partial class CloudServiceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, CloudService>
+    public partial class CloudServiceOperations : ResourceOperationsBase<CloudService>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private CloudServicesRestOperations _restClient { get; }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref="CloudServiceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal CloudServiceOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal CloudServiceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);

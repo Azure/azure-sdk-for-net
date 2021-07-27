@@ -9,9 +9,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     public partial class RestorePointCollectionData : IUtf8JsonSerializable
     {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             IDictionary<string, string> tags = default;
             Location location = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<RestorePointCollectionSourceProperties> source = default;

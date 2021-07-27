@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The RoleInstance. </summary>
-    public partial class RoleInstance : Resource<TenantResourceIdentifier>
+    public partial class RoleInstance : Resources.Models.Resource
     {
         /// <summary> Initializes a new instance of RoleInstance. </summary>
         internal RoleInstance()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"></param>
         /// <param name="properties"></param>
-        internal RoleInstance(TenantResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceProperties properties) : base(id, name, type)
+        internal RoleInstance(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceProperties properties) : base(id, name, type)
         {
             Location = location;
             Tags = tags;

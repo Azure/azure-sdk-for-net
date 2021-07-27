@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The ProxyOnly Resource model definition. </summary>
-    public partial class ProxyOnlyResource : SubResource<ResourceGroupResourceIdentifier>
+    public partial class ProxyOnlyResource : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of ProxyOnlyResource. </summary>
         internal ProxyOnlyResource()

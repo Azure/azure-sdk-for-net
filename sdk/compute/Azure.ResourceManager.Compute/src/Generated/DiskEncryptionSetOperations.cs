@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the operations that can be performed over a specific DiskEncryptionSet. </summary>
-    public partial class DiskEncryptionSetOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, DiskEncryptionSet>
+    public partial class DiskEncryptionSetOperations : ResourceOperationsBase<DiskEncryptionSet>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private DiskEncryptionSetsRestOperations _restClient { get; }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref="DiskEncryptionSetOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal DiskEncryptionSetOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal DiskEncryptionSetOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DiskEncryptionSetsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);

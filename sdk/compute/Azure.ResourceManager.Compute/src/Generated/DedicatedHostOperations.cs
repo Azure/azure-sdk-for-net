@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the operations that can be performed over a specific DedicatedHost. </summary>
-    public partial class DedicatedHostOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, DedicatedHost>
+    public partial class DedicatedHostOperations : ResourceOperationsBase<DedicatedHost>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private DedicatedHostsRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref="DedicatedHostOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal DedicatedHostOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal DedicatedHostOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DedicatedHostsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);

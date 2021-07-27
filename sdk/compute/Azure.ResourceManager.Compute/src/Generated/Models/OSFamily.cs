@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a cloud service OS family. </summary>
-    public partial class OSFamily : Resource<TenantResourceIdentifier>
+    public partial class OSFamily : Resources.Models.Resource
     {
         /// <summary> Initializes a new instance of OSFamily. </summary>
         internal OSFamily()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="type"> The type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="properties"> OS family properties. </param>
-        internal OSFamily(TenantResourceIdentifier id, string name, ResourceType type, string location, OSFamilyProperties properties) : base(id, name, type)
+        internal OSFamily(ResourceIdentifier id, string name, ResourceType type, string location, OSFamilyProperties properties) : base(id, name, type)
         {
             Location = location;
             Properties = properties;

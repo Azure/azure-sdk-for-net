@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The resource model definition for an Azure Resource Manager proxy resource. It will not have tags and a location. </summary>
-    public partial class ProxyResource : SubResource<ResourceGroupResourceIdentifier>
+    public partial class ProxyResource : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of ProxyResource. </summary>
         public ProxyResource()

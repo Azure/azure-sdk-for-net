@@ -18,7 +18,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the operations that can be performed over a specific SharedGallery. </summary>
-    public partial class SharedGalleryOperations : ResourceOperationsBase<SubscriptionResourceIdentifier, SharedGallery>
+    public partial class SharedGalleryOperations : ResourceOperationsBase<SharedGallery>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private SharedGalleriesRestOperations _restClient { get; }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref="SharedGalleryOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal SharedGalleryOperations(OperationsBase options, SubscriptionResourceIdentifier id) : base(options, id)
+        protected internal SharedGalleryOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new SharedGalleriesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);

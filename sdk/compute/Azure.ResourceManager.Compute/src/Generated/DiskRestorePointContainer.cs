@@ -13,14 +13,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of DiskRestorePoint and their operations over a RestorePoint. </summary>
-    public partial class DiskRestorePointContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, DiskRestorePoint, DiskRestorePointData>
+    public partial class DiskRestorePointContainer : ResourceContainerBase<DiskRestorePoint, DiskRestorePointData>
     {
         /// <summary> Initializes a new instance of the <see cref="DiskRestorePointContainer"/> class for mocking. </summary>
         protected DiskRestorePointContainer()
@@ -38,9 +37,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private DiskRestorePointRestOperations _restClient => new DiskRestorePointRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => RestorePointOperations.ResourceType;
@@ -202,7 +198,7 @@ namespace Azure.ResourceManager.Compute
         {
             Page<DiskRestorePoint> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.ListByRestorePoint");
+                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.List");
                 scope.Start();
                 try
                 {
@@ -217,7 +213,7 @@ namespace Azure.ResourceManager.Compute
             }
             Page<DiskRestorePoint> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.ListByRestorePoint");
+                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.List");
                 scope.Start();
                 try
                 {
@@ -240,7 +236,7 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<DiskRestorePoint>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.ListByRestorePoint");
+                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.List");
                 scope.Start();
                 try
                 {
@@ -255,7 +251,7 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<DiskRestorePoint>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.ListByRestorePoint");
+                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.List");
                 scope.Start();
                 try
                 {
@@ -318,6 +314,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, DiskRestorePoint, DiskRestorePointData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, DiskRestorePoint, DiskRestorePointData> Construct() { }
     }
 }

@@ -7,13 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Output of virtual machine capture operation. </summary>
-    public partial class VirtualMachineCaptureResult : WritableSubResource<ResourceIdentifier>
+    public partial class VirtualMachineCaptureResult : WritableSubResource
     {
         /// <summary> Initializes a new instance of VirtualMachineCaptureResult. </summary>
         public VirtualMachineCaptureResult()

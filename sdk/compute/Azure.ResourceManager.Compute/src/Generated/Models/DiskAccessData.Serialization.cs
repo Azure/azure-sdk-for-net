@@ -12,7 +12,7 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     public partial class DiskAccessData : IUtf8JsonSerializable
     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             IDictionary<string, string> tags = default;
             Location location = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;

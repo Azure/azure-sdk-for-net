@@ -13,14 +13,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of UpdateDomain and their operations over a CloudService. </summary>
-    public partial class UpdateDomainContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, UpdateDomain, UpdateDomainData>
+    public partial class UpdateDomainContainer : ResourceContainerBase<UpdateDomain, UpdateDomainData>
     {
         /// <summary> Initializes a new instance of the <see cref="UpdateDomainContainer"/> class for mocking. </summary>
         protected UpdateDomainContainer()
@@ -38,9 +37,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private CloudServicesUpdateDomainRestOperations _restClient => new CloudServicesUpdateDomainRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => CloudServiceOperations.ResourceType;
@@ -202,7 +198,7 @@ namespace Azure.ResourceManager.Compute
         {
             Page<UpdateDomain> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.ListUpdateDomains");
+                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.List");
                 scope.Start();
                 try
                 {
@@ -217,7 +213,7 @@ namespace Azure.ResourceManager.Compute
             }
             Page<UpdateDomain> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.ListUpdateDomains");
+                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.List");
                 scope.Start();
                 try
                 {
@@ -240,7 +236,7 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<UpdateDomain>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.ListUpdateDomains");
+                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.List");
                 scope.Start();
                 try
                 {
@@ -255,7 +251,7 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<UpdateDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.ListUpdateDomains");
+                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.List");
                 scope.Start();
                 try
                 {
@@ -318,6 +314,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, UpdateDomain, UpdateDomainData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, UpdateDomain, UpdateDomainData> Construct() { }
     }
 }

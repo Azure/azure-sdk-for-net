@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of SharedGalleryImage and their operations over a SharedGallery. </summary>
-    public partial class SharedGalleryImageContainer : ResourceContainerBase<SubscriptionResourceIdentifier, SharedGalleryImage, SharedGalleryImageData>
+    public partial class SharedGalleryImageContainer : ResourceContainerBase<SharedGalleryImage, SharedGalleryImageData>
     {
         /// <summary> Initializes a new instance of the <see cref="SharedGalleryImageContainer"/> class for mocking. </summary>
         protected SharedGalleryImageContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private SharedGalleryImagesRestOperations _restClient => new SharedGalleryImagesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new SubscriptionResourceIdentifier Id => base.Id as SubscriptionResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => SharedGalleryOperations.ResourceType;
@@ -320,6 +317,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<SubscriptionResourceIdentifier, SharedGalleryImage, SharedGalleryImageData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, SharedGalleryImage, SharedGalleryImageData> Construct() { }
     }
 }

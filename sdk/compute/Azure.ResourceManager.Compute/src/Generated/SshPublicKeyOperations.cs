@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the operations that can be performed over a specific SshPublicKey. </summary>
-    public partial class SshPublicKeyOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, SshPublicKey>
+    public partial class SshPublicKeyOperations : ResourceOperationsBase<SshPublicKey>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private SshPublicKeysRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref="SshPublicKeyOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal SshPublicKeyOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal SshPublicKeyOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new SshPublicKeysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to update the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<SshPublicKeyData>> UpdateAsync(SshPublicKeyUpdateResource parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SshPublicKey>> UpdateAsync(SshPublicKeyUpdateResource parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(new SshPublicKey(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="parameters"> Parameters supplied to update the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<SshPublicKeyData> Update(SshPublicKeyUpdateResource parameters, CancellationToken cancellationToken = default)
+        public virtual Response<SshPublicKey> Update(SshPublicKeyUpdateResource parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return response;
+                return Response.FromValue(new SshPublicKey(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

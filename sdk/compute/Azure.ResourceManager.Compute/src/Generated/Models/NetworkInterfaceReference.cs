@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a network interface reference. </summary>
-    public partial class NetworkInterfaceReference : WritableSubResource<ResourceIdentifier>
+    public partial class NetworkInterfaceReference : WritableSubResource
     {
         /// <summary> Initializes a new instance of NetworkInterfaceReference. </summary>
         public NetworkInterfaceReference()

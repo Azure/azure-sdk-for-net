@@ -10,9 +10,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     public partial class DedicatedHostData : IUtf8JsonSerializable
     {
@@ -54,10 +55,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DedicatedHostData DeserializeDedicatedHostData(JsonElement element)
         {
-            Sku sku = default;
+            Models.Sku sku = default;
             IDictionary<string, string> tags = default;
             Location location = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<int> platformFaultDomain = default;
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("sku"))
                 {
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = Models.Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

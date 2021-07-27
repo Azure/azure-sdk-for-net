@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a VMSS VM Extension. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionUpdate : SubResource<ResourceIdentifier>
+    public partial class VirtualMachineScaleSetVMExtensionUpdate : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMExtensionUpdate. </summary>
         public VirtualMachineScaleSetVMExtensionUpdate()

@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
-    public partial class RestorePointCollectionSourceProperties : WritableSubResource<ResourceIdentifier>
+    public partial class RestorePointCollectionSourceProperties : WritableSubResource
     {
         /// <summary> Initializes a new instance of RestorePointCollectionSourceProperties. </summary>
         public RestorePointCollectionSourceProperties()

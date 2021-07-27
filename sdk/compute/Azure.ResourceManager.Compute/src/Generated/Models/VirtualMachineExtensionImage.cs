@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Extension Image. </summary>
-    public partial class VirtualMachineExtensionImage : TrackedResource<TenantResourceIdentifier>
+    public partial class VirtualMachineExtensionImage : TrackedResource
     {
         /// <summary> Initializes a new instance of VirtualMachineExtensionImage. </summary>
         /// <param name="location"> The location. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="handlerSchema"> The schema defined by publisher, where extension consumers should provide settings in a matching schema. </param>
         /// <param name="vmScaleSetEnabled"> Whether the extension can be used on xRP VMScaleSets. By default existing extensions are usable on scalesets, but there might be cases where a publisher wants to explicitly indicate the extension is only enabled for CRP VMs but not VMSS. </param>
         /// <param name="supportsMultipleExtensions"> Whether the handler can support multiple extensions. </param>
-        internal VirtualMachineExtensionImage(TenantResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, string operatingSystem, string computeRole, string handlerSchema, bool? vmScaleSetEnabled, bool? supportsMultipleExtensions) : base(id, name, type, location, tags)
+        internal VirtualMachineExtensionImage(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, string operatingSystem, string computeRole, string handlerSchema, bool? vmScaleSetEnabled, bool? supportsMultipleExtensions) : base(id, name, type, location, tags)
         {
             OperatingSystem = operatingSystem;
             ComputeRole = computeRole;

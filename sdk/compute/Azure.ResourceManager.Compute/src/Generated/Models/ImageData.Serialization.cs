@@ -9,9 +9,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     public partial class ImageData : IUtf8JsonSerializable
     {
@@ -59,10 +60,10 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<ExtendedLocation> extendedLocation = default;
             IDictionary<string, string> tags = default;
             Location location = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SubResource> sourceVirtualMachine = default;
+            Optional<Models.SubResource> sourceVirtualMachine = default;
             Optional<ImageStorageProfile> storageProfile = default;
             Optional<string> provisioningState = default;
             Optional<HyperVGenerationTypes> hyperVGeneration = default;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sourceVirtualMachine = SubResource.DeserializeSubResource(property0.Value);
+                            sourceVirtualMachine = Models.SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"))

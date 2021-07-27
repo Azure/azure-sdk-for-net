@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet and their operations over a VirtualMachineScaleSet. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet, VirtualMachineScaleSetVMExtensionData>
+    public partial class VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetContainer : ResourceContainerBase<VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet, VirtualMachineScaleSetVMExtensionData>
     {
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetContainer"/> class for mocking. </summary>
         protected VirtualMachineScaleSetVMExtensionVirtualMachineScaleSetContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private VirtualMachineScaleSetVMExtensionsRestOperations _restClient => new VirtualMachineScaleSetVMExtensionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => VirtualMachineScaleSetOperations.ResourceType;
@@ -406,6 +403,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet, VirtualMachineScaleSetVMExtensionData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, VirtualMachineScaleSetVMExtensionVirtualMachineScaleSet, VirtualMachineScaleSetVMExtensionData> Construct() { }
     }
 }

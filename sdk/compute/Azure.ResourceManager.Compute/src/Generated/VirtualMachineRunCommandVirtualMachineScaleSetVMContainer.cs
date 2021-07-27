@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of VirtualMachineRunCommandVirtualMachineScaleSetVM and their operations over a VirtualMachineScaleSetVM. </summary>
-    public partial class VirtualMachineRunCommandVirtualMachineScaleSetVMContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, VirtualMachineRunCommandVirtualMachineScaleSetVM, VirtualMachineRunCommandData>
+    public partial class VirtualMachineRunCommandVirtualMachineScaleSetVMContainer : ResourceContainerBase<VirtualMachineRunCommandVirtualMachineScaleSetVM, VirtualMachineRunCommandData>
     {
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineRunCommandVirtualMachineScaleSetVMContainer"/> class for mocking. </summary>
         protected VirtualMachineRunCommandVirtualMachineScaleSetVMContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private VirtualMachineScaleSetVMRunCommandsRestOperations _restClient => new VirtualMachineScaleSetVMRunCommandsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => VirtualMachineScaleSetVMOperations.ResourceType;
@@ -446,6 +443,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, VirtualMachineRunCommandVirtualMachineScaleSetVM, VirtualMachineRunCommandData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, VirtualMachineRunCommandVirtualMachineScaleSetVM, VirtualMachineRunCommandData> Construct() { }
     }
 }

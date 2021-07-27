@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     public partial class UpdateDomainData : IUtf8JsonSerializable
     {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static UpdateDomainData DeserializeUpdateDomainData(JsonElement element)
         {
             Optional<string> name = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))

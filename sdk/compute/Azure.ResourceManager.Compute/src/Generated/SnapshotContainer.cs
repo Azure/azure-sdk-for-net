@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of Snapshot and their operations over a ResourceGroup. </summary>
-    public partial class SnapshotContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, Snapshot, SnapshotData>
+    public partial class SnapshotContainer : ResourceContainerBase<Snapshot, SnapshotData>
     {
         /// <summary> Initializes a new instance of the <see cref="SnapshotContainer"/> class for mocking. </summary>
         protected SnapshotContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private SnapshotsRestOperations _restClient => new SnapshotsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -322,7 +319,7 @@ namespace Azure.ResourceManager.Compute
         {
             Page<Snapshot> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.List");
                 scope.Start();
                 try
                 {
@@ -337,7 +334,7 @@ namespace Azure.ResourceManager.Compute
             }
             Page<Snapshot> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.List");
                 scope.Start();
                 try
                 {
@@ -360,7 +357,7 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<Snapshot>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.List");
                 scope.Start();
                 try
                 {
@@ -375,7 +372,7 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<Snapshot>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("SnapshotContainer.List");
                 scope.Start();
                 try
                 {
@@ -438,6 +435,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, Snapshot, SnapshotData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, Snapshot, SnapshotData> Construct() { }
     }
 }

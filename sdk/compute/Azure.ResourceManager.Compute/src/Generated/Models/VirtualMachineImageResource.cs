@@ -8,13 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Virtual machine image resource information. </summary>
-    public partial class VirtualMachineImageResource : WritableSubResource<SubscriptionResourceIdentifier>
+    public partial class VirtualMachineImageResource : WritableSubResource
     {
         /// <summary> Initializes a new instance of VirtualMachineImageResource. </summary>
         /// <param name="name"> The name of the resource. </param>

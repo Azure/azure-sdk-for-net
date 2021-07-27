@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of GalleryApplicationVersion and their operations over a GalleryApplication. </summary>
-    public partial class GalleryApplicationVersionContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, GalleryApplicationVersion, GalleryApplicationVersionData>
+    public partial class GalleryApplicationVersionContainer : ResourceContainerBase<GalleryApplicationVersion, GalleryApplicationVersionData>
     {
         /// <summary> Initializes a new instance of the <see cref="GalleryApplicationVersionContainer"/> class for mocking. </summary>
         protected GalleryApplicationVersionContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private GalleryApplicationVersionsRestOperations _restClient => new GalleryApplicationVersionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => GalleryApplicationOperations.ResourceType;
@@ -328,7 +325,7 @@ namespace Azure.ResourceManager.Compute
         {
             Page<GalleryApplicationVersion> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.ListByGalleryApplication");
+                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.List");
                 scope.Start();
                 try
                 {
@@ -343,7 +340,7 @@ namespace Azure.ResourceManager.Compute
             }
             Page<GalleryApplicationVersion> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.ListByGalleryApplication");
+                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.List");
                 scope.Start();
                 try
                 {
@@ -366,7 +363,7 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<GalleryApplicationVersion>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.ListByGalleryApplication");
+                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.List");
                 scope.Start();
                 try
                 {
@@ -381,7 +378,7 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<GalleryApplicationVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.ListByGalleryApplication");
+                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.List");
                 scope.Start();
                 try
                 {
@@ -444,6 +441,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, GalleryApplicationVersion, GalleryApplicationVersionData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, GalleryApplicationVersion, GalleryApplicationVersionData> Construct() { }
     }
 }

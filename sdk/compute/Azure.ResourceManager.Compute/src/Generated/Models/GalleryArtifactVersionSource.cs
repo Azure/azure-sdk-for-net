@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The gallery artifact version source. </summary>
-    public partial class GalleryArtifactVersionSource : WritableSubResource<ResourceIdentifier>
+    public partial class GalleryArtifactVersionSource : WritableSubResource
     {
         /// <summary> Initializes a new instance of GalleryArtifactVersionSource. </summary>
         public GalleryArtifactVersionSource()

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the operations that can be performed over a specific VirtualMachineScaleSetRollingUpgrade. </summary>
-    public partial class VirtualMachineScaleSetRollingUpgradeOperations : SingletonOperationsBase<ResourceGroupResourceIdentifier, VirtualMachineScaleSetRollingUpgrade>
+    public partial class VirtualMachineScaleSetRollingUpgradeOperations : SingletonOperationsBase<VirtualMachineScaleSetRollingUpgrade>
     {
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSetRollingUpgradeOperations"/> class for mocking. </summary>
         protected VirtualMachineScaleSetRollingUpgradeOperations()

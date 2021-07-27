@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a role of the cloud service. </summary>
-    public partial class CloudServiceRole : Resource<TenantResourceIdentifier>
+    public partial class CloudServiceRole : Resources.Models.Resource
     {
         /// <summary> Initializes a new instance of CloudServiceRole. </summary>
         internal CloudServiceRole()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Describes the cloud service role sku. </param>
         /// <param name="properties"></param>
-        internal CloudServiceRole(TenantResourceIdentifier id, string name, ResourceType type, string location, CloudServiceRoleSku sku, CloudServiceRoleProperties properties) : base(id, name, type)
+        internal CloudServiceRole(ResourceIdentifier id, string name, ResourceType type, string location, CloudServiceRoleSku sku, CloudServiceRoleProperties properties) : base(id, name, type)
         {
             Location = location;
             Sku = sku;

@@ -9,8 +9,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     public partial class RestorePointData : IUtf8JsonSerializable
     {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RestorePointData DeserializeRestorePointData(JsonElement element)
         {
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<IList<ApiEntityReference>> excludeDisks = default;

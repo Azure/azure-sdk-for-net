@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ExtendedLocation> extendedLocation = default;
-            SubscriptionResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             Optional<PurchasePlan> plan = default;
             Optional<OSDiskImage> osDiskImage = default;
             Optional<IList<DataDiskImage>> dataDiskImages = default;

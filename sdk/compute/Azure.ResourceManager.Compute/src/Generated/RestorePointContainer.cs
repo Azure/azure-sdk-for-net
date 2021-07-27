@@ -18,7 +18,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of RestorePoint and their operations over a RestorePointCollection. </summary>
-    public partial class RestorePointContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, RestorePoint, RestorePointData>
+    public partial class RestorePointContainer : ResourceContainerBase<RestorePoint, RestorePointData>
     {
         /// <summary> Initializes a new instance of the <see cref="RestorePointContainer"/> class for mocking. </summary>
         protected RestorePointContainer()
@@ -36,9 +36,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private RestorePointsRestOperations _restClient => new RestorePointsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => RestorePointCollectionOperations.ResourceType;
@@ -360,6 +357,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, RestorePoint, RestorePointData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, RestorePoint, RestorePointData> Construct() { }
     }
 }

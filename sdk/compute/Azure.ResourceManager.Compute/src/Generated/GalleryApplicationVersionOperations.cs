@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the operations that can be performed over a specific GalleryApplicationVersion. </summary>
-    public partial class GalleryApplicationVersionOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, GalleryApplicationVersion>
+    public partial class GalleryApplicationVersionOperations : ResourceOperationsBase<GalleryApplicationVersion>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private GalleryApplicationVersionsRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref="GalleryApplicationVersionOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal GalleryApplicationVersionOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal GalleryApplicationVersionOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new GalleryApplicationVersionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);

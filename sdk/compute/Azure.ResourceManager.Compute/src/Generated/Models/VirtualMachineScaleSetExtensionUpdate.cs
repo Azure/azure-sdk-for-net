@@ -7,13 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Scale Set Extension. </summary>
-    public partial class VirtualMachineScaleSetExtensionUpdate : SubResource<ResourceIdentifier>
+    public partial class VirtualMachineScaleSetExtensionUpdate : Resources.Models.SubResource
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionUpdate. </summary>
         public VirtualMachineScaleSetExtensionUpdate()

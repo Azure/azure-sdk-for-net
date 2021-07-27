@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of DedicatedHost and their operations over a DedicatedHostGroup. </summary>
-    public partial class DedicatedHostContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, DedicatedHost, DedicatedHostData>
+    public partial class DedicatedHostContainer : ResourceContainerBase<DedicatedHost, DedicatedHostData>
     {
         /// <summary> Initializes a new instance of the <see cref="DedicatedHostContainer"/> class for mocking. </summary>
         protected DedicatedHostContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private DedicatedHostsRestOperations _restClient => new DedicatedHostsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => DedicatedHostGroupOperations.ResourceType;
@@ -328,7 +325,7 @@ namespace Azure.ResourceManager.Compute
         {
             Page<DedicatedHost> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DedicatedHostContainer.ListByHostGroup");
+                using var scope = _clientDiagnostics.CreateScope("DedicatedHostContainer.List");
                 scope.Start();
                 try
                 {
@@ -343,7 +340,7 @@ namespace Azure.ResourceManager.Compute
             }
             Page<DedicatedHost> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DedicatedHostContainer.ListByHostGroup");
+                using var scope = _clientDiagnostics.CreateScope("DedicatedHostContainer.List");
                 scope.Start();
                 try
                 {
@@ -366,7 +363,7 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<DedicatedHost>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DedicatedHostContainer.ListByHostGroup");
+                using var scope = _clientDiagnostics.CreateScope("DedicatedHostContainer.List");
                 scope.Start();
                 try
                 {
@@ -381,7 +378,7 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<DedicatedHost>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DedicatedHostContainer.ListByHostGroup");
+                using var scope = _clientDiagnostics.CreateScope("DedicatedHostContainer.List");
                 scope.Start();
                 try
                 {
@@ -444,6 +441,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, DedicatedHost, DedicatedHostData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, DedicatedHost, DedicatedHostData> Construct() { }
     }
 }

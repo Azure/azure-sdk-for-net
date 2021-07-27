@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The parameters of a managed disk. </summary>
-    public partial class ManagedDiskParameters : WritableSubResource<ResourceIdentifier>
+    public partial class ManagedDiskParameters : WritableSubResource
     {
         /// <summary> Initializes a new instance of ManagedDiskParameters. </summary>
         public ManagedDiskParameters()

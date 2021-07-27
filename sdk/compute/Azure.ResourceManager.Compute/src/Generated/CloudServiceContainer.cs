@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of CloudService and their operations over a ResourceGroup. </summary>
-    public partial class CloudServiceContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, CloudService, CloudServiceData>
+    public partial class CloudServiceContainer : ResourceContainerBase<CloudService, CloudServiceData>
     {
         /// <summary> Initializes a new instance of the <see cref="CloudServiceContainer"/> class for mocking. </summary>
         protected CloudServiceContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private CloudServicesRestOperations _restClient => new CloudServicesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -422,6 +419,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, CloudService, CloudServiceData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, CloudService, CloudServiceData> Construct() { }
     }
 }

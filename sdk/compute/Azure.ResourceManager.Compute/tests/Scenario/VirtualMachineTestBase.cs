@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var vnetName = Recording.GenerateAssetName("testVNet-");
             var subnetName = Recording.GenerateAssetName("testSubnet-");
-            ResourceGroupResourceIdentifier vnetId = $"{_resourceGroup.Id}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
+            ResourceIdentifier vnetId = $"{_resourceGroup.Id}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
             var addressSpaces = new Dictionary<string, object>()
             {
                 { "addressPrefixes", new List<string>() { "10.0.0.0/16" } }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return await _genericResourceContainer.CreateOrUpdateAsync(vnetId, input);
         }
 
-        protected ResourceGroupResourceIdentifier GetSubnetId(GenericResource vnet)
+        protected ResourceIdentifier GetSubnetId(GenericResource vnet)
         {
             var properties = vnet.Data.Properties as IDictionary<string, object>;
             var subnets = properties["subnets"] as IEnumerable<object>;
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.Tests
 
         // WEIRD: second level resources cannot use GenericResourceContainer to create.
         // Exception thrown: System.InvalidOperationException : An invalid resouce id was given /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-4544/providers/Microsoft.Network/virtualNetworks/testVNet-9796/subnets/testSubnet-1786
-        private async Task<GenericResource> CreateSubnet(ResourceGroupResourceIdentifier vnetId)
+        private async Task<GenericResource> CreateSubnet(ResourceIdentifier vnetId)
         {
             var subnetName = Recording.GenerateAssetName("testSubnet-");
-            ResourceGroupResourceIdentifier subnetId = $"{vnetId}/subnets/{subnetName}";
+            ResourceIdentifier subnetId = $"{vnetId}/subnets/{subnetName}";
             var input = new GenericResourceData()
             {
                 Location = DefaultLocation,
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Tests
         private async Task<GenericResource> CreateNetworkInterface(ResourceIdentifier subnetId)
         {
             var nicName = Recording.GenerateAssetName("testNic-");
-            ResourceGroupResourceIdentifier nicId = $"{_resourceGroup.Id}/providers/Microsoft.Network/networkInterfaces/{nicName}";
+            ResourceIdentifier nicId = $"{_resourceGroup.Id}/providers/Microsoft.Network/networkInterfaces/{nicName}";
             var input = new GenericResourceData()
             {
                 Location = DefaultLocation,

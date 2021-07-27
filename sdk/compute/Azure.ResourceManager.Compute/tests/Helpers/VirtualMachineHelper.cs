@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             // adding these checks one by one is so tedious, is there anything we can do about this?
         }
 
-        public static VirtualMachineData GetBasicLinuxVirtualMachineData(Location location, string computerName, string nicID, string adminUsername = "adminuser")
+        public static VirtualMachineData GetBasicLinuxVirtualMachineData(Location location, string computerName, ResourceIdentifier nicID, string adminUsername = "adminuser")
         {
             return new VirtualMachineData(location)
             {

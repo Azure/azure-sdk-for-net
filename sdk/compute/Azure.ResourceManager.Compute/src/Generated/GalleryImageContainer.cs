@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of GalleryImage and their operations over a Gallery. </summary>
-    public partial class GalleryImageContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, GalleryImage, GalleryImageData>
+    public partial class GalleryImageContainer : ResourceContainerBase<GalleryImage, GalleryImageData>
     {
         /// <summary> Initializes a new instance of the <see cref="GalleryImageContainer"/> class for mocking. </summary>
         protected GalleryImageContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Represents the REST operations. </summary>
         private GalleryImagesRestOperations _restClient => new GalleryImagesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => GalleryOperations.ResourceType;
@@ -322,7 +319,7 @@ namespace Azure.ResourceManager.Compute
         {
             Page<GalleryImage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.ListByGallery");
+                using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.List");
                 scope.Start();
                 try
                 {
@@ -337,7 +334,7 @@ namespace Azure.ResourceManager.Compute
             }
             Page<GalleryImage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.ListByGallery");
+                using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.List");
                 scope.Start();
                 try
                 {
@@ -360,7 +357,7 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<GalleryImage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.ListByGallery");
+                using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.List");
                 scope.Start();
                 try
                 {
@@ -375,7 +372,7 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<GalleryImage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.ListByGallery");
+                using var scope = _clientDiagnostics.CreateScope("GalleryImageContainer.List");
                 scope.Start();
                 try
                 {
@@ -438,6 +435,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, GalleryImage, GalleryImageData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, GalleryImage, GalleryImageData> Construct() { }
     }
 }

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a cloud service OS version. </summary>
-    public partial class OSVersion : Resource<TenantResourceIdentifier>
+    public partial class OSVersion : Resources.Models.Resource
     {
         /// <summary> Initializes a new instance of OSVersion. </summary>
         internal OSVersion()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="type"> The type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="properties"> OS version properties. </param>
-        internal OSVersion(TenantResourceIdentifier id, string name, ResourceType type, string location, OSVersionProperties properties) : base(id, name, type)
+        internal OSVersion(ResourceIdentifier id, string name, ResourceType type, string location, OSVersionProperties properties) : base(id, name, type)
         {
             Location = location;
             Properties = properties;

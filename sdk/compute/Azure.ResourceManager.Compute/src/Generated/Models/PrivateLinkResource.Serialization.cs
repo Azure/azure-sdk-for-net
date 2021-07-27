@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static PrivateLinkResource DeserializePrivateLinkResource(JsonElement element)
         {
-            TenantResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<string> groupId = default;

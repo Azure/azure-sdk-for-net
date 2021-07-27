@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<InstanceSku> sku = default;
             Optional<RoleInstanceProperties> properties = default;
-            TenantResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             foreach (var property in element.EnumerateObject())
