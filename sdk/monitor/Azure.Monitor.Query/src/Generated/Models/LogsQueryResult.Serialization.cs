@@ -18,6 +18,7 @@ namespace Azure.Monitor.Query.Models
             IReadOnlyList<LogsQueryResultTable> tables = default;
             Optional<JsonElement> statistics = default;
             Optional<JsonElement> render = default;
+            Optional<JsonElement> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"))
@@ -40,8 +41,13 @@ namespace Azure.Monitor.Query.Models
                     render = property.Value.Clone();
                     continue;
                 }
+                if (property.NameEquals("error"))
+                {
+                    error = property.Value.Clone();
+                    continue;
+                }
             }
-            return new LogsQueryResult(tables, statistics, render);
+            return new LogsQueryResult(tables, statistics, render, error);
         }
     }
 }

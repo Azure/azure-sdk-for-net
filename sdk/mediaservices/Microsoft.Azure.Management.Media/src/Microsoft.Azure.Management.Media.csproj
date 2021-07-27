@@ -11,7 +11,7 @@
     <PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/mediaservices/Microsoft.Azure.Management.Media/CHANGELOG.md
+        For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/mediaservices/Microsoft.Azure.Management.Media/CHANGELOG.md
             ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

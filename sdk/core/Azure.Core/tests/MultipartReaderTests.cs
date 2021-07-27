@@ -375,7 +375,7 @@ namespace Azure.Core.Tests
             Assert.NotNull(section);
             Assert.That(section.Headers.Count, Is.EqualTo(1));
             // cspell:ignore FFFDU
-#if NET5_0 //https://github.com/dotnet/runtime/issues/29017
+#if NETCOREAPP //https://github.com/dotnet/runtime/issues/29017
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"text\" filename=\"a\uFFFD\uFFFDU.txt\""));
 #else
             Assert.That(section.Headers["Content-Disposition"][0], Is.EqualTo("form-data; name=\"text\" filename=\"a\uFFFDU.txt\""));

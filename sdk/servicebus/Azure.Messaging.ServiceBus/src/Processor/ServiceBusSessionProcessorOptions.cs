@@ -35,11 +35,11 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>Gets or sets a value that indicates whether the processor
         /// should automatically complete messages after the <see cref="ServiceBusSessionProcessor.ProcessMessageAsync"/>
         /// handler has completed processing. If the message handler triggers an exception,
-        /// the message will not be automatically completed. The default value is true.
+        /// the message will not be automatically completed.
         /// </summary>
         ///
-        /// <value>true to complete the message automatically on successful execution of the event handler;
-        /// otherwise, false.</value>
+        /// <value><c>true</c> to complete the message automatically on successful execution of the message handler; otherwise, <c>false</c>.
+        /// The default value is <c>true</c>.</value>
         public bool AutoCompleteMessages { get; set; } = true;
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.Messaging.ServiceBus
         /// should be greater than the queue's LockDuration Property.
         /// </summary>
         ///
-        /// <value>The maximum duration during which session locks are automatically renewed.</value>
+        /// <value>The maximum duration during which session locks are automatically renewed. The default value is 5 minutes.</value>
         /// <remarks>The session lock renewal can continue for sometime in the background
         /// after completion of message and result in a few false SessionLockLost exceptions temporarily.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">
@@ -98,10 +98,9 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Gets or sets the maximum number of sessions that can be processed concurrently by the processor.
-        /// The default value is 8.
         /// </summary>
         ///
-        /// <value>The maximum number of concurrent sessions to process.</value>
+        /// <value>The maximum number of concurrent sessions to process. The default value is 8.</value>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   A value that is not positive is attempted to be set for the property.
         /// </exception>

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -20,28 +21,20 @@ namespace Azure.Messaging.WebPubSub
         private static readonly char[] KeyValueSeparator = { '=' };
         private static readonly char[] PropertySeparator = { ';' };
 
+        internal static byte[] s_role = Encoding.UTF8.GetBytes("role");
+
         /// <summary>
         /// Creates a URI with authentication token.
         /// </summary>
-        /// <param name="expiresAtUtc">UTC time when the token expires.</param>
+        /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId"></param>
         /// <param name="roles"></param>
         /// <returns></returns>
-        public virtual Uri GenerateClientAccessUri(DateTime expiresAtUtc, string userId = default, params string[] roles)
+        public virtual Uri GenerateClientAccessUri(DateTimeOffset expiresAt, string userId = default, params string[] roles)
         {
-            List<Claim> claims = new List<Claim>();
-            if (userId != default)
-            {
-                var subject = new Claim("sub", userId);
-                claims.Add(subject);
-            }
-            if (roles != default && roles.Length > 0)
-            {
-                foreach (var role in roles)
-                {
-                    claims.Add(new Claim("role", role));
-                }
-            }
+            var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
+            var jwt = new JwtBuilder(keyBytes);
+            var now = DateTimeOffset.UtcNow;
 
             string endpoint = this.endpoint.AbsoluteUri;
             if (!endpoint.EndsWith("/", StringComparison.Ordinal))
@@ -50,7 +43,20 @@ namespace Azure.Messaging.WebPubSub
             }
             var audience = $"{endpoint}client/hubs/{hub}";
 
-            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, _credential, expiresAtUtc);
+            if (userId != default)
+            {
+                jwt.AddClaim(JwtBuilder.Sub, userId);
+            }
+            if (roles != default && roles.Length > 0)
+            {
+                jwt.AddClaim(s_role, roles);
+            }
+            jwt.AddClaim(JwtBuilder.Nbf, now);
+            jwt.AddClaim(JwtBuilder.Exp, expiresAt);
+            jwt.AddClaim(JwtBuilder.Iat, now);
+            jwt.AddClaim(JwtBuilder.Aud, audience);
+
+            string token = jwt.BuildString();
 
             var clientEndpoint = new UriBuilder(endpoint);
             clientEndpoint.Scheme = this.endpoint.Scheme == "http" ? "ws" : "wss";
@@ -71,7 +77,7 @@ namespace Azure.Messaging.WebPubSub
             if (expiresAfter.TotalMilliseconds < 0)
                 throw new ArgumentOutOfRangeException(nameof(expiresAfter));
 
-            DateTime expiresAt = DateTime.UtcNow;
+            DateTimeOffset expiresAt = DateTimeOffset.UtcNow;
             if (expiresAfter == default)
             {
                 expiresAt += TimeSpan.FromHours(1);

@@ -56,10 +56,7 @@ stages:
               runOnce:
                 deploy:
                   steps:
-                    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-                      parameters:
-                        Paths:
-                          - '${{ parameters.ServiceDirectory }}'
+                    - checkout: self
                     - template: /eng/common/pipelines/templates/steps/retain-run.yml
                     - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
                       parameters:
@@ -86,8 +83,8 @@ stages:
               dependsOn: TagRepository
 
               pool:
-                name: azsdk-pool-mms-ubuntu-1804-general
-                vmImage: MMSUbuntu18.04
+                name: azsdk-pool-mms-ubuntu-2004-general
+                vmImage: MMSUbuntu20.04
 
               strategy:
                 runOnce:
@@ -154,13 +151,7 @@ stages:
                   deploy:
                     steps:
                       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-                        parameters:
-                          paths:
-                            - .github/CODEOWNERS
-                      - template: /eng/common/pipelines/templates/steps/get-pr-owners.yml
-                        parameters:
-                          TargetVariable: "OwningGHUser"
-                          ServiceDirectory: ${{parameters.ServiceDirectory}}
+
                       - template: /eng/common/pipelines/templates/steps/docs-metadata-release.yml
                         parameters:
                           ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
@@ -174,7 +165,6 @@ stages:
                           ArtifactName: ${{artifact.name}}
                           Language: '.net'
                           DocRepoDestinationPath: 'api/overview/azure/'
-                          GHReviewersVariable: 'OwningGHUser'
                           CIConfigs: $(CIConfigs)
                           OnboardingBranch: 'onboarding'
                           CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'

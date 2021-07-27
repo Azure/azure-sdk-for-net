@@ -16,7 +16,19 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     /// </summary>
     public static class OutboundType
     {
+        /// <summary>
+        /// The load balancer is used for egress through an AKS assigned public
+        /// IP. This supports Kubernetes services of type 'loadBalancer'. For
+        /// more information see [outbound type
+        /// loadbalancer](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-loadbalancer).
+        /// </summary>
         public const string LoadBalancer = "loadBalancer";
+        /// <summary>
+        /// Egress paths must be defined by the user. This is an advanced
+        /// scenario and requires proper network configuration. For more
+        /// information see [outbound type
+        /// userDefinedRouting](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-userdefinedrouting).
+        /// </summary>
         public const string UserDefinedRouting = "userDefinedRouting";
     }
 }

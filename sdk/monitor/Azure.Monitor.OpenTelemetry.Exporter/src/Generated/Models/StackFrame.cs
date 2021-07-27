@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class StackFrame
     {
         /// <summary> Initializes a new instance of StackFrame. </summary>
-        /// <param name="level"> . </param>
+        /// <param name="level"></param>
         /// <param name="method"> Method name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="method"/> is null. </exception>
         public StackFrame(int level, string method)

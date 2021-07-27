@@ -129,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
         /// a batch of messages. The default value is 1000.
         /// </summary>
-        public int MaxBatchSize { get; set; } = 1000;
+        public int MaxMessageBatchSize { get; set; } = 1000;
 
         /// <summary>
         /// Gets or sets the maximum amount of time to wait for a message to be received for the
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 { nameof(MaxAutoLockRenewalDuration), MaxAutoLockRenewalDuration },
                 { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
-                { nameof(MaxBatchSize), MaxBatchSize },
+                { nameof(MaxMessageBatchSize), MaxMessageBatchSize },
                 { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty }
             };
 

@@ -7,7 +7,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         Ignored,
         Connect,
-        Disconnect,
+        Connected,
+        Disconnected,
         User
     }
 }

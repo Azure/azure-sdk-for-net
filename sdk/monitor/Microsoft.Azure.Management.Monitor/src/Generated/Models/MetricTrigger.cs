@@ -61,7 +61,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// defines what the rule monitors.</param>
         /// <param name="dimensions">List of dimension conditions. For example:
         /// [{"DimensionName":"AppName","Operator":"Equals","Values":["App1"]},{"DimensionName":"Deployment","Operator":"Equals","Values":["default"]}].</param>
-        public MetricTrigger(string metricName, string metricResourceUri, System.TimeSpan timeGrain, MetricStatisticType statistic, System.TimeSpan timeWindow, TimeAggregationType timeAggregation, ComparisonOperationType operatorProperty, double threshold, string metricNamespace = default(string), IList<ScaleRuleMetricDimension> dimensions = default(IList<ScaleRuleMetricDimension>))
+        /// <param name="dividePerInstance">a value indicating whether metric
+        /// should divide per instance.</param>
+        public MetricTrigger(string metricName, string metricResourceUri, System.TimeSpan timeGrain, MetricStatisticType statistic, System.TimeSpan timeWindow, TimeAggregationType timeAggregation, ComparisonOperationType operatorProperty, double threshold, string metricNamespace = default(string), IList<ScaleRuleMetricDimension> dimensions = default(IList<ScaleRuleMetricDimension>), bool? dividePerInstance = default(bool?))
         {
             MetricName = metricName;
             MetricNamespace = metricNamespace;
@@ -73,6 +75,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
             OperatorProperty = operatorProperty;
             Threshold = threshold;
             Dimensions = dimensions;
+            DividePerInstance = dividePerInstance;
             CustomInit();
         }
 
@@ -157,6 +160,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "dimensions")]
         public IList<ScaleRuleMetricDimension> Dimensions { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether metric should divide per
+        /// instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "dividePerInstance")]
+        public bool? DividePerInstance { get; set; }
 
         /// <summary>
         /// Validate the object.

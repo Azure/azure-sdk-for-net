@@ -17,16 +17,21 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal ServiceSpecification()
         {
             LogSpecifications = new ChangeTrackingList<LogSpecification>();
+            MetricSpecifications = new ChangeTrackingList<MetricSpecification>();
         }
 
         /// <summary> Initializes a new instance of ServiceSpecification. </summary>
         /// <param name="logSpecifications"> Log specifications of operation. </param>
-        internal ServiceSpecification(IReadOnlyList<LogSpecification> logSpecifications)
+        /// <param name="metricSpecifications"> Metric specifications of operation. </param>
+        internal ServiceSpecification(IReadOnlyList<LogSpecification> logSpecifications, IReadOnlyList<MetricSpecification> metricSpecifications)
         {
             LogSpecifications = logSpecifications;
+            MetricSpecifications = metricSpecifications;
         }
 
         /// <summary> Log specifications of operation. </summary>
         public IReadOnlyList<LogSpecification> LogSpecifications { get; }
+        /// <summary> Metric specifications of operation. </summary>
+        public IReadOnlyList<MetricSpecification> MetricSpecifications { get; }
     }
 }

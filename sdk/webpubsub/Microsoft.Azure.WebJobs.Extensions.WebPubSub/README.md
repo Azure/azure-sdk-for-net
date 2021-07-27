@@ -2,6 +2,12 @@
 
 This extension provides functionality for receiving Web PubSub webhook calls in Azure Functions, allowing you to easily write functions that respond to any event published to Web PubSub.
 
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/src) |
+[Package](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSub) |
+[API reference documentation](https://azure.github.io/azure-webpubsub/references/functions-bindings) |
+[Product documentation](https://aka.ms/awps/doc) |
+[Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/samples)
+
 ## Getting started
 
 ### Install the package
@@ -14,7 +20,7 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub --prerelease
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/) and an Azure resource group with a Web PubSub resource. Follow this [step-by-step tutorial](https://review.docs.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance?branch=release-azure-web-pubsub) to create an Azure Web PubSub instance.
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a Web PubSub resource. Follow this [step-by-step tutorial](https://review.docs.microsoft.com/azure/azure-web-pubsub/howto-develop-create-instance?branch=release-azure-web-pubsub) to create an Azure Web PubSub instance.
 
 ### Authenticate the client
 
@@ -56,61 +62,72 @@ In `Connect` and `Message` events, function will respect return values to send b
 
 ### Functions that uses Web PubSub input binding
 
-```cs
-[FunctionName("WebPubSubInputBindingFunction")]
-public static WebPubSubConnection Run(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-    [WebPubSubConnection(Hub = "simplechat", UserId = "{query.userid}")] WebPubSubConnection connection)
+```C# Snippet:WebPubSubConnectionBindingFunction
+public static class WebPubSubConnectionBindingFunction
 {
-    Console.WriteLine("login");
-    return connection;
+    [FunctionName("WebPubSubConnectionBindingFunction")]
+    public static WebPubSubConnection Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
+        [WebPubSubConnection(Hub = "hub", UserId = "{query.userid}")] WebPubSubConnection connection)
+    {
+        Console.WriteLine("login");
+        return connection;
+    }
 }
 ```
 
 ### Functions that uses Web PubSub output binding
 
-```cs
-[FunctionName("WebPubSubOutputBindingFunction")]
-public static async Task RunAsync(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-    [WebPubSub(Hub = "simplechat")] IAsyncCollector<WebPubSubOperation> operation)
+```C# Snippet:WebPubSubOutputBindingFunction
+public static class WebPubSubOutputBindingFunction
 {
-    await operation.AddAsync(new SendToAll
+    [FunctionName("WebPubSubOutputBindingFunction")]
+    public static async Task RunAsync(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
+        [WebPubSub(Hub = "hub")] IAsyncCollector<WebPubSubOperation> operation)
     {
-        Message = BinaryData.FromString("Hello Web PubSub"),
-        DataType = MessageDataType.Text
-    });
+        await operation.AddAsync(new SendToAll
+        {
+            Message = BinaryData.FromString("Hello Web PubSub"),
+            DataType = MessageDataType.Text
+        });
+    }
 }
 ```
 
 ### Functions that uses Web PubSub trigger
 
-```cs
-[FunctionName("WebPubSubTriggerFunction")]
-public static void Run(
-    [WebPubSubTrigger("message", WebPubSubEventType.User)] 
-    ConnectionContext context,
-    string message,
-    MessageDataType dataType)
+```C# Snippet:WebPubSubTriggerFunction
+public static class WebPubSubTriggerFunction
 {
-    Console.WriteLine($"Request from: {context.userId}");
-    Console.WriteLine($"Request message: {message}");
-    Console.WriteLine($"Request message DataType: {dataType}");
+    [FunctionName("WebPubSubTriggerFunction")]
+    public static void Run(
+        ILogger logger,
+        [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] ConnectionContext context,
+        string message,
+        MessageDataType dataType)
+    {
+        logger.LogInformation("Request from: {user}, message: {message}, dataType: {dataType}",
+            context.UserId, message, dataType);
+    }
 }
 ```
 
 ### Functions that uses Web PubSub trigger return value
 
-```cs
-[FunctionName("WebPubSubTriggerReturnValueFunction")]
-public static MessageResponse RunAsync(
-    [WebPubSubTrigger("message", WebPubSubEventType.User)] ConnectionContext context)
+```C# Snippet:WebPubSubTriggerReturnValueFunction
+public static class WebPubSubTriggerReturnValueFunction
 {
-    return new MessageResponse
+    [FunctionName("WebPubSubTriggerReturnValueFunction")]
+    public static MessageResponse Run(
+        [WebPubSubTrigger("hub", WebPubSubEventType.User, "message")] ConnectionContext context)
     {
-        Message = BinaryData.FromString("ack"),
-        DataType = MessageDataType.Text
-    };
+        return new MessageResponse
+        {
+            Message = BinaryData.FromString("ack"),
+            DataType = MessageDataType.Text
+        };
+    }
 }
 ```
 

@@ -1,6 +1,19 @@
 # Release History
 
-## 12.10.0-beta.1 (Unreleased)
+## 12.10.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.10.0-beta.2 (2021-07-23)
+- This release contains bug fixes to improve quality.
+
+## 12.10.0-beta.1 (2021-07-22)
 - Added support for service version 2020-10-02.
 - Added support for Immutable Storage with Versioning
     - Added BlobBaseClient.SetImmutibilityPolicy()
@@ -10,6 +23,10 @@
 - Added support for OAuth copy sources for synchronous copy operations.
 - Added support for Parquet as an input format in BlockBlobClient.Query().
 - Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.
+- Added support for RequestConditions parameter validation.  If a request condition is set for an API that doesn't support it, and ArguementException will be thrown.
+    - This feature can be disabled with the environment variable "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION" or the App Context switch "Azure.Storage.DisableRequestConditionsValidation".
+- Fixed bug where BlobBaseClient.DownloadStreamingAsync() won't correctly parse the LeaseStatus header.
+- Fixed bug where BlobBaseClient.DownloadContentAsync() fails on 304 response.
 
 ## 12.9.1 (2021-06-23)
 - Added optimization to unwrap encryption key once for DownloadTo and OpenRead when Client Side Encryption is enabled.
@@ -21,6 +38,9 @@
 - Fixed bug where specifying conditions in BlobBaseClient.OpenRead could override allowModifications flag in BlobOpenReadOptions leading to inconsistent read.
 - Fixed bug where BlobProperties.IsLatestVersion from BlobBaseClient.GetProperties did not set the value (defaulted to false).
 - Fixed bug where reading blob with Client Side Encryption enabled results in high CPU.
+
+- TenantId can now be discovered through the service challenge response, when using a TokenCredential for authorization.
+    - A new property is now available on the ClientOptions called `EnableTenantDiscovery`. If set to true, the client will attempt an initial unauthorized request to the service to prompt a challenge containing the tenantId hint.
 
 ## 12.8.4 (2021-05-20)
 - Fixed bug where Client Side Encryption during large transactions (greater than max int value) would throw an exception.

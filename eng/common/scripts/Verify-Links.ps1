@@ -27,7 +27,7 @@
   List of http status codes that count as broken links. Defaults to 400, 401, 404, SocketError.HostNotFound = 11001, SocketError.NoData = 11004.
 
   .PARAMETER branchReplaceRegex
-  Regex to check if the link needs to be replaced. E.g. ^(https://github.com/.*/(?:blob|tree)/)master(/.*)$
+  Regex to check if the link needs to be replaced. E.g. ^(https://github.com/.*/(?:blob|tree)/)main(/.*)$
 
   .PARAMETER branchReplacementName
   The substitute branch name or SHA commit.

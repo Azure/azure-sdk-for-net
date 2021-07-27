@@ -3,7 +3,7 @@
 trigger:
   branches:
     include:
-    - master
+    - main
     - hotfix/*
     - release/*
   paths:
@@ -13,7 +13,7 @@ trigger:
 pr:
   branches:
     include:
-    - master
+    - main
     - feature/*
     - hotfix/*
     - release/*
@@ -29,5 +29,5 @@ extends:
     ServiceDirectory: resourcemanager
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.Core
-      safeName: AzureResourceManagerCore
+    - name: Azure.ResourceManager
+      safeName: AzureResourceManager

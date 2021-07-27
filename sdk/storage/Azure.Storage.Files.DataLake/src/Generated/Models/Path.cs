@@ -18,14 +18,14 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of Path. </summary>
-        /// <param name="name"> . </param>
-        /// <param name="lastModified"> . </param>
-        /// <param name="eTag"> . </param>
-        /// <param name="owner"> . </param>
-        /// <param name="group"> . </param>
-        /// <param name="permissions"> . </param>
-        /// <param name="contentLength"> . </param>
-        /// <param name="isDirectory"> . </param>
+        /// <param name="name"></param>
+        /// <param name="lastModified"></param>
+        /// <param name="eTag"></param>
+        /// <param name="owner"></param>
+        /// <param name="group"></param>
+        /// <param name="permissions"></param>
+        /// <param name="contentLength"></param>
+        /// <param name="isDirectory"></param>
         internal Path(string name, DateTimeOffset? lastModified, string eTag, string owner, string group, string permissions, string contentLength, string isDirectory)
         {
             Name = name;
