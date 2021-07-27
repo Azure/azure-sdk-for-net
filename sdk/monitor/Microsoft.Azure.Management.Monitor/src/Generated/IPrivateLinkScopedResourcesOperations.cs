@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Gets a scoped resource in a private link scope.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='scopeName'>
         /// The name of the Azure Monitor PrivateLinkScope resource.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Approve or reject a private endpoint connection with a given name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='scopeName'>
         /// The name of the Azure Monitor PrivateLinkScope resource.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Deletes a private endpoint connection with a given name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='scopeName'>
         /// The name of the Azure Monitor PrivateLinkScope resource.
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Gets all private endpoint connections on a private link scope.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='scopeName'>
         /// The name of the Azure Monitor PrivateLinkScope resource.
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Approve or reject a private endpoint connection with a given name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='scopeName'>
         /// The name of the Azure Monitor PrivateLinkScope resource.
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// Deletes a private endpoint connection with a given name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='scopeName'>
         /// The name of the Azure Monitor PrivateLinkScope resource.

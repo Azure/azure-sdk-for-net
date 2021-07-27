@@ -474,7 +474,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="includeExtendedInfo"> The Boolean to use. </param>
+        /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentAsync(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
@@ -505,7 +505,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="includeExtendedInfo"> The Boolean to use. </param>
+        /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegment(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
@@ -732,7 +732,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="includeExtendedInfo"> The Boolean to use. </param>
+        /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentNextPageAsync(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
@@ -770,7 +770,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN&quot;&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="includeExtendedInfo"> The Boolean to use. </param>
+        /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegmentNextPage(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)

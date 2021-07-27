@@ -48,9 +48,9 @@ namespace Microsoft.Extensions.Hosting
                         "EventProcessorOptions:EnableReceiverRuntimeMetric",
                         options.TrackLastEnqueuedEventProperties);
 
-                    options.MaxBatchSize = section.GetValue(
+                    options.MaxEventBatchSize = section.GetValue(
                         "EventProcessorOptions:MaxBatchSize",
-                        options.MaxBatchSize);
+                        options.MaxEventBatchSize);
 
                     options.PrefetchCount = section.GetValue(
                         "EventProcessorOptions:PrefetchCount",

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.Http;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallingServer
 {
@@ -19,15 +21,28 @@ namespace Azure.Communication.CallingServer
         internal string ApiVersion { get; }
 
         /// <summary>
+        /// Enable auto redirect
+        /// </summary>
+        internal bool AllowAutoRedirect { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CallingServerClientOptions"/>.
         /// </summary>
-        public CallingServerClientOptions(ServiceVersion version = LatestVersion)
+        public CallingServerClientOptions(ServiceVersion version = LatestVersion, bool allowAutoRedirect = false)
         {
+            AllowAutoRedirect = allowAutoRedirect;
             ApiVersion = version switch
             {
                 ServiceVersion.V2021_06_15_Preview => "2021-06-15-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
+
+            var clientHandler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = allowAutoRedirect
+            };
+
+            Transport = new HttpClientTransport(clientHandler);
         }
 
         /// <summary>

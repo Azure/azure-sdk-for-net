@@ -25,6 +25,23 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizePiiEntitiesAction"/>
+        /// class based on the values of a <see cref="RecognizePiiEntitiesOptions"/>.
+        /// It sets the <see cref="ModelVersion"/>, <see cref="DisableServiceLogs"/>,
+        /// <see cref="DomainFilter"/>, and <see cref="CategoriesFilter"/> properties.
+        /// </summary>
+        public RecognizePiiEntitiesAction(RecognizePiiEntitiesOptions options)
+        {
+            ModelVersion = options.ModelVersion;
+            DisableServiceLogs = options.DisableServiceLogs;
+            DomainFilter = options.DomainFilter;
+            if (options.CategoriesFilter.Count > 0)
+            {
+                CategoriesFilter = new List<PiiEntityCategory>(options.CategoriesFilter);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value that, if set, indicates the version of the text
         /// analytics model that will be used to generate the result.  For supported
         /// model versions, see operation-specific documentation, for example:
@@ -35,9 +52,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// The default value of this property is 'true'. This means, Text Analytics service won't log your input text.
         /// Setting this property to 'false', enables logging your input text for 48 hours, solely to allow for troubleshooting issues.
+        /// <para>
+        /// Please see Cognitive Services Compliance and Privacy notes at <see href="https://aka.ms/cs-compliance"/> for additional details,
+        /// and Microsoft Responsible AI principles at <see href="https://www.microsoft.com/ai/responsible-ai"/>.
+        /// </para>
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1_Preview_5"/> and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
         /// </remarks>
         public bool? DisableServiceLogs { get; set; }
 

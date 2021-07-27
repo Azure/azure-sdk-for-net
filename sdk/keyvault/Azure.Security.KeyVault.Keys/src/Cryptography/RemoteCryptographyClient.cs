@@ -270,7 +270,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new VerifyResult { Algorithm = algorithm, KeyId = _keyId.ToString() }, cancellationToken, "/verify").ConfigureAwait(false);
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new VerifyResult { Algorithm = algorithm, KeyId = _keyId.AbsoluteUri }, cancellationToken, "/verify").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -294,7 +294,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new VerifyResult { Algorithm = algorithm, KeyId = _keyId.ToString() }, cancellationToken, "/verify");
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new VerifyResult { Algorithm = algorithm, KeyId = _keyId.AbsoluteUri }, cancellationToken, "/verify");
             }
             catch (Exception e)
             {

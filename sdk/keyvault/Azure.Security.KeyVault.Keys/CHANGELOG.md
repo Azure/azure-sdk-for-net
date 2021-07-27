@@ -4,12 +4,17 @@
 
 ### Features Added
 
+- Added `GetRandomBytes` and `GetRandomBytesAsync` to `KeyClient` to get random bytes from a managed HSM.
+- Added `Exportable` and `ReleasePolicy` to `CreateKeyOptions`, `ImportKeyOptions`, and `KeyProperties` to support Secure Key Release for Key Vault and Managed HSM.
+- Added `ReleaseKey` and `ReleaseKeyAsync` to `KeyClient` to release a key for Key Vault and Managed HSM.
+
 ### Breaking Changes
 
 ### Key Bugs Fixed
 
 ### Fixed
 
+- The default service version is now "7.3-preview".
 
 ## 4.2.0 (2021-06-15)
 

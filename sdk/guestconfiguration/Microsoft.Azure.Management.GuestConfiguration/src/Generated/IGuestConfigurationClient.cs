@@ -92,6 +92,16 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         IGuestConfigurationHCRPAssignmentReportsOperations GuestConfigurationHCRPAssignmentReports { get; }
 
         /// <summary>
+        /// Gets the IGuestConfigurationAssignmentsVMSSOperations.
+        /// </summary>
+        IGuestConfigurationAssignmentsVMSSOperations GuestConfigurationAssignmentsVMSS { get; }
+
+        /// <summary>
+        /// Gets the IGuestConfigurationAssignmentReportsVMSSOperations.
+        /// </summary>
+        IGuestConfigurationAssignmentReportsVMSSOperations GuestConfigurationAssignmentReportsVMSS { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }

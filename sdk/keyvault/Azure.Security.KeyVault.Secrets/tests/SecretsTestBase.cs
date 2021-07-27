@@ -14,7 +14,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     [ClientTestFixture(
         SecretClientOptions.ServiceVersion.V7_0,
         SecretClientOptions.ServiceVersion.V7_1,
-        SecretClientOptions.ServiceVersion.V7_2)]
+        SecretClientOptions.ServiceVersion.V7_2,
+        SecretClientOptions.ServiceVersion.V7_3_Preview)]
     [NonParallelizable]
     public abstract class SecretsTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {

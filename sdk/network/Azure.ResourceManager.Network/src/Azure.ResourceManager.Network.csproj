@@ -1,12 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Nullable>annotations</Nullable>
     <IsMgmtLibrary>true</IsMgmtLibrary>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <VersionSuffix>preview.3</VersionSuffix>
     <Version>1.0.0-preview.3</Version>
   </PropertyGroup>
 
@@ -14,10 +12,18 @@
     <LangVersion>9.0</LangVersion>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <RestoreAdditionalProjectSources>https://azuresdkartifacts.blob.core.windows.net/azure-sdk-tools/index.json</RestoreAdditionalProjectSources>
+    <PackageId>Azure.ResourceManager.Network</PackageId>
+    <Description>
+      Azure management client SDK for Azure resource provider Microsoft.Network.
+      This is a beta preview vesion.  This version uses a next-generation code generator that introduces important breaking changes, but also new features (such as intuitive authentication, custom HTTP pipeline, distributed tracing and much more).
+    </Description>
+    <PackageTags>azure;management;network</PackageTags>
+    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Core" VersionOverride="1.0.0-alpha.20210721.3" />
-  </ItemGroup>
+  <PropertyGroup>
+    <!-- TODO: Temp workaround. Should be fixed prio release  -->
+    <NoWarn>$(NoWarn);AZC0008</NoWarn>
+  </PropertyGroup>
 
 </Project>

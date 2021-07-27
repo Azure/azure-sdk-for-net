@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
@@ -88,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         internal static void LogExceptionReceivedEvent(ExceptionReceivedEventArgs e, ILoggerFactory loggerFactory)
         {
-            var logger = loggerFactory?.CreateLogger(LogCategories.Executor);
+            var logger = loggerFactory?.CreateLogger<EventHubListener>();
             string message = $"EventProcessorHost error (Action='{e.Action}', HostName='{e.Hostname}', PartitionId='{e.PartitionId}').";
 
             Utility.LogException(e.Exception, message, logger);
@@ -97,7 +98,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private IAsyncCollector<EventData> BuildFromAttribute(EventHubAttribute attribute)
         {
             EventHubProducerClient client = _clientFactory.GetEventHubProducerClient(attribute.EventHubName, attribute.Connection);
-            return new EventHubAsyncCollector(new EventHubProducerClientImpl(client, _loggerFactory));
+            return new EventHubAsyncCollector(new EventHubProducerClientImpl(client, _loggerFactory.CreateLogger<EventHubProducerClientImpl>()));
         }
 
         private static string ConvertEventDataToString(EventData x)

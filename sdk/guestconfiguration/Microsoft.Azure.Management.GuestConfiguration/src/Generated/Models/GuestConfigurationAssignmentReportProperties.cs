@@ -45,7 +45,8 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// <param name="endTime">End date and time of the guest configuration
         /// assignment compliance status check.</param>
         /// <param name="details">Details of the assignment report.</param>
-        public GuestConfigurationAssignmentReportProperties(string complianceStatus = default(string), string reportId = default(string), AssignmentInfo assignment = default(AssignmentInfo), VMInfo vm = default(VMInfo), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), AssignmentReportDetails details = default(AssignmentReportDetails))
+        /// <param name="vmssResourceId">Azure resource Id of the VMSS.</param>
+        public GuestConfigurationAssignmentReportProperties(string complianceStatus = default(string), string reportId = default(string), AssignmentInfo assignment = default(AssignmentInfo), VMInfo vm = default(VMInfo), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), AssignmentReportDetails details = default(AssignmentReportDetails), string vmssResourceId = default(string))
         {
             ComplianceStatus = complianceStatus;
             ReportId = reportId;
@@ -54,6 +55,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
             StartTime = startTime;
             EndTime = endTime;
             Details = details;
+            VmssResourceId = vmssResourceId;
             CustomInit();
         }
 
@@ -109,6 +111,12 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
         /// </summary>
         [JsonProperty(PropertyName = "details")]
         public AssignmentReportDetails Details { get; set; }
+
+        /// <summary>
+        /// Gets azure resource Id of the VMSS.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmssResourceId")]
+        public string VmssResourceId { get; private set; }
 
     }
 }

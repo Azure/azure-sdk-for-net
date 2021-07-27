@@ -65,6 +65,8 @@ namespace Azure.Core.Pipeline
             RetryOptions retryOptions = options.Retry;
             policies.Add(new RetryPolicy(retryOptions.Mode, retryOptions.Delay, retryOptions.MaxDelay, retryOptions.MaxRetries));
 
+            policies.Add(RedirectPolicy.Shared);
+
             policies.AddRange(perRetryPolicies);
 
             policies.AddRange(options.PerRetryPolicies);

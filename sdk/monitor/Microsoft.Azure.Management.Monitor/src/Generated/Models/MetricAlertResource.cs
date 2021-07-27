@@ -35,11 +35,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Initializes a new instance of the MetricAlertResource class.
         /// </summary>
         /// <param name="location">Resource location</param>
-        /// <param name="description">the description of the metric alert that
-        /// will be included in the alert email.</param>
         /// <param name="severity">Alert severity {0, 1, 2, 3, 4}</param>
         /// <param name="enabled">the flag that indicates whether the metric
         /// alert is enabled.</param>
+        /// <param name="scopes">the list of resource id's that this metric
+        /// alert is scoped to.</param>
         /// <param name="evaluationFrequency">how often the metric alert is
         /// evaluated represented in ISO 8601 duration format.</param>
         /// <param name="windowSize">the period of time (in ISO 8601 duration
@@ -51,14 +51,27 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="scopes">the list of resource id's that this metric
-        /// alert is scoped to.</param>
+        /// <param name="kind">Metadata used by portal/tooling/etc to render
+        /// different UX experiences for resources of the same type; e.g.
+        /// ApiApps are a kind of Microsoft.Web/sites type.  If supported, the
+        /// resource provider must validate and persist this value.</param>
+        /// <param name="etag">The etag field is *not* required. If it is
+        /// provided in the response body, it must also be provided as a header
+        /// per the normal etag convention.  Entity tags are used for comparing
+        /// two or more entities from the same requested resource. HTTP/1.1
+        /// uses entity tags in the etag (section 14.19), If-Match (section
+        /// 14.24), If-None-Match (section 14.26), and If-Range (section 14.27)
+        /// header fields. </param>
+        /// <param name="description">the description of the metric alert that
+        /// will be included in the alert email.</param>
         /// <param name="targetResourceType">the resource type of the target
-        /// resource(s) on which the alert is created/updated. Mandatory for
-        /// MultipleResourceMultipleMetricCriteria.</param>
+        /// resource(s) on which the alert is created/updated. Mandatory if the
+        /// scope contains a subscription, resource group, or more than one
+        /// resource.</param>
         /// <param name="targetResourceRegion">the region of the target
-        /// resource(s) on which the alert is created/updated. Mandatory for
-        /// MultipleResourceMultipleMetricCriteria.</param>
+        /// resource(s) on which the alert is created/updated. Mandatory if the
+        /// scope contains a subscription, resource group, or more than one
+        /// resource.</param>
         /// <param name="autoMitigate">the flag that indicates whether the
         /// alert should be auto resolved or not. The default is true.</param>
         /// <param name="actions">the array of actions that are performed when
@@ -66,8 +79,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// resolved.</param>
         /// <param name="lastUpdatedTime">Last time the rule was updated in
         /// ISO8601 format.</param>
-        public MetricAlertResource(string location, string description, int severity, bool enabled, System.TimeSpan evaluationFrequency, System.TimeSpan windowSize, MetricAlertCriteria criteria, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> scopes = default(IList<string>), string targetResourceType = default(string), string targetResourceRegion = default(string), bool? autoMitigate = default(bool?), IList<MetricAlertAction> actions = default(IList<MetricAlertAction>), System.DateTime? lastUpdatedTime = default(System.DateTime?))
-            : base(location, id, name, type, tags)
+        /// <param name="isMigrated">the value indicating whether this alert
+        /// rule is migrated.</param>
+        public MetricAlertResource(string location, int severity, bool enabled, IList<string> scopes, System.TimeSpan evaluationFrequency, System.TimeSpan windowSize, MetricAlertCriteria criteria, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string etag = default(string), string description = default(string), string targetResourceType = default(string), string targetResourceRegion = default(string), bool? autoMitigate = default(bool?), IList<MetricAlertAction> actions = default(IList<MetricAlertAction>), System.DateTime? lastUpdatedTime = default(System.DateTime?), bool? isMigrated = default(bool?))
+            : base(location, id, name, type, tags, kind, etag)
         {
             Description = description;
             Severity = severity;
@@ -81,6 +96,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
             AutoMitigate = autoMitigate;
             Actions = actions;
             LastUpdatedTime = lastUpdatedTime;
+            IsMigrated = isMigrated;
             CustomInit();
         }
 
@@ -132,16 +148,16 @@ namespace Microsoft.Azure.Management.Monitor.Models
 
         /// <summary>
         /// Gets or sets the resource type of the target resource(s) on which
-        /// the alert is created/updated. Mandatory for
-        /// MultipleResourceMultipleMetricCriteria.
+        /// the alert is created/updated. Mandatory if the scope contains a
+        /// subscription, resource group, or more than one resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetResourceType")]
         public string TargetResourceType { get; set; }
 
         /// <summary>
         /// Gets or sets the region of the target resource(s) on which the
-        /// alert is created/updated. Mandatory for
-        /// MultipleResourceMultipleMetricCriteria.
+        /// alert is created/updated. Mandatory if the scope contains a
+        /// subscription, resource group, or more than one resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetResourceRegion")]
         public string TargetResourceRegion { get; set; }
@@ -173,6 +189,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public System.DateTime? LastUpdatedTime { get; private set; }
 
         /// <summary>
+        /// Gets the value indicating whether this alert rule is migrated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isMigrated")]
+        public bool? IsMigrated { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -181,9 +203,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public override void Validate()
         {
             base.Validate();
-            if (Description == null)
+            if (Scopes == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Description");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Scopes");
             }
             if (Criteria == null)
             {

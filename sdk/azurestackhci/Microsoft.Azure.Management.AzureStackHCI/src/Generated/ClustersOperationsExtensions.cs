@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.AzureStackHCI
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -183,12 +181,12 @@ namespace Microsoft.Azure.Management.AzureStackHCI
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
-            /// <param name='tags'>
-            /// Resource tags.
+            /// <param name='cluster'>
+            /// Details of the HCI cluster.
             /// </param>
-            public static Cluster Update(this IClustersOperations operations, string resourceGroupName, string clusterName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static Cluster Update(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterPatch cluster)
             {
-                return operations.UpdateAsync(resourceGroupName, clusterName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, clusterName, cluster).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -203,15 +201,15 @@ namespace Microsoft.Azure.Management.AzureStackHCI
             /// <param name='clusterName'>
             /// The name of the cluster.
             /// </param>
-            /// <param name='tags'>
-            /// Resource tags.
+            /// <param name='cluster'>
+            /// Details of the HCI cluster.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> UpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> UpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterPatch cluster, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, cluster, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
