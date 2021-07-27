@@ -179,12 +179,12 @@ namespace Azure.DigitalTwins.Core.Models
 }
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
-    public enum AdtCollection
+    public enum DigitalTwinsCollection
     {
         DigitalTwins = 0,
         Relationships = 1,
     }
-    public enum AdtDataType
+    public enum DigitalTwinsDataType
     {
         DigitalTwinsBool = 0,
         DigitalTwinsNumber = 1,
@@ -195,10 +195,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     public partial class DigitalTwinsQueryBuilder
     {
         public DigitalTwinsQueryBuilder() { }
-        public DigitalTwinsQueryBuilder(Azure.DigitalTwins.Core.QueryBuilder.AdtCollection collection, string alias = null) { }
+        public DigitalTwinsQueryBuilder(Azure.DigitalTwins.Core.QueryBuilder.DigitalTwinsCollection collection, string alias = null) { }
         public Azure.DigitalTwins.Core.QueryBuilder.DigitalTwinsQueryBuilder Build() { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.DigitalTwinsQueryBuilder From(Azure.DigitalTwins.Core.QueryBuilder.AdtCollection collection) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.DigitalTwinsQueryBuilder From(Azure.DigitalTwins.Core.QueryBuilder.AdtCollection collection, string alias) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.DigitalTwinsQueryBuilder From(Azure.DigitalTwins.Core.QueryBuilder.DigitalTwinsCollection collection, string alias = null) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.DigitalTwinsQueryBuilder FromCustom(string collection) { throw null; }
         public string GetQueryText() { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.DigitalTwinsQueryBuilder Select(params string[] args) { throw null; }
@@ -237,11 +236,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public Azure.DigitalTwins.Core.QueryBuilder.WhereQuery IsDefined(string property) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.WhereQuery IsNull(string expression) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.WhereQuery IsOfModel(string model, bool exact = false) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.WhereQuery IsOfType(string expression, Azure.DigitalTwins.Core.QueryBuilder.AdtDataType type) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.WhereQuery IsOfType(string expression, Azure.DigitalTwins.Core.QueryBuilder.DigitalTwinsDataType type) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.WhereQuery NotContains(string value, string[] searched) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.WhereQuery Or() { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.WhereQuery Or(System.Func<Azure.DigitalTwins.Core.QueryBuilder.WhereQuery, Azure.DigitalTwins.Core.QueryBuilder.WhereQuery> nested) { throw null; }
-        public Azure.DigitalTwins.Core.QueryBuilder.WhereQuery Parenthetical(System.Func<Azure.DigitalTwins.Core.QueryBuilder.WhereQuery, Azure.DigitalTwins.Core.QueryBuilder.WhereQuery> nested) { throw null; }
+        public Azure.DigitalTwins.Core.QueryBuilder.WhereQuery Precedence(System.Func<Azure.DigitalTwins.Core.QueryBuilder.WhereQuery, Azure.DigitalTwins.Core.QueryBuilder.WhereQuery> nested) { throw null; }
         public Azure.DigitalTwins.Core.QueryBuilder.WhereQuery StartsWith(string stringToCheck, string beginningString) { throw null; }
     }
 }
