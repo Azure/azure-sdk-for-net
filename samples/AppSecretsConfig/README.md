@@ -1,6 +1,7 @@
 ---
 page_type: sample
 languages:
+- aspx-csharp
 - csharp
 products:
 - azure
@@ -47,14 +48,14 @@ Azure services:
 * (Optional) [App Service][appservice_overview] - needed to deploy the web application to Azure, which is provisioned in the [Bicep][bicep_overview] [template][sample_template].
 * (Optional) [Application Insights][appinsights_overview] - to monitor web traffic and application traces, which is *not* provisioned in the Bicep template.
 
-[![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)][sample_deploy]
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)][sample_deploy]
 
 To deploy the template manually, make sure your [Azure CLI][azure_cli] is up to date and run:
 
 ```bash
-az bicep install
+az bicep install # if deploying azuredeploy.bicep
 az group create --location {location} --resource-group {group-name}
-az deployment group create --resource-group {group-name} --template-file azuredeploy.bicep
+az deployment group create --resource-group {group-name} --template-file azuredeploy.bicep # or azuredeploy.json
 ```
 
 There are a number of parameters you can optional set. [View the template][sample_template] for details.
@@ -108,7 +109,9 @@ If you're logged in as a service principal, the `user.type` will be `servicePrin
 az keyvault set-policy -n {vault-host-name} --spn {spn} --secret-permissions get
 ```
 
-#### Visual Studio
+Next you'll need to add the App Configuration connection string from the template deployment outputs to your local user secrets:
+
+#### [Visual Studio](#tab/visualstudio)
 
 1. Right-click on the project
 2. Click **Managed User Secrets**
@@ -122,7 +125,7 @@ az keyvault set-policy -n {vault-host-name} --spn {spn} --secret-permissions get
 
 4. Click **Debug -> Start debugging (F5)** to run.
 
-#### Visual Studio Code
+#### [Visual Studio Code](#tab/visualstudiocode)
 
 1. In the project folder, run the following to add a variable named `ConnectionStrings:AppConfig` with the `value` of the `appConfigurationConnectionString` output variable:
 
@@ -133,7 +136,7 @@ az keyvault set-policy -n {vault-host-name} --spn {spn} --secret-permissions get
 2. With a *.cs* file open the command palette and run `Debug: Start debugging` or press `F5` (default binding).
 3. If prompted, select ".NET Core" to create a launch configuration and start debugging.
 
-#### dotnet CLI
+#### [.NET CLI](#tab/dotnet_cli)
 
 1. In the project folder, run the following to add a variable named `ConnectionStrings:AppConfig` with the `value` of the `appConfigurationConnectionString` output variable:
 
@@ -251,7 +254,7 @@ In [ASP.NET Razor pages][aspnet_razor] as an example, you can then inject them i
 [keyvault_secretclient]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md#secretclient
 [nuget_azureappconfig]: https://nuget.org/packages/Microsoft.Extensions.Configuration.AzureAppConfiguration
 [nuget_azureextensions]: https://nuget.org/packages/Microsoft.Extensions.Azure
-[sample_deploy]: https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmain%2Fsamples%2FAppSecretsConfig%2Fazuredeploy.bicep
+[sample_deploy]: https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmain%2Fsamples%2FAppSecretsConfig%2Fazuredeploy.json
 [sample_template]: https://github.com/Azure/azure-sdk-for-net/blob/main/samples/AppSecretsConfig/azuredeploy.bicep
 [visualstudio]: https://visualstudio.microsoft.com/
 [visualstudiocode]: https://code.visualstudio.com/
