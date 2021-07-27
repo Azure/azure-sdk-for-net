@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Personalizer.Tests
@@ -18,7 +19,7 @@ namespace Azure.AI.Personalizer.Tests
         {
             var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
             var options = InstrumentClientOptions(new PersonalizerClientOptions());
-            PersonalizerClient personalizerClient = new PersonalizerClient(TestEnvironment.Endpoint, credential, options);
+            PersonalizerClient personalizerClient = new PersonalizerClient(new Uri(TestEnvironment.Endpoint), credential, options);
             personalizerClient = InstrumentClient(personalizerClient);
             return personalizerClient;
         }
@@ -27,7 +28,7 @@ namespace Azure.AI.Personalizer.Tests
         {
             var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
             var options = InstrumentClientOptions(new PersonalizerClientOptions());
-            PersonalizerManagementClient personalizerManagementClient = new PersonalizerManagementClient(TestEnvironment.Endpoint, credential, options);
+            PersonalizerManagementClient personalizerManagementClient = new PersonalizerManagementClient(new Uri(TestEnvironment.Endpoint), credential, options);
             personalizerManagementClient = InstrumentClient(personalizerManagementClient);
             return personalizerManagementClient;
         }
