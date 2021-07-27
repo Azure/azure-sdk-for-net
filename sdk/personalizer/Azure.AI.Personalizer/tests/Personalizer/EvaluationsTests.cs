@@ -57,8 +57,8 @@ namespace Azure.AI.Personalizer.Tests
             PersonalizerManagementClient client = GetPersonalizerManagementClient();
             var evaluation = new PersonalizerEvaluationOptions(
                 name: "sdkTestEvaluation",
-                startTime: new DateTime(2021, 06, 01).ToUniversalTime(),
-                endTime: new DateTime(2021, 06, 30).ToUniversalTime(),
+                startTime: DateTime.SpecifyKind(new DateTime(2021, 06, 01), DateTimeKind.Utc),
+                endTime: DateTime.SpecifyKind(new DateTime(2021, 06, 30), DateTimeKind.Utc),
                 policies: new PersonalizerPolicyOptions[]
                 {
                     new PersonalizerPolicyOptions(name: "Custom Policy 1", arguments: "--cb_explore_adf --epsilon 0.2 --dsjson --cb_type ips -l 0.5 --l1 1E-07 --power_t 0.5")
