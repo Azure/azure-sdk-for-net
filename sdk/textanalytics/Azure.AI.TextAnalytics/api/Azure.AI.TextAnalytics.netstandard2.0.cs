@@ -736,9 +736,11 @@ namespace Azure.AI.TextAnalytics
         public double Neutral { get { throw null; } }
         public double Positive { get { throw null; } }
     }
-    public partial class SummarySentence
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SummarySentence
     {
-        internal SummarySentence() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public int Length { get { throw null; } }
         public int Offset { get { throw null; } }
         public double RankScore { get { throw null; } }

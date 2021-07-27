@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
 using NUnit.Framework;
 
-/// <summary>
-/// The suite of tests for the <see cref="TextAnalyticsModelFactory"/> class.
-/// </summary>
 namespace Azure.AI.TextAnalytics.Tests
 {
+    /// <summary>
+    /// The suite of tests for the <see cref="TextAnalyticsModelFactory"/> class.
+    /// </summary>
     public class TextAnalyticsModelFactoryTests
     {
         #region Extract Summary
