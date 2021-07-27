@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> List resources at the specified scope. </summary>
+        /// <summary> Get all the deployments at the given scope. </summary>
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List resources at the specified scope. </summary>
+        /// <summary> Get all the deployments at the given scope. </summary>
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=provisioningState eq &apos;{state}&apos;. </param>
         /// <param name="top"> The number of results to get. If null is passed, returns all deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<DeploymentExtended>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.ListAsync");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.List");
                 scope.Start();
                 try
                 {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<DeploymentExtended>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.ListAsync");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentExtendedContainer.List");
                 scope.Start();
                 try
                 {

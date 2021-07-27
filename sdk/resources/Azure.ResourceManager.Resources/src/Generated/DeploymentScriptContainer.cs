@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<DeploymentScript> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.List");
                 scope.Start();
                 try
                 {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<DeploymentScript> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.List");
                 scope.Start();
                 try
                 {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<DeploymentScript>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.List");
                 scope.Start();
                 try
                 {
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<DeploymentScript>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentScriptContainer.List");
                 scope.Start();
                 try
                 {

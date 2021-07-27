@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<DeploymentOperation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentOperationContainer.ListAtScope");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentOperationContainer.List");
                 scope.Start();
                 try
                 {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<DeploymentOperation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentOperationContainer.ListAtScope");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentOperationContainer.List");
                 scope.Start();
                 try
                 {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<DeploymentOperation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentOperationContainer.ListAtScope");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentOperationContainer.List");
                 scope.Start();
                 try
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<DeploymentOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentOperationContainer.ListAtScope");
+                using var scope = _clientDiagnostics.CreateScope("DeploymentOperationContainer.List");
                 scope.Start();
                 try
                 {
