@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using System.Threading;
 using Azure.ResourceManager.Resources;
 
@@ -20,7 +21,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResourceExpanded> ListAtContext(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<GenericResourceExpanded> GetAtContext(
             ResourceGroupOperations resourceGroup,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
@@ -45,7 +47,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns>An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResourceExpanded> ListAtContextAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<GenericResourceExpanded> GetAtContextAsync(
             ResourceGroupOperations resourceGroup,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
@@ -70,7 +73,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResourceExpanded> ListAtContext(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<GenericResourceExpanded> GetAtContext(
             SubscriptionOperations subscription,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
@@ -95,7 +99,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResourceExpanded> ListAtContextAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<GenericResourceExpanded> GetAtContextAsync(
             SubscriptionOperations subscription,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
