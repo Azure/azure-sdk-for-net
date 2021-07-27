@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.AI.Personalizer client library</AssemblyTitle>
     <Version>1.1.0-beta.1</Version>
@@ -25,6 +25,7 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
