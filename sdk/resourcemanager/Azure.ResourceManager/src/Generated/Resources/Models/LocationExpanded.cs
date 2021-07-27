@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Metadata = metadata;
             Id = id;
-            SubscriptionResourceIdentifier subId = id;
+            ResourceIdentifier subId = id;
             SubscriptionId = subscriptionId ?? subId.SubscriptionId;
         }
 

@@ -3,7 +3,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class FeatureOperationsTests : ResourceManagerTestBase
     {

@@ -37,20 +37,19 @@ namespace Azure.ResourceManager.Core
     /// Base class for all operations over a resource.
     /// </summary>
     /// <typeparam name="TOperations"> The type implementing operations over the resource. </typeparam>
-    /// <typeparam name="TIdentifier"> The The identifier type for the resource. </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Types differ by type argument only")]
-    public abstract class ResourceOperationsBase<TIdentifier, TOperations> : ResourceOperationsBase
-        where TOperations : ResourceOperationsBase<TIdentifier, TOperations> where TIdentifier : ResourceIdentifier
+    public abstract class ResourceOperationsBase<TOperations> : ResourceOperationsBase
+        where TOperations : ResourceOperationsBase<TOperations>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TIdentifier, TOperations}"/> class for mocking.
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class for mocking.
         /// </summary>
         protected ResourceOperationsBase()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TIdentifier, TOperations}"/> class.
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class.
         /// </summary>
         /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
         /// <param name="parentOperations"> The resource representing the parent resource. </param>
@@ -68,14 +67,6 @@ namespace Azure.ResourceManager.Core
         internal ResourceOperationsBase(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
-        }
-
-        /// <summary>
-        /// The typed resource identifier for the underlying resource.
-        /// </summary>
-        public virtual new TIdentifier Id
-        {
-            get { return base.Id as TIdentifier; }
         }
 
         /// <summary>

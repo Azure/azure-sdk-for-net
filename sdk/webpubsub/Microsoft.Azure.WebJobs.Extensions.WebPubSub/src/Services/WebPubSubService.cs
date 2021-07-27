@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         internal WebPubSubConnection GetClientConnection(string userId = null, string[] roles = null)
         {
-            var url = _client.GetClientAccessUri(userId, roles);
+            var url = _client.GenerateClientAccessUri(userId: userId, roles: roles);
 
             #region TODO: Remove after SDK fix. Work-around to support http.
             if (!_serviceConfig.Endpoint.Scheme.StartsWith("https", StringComparison.OrdinalIgnoreCase))

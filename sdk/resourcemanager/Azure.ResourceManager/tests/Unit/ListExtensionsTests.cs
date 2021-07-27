@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Core;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
     public class ListExtensionsTests

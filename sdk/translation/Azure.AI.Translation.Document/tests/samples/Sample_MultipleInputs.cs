@@ -22,7 +22,6 @@ namespace Azure.AI.Translation.Document.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:MultipleInputs
             Uri source1SasUriUri = new Uri("<source1 SAS URI>");
             Uri source2SasUri = new Uri("<source2 SAS URI>");
             Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
@@ -92,8 +91,6 @@ namespace Azure.AI.Translation.Document.Samples
                     Console.WriteLine($"  Message: {document.Error.Message}");
                 }
             }
-
-            #endregion
         }
     }
 }

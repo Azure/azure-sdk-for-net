@@ -4,7 +4,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
     public class ArmClientOptionsTests : ResourceManagerTestBase

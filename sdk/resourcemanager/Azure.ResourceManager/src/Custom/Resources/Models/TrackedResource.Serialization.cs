@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary>
     /// Generic representation of a tracked resource.  All tracked resources should extend this class
     /// </summary>
-    public abstract partial class TrackedResource<TIdentifier> : IUtf8JsonSerializable
+    public abstract partial class TrackedResource : IUtf8JsonSerializable
     {
         /// <summary>
         /// Serialize the input TrackedResource object.

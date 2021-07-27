@@ -7,7 +7,7 @@ using Azure.ResourceManager.Resources;
 #if !SNIPPET
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests.Samples
+namespace Azure.ResourceManager.Tests.Samples
 {
     class Readme
     {
@@ -30,7 +30,7 @@ var armClient = new ArmClient(new DefaultAzureCredential());
             #region Snippet:Readme_CastToSpecificType
             string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
             // We know the subnet is a resource group level identifier since it has a resource group name in its string
-            ResourceGroupResourceIdentifier id = resourceId;
+            ResourceIdentifier id = resourceId;
             Console.WriteLine($"Subscription: {id.SubscriptionId}");
             Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
             Console.WriteLine($"Vnet: {id.Parent.Name}");

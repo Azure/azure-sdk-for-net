@@ -7,7 +7,7 @@ using Azure.ResourceManager.Resources.Models;
 #endregion
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests.Samples
+namespace Azure.ResourceManager.Tests.Samples
 {
     class Sample2_ManagingResourceGroups
     {

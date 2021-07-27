@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Management
     /// <summary>
     /// A class representing the operations that can be performed over a specific ManagementGroup.
     /// </summary>
-    public class ManagementGroupOperations : ResourceOperationsBase<TenantResourceIdentifier, ManagementGroup>
+    public class ManagementGroupOperations : ResourceOperationsBase<ManagementGroup>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ManagementGroupsRestOperations _restClient;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Management
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ManagementGroupOperations(OperationsBase options, TenantResourceIdentifier id)
+        protected internal ManagementGroupOperations(OperationsBase options, ResourceIdentifier id)
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);

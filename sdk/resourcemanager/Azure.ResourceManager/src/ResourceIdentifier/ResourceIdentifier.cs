@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager
@@ -13,48 +14,99 @@ namespace Azure.ResourceManager
     /// <summary>
     /// An Azure Resource Manager resource identifier.
     /// </summary>
-    public abstract class ResourceIdentifier : IEquatable<ResourceIdentifier>, IComparable<ResourceIdentifier>
+    public class ResourceIdentifier : IEquatable<ResourceIdentifier>, IComparable<ResourceIdentifier>
     {
-        internal const string ProvidersKey = "providers", SubscriptionsKey = "subscriptions",
-            ResourceGroupsKey = "resourceGroups", LocationsKey = "locations";
+        private const string RootStringValue = "/";
 
+        internal const string ProvidersKey = "providers";
+        internal const string SubscriptionsKey = "subscriptions";
+        internal const string LocationsKey = "locations";
         internal const string ResourceGroupsLowerKey = "resourcegroups";
-
         internal const string BuiltInResourceNamespace = "Microsoft.Resources";
 
-        internal static readonly IDictionary<string, string> SubscriptionResourceWithImplicitProviderList =
-            new Dictionary<string, string>() { { "tagnames", "Microsoft.Resources" } };
-
-        internal static ResourceType SubscriptionType => new ResourceType(BuiltInResourceNamespace, SubscriptionsKey);
-        internal static ResourceType LocationsType =>
-            new ResourceType(BuiltInResourceNamespace, $"{SubscriptionsKey}/{LocationsKey}");
-        internal static ResourceType ResourceGroupsType =>
-            new ResourceType(BuiltInResourceNamespace, $"{ResourceGroupsKey}");
-
         /// <summary>
-        /// The root of the resource hierarchy
+        /// The root of the resource hierarchy.
         /// </summary>
-        public static ResourceIdentifier RootResourceIdentifier => new RootResourceIdentifier();
+        public static readonly ResourceIdentifier RootResourceIdentifier = new ResourceIdentifier(null, TenantOperations.ResourceType, string.Empty);
 
         /// <summary>
         /// For internal use only.
         /// </summary>
-        internal ResourceIdentifier()
+        /// <param name="parent"> The parent resource for this resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        internal ResourceIdentifier(ResourceIdentifier parent, ResourceType resourceType, string name)
         {
-            _stringValue = null;
+            Init(parent, resourceType, name, true);
         }
 
         /// <summary>
-        /// For internal use only.
+        /// Initializes a new instance of the <see cref="ResourceIdentifier"/> class.
         /// </summary>
-        /// <param name="resourceType"> The type of the resource.</param>
-        /// <param name="name"> The name of the resource.</param>
-        internal ResourceIdentifier(ResourceType resourceType, string name)
+        /// <param name="resourceId"> The id string to create the ResourceIdentifier from. </param>
+        public ResourceIdentifier(string resourceId)
         {
+            var id = Create(resourceId);
+            Init(id.Parent, id.ResourceType, id.Name, id.IsChild);
+        }
+
+        private ResourceIdentifier(ResourceIdentifier parent, string resourceTypeName, string resourceName)
+        {
+            Init(parent, ChooseResourceType(resourceTypeName, parent), resourceName, true);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResourceIdentifier"/> class for a resource in a different namespace than its parent.
+        /// </summary>
+        /// <param name="parent"> The <see cref="ResourceIdentifier"/> of the target of this extension resource. </param>
+        /// <param name="providerNamespace"> The provider namespace of the extension. </param>
+        /// <param name="resourceTypeName"> The full ARM resource type of the extension. </param>
+        /// <param name="resourceName"> The name of the extension resource. </param>
+        internal ResourceIdentifier(ResourceIdentifier parent, string providerNamespace, string resourceTypeName, string resourceName)
+        {
+            Init(parent, new ResourceType(providerNamespace, resourceTypeName), resourceName, false);
+        }
+
+        private void Init(ResourceIdentifier parent, ResourceType resourceType, string name, bool isChild)
+        {
+            if (parent != null)
+            {
+                Provider = parent.Provider;
+                SubscriptionId = parent.SubscriptionId;
+                Location = parent.Location;
+                ResourceGroupName = parent.ResourceGroupName;
+            }
+
+            if (resourceType == SubscriptionOperations.ResourceType)
+            {
+                Guid output;
+                if (!Guid.TryParse(name, out output))
+                    throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
+                SubscriptionId = name;
+            }
+
+            if (resourceType.LastType == LocationsKey)
+                Location = name;
+
+            if (resourceType == ResourceGroupOperations.ResourceType)
+                ResourceGroupName = name;
+
+            if (resourceType == ProviderOperations.ResourceType)
+                Provider = name;
+
+            Parent = parent ?? RootResourceIdentifier;
+            IsChild = isChild;
             ResourceType = resourceType;
             Name = name;
-            _stringValue = null;
+            _stringValue = parent == null ? RootStringValue : null;
         }
+
+        private static ResourceType ChooseResourceType(string resourceTypeName, ResourceIdentifier parent) => resourceTypeName.ToLowerInvariant() switch
+        {
+            ResourceGroupsLowerKey => ResourceGroupOperations.ResourceType,
+            SubscriptionsKey => SubscriptionOperations.ResourceType,
+            _ => new ResourceType(parent.ResourceType, resourceTypeName)
+        };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceIdentifier"/> class.
@@ -65,263 +117,57 @@ namespace Azure.ResourceManager
         {
             if (resourceId is null)
                 throw new ArgumentNullException(nameof(resourceId));
+
             if (!resourceId.StartsWith("/", StringComparison.InvariantCultureIgnoreCase))
                 throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
+
             var parts = resourceId.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList();
             if (parts.Count < 2)
                 throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
-            switch (parts[0].ToLowerInvariant())
-            {
-                case SubscriptionsKey:
-                    {
-                        ResourceIdentifier id = CreateBaseSubscriptionIdentifier(parts[1], parts.Trim(2));
-                        id.StringValue = resourceId;
-                        return id;
-                    }
-                case ProvidersKey:
-                    {
-                        if (parts.Count == 2 || parts[2] == ProvidersKey)
-                        {
-                            ResourceIdentifier id = CreateTenantProviderIdentifier(new TenantProviderIdentifier(new TenantResourceIdentifier(), parts[1]), parts.Trim(2));
-                            id.StringValue = resourceId;
-                            return id;
-                        }
-                        else if (parts.Count > 3)
-                        {
-                            ResourceIdentifier id = CreateTenantIdentifier(new TenantResourceIdentifier(new ResourceType(parts[1], parts[2]), parts[3]), parts.Trim(4));
-                            id.StringValue = resourceId;
-                            return id;
-                        }
-                        throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
-                    }
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
-            }
+
+            var firstToLower = parts[0].ToLowerInvariant();
+            if (firstToLower != SubscriptionsKey  && firstToLower != ProvidersKey)
+                throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
+
+            return AppendNext(RootResourceIdentifier, parts);
         }
 
-        /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
-        /// that are contained in a subscription.
-        /// </summary>
-        /// <param name="subscriptionId"> The GUID string representing the resource. </param>
-        /// <param name="parts"> The path segments in the resource id following the subscription Guid. </param>
-        /// <returns> The resource identifier for the given resource path. </returns>
-        internal static ResourceIdentifier CreateBaseSubscriptionIdentifier(string subscriptionId, List<string> parts)
+        private static ResourceIdentifier AppendNext(ResourceIdentifier parent, List<string> parts)
         {
-            Guid subscriptionGuid;
-            if (!Guid.TryParse(subscriptionId, out subscriptionGuid))
-                throw new ArgumentOutOfRangeException(nameof(subscriptionId), "Invalid subscription id.");
-            var subscription = new SubscriptionResourceIdentifier(subscriptionGuid);
             if (parts.Count == 0)
-                return subscription;
-            if (parts.Count > 1)
+                return parent;
+
+            var lowerFirstPart = parts[0].ToLowerInvariant();
+
+            if (parts.Count == 1)
             {
-                switch (parts[0].ToLowerInvariant())
-                {
-                    case LocationsKey:
-                        return CreateBaseLocationIdentifier(subscription, parts[1], parts.Trim(2));
-                    case ResourceGroupsLowerKey:
-                        return CreateBaseResourceGroupIdentifier(subscription, parts[1], parts.Trim(2));
-                    case ProvidersKey:
-                        {
-                            if (parts.Count == 2 || parts[2] == ProvidersKey)
-                            {
-                                return CreateSubscriptionProviderIdentifier(new SubscriptionProviderIdentifier(new SubscriptionResourceIdentifier(subscription), parts[1]), parts.Trim(2));
-                            }
-                            else if (parts.Count > 3)
-                                return CreateSubscriptionIdentifier(new SubscriptionResourceIdentifier(subscription,
-                                    parts[1], parts[2], parts[3]), parts.Skip(4).ToList());
-                            throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource string");
-                        }
-                    default:
-                        {
-                            // Check for resources that has implicit(omitted) provider
-                            if (SubscriptionResourceWithImplicitProviderList.Keys.Contains(parts[0].ToLowerInvariant()))
-                            {
-                                var resourceTypeName = parts[0].ToLowerInvariant();
-                                var providerName = SubscriptionResourceWithImplicitProviderList[parts[0].ToLowerInvariant()];
-                                var providerIdentifier = new SubscriptionProviderIdentifier(subscription, providerName);
-                                if (parts.Count == 1 || parts[1] == ProvidersKey)
-                                {
-                                    return CreateSubscriptionProviderIdentifier(providerIdentifier, parts.Trim(1));
-                                }
+                //subscriptions and resourceGroups aren't valid ids without their name
+                if (lowerFirstPart == SubscriptionsKey || lowerFirstPart == ResourceGroupsLowerKey)
+                    throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
 
-                                if (parts.Count > 1)
-                                {
-                                    return CreateSubscriptionIdentifier(
-                                        new SubscriptionResourceIdentifier(providerIdentifier, providerName, resourceTypeName, parts[1]),
-                                        parts.Skip(2).ToList());
-                                }
-                            }
+                //resourceGroup must contain either child or provider resource type
+                if (parent.ResourceType == ResourceGroupOperations.ResourceType)
+                    throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
 
-                            throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
-                        }
-                }
+                return new ResourceIdentifier(parent, parts[0], string.Empty);
             }
 
-            throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
-        }
-
-        /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
-        /// that are contained in a location.
-        /// </summary>
-        /// <param name="subscription"> The resource id of the subscription for this resource. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="parts"> The path segments in the resource id following the location. </param>
-        /// <returns> The resource identifier for the given resource path. </returns>
-        internal static ResourceIdentifier CreateBaseLocationIdentifier(SubscriptionResourceIdentifier subscription, Location location, List<string> parts)
-        {
-            var parent = new LocationResourceIdentifier(subscription, location);
-            if (parts.Count == 0)
-                return parent;
-            if (parts.Count == 1)
-                throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
-            switch (parts[0].ToLowerInvariant())
+            if (lowerFirstPart == ProvidersKey && (parts.Count == 2 || parts[2].ToLowerInvariant() == ProvidersKey))
             {
-                case ProvidersKey:
-                    {
-                        if (parts.Count > 3)
-                            return CreateLocationIdentifier(new LocationResourceIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
-                        throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
-                    }
-                default:
-                    return CreateLocationIdentifier(new LocationResourceIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
+                //provider resource can only be on a tenant or a subscription parent
+                if (parent.ResourceType != SubscriptionOperations.ResourceType && parent.ResourceType != TenantOperations.ResourceType)
+                    throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
+
+                return AppendNext(new ResourceIdentifier(parent, ProviderOperations.ResourceType, parts[1]), parts.Trim(2));
             }
-        }
 
-        /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
-        /// that are contained in a resource group.
-        /// </summary>
-        /// <param name="subscription"> The resource id of the subscription for this resource. </param>
-        /// <param name="resourceGroupName"> The resource group containing the resource. </param>
-        /// <param name="parts"> The path segments in the resource id following the resource group name. </param>
-        /// <returns> The resource identifier for the given resource path. </returns>
-        internal static ResourceIdentifier CreateBaseResourceGroupIdentifier(SubscriptionResourceIdentifier subscription, string resourceGroupName, List<string> parts)
-        {
-            var parent = new ResourceGroupResourceIdentifier(subscription, resourceGroupName);
-            if (parts.Count == 0)
-                return parent;
-            if (parts.Count == 1)
-                throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
-            switch (parts[0].ToLowerInvariant())
-            {
-                case ProvidersKey:
-                    {
-                        if (parts.Count > 3)
-                            return CreateResourceGroupIdentifier(new ResourceGroupResourceIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
-                        throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
-                    }
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
-            }
-        }
-
-        /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
-        /// that are based in the tenant.
-        /// </summary>
-        /// <param name="parent"> The resource id of the parent resource. </param>
-        /// <param name="parts"> The path segments in the resource path after the parent. </param>
-        /// <returns> A resource identifier for a resource contained in the tenant. </returns>
-        internal static ResourceIdentifier CreateTenantIdentifier(TenantResourceIdentifier parent, List<string> parts)
-        {
-            if (parts.Count == 0)
-                return parent;
-            if (parts.Count == 1)
-                return new TenantResourceIdentifier(parent, parts[0], string.Empty);
             if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateTenantIdentifier(new TenantResourceIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
-            if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateTenantIdentifier(new TenantResourceIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
-            throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
-        }
+                return AppendNext(new ResourceIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
 
-        /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
-        /// that are based in a subscription.
-        /// </summary>
-        /// <param name="parent"> The resource id of the parent resource. </param>
-        /// <param name="parts"> The path segments in the resource path after the parent. </param>
-        /// <returns> A resource identifier for a resource contained in the subscription. </returns>
-        internal static ResourceIdentifier CreateSubscriptionIdentifier(SubscriptionResourceIdentifier parent, List<string> parts)
-        {
-            if (parts.Count == 0)
-                return parent;
-            if (parts.Count == 1)
-                return new SubscriptionResourceIdentifier(parent, parts[0], string.Empty);
-            if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateSubscriptionIdentifier(new SubscriptionResourceIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
             if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateSubscriptionIdentifier(new SubscriptionResourceIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
-            throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
-        }
+                return AppendNext(new ResourceIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
 
-        /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
-        /// that are contained in a location.
-        /// </summary>
-        /// <param name="parent"> The resource id of the parent resource. </param>
-        /// <param name="parts"> The path segments in the resource path after the parent. </param>
-        /// <returns> A resource identifier for a resource contained in a location. </returns>
-        internal static ResourceIdentifier CreateLocationIdentifier(LocationResourceIdentifier parent, List<string> parts)
-        {
-            if (parts.Count == 0)
-                return parent;
-            if (parts.Count == 1)
-                return new LocationResourceIdentifier(parent, parts[0], string.Empty);
-            if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateLocationIdentifier(new LocationResourceIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
-            if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateLocationIdentifier(new LocationResourceIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
-            throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
-        }
-
-        /// <summary>
-        /// Create a new instance of the <see cref="ResourceIdentifier"/> class for resource identifiers
-        /// that are contained in a resource group.
-        /// </summary>
-        /// <param name="parent"> The resource id of the parent resource. </param>
-        /// <param name="parts"> The path segments in the resource path after the parent. </param>
-        /// <returns> A resource identifier for a resource contained in a resource group. </returns>
-        internal static ResourceIdentifier CreateResourceGroupIdentifier(ResourceGroupResourceIdentifier parent, List<string> parts)
-        {
-            if (parts.Count == 0)
-                return parent;
-            if (parts.Count == 1)
-                return new ResourceGroupResourceIdentifier(parent, parts[0], string.Empty);
-            if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateResourceGroupIdentifier(new ResourceGroupResourceIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
-            if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateResourceGroupIdentifier(new ResourceGroupResourceIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
-            throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
-        }
-
-        private static ResourceIdentifier CreateTenantProviderIdentifier(TenantProviderIdentifier parent, List<string> parts)
-        {
-            if (parts.Count == 0)
-                return parent;
-            if (parts.Count == 1)
-                return new TenantProviderIdentifier(parent, parts[0], string.Empty);
-            if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateTenantProviderIdentifier(new TenantProviderIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
-            if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateTenantProviderIdentifier(new TenantProviderIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
-            throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
-        }
-
-        private static ResourceIdentifier CreateSubscriptionProviderIdentifier(SubscriptionProviderIdentifier parent, List<string> parts)
-        {
-            if (parts.Count == 0)
-                return parent;
-            if (parts.Count == 1)
-                return new SubscriptionProviderIdentifier(parent, parts[0], string.Empty);
-            if (parts.Count > 3 && string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateSubscriptionProviderIdentifier(new SubscriptionProviderIdentifier(parent, parts[1], parts[2], parts[3]), parts.Trim(4));
-            if (parts.Count > 1 && !string.Equals(parts[0], ProvidersKey, StringComparison.InvariantCultureIgnoreCase))
-                return CreateSubscriptionProviderIdentifier(new SubscriptionProviderIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
-            throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
+            throw new ArgumentOutOfRangeException("resourceId", "Invalid resource id.");
         }
 
         private object lockObject = new object();
@@ -375,17 +221,34 @@ namespace Azure.ResourceManager
         internal virtual bool IsChild { get; set; }
 
         /// <summary>
+        /// Gets the subscription id if it exists otherwise null.
+        /// </summary>
+        public string SubscriptionId { get; protected set; }
+
+        /// <summary>
+        /// Gets the provider namespace if it exists otherwise null.
+        /// </summary>
+        public string Provider { get; protected set; }
+
+        /// <summary>
+        /// Gets the location if it exists otherwise null.
+        /// </summary>
+        public string Location { get; protected set; }
+
+        /// <summary>
+        /// The name of the resource group if it exists otherwise null.
+        /// </summary>
+        public string ResourceGroupName { get; protected set; }
+
+        /// <summary>
         /// Tries to get the resource identifier of the parent of this resource.
         /// </summary>
-        /// <param name="containerId"> The resource id of the parent resource. </param>
+        /// <param name="resourceId"> The resource id of the parent resource. </param>
         /// <returns> True if the resource has a parent, otherwise false. </returns>
-        public virtual bool TryGetParent(out ResourceIdentifier containerId)
+        public virtual bool TryGetParent(out ResourceIdentifier resourceId)
         {
-            containerId = default(ResourceIdentifier);
-            if (this.Parent is RootResourceIdentifier)
-                return false;
-            containerId = this.Parent;
-            return true;
+            resourceId = Parent;
+            return resourceId != null;
         }
 
         /// <summary>
@@ -395,8 +258,8 @@ namespace Azure.ResourceManager
         /// <returns> True if the resource is contained in a subscription, otherwise false. </returns>
         public virtual bool TryGetSubscriptionId(out string subscriptionId)
         {
-            subscriptionId = default(string);
-            return false;
+            subscriptionId = SubscriptionId;
+            return subscriptionId != null;
         }
 
         /// <summary>
@@ -406,8 +269,8 @@ namespace Azure.ResourceManager
         /// <returns> True if the resource is contained in a resource group, otherwise false. </returns>
         public virtual bool TryGetResourceGroupName(out string resourceGroupName)
         {
-            resourceGroupName = default(string);
-            return false;
+            resourceGroupName = ResourceGroupName;
+            return resourceGroupName != null;
         }
 
         /// <summary>
@@ -417,8 +280,8 @@ namespace Azure.ResourceManager
         /// <returns> True if the resource is contained in a location, otherwise false. </returns>
         public virtual bool TryGetLocation(out Location location)
         {
-            location = default(Location);
-            return false;
+            location = Location;
+            return location != null;
         }
 
         /// <summary>
@@ -427,10 +290,13 @@ namespace Azure.ResourceManager
         /// <returns> The string representation of this resource id. </returns>
         internal virtual string ToResourceString()
         {
+            if (Parent == null)
+                return string.Empty;
+
             StringBuilder builder = new StringBuilder(Parent.ToResourceString());
             if (IsChild)
             {
-                builder.Append($"/{ResourceType.Types[ResourceType.Types.Count - 1]}");
+                builder.Append($"/{ResourceType.LastType}");
                 if (!string.IsNullOrWhiteSpace(Name))
                     builder.Append($"/{Name}");
             }
