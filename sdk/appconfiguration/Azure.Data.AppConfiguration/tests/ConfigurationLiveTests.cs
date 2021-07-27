@@ -944,6 +944,111 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        public async Task SetConfigurationSettingWithIfMatch_Matches()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+            try
+            {
+                testSetting.Value = "new value";
+                // Test
+                ConfigurationSetting response = await service.SetConfigurationSettingAsync(testSetting, new MatchConditions()
+                {
+                    IfMatch = testSetting.ETag
+                });
+
+                Assert.AreEqual("new value", response.Value);
+            }
+            finally
+            {
+                await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task SetConfigurationSettingWithIfMatch_NoMatch()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+            try
+            {
+                testSetting.Value = "new value";
+
+                // Test
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await service.SetConfigurationSettingAsync(testSetting, new MatchConditions()
+                    {
+                        IfMatch = new ETag("this won't match")
+                    }));
+
+                Assert.AreEqual(412, exception.Status);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task SetConfigurationSettingWithIfNoneMatch_Matches()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            testSetting = await service.SetConfigurationSettingAsync(testSetting);
+            try
+            {
+                testSetting.Value = "new value";
+                // Test
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await service.SetConfigurationSettingAsync(testSetting, new MatchConditions()
+                    {
+                        IfNoneMatch = testSetting.ETag
+                    }));
+
+                Assert.AreEqual(412, exception.Status);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task SetConfigurationSettingWithIfNoneMatch_NoMatch()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+            try
+            {
+                testSetting.Value = "new value";
+
+                // Test
+                ConfigurationSetting response = await service.SetConfigurationSettingAsync(testSetting, new MatchConditions()
+                {
+                    IfNoneMatch = new ETag("this won't match")
+                });
+
+                Assert.AreEqual("new value", response.Value);
+            }
+            finally
+            {
+                await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
         public async Task GetWithAcceptDateTime()
         {
             ConfigurationClient service = GetClient();
