@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Private endpoint object properties. </summary>
     public partial class PrivateEndpoint

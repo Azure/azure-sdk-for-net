@@ -12,12 +12,14 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing collection of DeletedVault and their operations over a Subscription. </summary>
-    public partial class DeletedVaultContainer : ResourceContainerBase<SubscriptionResourceIdentifier, DeletedVault, DeletedVaultData>
+    public partial class DeletedVaultContainer : ResourceContainerBase<DeletedVault, DeletedVaultData>
     {
         /// <summary> Initializes a new instance of the <see cref="DeletedVaultContainer"/> class for mocking. </summary>
         protected DeletedVaultContainer()
@@ -35,9 +37,6 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Represents the REST operations. </summary>
         private DeletedVaultsRestOperations _restClient => new DeletedVaultsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new SubscriptionResourceIdentifier Id => base.Id as SubscriptionResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Page<DeletedVault> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeletedVaultContainer.ListDeletedVaults");
+                using var scope = _clientDiagnostics.CreateScope("DeletedVaultContainer.List");
                 scope.Start();
                 try
                 {
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.KeyVault
             }
             Page<DeletedVault> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeletedVaultContainer.ListDeletedVaults");
+                using var scope = _clientDiagnostics.CreateScope("DeletedVaultContainer.List");
                 scope.Start();
                 try
                 {
@@ -237,7 +236,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             async Task<Page<DeletedVault>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeletedVaultContainer.ListDeletedVaults");
+                using var scope = _clientDiagnostics.CreateScope("DeletedVaultContainer.List");
                 scope.Start();
                 try
                 {
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.KeyVault
             }
             async Task<Page<DeletedVault>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeletedVaultContainer.ListDeletedVaults");
+                using var scope = _clientDiagnostics.CreateScope("DeletedVaultContainer.List");
                 scope.Start();
                 try
                 {
@@ -268,7 +267,7 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of DeletedVault for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="DeletedVault" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Filters the list of DeletedVault for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="DeletedVault" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -315,6 +314,6 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         // Builders.
-        // public ArmBuilder<SubscriptionResourceIdentifier, DeletedVault, DeletedVaultData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, DeletedVault, DeletedVaultData> Construct() { }
     }
 }

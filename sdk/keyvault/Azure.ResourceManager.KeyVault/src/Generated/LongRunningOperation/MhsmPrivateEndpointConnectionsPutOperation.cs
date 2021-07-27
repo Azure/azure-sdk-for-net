@@ -11,8 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.KeyVault;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Updates the specified private endpoint connection associated with the managed hsm pool. </summary>
     public partial class MhsmPrivateEndpointConnectionsPutOperation : Operation<MhsmPrivateEndpointConnection>

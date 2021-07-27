@@ -11,8 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.KeyVault;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Update a key vault in the specified subscription. </summary>
     public partial class VaultsUpdateOperation : Operation<Vault>

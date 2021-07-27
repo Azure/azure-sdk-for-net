@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
 using Azure.Graph.Rbac;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
@@ -51,8 +51,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             Client = GetArmClient();
             DeletedVaultContainer = Client.DefaultSubscription.GetDeletedVaultContainer();
-            var resourceManagementClient = GetResourceManagementClient();
-            ResourceProvidersClient = resourceManagementClient.Providers;
 
             if (Mode == RecordedTestMode.Playback)
             {
@@ -69,16 +67,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                     break;
                 }
             }
-            var provider = (await ResourceProvidersClient.GetAsync("Microsoft.KeyVault")).Value;
-            Location = provider.ResourceTypes.Where(
-                (resType) =>
-                {
-                    if (resType.ResourceType == "vaults")
-                        return true;
-                    else
-                        return false;
-                }
-                ).First().Locations.FirstOrDefault();
+            Location = "North Central US";
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg");
             var rgResponse = await Client.DefaultSubscription.GetResourceGroups().Construct(Location).CreateOrUpdateAsync(ResGroupName).ConfigureAwait(false);

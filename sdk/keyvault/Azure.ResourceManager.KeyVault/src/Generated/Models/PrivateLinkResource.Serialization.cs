@@ -8,9 +8,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class PrivateLinkResource : IUtf8JsonSerializable
     {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Optional<string> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<string> groupId = default;

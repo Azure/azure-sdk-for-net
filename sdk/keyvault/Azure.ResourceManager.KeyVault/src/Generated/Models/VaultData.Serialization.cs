@@ -8,7 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.KeyVault
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<SystemData> systemData = default;
             VaultProperties properties = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             foreach (var property in element.EnumerateObject())

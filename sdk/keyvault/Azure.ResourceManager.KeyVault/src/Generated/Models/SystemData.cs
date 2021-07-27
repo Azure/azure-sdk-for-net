@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Metadata pertaining to creation and last modification of the key vault resource. </summary>
     public partial class SystemData

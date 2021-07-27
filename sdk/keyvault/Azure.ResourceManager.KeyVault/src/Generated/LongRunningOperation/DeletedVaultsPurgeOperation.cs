@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
     public partial class DeletedVaultsPurgeOperation : Operation

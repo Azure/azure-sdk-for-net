@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Type of operation: get, read, delete, etc. </summary>
     public partial class DimensionProperties

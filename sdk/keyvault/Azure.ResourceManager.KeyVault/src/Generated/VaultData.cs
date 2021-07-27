@@ -8,12 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the Vault data model. </summary>
-    public partial class VaultData : Resource<ResourceGroupResourceIdentifier>
+    public partial class VaultData : Resources.Models.Resource
     {
         /// <summary> Initializes a new instance of VaultData. </summary>
         /// <param name="properties"> Properties of the vault. </param>
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <param name="systemData"> System metadata for the key vault. </param>
         /// <param name="properties"> Properties of the vault. </param>
-        internal VaultData(ResourceGroupResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, SystemData systemData, VaultProperties properties) : base(id, name, type)
+        internal VaultData(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, SystemData systemData, VaultProperties properties) : base(id, name, type)
         {
             Location = location;
             Tags = tags;

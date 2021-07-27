@@ -7,8 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> List of private endpoint connections associated with a managed HSM Pools. </summary>
     internal partial class MhsmPrivateEndpointConnectionsListResult

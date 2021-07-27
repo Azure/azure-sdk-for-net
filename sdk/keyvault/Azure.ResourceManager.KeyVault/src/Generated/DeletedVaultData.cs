@@ -5,12 +5,14 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the DeletedVault data model. </summary>
-    public partial class DeletedVaultData : Resource<SubscriptionResourceIdentifier>
+    public partial class DeletedVaultData : Resources.Models.Resource
     {
         /// <summary> Initializes a new instance of DeletedVaultData. </summary>
         internal DeletedVaultData()
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> The name. </param>
         /// <param name="type"> The type. </param>
         /// <param name="properties"> Properties of the vault. </param>
-        internal DeletedVaultData(SubscriptionResourceIdentifier id, string name, ResourceType type, DeletedVaultProperties properties) : base(id, name, type)
+        internal DeletedVaultData(ResourceIdentifier id, string name, ResourceType type, DeletedVaultProperties properties) : base(id, name, type)
         {
             Properties = properties;
         }

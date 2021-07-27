@@ -33,6 +33,9 @@ directive:
       where: $.definitions
       transform: delete $['VaultAccessPolicyProperties']
     - from: swagger-document
+      where: $.paths
+      transform: delete $['/subscriptions/{subscriptionId}/resources']
+    - from: swagger-document
       where: $['definitions']['Sku']['properties']['family']
       transform: delete $['x-ms-client-default']
     - from: swagger-document

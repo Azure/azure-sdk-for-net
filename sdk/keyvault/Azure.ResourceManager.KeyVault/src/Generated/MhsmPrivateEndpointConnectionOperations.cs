@@ -11,12 +11,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the operations that can be performed over a specific MhsmPrivateEndpointConnection. </summary>
-    public partial class MhsmPrivateEndpointConnectionOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, MhsmPrivateEndpointConnection>
+    public partial class MhsmPrivateEndpointConnectionOperations : ResourceOperationsBase<MhsmPrivateEndpointConnection>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private MhsmPrivateEndpointConnectionsRestOperations _restClient { get; }
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Initializes a new instance of the <see cref="MhsmPrivateEndpointConnectionOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal MhsmPrivateEndpointConnectionOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal MhsmPrivateEndpointConnectionOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new MhsmPrivateEndpointConnectionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -85,14 +88,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary> Deletes the specified private endpoint connection associated with the managed hsm pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<MhsmPrivateEndpointConnectionData>> DeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MhsmPrivateEndpointConnectionData>> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionOperations.Delete");
             scope.Start();
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified private endpoint connection associated with the managed hsm pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<MhsmPrivateEndpointConnectionData> Delete(CancellationToken cancellationToken = default)
+        public virtual Response<MhsmPrivateEndpointConnectionData> Delete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionOperations.Delete");
             scope.Start();
@@ -128,7 +131,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified private endpoint connection associated with the managed hsm pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<MhsmPrivateEndpointConnectionsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<MhsmPrivateEndpointConnectionsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionOperations.StartDelete");
             scope.Start();
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Deletes the specified private endpoint connection associated with the managed hsm pool. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public MhsmPrivateEndpointConnectionsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual MhsmPrivateEndpointConnectionsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionOperations.StartDelete");
             scope.Start();

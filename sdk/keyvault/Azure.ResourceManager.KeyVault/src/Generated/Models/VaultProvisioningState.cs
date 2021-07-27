@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Provisioning state of the vault. </summary>
     public readonly partial struct VaultProvisioningState : IEquatable<VaultProvisioningState>

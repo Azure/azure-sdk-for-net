@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Private endpoint connection item. </summary>
-    public partial class PrivateEndpointConnectionItem : SubResource<ResourceIdentifier>
+    public partial class PrivateEndpointConnectionItem : SubResource
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionItem. </summary>
         internal PrivateEndpointConnectionItem()

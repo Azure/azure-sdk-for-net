@@ -5,12 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A rule governing the accessibility of a vault from a specific virtual network. </summary>
-    public partial class VirtualNetworkRule : WritableSubResource<ResourceIdentifier>
+    public partial class VirtualNetworkRule : WritableSubResource
     {
         /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
         public VirtualNetworkRule()

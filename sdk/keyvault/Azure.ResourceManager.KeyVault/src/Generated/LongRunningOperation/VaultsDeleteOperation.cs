@@ -10,23 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> Deletes the specified managed HSM Pool. </summary>
-    public partial class ManagedHsmsDeleteOperation : Operation
+    /// <summary> Deletes the specified Azure key vault. </summary>
+    public partial class VaultsDeleteOperation : Operation
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of ManagedHsmsDeleteOperation for mocking. </summary>
-        protected ManagedHsmsDeleteOperation()
+        /// <summary> Initializes a new instance of VaultsDeleteOperation for mocking. </summary>
+        protected VaultsDeleteOperation()
         {
         }
 
-        internal ManagedHsmsDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VaultsDeleteOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedHsmsDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
         }
 
         /// <inheritdoc />

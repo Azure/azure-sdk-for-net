@@ -7,7 +7,8 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault
         internal static DeletedVaultData DeserializeDeletedVaultData(JsonElement element)
         {
             Optional<DeletedVaultProperties> properties = default;
-            SubscriptionResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             foreach (var property in element.EnumerateObject())

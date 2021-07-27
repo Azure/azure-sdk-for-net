@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     internal static partial class CreateModeExtensions
     {

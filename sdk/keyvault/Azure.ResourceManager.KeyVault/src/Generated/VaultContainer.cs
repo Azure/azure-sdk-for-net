@@ -12,12 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing collection of Vault and their operations over a ResourceGroup. </summary>
-    public partial class VaultContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, Vault, VaultData>
+    public partial class VaultContainer : ResourceContainerBase<Vault, VaultData>
     {
         /// <summary> Initializes a new instance of the <see cref="VaultContainer"/> class for mocking. </summary>
         protected VaultContainer()
@@ -35,9 +38,6 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Represents the REST operations. </summary>
         private VaultsRestOperations _restClient => new VaultsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Page<Vault> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VaultContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("VaultContainer.List");
                 scope.Start();
                 try
                 {
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.KeyVault
             }
             Page<Vault> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VaultContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("VaultContainer.List");
                 scope.Start();
                 try
                 {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             async Task<Page<Vault>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VaultContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("VaultContainer.List");
                 scope.Start();
                 try
                 {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.KeyVault
             }
             async Task<Page<Vault>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VaultContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("VaultContainer.List");
                 scope.Start();
                 try
                 {
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of Vault for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="Vault" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Filters the list of Vault for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="Vault" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -437,6 +437,6 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, Vault, VaultData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, Vault, VaultData> Construct() { }
     }
 }

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The parameters used to check the availability of the vault name. </summary>
     internal partial class VaultCheckNameAvailabilityParameters

@@ -8,7 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.KeyVault
             Optional<string> etag = default;
             Optional<string> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<PrivateEndpoint> privateEndpoint = default;

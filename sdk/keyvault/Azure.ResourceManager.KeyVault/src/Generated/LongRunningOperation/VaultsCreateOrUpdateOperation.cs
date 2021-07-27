@@ -13,8 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.KeyVault;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Create or update a key vault in the specified subscription. </summary>
     public partial class VaultsCreateOrUpdateOperation : Operation<Vault>, IOperationSource<Vault>

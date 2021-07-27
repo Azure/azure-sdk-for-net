@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
     public readonly partial struct PublicNetworkAccess : IEquatable<PublicNetworkAccess>

@@ -13,24 +13,25 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.KeyVault;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> Update a managed HSM Pool in the specified subscription. </summary>
-    public partial class ManagedHsmsUpdateOperation : Operation<ManagedHsm>, IOperationSource<ManagedHsm>
+    /// <summary> Create or update a managed HSM Pool in the specified subscription. </summary>
+    public partial class ManagedHsmsCreateOrUpdateOperation : Operation<ManagedHsm>, IOperationSource<ManagedHsm>
     {
         private readonly OperationInternals<ManagedHsm> _operation;
 
         private readonly OperationsBase _operationBase;
 
-        /// <summary> Initializes a new instance of ManagedHsmsUpdateOperation for mocking. </summary>
-        protected ManagedHsmsUpdateOperation()
+        /// <summary> Initializes a new instance of ManagedHsmsCreateOrUpdateOperation for mocking. </summary>
+        protected ManagedHsmsCreateOrUpdateOperation()
         {
         }
 
-        internal ManagedHsmsUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagedHsmsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<ManagedHsm>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedHsmsUpdateOperation");
+            _operation = new OperationInternals<ManagedHsm>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ManagedHsmsCreateOrUpdateOperation");
             _operationBase = operationsBase;
         }
 

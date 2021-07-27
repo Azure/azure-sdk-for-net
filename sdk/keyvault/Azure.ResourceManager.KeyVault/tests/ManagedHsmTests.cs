@@ -3,13 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.KeyVault.Models;
 using NUnit.Framework;
-using Azure.ResourceManager.Core;
-using System.Threading;
 
 namespace Azure.ResourceManager.KeyVault.Tests
 {
@@ -27,12 +25,6 @@ namespace Azure.ResourceManager.KeyVault.Tests
             {
                 Initialize().ConfigureAwait(false).GetAwaiter().GetResult();
             }
-        }
-
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
         }
 
         [Test]

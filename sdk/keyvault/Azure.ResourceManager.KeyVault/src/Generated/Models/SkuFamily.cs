@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> SKU family name. </summary>
     public readonly partial struct SkuFamily : IEquatable<SkuFamily>

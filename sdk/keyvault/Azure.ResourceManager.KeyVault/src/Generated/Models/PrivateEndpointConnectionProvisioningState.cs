@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The current provisioning state. </summary>
     public readonly partial struct PrivateEndpointConnectionProvisioningState : IEquatable<PrivateEndpointConnectionProvisioningState>

@@ -7,9 +7,10 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A private link resource. </summary>
     public partial class MhsmPrivateLinkResource : ManagedHsmResource
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="groupId"> Group identifier of private link resource. </param>
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
-        internal MhsmPrivateLinkResource(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, ManagedHsmSku sku, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type, location, tags, sku, systemData)
+        internal MhsmPrivateLinkResource(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, ManagedHsmSku sku, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type, location, tags, sku, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

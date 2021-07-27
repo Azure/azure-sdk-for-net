@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A rule governing the accessibility of a managed hsm pool from a specific virtual network. </summary>
     public partial class MhsmVirtualNetworkRule

@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Managed HSM resource. </summary>
-    public partial class ManagedHsmResource : TrackedResource<ResourceGroupResourceIdentifier>
+    public partial class ManagedHsmResource : TrackedResource
     {
         /// <summary> Initializes a new instance of ManagedHsmResource. </summary>
         /// <param name="location"> The location. </param>
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="tags"> The tags. </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the key vault resource. </param>
-        internal ManagedHsmResource(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, ManagedHsmSku sku, SystemData systemData) : base(id, name, type, location, tags)
+        internal ManagedHsmResource(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, ManagedHsmSku sku, SystemData systemData) : base(id, name, type, location, tags)
         {
             Sku = sku;
             SystemData = systemData;

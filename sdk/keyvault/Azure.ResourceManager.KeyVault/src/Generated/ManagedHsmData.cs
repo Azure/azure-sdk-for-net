@@ -6,7 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="sku"> SKU details. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the key vault resource. </param>
         /// <param name="properties"> Properties of the managed HSM. </param>
-        internal ManagedHsmData(ResourceGroupResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, ManagedHsmSku sku, SystemData systemData, ManagedHsmProperties properties) : base(id, name, type, location, tags, sku, systemData)
+        internal ManagedHsmData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, ManagedHsmSku sku, SystemData systemData, ManagedHsmProperties properties) : base(id, name, type, location, tags, sku, systemData)
         {
             Properties = properties;
         }

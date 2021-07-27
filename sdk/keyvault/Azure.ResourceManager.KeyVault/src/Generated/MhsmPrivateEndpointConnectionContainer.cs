@@ -12,12 +12,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing collection of MhsmPrivateEndpointConnection and their operations over a ManagedHsm. </summary>
-    public partial class MhsmPrivateEndpointConnectionContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, MhsmPrivateEndpointConnection, MhsmPrivateEndpointConnectionData>
+    public partial class MhsmPrivateEndpointConnectionContainer : ResourceContainerBase<MhsmPrivateEndpointConnection, MhsmPrivateEndpointConnectionData>
     {
         /// <summary> Initializes a new instance of the <see cref="MhsmPrivateEndpointConnectionContainer"/> class for mocking. </summary>
         protected MhsmPrivateEndpointConnectionContainer()
@@ -35,9 +38,6 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Represents the REST operations. </summary>
         private MhsmPrivateEndpointConnectionsRestOperations _restClient => new MhsmPrivateEndpointConnectionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ManagedHsmOperations.ResourceType;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Page<MhsmPrivateEndpointConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.ListByResource");
+                using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.List");
                 scope.Start();
                 try
                 {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.KeyVault
             }
             Page<MhsmPrivateEndpointConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.ListByResource");
+                using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.List");
                 scope.Start();
                 try
                 {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             async Task<Page<MhsmPrivateEndpointConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.ListByResource");
+                using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.List");
                 scope.Start();
                 try
                 {
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.KeyVault
             }
             async Task<Page<MhsmPrivateEndpointConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.ListByResource");
+                using var scope = _clientDiagnostics.CreateScope("MhsmPrivateEndpointConnectionContainer.List");
                 scope.Start();
                 try
                 {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.KeyVault
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Filters the list of MhsmPrivateEndpointConnection for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="MhsmPrivateEndpointConnection" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> Filters the list of MhsmPrivateEndpointConnection for this resource group represented as generic resources. </summary>
+        /// <summary> Filters the list of <see cref="MhsmPrivateEndpointConnection" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
@@ -435,6 +435,6 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, MhsmPrivateEndpointConnection, MhsmPrivateEndpointConnectionData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, MhsmPrivateEndpointConnection, MhsmPrivateEndpointConnectionData> Construct() { }
     }
 }
