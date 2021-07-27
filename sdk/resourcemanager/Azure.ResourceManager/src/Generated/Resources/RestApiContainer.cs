@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a list of operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestApi" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestApi> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<RestApi> GetAll(CancellationToken cancellationToken = default)
         {
             Page<RestApi> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RestApiContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("RestApiContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets a list of operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RestApi" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestApi> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RestApi> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<RestApi>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RestApiContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("RestApiContainer.GetAll");
                 scope.Start();
                 try
                 {

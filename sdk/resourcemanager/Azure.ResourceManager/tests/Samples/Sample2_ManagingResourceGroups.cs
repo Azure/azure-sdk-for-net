@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Tests.Samples
             // Now we get a ResourceGroup container for that subscription
             ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
             // With ListAsync(), we can get a list of the resources in the container
-            AsyncPageable<ResourceGroup> response = rgContainer.ListAsync();
+            AsyncPageable<ResourceGroup> response = rgContainer.GetAllAsync();
             await foreach (ResourceGroup rg in response)
             {
                 Console.WriteLine(rg.Data.Name);

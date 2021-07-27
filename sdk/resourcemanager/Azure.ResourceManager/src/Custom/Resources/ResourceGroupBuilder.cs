@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing a builder object used to create Azure resources.
     /// </summary>
-    public class ResourceGroupBuilder
+    internal class ResourceGroupBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupBuilder"/> class.

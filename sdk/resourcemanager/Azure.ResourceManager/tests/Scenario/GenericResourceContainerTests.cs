@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Tests
             count = await GetResourceCountAsync(genericResources, rg2);
             Assert.AreEqual(1, count);
 
-            Assert.Throws<ArgumentNullException>(() => { genericResources.ListByResourceGroupAsync(null); });
+            Assert.Throws<ArgumentNullException>(() => { genericResources.GetByResourceGroupAsync(null); });
         }
 
         [TestCase]

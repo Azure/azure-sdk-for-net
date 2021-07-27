@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Tests
 
             ResourceGroupOperations rgOp = Client.GetResourceGroupOperations(rg.Id);
             var result = 0;
-            var pageable = ResourceListOperations.ListAtContextAsync(rgOp);
+            var pageable = ResourceListOperations.GetAtContextAsync(rgOp);
             await foreach (var resource in pageable)
             {
                 result++;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(1, result);
 
             result = 0;
-            pageable = ResourceListOperations.ListAtContextAsync(Client.DefaultSubscription);
+            pageable = ResourceListOperations.GetAtContextAsync(Client.DefaultSubscription);
             await foreach (var resource in pageable)
             {
                 result++;

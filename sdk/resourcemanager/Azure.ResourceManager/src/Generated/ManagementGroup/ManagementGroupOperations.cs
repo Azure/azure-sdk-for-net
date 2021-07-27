@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.Management
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<DescendantInfo> ListDescendants(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DescendantInfo> GetDescendants(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<DescendantInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.ListDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Management
             }
             Page<DescendantInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.ListDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -246,11 +246,11 @@ namespace Azure.ResourceManager.Management
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<DescendantInfo> ListDescendantsAsync(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DescendantInfo> GetDescendantsAsync(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DescendantInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.ListDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Management
             }
             async Task<Page<DescendantInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.ListDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
