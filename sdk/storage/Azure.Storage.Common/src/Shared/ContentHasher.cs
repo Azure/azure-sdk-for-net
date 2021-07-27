@@ -23,8 +23,35 @@ namespace Azure.Storage
         /// Computes the requested hash, if desired.
         /// </summary>
         /// <param name="content">Content to hash.</param>
+        /// <param name="options">Hash options.</param>
+        /// <returns>Object containing the requested hash, or no hash, on its algorithm's respective property.</returns>
+        public static GetHashResult GetHash(Stream content, UploadTransactionalHashingOptions options)
+        {
+            if (options == default)
+            {
+                return new GetHashResult();
+            }
+
+            if (options.PrecalculatedHash != default)
+            {
+                return options.Algorithm switch
+                {
+                    TransactionalHashAlgorithm.StorageCrc64 => new GetHashResult() { StorageCrc64 = options.PrecalculatedHash },
+                    TransactionalHashAlgorithm.MD5 => new GetHashResult() { MD5 = options.PrecalculatedHash },
+                    _ => throw new ArgumentException(
+                        $"{nameof(UploadTransactionalHashingOptions)} instance provided {nameof(UploadTransactionalHashingOptions.PrecalculatedHash)} without specifying a {nameof(TransactionalHashAlgorithm)}.")
+                };
+            }
+
+            return GetHash(content, options.Algorithm);
+        }
+
+        /// <summary>
+        /// Computes the requested hash, if desired.
+        /// </summary>
+        /// <param name="content">Content to hash.</param>
         /// <param name="algorithmIdentifier">Algorithm to compute the hash with.</param>
-        /// <returns>Object containing the requested hash on its algorithm's respective property.</returns>
+        /// <returns>Object containing the requested hash, or no hash, on its algorithm's respective property.</returns>
         public static GetHashResult GetHash(Stream content, TransactionalHashAlgorithm algorithmIdentifier)
         {
             return algorithmIdentifier switch

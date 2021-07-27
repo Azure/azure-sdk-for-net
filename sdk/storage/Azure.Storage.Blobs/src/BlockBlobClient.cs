@@ -1164,7 +1164,7 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHash(content, options.TransactionalHashingOptions?.Algorithm ?? Storage.Models.TransactionalHashAlgorithm.None);
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHash(content, options.TransactionalHashingOptions);
 
                     content = content.WithNoDispose().WithProgress(options.ProgressHandler);
 
