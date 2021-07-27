@@ -13,7 +13,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// </summary>
     public class WhereQuery
     {
-        private List<WhereClause> _whereClauses;
+        private readonly List<WhereClause> _whereClauses;
 
         internal WhereQuery()
         {
@@ -21,13 +21,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds the conditional arguments for a comparison to the query object. Used to compare ADT properties
+        /// Adds the conditional arguments for a comparison to the query object. Used to compare DigitalTwins properties
         /// using the query language's comparison operators.
         /// </summary>
         /// <param name="field">The field being checked against a certain value.</param>
         /// <param name="comparisonOperator">The comparison operator being invoked.</param>
-        /// <param name="value">The value being checked against a Field.</param>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
+        /// <param name="value">The value being checked against a field.</param>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery Compare<T>(string field, QueryComparisonOperator comparisonOperator, T value)
         {
             _whereClauses.Add(new WhereClause(new ComparisonCondition<T>(field, comparisonOperator, value)));
@@ -35,12 +35,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds the conditional arugments for a contains conditional statement to the query object. Used to search
+        /// Adds the conditional arguments for a contains conditional statement to the query object. Used to search
         /// a field for a user specified property.
         /// </summary>
         /// <param name="value">User specified property to look for.</param>
-        /// <param name="searched">Field of possible options to check for the 'value' parameter.</param>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
+        /// <param name="searched">Field of possible options to check for the <c>value</c> parameter.</param>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery Contains(string value, string[] searched)
         {
             _whereClauses.Add(new WhereClause(new ContainsCondition(value, QueryContainsOperator.In, searched)));
@@ -48,12 +48,12 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Adds the conditional arugments for a contains conditional statement to the query object. Used to search
+        /// Adds the conditional arguments for a contains conditional statement to the query object. Used to search
         /// a field for a user specified property.
         /// </summary>
         /// <param name="value">User specified property to look for.</param>
-        /// <param name="searched">Field of possible options to check for the 'value' parameter.</param>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
+        /// <param name="searched">Field of possible options to check for the <c>value</c> parameter.</param>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery NotContains(string value, string[] searched)
         {
             _whereClauses.Add(new WhereClause(new ContainsCondition(value, QueryContainsOperator.NotIn, searched)));
@@ -64,7 +64,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// An alternative way to add a WHERE clause to the query by directly providing a string that contains the condition.
         /// </summary>
         /// <param name="condition">The verbatim condition (SQL-like syntax) in string format.</param>
-        /// <returns>Logical operator to combine different WHERE functions or conditions.</returns>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery Custom(string condition)
         {
             _whereClauses.Add(new WhereClause(condition));
@@ -75,7 +75,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_defined">IS_DEFINED</see> function to the condition statement of the query.
         /// </summary>
         /// <param name="property">The property that the query is looking for as defined.</param>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery IsDefined(string property)
         {
             _whereClauses.Add(new WhereClause($"{QueryConstants.IsDefined}({property})"));
@@ -86,7 +86,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Adds the <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-functions#is_null">IS_NULL</see> function to the condition statement of the query.
         /// </summary>
         /// <param name="expression">The expression being checked for null.</param>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery IsNull(string expression)
         {
             _whereClauses.Add(new WhereClause($"{QueryConstants.IsNull}({expression})"));
@@ -98,7 +98,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="stringToCheck">String to check the beginning of.</param>
         /// <param name="beginningString">String representing the beginning to check for.</param>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery StartsWith(string stringToCheck, string beginningString)
         {
             _whereClauses.Add(new WhereClause($"{QueryConstants.StartsWith}({stringToCheck}, '{beginningString}')"));
@@ -110,7 +110,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="stringToCheck">String to check the ending of.</param>
         /// <param name="endingString">String representing the ending to check for.</param>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery EndsWith(string stringToCheck, string endingString)
         {
             _whereClauses.Add(new WhereClause($"{QueryConstants.EndsWith}({stringToCheck}, '{endingString}')"));
@@ -122,7 +122,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="model">Model Id to check for.</param>
         /// <param name="exact">Whether or not an exact match is required.</param>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery IsOfModel(string model, bool exact = false)
         {
             var whereClauseArg = new StringBuilder();
@@ -144,8 +144,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// </summary>
         /// <param name="expression">The expression that the query is looking for as a specified type.</param>
         /// <param name="type">The type in the ADT query language being checked for.</param>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
-        public WhereQuery IsOfType(string expression, AdtDataType type)
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
+        public WhereQuery IsOfType(string expression, DigitalTwinsDataType type)
         {
             string functionName = QueryConstants.DataTypeToFunctionNameMap[type];
             _whereClauses.Add(new WhereClause($"{functionName}({expression})"));
@@ -153,11 +153,11 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Used to add nested WHERE conditions to a query.
+        /// Used to add WHERE conditions wrapped in parenthesis to signify precedence to a query.
         /// </summary>
         /// <param name="nested">WhereQuery methods to perform within a set of parenthesis.</param>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
-        public WhereQuery Parenthetical(Func<WhereQuery, WhereQuery> nested)
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
+        public WhereQuery Precedence(Func<WhereQuery, WhereQuery> nested)
         {
             var nestedLogic = new WhereQuery();
             nested.Invoke(nestedLogic);
@@ -170,7 +170,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Used to add nested WHERE conditions within an AND logical operator to a query.
         /// </summary>
         /// <param name="nested">WhereQuery methods to perform within a set of parenthesis.</param>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery And(Func<WhereQuery, WhereQuery> nested)
         {
             var nestedLogic = new WhereQuery();
@@ -184,7 +184,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Adds the AND logical operator to a query.
         /// </summary>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery And()
         {
             _whereClauses.Add(new WhereClause(QueryConstants.And));
@@ -195,7 +195,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Used to add nested WHERE conditions within an OR logical operator to a query.
         /// </summary>
         /// <param name="nested">WhereQuery methods to perform within a set of parenthesis.</param>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery Or(Func<WhereQuery, WhereQuery> nested)
         {
             var nestedLogic = new WhereQuery();
@@ -209,7 +209,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Adds the OR logical operator to a query.
         /// </summary>
-        /// <returns>Query that already contains a SELECT and FROM clause.</returns>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery Or()
         {
             _whereClauses.Add(new WhereClause(QueryConstants.Or));
@@ -217,9 +217,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// Gets the string reperesentation of a WhereQuery.
+        /// Gets the string representation of a WhereQuery.
         /// </summary>
-        /// <returns>A Digital Twin query's WHERE clause in string format.</returns>
+        /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public string GetQueryText()
         {
             var whereClauseString = new StringBuilder();

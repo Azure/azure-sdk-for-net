@@ -6,7 +6,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// <see href="https://docs.microsoft.com/azure/digital-twins/concepts-models#schema">Data types</see>in the ADT query language.
     /// </summary>
-    public enum AdtDataType
+    public enum DigitalTwinsDataType
     {
         /// <summary>
         /// Boolean type in the ADT query language.
@@ -24,7 +24,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         DigitalTwinsString,
 
         /// <summary>
-        /// Primative type (string, numeric, boolean, or null) in the ADT query language.
+        /// Primitive type (string, numeric, boolean, or null) in the ADT query language.
         /// </summary>
         DigitalTwinsPrimative,
 

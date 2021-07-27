@@ -295,7 +295,7 @@ namespace Azure.DigitalTwins.Core.Samples
                 AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilder = client.QueryAsync<BasicDigitalTwin>(
                     new DigitalTwinsQueryBuilder()
                         .SelectAll()
-                        .From(AdtCollection.DigitalTwins)
+                        .From(DigitalTwinsCollection.DigitalTwins)
                         .Build());
                 #endregion
 

@@ -14,14 +14,16 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// Constructor for a FROM clause.
         /// </summary>
         /// <param name="collection">Enum Collection that can be either a ADT instance or a relationship.</param>
-        internal FromClause(AdtCollection collection)
+        internal FromClause(DigitalTwinsCollection collection)
         {
             Collection = collection.ToString();
         }
 
-        internal FromClause(AdtCollection collection, string alias)
+        internal FromClause(DigitalTwinsCollection collection, string alias = default)
         {
-            Collection = $"{collection} {alias}";
+            Collection = alias == null
+                ? collection.ToString()
+                : $"{collection} {alias}";
         }
 
         internal FromClause(string literalCollection)
