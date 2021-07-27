@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Management
         /// .
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ManagementGroupInfo> List(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagementGroupInfo> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Page<ManagementGroupInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Management
             }
             Page<ManagementGroupInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Management
         /// .
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ManagementGroupInfo> ListAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagementGroupInfo> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagementGroupInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Management
             }
             async Task<Page<ManagementGroupInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {

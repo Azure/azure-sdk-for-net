@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Tests
         {
             Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
             Feature testFeature = null;
-            await foreach (var feature in provider.GetFeatures().ListAsync())
+            await foreach (var feature in provider.GetFeatures().GetAllAsync())
             {
                 testFeature = feature;
                 break;

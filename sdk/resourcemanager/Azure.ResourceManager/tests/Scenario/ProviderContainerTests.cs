@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Tests
         public async Task List()
         {
             var providerContainer = Client.DefaultSubscription.GetProviders();
-            var x = providerContainer.ListAsync();
+            var x = providerContainer.GetAllAsync();
             Assert.IsNotNull(x);
             await foreach (var p in x)
             {

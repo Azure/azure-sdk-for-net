@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Tests
         {
             var mgmtGroupContainer = Client.GetManagementGroups();
             ManagementGroupInfo mgmtGroup = null;
-            await foreach(var item in mgmtGroupContainer.ListAsync("no-cache"))
+            await foreach(var item in mgmtGroupContainer.GetAllAsync("no-cache"))
             {
                 mgmtGroup = item;
                 break;

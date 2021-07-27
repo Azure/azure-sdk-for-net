@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task VerifyMetadata()
         {
-            var listLocs = Client.DefaultSubscription.ListLocationsAsync();
+            var listLocs = Client.DefaultSubscription.GetLocationsAsync();
             await foreach (LocationExpanded loc in listLocs)
             {
                 Assert.IsNotNull(loc.Metadata);
