@@ -1,7 +1,8 @@
 # Release History
 
-## 1.0.0-preview.3 (Unreleased)
+## 1.0.0-beta.1 (2021-07-27)
 
+-Initial checkin of the new Track 2 SDK.
 
 ## 1.0.0-preview.2 (2020-09-23)
 

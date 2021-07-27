@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -76,7 +77,14 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    assignPermissions = property.Value.GetBoolean();
+                    try
+                    {
+                        assignPermissions = property.Value.GetBoolean();
+                    }
+                    catch (Exception)
+                    {
+                        assignPermissions = property.Value.GetString().Equals("true", StringComparison.InvariantCultureIgnoreCase);
+                    }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());

@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<Application> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.List");
                 scope.Start();
                 try
                 {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Application> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.List");
                 scope.Start();
                 try
                 {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<Application>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.List");
                 scope.Start();
                 try
                 {
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Application>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("ApplicationContainer.List");
                 scope.Start();
                 try
                 {
