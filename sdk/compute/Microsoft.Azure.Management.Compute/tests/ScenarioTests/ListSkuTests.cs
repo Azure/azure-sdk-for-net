@@ -22,7 +22,7 @@ namespace Compute.Tests
                 var computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
                     new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
 
-                IPage<ResourceSku> skus = computeClient.ResourceSkus.List();
+                IPage<ResourceSku> skus = computeClient.ResourceSkus.List(includeExtendedLocations: "true");
                 Assert.True(skus.Any(), "Assert that the array of skus has at least 1 member.");
                 Assert.True(skus.Any(sku => sku.ResourceType == "availabilitySets"), "Assert that the sku list at least contains" +
                                                                                      "one availability set.");
@@ -42,7 +42,7 @@ namespace Compute.Tests
                 var nonUltraSSDSupportingSku = vmSkusInEastUS2Euap.First(s => s.Name == "Standard_A7");
 
                 Assert.NotNull(ultraSSDSupportingSku.LocationInfo);
-                Assert.Equal(1, ultraSSDSupportingSku.LocationInfo.Count);
+                Assert.Equal(2, ultraSSDSupportingSku.LocationInfo.Count);
                 Assert.NotNull(ultraSSDSupportingSku.LocationInfo[0].ZoneDetails);
                 Assert.Equal(1, ultraSSDSupportingSku.LocationInfo[0].ZoneDetails.Count);
                 Assert.NotNull(ultraSSDSupportingSku.LocationInfo[0].ZoneDetails[0].Name);
@@ -56,6 +56,9 @@ namespace Compute.Tests
                 // other zonal capability currently.
                 //Assert.Null(nonUltraSSDSupportingSku.LocationInfo[0].ZoneDetails);
                 Assert.Equal(0, nonUltraSSDSupportingSku.LocationInfo[0].ZoneDetails.Count);
+
+                // Test that we also see extendedlocations in the response, for a supported sku
+                Assert.True(vmSkusInEastUS2Euap.Where(s => s.Name == "Standard_D4s_v3").First().LocationInfo.Where(info => info.ExtendedLocations != null).First().ExtendedLocations.Any());
             }
         }
     }
