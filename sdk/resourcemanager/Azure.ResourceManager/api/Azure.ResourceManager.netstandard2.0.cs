@@ -72,7 +72,9 @@ namespace Azure.ResourceManager
         public int CompareTo(Azure.ResourceManager.ResourceIdentifier other) { throw null; }
         public static Azure.ResourceManager.ResourceIdentifier Create(string resourceId) { throw null; }
         public bool Equals(Azure.ResourceManager.ResourceIdentifier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceIdentifier id1, Azure.ResourceManager.ResourceIdentifier id2) { throw null; }
         public static bool operator >(Azure.ResourceManager.ResourceIdentifier left, Azure.ResourceManager.ResourceIdentifier right) { throw null; }
@@ -100,9 +102,11 @@ namespace Azure.ResourceManager
         public string Name { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public bool Equals(Azure.ResourceManager.ResourceNameFilter other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         public bool Equals(string other) { throw null; }
         public override string GetFilterString() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceNameFilter (string nameString) { throw null; }
     }
@@ -113,8 +117,10 @@ namespace Azure.ResourceManager
         public string Key { get { throw null; } }
         public string Value { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceTagFilter other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         public override string GetFilterString() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
     }
     public sealed partial class ResourceType : System.IComparable<Azure.ResourceManager.ResourceType>, System.IEquatable<Azure.ResourceManager.ResourceType>
@@ -126,7 +132,9 @@ namespace Azure.ResourceManager
         public System.Collections.Generic.IReadOnlyList<string> Types { get { throw null; } }
         public int CompareTo(Azure.ResourceManager.ResourceType other) { throw null; }
         public bool Equals(Azure.ResourceManager.ResourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public bool IsParentOf(Azure.ResourceManager.ResourceType child) { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceType left, Azure.ResourceManager.ResourceType right) { throw null; }
@@ -144,9 +152,11 @@ namespace Azure.ResourceManager
         public ResourceTypeFilter(Azure.ResourceManager.ResourceType resourceType) { }
         public Azure.ResourceManager.ResourceType ResourceType { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceTypeFilter other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         public bool Equals(string other) { throw null; }
         public override string GetFilterString() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
     }
 }
@@ -157,8 +167,10 @@ namespace Azure.ResourceManager.Core
         protected ApiVersionsBase(string value) { }
         public virtual Azure.ResourceManager.ResourceType ResourceType { get { throw null; } }
         public int CompareTo(string other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object other) { throw null; }
         public bool Equals(string other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Core.ApiVersionsBase left, string right) { throw null; }
         public static bool operator >(Azure.ResourceManager.Core.ApiVersionsBase left, Azure.ResourceManager.Core.ApiVersionsBase right) { throw null; }
@@ -1003,7 +1015,9 @@ namespace Azure.ResourceManager.Resources.Models
         public string RegionalDisplayName { get { throw null; } }
         public int CompareTo(Azure.ResourceManager.Resources.Models.Location other) { throw null; }
         public bool Equals(Azure.ResourceManager.Resources.Models.Location other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.Location left, Azure.ResourceManager.Resources.Models.Location right) { throw null; }
         public static bool operator >(Azure.ResourceManager.Resources.Models.Location left, Azure.ResourceManager.Resources.Models.Location right) { throw null; }
@@ -1055,7 +1069,9 @@ namespace Azure.ResourceManager.Resources.Models
         public string Version { get { throw null; } set { } }
         public int CompareTo(Azure.ResourceManager.Resources.Models.Plan other) { throw null; }
         public bool Equals(Azure.ResourceManager.Resources.Models.Plan other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.Plan left, Azure.ResourceManager.Resources.Models.Plan right) { throw null; }
         public static bool operator >(Azure.ResourceManager.Resources.Models.Plan left, Azure.ResourceManager.Resources.Models.Plan right) { throw null; }
@@ -1229,7 +1245,9 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.SystemAssignedIdentity SystemAssignedIdentity { get { throw null; } }
         public System.Collections.Generic.IDictionary<Azure.ResourceManager.ResourceIdentifier, Azure.ResourceManager.Resources.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.ResourceIdentity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
     }
     public enum ResourceIdentityType
@@ -1336,7 +1354,9 @@ namespace Azure.ResourceManager.Resources.Models
         public string Tier { get { throw null; } set { } }
         public int CompareTo(Azure.ResourceManager.Resources.Models.Sku other) { throw null; }
         public bool Equals(Azure.ResourceManager.Resources.Models.Sku other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Resources.Models.Sku left, Azure.ResourceManager.Resources.Models.Sku right) { throw null; }
         public static bool operator >(Azure.ResourceManager.Resources.Models.Sku left, Azure.ResourceManager.Resources.Models.Sku right) { throw null; }
@@ -1384,7 +1404,9 @@ namespace Azure.ResourceManager.Resources.Models
         public int CompareTo(Azure.ResourceManager.Resources.Models.SystemAssignedIdentity other) { throw null; }
         public bool Equals(Azure.ResourceManager.Resources.Models.SystemAssignedIdentity other) { throw null; }
         public static bool Equals(Azure.ResourceManager.Resources.Models.SystemAssignedIdentity original, Azure.ResourceManager.Resources.Models.SystemAssignedIdentity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
     }
     public partial class Tag : Azure.ResourceManager.Resources.Models.Resource
@@ -1455,7 +1477,9 @@ namespace Azure.ResourceManager.Resources.Models
         public int CompareTo(Azure.ResourceManager.Resources.Models.UserAssignedIdentity other) { throw null; }
         public bool Equals(Azure.ResourceManager.Resources.Models.UserAssignedIdentity other) { throw null; }
         public static bool Equals(Azure.ResourceManager.Resources.Models.UserAssignedIdentity original, Azure.ResourceManager.Resources.Models.UserAssignedIdentity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
     }
     [Azure.ResourceManager.Core.ReferenceTypeAttribute]

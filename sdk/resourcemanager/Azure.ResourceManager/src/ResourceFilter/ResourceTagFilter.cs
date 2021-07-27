@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager
@@ -64,6 +65,7 @@ namespace Azure.ResourceManager
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(this, obj))
@@ -73,6 +75,7 @@ namespace Azure.ResourceManager
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return HashCodeBuilder.Combine(Key, Value);
