@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    public class ProviderContainer : ResourceContainerBase<Provider, ProviderData>
+    public class ProviderContainer : ResourceContainer
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderContainer"/> class for mocking.

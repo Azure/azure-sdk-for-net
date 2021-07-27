@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Management
     /// <summary>
     /// A class representing collection of ManagementGroupContainer and their operations over a ManagementGroup.
     /// </summary>
-    public class ManagementGroupContainer : ResourceContainerBase<ManagementGroup, ManagementGroupData>
+    public class ManagementGroupContainer : ResourceContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ManagementGroupsRestOperations _restClient;

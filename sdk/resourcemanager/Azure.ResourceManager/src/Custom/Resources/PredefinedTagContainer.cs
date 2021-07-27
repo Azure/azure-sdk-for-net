@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of Tag and its operations.
     /// </summary>
-    public class PredefinedTagContainer : ContainerBase
+    public class PredefinedTagContainer : ResourceContainer
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PredefinedTagContainer"/> class for mocking.

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of Subscription and their operations
     /// </summary>
-    public class SubscriptionContainer : ResourceContainerBase<Subscription, SubscriptionData>
+    public class SubscriptionContainer : ResourceContainer
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class for mocking.

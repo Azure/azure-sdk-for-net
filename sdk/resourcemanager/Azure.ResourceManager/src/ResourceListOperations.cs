@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.Core
                 cancellationToken);
         }
 
-        private static GenericResourceContainer GetGenericResourceContainer(ResourceOperationsBase resourceOperations)
+        private static GenericResourceContainer GetGenericResourceContainer(ResourceOperations resourceOperations)
         {
             return new GenericResourceContainer(new ClientContext(resourceOperations.ClientOptions, resourceOperations.Credential, resourceOperations.BaseUri, resourceOperations.Pipeline), resourceOperations.Id);
         }
 
         private static AsyncPageable<GenericResourceExpanded> ListAtContextInternalAsync(
-            ResourceOperationsBase resourceOperations,
+            ResourceOperations resourceOperations,
             string scopeFilter,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Core
         }
 
         private static Pageable<GenericResourceExpanded> ListAtContextInternal(
-            ResourceOperationsBase resourceOperations,
+            ResourceOperations resourceOperations,
             string scopeFilter = null,
             ResourceFilterCollection resourceFilters = null,
             string expand = null,

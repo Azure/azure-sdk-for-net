@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific subscription.
     /// </summary>
-    public class SubscriptionOperations : ResourceOperationsBase<Subscription>
+    public class SubscriptionOperations : ResourceOperations
     {
         /// <summary>
         /// The resource type for subscription
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="operations"> The resource operations to copy the options from. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected SubscriptionOperations(OperationsBase operations, ResourceIdentifier id)
+        protected SubscriptionOperations(ResourceOperations operations, ResourceIdentifier id)
             : base(operations, id)
         {
         }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <inheritdoc/>
-        public override Response<Subscription> Get(CancellationToken cancellationToken = default)
+        public virtual Response<Subscription> Get(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("SubscriptionOperations.Get");
             scope.Start();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<Subscription>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("SubscriptionOperations.Get");
             scope.Start();

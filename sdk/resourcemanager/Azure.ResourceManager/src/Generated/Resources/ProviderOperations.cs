@@ -13,7 +13,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> The Providers service client. </summary>
-    public partial class ProviderOperations : ResourceOperationsBase<Provider>
+    public partial class ProviderOperations : ResourceOperations
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderOperations"/> class for mocking.
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
         { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
+        /// Initializes a new instance of the <see cref="ProviderOperations"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"></param>
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericResourceOperations"/> class.
+        /// Initializes a new instance of the <see cref="ProviderOperations"/> class.
         /// </summary>
         /// <param name="operations"> The resource operations to copy the options from. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected ProviderOperations(OperationsBase operations, ResourceIdentifier id)
+        protected ProviderOperations(ResourceOperations operations, ResourceIdentifier id)
             : base(operations, id)
         {
         }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <inheritdoc/>
-        public override Response<Provider> Get(CancellationToken cancellationToken = default)
+        public virtual Response<Provider> Get(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProviderOperations.Get");
             scope.Start();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <inheritdoc/>
-        public override async Task<Response<Provider>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Provider>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ProvidersOperations.Get");
             scope.Start();
