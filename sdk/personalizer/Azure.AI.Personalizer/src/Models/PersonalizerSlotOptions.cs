@@ -42,25 +42,16 @@ namespace Azure.AI.Personalizer.Models
         /// Each slot must have a unique BaselineAction which corresponds to an an action from the event&apos;s Actions list.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="baselineAction"/> is null. </exception>
-        public PersonalizerSlotOptions(string id, string baselineAction, IList<object> features = default(IList<object>), IList<string> excludedActions = default(IList<string>))
+        public PersonalizerSlotOptions(string id, string baselineAction, IList<object> features = default, IList<string> excludedActions = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (baselineAction == null)
-            {
-                throw new ArgumentNullException(nameof(baselineAction));
-            }
-
-            Id = id;
+            Id = id ?? throw new ArgumentNullException(nameof(id));
             Features = features ?? new ChangeTrackingList<object>();
             ExcludedActions = excludedActions ?? new ChangeTrackingList<string>();
-            BaselineAction = baselineAction;
+            BaselineAction = baselineAction ?? throw new ArgumentNullException(nameof(baselineAction));
         }
 
         /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
+        /// An initialization method that performs custom operations like setting defaults.
         /// </summary>
         partial void CustomInit();
     }

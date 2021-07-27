@@ -79,7 +79,7 @@ namespace Azure.AI.Personalizer.Models
         }
 
         /// <summary>
-        /// Initializes a new <see cref="CreatePersonalizerEvaluationOperation"/> instance
+        /// Initializes a new <see cref="CreatePersonalizerEvaluationOperation"/> instance.
         /// </summary>
         /// <param name="client">
         /// The client used to check for completion.
@@ -91,7 +91,7 @@ namespace Azure.AI.Personalizer.Models
         }
 
         /// <summary>
-        /// Initializes a new <see cref="CreatePersonalizerEvaluationOperation"/> instance
+        /// Initializes a new <see cref="CreatePersonalizerEvaluationOperation"/> instance.
         /// </summary>
         /// <param name="client">
         /// The client used to check for completion.

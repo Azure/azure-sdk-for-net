@@ -68,7 +68,7 @@ namespace Azure.AI.Personalizer.Models
         /// (e.g. because the page is rendering later, or the Rank results may be overridden by code further downstream).
         /// You must call the Activate Event API if the event output is shown to users, otherwise Rewards will be ignored.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="actions"/> or <paramref name="slots"/> is null. </exception>
-        public PersonalizerMultiSlotRankOptions(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<PersonalizerSlotOptions> slots, IList<object> contextFeatures = default(IList<object>), string eventId = default(string), bool deferActivation = false)
+        public PersonalizerMultiSlotRankOptions(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<PersonalizerSlotOptions> slots, IList<object> contextFeatures = default, string eventId = default, bool deferActivation = false)
         {
             if (actions == null)
             {
@@ -86,7 +86,7 @@ namespace Azure.AI.Personalizer.Models
         }
 
         /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
+        /// An initialization method that performs custom operations like setting defaults.
         /// </summary>
         partial void CustomInit();
     }
