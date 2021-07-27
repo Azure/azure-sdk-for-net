@@ -14,12 +14,14 @@ namespace Azure
     /// </summary>
     public class RequestOptions
     {
-        private List<Func<HttpMessage, ResponseClassification?>> _classifiers = new();
+        private List<HttpMessageClassifier> _classifiers = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestOptions"/> class.
         /// </summary>
-        public RequestOptions() { }
+        public RequestOptions()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestOptions"/> class using the given <see cref="RequestOptions"/>.
@@ -37,7 +39,7 @@ namespace Azure
         ///
         /// </summary>
         /// <param name="treatAsSuccess"></param>
-        public RequestOptions(params int[] treatAsSuccess): this(treatAsSuccess, ResponseClassification.Success)
+        public RequestOptions(params int[] treatAsSuccess) : this(treatAsSuccess, ResponseClassification.Success)
         {
         }
 
@@ -46,7 +48,8 @@ namespace Azure
         /// </summary>
         /// <param name="statusCodes"></param>
         /// <param name="classification"></param>
-        public RequestOptions(int[] statusCodes, ResponseClassification classification) {
+        public RequestOptions(int[] statusCodes, ResponseClassification classification)
+        {
             AddStatusClassifier(statusCodes, classification);
         }
 
@@ -59,7 +62,7 @@ namespace Azure
         {
             foreach (var statusCode in statusCodes)
             {
-                _classifiers.Add(message => message.Response.Status == statusCode ? classification : null);
+                AddClassifier(message => message.Response.Status == statusCode ? classification : null);
             }
         }
 
@@ -69,7 +72,7 @@ namespace Azure
         /// <param name="classifier"></param>
         public void AddClassifier(Func<HttpMessage, ResponseClassification?> classifier)
         {
-            _classifiers.Add(classifier);
+            _classifiers.Add(new FuncHttpMessageClassifier(classifier));
         }
 
         /// <summary>
@@ -104,6 +107,7 @@ namespace Azure
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", PerCallPolicy);
             }
+
             message.ResponseClassifier = new PerCallResponseClassifier(message.ResponseClassifier, this);
         }
 
@@ -161,13 +165,43 @@ namespace Azure
             {
                 foreach (var classifier in _options._classifiers)
                 {
-                    if (classifier(message) == responseClassification)
+                    if (classifier.TryClassify(message, null, out var c) &&
+                        c == responseClassification)
                     {
                         return true;
                     }
                 }
 
                 return false;
+            }
+        }
+
+        internal abstract class HttpMessageClassifier
+        {
+            public abstract bool TryClassify(HttpMessage message, Exception? exception, out ResponseClassification classification);
+        }
+
+        internal class FuncHttpMessageClassifier : HttpMessageClassifier
+        {
+            private readonly Func<HttpMessage, ResponseClassification?> _func;
+
+            public FuncHttpMessageClassifier(Func<HttpMessage, ResponseClassification?> func)
+            {
+                _func = func;
+            }
+
+            public override bool TryClassify(HttpMessage message, Exception? exception, out ResponseClassification classification)
+            {
+                if (_func(message) is ResponseClassification c)
+                {
+                    classification = c;
+                    return true;
+                }
+                else
+                {
+                    classification = default;
+                    return false;
+                }
             }
         }
     }
@@ -181,14 +215,17 @@ namespace Azure
         ///
         /// </summary>
         Retry,
+
         /// <summary>
         ///
         /// </summary>
         DontRetry,
+
         /// <summary>
         ///
         /// </summary>
         Throw,
+
         /// <summary>
         ///
         /// </summary>
