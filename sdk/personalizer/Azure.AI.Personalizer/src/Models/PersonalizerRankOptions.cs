@@ -60,7 +60,7 @@ namespace Azure.AI.Personalizer.Models
         /// the default Reward to the event. Send true if it is possible the user will not
         /// see the action specified in the rank results, because the page is rendering
         /// later, or the Rank results may be overridden by code further downstream.</param>
-        public PersonalizerRankOptions(IList<PersonalizerRankableAction> actions, IList<object> contextFeatures = default(IList<object>), IList<string> excludedActions = default(IList<string>), string eventId = default(string), bool? deferActivation = default(bool?))
+        public PersonalizerRankOptions(IList<PersonalizerRankableAction> actions, IList<object> contextFeatures = default, IList<string> excludedActions = default, string eventId = default, bool? deferActivation = default)
         {
             ContextFeatures = contextFeatures ?? new ChangeTrackingList<object>();
             Actions = actions;
@@ -70,7 +70,7 @@ namespace Azure.AI.Personalizer.Models
         }
 
         /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
+        /// An initialization method that performs custom operations like setting defaults.
         /// </summary>
         partial void CustomInit();
     }

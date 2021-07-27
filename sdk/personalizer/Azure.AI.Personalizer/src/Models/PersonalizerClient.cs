@@ -139,7 +139,7 @@ namespace Azure.AI.Personalizer
         /// https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerRankResult>> RankAsync(IList<PersonalizerRankableAction> actions, IList<object> contextFeatures = default(IList<object>), CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerRankResult>> RankAsync(IList<PersonalizerRankableAction> actions, IList<object> contextFeatures = default, CancellationToken cancellationToken = default)
         {
             PersonalizerRankOptions options = new PersonalizerRankOptions(actions, contextFeatures);
             return await RankAsync(options, cancellationToken).ConfigureAwait(false);
@@ -182,7 +182,7 @@ namespace Azure.AI.Personalizer
         /// https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerRankResult> Rank(IList<PersonalizerRankableAction> actions, IList<object> contextFeatures = default(IList<object>), CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerRankResult> Rank(IList<PersonalizerRankableAction> actions, IList<object> contextFeatures = default, CancellationToken cancellationToken = default)
         {
             PersonalizerRankOptions options = new PersonalizerRankOptions(actions, contextFeatures);
             return Rank(options, cancellationToken);
@@ -232,7 +232,7 @@ namespace Azure.AI.Personalizer
         /// https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerMultiSlotRankResult>> MultiSlotRankAsync(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<PersonalizerSlotOptions> slots, IList<object> contextFeatures = default(IList<object>), CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerMultiSlotRankResult>> MultiSlotRankAsync(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<PersonalizerSlotOptions> slots, IList<object> contextFeatures = default, CancellationToken cancellationToken = default)
         {
             PersonalizerMultiSlotRankOptions options = new PersonalizerMultiSlotRankOptions(actions, slots, contextFeatures);
             return await MultiSlotRankAsync(options, cancellationToken).ConfigureAwait(false);
@@ -282,7 +282,7 @@ namespace Azure.AI.Personalizer
         /// https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerMultiSlotRankResult> MultiSlotRank(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<PersonalizerSlotOptions> slots, IList<object> contextFeatures = default(IList<object>), CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerMultiSlotRankResult> MultiSlotRank(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<PersonalizerSlotOptions> slots, IList<object> contextFeatures = default, CancellationToken cancellationToken = default)
         {
             PersonalizerMultiSlotRankOptions options = new PersonalizerMultiSlotRankOptions(actions, slots, contextFeatures);
             return MultiSlotRank(options, cancellationToken);
