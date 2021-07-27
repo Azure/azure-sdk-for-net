@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.AI.Personalizer.Models
 {
     /// <summary> Reward given to a list of slots. </summary>
-    public partial class PersonalizerMultiSlotRewardOptions
+    public partial class PersonalizerRewardMultiSlotOptions
     {
-        /// <summary> Initializes a new instance of PersonalizerMultiSlotRewardOptions. </summary>
+        /// <summary> Initializes a new instance of PersonalizerRewardMultiSlotOptions. </summary>
         /// <param name="reward"> List of SlotRewards. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reward"/> is null. </exception>
-        public PersonalizerMultiSlotRewardOptions(IEnumerable<PersonalizerSlotReward> reward)
+        public PersonalizerRewardMultiSlotOptions(IEnumerable<PersonalizerSlotReward> reward)
         {
             if (reward == null)
             {

@@ -34,7 +34,7 @@ namespace Azure.AI.Personalizer
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateRankRequest(PersonalizerMultiSlotRankOptions body)
+        internal HttpMessage CreateRankRequest(PersonalizerRankMultiSlotOptions body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,7 +56,7 @@ namespace Azure.AI.Personalizer
         /// <param name="body"> A Personalizer multi-slot Rank request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<PersonalizerMultiSlotRankResult>> RankAsync(PersonalizerMultiSlotRankOptions body, CancellationToken cancellationToken = default)
+        public async Task<Response<PersonalizerMultiSlotRankResult>> RankAsync(PersonalizerRankMultiSlotOptions body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -83,7 +83,7 @@ namespace Azure.AI.Personalizer
         /// <param name="body"> A Personalizer multi-slot Rank request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<PersonalizerMultiSlotRankResult> Rank(PersonalizerMultiSlotRankOptions body, CancellationToken cancellationToken = default)
+        public Response<PersonalizerMultiSlotRankResult> Rank(PersonalizerRankMultiSlotOptions body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {

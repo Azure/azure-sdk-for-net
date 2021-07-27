@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.Personalizer.Models
 {
-    public partial class PersonalizerLogsPropertiesDateRange
+    public partial class PersonalizerLogPropertiesDateRange
     {
-        internal static PersonalizerLogsPropertiesDateRange DeserializePersonalizerLogsPropertiesDateRange(JsonElement element)
+        internal static PersonalizerLogPropertiesDateRange DeserializePersonalizerLogPropertiesDateRange(JsonElement element)
         {
             Optional<DateTimeOffset> @from = default;
             Optional<DateTimeOffset> to = default;
@@ -40,7 +40,7 @@ namespace Azure.AI.Personalizer.Models
                     continue;
                 }
             }
-            return new PersonalizerLogsPropertiesDateRange(Optional.ToNullable(@from), Optional.ToNullable(to));
+            return new PersonalizerLogPropertiesDateRange(Optional.ToNullable(@from), Optional.ToNullable(to));
         }
     }
 }

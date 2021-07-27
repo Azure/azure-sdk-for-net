@@ -33,7 +33,7 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="evaluationType"> Evaluation type (manual or through Automatic Optimization). </param>
         /// <param name="optimalPolicy"> Thr optimal policy. </param>
         /// <param name="creationTime"> Creation time. </param>
-        internal PersonalizerEvaluation(string id, string name, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, EvaluationJobStatus? status, IReadOnlyList<PersonalizerPolicyResult> policyResults, IReadOnlyList<IList<string>> featureImportance, EvaluationType? evaluationType, string optimalPolicy, DateTimeOffset? creationTime)
+        internal PersonalizerEvaluation(string id, string name, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, EvaluationJobStatus? status, IReadOnlyList<PersonalizerPolicyResult> policyResults, IReadOnlyList<IList<string>> featureImportance, PersonalizerEvaluationType? evaluationType, string optimalPolicy, DateTimeOffset? creationTime)
         {
             Id = id;
             Name = name;
@@ -65,7 +65,7 @@ namespace Azure.AI.Personalizer.Models
         /// <summary> Feature Importance. </summary>
         public IReadOnlyList<IList<string>> FeatureImportance { get; }
         /// <summary> Evaluation type (manual or through Automatic Optimization). </summary>
-        public EvaluationType? EvaluationType { get; }
+        public PersonalizerEvaluationType? EvaluationType { get; }
         /// <summary> Thr optimal policy. </summary>
         public string OptimalPolicy { get; }
         /// <summary> Creation time. </summary>

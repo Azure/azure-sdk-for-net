@@ -10,7 +10,7 @@ namespace Azure.AI.Personalizer.Models
 {
     /// <summary> The MultiSlotRankRequest. </summary>
     [CodeGenModel("MultiSlotRankRequest")]
-    public partial class PersonalizerMultiSlotRankOptions
+    public partial class PersonalizerRankMultiSlotOptions
     {
         /// <summary>
         /// Features of the context used for Personalizer as a
@@ -26,7 +26,7 @@ namespace Azure.AI.Personalizer.Models
         /// <summary>
         /// Initializes a new instance of the MultiSlotRankRequest class.
         /// </summary>
-        public PersonalizerMultiSlotRankOptions()
+        public PersonalizerRankMultiSlotOptions()
         {
             CustomInit();
         }
@@ -68,7 +68,7 @@ namespace Azure.AI.Personalizer.Models
         /// (e.g. because the page is rendering later, or the Rank results may be overridden by code further downstream).
         /// You must call the Activate Event API if the event output is shown to users, otherwise Rewards will be ignored.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="actions"/> or <paramref name="slots"/> is null. </exception>
-        public PersonalizerMultiSlotRankOptions(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<PersonalizerSlotOptions> slots, IList<object> contextFeatures = default, string eventId = default, bool deferActivation = false)
+        public PersonalizerRankMultiSlotOptions(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<PersonalizerSlotOptions> slots, IList<object> contextFeatures = default, string eventId = default, bool deferActivation = false)
         {
             if (actions == null)
             {

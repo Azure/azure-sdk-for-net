@@ -24,7 +24,7 @@ namespace Azure.AI.Personalizer.Models
             Optional<EvaluationJobStatus> status = default;
             Optional<IReadOnlyList<PersonalizerPolicyResult>> policyResults = default;
             Optional<IReadOnlyList<IList<string>>> featureImportance = default;
-            Optional<EvaluationType> evaluationType = default;
+            Optional<PersonalizerEvaluationType> evaluationType = default;
             Optional<string> optimalPolicy = default;
             Optional<DateTimeOffset> creationTime = default;
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.AI.Personalizer.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    evaluationType = new EvaluationType(property.Value.GetString());
+                    evaluationType = new PersonalizerEvaluationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("optimalPolicy"))

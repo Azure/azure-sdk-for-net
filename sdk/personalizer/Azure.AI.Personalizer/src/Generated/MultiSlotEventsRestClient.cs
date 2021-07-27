@@ -33,7 +33,7 @@ namespace Azure.AI.Personalizer
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateRewardRequest(string eventId, PersonalizerMultiSlotRewardOptions body)
+        internal HttpMessage CreateRewardRequest(string eventId, PersonalizerRewardMultiSlotOptions body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,7 +58,7 @@ namespace Azure.AI.Personalizer
         /// <param name="body"> List of slot id and reward values. The reward should be a floating point number, typically between 0 and 1. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventId"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Response> RewardAsync(string eventId, PersonalizerMultiSlotRewardOptions body, CancellationToken cancellationToken = default)
+        public async Task<Response> RewardAsync(string eventId, PersonalizerRewardMultiSlotOptions body, CancellationToken cancellationToken = default)
         {
             if (eventId == null)
             {
@@ -85,7 +85,7 @@ namespace Azure.AI.Personalizer
         /// <param name="body"> List of slot id and reward values. The reward should be a floating point number, typically between 0 and 1. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventId"/> or <paramref name="body"/> is null. </exception>
-        public Response Reward(string eventId, PersonalizerMultiSlotRewardOptions body, CancellationToken cancellationToken = default)
+        public Response Reward(string eventId, PersonalizerRewardMultiSlotOptions body, CancellationToken cancellationToken = default)
         {
             if (eventId == null)
             {

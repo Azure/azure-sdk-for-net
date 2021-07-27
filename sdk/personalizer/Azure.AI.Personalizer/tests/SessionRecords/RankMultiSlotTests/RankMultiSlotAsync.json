@@ -5,15 +5,41 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "511",
+        "Content-Length": "798",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-3c74b17840d0c241a11ff99173408d80-068e95d5b48ece45-00",
-        "User-Agent": "azsdk-net-AI.Personalizer/1.1.0-alpha.20210630.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "47d71a92921f1a3bca7c29a96ee94953",
+        "traceparent": "00-028e6d758a2a0540b3e7583420b61c60-f4223e0279b64043-00",
+        "User-Agent": "azsdk-net-AI.Personalizer/1.1.0-alpha.20210727.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "859f46bf1c22a3ec261a0a55e987810f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "contextFeatures": [
+          {
+            "User": {
+              "ProfileType": "AnonymousUser",
+              "LatLong": "47.6,-122.1"
+            }
+          },
+          {
+            "Environment": {
+              "DayOfMonth": "28",
+              "MonthOfYear": "8",
+              "Weather": "Sunny"
+            }
+          },
+          {
+            "Device": {
+              "Mobile": true,
+              "Windows": true
+            }
+          },
+          {
+            "RecentActivity": {
+              "ItemsInCart": 3
+            }
+          }
+        ],
         "actions": [
           {
             "id": "NewsArticle",
@@ -68,25 +94,27 @@
             ],
             "baselineAction": "SportsArticle"
           }
-        ]
+        ],
+        "eventId": "sdkTestEventId",
+        "deferActivation": false
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "cc389832-ca1e-440d-90a0-15c6011eaa12",
+        "apim-request-id": "129126ae-7be8-4a02-a90e-baa1237417dc",
         "Cache-Control": [
           "no-cache",
           "no-store",
           "must-revalidate"
         ],
-        "Content-Length": "166",
+        "Content-Length": "142",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 30 Jun 2021 18:43:09 GMT",
+        "Date": "Tue, 27 Jul 2021 20:59:40 GMT",
         "Expires": "0",
         "pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "timing-allow-origin": "*",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "4"
+        "x-envoy-upstream-service-time": "364"
       },
       "ResponseBody": {
         "slots": [
@@ -99,13 +127,13 @@
             "rewardActionId": "SportsArticle"
           }
         ],
-        "eventId": "f236062169a24b10bcde65ea82341662-85EEm"
+        "eventId": "sdkTestEventId"
       }
     }
   ],
   "Variables": {
     "PERSONALIZER_API_KEY": "Sanitized",
     "PERSONALIZER_ENDPOINT": "https://sdktestrecorder.cognitiveservices.azure.com/",
-    "RandomSeed": "341113140"
+    "RandomSeed": "533566210"
   }
 }

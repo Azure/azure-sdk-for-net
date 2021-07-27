@@ -8,9 +8,9 @@ using NUnit.Framework;
 
 namespace Azure.AI.Personalizer.Tests
 {
-    public class MultiSlotRankTests : PersonalizerTestBase
+    public class RankMultiSlotTests : PersonalizerTestBase
     {
-        public MultiSlotRankTests(bool isAsync) : base(isAsync)
+        public RankMultiSlotTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -73,12 +73,12 @@ namespace Azure.AI.Personalizer.Tests
         };
 
         [Test]
-        public async Task MultiSlotRankNullParameters()
+        public async Task RankMultiSlotNullParameters()
         {
             PersonalizerClient client = GetPersonalizerClient();
-            PersonalizerMultiSlotRankOptions request = new PersonalizerMultiSlotRankOptions(actions, slots);
+            PersonalizerRankMultiSlotOptions request = new PersonalizerRankMultiSlotOptions(actions, slots);
             // Action
-            PersonalizerMultiSlotRankResult response = await client.MultiSlotRankAsync(request);
+            PersonalizerMultiSlotRankResult response = await client.RankMultiSlotAsync(request);
             // Assert
             Assert.AreEqual(slots.Count, response.Slots.Count);
             // Assertions for first slot
@@ -92,13 +92,31 @@ namespace Azure.AI.Personalizer.Tests
         }
 
         [Test]
-        public async Task MultiSlotRank()
+        public async Task RankMultiSlot()
         {
             PersonalizerClient client = GetPersonalizerClient();
             string eventId = "sdkTestEventId";
-            PersonalizerMultiSlotRankOptions request = new PersonalizerMultiSlotRankOptions(actions, slots, contextFeatures, eventId);
+            PersonalizerRankMultiSlotOptions request = new PersonalizerRankMultiSlotOptions(actions, slots, contextFeatures, eventId);
             // Action
-            PersonalizerMultiSlotRankResult response = await client.MultiSlotRankAsync(request);
+            PersonalizerMultiSlotRankResult response = await client.RankMultiSlotAsync(request);
+            // Assert
+            Assert.AreEqual(slots.Count, response.Slots.Count);
+            // Assertions for first slot
+            PersonalizerSlotResult responseSlot1 = response.Slots[0];
+            Assert.AreEqual(slot1.Id, responseSlot1.Id);
+            Assert.AreEqual("NewsArticle", responseSlot1.RewardActionId);
+            // Assertions for second slot
+            PersonalizerSlotResult responseSlot2 = response.Slots[1];
+            Assert.AreEqual(slot2.Id, responseSlot2.Id);
+            Assert.AreEqual("SportsArticle", responseSlot2.RewardActionId);
+        }
+
+        [Test]
+        public async Task RankMultiSlotNoOptions()
+        {
+            PersonalizerClient client = GetPersonalizerClient();
+            // Action
+            PersonalizerMultiSlotRankResult response = await client.RankMultiSlotAsync(actions, slots, contextFeatures);
             // Assert
             Assert.AreEqual(slots.Count, response.Slots.Count);
             // Assertions for first slot

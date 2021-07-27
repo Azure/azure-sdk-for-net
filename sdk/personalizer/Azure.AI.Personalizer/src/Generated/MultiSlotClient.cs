@@ -84,7 +84,7 @@ namespace Azure.AI.Personalizer
         /// <summary> Submit a Personalizer multi-slot rank request. Receives a context, a list of actions, and a list of slots. Returns which of the provided actions should be used in each slot, in each rewardActionId. </summary>
         /// <param name="body"> A Personalizer multi-slot Rank request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerMultiSlotRankResult>> RankAsync(PersonalizerMultiSlotRankOptions body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerMultiSlotRankResult>> RankAsync(PersonalizerRankMultiSlotOptions body, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MultiSlotClient.Rank");
             scope.Start();
@@ -102,7 +102,7 @@ namespace Azure.AI.Personalizer
         /// <summary> Submit a Personalizer multi-slot rank request. Receives a context, a list of actions, and a list of slots. Returns which of the provided actions should be used in each slot, in each rewardActionId. </summary>
         /// <param name="body"> A Personalizer multi-slot Rank request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerMultiSlotRankResult> Rank(PersonalizerMultiSlotRankOptions body, CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerMultiSlotRankResult> Rank(PersonalizerRankMultiSlotOptions body, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MultiSlotClient.Rank");
             scope.Start();

@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.AI.Personalizer.Models
 {
-    public partial class PersonalizerMultiSlotRankOptions : IUtf8JsonSerializable
+    public partial class PersonalizerRankMultiSlotOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

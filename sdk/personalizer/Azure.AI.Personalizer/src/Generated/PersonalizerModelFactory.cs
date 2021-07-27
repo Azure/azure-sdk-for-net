@@ -27,7 +27,7 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="optimalPolicy"> Thr optimal policy. </param>
         /// <param name="creationTime"> Creation time. </param>
         /// <returns> A new <see cref="Models.PersonalizerEvaluation"/> instance for mocking. </returns>
-        public static PersonalizerEvaluation PersonalizerEvaluation(string id = null, string name = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string jobId = null, EvaluationJobStatus? status = null, IEnumerable<PersonalizerPolicyResult> policyResults = null, IEnumerable<IList<string>> featureImportance = null, EvaluationType? evaluationType = null, string optimalPolicy = null, DateTimeOffset? creationTime = null)
+        public static PersonalizerEvaluation PersonalizerEvaluation(string id = null, string name = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string jobId = null, EvaluationJobStatus? status = null, IEnumerable<PersonalizerPolicyResult> policyResults = null, IEnumerable<IList<string>> featureImportance = null, PersonalizerEvaluationType? evaluationType = null, string optimalPolicy = null, DateTimeOffset? creationTime = null)
         {
             policyResults ??= new List<PersonalizerPolicyResult>();
             featureImportance ??= new List<IList<string>>();
@@ -72,7 +72,7 @@ namespace Azure.AI.Personalizer.Models
         /// <summary> Initializes a new instance of PersonalizerLogProperties. </summary>
         /// <param name="dateRange"> Date range. </param>
         /// <returns> A new <see cref="Models.PersonalizerLogProperties"/> instance for mocking. </returns>
-        public static PersonalizerLogProperties PersonalizerLogProperties(PersonalizerLogsPropertiesDateRange dateRange = null)
+        public static PersonalizerLogProperties PersonalizerLogProperties(PersonalizerLogPropertiesDateRange dateRange = null)
         {
             return new PersonalizerLogProperties(dateRange);
         }

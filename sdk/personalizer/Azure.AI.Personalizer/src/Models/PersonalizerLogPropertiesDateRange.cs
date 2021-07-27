@@ -7,5 +7,5 @@ namespace Azure.AI.Personalizer.Models
 {
     /// <summary> Date range. </summary>
     [CodeGenModel("LogsPropertiesDateRange")]
-    public partial class PersonalizerLogsPropertiesDateRange { }
+    public partial class PersonalizerLogPropertiesDateRange { }
 }

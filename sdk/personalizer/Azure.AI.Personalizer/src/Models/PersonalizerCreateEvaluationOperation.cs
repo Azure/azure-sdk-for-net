@@ -15,7 +15,7 @@ namespace Azure.AI.Personalizer.Models
     /// request.  Its <see cref="Operation{PersonalizerEvaluation}.Value"/> upon successful
     /// completion will be the completed personalizer evaluation.
     /// </summary>
-    public class CreatePersonalizerEvaluationOperation : Operation<PersonalizerEvaluation>
+    public class PersonalizerCreateEvaluationOperation : Operation<PersonalizerEvaluation>
     {
         /// <summary>
         /// The client used to check for completion.
@@ -71,27 +71,27 @@ namespace Azure.AI.Personalizer.Models
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
-        /// Initializes a new <see cref="CreatePersonalizerEvaluationOperation"/> instance for
+        /// Initializes a new <see cref="PersonalizerCreateEvaluationOperation"/> instance for
         /// mocking.
         /// </summary>
-        protected CreatePersonalizerEvaluationOperation()
+        protected PersonalizerCreateEvaluationOperation()
         {
         }
 
         /// <summary>
-        /// Initializes a new <see cref="CreatePersonalizerEvaluationOperation"/> instance.
+        /// Initializes a new <see cref="PersonalizerCreateEvaluationOperation"/> instance.
         /// </summary>
         /// <param name="client">
         /// The client used to check for completion.
         /// </param>
         /// <param name="evaluationId">The ID of the evaluation.</param>
-        public CreatePersonalizerEvaluationOperation(string evaluationId, PersonalizerManagementClient client) :
+        public PersonalizerCreateEvaluationOperation(string evaluationId, PersonalizerManagementClient client) :
             this(client, evaluationId, null, CancellationToken.None)
         {
         }
 
         /// <summary>
-        /// Initializes a new <see cref="CreatePersonalizerEvaluationOperation"/> instance.
+        /// Initializes a new <see cref="PersonalizerCreateEvaluationOperation"/> instance.
         /// </summary>
         /// <param name="client">
         /// The client used to check for completion.
@@ -105,7 +105,7 @@ namespace Azure.AI.Personalizer.Models
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        internal CreatePersonalizerEvaluationOperation(
+        internal PersonalizerCreateEvaluationOperation(
             PersonalizerManagementClient client,
             string evaluationId,
             Response initialResponse,

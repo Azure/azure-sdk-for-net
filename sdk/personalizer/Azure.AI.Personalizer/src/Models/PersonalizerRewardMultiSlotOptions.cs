@@ -7,7 +7,7 @@ namespace Azure.AI.Personalizer.Models
 {
     /// <summary> Reward given to a list of slots. </summary>
     [CodeGenModel("MultiSlotRewardRequest")]
-    public partial class PersonalizerMultiSlotRewardOptions
+    public partial class PersonalizerRewardMultiSlotOptions
     {
     }
 }

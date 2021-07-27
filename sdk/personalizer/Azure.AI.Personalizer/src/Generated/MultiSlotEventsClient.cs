@@ -85,7 +85,7 @@ namespace Azure.AI.Personalizer
         /// <param name="eventId"> The event id this reward applies to. </param>
         /// <param name="body"> List of slot id and reward values. The reward should be a floating point number, typically between 0 and 1. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RewardAsync(string eventId, PersonalizerMultiSlotRewardOptions body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RewardAsync(string eventId, PersonalizerRewardMultiSlotOptions body, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MultiSlotEventsClient.Reward");
             scope.Start();
@@ -104,7 +104,7 @@ namespace Azure.AI.Personalizer
         /// <param name="eventId"> The event id this reward applies to. </param>
         /// <param name="body"> List of slot id and reward values. The reward should be a floating point number, typically between 0 and 1. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Reward(string eventId, PersonalizerMultiSlotRewardOptions body, CancellationToken cancellationToken = default)
+        public virtual Response Reward(string eventId, PersonalizerRewardMultiSlotOptions body, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MultiSlotEventsClient.Reward");
             scope.Start();

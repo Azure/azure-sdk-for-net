@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.AI.Personalizer.Models
 {
     /// <summary> The MultiSlotRankRequest. </summary>
-    public partial class PersonalizerMultiSlotRankOptions
+    public partial class PersonalizerRankMultiSlotOptions
     {
-        /// <summary> Initializes a new instance of PersonalizerMultiSlotRankOptions. </summary>
+        /// <summary> Initializes a new instance of PersonalizerRankMultiSlotOptions. </summary>
         /// <param name="actions">
         /// The set of actions the Personalizer service can pick from.
         /// The set should not contain more than 50 actions.
@@ -28,7 +28,7 @@ namespace Azure.AI.Personalizer.Models
         /// The set should not contain more than 50 slots.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actions"/> or <paramref name="slots"/> is null. </exception>
-        public PersonalizerMultiSlotRankOptions(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<PersonalizerSlotOptions> slots)
+        public PersonalizerRankMultiSlotOptions(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<PersonalizerSlotOptions> slots)
         {
             if (actions == null)
             {

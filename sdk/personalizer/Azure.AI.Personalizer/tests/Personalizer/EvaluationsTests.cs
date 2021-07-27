@@ -64,7 +64,7 @@ namespace Azure.AI.Personalizer.Tests
                     new PersonalizerPolicyOptions(name: "Custom Policy 1", arguments: "--cb_explore_adf --epsilon 0.2 --dsjson --cb_type ips -l 0.5 --l1 1E-07 --power_t 0.5")
                 });
             evaluation.EnableOfflineExperimentation = true;
-            CreatePersonalizerEvaluationOperation createdEvaluation = await client.CreatePersonalizerEvaluationAsync(evaluation);
+            PersonalizerCreateEvaluationOperation createdEvaluation = await client.CreatePersonalizerEvaluationAsync(evaluation);
             await createdEvaluation.WaitForCompletionAsync();
             Assert.AreEqual(evaluation.Name, createdEvaluation.Value.Name);
         }

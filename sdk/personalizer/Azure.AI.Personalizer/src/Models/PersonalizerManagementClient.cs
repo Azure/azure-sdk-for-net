@@ -604,14 +604,14 @@ namespace Azure.AI.Personalizer
         /// <summary> Submit a new Offline Evaluation job. </summary>
         /// <param name="evaluation"> The Offline Evaluation job definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<CreatePersonalizerEvaluationOperation> CreatePersonalizerEvaluationAsync(PersonalizerEvaluationOptions evaluation, CancellationToken cancellationToken = default)
+        public virtual async Task<PersonalizerCreateEvaluationOperation> CreatePersonalizerEvaluationAsync(PersonalizerEvaluationOptions evaluation, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.CreatePersonalizerEvaluation");
             scope.Start();
             try
             {
                 Response<PersonalizerEvaluation> result = await EvaluationsRestClient.CreateAsync(evaluation, cancellationToken).ConfigureAwait(false);
-                return new CreatePersonalizerEvaluationOperation(this, result.Value.Id, result.GetRawResponse(), cancellationToken);
+                return new PersonalizerCreateEvaluationOperation(this, result.Value.Id, result.GetRawResponse(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -623,14 +623,14 @@ namespace Azure.AI.Personalizer
         /// <summary> Submit a new Offline Evaluation job. </summary>
         /// <param name="evaluation"> The Offline Evaluation job definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual CreatePersonalizerEvaluationOperation CreatePersonalizerEvaluation(PersonalizerEvaluationOptions evaluation, CancellationToken cancellationToken = default)
+        public virtual PersonalizerCreateEvaluationOperation CreatePersonalizerEvaluation(PersonalizerEvaluationOptions evaluation, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerManagementClient.CreatePersonalizerEvaluation");
             scope.Start();
             try
             {
                 Response<PersonalizerEvaluation> result = EvaluationsRestClient.Create(evaluation, cancellationToken);
-                return new CreatePersonalizerEvaluationOperation(this, result.Value.Id, result.GetRawResponse(), cancellationToken);
+                return new PersonalizerCreateEvaluationOperation(this, result.Value.Id, result.GetRawResponse(), cancellationToken);
             }
             catch (Exception e)
             {
