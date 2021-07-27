@@ -30,7 +30,7 @@ namespace Azure.Core.TestFramework
             DateParseHandling = DateParseHandling.None
         };
 
-        public List<string> SanitizedHeaders { get; } = new List<string> { "Authorization" };
+        public List<string> SanitizedHeaders { get; } = new List<string> { "api-key", "Authorization" };
 
         public void AddJsonPathSanitizer(string jsonPath, Func<JToken, JToken> sanitizer = null)
         {
