@@ -762,6 +762,188 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        public async Task DeleteConfigurationSettingWithIfMatch_Matches()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+            // Test
+            var response = await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label, new MatchConditions()
+            {
+                IfMatch = testSetting.ETag
+            });
+
+            Assert.AreEqual(200, response.Status);
+        }
+
+        [RecordedTest]
+        public async Task DeleteConfigurationSettingWithIfMatch_NoMatch()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+                // Test
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label, new MatchConditions()
+                    {
+                        IfMatch = new ETag("this won't match")
+                    }));
+
+                Assert.AreEqual(412, exception.Status);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task DeleteConfigurationSettingWithIfNoneMatch_Matches()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+                // Test
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label, new MatchConditions()
+                    {
+                        IfNoneMatch = testSetting.ETag
+                    }));
+
+                Assert.AreEqual(412, exception.Status);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task DeleteConfigurationSettingWithIfNoneMatch_NoMatch()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+            // Test
+            var response = await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label, new MatchConditions()
+            {
+                IfNoneMatch = new ETag("this won't match")
+            });
+
+            Assert.AreEqual(200, response.Status);
+        }
+
+        [RecordedTest]
+        public async Task SetReadOnlyWithIfMatch_Matches()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+            try
+            {
+                // Test
+                ConfigurationSetting response = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, true, new MatchConditions()
+                {
+                    IfMatch = testSetting.ETag
+                });
+
+                Assert.True(response.IsReadOnly);
+            }
+            finally
+            {
+                await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task SetReadOnlyWithIfMatch_NoMatch()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+                // Test
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, true, new MatchConditions()
+                    {
+                        IfMatch = new ETag("this won't match")
+                    }));
+
+                Assert.AreEqual(412, exception.Status);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task SetReadOnlyWithIfNoneMatch_Matches()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+                // Test
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, true, new MatchConditions()
+                    {
+                        IfNoneMatch = testSetting.ETag
+                    }));
+
+                Assert.AreEqual(412, exception.Status);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task SetReadOnlyWithIfNoneMatch_NoMatch()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+            try
+            {
+                testSetting = await service.SetConfigurationSettingAsync(testSetting);
+
+                // Test
+                ConfigurationSetting response = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, true, new MatchConditions()
+                {
+                    IfNoneMatch = new ETag("this won't match")
+                });
+                Assert.True(response.IsReadOnly);
+            }
+            finally
+            {
+                await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
         public async Task GetWithAcceptDateTime()
         {
             ConfigurationClient service = GetClient();
