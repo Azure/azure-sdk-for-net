@@ -15,12 +15,12 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ## Synchronous
 
-```C# Snippet:QuestionAnsweringClient_QueryKnowledgebase
-KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should my Surface battery last?");
+```C# Snippet:QuestionAnsweringClient_QueryKnowledgeBase
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should my Surface battery last?");
 
-Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("FAQ", options);
+Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
 
-foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
     Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");
@@ -30,13 +30,13 @@ foreach (KnowledgebaseAnswer answer in response.Value.Answers)
 
 ## Asynchronous
 
-```C# Snippet:QuestionAnsweringClient_QueryKnowledgebaseAsync
+```C# Snippet:QuestionAnsweringClient_QueryKnowledgeBaseAsync
 string projectName = "FAQ";
-KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should my Surface battery last?");
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should my Surface battery last?");
 
-Response<KnowledgebaseAnswers> response = await client.QueryKnowledgebaseAsync(projectName, options);
+Response<KnowledgeBaseAnswers> response = await client.QueryKnowledgeBaseAsync(projectName, options);
 
-foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
     Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");

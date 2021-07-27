@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
-    public partial class TextInput : IUtf8JsonSerializable
+    public partial class TextRecord : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
     /// <summary> Dialog associated with Answer. </summary>
-    public partial class KnowledgebaseAnswerDialog
+    public partial class KnowledgeBaseAnswerDialog
     {
-        /// <summary> Initializes a new instance of KnowledgebaseAnswerDialog. </summary>
-        internal KnowledgebaseAnswerDialog()
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
+        internal KnowledgeBaseAnswerDialog()
         {
-            Prompts = new ChangeTrackingList<KnowledgebaseAnswerPrompt>();
+            Prompts = new ChangeTrackingList<KnowledgeBaseAnswerPrompt>();
         }
 
-        /// <summary> Initializes a new instance of KnowledgebaseAnswerDialog. </summary>
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
         /// <param name="isContextOnly"> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </param>
         /// <param name="prompts"> List of 0 to 20 prompts associated with the answer. </param>
-        internal KnowledgebaseAnswerDialog(bool? isContextOnly, IReadOnlyList<KnowledgebaseAnswerPrompt> prompts)
+        internal KnowledgeBaseAnswerDialog(bool? isContextOnly, IReadOnlyList<KnowledgeBaseAnswerPrompt> prompts)
         {
             IsContextOnly = isContextOnly;
             Prompts = prompts;
@@ -31,6 +31,6 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         /// <summary> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </summary>
         public bool? IsContextOnly { get; }
         /// <summary> List of 0 to 20 prompts associated with the answer. </summary>
-        public IReadOnlyList<KnowledgebaseAnswerPrompt> Prompts { get; }
+        public IReadOnlyList<KnowledgeBaseAnswerPrompt> Prompts { get; }
     }
 }

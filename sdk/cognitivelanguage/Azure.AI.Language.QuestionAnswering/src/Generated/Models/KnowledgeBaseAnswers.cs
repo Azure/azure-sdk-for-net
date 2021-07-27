@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
     /// <summary> Represents List of Question Answers. </summary>
-    public partial class KnowledgebaseAnswers
+    public partial class KnowledgeBaseAnswers
     {
-        /// <summary> Initializes a new instance of KnowledgebaseAnswers. </summary>
-        internal KnowledgebaseAnswers()
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswers. </summary>
+        internal KnowledgeBaseAnswers()
         {
-            Answers = new ChangeTrackingList<KnowledgebaseAnswer>();
+            Answers = new ChangeTrackingList<KnowledgeBaseAnswer>();
         }
 
-        /// <summary> Initializes a new instance of KnowledgebaseAnswers. </summary>
+        /// <summary> Initializes a new instance of KnowledgeBaseAnswers. </summary>
         /// <param name="answers"> Represents Answer Result list. </param>
-        internal KnowledgebaseAnswers(IReadOnlyList<KnowledgebaseAnswer> answers)
+        internal KnowledgeBaseAnswers(IReadOnlyList<KnowledgeBaseAnswer> answers)
         {
             Answers = answers;
         }
 
         /// <summary> Represents Answer Result list. </summary>
-        public IReadOnlyList<KnowledgebaseAnswer> Answers { get; }
+        public IReadOnlyList<KnowledgeBaseAnswer> Answers { get; }
     }
 }

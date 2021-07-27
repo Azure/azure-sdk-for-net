@@ -7,8 +7,8 @@
 
 namespace Azure.AI.Language.QuestionAnswering.Models
 {
-    /// <summary> The question parameters to answer using a knowledgebase. </summary>
-    public partial class KnowledgebaseQueryOptions
+    /// <summary> The question parameters to answer using a knowledge base. </summary>
+    public partial class QueryKnowledgeBaseOptions
     {
         /// <summary> Max number of answers to be returned for the question. </summary>
         public int? Top { get; set; }
@@ -17,10 +17,10 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         /// <summary> Minimum threshold score for answers, value ranges from 0 to 1. </summary>
         public double? ConfidenceScoreThreshold { get; set; }
         /// <summary> Context object with previous QnA&apos;s information. </summary>
-        public KnowledgebaseAnswerRequestContext Context { get; set; }
+        public KnowledgeBaseAnswerRequestContext Context { get; set; }
         /// <summary> (Optional) Set to &apos;QuestionOnly&apos; for using a question only Ranker. </summary>
         public RankerType? RankerType { get; set; }
-        /// <summary> Filter QnAs based on give metadata list and knowledgebase source names. </summary>
+        /// <summary> Filter QnAs based on give metadata list and knowledge base source names. </summary>
         public StrictFilters StrictFilters { get; set; }
         /// <summary> To configure Answer span prediction feature. </summary>
         public AnswerSpanRequest AnswerSpanRequest { get; set; }
