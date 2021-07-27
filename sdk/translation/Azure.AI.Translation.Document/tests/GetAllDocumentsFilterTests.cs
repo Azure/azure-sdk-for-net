@@ -93,7 +93,7 @@ namespace Azure.AI.Translation.Document.Tests
             // list docs
             var filter = new DocumentFilter(
                 orderBy: new List<DocumentFilterOrder> {
-                  new DocumentFilterOrder(property: DocumentFilterProperty.CreatedOn, orderBy: DocumentTranslationFilterMode.Desc)
+                  new DocumentFilterOrder(property: DocumentFilterProperty.CreatedOn, asc: false)
                 }
             );
             var filterResults = operation.GetAllDocumentStatuses(filter: filter);

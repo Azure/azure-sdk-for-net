@@ -147,7 +147,7 @@ namespace Azure.AI.Translation.Document.Tests
             // list translations with filter
             var filter = new TranslationFilter(
                 orderBy: new List<TranslationFilterOrder> {
-                  new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, orderBy: DocumentTranslationFilterMode.Desc)
+                  new TranslationFilterOrder(property: TranslationFilterProperty.CreatedOn, asc: false)
                 }
             );
             var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
