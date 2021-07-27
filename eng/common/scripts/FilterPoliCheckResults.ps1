@@ -20,16 +20,15 @@ param(
   [Parameter(Mandatory=$true)]
   [String] $ServiceDirectory,
   [Parameter(Mandatory=$true)]
-  [String] $AllowListLocation
+  [String] $AllowListLocation,
+  [String] $ToolsFeedUri="https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2"
 )
 
-. "${PSScriptRoot}\logging.ps1"
+. (Join-path ${PSScriptRoot} logging.ps1)
+. (Join-Path ${PSScriptRoot} Helpers PSModule-Helpers.ps1)
 
-# Install Powershell Yaml
-$ProgressPreference = "SilentlyContinue"
-$toolsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2"
-Register-PSRepository -Name azure-sdk-tools-feed -SourceLocation $toolsFeed -PublishLocation $toolsFeed -InstallationPolicy Trusted -ErrorAction SilentlyContinue
-Install-Module -Repository azure-sdk-tools-feed powershell-yaml
+Install-ModuleIfNotInstalled -moduleName "powershell-yaml" `
+-version 0.4.2 -repositoryUrl $ToolsFeedUri
 
 $allowListFilePath = Join-Path $AllowListLocation "${ServiceDirectory}.yml"
 $allowListData = @{}
@@ -40,7 +39,7 @@ if (Test-Path -Path $allowListFilePath)
 }
 else
 {
-    LogError "Allow list path ${allowListFilePath} does not exisit."
+    LogError "Allow list path $allowListFilePath does not exist."
     exit 1
 }
 
