@@ -64,7 +64,8 @@ namespace Azure.ResourceManager.TestFramework
                         TestEnvironment.SubscriptionId,
                         GetUri(TestEnvironment.ResourceManagerUrl),
                         TestEnvironment.Credential,
-                        new ArmClientOptions());
+                        new ArmClientOptions(),
+                        null);
             }
             return null;
         }
@@ -81,7 +82,8 @@ namespace Azure.ResourceManager.TestFramework
                 TestEnvironment.SubscriptionId,
                 GetUri(TestEnvironment.ResourceManagerUrl),
                 TestEnvironment.Credential,
-                options);
+                options,
+                null);
         }
 
         private Uri GetUri(string endpoint)
@@ -168,7 +170,8 @@ namespace Azure.ResourceManager.TestFramework
                 SessionEnvironment.SubscriptionId,
                 GetUri(SessionEnvironment.ResourceManagerUrl),
                 SessionEnvironment.Credential,
-                options);
+                options,
+                null);
         }
 
         private bool HasOneTimeSetup()
