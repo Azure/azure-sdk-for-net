@@ -65,10 +65,12 @@ ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
 Location location = Location.WestUS2;
 string rgName = "QuickStartRG";
+
 ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName)
 ```
+The main difference is that the prevoius libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionContainer` to manage the resources in a particular subscripations. In this example, a `resourceGroupContainer` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupContainer. With that `ResoueceGroup` you will be able to get the resource containers to manage all the resources that will be inside it, as it is shown in the next part of this guide.
 
-In the new libraries, the Resource Group is created trought a container that came from the subscription. Also, public locations are provided trought the `Location` object, but it can be specified as a string as well. Additionally, there's no need to create a `ResourceGroup` object to send parameters when creating a resource group, since tags can be added directly from the resource group variable and the location is specified in the `Construct()` method.
+Another thing is that the new preview SDK provides some common classes to represent commonly-used constructs, like `Location`, and allow you to use them directly throughout the APIs, again, making it easier to discover how to properly configure resources.
 
 ### Create an Availability Set
 #### Old
@@ -101,6 +103,7 @@ string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{
 ```C#
 string vmName = "quickstartvm";
 var aset = await resourceGroup.GetAvailabilitySets().Construct("Aligned").CreateOrUpdateAsync(vmName + "_aSet");
+string asetId = aset.Id;
 ```
 
 Now there's no need to create an `AvailabilitySet` object, thus less code is needed. The availability set is created using  the `GetAvailabilitySets()` extension method instead of using another client. 
@@ -269,7 +272,7 @@ var vm = VMcomputeClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, in
 ```
 #### New
 ```C#
-var vm = await resourceGroup.GetVirtualMachines().Construct("hostname", "admin-user", "p4$$w0rd", nic.Id, aset.Id).CreateOrUpdateAsync(vmName);
+var vm = await resourceGroup.GetVirtualMachines().Construct("hostname", "admin-user", "p4$$w0rd", nic.Id, asetId).CreateOrUpdateAsync(vmName);
 Console.WriteLine("VM ID: " + vm.Id);
 ```
 
