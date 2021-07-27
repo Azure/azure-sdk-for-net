@@ -84,8 +84,8 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public void SummarySentenceCollection()
         {
-            var sentence1 = TextAnalyticsModelFactory.SummarySentence("text", default, default, default);
-            var sentence2 = TextAnalyticsModelFactory.SummarySentence("text", default, default, default);
+            var sentence1 = TextAnalyticsModelFactory.SummarySentence("text1", 0.1, 10, 20);
+            var sentence2 = TextAnalyticsModelFactory.SummarySentence("text2", 0.2, 30, 40);
 
             var warning1 = TextAnalyticsModelFactory.TextAnalyticsWarning("code1", "message1");
             var warning2 = TextAnalyticsModelFactory.TextAnalyticsWarning("code2", "message2");
@@ -95,8 +95,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var sentenceCollection = TextAnalyticsModelFactory.SummarySentenceCollection(sentences, warnings);
 
-            CollectionAssert.AreEqual(sentences, sentenceCollection);
-            CollectionAssert.AreEqual(warnings, sentenceCollection.Warnings);
+            CollectionAssert.AreEquivalent(sentences, sentenceCollection);
+            CollectionAssert.AreEquivalent(warnings, sentenceCollection.Warnings);
         }
 
         #endregion Extract Summary

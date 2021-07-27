@@ -510,10 +510,10 @@ namespace Azure.AI.TextAnalytics
         /// <param name="sentences">Sets the collection of <see cref="TextAnalytics.SummarySentence"/>.</param>
         /// <param name="warnings">Sets the <see cref="CategorizedEntityCollection.Warnings"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SummarySentenceCollection"/> for mocking purposes.</returns>
-        public static SummarySentenceCollection SummarySentenceCollection(IList<SummarySentence> sentences, IList<TextAnalyticsWarning> warnings = default)
+        public static SummarySentenceCollection SummarySentenceCollection(IEnumerable<SummarySentence> sentences, IEnumerable<TextAnalyticsWarning> warnings = default)
         {
             warnings ??= new List<TextAnalyticsWarning>();
-            return new SummarySentenceCollection(sentences, warnings);
+            return new SummarySentenceCollection(sentences.ToList(), warnings.ToList());
         }
 
         #endregion Extract Summary
