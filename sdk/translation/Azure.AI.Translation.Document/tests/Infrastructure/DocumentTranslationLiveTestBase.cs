@@ -17,6 +17,10 @@ namespace Azure.AI.Translation.Document.Tests
     {
         protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 30);
 
+        protected string sourceContainerName;
+
+        protected string targetContainerName;
+
         public DocumentTranslationLiveTestBase(bool isAsync, RecordedTestMode? mode = null)
             : base(isAsync, mode)
         {
@@ -68,8 +72,8 @@ namespace Azure.AI.Translation.Document.Tests
         public async Task<Uri> CreateSourceContainerAsync(List<TestDocument> documents)
         {
             Recording.DisableIdReuse();
-            string containerName = "source" + Recording.GenerateId();
-            var containerClient = GetBlobContainerClient(containerName);
+            sourceContainerName = "source" + Recording.GenerateId();
+            var containerClient = GetBlobContainerClient(sourceContainerName);
             await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
             await UploadDocumentsAsync(containerClient, documents);
@@ -81,8 +85,8 @@ namespace Azure.AI.Translation.Document.Tests
         public async Task<Uri> CreateTargetContainerAsync(List<TestDocument> documents = default)
         {
             Recording.DisableIdReuse();
-            string containerName = "target" + Recording.GenerateId();
-            var containerClient = GetBlobContainerClient(containerName);
+            targetContainerName = "target" + Recording.GenerateId();
+            var containerClient = GetBlobContainerClient(targetContainerName);
             await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
             if (documents != default)
@@ -94,7 +98,7 @@ namespace Azure.AI.Translation.Document.Tests
             return containerClient.GenerateSasUri(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write, expiresOn);
         }
 
-        private async Task UploadDocumentsAsync(BlobContainerClient containerClient, List<TestDocument> documents)
+        protected async Task UploadDocumentsAsync(BlobContainerClient containerClient, List<TestDocument> documents)
         {
             for (int i = 0; i < documents.Count; i++)
             {
