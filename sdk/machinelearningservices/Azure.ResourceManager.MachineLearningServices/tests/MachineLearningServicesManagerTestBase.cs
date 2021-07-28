@@ -42,29 +42,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests
         {
         }
 
-        [OneTimeSetUp]
         public void OneTimeDependencySetup()
         {
-            //// TODO: following is used in recording mode to not having to deal with common resource creation.
-            //// Unable to set soft delete on KV to ensure immediate deletion after cleanup.
-            //CommonResourceGroupId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/test-ml-common";
-            //CommonStorageId = CommonResourceGroupId.AppendProviderResource(
-            //    "Microsoft.Storage",
-            //    "storageAccounts",
-            //    "track2mlstorage");
-            //CommonKeyVaultId = CommonResourceGroupId.AppendProviderResource(
-            //    "Microsoft.KeyVault",
-            //    "vaults",
-            //    "track2mltestkeyvault");
-            //CommonAcrId = CommonResourceGroupId.AppendProviderResource(
-            //    "Microsoft.ContainerRegistry",
-            //    "registries",
-            //    "track2mlacr");
-            //CommonAppInsightId = CommonResourceGroupId.AppendProviderResource(
-            //    "microsoft.insights",
-            //    "components",
-            //    "track2mlappinsight");
-
+            // NOTE: For initial setup, add [Test] for this method and run it once.
             CommonResourceGroupId = GlobalClient.DefaultSubscription
                 .GetResourceGroups()
                 .CreateOrUpdate(CommonResourceResourceGroup, new ResourceGroupData(Location.WestUS2))
@@ -81,6 +61,24 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests
         public void CreateCommonClient()
         {
             Client = GetArmClient();
+
+            CommonResourceGroupId = Client.DefaultSubscription.Id + $"/resourceGroups/{CommonResourceResourceGroup}";
+            CommonStorageId = CommonResourceGroupId.AppendProviderResource(
+                "Microsoft.Storage",
+                "storageAccounts",
+                "track2mlstorage");
+            CommonKeyVaultId = CommonResourceGroupId.AppendProviderResource(
+                "Microsoft.KeyVault",
+                "vaults",
+                "track2mltestkeyvault");
+            CommonAcrId = CommonResourceGroupId.AppendProviderResource(
+                "Microsoft.ContainerRegistry",
+                "registries",
+                "track2mlacr");
+            CommonAppInsightId = CommonResourceGroupId.AppendProviderResource(
+                "microsoft.insights",
+                "components",
+                "track2mlappinsight");
         }
 
         protected async Task<Workspace> CreateMLWorkspaceAsync(ResourceGroup rg, string workspaceNameOverride = default)
