@@ -63,6 +63,9 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = _restClient.Get(Id.Name, expand, recurse, filter, cacheControl, cancellationToken);
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
                 return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -88,6 +91,9 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = await _restClient.GetAsync(Id.Name, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
                 return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
