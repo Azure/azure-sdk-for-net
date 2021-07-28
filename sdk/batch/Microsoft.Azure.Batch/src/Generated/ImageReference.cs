@@ -24,6 +24,12 @@ namespace Microsoft.Azure.Batch
     public partial class ImageReference : ITransportObjectProvider<Models.ImageReference>, IPropertyMetadata
     {
         #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageReference"/> class.
+        /// </summary>
+        public ImageReference()
+        {
+        }
 
         internal ImageReference(Models.ImageReference protocolObject)
         {
