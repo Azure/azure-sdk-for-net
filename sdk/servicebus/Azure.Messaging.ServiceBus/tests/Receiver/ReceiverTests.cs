@@ -114,6 +114,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var client = new ServiceBusClient(connString);
             var receiver = client.CreateReceiver("queue");
             Assert.That(
+                async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(0)),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(-1)),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        [Test]
+        public void ReceiveValidatesMaxWaitTimePrefetchMode()
+        {
+            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var client = new ServiceBusClient(connString);
+            var receiver = client.CreateReceiver("queue", options: new ServiceBusReceiverOptions { PrefetchCount = 10 });
+            Assert.That(
+                async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(0)),
+                Throws.InstanceOf<ServiceBusException>());
+            Assert.That(
                 async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(-1)),
                 Throws.InstanceOf<ArgumentOutOfRangeException>());
         }

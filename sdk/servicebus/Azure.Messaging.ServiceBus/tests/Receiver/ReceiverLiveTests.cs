@@ -56,30 +56,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 await using var receiverWithPrefetch = client.CreateReceiver(scope.QueueName,
                     options: new ServiceBusReceiverOptions() {PrefetchCount = 10});
-                await using var receiver = client.CreateReceiver(scope.QueueName);
 
-                // Test without prefetch
                 var stopwatch = new Stopwatch();
-                stopwatch.Start();
-                await receiver.ReceiveMessagesAsync(10, TimeSpan.Zero).ConfigureAwait(false);
-
-                stopwatch.Stop();
-                var durationInSecs = stopwatch.Elapsed.TotalSeconds;
-
-                // Test with prefetch
-                stopwatch.Reset();
                 stopwatch.Start();
                 await receiverWithPrefetch.ReceiveMessagesAsync(10, TimeSpan.Zero).ConfigureAwait(false);
                 stopwatch.Stop();
                 var durationWithPrefetchModeInSecs = stopwatch.Elapsed.TotalSeconds;
 
-                // Asserts:
-                Assert.IsTrue(durationWithPrefetchModeInSecs < durationInSecs);
-
-                // If prefetch isn't enabled, timeout 0 secs will be replaced with 10 seconds.
-                Assert.IsTrue(durationInSecs > 10);
-
-                // If prefetch is enabled, timeout 0 secs will not be replaced with 10 seconds.
+                // If prefetch is enabled, timeout 0 secs will not be replaced with default timeout.
                 // In such case, only prefetched messages will be returned and no call to server will be made and call will be very fast.
                 Assert.IsTrue(durationWithPrefetchModeInSecs < 1);
             }
