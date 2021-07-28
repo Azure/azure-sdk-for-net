@@ -97,9 +97,12 @@ namespace Azure.Storage.Blobs
                 Response<PageInfo> response = await _pageBlobClient.UploadPagesInternal(
                     content: _buffer,
                     offset: _writeIndex,
-                    transactionalContentHash: default,
-                    conditions: _conditions,
-                    progressHandler: _progressHandler,
+                    new PageBlobUploadPagesOptions()
+                    {
+                        // TODO inject SDK-managed transactional hashing // TransactionalHashingOptions = null
+                        Conditions = _conditions,
+                        ProgressHandler = _progressHandler
+                    },
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

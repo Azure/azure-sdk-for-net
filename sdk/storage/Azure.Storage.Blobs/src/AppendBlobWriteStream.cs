@@ -40,9 +40,12 @@ namespace Azure.Storage.Blobs
 
                 Response<BlobAppendInfo> response = await _appendBlobClient.AppendBlockInternal(
                     content: _buffer,
-                    transactionalContentHash: default,
-                    conditions: _conditions,
-                    progressHandler: _progressHandler,
+                    new AppendBlobAppendBlockOptions()
+                    {
+                        // TODO inject SDK-managed transactional hashing // TransactionalHashingOptions = null
+                        Conditions = _conditions,
+                        ProgressHandler = _progressHandler
+                    },
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
