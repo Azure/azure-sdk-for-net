@@ -17,7 +17,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task GetModel()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             Stream stream = await client.GetPersonalizerModelAsync();
             Assert.AreNotEqual(-1 , stream.ReadByte());
         }
@@ -25,14 +25,14 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task ResetModel()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             await client.ResetPersonalizerModelAsync();
         }
 
         [Test]
         public async Task GetModelProperties()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             PersonalizerModelProperties modelProperties = await client.GetPersonalizerModelPropertiesAsync();
             Assert.True(modelProperties.CreationTime != null);
             Assert.True(modelProperties.LastModifiedTime != null);

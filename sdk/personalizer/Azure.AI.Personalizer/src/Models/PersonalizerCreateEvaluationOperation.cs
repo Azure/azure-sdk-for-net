@@ -11,7 +11,7 @@ namespace Azure.AI.Personalizer.Models
 {
     /// <summary>
     /// An <see cref="Operation{PersonalizerEvaluation}"/> for tracking the status of a
-    /// <see cref="PersonalizerManagementClient.CreatePersonalizerEvaluationAsync(PersonalizerEvaluationOptions, CancellationToken)"/>
+    /// <see cref="PersonalizerAdministrationClient.CreatePersonalizerEvaluationAsync(PersonalizerEvaluationOptions, CancellationToken)"/>
     /// request.  Its <see cref="Operation{PersonalizerEvaluation}.Value"/> upon successful
     /// completion will be the completed personalizer evaluation.
     /// </summary>
@@ -20,7 +20,7 @@ namespace Azure.AI.Personalizer.Models
         /// <summary>
         /// The client used to check for completion.
         /// </summary>
-        private readonly PersonalizerManagementClient _client;
+        private readonly PersonalizerAdministrationClient _client;
 
         /// <summary>
         /// The CancellationToken to use for all status checking.
@@ -85,7 +85,7 @@ namespace Azure.AI.Personalizer.Models
         /// The client used to check for completion.
         /// </param>
         /// <param name="evaluationId">The ID of the evaluation.</param>
-        public PersonalizerCreateEvaluationOperation(string evaluationId, PersonalizerManagementClient client) :
+        public PersonalizerCreateEvaluationOperation(string evaluationId, PersonalizerAdministrationClient client) :
             this(client, evaluationId, null, CancellationToken.None)
         {
         }
@@ -106,7 +106,7 @@ namespace Azure.AI.Personalizer.Models
         /// notifications that the operation should be cancelled.
         /// </param>
         internal PersonalizerCreateEvaluationOperation(
-            PersonalizerManagementClient client,
+            PersonalizerAdministrationClient client,
             string evaluationId,
             Response initialResponse,
             CancellationToken cancellationToken)

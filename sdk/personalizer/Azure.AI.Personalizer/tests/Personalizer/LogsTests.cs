@@ -17,7 +17,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task GetLogsProperties()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             PersonalizerLogProperties properties = await client.GetPersonalizerLogPropertiesAsync();
 
             Assert.AreEqual(new DateTime(0001, 01, 01), new DateTime(properties.DateRange.Start.Value.Year, properties.DateRange.Start.Value.Month, properties.DateRange.Start.Value.Day));
@@ -27,7 +27,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task DeleteLogs()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             await client.DeletePersonalizerLogsAsync();
         }
     }

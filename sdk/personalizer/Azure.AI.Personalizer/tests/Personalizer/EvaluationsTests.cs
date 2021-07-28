@@ -18,7 +18,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task GetEvaluations()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             AsyncPageable<PersonalizerEvaluation> evaluations = client.GetPersonalizerEvaluationsAsync();
             int numEvaluations = 0;
             PersonalizerEvaluation eval0 = null;
@@ -54,7 +54,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task CreateEvaluation()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             var evaluation = new PersonalizerEvaluationOptions(
                 name: "sdkTestEvaluation",
                 startTime: DateTime.SpecifyKind(new DateTime(2021, 06, 01), DateTimeKind.Utc),
@@ -72,7 +72,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task GetEvaluation()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             string evaluationId = "014fd077-b5ab-495b-8ef9-f6d2dce9c624";
             PersonalizerEvaluation evaluation = await client.GetPersonalizerEvaluationAsync(evaluationId);
             Assert.AreEqual(evaluationId, evaluation.Id);
@@ -81,7 +81,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task DeleteEvaluation()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             string evaluationId = "b58c6d92-b727-48c1-9487-4be2782c9e0a";
             await client.DeletePersonalizerEvaluationAsync(evaluationId);
         }

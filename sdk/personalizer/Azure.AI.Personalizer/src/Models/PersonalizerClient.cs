@@ -105,15 +105,15 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> Submit a Personalizer rank request. Receives a context and a list of actions. Returns which of the provided actions should be used by your application, in rewardActionId. </summary>
-        /// <param name="rankOptions"> A Personalizer Rank request. </param>
+        /// <param name="options"> A Personalizer Rank request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerRankResult>> RankAsync(PersonalizerRankOptions rankOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerRankResult>> RankAsync(PersonalizerRankOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.Rank");
             scope.Start();
             try
             {
-                return await RankRestClient.RankAsync(rankOptions, cancellationToken).ConfigureAwait(false);
+                return await RankRestClient.RankAsync(options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -148,15 +148,15 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> Submit a Personalizer rank request. Receives a context and a list of actions. Returns which of the provided actions should be used by your application, in rewardActionId. </summary>
-        /// <param name="rankOptions"> A Personalizer Rank request. </param>
+        /// <param name="options"> A Personalizer Rank request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerRankResult> Rank(PersonalizerRankOptions rankOptions, CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerRankResult> Rank(PersonalizerRankOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.Rank");
             scope.Start();
             try
             {
-                return RankRestClient.Rank(rankOptions, cancellationToken);
+                return RankRestClient.Rank(options, cancellationToken);
             }
             catch (Exception e)
             {
@@ -191,15 +191,15 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> Submit a Personalizer multi-slot rank request. Receives a context, a list of actions, and a list of slots. Returns which of the provided actions should be used in each slot, in each rewardActionId. </summary>
-        /// <param name="body"> A Personalizer multi-slot Rank request. </param>
+        /// <param name="options"> A Personalizer multi-slot Rank request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerMultiSlotRankResult>> RankMultiSlotAsync(PersonalizerRankMultiSlotOptions body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerMultiSlotRankResult>> RankMultiSlotAsync(PersonalizerRankMultiSlotOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.RankMultiSlot");
             scope.Start();
             try
             {
-                return await MultiSlotRestClient.RankAsync(body, cancellationToken).ConfigureAwait(false);
+                return await MultiSlotRestClient.RankAsync(options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -241,15 +241,15 @@ namespace Azure.AI.Personalizer
         }
 
         /// <summary> Submit a Personalizer multi-slot rank request. Receives a context, a list of actions, and a list of slots. Returns which of the provided actions should be used in each slot, in each rewardActionId. </summary>
-        /// <param name="body"> A Personalizer multi-slot Rank request. </param>
+        /// <param name="options"> A Personalizer multi-slot Rank request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerMultiSlotRankResult> RankMultiSlot(PersonalizerRankMultiSlotOptions body, CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerMultiSlotRankResult> RankMultiSlot(PersonalizerRankMultiSlotOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.RankMultiSlot");
             scope.Start();
             try
             {
-                return MultiSlotRestClient.Rank(body, cancellationToken);
+                return MultiSlotRestClient.Rank(options, cancellationToken);
             }
             catch (Exception e)
             {
@@ -292,16 +292,16 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Report reward between 0 and 1 that resulted from using the action specified in rewardActionId, for the specified event. </summary>
         /// <param name="eventId"> The event id this reward applies to. </param>
-        /// <param name="rewardValue"> The reward should be a floating point number, typically between 0 and 1. </param>
+        /// <param name="reward"> The reward should be a floating point number, typically between 0 and 1. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RewardAsync(string eventId, float rewardValue, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RewardAsync(string eventId, float reward, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.Reward");
             scope.Start();
             try
             {
-                PersonalizerRewardOptions reward = new PersonalizerRewardOptions(rewardValue);
-                return await EventsRestClient.RewardAsync(eventId, reward, cancellationToken).ConfigureAwait(false);
+                PersonalizerRewardOptions rewardOptions = new PersonalizerRewardOptions(reward);
+                return await EventsRestClient.RewardAsync(eventId, rewardOptions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -312,16 +312,16 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Report reward between 0 and 1 that resulted from using the action specified in rewardActionId, for the specified event. </summary>
         /// <param name="eventId"> The event id this reward applies to. </param>
-        /// <param name="rewardValue"> The reward should be a floating point number, typically between 0 and 1. </param>
+        /// <param name="reward"> The reward should be a floating point number, typically between 0 and 1. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Reward(string eventId, float rewardValue, CancellationToken cancellationToken = default)
+        public virtual Response Reward(string eventId, float reward, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.Reward");
             scope.Start();
             try
             {
-                PersonalizerRewardOptions reward = new PersonalizerRewardOptions(rewardValue);
-                return EventsRestClient.Reward(eventId, reward, cancellationToken);
+                PersonalizerRewardOptions rewardOptions = new PersonalizerRewardOptions(reward);
+                return EventsRestClient.Reward(eventId, rewardOptions, cancellationToken);
             }
             catch (Exception e)
             {
@@ -332,15 +332,15 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Report reward that resulted from using the action specified in rewardActionId for the slot. </summary>
         /// <param name="eventId"> The event id this reward applies to. </param>
-        /// <param name="body"> List of slot id and reward values. The reward should be a floating point number, typically between 0 and 1. </param>
+        /// <param name="options"> List of slot id and reward values. The reward should be a floating point number, typically between 0 and 1. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RewardMultiSlotAsync(string eventId, PersonalizerRewardMultiSlotOptions body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RewardMultiSlotAsync(string eventId, PersonalizerRewardMultiSlotOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.RewardMultiSlot");
             scope.Start();
             try
             {
-                return await MultiSlotEventsRestClient.RewardAsync(eventId, body, cancellationToken).ConfigureAwait(false);
+                return await MultiSlotEventsRestClient.RewardAsync(eventId, options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -362,15 +362,15 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Report reward that resulted from using the action specified in rewardActionId for the slot. </summary>
         /// <param name="eventId"> The event id this reward applies to. </param>
-        /// <param name="body"> List of slot id and reward values. The reward should be a floating point number, typically between 0 and 1. </param>
+        /// <param name="options"> List of slot id and reward values. The reward should be a floating point number, typically between 0 and 1. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RewardMultiSlot(string eventId, PersonalizerRewardMultiSlotOptions body, CancellationToken cancellationToken = default)
+        public virtual Response RewardMultiSlot(string eventId, PersonalizerRewardMultiSlotOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PersonalizerClient.RewardMultiSlot");
             scope.Start();
             try
             {
-                return MultiSlotEventsRestClient.Reward(eventId, body, cancellationToken);
+                return MultiSlotEventsRestClient.Reward(eventId, options, cancellationToken);
             }
             catch (Exception e)
             {

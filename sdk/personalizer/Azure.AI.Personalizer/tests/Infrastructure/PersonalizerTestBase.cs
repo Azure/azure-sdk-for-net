@@ -24,13 +24,13 @@ namespace Azure.AI.Personalizer.Tests
             return personalizerClient;
         }
 
-        protected PersonalizerManagementClient GetPersonalizerManagementClient()
+        protected PersonalizerAdministrationClient GetPersonalizerAdministrationClient()
         {
             var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
             var options = InstrumentClientOptions(new PersonalizerClientOptions());
-            PersonalizerManagementClient personalizerManagementClient = new PersonalizerManagementClient(new Uri(TestEnvironment.Endpoint), credential, options);
-            personalizerManagementClient = InstrumentClient(personalizerManagementClient);
-            return personalizerManagementClient;
+            PersonalizerAdministrationClient PersonalizerAdministrationClient = new PersonalizerAdministrationClient(new Uri(TestEnvironment.Endpoint), credential, options);
+            PersonalizerAdministrationClient = InstrumentClient(PersonalizerAdministrationClient);
+            return PersonalizerAdministrationClient;
         }
     }
 }

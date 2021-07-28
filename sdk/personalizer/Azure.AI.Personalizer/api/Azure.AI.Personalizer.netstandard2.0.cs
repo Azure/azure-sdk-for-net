@@ -1,44 +1,10 @@
 namespace Azure.AI.Personalizer
 {
-    public partial class PersonalizerClient
+    public partial class PersonalizerAdministrationClient
     {
-        protected PersonalizerClient() { }
-        public PersonalizerClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public PersonalizerClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
-        public PersonalizerClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public PersonalizerClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
-        public virtual Azure.Response Activate(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ActivateAsync(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ActivateMultiSlot(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ActivateMultiSlotAsync(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Personalizer.Models.PersonalizerRankResult> Rank(Azure.AI.Personalizer.Models.PersonalizerRankOptions rankOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Personalizer.Models.PersonalizerRankResult> Rank(System.Collections.Generic.IList<Azure.AI.Personalizer.Models.PersonalizerRankableAction> actions, System.Collections.Generic.IList<object> contextFeatures, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerRankResult>> RankAsync(Azure.AI.Personalizer.Models.PersonalizerRankOptions rankOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerRankResult>> RankAsync(System.Collections.Generic.IList<Azure.AI.Personalizer.Models.PersonalizerRankableAction> actions, System.Collections.Generic.IList<object> contextFeatures, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Personalizer.Models.PersonalizerMultiSlotRankResult> RankMultiSlot(Azure.AI.Personalizer.Models.PersonalizerRankMultiSlotOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Personalizer.Models.PersonalizerMultiSlotRankResult> RankMultiSlot(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PersonalizerRankableAction> actions, System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PersonalizerSlotOptions> slots, System.Collections.Generic.IList<object> contextFeatures, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerMultiSlotRankResult>> RankMultiSlotAsync(Azure.AI.Personalizer.Models.PersonalizerRankMultiSlotOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerMultiSlotRankResult>> RankMultiSlotAsync(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PersonalizerRankableAction> actions, System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PersonalizerSlotOptions> slots, System.Collections.Generic.IList<object> contextFeatures, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Reward(string eventId, float rewardValue, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RewardAsync(string eventId, float rewardValue, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RewardMultiSlot(string eventId, Azure.AI.Personalizer.Models.PersonalizerRewardMultiSlotOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RewardMultiSlot(string eventId, string slotId, float rewardValue, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RewardMultiSlotAsync(string eventId, Azure.AI.Personalizer.Models.PersonalizerRewardMultiSlotOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RewardMultiSlotAsync(string eventId, string slotId, float rewardValue, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PersonalizerClientOptions : Azure.Core.ClientOptions
-    {
-        public PersonalizerClientOptions(Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion version = Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion.V1_1_preview_1) { }
-        public enum ServiceVersion
-        {
-            V1_1_preview_1 = 1,
-        }
-    }
-    public partial class PersonalizerManagementClient
-    {
-        protected PersonalizerManagementClient() { }
-        public PersonalizerManagementClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
-        public PersonalizerManagementClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
+        protected PersonalizerAdministrationClient() { }
+        public PersonalizerAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
+        public PersonalizerAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
         public virtual Azure.Response ApplyPersonalizerEvaluation(Azure.AI.Personalizer.Models.PersonalizerPolicyReferenceOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ApplyPersonalizerEvaluationAsync(Azure.AI.Personalizer.Models.PersonalizerPolicyReferenceOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.Personalizer.Models.PersonalizerCreateEvaluationOperation CreatePersonalizerEvaluation(Azure.AI.Personalizer.Models.PersonalizerEvaluationOptions evaluation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -70,6 +36,40 @@ namespace Azure.AI.Personalizer
         public virtual Azure.Response<Azure.AI.Personalizer.Models.PersonalizerPolicyOptions> UpdatePersonalizerPolicy(Azure.AI.Personalizer.Models.PersonalizerPolicyOptions policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerPolicyOptions>> UpdatePersonalizerPolicyAsync(Azure.AI.Personalizer.Models.PersonalizerPolicyOptions policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class PersonalizerClient
+    {
+        protected PersonalizerClient() { }
+        public PersonalizerClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public PersonalizerClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
+        public PersonalizerClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public PersonalizerClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Personalizer.PersonalizerClientOptions options = null) { }
+        public virtual Azure.Response Activate(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ActivateAsync(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ActivateMultiSlot(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ActivateMultiSlotAsync(string eventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Personalizer.Models.PersonalizerRankResult> Rank(Azure.AI.Personalizer.Models.PersonalizerRankOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Personalizer.Models.PersonalizerRankResult> Rank(System.Collections.Generic.IList<Azure.AI.Personalizer.Models.PersonalizerRankableAction> actions, System.Collections.Generic.IList<object> contextFeatures, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerRankResult>> RankAsync(Azure.AI.Personalizer.Models.PersonalizerRankOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerRankResult>> RankAsync(System.Collections.Generic.IList<Azure.AI.Personalizer.Models.PersonalizerRankableAction> actions, System.Collections.Generic.IList<object> contextFeatures, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Personalizer.Models.PersonalizerMultiSlotRankResult> RankMultiSlot(Azure.AI.Personalizer.Models.PersonalizerRankMultiSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Personalizer.Models.PersonalizerMultiSlotRankResult> RankMultiSlot(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PersonalizerRankableAction> actions, System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PersonalizerSlotOptions> slots, System.Collections.Generic.IList<object> contextFeatures, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerMultiSlotRankResult>> RankMultiSlotAsync(Azure.AI.Personalizer.Models.PersonalizerRankMultiSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Personalizer.Models.PersonalizerMultiSlotRankResult>> RankMultiSlotAsync(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PersonalizerRankableAction> actions, System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.Models.PersonalizerSlotOptions> slots, System.Collections.Generic.IList<object> contextFeatures, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Reward(string eventId, float reward, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RewardAsync(string eventId, float reward, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RewardMultiSlot(string eventId, Azure.AI.Personalizer.Models.PersonalizerRewardMultiSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RewardMultiSlot(string eventId, string slotId, float rewardValue, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RewardMultiSlotAsync(string eventId, Azure.AI.Personalizer.Models.PersonalizerRewardMultiSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RewardMultiSlotAsync(string eventId, string slotId, float rewardValue, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PersonalizerClientOptions : Azure.Core.ClientOptions
+    {
+        public PersonalizerClientOptions(Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion version = Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion.V1_1_preview_1) { }
+        public enum ServiceVersion
+        {
+            V1_1_preview_1 = 1,
+        }
+    }
 }
 namespace Azure.AI.Personalizer.Models
 {
@@ -99,7 +99,7 @@ namespace Azure.AI.Personalizer.Models
     public partial class PersonalizerCreateEvaluationOperation : Azure.Operation<Azure.AI.Personalizer.Models.PersonalizerEvaluation>
     {
         protected PersonalizerCreateEvaluationOperation() { }
-        public PersonalizerCreateEvaluationOperation(string evaluationId, Azure.AI.Personalizer.PersonalizerManagementClient client) { }
+        public PersonalizerCreateEvaluationOperation(string evaluationId, Azure.AI.Personalizer.PersonalizerAdministrationClient client) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

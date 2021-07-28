@@ -17,7 +17,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task GetServiceConfiguration()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             PersonalizerServiceProperties  defaultConfig = await client.GetPersonalizerConfigurationAsync();
             Assert.AreEqual(TimeSpan.FromMinutes(1), defaultConfig.RewardWaitTime);
             Assert.AreEqual(TimeSpan.FromHours(1), defaultConfig.ModelExportFrequency);
@@ -29,7 +29,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task ApplyFromEvaluation()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             PersonalizerPolicyReferenceOptions policyReferenceContract = new PersonalizerPolicyReferenceOptions("628a6299-ce45-4a9d-98a6-017c2c9ff008", "Inter-len1");
             await client.ApplyPersonalizerEvaluationAsync(policyReferenceContract);
         }
@@ -37,7 +37,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task UpdateServiceConfiguration()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             TimeSpan newExperimentalUnitDuration = TimeSpan.FromMinutes(1);
             TimeSpan modelExportFrequency = TimeSpan.FromHours(1);
             double newDefaultReward = 1.0;
@@ -62,7 +62,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task GetPolicy()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             PersonalizerPolicyOptions policy = await client.GetPersonalizerPolicyAsync();
             Assert.AreEqual("app1", policy.Name);
             Assert.AreEqual("--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2",
@@ -72,7 +72,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task UpdatePolicy()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             var policy = new PersonalizerPolicyOptions(
                 name: "app1",
                 arguments: "--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2"
@@ -85,7 +85,7 @@ namespace Azure.AI.Personalizer.Tests
         [Test]
         public async Task ResetPolicy()
         {
-            PersonalizerManagementClient client = GetPersonalizerManagementClient();
+            PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             PersonalizerPolicyOptions policy = await client.ResetPersonalizerPolicyAsync();
             Assert.AreEqual("--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2",
             policy.Arguments);
