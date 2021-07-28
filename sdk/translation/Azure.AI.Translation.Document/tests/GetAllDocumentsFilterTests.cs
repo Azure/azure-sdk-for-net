@@ -43,7 +43,7 @@ namespace Azure.AI.Translation.Document.Tests
             );
             var result = operation.GetAllDocumentStatuses(filter: filter);
 
-            // assert
+            // assert.
             Assert.That(result.All(d => d.Status == DocumentTranslationStatus.Succeeded));
         }
 
