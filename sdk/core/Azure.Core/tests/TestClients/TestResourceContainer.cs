@@ -149,6 +149,46 @@ namespace Azure.Core.Tests
             }
         }
 
+        public virtual Response<TestResource> GetIfExistsResponse(bool shouldExist, string name, CancellationToken cancellationToken = default)
+        {
+            using var scope = _diagnostic.CreateScope("TestResourceContainer.GetIfExistsResponse");
+            scope.Start();
+
+            try
+            {
+                return Get(shouldExist, name, cancellationToken);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return Response.FromValue<TestResource>(null, new MockResponse(404));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual async Task<Response<TestResource>> GetIfExistsResponseAsync(bool shouldExist, string name, CancellationToken cancellationToken = default)
+        {
+            using var scope = _diagnostic.CreateScope("TestResourceContainer.GetIfExistsResponse");
+            scope.Start();
+
+            try
+            {
+                return await GetAsync(shouldExist, name, cancellationToken);
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return Response.FromValue<TestResource>(null, new MockResponse(404));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         public virtual string Method()
         {
             return "success";

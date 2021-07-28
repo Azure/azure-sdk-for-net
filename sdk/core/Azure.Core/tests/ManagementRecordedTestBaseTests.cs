@@ -182,5 +182,69 @@ namespace Azure.Core.Tests.Management
             //method waits for 10 seconds so timer should easily be less than half of that if we skip
             Assert.IsTrue(timer.ElapsedMilliseconds < 5000, $"WaitForCompletion took {timer.ElapsedMilliseconds}ms");
         }
+
+        [Test]
+        public async Task ValidateGetIfExistsSuccess()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            var testResources = client.GetTestResourceContainer();
+
+            TestResource testResource = await testResources.GetIfExistsAsync(true, "myResource");
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.AreEqual("success", testResource.Method());
+
+            var varTestResource = await testResources.GetIfExistsAsync(true, "myResource");
+            testResource = varTestResource.Value;
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.AreEqual("success", testResource.Method());
+        }
+
+        [Test]
+        public async Task ValidateGetIfExistsFail()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            var testResources = client.GetTestResourceContainer();
+
+            TestResource testResource = await testResources.GetIfExistsAsync(false, "myResource");
+            Assert.IsNull(testResource);
+
+            var varTestResource = await testResources.GetIfExistsAsync(false, "myResource");
+            Assert.IsNotNull(varTestResource);
+            Assert.IsNotNull(varTestResource.GetRawResponse());
+            testResource = varTestResource.Value;
+            Assert.IsNull(testResource);
+        }
+
+        [Test]
+        public async Task ValidateGetIfExistsResponseSuccess()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            var testResources = client.GetTestResourceContainer();
+
+            TestResource testResource = await testResources.GetIfExistsResponseAsync(true, "myResource");
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.AreEqual("success", testResource.Method());
+
+            var varTestResource = await testResources.GetIfExistsResponseAsync(true, "myResource");
+            testResource = varTestResource.Value;
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.AreEqual("success", testResource.Method());
+        }
+
+        [Test]
+        public async Task ValidateGetIfExistsResponseFail()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            var testResources = client.GetTestResourceContainer();
+
+            TestResource testResource = await testResources.GetIfExistsResponseAsync(false, "myResource");
+            Assert.IsNull(testResource);
+
+            var varTestResource = await testResources.GetIfExistsResponseAsync(false, "myResource");
+            Assert.IsNotNull(varTestResource);
+            Assert.IsNotNull(varTestResource.GetRawResponse());
+            testResource = varTestResource.Value;
+            Assert.IsNull(testResource);
+        }
     }
 }

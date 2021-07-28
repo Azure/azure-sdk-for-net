@@ -38,7 +38,7 @@ namespace Azure.Core.TestFramework
                     return;
 
                 var taskResultType = type.GetGenericArguments()[0];
-                if (taskResultType.Name.StartsWith("Response"))
+                if (taskResultType.Name.StartsWith("Response") || taskResultType.Name.StartsWith("NullableResponse"))
                 {
                     try
                     {
