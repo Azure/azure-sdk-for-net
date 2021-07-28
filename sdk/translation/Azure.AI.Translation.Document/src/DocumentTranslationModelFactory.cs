@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.AI.Translation.Document.Models;
 namespace Azure.AI.Translation.Document
 {
     /// <summary>
@@ -34,32 +35,35 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Initializes a new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.
         /// </summary>
+        /// <param name="id">Sets the <see cref="DocumentStatus.Id"/> property.</param>
+        /// <param name="translatedDocumentUri">Sets the <see cref="DocumentStatus.TranslatedDocumentUri"/> property.</param>
         /// <param name="sourceDocumentUri">Sets the <see cref="DocumentStatus.SourceDocumentUri"/> property.</param>
         /// <param name="createdOn">Sets the <see cref="DocumentStatus.CreatedOn"/> property.</param>
         /// <param name="lastModified">Sets the <see cref="DocumentStatus.LastModified"/> property.</param>
         /// <param name="status">Sets the <see cref="DocumentStatus.Status"/> property.</param>
         /// <param name="translatedTo">Sets the <see cref="DocumentStatus.TranslatedTo"/> property.</param>
         /// <param name="progress">Sets the <see cref="DocumentStatus.Progress"/> property.</param>
-        /// <param name="id">Sets the <see cref="DocumentStatus.Id"/> property.</param>
+        /// <param name="charactersCharged">Sets the <see cref="DocumentStatus.CharactersCharged"/> property.</param>
         /// <returns>A new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.</returns>
-        /// /// <exception cref="ArgumentNullException"> <paramref name="sourceDocumentUri"/>, <paramref name="translatedTo"/>, or <paramref name="id"/> is null. </exception>
         public static DocumentStatus DocumentStatus(
+            string id,
+            Uri translatedDocumentUri,
             Uri sourceDocumentUri,
             DateTimeOffset createdOn,
             DateTimeOffset lastModified,
             DocumentTranslationStatus status,
             string translatedTo,
             float progress,
-            string id
+            long charactersCharged
             )
         {
-            return new DocumentStatus(default, sourceDocumentUri, createdOn, lastModified, status, translatedTo,default, progress, id, default);
+            return new DocumentStatus(translatedDocumentUri, sourceDocumentUri, createdOn, lastModified, status, translatedTo, default, progress, id, charactersCharged);
         }
 
         /// <summary>
         /// Initializes a new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.
         /// </summary>
-        /// <param name="translatedDocumentUri">Sets the <see cref="DocumentStatus.TranslatedDocumentUri"/> property.</param>
+        /// <param name="id">Sets the <see cref="DocumentStatus.Id"/> property.</param>
         /// <param name="sourceDocumentUri">Sets the <see cref="DocumentStatus.SourceDocumentUri"/> property.</param>
         /// <param name="createdOn">Sets the <see cref="DocumentStatus.CreatedOn"/> property.</param>
         /// <param name="lastModified">Sets the <see cref="DocumentStatus.LastModified"/> property.</param>
@@ -67,11 +71,10 @@ namespace Azure.AI.Translation.Document
         /// <param name="translatedTo">Sets the <see cref="DocumentStatus.TranslatedTo"/> property.</param>
         /// <param name="error">Sets the <see cref="DocumentStatus.Error"/> property.</param>
         /// <param name="progress">Sets the <see cref="DocumentStatus.Progress"/> property.</param>
-        /// <param name="id">Sets the <see cref="DocumentStatus.Id"/> property.</param>
         /// <param name="charactersCharged">Sets the <see cref="DocumentStatus.CharactersCharged"/> property.</param>
         /// <returns>A new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.</returns>
         public static DocumentStatus DocumentStatus(
-            Uri translatedDocumentUri,
+            string id,
             Uri sourceDocumentUri,
             DateTimeOffset createdOn,
             DateTimeOffset lastModified,
@@ -79,11 +82,10 @@ namespace Azure.AI.Translation.Document
             string translatedTo,
             DocumentTranslationError error,
             float progress,
-            string id,
             long charactersCharged
             )
         {
-            return new DocumentStatus(translatedDocumentUri, sourceDocumentUri, createdOn, lastModified, status, translatedTo,error, progress, id, charactersCharged);
+            return new DocumentStatus(default, sourceDocumentUri, createdOn, lastModified, status, translatedTo, error, progress, id, charactersCharged);
         }
 
         /// <summary>
