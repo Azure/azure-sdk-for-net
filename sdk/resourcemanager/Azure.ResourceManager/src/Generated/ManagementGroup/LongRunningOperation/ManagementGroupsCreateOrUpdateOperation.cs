@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Management.Models
     {
         private readonly OperationOrResponseInternals<ManagementGroup> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of ManagementGroupsCreateOrUpdateOperation for mocking. </summary>
         protected ManagementGroupsCreateOrUpdateOperation()
         {
         }
 
-        internal ManagementGroupsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ManagementGroupsCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationOrResponseInternals<ManagementGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ManagementGroupsCreateOrUpdateOperation");
             _operationBase = operationsBase;

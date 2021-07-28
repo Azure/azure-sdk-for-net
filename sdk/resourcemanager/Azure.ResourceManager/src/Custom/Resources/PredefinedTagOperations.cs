@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> The predefined tag client. </summary>
-    public class PredefinedTagOperations : ResourceOperationsBase
+    public class PredefinedTagOperations : ResourceOperations
     {
         /// <summary>
         /// The resource type for predefined tag.

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Management
     /// <summary>
     /// A class representing the operations that can be performed over a specific ManagementGroup.
     /// </summary>
-    public class ManagementGroupOperations : ResourceOperationsBase<ManagementGroup>
+    public class ManagementGroupOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ManagementGroupsRestOperations _restClient;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Management
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ManagementGroupOperations(OperationsBase options, ResourceIdentifier id)
+        protected internal ManagementGroupOperations(ResourceOperations options, ResourceIdentifier id)
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -46,18 +46,6 @@ namespace Azure.ResourceManager.Management
 
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceType;
-
-        /// <inheritdoc/>
-        public override Response<ManagementGroup> Get(CancellationToken cancellationToken = default)
-        {
-            return Get(null, null, null, null, cancellationToken);
-        }
-
-        /// <inheritdoc/>
-        public async override Task<Response<ManagementGroup>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            return await GetAsync(null, null, null, null, cancellationToken).ConfigureAwait(false);
-        }
 
         /// <summary>
         /// Get the details of the management group.

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    public class GenericResourceContainer : ResourceContainerBase<GenericResource, GenericResourceData>
+    public class GenericResourceContainer : ResourceContainer
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceContainer"/> class for mocking.

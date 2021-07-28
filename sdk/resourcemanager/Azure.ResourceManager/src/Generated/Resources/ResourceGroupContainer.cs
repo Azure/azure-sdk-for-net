@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of ResourceGroupContainer and their operations over a ResourceGroup.
     /// </summary>
-    public class ResourceGroupContainer : ResourceContainerBase<ResourceGroup, ResourceGroupData>
+    public class ResourceGroupContainer : ResourceContainer
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupContainer"/> class for mocking.
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var originalResponse = RestClient.CreateOrUpdate(name, resourceDetails, cancellationToken);
-                return new ResourceGroupCreateOrUpdateOperation(Parent, originalResponse);
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
