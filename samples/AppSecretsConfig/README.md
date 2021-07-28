@@ -46,6 +46,11 @@ Azure services:
 * [App Configuration][appconfig_overview]
 * [Key Vault][keyvault_overview]
 * (Optional) [App Service][appservice_overview] - needed to deploy the web application to Azure, which is provisioned in the [Bicep][bicep_overview] [template][sample_template].
+
+  > [!NOTE]
+  > App Service has [support for referencing Key Vault secrets][appservice_secrets] directly, but is used only as an example how to configure a web site to use App Configuration.
+  > If you choose to deploy your web application to another service, the same principles to configure the App Configuration connection string still apply.
+
 * (Optional) [Application Insights][appinsights_overview] - to monitor web traffic and application traces, which is *not* provisioned in the Bicep template.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)][sample_deploy]
@@ -237,6 +242,7 @@ In [ASP.NET Razor pages][aspnet_razor] as an example, you can then inject them i
 [appconfig_overview]: https://docs.microsoft.com/azure/azure-app-configuration/overview
 [appinsights_overview]: https://docs.microsoft.com/azure/azure-monitor/app/app-insights-overview
 [appservice_overview]: https://docs.microsoft.com/azure/app-service/overview
+[appservice_secrets]: https://docs.microsoft.com/azure/app-service/app-service-key-vault-references#rotation
 [aspnet_config]: https://docs.microsoft.com/aspnet/core/fundamentals/configuration
 [aspnet_deploy_localgit]: https://docs.microsoft.com/azure/app-service/deploy-local-git
 [aspnet_quickstart]: https://docs.microsoft.com/azure/app-service/quickstart-dotnetcore
