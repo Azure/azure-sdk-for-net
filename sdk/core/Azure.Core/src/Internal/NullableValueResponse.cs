@@ -12,9 +12,12 @@ namespace Azure
         {
             _response = response;
             Value = value;
+            HasValue = value is not null;
         }
 
         public override T Value { get; }
+
+        public override bool HasValue { get; }
 
         public override Response GetRawResponse() => _response;
     }

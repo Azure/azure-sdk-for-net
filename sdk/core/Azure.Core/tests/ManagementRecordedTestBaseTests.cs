@@ -194,6 +194,7 @@ namespace Azure.Core.Tests.Management
             Assert.AreEqual("success", testResource.Method());
 
             var varTestResource = await testResources.GetIfExistsAsync(true, "myResource");
+            Assert.IsTrue(varTestResource.HasValue);
             testResource = varTestResource.Value;
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             Assert.AreEqual("success", testResource.Method());
@@ -209,6 +210,7 @@ namespace Azure.Core.Tests.Management
             Assert.IsNull(testResource);
 
             var varTestResource = await testResources.GetIfExistsAsync(false, "myResource");
+            Assert.IsFalse(varTestResource.HasValue);
             Assert.IsNotNull(varTestResource);
             Assert.IsNotNull(varTestResource.GetRawResponse());
             testResource = varTestResource.Value;

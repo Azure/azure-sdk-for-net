@@ -26,6 +26,11 @@ namespace Azure
         public abstract T Value { get; }
 
         /// <summary>
+        /// Gets whether or not there is a value.
+        /// </summary>
+        public abstract bool HasValue { get; }
+
+        /// <summary>
         /// Returns the value of this <see cref="NullableResponse{T}"/> object.
         /// </summary>
         /// <param name="response">The <see cref="NullableResponse{T}"/> instance.</param>
