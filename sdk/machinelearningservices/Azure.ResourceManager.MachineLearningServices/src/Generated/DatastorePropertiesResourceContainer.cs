@@ -21,7 +21,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of DatastorePropertiesResource and their operations over a Workspace. </summary>
-    public partial class DatastorePropertiesResourceContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, DatastorePropertiesResource, DatastorePropertiesResourceData>
+    public partial class DatastorePropertiesResourceContainer : ResourceContainerBase<DatastorePropertiesResource, DatastorePropertiesResourceData>
     {
         /// <summary> Initializes a new instance of the <see cref="DatastorePropertiesResourceContainer"/> class for mocking. </summary>
         protected DatastorePropertiesResourceContainer()
@@ -39,9 +39,6 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Represents the REST operations. </summary>
         private DatastoresRestOperations _restClient => new DatastoresRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => WorkspaceOperations.ResourceType;
@@ -131,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.Name, Id.ResourceGroupName, workspaceName, properties, skipValidation, cancellationToken);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, workspaceName, properties, skipValidation, cancellationToken);
                 return new DatastoresCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
@@ -162,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.Name, Id.ResourceGroupName, workspaceName, properties, skipValidation, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, workspaceName, properties, skipValidation, cancellationToken).ConfigureAwait(false);
                 return new DatastoresCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
@@ -186,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(workspaceName));
                 }
 
-                var response = _restClient.Get(Id.Name, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(new DatastorePropertiesResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -210,7 +207,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(workspaceName));
                 }
 
-                var response = await _restClient.GetAsync(Id.Name, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatastorePropertiesResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -277,9 +274,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -300,9 +297,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -330,15 +327,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="orderByAsc"> Order by property in ascending order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatastorePropertiesResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<DatastorePropertiesResource> List(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
+        public Pageable<DatastorePropertiesResource> GetAll(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
         {
             Page<DatastorePropertiesResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DatastorePropertiesResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -349,11 +346,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<DatastorePropertiesResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DatastorePropertiesResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -375,15 +372,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="orderByAsc"> Order by property in ascending order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatastorePropertiesResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<DatastorePropertiesResource> ListAsync(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<DatastorePropertiesResource> GetAllAsync(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DatastorePropertiesResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DatastorePropertiesResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -394,11 +391,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<DatastorePropertiesResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DatastorePropertiesResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -416,15 +413,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(DatastorePropertiesResourceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -439,15 +436,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(DatastorePropertiesResourceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -457,6 +454,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, DatastorePropertiesResource, DatastorePropertiesResourceData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, DatastorePropertiesResource, DatastorePropertiesResourceData> Construct() { }
     }
 }

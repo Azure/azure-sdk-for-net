@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of JobBaseResource and their operations over a Workspace. </summary>
-    public partial class JobBaseResourceContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, JobBaseResource, JobBaseResourceData>
+    public partial class JobBaseResourceContainer : ResourceContainerBase<JobBaseResource, JobBaseResourceData>
     {
         /// <summary> Initializes a new instance of the <see cref="JobBaseResourceContainer"/> class for mocking. </summary>
         protected JobBaseResourceContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Represents the REST operations. </summary>
         private JobsRestOperations _restClient => new JobsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => WorkspaceOperations.ResourceType;
@@ -272,9 +269,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -295,9 +292,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -322,15 +319,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="JobBaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<JobBaseResource> List(string skip = null, string jobType = null, string tags = null, string tag = null, CancellationToken cancellationToken = default)
+        public Pageable<JobBaseResource> GetAll(string skip = null, string jobType = null, string tags = null, string tag = null, CancellationToken cancellationToken = default)
         {
             Page<JobBaseResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, Id.Name, skip, jobType, tags, tag, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, skip, jobType, tags, tag, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new JobBaseResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -341,11 +338,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<JobBaseResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, skip, jobType, tags, tag, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, skip, jobType, tags, tag, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new JobBaseResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -364,15 +361,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="JobBaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<JobBaseResource> ListAsync(string skip = null, string jobType = null, string tags = null, string tag = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<JobBaseResource> GetAllAsync(string skip = null, string jobType = null, string tags = null, string tag = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<JobBaseResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, Id.Name, skip, jobType, tags, tag, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, skip, jobType, tags, tag, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new JobBaseResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -383,11 +380,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<JobBaseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skip, jobType, tags, tag, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skip, jobType, tags, tag, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new JobBaseResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -405,15 +402,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(JobBaseResourceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -428,15 +425,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("JobBaseResourceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(JobBaseResourceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -446,6 +443,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, JobBaseResource, JobBaseResourceData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, JobBaseResource, JobBaseResourceData> Construct() { }
     }
 }

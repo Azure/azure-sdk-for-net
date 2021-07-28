@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
@@ -20,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the operations that can be performed over a specific ComputeResource. </summary>
-    public partial class ComputeResourceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, ComputeResource>
+    public partial class ComputeResourceOperations : ResourceOperationsBase<ComputeResource>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ComputeRestOperations _restClient { get; }
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref="ComputeResourceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ComputeResourceOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal ComputeResourceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ComputeRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -167,13 +166,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
         /// <summary> Gets secrets related to Machine Learning compute (storage keys, service credentials, etc). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComputeSecrets>> ListKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputeSecrets>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.ListKeys");
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.GetKeys");
             scope.Start();
             try
             {
-                var response = await _restClient.ListKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -185,13 +184,13 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Gets secrets related to Machine Learning compute (storage keys, service credentials, etc). </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComputeSecrets> ListKeys(CancellationToken cancellationToken = default)
+        public virtual Response<ComputeSecrets> GetKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.ListKeys");
+            using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.GetKeys");
             scope.Start();
             try
             {
-                var response = _restClient.ListKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _restClient.GetKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -273,82 +272,6 @@ namespace Azure.ResourceManager.MachineLearningServices
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Get the details (e.g IP address, port etc) of all the compute nodes in the compute. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AmlComputeNodeInformation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AmlComputeNodeInformation> ListNodes(CancellationToken cancellationToken = default)
-        {
-            Page<AmlComputeNodeInformation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.ListNodes");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.ListNodes(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Nodes, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AmlComputeNodeInformation> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.ListNodes");
-                scope.Start();
-                try
-                {
-                    var response = _restClient.ListNodesNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Nodes, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Get the details (e.g IP address, port etc) of all the compute nodes in the compute. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AmlComputeNodeInformation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AmlComputeNodeInformation> ListNodesAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<AmlComputeNodeInformation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.ListNodes");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.ListNodesAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Nodes, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AmlComputeNodeInformation>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("ComputeResourceOperations.ListNodes");
-                scope.Start();
-                try
-                {
-                    var response = await _restClient.ListNodesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Nodes, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Updates properties of a compute. This call will overwrite a compute if it exists. This is a nonrecoverable operation. </summary>

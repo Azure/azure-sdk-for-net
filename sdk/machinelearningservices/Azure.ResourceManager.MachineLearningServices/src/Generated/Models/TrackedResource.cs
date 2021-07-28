@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has &apos;tags&apos; and a &apos;location&apos;. </summary>
-    public partial class TrackedResource : Resource<ResourceGroupResourceIdentifier>
+    public partial class TrackedResource : Resources.Models.Resource
     {
         /// <summary> Initializes a new instance of TrackedResource. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="type"> The type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal TrackedResource(ResourceGroupResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, string location) : base(id, name, type)
+        internal TrackedResource(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, string location) : base(id, name, type)
         {
             Tags = tags;
             Location = location;

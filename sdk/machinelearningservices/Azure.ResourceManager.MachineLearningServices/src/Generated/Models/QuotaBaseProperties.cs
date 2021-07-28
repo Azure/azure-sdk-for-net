@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The properties for Quota update or retrieval. </summary>
-    public partial class QuotaBaseProperties : WritableSubResource<ResourceIdentifier>
+    public partial class QuotaBaseProperties : WritableSubResource
     {
         /// <summary> Initializes a new instance of QuotaBaseProperties. </summary>
         public QuotaBaseProperties()

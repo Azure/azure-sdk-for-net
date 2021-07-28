@@ -9,8 +9,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class WorkspaceData : IUtf8JsonSerializable
     {
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<Sku> sku = default;
             Optional<SystemData> systemData = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<string> workspaceId = default;

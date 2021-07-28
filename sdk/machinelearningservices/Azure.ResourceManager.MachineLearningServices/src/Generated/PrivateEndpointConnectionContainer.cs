@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of PrivateEndpointConnection and their operations over a Workspace. </summary>
-    public partial class PrivateEndpointConnectionContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, PrivateEndpointConnection, PrivateEndpointConnectionData>
+    public partial class PrivateEndpointConnectionContainer : ResourceContainerBase<PrivateEndpointConnection, PrivateEndpointConnectionData>
     {
         /// <summary> Initializes a new instance of the <see cref="PrivateEndpointConnectionContainer"/> class for mocking. </summary>
         protected PrivateEndpointConnectionContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Represents the REST operations. </summary>
         private PrivateEndpointConnectionsRestOperations _restClient => new PrivateEndpointConnectionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => WorkspaceOperations.ResourceType;
@@ -272,9 +269,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -295,9 +292,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -318,15 +315,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> List all the private endpoint connections associated with the workspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<PrivateEndpointConnection> List(CancellationToken cancellationToken = default)
+        public Pageable<PrivateEndpointConnection> GetAll(CancellationToken cancellationToken = default)
         {
             Page<PrivateEndpointConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnection(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -341,15 +338,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> List all the private endpoint connections associated with the workspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<PrivateEndpointConnection> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<PrivateEndpointConnection> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PrivateEndpointConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PrivateEndpointConnection(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -367,15 +364,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(PrivateEndpointConnectionOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -390,15 +387,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("PrivateEndpointConnectionContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(PrivateEndpointConnectionOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -408,6 +405,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, PrivateEndpointConnection, PrivateEndpointConnectionData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, PrivateEndpointConnection, PrivateEndpointConnectionData> Construct() { }
     }
 }

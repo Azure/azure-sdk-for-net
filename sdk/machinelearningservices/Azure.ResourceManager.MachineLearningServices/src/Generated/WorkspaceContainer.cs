@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of Workspace and their operations over a ResourceGroup. </summary>
-    public partial class WorkspaceContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, Workspace, WorkspaceData>
+    public partial class WorkspaceContainer : ResourceContainerBase<Workspace, WorkspaceData>
     {
         /// <summary> Initializes a new instance of the <see cref="WorkspaceContainer"/> class for mocking. </summary>
         protected WorkspaceContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Represents the REST operations. </summary>
         private WorkspacesRestOperations _restClient => new WorkspacesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
@@ -272,9 +269,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -295,9 +292,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -319,15 +316,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Workspace" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<Workspace> List(string skip = null, CancellationToken cancellationToken = default)
+        public Pageable<Workspace> GetAll(string skip = null, CancellationToken cancellationToken = default)
         {
             Page<Workspace> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListByResourceGroup(Id.ResourceGroupName, skip, cancellationToken: cancellationToken);
+                    var response = _restClient.GetByResourceGroup(Id.ResourceGroupName, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Workspace(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -338,11 +335,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<Workspace> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, skip, cancellationToken: cancellationToken);
+                    var response = _restClient.GetByResourceGroupNextPage(nextLink, Id.ResourceGroupName, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new Workspace(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -358,15 +355,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Workspace" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<Workspace> ListAsync(string skip = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<Workspace> GetAllAsync(string skip = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<Workspace>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListByResourceGroupAsync(Id.ResourceGroupName, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetByResourceGroupAsync(Id.ResourceGroupName, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Workspace(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -377,11 +374,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<Workspace>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new Workspace(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -399,15 +396,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(WorkspaceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -422,15 +419,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("WorkspaceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(WorkspaceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -440,6 +437,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, Workspace, WorkspaceData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, Workspace, WorkspaceData> Construct() { }
     }
 }

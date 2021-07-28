@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 
             Assert.DoesNotThrowAsync(async () => _ = await CreateMLWorkspaceAsync(rg));
 
-            var count = (await rg.GetWorkspaces().ListAsync().ToEnumerableAsync()).Count;
+            var count = (await rg.GetWorkspaces().GetAllAsync().ToEnumerableAsync()).Count;
             Assert.AreEqual(count, 1);
         }
 
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await CreateTestResourceGroup();
             var workspace = await CreateMLWorkspaceAsync(rg);
 
-            Assert.IsTrue(await rg.GetWorkspaces().DoesExistAsync(workspace.Data.Name));
-            Assert.IsFalse(await rg.GetWorkspaces().DoesExistAsync(workspace.Data.Name + "xyz"));
+            Assert.IsTrue(await rg.GetWorkspaces().CheckIfExistsAsync(workspace.Data.Name));
+            Assert.IsFalse(await rg.GetWorkspaces().CheckIfExistsAsync(workspace.Data.Name + "xyz"));
         }
 
         private async Task<ResourceGroup> CreateTestResourceGroup()
@@ -85,8 +85,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             return await Client
                 .DefaultSubscription
                 .GetResourceGroups()
-                .Construct(Location.WestUS2)
-                .CreateOrUpdateAsync(Recording.GenerateAssetName("testmlrg"));
+                .CreateOrUpdateAsync(
+                    Recording.GenerateAssetName("testmlrg"),
+                    new ResourceGroupData(Location.WestUS2));
         }
     }
 }

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<Sku> sku = default;
             Optional<SystemData> systemData = default;
-            TenantResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<string> groupId = default;

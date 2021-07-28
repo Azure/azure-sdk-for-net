@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The properties for update Quota response. </summary>
-    public partial class UpdateWorkspaceQuotas : SubResource<ResourceIdentifier>
+    public partial class UpdateWorkspaceQuotas : SubResource
     {
         /// <summary> Initializes a new instance of UpdateWorkspaceQuotas. </summary>
         internal UpdateWorkspaceQuotas()

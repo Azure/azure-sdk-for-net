@@ -8,8 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class DataVersionResourceData : IUtf8JsonSerializable
     {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             DataVersion properties = default;
             Optional<SystemData> systemData = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             foreach (var property in element.EnumerateObject())

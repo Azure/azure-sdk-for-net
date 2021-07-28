@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of BatchEndpointTrackedResource and their operations over a Workspace. </summary>
-    public partial class BatchEndpointTrackedResourceContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, BatchEndpointTrackedResource, BatchEndpointTrackedResourceData>
+    public partial class BatchEndpointTrackedResourceContainer : ResourceContainerBase<BatchEndpointTrackedResource, BatchEndpointTrackedResourceData>
     {
         /// <summary> Initializes a new instance of the <see cref="BatchEndpointTrackedResourceContainer"/> class for mocking. </summary>
         protected BatchEndpointTrackedResourceContainer()
@@ -39,24 +39,21 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Represents the REST operations. </summary>
         private BatchEndpointsRestOperations _restClient => new BatchEndpointsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
 
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
-
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => WorkspaceOperations.ResourceType;
 
         // Container level operations.
 
         /// <summary> Creates a batch inference endpoint. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="endpointName"> Name for the Batch inference endpoint. </param>
         /// <param name="body"> Batch inference endpoint definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="body"/> is null. </exception>
-        public virtual Response<BatchEndpointTrackedResource> CreateOrUpdate(string workspaceName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
+        public virtual Response<BatchEndpointTrackedResource> CreateOrUpdate(string endpointName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (endpointName == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(endpointName));
             }
             if (body == null)
             {
@@ -67,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var operation = StartCreateOrUpdate(workspaceName, body, cancellationToken);
+                var operation = StartCreateOrUpdate(endpointName, body, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -78,15 +75,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Creates a batch inference endpoint. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="endpointName"> Name for the Batch inference endpoint. </param>
         /// <param name="body"> Batch inference endpoint definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="body"/> is null. </exception>
-        public async virtual Task<Response<BatchEndpointTrackedResource>> CreateOrUpdateAsync(string workspaceName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
+        public async virtual Task<Response<BatchEndpointTrackedResource>> CreateOrUpdateAsync(string endpointName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (endpointName == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(endpointName));
             }
             if (body == null)
             {
@@ -97,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var operation = await StartCreateOrUpdateAsync(workspaceName, body, cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(endpointName, body, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -108,15 +105,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Creates a batch inference endpoint. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="endpointName"> Name for the Batch inference endpoint. </param>
         /// <param name="body"> Batch inference endpoint definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="body"/> is null. </exception>
-        public virtual BatchEndpointsCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
+        public virtual BatchEndpointsCreateOrUpdateOperation StartCreateOrUpdate(string endpointName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (endpointName == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(endpointName));
             }
             if (body == null)
             {
@@ -127,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.Name, Id.ResourceGroupName, workspaceName, body, cancellationToken);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken);
                 return new BatchEndpointsCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
@@ -138,15 +135,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Creates a batch inference endpoint. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="endpointName"> Name for the Batch inference endpoint. </param>
         /// <param name="body"> Batch inference endpoint definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="body"/> is null. </exception>
-        public async virtual Task<BatchEndpointsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="body"/> is null. </exception>
+        public async virtual Task<BatchEndpointsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string endpointName, BatchEndpointTrackedResourceData body, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (endpointName == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(endpointName));
             }
             if (body == null)
             {
@@ -157,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.Name, Id.ResourceGroupName, workspaceName, body, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, endpointName, body, cancellationToken).ConfigureAwait(false);
                 return new BatchEndpointsCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
@@ -168,20 +165,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="endpointName"> Name for the Batch Endpoint. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<BatchEndpointTrackedResource> Get(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<BatchEndpointTrackedResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.Get");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (endpointName == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(endpointName));
                 }
 
-                var response = _restClient.Get(Id.Name, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(new BatchEndpointTrackedResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,20 +189,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="endpointName"> Name for the Batch Endpoint. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<BatchEndpointTrackedResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<BatchEndpointTrackedResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.Get");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (endpointName == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(endpointName));
                 }
 
-                var response = await _restClient.GetAsync(Id.Name, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new BatchEndpointTrackedResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -216,20 +213,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="endpointName"> Name for the Batch Endpoint. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual BatchEndpointTrackedResource TryGet(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual BatchEndpointTrackedResource TryGet(string endpointName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.TryGet");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (endpointName == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(endpointName));
                 }
 
-                return Get(workspaceName, cancellationToken: cancellationToken).Value;
+                return Get(endpointName, cancellationToken: cancellationToken).Value;
             }
             catch (RequestFailedException e) when (e.Status == 404)
             {
@@ -243,20 +240,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="endpointName"> Name for the Batch Endpoint. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<BatchEndpointTrackedResource> TryGetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<BatchEndpointTrackedResource> TryGetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.TryGet");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (endpointName == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(endpointName));
                 }
 
-                return await GetAsync(workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await GetAsync(endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException e) when (e.Status == 404)
             {
@@ -270,20 +267,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="endpointName"> Name for the Batch Endpoint. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (endpointName == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(endpointName));
                 }
 
-                return TryGet(workspaceName, cancellationToken: cancellationToken) != null;
+                return TryGet(endpointName, cancellationToken: cancellationToken) != null;
             }
             catch (Exception e)
             {
@@ -293,20 +290,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="endpointName"> Name for the Batch Endpoint. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (endpointName == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(endpointName));
                 }
 
-                return await TryGetAsync(workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                return await TryGetAsync(endpointName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {
@@ -320,15 +317,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BatchEndpointTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<BatchEndpointTrackedResource> List(int? count = null, string skip = null, CancellationToken cancellationToken = default)
+        public Pageable<BatchEndpointTrackedResource> GetAll(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             Page<BatchEndpointTrackedResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchEndpointTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -339,11 +336,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<BatchEndpointTrackedResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchEndpointTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -360,15 +357,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BatchEndpointTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<BatchEndpointTrackedResource> ListAsync(int? count = null, string skip = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<BatchEndpointTrackedResource> GetAllAsync(int? count = null, string skip = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<BatchEndpointTrackedResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchEndpointTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -379,11 +376,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<BatchEndpointTrackedResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, count, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchEndpointTrackedResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -401,15 +398,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(BatchEndpointTrackedResourceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -424,15 +421,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(BatchEndpointTrackedResourceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -442,6 +439,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, BatchEndpointTrackedResource, BatchEndpointTrackedResourceData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, BatchEndpointTrackedResource, BatchEndpointTrackedResourceData> Construct() { }
     }
 }

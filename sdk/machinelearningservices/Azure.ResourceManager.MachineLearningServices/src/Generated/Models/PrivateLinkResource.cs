@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class PrivateLinkResource : Resource<TenantResourceIdentifier>
+    public partial class PrivateLinkResource : Resources.Models.Resource
     {
         /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
         public PrivateLinkResource()
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        internal PrivateLinkResource(TenantResourceIdentifier id, string name, ResourceType type, Identity identity, string location, IDictionary<string, string> tags, Sku sku, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type)
+        internal PrivateLinkResource(ResourceIdentifier id, string name, ResourceType type, Identity identity, string location, IDictionary<string, string> tags, Sku sku, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, type)
         {
             Identity = identity;
             Location = location;

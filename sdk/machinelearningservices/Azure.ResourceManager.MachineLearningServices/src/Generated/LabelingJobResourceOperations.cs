@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the operations that can be performed over a specific LabelingJobResource. </summary>
-    public partial class LabelingJobResourceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, LabelingJobResource>
+    public partial class LabelingJobResourceOperations : ResourceOperationsBase<LabelingJobResource>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private LabelingJobsRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref="LabelingJobResourceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal LabelingJobResourceOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal LabelingJobResourceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new LabelingJobsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }

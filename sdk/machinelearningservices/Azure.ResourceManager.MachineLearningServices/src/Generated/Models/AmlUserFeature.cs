@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Features enabled for a workspace. </summary>
-    public partial class AmlUserFeature : SubResource<ResourceIdentifier>
+    public partial class AmlUserFeature : SubResource
     {
         /// <summary> Initializes a new instance of AmlUserFeature. </summary>
         internal AmlUserFeature()

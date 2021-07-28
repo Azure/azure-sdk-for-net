@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
-    public partial class Resource : SubResource<ResourceGroupResourceIdentifier>
+    public partial class Resource : SubResource
     {
         /// <summary> Initializes a new instance of Resource. </summary>
         public Resource()

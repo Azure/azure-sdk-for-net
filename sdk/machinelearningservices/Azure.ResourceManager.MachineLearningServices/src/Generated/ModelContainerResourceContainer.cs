@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of ModelContainerResource and their operations over a Workspace. </summary>
-    public partial class ModelContainerResourceContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, ModelContainerResource, ModelContainerResourceData>
+    public partial class ModelContainerResourceContainer : ResourceContainerBase<ModelContainerResource, ModelContainerResourceData>
     {
         /// <summary> Initializes a new instance of the <see cref="ModelContainerResourceContainer"/> class for mocking. </summary>
         protected ModelContainerResourceContainer()
@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Represents the REST operations. </summary>
         private ModelContainersRestOperations _restClient => new ModelContainersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
-
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => WorkspaceOperations.ResourceType;
@@ -127,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.Name, Id.ResourceGroupName, workspaceName, properties, cancellationToken);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Name, workspaceName, properties, cancellationToken);
                 return new ModelContainersCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
@@ -157,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.Name, Id.ResourceGroupName, workspaceName, properties, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, workspaceName, properties, cancellationToken).ConfigureAwait(false);
                 return new ModelContainersCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
@@ -181,7 +178,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(workspaceName));
                 }
 
-                var response = _restClient.Get(Id.Name, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(new ModelContainerResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(workspaceName));
                 }
 
-                var response = await _restClient.GetAsync(Id.Name, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ModelContainerResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,9 +269,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -295,9 +292,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -320,15 +317,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="count"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ModelContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<ModelContainerResource> List(string skip = null, int? count = null, CancellationToken cancellationToken = default)
+        public Pageable<ModelContainerResource> GetAll(string skip = null, int? count = null, CancellationToken cancellationToken = default)
         {
             Page<ModelContainerResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, Id.Name, skip, count, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, skip, count, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ModelContainerResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -339,11 +336,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<ModelContainerResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, skip, count, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, skip, count, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ModelContainerResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -360,15 +357,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="count"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ModelContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<ModelContainerResource> ListAsync(string skip = null, int? count = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<ModelContainerResource> GetAllAsync(string skip = null, int? count = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ModelContainerResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, Id.Name, skip, count, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, skip, count, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ModelContainerResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -379,11 +376,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<ModelContainerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skip, count, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, skip, count, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ModelContainerResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -401,15 +398,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(ModelContainerResourceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -424,15 +421,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("ModelContainerResourceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(ModelContainerResourceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -442,6 +439,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, ModelContainerResource, ModelContainerResourceData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, ModelContainerResource, ModelContainerResourceData> Construct() { }
     }
 }

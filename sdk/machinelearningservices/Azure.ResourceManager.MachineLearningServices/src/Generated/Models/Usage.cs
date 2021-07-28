@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Describes AML Resource Usage. </summary>
-    public partial class Usage : SubResource<ResourceIdentifier>
+    public partial class Usage : SubResource
     {
         /// <summary> Initializes a new instance of Usage. </summary>
         internal Usage()

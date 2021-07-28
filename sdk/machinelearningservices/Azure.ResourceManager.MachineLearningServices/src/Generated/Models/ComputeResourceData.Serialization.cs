@@ -9,8 +9,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class ComputeResourceData : IUtf8JsonSerializable
     {
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<Sku> sku = default;
             Optional<SystemData> systemData = default;
             Optional<Compute> properties = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             foreach (var property in element.EnumerateObject())

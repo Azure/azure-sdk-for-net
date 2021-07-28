@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The Private Endpoint resource. </summary>
-    public partial class PrivateEndpoint : SubResource<ResourceIdentifier>
+    public partial class PrivateEndpoint : SubResource
     {
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
         public PrivateEndpoint()

@@ -8,8 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearningServices.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class WorkspaceConnectionData : IUtf8JsonSerializable
     {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static WorkspaceConnectionData DeserializeWorkspaceConnectionData(JsonElement element)
         {
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<string> category = default;

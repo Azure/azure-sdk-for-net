@@ -6,7 +6,6 @@
 #nullable disable
 
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.MachineLearningServices.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {

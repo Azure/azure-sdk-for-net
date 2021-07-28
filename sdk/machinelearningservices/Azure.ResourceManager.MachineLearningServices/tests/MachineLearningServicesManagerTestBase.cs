@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests
     {
         private const string CommonResourceResourceGroup = "test-ml-common";
 
-        protected ResourceGroupResourceIdentifier CommonResourceGroupId { get; private set; }
+        protected ResourceIdentifier CommonResourceGroupId { get; private set; }
 
         protected string CommonStorageId { get; private set; }
 
@@ -67,11 +67,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests
 
             CommonResourceGroupId = GlobalClient.DefaultSubscription
                 .GetResourceGroups()
-                .Construct(Location.WestUS2)
-                .CreateOrUpdateAsync(CommonResourceResourceGroup)
-                .ConfigureAwait(false)
-                .GetAwaiter()
-                .GetResult().Value.Id;
+                .CreateOrUpdate(CommonResourceResourceGroup, new ResourceGroupData(Location.WestUS2))
+                .Value.Id;
 
             CreateAppInsight();
             CreateAcr();

@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the operations that can be performed over a specific DatastorePropertiesResource. </summary>
-    public partial class DatastorePropertiesResourceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, DatastorePropertiesResource>
+    public partial class DatastorePropertiesResourceOperations : ResourceOperationsBase<DatastorePropertiesResource>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private DatastoresRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref="DatastorePropertiesResourceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal DatastorePropertiesResourceOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal DatastorePropertiesResourceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DatastoresRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.Parent.Name, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return new DatastoresDeleteOperation(response);
             }
             catch (Exception e)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.Parent.Name, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return new DatastoresDeleteOperation(response);
             }
             catch (Exception e)
@@ -166,13 +166,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
         /// <summary> Get datastore secrets. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatastoreSecrets>> ListSecretsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatastoreSecrets>> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceOperations.ListSecrets");
+            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceOperations.GetSecrets");
             scope.Start();
             try
             {
-                var response = await _restClient.ListSecretsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetSecretsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -184,13 +184,13 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Get datastore secrets. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatastoreSecrets> ListSecrets(CancellationToken cancellationToken = default)
+        public virtual Response<DatastoreSecrets> GetSecrets(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceOperations.ListSecrets");
+            using var scope = _clientDiagnostics.CreateScope("DatastorePropertiesResourceOperations.GetSecrets");
             scope.Start();
             try
             {
-                var response = _restClient.ListSecrets(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _restClient.GetSecrets(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the operations that can be performed over a specific BatchEndpointTrackedResource. </summary>
-    public partial class BatchEndpointTrackedResourceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, BatchEndpointTrackedResource>
+    public partial class BatchEndpointTrackedResourceOperations : ResourceOperationsBase<BatchEndpointTrackedResource>
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private BatchEndpointsRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref="BatchEndpointTrackedResourceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal BatchEndpointTrackedResourceOperations(OperationsBase options, ResourceGroupResourceIdentifier id) : base(options, id)
+        protected internal BatchEndpointTrackedResourceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new BatchEndpointsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.Parent.Name, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return new BatchEndpointsDeleteOperation(response);
             }
             catch (Exception e)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.Parent.Name, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return new BatchEndpointsDeleteOperation(response);
             }
             catch (Exception e)
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> Mutable batch inference endpoint definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<BatchEndpointTrackedResourceData>> UpdateAsync(PartialBatchEndpointPartialTrackedResource body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchEndpointTrackedResource>> UpdateAsync(PartialBatchEndpointPartialTrackedResource body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _restClient.UpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                return response;
+                return Response.FromValue(new BatchEndpointTrackedResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="body"> Mutable batch inference endpoint definition object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<BatchEndpointTrackedResourceData> Update(PartialBatchEndpointPartialTrackedResource body, CancellationToken cancellationToken = default)
+        public virtual Response<BatchEndpointTrackedResource> Update(PartialBatchEndpointPartialTrackedResource body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -377,6 +377,24 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _restClient.Update(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
+                return Response.FromValue(new BatchEndpointTrackedResource(this, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists batch Inference Endpoint keys. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<EndpointAuthKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.GetKeys");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -388,31 +406,13 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Lists batch Inference Endpoint keys. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EndpointAuthKeys>> ListKeysAsync(CancellationToken cancellationToken = default)
+        public virtual Response<EndpointAuthKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.ListKeys");
+            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.GetKeys");
             scope.Start();
             try
             {
-                var response = await _restClient.ListKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists batch Inference Endpoint keys. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EndpointAuthKeys> ListKeys(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("BatchEndpointTrackedResourceOperations.ListKeys");
-            scope.Start();
-            try
-            {
-                var response = _restClient.ListKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _restClient.GetKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

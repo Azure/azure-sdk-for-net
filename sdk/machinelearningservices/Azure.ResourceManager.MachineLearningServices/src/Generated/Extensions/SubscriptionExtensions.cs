@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Workspace> ListWorkspacesAsync(this SubscriptionOperations subscription, string skip = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Workspace> GetWorkspacesAsync(this SubscriptionOperations subscription, string skip = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var restOperations = GetWorkspacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<Workspace>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListWorkspaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWorkspaces");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListBySubscriptionAsync(skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetBySubscriptionAsync(skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Workspace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
                 async Task<Page<Workspace>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListWorkspaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWorkspaces");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListBySubscriptionNextPageAsync(nextLink, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetBySubscriptionNextPageAsync(nextLink, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value.Select(value => new Workspace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Workspace> ListWorkspaces(this SubscriptionOperations subscription, string skip = null, CancellationToken cancellationToken = default)
+        public static Pageable<Workspace> GetWorkspaces(this SubscriptionOperations subscription, string skip = null, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var restOperations = GetWorkspacesRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<Workspace> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListWorkspaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWorkspaces");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListBySubscription(skip, cancellationToken: cancellationToken);
+                        var response = restOperations.GetBySubscription(skip, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Workspace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
                 Page<Workspace> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListWorkspaces");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWorkspaces");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListBySubscriptionNextPage(nextLink, skip, cancellationToken: cancellationToken);
+                        var response = restOperations.GetBySubscriptionNextPage(nextLink, skip, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value.Select(value => new Workspace(subscription, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GenericResourceExpanded> ListWorkspaceByNameAsync(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GenericResourceExpanded> GetWorkspaceByNameAsync(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(WorkspaceOperations.ResourceType);
             filters.SubstringFilter = filter;
-            return ResourceListOperations.ListAtContextAsync(subscription, filters, expand, top, cancellationToken);
+            return ResourceListOperations.GetAtContextAsync(subscription, filters, expand, top, cancellationToken);
         }
 
         /// <summary> Filters the list of Workspaces for a <see cref="SubscriptionOperations" /> represented as generic resources. </summary>
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GenericResourceExpanded> ListWorkspaceByName(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
+        public static Pageable<GenericResourceExpanded> GetWorkspaceByName(this SubscriptionOperations subscription, string filter, string expand, int? top, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new(WorkspaceOperations.ResourceType);
             filters.SubstringFilter = filter;
-            return ResourceListOperations.ListAtContext(subscription, filters, expand, top, cancellationToken);
+            return ResourceListOperations.GetAtContext(subscription, filters, expand, top, cancellationToken);
         }
         #endregion
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<ResourceQuota> ListQuotasAsync(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ResourceQuota> GetQuotasAsync(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -175,11 +175,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var restOperations = GetQuotasRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<ResourceQuota>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListQuotas");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetQuotas");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
                 async Task<Page<ResourceQuota>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListQuotas");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetQuotas");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<ResourceQuota> ListQuotas(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
+        public static Pageable<ResourceQuota> GetQuotas(this SubscriptionOperations subscription, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -227,11 +227,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var restOperations = GetQuotasRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<ResourceQuota> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListQuotas");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetQuotas");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.List(location, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAll(location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
                 Page<ResourceQuota> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListQuotas");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetQuotas");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListNextPage(nextLink, location, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllNextPage(nextLink, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<IReadOnlyList<UpdateWorkspaceQuotas>>> UpdateQuotasAsync(this SubscriptionOperations subscription, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<UpdateWorkspaceQuotas>>> GetQuotaateAsync(this SubscriptionOperations subscription, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetQuotasRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.UpdateQuotas");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetQuotaate");
                 scope.Start();
                 try
                 {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="quotaUpdateParametersLocation"> Region of workspace quota to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<IReadOnlyList<UpdateWorkspaceQuotas>> UpdateQuotas(this SubscriptionOperations subscription, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
+        public static Response<IReadOnlyList<UpdateWorkspaceQuotas>> GetQuotaate(this SubscriptionOperations subscription, string location, IEnumerable<QuotaBaseProperties> value = null, string quotaUpdateParametersLocation = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 var clientDiagnostics = new ClientDiagnostics(options);
                 var restOperations = GetQuotasRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
-                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.UpdateQuotas");
+                using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetQuotaate");
                 scope.Start();
                 try
                 {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkspaceSku> ListWorkspaceSkusAsync(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WorkspaceSku> GetWorkspaceSkusAsync(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -348,11 +348,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var restOperations = GetWorkspaceSkusRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 async Task<Page<WorkspaceSku>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListWorkspaceSkus");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWorkspaceSkus");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -363,11 +363,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
                 async Task<Page<WorkspaceSku>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListWorkspaceSkus");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWorkspaceSkus");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkspaceSku> ListWorkspaceSkus(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
+        public static Pageable<WorkspaceSku> GetWorkspaceSkus(this SubscriptionOperations subscription, CancellationToken cancellationToken = default)
         {
             return subscription.UseClientContext((baseUri, credential, options, pipeline) =>
             {
@@ -393,11 +393,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 var restOperations = GetWorkspaceSkusRestOperations(clientDiagnostics, credential, options, pipeline, subscription.Id.SubscriptionId, baseUri);
                 Page<WorkspaceSku> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListWorkspaceSkus");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWorkspaceSkus");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.List(cancellationToken: cancellationToken);
+                        var response = restOperations.GetAll(cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -408,11 +408,11 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
                 Page<WorkspaceSku> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.ListWorkspaceSkus");
+                    using var scope = clientDiagnostics.CreateScope("SubscriptionExtensions.GetWorkspaceSkus");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListNextPage(nextLink, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllNextPage(nextLink, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)

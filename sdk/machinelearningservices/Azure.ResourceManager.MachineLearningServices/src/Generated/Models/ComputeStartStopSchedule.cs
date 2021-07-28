@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Compute start stop schedule properties. </summary>
-    public partial class ComputeStartStopSchedule : SubResource<ResourceIdentifier>
+    public partial class ComputeStartStopSchedule : SubResource
     {
         /// <summary> Initializes a new instance of ComputeStartStopSchedule. </summary>
         public ComputeStartStopSchedule()

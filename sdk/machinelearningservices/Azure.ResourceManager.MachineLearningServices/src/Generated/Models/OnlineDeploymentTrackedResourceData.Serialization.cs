@@ -9,9 +9,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearningServices.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearningServices
 {
     public partial class OnlineDeploymentTrackedResourceData : IUtf8JsonSerializable
     {
@@ -45,13 +46,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static OnlineDeploymentTrackedResourceData DeserializeOnlineDeploymentTrackedResourceData(JsonElement element)
         {
-            Optional<ResourceIdentity> identity = default;
+            Optional<Models.ResourceIdentity> identity = default;
             Optional<string> kind = default;
             OnlineDeployment properties = default;
             Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             Location location = default;
-            ResourceGroupResourceIdentifier id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             foreach (var property in element.EnumerateObject())
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ResourceIdentity.DeserializeResourceIdentity(property.Value);
+                    identity = Models.ResourceIdentity.DeserializeResourceIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))

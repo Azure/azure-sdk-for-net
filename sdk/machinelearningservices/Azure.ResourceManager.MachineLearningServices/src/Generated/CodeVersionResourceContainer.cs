@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of CodeVersionResource and their operations over a CodeContainerResource. </summary>
-    public partial class CodeVersionResourceContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, CodeVersionResource, CodeVersionResourceData>
+    public partial class CodeVersionResourceContainer : ResourceContainerBase<CodeVersionResource, CodeVersionResourceData>
     {
         /// <summary> Initializes a new instance of the <see cref="CodeVersionResourceContainer"/> class for mocking. </summary>
         protected CodeVersionResourceContainer()
@@ -39,24 +39,21 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Represents the REST operations. </summary>
         private CodeVersionsRestOperations _restClient => new CodeVersionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
 
-        /// <summary> Typed Resource Identifier for the container. </summary>
-        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
-
         /// <summary> Gets the valid resource type for this object. </summary>
         protected override ResourceType ValidResourceType => CodeContainerResourceOperations.ResourceType;
 
         // Container level operations.
 
         /// <summary> Create or update version. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="version"> Version identifier. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual Response<CodeVersionResource> CreateOrUpdate(string workspaceName, CodeVersion properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="properties"/> is null. </exception>
+        public virtual Response<CodeVersionResource> CreateOrUpdate(string version, CodeVersion properties, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (version == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(version));
             }
             if (properties == null)
             {
@@ -67,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var operation = StartCreateOrUpdate(workspaceName, properties, cancellationToken);
+                var operation = StartCreateOrUpdate(version, properties, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -78,15 +75,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Create or update version. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="version"> Version identifier. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<Response<CodeVersionResource>> CreateOrUpdateAsync(string workspaceName, CodeVersion properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="properties"/> is null. </exception>
+        public async virtual Task<Response<CodeVersionResource>> CreateOrUpdateAsync(string version, CodeVersion properties, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (version == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(version));
             }
             if (properties == null)
             {
@@ -97,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var operation = await StartCreateOrUpdateAsync(workspaceName, properties, cancellationToken).ConfigureAwait(false);
+                var operation = await StartCreateOrUpdateAsync(version, properties, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -108,15 +105,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Create or update version. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="version"> Version identifier. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual CodeVersionsCreateOrUpdateOperation StartCreateOrUpdate(string workspaceName, CodeVersion properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="properties"/> is null. </exception>
+        public virtual CodeVersionsCreateOrUpdateOperation StartCreateOrUpdate(string version, CodeVersion properties, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (version == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(version));
             }
             if (properties == null)
             {
@@ -127,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.CreateOrUpdate(Id.Parent.Name, Id.Name, Id.ResourceGroupName, workspaceName, properties, cancellationToken);
+                var response = _restClient.CreateOrUpdate(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, properties, cancellationToken);
                 return new CodeVersionsCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
@@ -138,15 +135,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Create or update version. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="version"> Version identifier. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<CodeVersionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string workspaceName, CodeVersion properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="properties"/> is null. </exception>
+        public async virtual Task<CodeVersionsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string version, CodeVersion properties, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
+            if (version == null)
             {
-                throw new ArgumentNullException(nameof(workspaceName));
+                throw new ArgumentNullException(nameof(version));
             }
             if (properties == null)
             {
@@ -157,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.CreateOrUpdateAsync(Id.Parent.Name, Id.Name, Id.ResourceGroupName, workspaceName, properties, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.CreateOrUpdateAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, properties, cancellationToken).ConfigureAwait(false);
                 return new CodeVersionsCreateOrUpdateOperation(Parent, response);
             }
             catch (Exception e)
@@ -168,20 +165,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual Response<CodeVersionResource> Get(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<CodeVersionResource> Get(string version, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.Get");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (version == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(version));
                 }
 
-                var response = _restClient.Get(Id.Parent.Name, Id.Name, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
                 return Response.FromValue(new CodeVersionResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,20 +189,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<Response<CodeVersionResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CodeVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.Get");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (version == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(version));
                 }
 
-                var response = await _restClient.GetAsync(Id.Parent.Name, Id.Name, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CodeVersionResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -216,20 +213,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual CodeVersionResource TryGet(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual CodeVersionResource TryGet(string version, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.TryGet");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (version == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(version));
                 }
 
-                return Get(workspaceName, cancellationToken: cancellationToken).Value;
+                return Get(version, cancellationToken: cancellationToken).Value;
             }
             catch (RequestFailedException e) when (e.Status == 404)
             {
@@ -243,20 +240,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<CodeVersionResource> TryGetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<CodeVersionResource> TryGetAsync(string version, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.TryGet");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (version == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(version));
                 }
 
-                return await GetAsync(workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await GetAsync(version, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException e) when (e.Status == 404)
             {
@@ -270,20 +267,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string version, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (version == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(version));
                 }
 
-                return TryGet(workspaceName, cancellationToken: cancellationToken) != null;
+                return TryGet(version, cancellationToken: cancellationToken) != null;
             }
             catch (Exception e)
             {
@@ -293,20 +290,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.CheckIfExists");
             scope.Start();
             try
             {
-                if (workspaceName == null)
+                if (version == null)
                 {
-                    throw new ArgumentNullException(nameof(workspaceName));
+                    throw new ArgumentNullException(nameof(version));
                 }
 
-                return await TryGetAsync(workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                return await TryGetAsync(version, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
             }
             catch (Exception e)
             {
@@ -321,15 +318,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CodeVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<CodeVersionResource> List(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        public Pageable<CodeVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
             Page<CodeVersionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.Parent.Name, Id.ResourceGroupName, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CodeVersionResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -340,11 +337,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             Page<CodeVersionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.Parent.Name, Id.ResourceGroupName, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CodeVersionResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -362,15 +359,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CodeVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<CodeVersionResource> ListAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<CodeVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<CodeVersionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.Parent.Name, Id.ResourceGroupName, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CodeVersionResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -381,11 +378,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             async Task<Page<CodeVersionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.Parent.Name, Id.ResourceGroupName, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CodeVersionResource(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -403,15 +400,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(CodeVersionResourceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -426,15 +423,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(CodeVersionResourceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -444,6 +441,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         // Builders.
-        // public ArmBuilder<ResourceGroupResourceIdentifier, CodeVersionResource, CodeVersionResourceData> Construct() { }
+        // public ArmBuilder<ResourceIdentifier, CodeVersionResource, CodeVersionResourceData> Construct() { }
     }
 }

@@ -5,13 +5,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The quota assigned to a resource. </summary>
-    public partial class ResourceQuota : SubResource<ResourceIdentifier>
+    public partial class ResourceQuota : SubResource
     {
         /// <summary> Initializes a new instance of ResourceQuota. </summary>
         internal ResourceQuota()
