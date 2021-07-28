@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Gets the parent resource of this resource.
         /// </summary>
-        protected new TenantOperations Parent { get {return base.Parent as TenantOperations;} }
+        protected new TenantOperations Parent { get { return base.Parent as TenantOperations; } }
 
         /// <summary>
         /// Gets the valid resource type associated with the container.
@@ -146,6 +147,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = RestClient.Get(subscriptionGuid, cancellationToken);
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
                 return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -169,6 +173,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await RestClient.GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
                 return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -185,18 +192,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual Subscription GetIfExists(string subscriptionGuid, CancellationToken cancellationToken = default)
+        public virtual Response<Subscription> GetIfExists(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("SubscriptionContainer.GetIfExists");
             scope.Start();
 
             try
             {
-                return Get(subscriptionGuid, cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = RestClient.Get(subscriptionGuid, cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<Subscription>(null, response.GetRawResponse())
+                    : Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,18 +218,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<Subscription> GetIfExistsAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Subscription>> GetIfExistsAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("SubscriptionContainer.GetIfExists");
             scope.Start();
 
             try
             {
-                return await GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await RestClient.GetAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<Subscription>(null, response.GetRawResponse())
+                    : Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -239,11 +244,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool CheckIfExists(string subscriptionGuid, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("SubscriptionContainer.CheckIfExists");
             scope.Start();
-            return GetIfExists(subscriptionGuid, cancellationToken) != null;
+
+            try
+            {
+                var response = GetIfExists(subscriptionGuid, cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -253,11 +268,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<bool> CheckIfExistsAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckIfExistsAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("SubscriptionContainer.CheckIfExists");
             scope.Start();
-            return await GetIfExistsAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false) != null;
+
+            try
+            {
+                var response = await GetIfExistsAsync(subscriptionGuid, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

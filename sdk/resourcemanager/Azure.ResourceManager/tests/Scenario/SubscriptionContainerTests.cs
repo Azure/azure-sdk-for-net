@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Tests
         public async Task TryGet()
         {
             var foo = await Client.GetSubscriptions().GetIfExistsAsync(new Guid().ToString()).ConfigureAwait(false);
-            Assert.IsNull(foo);
+            Assert.IsNull(foo.Value);
             string subscriptionId = Client.DefaultSubscription.Id.SubscriptionId;
-            var subscription = await Client.GetSubscriptions().GetIfExistsAsync(subscriptionId).ConfigureAwait(false);
+            Subscription subscription = await Client.GetSubscriptions().GetIfExistsAsync(subscriptionId).ConfigureAwait(false);
             Assert.NotNull(subscription);
             Assert.IsTrue(subscription.Id.SubscriptionId.Equals(subscriptionId));
         }
@@ -46,6 +46,8 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(subscriptionId, result.Id.SubscriptionId);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetSubscriptions().GetAsync(null).ConfigureAwait(false));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscriptions().GetAsync(new Guid().ToString()).ConfigureAwait(false));
+            Assert.AreEqual(404, ex.Status);
         }
 
         [TestCase]
