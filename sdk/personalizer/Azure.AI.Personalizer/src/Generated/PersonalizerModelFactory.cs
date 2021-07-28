@@ -27,7 +27,7 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="optimalPolicy"> Thr optimal policy. </param>
         /// <param name="creationTime"> Creation time. </param>
         /// <returns> A new <see cref="Models.PersonalizerEvaluation"/> instance for mocking. </returns>
-        public static PersonalizerEvaluation PersonalizerEvaluation(string id = null, string name = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string jobId = null, EvaluationJobStatus? status = null, IEnumerable<PersonalizerPolicyResult> policyResults = null, IEnumerable<IList<string>> featureImportance = null, PersonalizerEvaluationType? evaluationType = null, string optimalPolicy = null, DateTimeOffset? creationTime = null)
+        public static PersonalizerEvaluation PersonalizerEvaluation(string id = null, string name = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string jobId = null, PersonalizerEvaluationJobStatus? status = null, IEnumerable<PersonalizerPolicyResult> policyResults = null, IEnumerable<IList<string>> featureImportance = null, PersonalizerEvaluationType? evaluationType = null, string optimalPolicy = null, DateTimeOffset? creationTime = null)
         {
             policyResults ??= new List<PersonalizerPolicyResult>();
             featureImportance ??= new List<IList<string>>();
@@ -107,12 +107,12 @@ namespace Azure.AI.Personalizer.Models
         }
 
         /// <summary> Initializes a new instance of PersonalizerSlotResult. </summary>
-        /// <param name="id"> Id is the slot ID. </param>
+        /// <param name="slotId"> Id is the slot ID. </param>
         /// <param name="rewardActionId"> RewardActionID is the action ID recommended by Personalizer. </param>
         /// <returns> A new <see cref="Models.PersonalizerSlotResult"/> instance for mocking. </returns>
-        public static PersonalizerSlotResult PersonalizerSlotResult(string id = null, string rewardActionId = null)
+        public static PersonalizerSlotResult PersonalizerSlotResult(string slotId = null, string rewardActionId = null)
         {
-            return new PersonalizerSlotResult(id, rewardActionId);
+            return new PersonalizerSlotResult(slotId, rewardActionId);
         }
 
         /// <summary> Initializes a new instance of PersonalizerRankResult. </summary>

@@ -7,5 +7,10 @@ namespace Azure.AI.Personalizer.Models
 {
     /// <summary> The Slot Result. </summary>
     [CodeGenModel("SlotResponse")]
-    public partial class PersonalizerSlotResult {}
+    public partial class PersonalizerSlotResult
+    {
+        /// <summary> Start date for the range. </summary>
+        [CodeGenMember("Id")]
+        public string SlotId { get; }
+    }
 }

@@ -13,29 +13,26 @@ namespace Azure.AI.Personalizer.Models
     public partial class PersonalizerSlotResult
     {
         /// <summary> Initializes a new instance of PersonalizerSlotResult. </summary>
-        /// <param name="id"> Id is the slot ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal PersonalizerSlotResult(string id)
+        /// <param name="slotId"> Id is the slot ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="slotId"/> is null. </exception>
+        internal PersonalizerSlotResult(string slotId)
         {
-            if (id == null)
+            if (slotId == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(slotId));
             }
 
-            Id = id;
+            SlotId = slotId;
         }
 
         /// <summary> Initializes a new instance of PersonalizerSlotResult. </summary>
-        /// <param name="id"> Id is the slot ID. </param>
+        /// <param name="slotId"> Id is the slot ID. </param>
         /// <param name="rewardActionId"> RewardActionID is the action ID recommended by Personalizer. </param>
-        internal PersonalizerSlotResult(string id, string rewardActionId)
+        internal PersonalizerSlotResult(string slotId, string rewardActionId)
         {
-            Id = id;
+            SlotId = slotId;
             RewardActionId = rewardActionId;
         }
-
-        /// <summary> Id is the slot ID. </summary>
-        public string Id { get; }
         /// <summary> RewardActionID is the action ID recommended by Personalizer. </summary>
         public string RewardActionId { get; }
     }

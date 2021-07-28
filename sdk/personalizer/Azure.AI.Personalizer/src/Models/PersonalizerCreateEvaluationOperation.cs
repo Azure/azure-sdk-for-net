@@ -172,7 +172,7 @@ namespace Azure.AI.Personalizer.Models
                 : _client.GetPersonalizerEvaluation(Id, cancellationToken: cancellationToken);
 
             // Check if the operation is no longer running
-            if (evaluation.Value.Status != EvaluationJobStatus.Pending)
+            if (evaluation.Value.Status != PersonalizerEvaluationJobStatus.Pending)
             {
                 _hasCompleted = true;
                 _value = evaluation.Value;

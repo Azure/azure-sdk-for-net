@@ -352,11 +352,11 @@ namespace Azure.AI.Personalizer
         /// <summary> Report reward that resulted from using the action specified in rewardActionId for the slot. </summary>
         /// <param name="eventId"> The event id this reward applies to. </param>
         /// <param name="slotId"> Slot id for which we are sending the reward. </param>
-        /// <param name="rewardValue"> Reward to be assigned to slotId. Value should be between -1 and 1 inclusive. </param>
+        /// <param name="reward"> Reward to be assigned to slotId. Value should be between -1 and 1 inclusive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RewardMultiSlotAsync(string eventId, string slotId, float rewardValue, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RewardMultiSlotAsync(string eventId, string slotId, float reward, CancellationToken cancellationToken = default)
         {
-            PersonalizerRewardMultiSlotOptions options = new PersonalizerRewardMultiSlotOptions(new List<PersonalizerSlotReward> { new PersonalizerSlotReward(slotId, rewardValue) });
+            PersonalizerRewardMultiSlotOptions options = new PersonalizerRewardMultiSlotOptions(new List<PersonalizerSlotReward> { new PersonalizerSlotReward(slotId, reward) });
             return await RewardMultiSlotAsync(eventId, options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -382,11 +382,11 @@ namespace Azure.AI.Personalizer
         /// <summary> Report reward that resulted from using the action specified in rewardActionId for the slot. </summary>
         /// <param name="eventId"> The event id this reward applies to. </param>
         /// <param name="slotId"> Slot id for which we are sending the reward. </param>
-        /// <param name="rewardValue"> Reward to be assigned to slotId. Value should be between -1 and 1 inclusive. </param>
+        /// <param name="reward"> Reward to be assigned to slotId. Value should be between -1 and 1 inclusive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RewardMultiSlot(string eventId, string slotId, float rewardValue, CancellationToken cancellationToken = default)
+        public virtual Response RewardMultiSlot(string eventId, string slotId, float reward, CancellationToken cancellationToken = default)
         {
-            PersonalizerRewardMultiSlotOptions options = new PersonalizerRewardMultiSlotOptions(new List<PersonalizerSlotReward> { new PersonalizerSlotReward(slotId, rewardValue) });
+            PersonalizerRewardMultiSlotOptions options = new PersonalizerRewardMultiSlotOptions(new List<PersonalizerSlotReward> { new PersonalizerSlotReward(slotId, reward) });
             return RewardMultiSlot(eventId, options, cancellationToken);
         }
 

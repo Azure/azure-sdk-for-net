@@ -83,11 +83,11 @@ namespace Azure.AI.Personalizer.Tests
             Assert.AreEqual(slots.Count, response.Slots.Count);
             // Assertions for first slot
             PersonalizerSlotResult responseSlot1 = response.Slots[0];
-            Assert.AreEqual(slot1.Id, responseSlot1.Id);
+            Assert.AreEqual(slot1.Id, responseSlot1.SlotId);
             Assert.AreEqual("NewsArticle", responseSlot1.RewardActionId);
             // Assertions for second slot
             PersonalizerSlotResult responseSlot2 = response.Slots[1];
-            Assert.AreEqual(slot2.Id, responseSlot2.Id);
+            Assert.AreEqual(slot2.Id, responseSlot2.SlotId);
             Assert.AreEqual("SportsArticle", responseSlot2.RewardActionId);
         }
 
@@ -103,11 +103,11 @@ namespace Azure.AI.Personalizer.Tests
             Assert.AreEqual(slots.Count, response.Slots.Count);
             // Assertions for first slot
             PersonalizerSlotResult responseSlot1 = response.Slots[0];
-            Assert.AreEqual(slot1.Id, responseSlot1.Id);
+            Assert.AreEqual(slot1.Id, responseSlot1.SlotId);
             Assert.AreEqual("NewsArticle", responseSlot1.RewardActionId);
             // Assertions for second slot
             PersonalizerSlotResult responseSlot2 = response.Slots[1];
-            Assert.AreEqual(slot2.Id, responseSlot2.Id);
+            Assert.AreEqual(slot2.Id, responseSlot2.SlotId);
             Assert.AreEqual("SportsArticle", responseSlot2.RewardActionId);
         }
 
@@ -121,11 +121,11 @@ namespace Azure.AI.Personalizer.Tests
             Assert.AreEqual(slots.Count, response.Slots.Count);
             // Assertions for first slot
             PersonalizerSlotResult responseSlot1 = response.Slots[0];
-            Assert.AreEqual(slot1.Id, responseSlot1.Id);
+            Assert.AreEqual(slot1.Id, responseSlot1.SlotId);
             Assert.AreEqual("NewsArticle", responseSlot1.RewardActionId);
             // Assertions for second slot
             PersonalizerSlotResult responseSlot2 = response.Slots[1];
-            Assert.AreEqual(slot2.Id, responseSlot2.Id);
+            Assert.AreEqual(slot2.Id, responseSlot2.SlotId);
             Assert.AreEqual("SportsArticle", responseSlot2.RewardActionId);
         }
     }
