@@ -29,19 +29,19 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Initializes a new instance of the ContainerRegistry class.
         /// </summary>
-        /// <param name="registryServer">The registry URL.</param>
         /// <param name="userName">The user name to log into the registry
         /// server.</param>
         /// <param name="password">The password to log into the registry
         /// server.</param>
+        /// <param name="registryServer">The registry URL.</param>
         /// <param name="identityReference">The reference to the user assigned
         /// identity to use to access an Azure Container Registry instead of
         /// username and password.</param>
-        public ContainerRegistry(string registryServer = default(string), string userName = default(string), string password = default(string), ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference))
+        public ContainerRegistry(string userName = default(string), string password = default(string), string registryServer = default(string), ComputeNodeIdentityReference identityReference = default(ComputeNodeIdentityReference))
         {
-            RegistryServer = registryServer;
             UserName = userName;
             Password = password;
+            RegistryServer = registryServer;
             IdentityReference = identityReference;
             CustomInit();
         }
@@ -50,15 +50,6 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the registry URL.
-        /// </summary>
-        /// <remarks>
-        /// If omitted, the default is "docker.io".
-        /// </remarks>
-        [JsonProperty(PropertyName = "registryServer")]
-        public string RegistryServer { get; set; }
 
         /// <summary>
         /// Gets or sets the user name to log into the registry server.
@@ -71,6 +62,15 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets the registry URL.
+        /// </summary>
+        /// <remarks>
+        /// If omitted, the default is "docker.io".
+        /// </remarks>
+        [JsonProperty(PropertyName = "registryServer")]
+        public string RegistryServer { get; set; }
 
         /// <summary>
         /// Gets or sets the reference to the user assigned identity to use to
