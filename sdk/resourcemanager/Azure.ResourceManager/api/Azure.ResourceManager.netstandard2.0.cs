@@ -94,6 +94,8 @@ namespace Azure.ResourceManager
     public static partial class ResourceIdentifierExtensions
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ResourceIdentifier AppendChildResource(this Azure.ResourceManager.ResourceIdentifier identifier, string childResourceType, string childResourceName) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ResourceIdentifier AppendProviderResource(this Azure.ResourceManager.ResourceIdentifier identifier, string providerNamespace, string resourceType, string resourceName) { throw null; }
     }
     public partial class ResourceNameFilter : Azure.ResourceManager.GenericResourceFilter, System.IEquatable<Azure.ResourceManager.ResourceNameFilter>, System.IEquatable<string>
@@ -234,6 +236,7 @@ namespace Azure.ResourceManager.Core
     public abstract partial class SingletonOperations : Azure.ResourceManager.Core.ResourceOperations
     {
         protected SingletonOperations() { }
+        protected SingletonOperations(Azure.ResourceManager.Core.ResourceOperations parent) { }
         protected Azure.ResourceManager.Core.ResourceOperations Parent { get { throw null; } }
     }
     public static partial class UtilityExtensions

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="SingletonOperations"/> class.
         /// </summary>
         /// <param name="parent"></param>
-        internal SingletonOperations(ResourceOperations parent)
+        protected SingletonOperations(ResourceOperations parent)
             : base(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri, parent.Pipeline), ResourceIdentifier.RootResourceIdentifier)
         {
             Parent = parent;
