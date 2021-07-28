@@ -19,6 +19,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
 
         public const string And = "AND";
         public const string Or = "OR";
+        public const string As = "AS";
 
         public const string IsDefined = "IS_DEFINED";
         public const string IsNull = "IS_NULL";
@@ -26,13 +27,13 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         public const string EndsWith = "ENDSWITH";
         public const string IsOfModel = "IS_OF_MODEL";
 
-        public static readonly IReadOnlyDictionary<AdtDataType, string> DataTypeToFunctionNameMap = new Dictionary<AdtDataType, string>()
+        public static readonly IReadOnlyDictionary<DigitalTwinsDataType, string> DataTypeToFunctionNameMap = new Dictionary<DigitalTwinsDataType, string>()
         {
-            { AdtDataType.AdtBool, "IS_BOOL" },
-            { AdtDataType.AdtNumber, "IS_NUMBER" },
-            { AdtDataType.AdtString, "IS_STRING" },
-            { AdtDataType.AdtPrimative, "IS_PRIMATIVE" },
-            { AdtDataType.AdtObject, "IS_OBJECT" }
+            { DigitalTwinsDataType.DigitalTwinsBool, "IS_BOOL" },
+            { DigitalTwinsDataType.DigitalTwinsNumber, "IS_NUMBER" },
+            { DigitalTwinsDataType.DigitalTwinsString, "IS_STRING" },
+            { DigitalTwinsDataType.DigitalTwinsPrimative, "IS_PRIMITIVE" },
+            { DigitalTwinsDataType.DigitalTwinsObject, "IS_OBJECT" }
         };
 
         // Maps comparison operators represented alphabetically to respective symbolic representations.
