@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual("Microsoft.Compute/AHUB", feature.Data.Name);
             Assert.IsNotNull(feature.Data.Properties);
             Assert.IsNotNull(feature.Data.Type);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await provider.GetFeatures().GetAsync("DoesNotExist"));
+            Assert.AreEqual(404, ex.Status);
         }
 
         [RecordedTest]
@@ -51,6 +54,9 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual("Microsoft.Compute/AHUB", feature.Data.Name);
             Assert.IsNotNull(feature.Data.Properties);
             Assert.IsNotNull(feature.Data.Type);
+
+            var response = await provider.GetFeatures().GetIfExistsAsync("DoesNotExist");
+            Assert.IsNull(response.Value);
         }
 
         [RecordedTest]
@@ -58,6 +64,7 @@ namespace Azure.ResourceManager.Tests
         {
             Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
             Assert.IsTrue(await provider.GetFeatures().CheckIfExistsAsync("AHUB"));
+            Assert.IsFalse(await provider.GetFeatures().CheckIfExistsAsync("DoesNotExist"));
         }
     }
 }
