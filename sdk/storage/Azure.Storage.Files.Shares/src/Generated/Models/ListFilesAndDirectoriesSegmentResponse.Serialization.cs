@@ -23,6 +23,7 @@ namespace Azure.Storage.Files.Shares.Models
             int? maxResults = default;
             FilesAndDirectoriesListSegment segment = default;
             string nextMarker = default;
+            string directoryId = default;
             if (element.Attribute("ServiceEndpoint") is XAttribute serviceEndpointAttribute)
             {
                 serviceEndpoint = (string)serviceEndpointAttribute;
@@ -59,7 +60,11 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 nextMarker = (string)nextMarkerElement;
             }
-            return new ListFilesAndDirectoriesSegmentResponse(serviceEndpoint, shareName, shareSnapshot, directoryPath, prefix, marker, maxResults, segment, nextMarker);
+            if (element.Element("DirectoryId") is XElement directoryIdElement)
+            {
+                directoryId = (string)directoryIdElement;
+            }
+            return new ListFilesAndDirectoriesSegmentResponse(serviceEndpoint, shareName, shareSnapshot, directoryPath, prefix, marker, maxResults, segment, nextMarker, directoryId);
         }
     }
 }

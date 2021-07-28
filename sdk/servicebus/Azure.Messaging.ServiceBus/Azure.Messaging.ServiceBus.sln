@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8B8C
 		samples\Sample05_SessionProcessor.md = samples\Sample05_SessionProcessor.md
 		samples\Sample06_Transactions.md = samples\Sample06_Transactions.md
 		samples\Sample07_CrudOperations.md = samples\Sample07_CrudOperations.md
+		samples\Sample08_Interop.md = samples\Sample08_Interop.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{9CD1905A-19B9-4F71-8BE6-D25CF49DA5B3}"

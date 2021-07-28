@@ -180,7 +180,7 @@ else
 {
   LogError "The function 'SetPackageVersion' was not found.`
     Make sure it is present in eng/scripts/Language-Settings.ps1.`
-    See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
+    See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
   exit 1
 }
 

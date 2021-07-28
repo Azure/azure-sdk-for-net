@@ -11,7 +11,7 @@ namespace Azure.Core.GeoJson
     /// </summary>
     /// <example>
     /// Creating a point:
-    /// <code snippet="Snippet:CreatePoint">
+    /// <code snippet="Snippet:CreatePoint" language="csharp">
     /// var point = new GeoPoint(-122.091954, 47.607148);
     /// </code>
     /// </example>

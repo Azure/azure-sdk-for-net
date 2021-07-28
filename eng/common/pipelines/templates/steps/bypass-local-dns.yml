@@ -6,9 +6,6 @@ steps:
       condition: |
         and(
           succeededOrFailed(),
-          or(
-            eq(variables['OSVmImage'], 'ubuntu-18.04'),
-            eq(variables['OSVmImage'], 'MMSUbuntu18.04')
-          ),
+          contains(variables['OSVmImage'], 'ubuntu'),
           eq(variables['Container'], '')
         )

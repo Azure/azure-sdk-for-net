@@ -67,6 +67,11 @@ namespace Azure.Storage.Sas
         Execute = 512,
 
         /// <summary>
+        /// Indicates that setting immutability policy is permitted.
+        /// </summary>
+        SetImmutabilityPolicy = 1024,
+
+        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -127,6 +132,10 @@ namespace Azure.Storage.Blobs
             if ((permissions & BlobSasPermissions.Execute) == BlobSasPermissions.Execute)
             {
                 sb.Append(Constants.Sas.Permissions.Execute);
+            }
+            if ((permissions & BlobSasPermissions.SetImmutabilityPolicy) == BlobSasPermissions.SetImmutabilityPolicy)
+            {
+                sb.Append(Constants.Sas.Permissions.SetImmutabilityPolicy);
             }
             return sb.ToString();
         }

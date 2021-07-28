@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://amandacanaryoauth.blob.core.windows.net/test-filesystem-a50f9183-3a04-5369-7333-0b6a1861673d?restype=container",
@@ -21,7 +21,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 29 May 2020 00:05:08 GMT",
-        "ETag": "\u00220x8D80363F3434DD6\u0022",
+        "ETag": "\"0x8D80363F3434DD6\"",
         "Last-Modified": "Fri, 29 May 2020 00:05:09 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
@@ -52,7 +52,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 29 May 2020 00:05:08 GMT",
-        "ETag": "\u00220x8D80363F357A9F4\u0022",
+        "ETag": "\"0x8D80363F357A9F4\"",
         "Last-Modified": "Fri, 29 May 2020 00:05:09 GMT",
         "Server": [
           "Windows-Azure-HDFS/1.0",
@@ -65,7 +65,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://amandacanaryoauth.dfs.core.windows.net/test-filesystem-a50f9183-3a04-5369-7333-0b6a1861673d?resource=filesystem\u0026recursive=true\u0026upn=false",
+      "RequestUri": "http://amandacanaryoauth.dfs.core.windows.net/test-filesystem-a50f9183-3a04-5369-7333-0b6a1861673d?resource=filesystem&recursive=true&upn=false",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -137,6 +137,6 @@
   ],
   "Variables": {
     "RandomSeed": "470932305",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\namandacanaryoauth\nU2FuaXRpemVk\nhttp://amandacanaryoauth.blob.core.windows.net\nhttp://amandacanaryoauth.file.core.windows.net\nhttp://amandacanaryoauth.queue.core.windows.net\nhttp://amandacanaryoauth.table.core.windows.net\n\n\n\n\nhttp://amandacanaryoauth-secondary.blob.core.windows.net\nhttp://amandacanaryoauth-secondary.file.core.windows.net\nhttp://amandacanaryoauth-secondary.queue.core.windows.net\nhttp://amandacanaryoauth-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://amandacanaryoauth.blob.core.windows.net/;QueueEndpoint=http://amandacanaryoauth.queue.core.windows.net/;FileEndpoint=http://amandacanaryoauth.file.core.windows.net/;BlobSecondaryEndpoint=http://amandacanaryoauth-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://amandacanaryoauth-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://amandacanaryoauth-secondary.file.core.windows.net/;AccountName=amandacanaryoauth;AccountKey=Sanitized\n"
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\namandacanaryoauth\nU2FuaXRpemVk\nhttp://amandacanaryoauth.blob.core.windows.net\nhttp://amandacanaryoauth.file.core.windows.net\nhttp://amandacanaryoauth.queue.core.windows.net\nhttp://amandacanaryoauth.table.core.windows.net\n\n\n\n\nhttp://amandacanaryoauth-secondary.blob.core.windows.net\nhttp://amandacanaryoauth-secondary.file.core.windows.net\nhttp://amandacanaryoauth-secondary.queue.core.windows.net\nhttp://amandacanaryoauth-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=http://amandacanaryoauth.blob.core.windows.net/;QueueEndpoint=http://amandacanaryoauth.queue.core.windows.net/;FileEndpoint=http://amandacanaryoauth.file.core.windows.net/;BlobSecondaryEndpoint=http://amandacanaryoauth-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://amandacanaryoauth-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://amandacanaryoauth-secondary.file.core.windows.net/;AccountName=amandacanaryoauth;AccountKey=Sanitized\n\n\n"
   }
 }

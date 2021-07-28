@@ -22,5 +22,5 @@ This client library allows to do following operations:
  - Generate user tokens [synchronously][sample_identity] or [asynchronously][sample_identity_async]
  
 <!-- LINKS -->
-[sample_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Identity/samples/Sample1_CommunicationIdentityClient.md
-[sample_identity_async]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Identity/samples/Sample1_CommunicationIdentityClientAsync.md
+[sample_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Identity/samples/Sample1_CommunicationIdentityClient.md
+[sample_identity_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Identity/samples/Sample1_CommunicationIdentityClientAsync.md

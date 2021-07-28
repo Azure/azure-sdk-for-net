@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> Gets or sets the tone detected. </summary>
+    /// <summary> The tone value. </summary>
     public readonly partial struct ToneValue : IEquatable<ToneValue>
     {
         private readonly string _value;

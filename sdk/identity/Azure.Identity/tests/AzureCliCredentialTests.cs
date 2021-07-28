@@ -14,19 +14,40 @@ namespace Azure.Identity.Tests
 {
     public class AzureCliCredentialTests : ClientTestBase
     {
+        private const string Scope = "https://vault.azure.net/.default";
+        private const string TenantId = "explicitTenantId";
+        private const string TenantIdHint = "tenantIdChallenge";
+
         public AzureCliCredentialTests(bool isAsync) : base(isAsync) { }
 
         [Test]
-        public async Task AuthenticateWithCliCredential()
+        public async Task AuthenticateWithCliCredential(
+            [Values(null, TenantIdHint)] string tenantId,
+            [Values(true)] bool allowMultiTenantAuthentication,
+            [Values(null, TenantId)] string explicitTenantId)
         {
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
+            var options = new AzureCliCredentialOptions { TenantId = explicitTenantId, AllowMultiTenantAuthentication = allowMultiTenantAuthentication};
+            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, options.AllowMultiTenantAuthentication);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
 
             var testProcess = new TestProcess { Output = processOutput };
-            AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            AzureCliCredential credential =
+                InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), options));
+            AccessToken actualToken = await credential.GetTokenAsync(context);
 
             Assert.AreEqual(expectedToken, actualToken.Token);
             Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
+
+            var expectTenantId = expectedTenantId != null;
+            if (expectTenantId)
+            {
+                Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"-tenant {expectedTenantId}"));
+            }
+            else
+            {
+                Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("-tenant"));
+            }
         }
 
         [Test]
@@ -43,14 +64,18 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void AuthenticateWithCliCredential_InvalidJsonOutput([Values("", "{}", "{\"Some\": false}", "{\"accessToken\": \"token\"}", "{\"expiresOn\" : \"1900-01-01 00:00:00.123456\"}")] string jsonContent)
+        public void AuthenticateWithCliCredential_InvalidJsonOutput(
+            [Values("", "{}", "{\"Some\": false}", "{\"accessToken\": \"token\"}", "{\"expiresOn\" : \"1900-01-01 00:00:00.123456\"}")]
+            string jsonContent)
         {
             var testProcess = new TestProcess { Output = jsonContent };
             AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
         }
 
-        private const string RefreshTokenExpiredError = "Azure CLI authentication failed due to an unknown error. ERROR: Get Token request returned http error: 400 and server response: {\"error\":\"invalid_grant\",\"error_description\":\"AADSTS70008: The provided authorization code or refresh token has expired due to inactivity. Send a new interactive authorization request for this user and resource.";
+        private const string RefreshTokenExpiredError =
+            "Azure CLI authentication failed due to an unknown error. ERROR: Get Token request returned http error: 400 and server response: {\"error\":\"invalid_grant\",\"error_description\":\"AADSTS70008: The provided authorization code or refresh token has expired due to inactivity. Send a new interactive authorization request for this user and resource.";
+
         public static IEnumerable<object[]> AzureCliExceptionScenarios()
         {
             // params
@@ -60,7 +85,10 @@ namespace Azure.Identity.Tests
             yield return new object[] { "az: not found", AzureCliCredential.AzureCLINotInstalled, typeof(CredentialUnavailableException) };
             yield return new object[] { "Please run 'az login'", AzureCliCredential.AzNotLogIn, typeof(CredentialUnavailableException) };
             yield return new object[] { RefreshTokenExpiredError, AzureCliCredential.InteractiveLoginRequired, typeof(CredentialUnavailableException) };
-            yield return new object[] { "random unknown exception", AzureCliCredential.AzureCliFailedError + " random unknown exception", typeof(AuthenticationFailedException) };
+            yield return new object[]
+            {
+                "random unknown exception", AzureCliCredential.AzureCliFailedError + " random unknown exception", typeof(AuthenticationFailedException)
+            };
         }
 
         [Test]

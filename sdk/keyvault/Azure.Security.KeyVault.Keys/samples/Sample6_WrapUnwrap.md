@@ -1,7 +1,7 @@
 # Wrapping and unwrap a key
 
 This sample demonstrates how to wrap and unwrap a symmetric key with an RSA key.
-To get started, you'll need a URI to an Azure Key Vault or Managed HSM. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault or Managed HSM. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) for links and instructions.
 
 ## Creating a KeyClient
 
@@ -68,7 +68,7 @@ Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, w
 
 To see the full example source, see:
 
-* [Synchronous Sample6_WrapUnwrap.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample6_WrapUnwrap.cs)
-* [Asynchronous Sample6_WrapUnwrapAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample6_WrapUnwrapAsync.cs)
+* [Synchronous Sample6_WrapUnwrap.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample6_WrapUnwrap.cs)
+* [Asynchronous Sample6_WrapUnwrapAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample6_WrapUnwrapAsync.cs)
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

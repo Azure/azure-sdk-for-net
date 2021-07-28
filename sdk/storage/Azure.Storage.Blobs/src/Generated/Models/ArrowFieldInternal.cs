@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> field of an arrow schema. </summary>
+    /// <summary> Groups settings regarding specific field of an arrow schema. </summary>
     internal partial class ArrowFieldInternal
     {
         /// <summary> Initializes a new instance of ArrowFieldInternal. </summary>

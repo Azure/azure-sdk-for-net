@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <exception cref="ArgumentNullException"><paramref name="applicationId"/>, <paramref name="apiKey"/>, <paramref name="azureCloud"/>, or <paramref name="query"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="applicationId"/>, <paramref name="apiKey"/>, <paramref name="azureCloud"/>, or <paramref name="query"/> is empty.</exception>
         public AzureApplicationInsightsDataFeedSource(string applicationId, string apiKey, string azureCloud, string query)
-            : base(DataFeedSourceType.AzureApplicationInsights)
+            : base(DataFeedSourceKind.AzureApplicationInsights)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
             Argument.AssertNotNullOrEmpty(azureCloud, nameof(azureCloud));
@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         internal AzureApplicationInsightsDataFeedSource(AzureApplicationInsightsParameter parameter)
-            : base(DataFeedSourceType.AzureApplicationInsights)
+            : base(DataFeedSourceKind.AzureApplicationInsights)
         {
             Argument.AssertNotNull(parameter, nameof(parameter));
 

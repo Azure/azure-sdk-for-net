@@ -1,4 +1,4 @@
-﻿# Microsoft.Azure.Management.Media release notes
+# Microsoft.Azure.Management.Media release notes
 
 ## Changes in 4.0.0
 

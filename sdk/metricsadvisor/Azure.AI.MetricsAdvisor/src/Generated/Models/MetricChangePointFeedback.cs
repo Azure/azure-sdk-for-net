@@ -15,21 +15,21 @@ namespace Azure.AI.MetricsAdvisor
     {
 
         /// <summary> Initializes a new instance of MetricChangePointFeedback. </summary>
-        /// <param name="type"> feedback type. </param>
+        /// <param name="feedbackKind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>
-        /// <param name="createdTime"> feedback created time. </param>
+        /// <param name="createdOn"> feedback created time. </param>
         /// <param name="userPrincipal"> user who gives this feedback. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="dimensionFilter"> . </param>
-        /// <param name="startTime"> the start timestamp of feedback time range. </param>
-        /// <param name="endTime"> the end timestamp of feedback time range, when equals to startTime means only one timestamp. </param>
+        /// <param name="startsOn"> the start timestamp of feedback time range. </param>
+        /// <param name="endsOn"> the end timestamp of feedback time range, when equals to startTime means only one timestamp. </param>
         /// <param name="valueInternal"> . </param>
-        internal MetricChangePointFeedback(FeedbackType type, string id, DateTimeOffset? createdTime, string userPrincipal, string metricId, FeedbackDimensionFilter dimensionFilter, DateTimeOffset startTime, DateTimeOffset endTime, ChangePointFeedbackValue valueInternal) : base(type, id, createdTime, userPrincipal, metricId, dimensionFilter)
+        internal MetricChangePointFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startsOn, DateTimeOffset endsOn, ChangePointFeedbackValue valueInternal) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ValueInternal = valueInternal;
-            Type = type;
+            FeedbackKind = feedbackKind;
         }
     }
 }

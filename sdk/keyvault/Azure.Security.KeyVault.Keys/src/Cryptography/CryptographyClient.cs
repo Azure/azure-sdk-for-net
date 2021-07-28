@@ -96,7 +96,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(keyId, nameof(keyId));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            _keyId = keyId.ToString();
+            _keyId = keyId.AbsoluteUri;
             options ??= new CryptographyClientOptions();
 
             RemoteCryptographyClient remoteClient = new RemoteCryptographyClient(new Uri(_keyId), credential, options);
@@ -154,7 +154,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
 
-            _keyId = keyId.ToString();
+            _keyId = keyId.AbsoluteUri;
 
             RemoteCryptographyClient remoteClient = new RemoteCryptographyClient(pipeline);
 
@@ -1482,8 +1482,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             try
             {
-                using HashAlgorithm hashAlgo = algorithm.GetHashAlgorithm();
-                return hashAlgo.ComputeHash(data);
+                using HashAlgorithm hashAlgorithm = algorithm.GetHashAlgorithm();
+                return hashAlgorithm.ComputeHash(data);
             }
             catch (InvalidOperationException ex) when (LocalOnly)
             {
@@ -1496,8 +1496,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             try
             {
-                using HashAlgorithm hashAlgo = algorithm.GetHashAlgorithm();
-                return hashAlgo.ComputeHash(data);
+                using HashAlgorithm hashAlgorithm = algorithm.GetHashAlgorithm();
+                return hashAlgorithm.ComputeHash(data);
             }
             catch (InvalidOperationException ex) when (LocalOnly)
             {
