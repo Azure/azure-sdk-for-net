@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources
 
                 return new ResourcesRestOperations(
                     new Azure.Core.Pipeline.ClientDiagnostics(ClientOptions),
-                    Pipeline,
+                    ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions),
                     subscription,
                     BaseUri);
             }
