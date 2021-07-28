@@ -15,9 +15,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <summary>
         /// Constructor for a comparison condition.
         /// </summary>
-        /// <param name="field"> The field being checked against a certain value. </param>
-        /// <param name="comparisonOperator"> The ADT <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#comparison-operators">comparison operator</see> being invoked. </param>
-        /// <param name="value"> The value being checked against a field. Valid types are string, int, long, float or double.</param>
+        /// <param name="field">The field being checked against a certain value.</param>
+        /// <param name="comparisonOperator">The ADT <see href="https://docs.microsoft.com/azure/digital-twins/reference-query-operators#comparison-operators">comparison operator</see> being invoked.</param>
+        /// <param name="value">The value being checked against a field. Valid types are string, int, long, float or double.</param>
         public ComparisonCondition(string field, QueryComparisonOperator comparisonOperator, T value)
         {
             Field = field;
@@ -60,7 +60,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         }
 
         /// <summary>
-        /// The ADT <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#comparison-operators">comparison operator</see> being invoked.
+        /// The ADT <see href="https://docs.microsoft.com/azure/digital-twins/reference-query-operators#comparison-operators">comparison operator</see> being invoked.
         /// </summary>
         public QueryComparisonOperator Operator { private get; set; }
 

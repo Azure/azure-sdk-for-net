@@ -1846,7 +1846,7 @@ namespace Azure.DigitalTwins.Core
         /// <para>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </para>
-        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models">Understand twin models in Azure Digital Twins.</see>
+        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models">Understand twin models in Azure Digital Twins</see>.
         /// </remarks>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleCreateModels" language="csharp">
@@ -1895,7 +1895,7 @@ namespace Azure.DigitalTwins.Core
         /// <para>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </para>
-        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models">Understand twin models in Azure Digital Twins.</see>
+        /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models">Understand twin models in Azure Digital Twins</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
@@ -2148,7 +2148,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of query results.</returns>
         /// <typeparam name="T">The type to deserialize the result to.</typeparam>
-        public virtual AsyncPageable<T> QueryAsync<T>(AdtQueryBuilder adtQueryBuilder, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<T> QueryAsync<T>(DigitalTwinsQueryBuilder adtQueryBuilder, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
             scope.Start();
@@ -2173,7 +2173,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{T}"/> of query results.</returns>
         /// <typeparam name="T">The type to deserialize the result to.</typeparam>
-        public virtual Pageable<T> Query<T>(AdtQueryBuilder adtQueryBuilder, CancellationToken cancellationToken = default)
+        public virtual Pageable<T> Query<T>(DigitalTwinsQueryBuilder adtQueryBuilder, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
             scope.Start();

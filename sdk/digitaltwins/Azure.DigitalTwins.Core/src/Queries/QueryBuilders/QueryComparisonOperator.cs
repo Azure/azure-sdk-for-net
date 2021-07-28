@@ -29,7 +29,7 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         LessThan,
 
         /// <summary>
-        /// Geater than or equal to operator.
+        /// Greater than or equal to operator.
         /// </summary>
         GreaterOrEqual,
 

@@ -4,17 +4,17 @@
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
     /// <summary>
-    /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#contains-operators">Contains operators</see> in the ADT Query language.
+    /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/reference-query-operators#contains-operators">Contains operators</see> in the Azure DigitalTwins Query language.
     /// </summary>
     public enum QueryContainsOperator
     {
         /// <summary>
-        /// IN operator defined by the ADT query language.
+        /// IN operator defined by the DigitalTwins query language.
         /// </summary>
         In,
 
         /// <summary>
-        /// NIN (not in) operator defined by the ADT query language
+        /// NIN (not in) operator defined by the DigitalTwins query language.
         /// </summary>
         NotIn
     }

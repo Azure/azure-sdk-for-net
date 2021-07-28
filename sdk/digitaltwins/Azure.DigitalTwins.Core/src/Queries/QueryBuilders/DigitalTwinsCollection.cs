@@ -6,15 +6,15 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
     /// <summary>
     /// Collections that can be queried.
     /// </summary>
-    public enum AdtCollection
+    public enum DigitalTwinsCollection
     {
         /// <summary>
-        /// DigitalTwins collection in an ADT instance.
+        /// DigitalTwins collection.
         /// </summary>
         DigitalTwins,
 
         /// <summary>
-        /// Relationships in an ADT instance.
+        /// Relationships collection.
         /// </summary>
         Relationships,
     }
