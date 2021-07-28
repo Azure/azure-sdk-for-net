@@ -277,7 +277,7 @@ pn29yMivL7r48dlo";
         [Test]
         public void LoadECDsaCertificate()
         {
-#if NET461 || NETCOREAPP2_1
+#if NET461
             // Compatible with previous release. Goes through the LightweightPkcs8Decoder.DecodeRSAPkcs8().
             Assert.Throws<InvalidDataException>(() => PemReader.LoadCertificate(ECDsaCertificate.AsSpan(), keyType: PemReader.KeyType.RSA));
 #else

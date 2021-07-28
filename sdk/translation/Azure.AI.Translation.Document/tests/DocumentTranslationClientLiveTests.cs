@@ -21,7 +21,6 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21305")]
         public void ClientCannotAuthenticateWithFakeApiKey()
         {
             DocumentTranslationClient client = GetClient(credential: new AzureKeyCredential("fakeKey"));

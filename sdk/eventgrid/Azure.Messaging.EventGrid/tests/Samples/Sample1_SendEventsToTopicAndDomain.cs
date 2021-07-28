@@ -108,6 +108,31 @@ namespace Azure.Messaging.EventGrid.Tests.Samples
             await client.SendEventsAsync(eventsList);
         }
 
+        [Test]
+        public async Task AuthenticateWithAAD()
+        {
+            string topicEndpoint = TestEnvironment.TopicHost;
+
+            #region Snippet:EventGridAAD
+            EventGridPublisherClient client = new EventGridPublisherClient(
+                new Uri(topicEndpoint),
+                new DefaultAzureCredential());
+            #endregion
+
+            // Add EventGridEvents to a list to publish to the topic
+            List<EventGridEvent> eventsList = new List<EventGridEvent>
+            {
+                new EventGridEvent(
+                    "ExampleEventSubject",
+                    "Example.EventType",
+                    "1.0",
+                    "This is the event data")
+            };
+
+            // Send the events
+            await client.SendEventsAsync(eventsList);
+        }
+
         // This sample demonstrates how to publish CloudEvents 1.0 schema events to an Event Grid topic.
         [Test]
         public async Task SendCloudEventsToTopic()

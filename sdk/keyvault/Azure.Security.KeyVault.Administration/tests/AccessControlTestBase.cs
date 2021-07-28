@@ -25,8 +25,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
         internal string _roleDefinitionId;
         internal string _objectId;
 
-        public AccessControlTestBase(bool isAsync, RecordedTestMode? mode)
-            : base(isAsync, mode)
+        public AccessControlTestBase(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, serviceVersion, mode)
         { }
 
         internal KeyVaultAccessControlClient GetClient(TestRecording recording = null)

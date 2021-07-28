@@ -20,8 +20,8 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of HealthcareTaskResult. </summary>
-        /// <param name="results"> . </param>
-        /// <param name="errors"> . </param>
+        /// <param name="results"></param>
+        /// <param name="errors"></param>
         internal HealthcareTaskResult(HealthcareResult results, IReadOnlyList<TextAnalyticsErrorInternal> errors)
         {
             Results = results;

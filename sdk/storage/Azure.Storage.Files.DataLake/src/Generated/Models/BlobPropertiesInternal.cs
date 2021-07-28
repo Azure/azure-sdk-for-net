@@ -13,8 +13,8 @@ namespace Azure.Storage.Files.DataLake.Models
     internal partial class BlobPropertiesInternal
     {
         /// <summary> Initializes a new instance of BlobPropertiesInternal. </summary>
-        /// <param name="lastModified"> . </param>
-        /// <param name="etag"> . </param>
+        /// <param name="lastModified"></param>
+        /// <param name="etag"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
         internal BlobPropertiesInternal(DateTimeOffset lastModified, string etag)
         {
@@ -28,36 +28,36 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary> Initializes a new instance of BlobPropertiesInternal. </summary>
-        /// <param name="creationTime"> . </param>
-        /// <param name="lastModified"> . </param>
-        /// <param name="etag"> . </param>
+        /// <param name="creationTime"></param>
+        /// <param name="lastModified"></param>
+        /// <param name="etag"></param>
         /// <param name="contentLength"> Size in bytes. </param>
-        /// <param name="contentType"> . </param>
-        /// <param name="contentEncoding"> . </param>
-        /// <param name="contentLanguage"> . </param>
-        /// <param name="contentMD5"> . </param>
-        /// <param name="contentDisposition"> . </param>
-        /// <param name="cacheControl"> . </param>
-        /// <param name="blobSequenceNumber"> . </param>
-        /// <param name="copyId"> . </param>
-        /// <param name="copySource"> . </param>
-        /// <param name="copyProgress"> . </param>
-        /// <param name="copyCompletionTime"> . </param>
-        /// <param name="copyStatusDescription"> . </param>
-        /// <param name="serverEncrypted"> . </param>
-        /// <param name="incrementalCopy"> . </param>
-        /// <param name="destinationSnapshot"> . </param>
-        /// <param name="deletedTime"> . </param>
-        /// <param name="remainingRetentionDays"> . </param>
-        /// <param name="accessTierInferred"> . </param>
-        /// <param name="customerProvidedKeySha256"> . </param>
+        /// <param name="contentType"></param>
+        /// <param name="contentEncoding"></param>
+        /// <param name="contentLanguage"></param>
+        /// <param name="contentMD5"></param>
+        /// <param name="contentDisposition"></param>
+        /// <param name="cacheControl"></param>
+        /// <param name="blobSequenceNumber"></param>
+        /// <param name="copyId"></param>
+        /// <param name="copySource"></param>
+        /// <param name="copyProgress"></param>
+        /// <param name="copyCompletionTime"></param>
+        /// <param name="copyStatusDescription"></param>
+        /// <param name="serverEncrypted"></param>
+        /// <param name="incrementalCopy"></param>
+        /// <param name="destinationSnapshot"></param>
+        /// <param name="deletedTime"></param>
+        /// <param name="remainingRetentionDays"></param>
+        /// <param name="accessTierInferred"></param>
+        /// <param name="customerProvidedKeySha256"></param>
         /// <param name="encryptionScope"> The name of the encryption scope under which the blob is encrypted. </param>
-        /// <param name="accessTierChangeTime"> . </param>
-        /// <param name="tagCount"> . </param>
-        /// <param name="expiresOn"> . </param>
-        /// <param name="isSealed"> . </param>
-        /// <param name="lastAccessedOn"> . </param>
-        /// <param name="deleteTime"> . </param>
+        /// <param name="accessTierChangeTime"></param>
+        /// <param name="tagCount"></param>
+        /// <param name="expiresOn"></param>
+        /// <param name="isSealed"></param>
+        /// <param name="lastAccessedOn"></param>
+        /// <param name="deleteTime"></param>
         internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, byte[] contentMD5, string contentDisposition, string cacheControl, long? blobSequenceNumber, string copyId, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? accessTierInferred, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, DateTimeOffset? lastAccessedOn, DateTimeOffset? deleteTime)
         {
             CreationTime = creationTime;

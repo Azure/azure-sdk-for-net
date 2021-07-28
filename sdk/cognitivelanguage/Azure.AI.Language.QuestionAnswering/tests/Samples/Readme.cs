@@ -24,12 +24,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         public void BadArgument()
         {
             QuestionAnsweringClient client = Client;
-            KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("Does this knowledge base exist?");
+            QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("Does this knowledge base exist?");
 
             #region Snippet:QuestionAnsweringClient_BadRequest
             try
             {
-                Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("invalid-knowledgebase", options);
+                Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("invalid-knowledgebase", options);
             }
             catch (RequestFailedException ex)
             {

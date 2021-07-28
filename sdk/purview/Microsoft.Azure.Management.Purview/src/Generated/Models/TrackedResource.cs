@@ -38,14 +38,17 @@ namespace Microsoft.Azure.Management.Purview.Models
         /// resource</param>
         /// <param name="location">Gets or sets the location.</param>
         /// <param name="name">Gets or sets the name.</param>
+        /// <param name="systemData">Metadata pertaining to creation and last
+        /// modification of the resource.</param>
         /// <param name="tags">Tags on the azure resource.</param>
         /// <param name="type">Gets or sets the type.</param>
-        public TrackedResource(string id = default(string), Identity identity = default(Identity), string location = default(string), string name = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string))
+        public TrackedResource(string id = default(string), Identity identity = default(Identity), string location = default(string), string name = default(string), TrackedResourceSystemData systemData = default(TrackedResourceSystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string))
         {
             Id = id;
             Identity = identity;
             Location = location;
             Name = name;
+            SystemData = systemData;
             Tags = tags;
             Type = type;
             CustomInit();
@@ -79,6 +82,13 @@ namespace Microsoft.Azure.Management.Purview.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public TrackedResourceSystemData SystemData { get; private set; }
 
         /// <summary>
         /// Gets or sets tags on the azure resource.
