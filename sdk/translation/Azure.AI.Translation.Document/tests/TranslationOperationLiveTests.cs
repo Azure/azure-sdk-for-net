@@ -413,7 +413,8 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.Throws(expectedException, () => operation.GetDocumentStatus(invalidGuid));
         }
 
-        [RecordedTest]
+        [LiveOnly]
+        [Test]
         public async Task DocumentTranslationWithGlossary()
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
