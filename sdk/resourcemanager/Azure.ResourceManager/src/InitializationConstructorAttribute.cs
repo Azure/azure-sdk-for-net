@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Core
     /// An attribute class indicating the constructor to use for initialization.
     /// </summary>
     [AttributeUsage(AttributeTargets.Constructor)]
-    public class InitializationConstructorAttribute : Attribute
+    internal class InitializationConstructorAttribute : Attribute
     {
         /// <summary>
         /// Instatiate a new InitializationConstructor attribute.

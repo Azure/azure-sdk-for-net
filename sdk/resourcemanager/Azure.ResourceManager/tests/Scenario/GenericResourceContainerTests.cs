@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
