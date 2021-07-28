@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific subscription.
     /// </summary>
-    public class TenantOperations : OperationsBase
+    public class TenantOperations : ResourceOperations
     {
         private ProviderRestOperations _providerRestOperations;
 

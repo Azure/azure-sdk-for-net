@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of Tenant and their operations over their parent.
     /// </summary>
-    public class TenantContainer : ContainerBase
+    public class TenantContainer : ResourceContainer
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TenantContainer"/> class for mocking.

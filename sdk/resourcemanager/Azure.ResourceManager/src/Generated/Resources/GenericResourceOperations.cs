@@ -14,21 +14,21 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific ArmResource.
     /// </summary>
-    public class GenericResourceOperations : ResourceOperationsBase<GenericResource>
+    public class GenericResourceOperations : ResourceOperations
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class for mocking.
+        /// Initializes a new instance of the <see cref="GenericResourceOperations"/> class for mocking.
         /// </summary>
         protected GenericResourceOperations()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
+        /// Initializes a new instance of the <see cref="GenericResourceOperations"/> class.
         /// </summary>
         /// <param name="operations"> The operation to get the client properties from. </param>
         /// <param name="id"> The id of the resource. </param>
-        internal GenericResourceOperations(OperationsBase operations, ResourceIdentifier id)
+        internal GenericResourceOperations(ResourceOperations operations, ResourceIdentifier id)
             : base(operations, id)
         {
         }
@@ -204,8 +204,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        public override Response<GenericResource> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets the current GenericResource from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<GenericResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.Get");
             scope.Start();
@@ -222,8 +223,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        public override async Task<Response<GenericResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets the current GenericResource from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<GenericResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.Get");
             scope.Start();

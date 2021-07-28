@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific Feature.
     /// </summary>
-    public class FeatureOperations : ResourceOperationsBase<Feature>
+    public class FeatureOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private FeaturesRestOperations _restClient { get; }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The id of the feature to use. </param>
-        protected FeatureOperations(ResourceOperationsBase options, ResourceIdentifier id)
+        protected FeatureOperations(ResourceOperations options, ResourceIdentifier id)
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -65,8 +65,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        public override Response<Feature> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets the current Feature from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Feature> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FeatureOperations.Get");
             scope.Start();
@@ -82,8 +83,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        public override async Task<Response<Feature>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets the current Feature from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<Feature>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FeatureOperations.Get");
             scope.Start();

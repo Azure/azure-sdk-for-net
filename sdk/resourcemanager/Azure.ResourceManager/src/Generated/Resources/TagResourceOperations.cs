@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// The tag client.
     /// </summary>
-    public class TagResourceOperations : OperationsBase
+    public class TagResourceOperations : ResourceOperations
     {
         /// <summary> Initializes a new instance of the <see cref="TagResourceOperations"/> class for mocking. </summary>
         protected TagResourceOperations()
         {
         }
 
-        internal TagResourceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        internal TagResourceOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }

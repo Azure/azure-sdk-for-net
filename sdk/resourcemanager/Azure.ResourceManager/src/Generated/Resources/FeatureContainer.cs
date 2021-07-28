@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of FeatureContainer and their operations over a Feature.
     /// </summary>
-    public class FeatureContainer : ResourceContainerBase<Feature, FeatureData>
+    public class FeatureContainer : ResourceContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private FeaturesRestOperations _restClient { get; }

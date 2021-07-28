@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="operations"> The operations to copy the client options from. </param>
         /// <param name="resource"> The FeatureData to use in these operations. </param>
-        internal Feature(ResourceOperationsBase operations, FeatureData resource)
+        internal Feature(ResourceOperations operations, FeatureData resource)
             : base(operations, resource.Id)
         {
             Data = resource;
