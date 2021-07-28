@@ -109,7 +109,7 @@ namespace Azure.ResourceManager
             _tenant = new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
-                : GetSubscriptions().TryGet(defaultSubscriptionId);
+                : GetSubscriptions().GetIfExists(defaultSubscriptionId);
             ClientOptions.ApiVersions.SetProviderClient(this);
         }
 

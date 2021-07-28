@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TryGet()
         {
-            var foo = await Client.GetSubscriptions().TryGetAsync(new Guid().ToString()).ConfigureAwait(false);
+            var foo = await Client.GetSubscriptions().GetIfExistsAsync(new Guid().ToString()).ConfigureAwait(false);
             Assert.IsNull(foo);
             string subscriptionId = Client.DefaultSubscription.Id.SubscriptionId;
-            var subscription = await Client.GetSubscriptions().TryGetAsync(subscriptionId).ConfigureAwait(false);
+            var subscription = await Client.GetSubscriptions().GetIfExistsAsync(subscriptionId).ConfigureAwait(false);
             Assert.NotNull(subscription);
             Assert.IsTrue(subscription.Id.SubscriptionId.Equals(subscriptionId));
         }

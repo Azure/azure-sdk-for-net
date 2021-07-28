@@ -149,9 +149,9 @@ AvailabilitySet availabilitySet = await availabilitySetOperations.GetAsync();
 ```
 
 ### `tryGet` and `CheckIfExistss` convenience methods
-If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `tryGet()` or `CheckIfExistss()` methods, which can be invoque from any [Resource]Container class.
+If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists)` or `CheckIfExistss()` methods, which can be invoque from any [Resource]Container class.
 
-`tryGet()` and `tryGetAsync()` are going to return a null object if the specified resource name or id does not exists. On the other hand, `CheckIfExistss()` and `CheckIfExistssAsync()` is going to return a boolean, depending if the specified resource exists.
+`GetIfExists)` and `tryGetAsync()` are going to return a null object if the specified resource name or id does not exists. On the other hand, `CheckIfExistss()` and `CheckIfExistssAsync()` is going to return a boolean, depending if the specified resource exists.
 
 You can find an example for these methods [below](#check-if-resource-group-exists).
 
@@ -226,14 +226,14 @@ else
 }
 ```
 
-Another way to do this is by using `tryGet()`:
+Another way to do this is by using `GetIfExists)`:
 
 ```C# Snippet:Readme_TryGetRG
 var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 string rgName = "myRgName";
 
-var myRG = await subscription.GetResourceGroups().TryGetAsync(rgName);
+var myRG = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
 
 if (myRG == null)
 {

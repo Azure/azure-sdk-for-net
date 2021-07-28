@@ -90,7 +90,7 @@ var armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.DefaultSubscription;
             string rgName = "myRgName";
 
-            var myRG = await subscription.GetResourceGroups().TryGetAsync(rgName);
+            var myRG = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
 
             if (myRG == null)
             {

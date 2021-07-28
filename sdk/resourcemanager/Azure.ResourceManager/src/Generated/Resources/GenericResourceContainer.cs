@@ -430,9 +430,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual GenericResource TryGet(string resourceName, CancellationToken cancellationToken = default)
+        public virtual GenericResource GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.TryGet");
+            using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetIfExists");
             scope.Start();
 
             try
@@ -457,9 +457,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<GenericResource> TryGetAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<GenericResource> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.TryGet");
+            using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetIfExists");
             scope.Start();
 
             try
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Resources
         {
             using var scope = Diagnostics.CreateScope("GenericResourceContainer.CheckIfExists");
             scope.Start();
-            return TryGet(resourceName, cancellationToken) != null;
+            return GetIfExists(resourceName, cancellationToken) != null;
         }
 
         /// <summary>
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Resources
         {
             using var scope = Diagnostics.CreateScope("GenericResourceContainer.CheckIfExists");
             scope.Start();
-            return await TryGetAsync(resourceName, cancellationToken).ConfigureAwait(false) != null;
+            return await GetIfExistsAsync(resourceName, cancellationToken).ConfigureAwait(false) != null;
         }
     }
 }

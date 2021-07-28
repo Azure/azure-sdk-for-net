@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task GetSubscriptionOperation()
         {
-            var sub = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
+            var sub = await Client.GetSubscriptions().GetIfExistsAsync(TestEnvironment.SubscriptionId);
             Assert.AreEqual(sub.Id.SubscriptionId, TestEnvironment.SubscriptionId);
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TestTryGet()
         {
-            var sub = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
+            var sub = await Client.GetSubscriptions().GetIfExistsAsync(TestEnvironment.SubscriptionId);
             Assert.AreEqual($"/subscriptions/{TestEnvironment.SubscriptionId}", sub.Data.Id.ToString());
         }
 

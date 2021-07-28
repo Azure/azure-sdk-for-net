@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Tests.Samples
             string rgName = "myRgName";
 #if !SNIPPET
             //Check if "myRgName" exists, if not, create it first or run CreateResourceGroup()
-            var rg = await subscription.GetResourceGroups().TryGetAsync(rgName);
+            var rg = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
             if (rg == null)
             {
                 Location location = Location.WestUS2;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Tests.Samples
             string rgName = "myRgName";
 #if !SNIPPET
             //Check if 'myRgName' exists, if not, create it first or run CreateResourceGroup()
-            var rg = await subscription.GetResourceGroups().TryGetAsync(rgName);
+            var rg = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
             if (rg == null)
             {
                 Location location = Location.WestUS2;

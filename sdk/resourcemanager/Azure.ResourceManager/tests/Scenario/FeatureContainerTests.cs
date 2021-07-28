@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Tests
         public async Task TryGet()
         {
             Provider provider = await Client.DefaultSubscription.GetProviders().GetAsync("Microsoft.Compute");
-            Feature feature = await provider.GetFeatures().TryGetAsync("AHUB");
+            Feature feature = await provider.GetFeatures().GetIfExistsAsync("AHUB");
             Assert.IsNotNull(feature);
             Assert.IsNotNull(feature.Data.Id);
             Assert.AreEqual("Microsoft.Compute/AHUB", feature.Data.Name);

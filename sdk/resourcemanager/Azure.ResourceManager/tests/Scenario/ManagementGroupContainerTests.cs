@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TryGet()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().TryGetAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache");
+            ManagementGroup mgmtGroup = await Client.GetManagementGroups().GetIfExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache");
             CompareMgmtGroups(_mgmtGroup, mgmtGroup);
         }
 
