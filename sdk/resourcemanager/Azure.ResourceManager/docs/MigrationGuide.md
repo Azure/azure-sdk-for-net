@@ -66,7 +66,8 @@ ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 Location location = Location.WestUS2;
 string rgName = "QuickStartRG";
 
-ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpdateAsync(rgName)
+var rgData = new ResourceGroupData(location);
+ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
 ```
 The main difference is that the prevoius libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionContainer` to manage the resources in a particular subscripations. In this example, a `resourceGroupContainer` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupContainer. With that `ResoueceGroup` you will be able to get the resource containers to manage all the resources that will be inside it, as it is shown in the next part of this guide.
 
