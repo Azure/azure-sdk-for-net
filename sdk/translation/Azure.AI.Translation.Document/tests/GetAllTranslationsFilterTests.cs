@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Document.Tests
 {
     public partial class DocumentTranslationClientLiveTests
     {
-        private async Task<List<string>> CreateTranslationJobsAsync(DocumentTranslationClient client, int jobsCount = 1, int docsPerJob = 1, DocumentTranslationStatus jobTerminalStatus = default)
+        public async Task<List<string>> CreateTranslationJobsAsync(DocumentTranslationClient client, int jobsCount = 1, int docsPerJob = 1, DocumentTranslationStatus jobTerminalStatus = default)
         {
             // create source container
             if (jobTerminalStatus == DocumentTranslationStatus.Cancelled)
@@ -120,13 +120,13 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetClient();
 
             // create test jobs
-            var targetIds = await CreateTranslationJobsAsync(client, jobsCount: 5, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
+            var targetIds = await CreateTranslationJobsAsync(client, jobsCount: 2, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
             var timestamp = DateTimeOffset.UtcNow;
-            await CreateTranslationJobsAsync(client, jobsCount: 5, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
+            await CreateTranslationJobsAsync(client, jobsCount: 2, docsPerJob: 1, jobTerminalStatus: DocumentTranslationStatus.Succeeded);
 
             // list translations with filter
             var filter = new TranslationFilter(
-                createdAfter: timestamp
+                createdBefore: timestamp
             );
             var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
 
