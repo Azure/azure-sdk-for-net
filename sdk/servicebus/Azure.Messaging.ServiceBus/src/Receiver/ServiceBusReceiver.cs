@@ -260,7 +260,7 @@ namespace Azure.Messaging.ServiceBus
 
             if (maxWaitTime.HasValue)
             {
-                Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
+                Argument.AssertNotNegative(maxWaitTime.Value, nameof(maxWaitTime));
             }
             if (PrefetchCount > 0 && maxMessages > PrefetchCount)
             {

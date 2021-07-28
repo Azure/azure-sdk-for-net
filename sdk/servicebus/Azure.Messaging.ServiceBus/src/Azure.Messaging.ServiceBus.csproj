@@ -21,7 +21,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Core.Amqp" />
-    <PackageReference Include="Microsoft.Azure.Amqp" />
+    <PackageReference Include="Microsoft.Azure.Amqp" VersionOverride="2.5.1" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
