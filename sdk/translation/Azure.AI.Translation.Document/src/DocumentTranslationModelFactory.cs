@@ -4,14 +4,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-
-namespace Azure.AI.Translation.Document.Models
+namespace Azure.AI.Translation.Document
 {
     /// <summary>
     /// Model factory that enables mocking for the Document Translation Library.
     /// </summary>
-    [CodeGenType(nameof(BatchDocumentTranslationModelFactory))]
-    public static partial class BatchDocumentTranslationModelFactory
+    [CodeGenModel("BatchDocumentTranslationModelFactory")]
+    public static partial class DocumentTranslationModelFactory
     {
         #region Errors
         /// <summary>

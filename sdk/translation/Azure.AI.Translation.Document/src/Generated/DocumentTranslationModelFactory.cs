@@ -7,12 +7,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Translation.Document;
 
-namespace Azure.AI.Translation.Document.Models
+namespace Azure.AI.Translation.Document
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class BatchDocumentTranslationModelFactory
+    public static partial class DocumentTranslationModelFactory
     {
         /// <summary> Initializes a new instance of FileFormat. </summary>
         /// <param name="format"> Name of the format. </param>
