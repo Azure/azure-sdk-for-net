@@ -124,6 +124,19 @@ namespace Azure
         }
 
         /// <summary>
+        /// Creates a new instance of <see cref="NullableResponse{T}"/> with the provided value and HTTP response.
+        /// </summary>
+        /// <typeparam name="T">The type of the value.</typeparam>
+        /// <param name="value">The value.</param>
+        /// <param name="response">The HTTP response.</param>
+        /// <returns>A new instance of <see cref="NullableResponse{T}"/> with the provided value and HTTP response.</returns>
+        public static NullableResponse<T> FromNullableValue<T>(T value, Response response)
+            where T: class
+        {
+            return new NullableValueResponse<T>(response, value);
+        }
+
+        /// <summary>
         /// Returns the string representation of this <see cref="Response"/>.
         /// </summary>
         /// <returns>The string representation of this <see cref="Response"/></returns>
