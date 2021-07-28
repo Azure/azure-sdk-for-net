@@ -40,6 +40,7 @@ namespace Azure.ResourceManager
     {
         public ArmClientOptions() { }
         public Azure.ResourceManager.ApiVersions ApiVersions { get { throw null; } }
+        public string Scope { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public object GetOverrideObject<T>(System.Func<object> objectConstructor) { throw null; }
     }
