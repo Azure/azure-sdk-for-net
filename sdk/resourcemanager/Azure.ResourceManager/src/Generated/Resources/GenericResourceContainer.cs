@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
-    public class GenericResourceContainer : ResourceContainerBase<GenericResource, GenericResourceData>
+    public class GenericResourceContainer : ResourceContainer
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceContainer"/> class for mocking.
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<GenericResourceExpanded> List(string filter = null, string expand = null, int ? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResourceExpanded> GetAll(string filter = null, string expand = null, int ? top = null, CancellationToken cancellationToken = default)
         {
             Page<GenericResourceExpanded> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.List");
+                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<GenericResourceExpanded> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.List");
+                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. For example, `$expand=createdTime,changedTime`. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<GenericResourceExpanded> ListAsync(string filter = null, string expand = null, int ? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResourceExpanded> GetAllAsync(string filter = null, string expand = null, int ? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<GenericResourceExpanded>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.List");
+                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<GenericResourceExpanded>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.List");
+                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual Pageable<GenericResourceExpanded> ListByResourceGroup(string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResourceExpanded> GetByResourceGroup(string resourceGroupName, string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Resources
 
             Page<GenericResourceExpanded> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.ListByResourceGroup");
+                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetByResourceGroup");
                 scope.Start();
                 try
                 {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<GenericResourceExpanded> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.ListByResourceGroup");
+                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetByResourceGroup");
                 scope.Start();
                 try
                 {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed, returns all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual AsyncPageable<GenericResourceExpanded> ListByResourceGroupAsync(string resourceGroupName, string filter = null, string expand = null, int ? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResourceExpanded> GetByResourceGroupAsync(string resourceGroupName, string filter = null, string expand = null, int ? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Resources
 
             async Task<Page<GenericResourceExpanded>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.ListByResourceGroup");
+                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetByResourceGroup");
                 scope.Start();
                 try
                 {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<GenericResourceExpanded>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("GenericResourceContainer.ListByResourceGroup");
+                using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetByResourceGroup");
                 scope.Start();
                 try
                 {

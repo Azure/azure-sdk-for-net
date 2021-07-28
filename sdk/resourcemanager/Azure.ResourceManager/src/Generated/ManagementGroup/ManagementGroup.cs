@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Management
         /// </summary>
         /// <param name="operations"> The operations to copy the client options from. </param>
         /// <param name="resource"> The ManagementGroupData to use in these operations. </param>
-        internal ManagementGroup(OperationsBase operations, ManagementGroupData resource)
+        internal ManagementGroup(ResourceOperations operations, ManagementGroupData resource)
             : base(operations, resource.Id)
         {
             Data = resource;
