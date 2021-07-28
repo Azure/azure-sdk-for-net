@@ -4,7 +4,7 @@ namespace Azure.ResourceManager.Tests
 {
     public class TestTrackedResource : TrackedResource
     {
-        public TestTrackedResource(ResourceIdentifier id) : this(id, Location.WestUS2)
+        public TestTrackedResource(ResourceIdentifier id) : this(id, Location.WestUS)
         {
         }
 
