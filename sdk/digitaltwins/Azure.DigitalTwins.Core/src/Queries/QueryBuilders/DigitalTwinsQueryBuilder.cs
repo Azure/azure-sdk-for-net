@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Core;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
@@ -119,6 +120,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="DigitalTwinsQueryBuilder"/> object itself.</returns>
         public DigitalTwinsQueryBuilder SelectCustom(string customQuery)
         {
+            Argument.AssertNotNullOrWhiteSpace(customQuery, nameof(customQuery));
+
             _selectClauses.Add(new SelectClause(new string[] { customQuery }));
             return this;
         }
@@ -131,6 +134,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="DigitalTwinsQueryBuilder"/> object itself.</returns>
         public DigitalTwinsQueryBuilder SelectAs(string field, string alias)
         {
+            Argument.AssertNotNullOrWhiteSpace(field, nameof(field));
+            Argument.AssertNotNullOrWhiteSpace(alias, nameof(alias));
+
             _selectAsClauses.Add($"{field} {QueryConstants.As} {alias}");
             return this;
         }
@@ -155,6 +161,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="DigitalTwinsQueryBuilder"/> object itself.</returns>
         public DigitalTwinsQueryBuilder FromCustom(string collection)
         {
+            Argument.AssertNotNullOrWhiteSpace(collection, nameof(collection));
+
             _fromClause = new FromClause(collection);
             return this;
         }

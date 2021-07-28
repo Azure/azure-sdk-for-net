@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Azure.Core;
 
 namespace Azure.DigitalTwins.Core.QueryBuilder
 {
@@ -30,6 +31,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery Compare<T>(string field, QueryComparisonOperator comparisonOperator, T value)
         {
+            Argument.AssertNotNullOrWhiteSpace(field, nameof(field));
+
             _whereClauses.Add(new WhereClause(new ComparisonCondition<T>(field, comparisonOperator, value)));
             return this;
         }
@@ -43,6 +46,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery Contains(string value, string[] searched)
         {
+            Argument.AssertNotNullOrWhiteSpace(value, nameof(value));
+
             _whereClauses.Add(new WhereClause(new ContainsCondition(value, QueryContainsOperator.In, searched)));
             return this;
         }
@@ -56,6 +61,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery NotContains(string value, string[] searched)
         {
+            Argument.AssertNotNullOrWhiteSpace(value, nameof(value));
+
             _whereClauses.Add(new WhereClause(new ContainsCondition(value, QueryContainsOperator.NotIn, searched)));
             return this;
         }
@@ -67,6 +74,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery Custom(string condition)
         {
+            Argument.AssertNotNullOrWhiteSpace(condition, nameof(condition));
+
             _whereClauses.Add(new WhereClause(condition));
             return this;
         }
@@ -78,6 +87,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery IsDefined(string property)
         {
+            Argument.AssertNotNullOrWhiteSpace(property, nameof(property));
+
             _whereClauses.Add(new WhereClause($"{QueryConstants.IsDefined}({property})"));
             return this;
         }
@@ -89,6 +100,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery IsNull(string expression)
         {
+            Argument.AssertNotNullOrWhiteSpace(expression, nameof(expression));
+
             _whereClauses.Add(new WhereClause($"{QueryConstants.IsNull}({expression})"));
             return this;
         }
@@ -101,6 +114,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery StartsWith(string stringToCheck, string beginningString)
         {
+            Argument.AssertNotNullOrWhiteSpace(stringToCheck, nameof(stringToCheck));
+            Argument.AssertNotNullOrWhiteSpace(beginningString, nameof(beginningString));
+
             _whereClauses.Add(new WhereClause($"{QueryConstants.StartsWith}({stringToCheck}, '{beginningString}')"));
             return this;
         }
@@ -113,6 +129,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery EndsWith(string stringToCheck, string endingString)
         {
+            Argument.AssertNotNullOrWhiteSpace(stringToCheck, nameof(stringToCheck));
+            Argument.AssertNotNullOrWhiteSpace(endingString, nameof(endingString));
+
             _whereClauses.Add(new WhereClause($"{QueryConstants.EndsWith}({stringToCheck}, '{endingString}')"));
             return this;
         }
@@ -125,6 +144,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery IsOfModel(string model, bool exact = false)
         {
+            Argument.AssertNotNullOrWhiteSpace(model, nameof(model));
+
             var whereClauseArg = new StringBuilder();
             whereClauseArg.Append($"{QueryConstants.IsOfModel}('{model}'");
 
@@ -147,6 +168,8 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <returns>The <see cref="WhereQuery"/> object itself.</returns>
         public WhereQuery IsOfType(string expression, DigitalTwinsDataType type)
         {
+            Argument.AssertNotNullOrWhiteSpace(expression, nameof(expression));
+
             string functionName = QueryConstants.DataTypeToFunctionNameMap[type];
             _whereClauses.Add(new WhereClause($"{functionName}({expression})"));
             return this;

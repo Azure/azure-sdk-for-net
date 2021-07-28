@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.DigitalTwins.Core.QueryBuilder;
 using FluentAssertions;
 using NUnit.Framework;
@@ -343,92 +344,92 @@ namespace Azure.DigitalTwins.Core.Tests.QueryBuilderTests
         }
 
         [Test]
-        public void DigitalTwinsQueryBuilder_FromCustom_Null()
+        public void DigitalTwinsQueryBuilder_FromCustom_Null_Throws()
         {
-            new DigitalTwinsQueryBuilder()
+            Func<string> act = () => new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .FromCustom(null)
                 .Build()
-                .GetQueryText()
-                .Should()
-                .Be("SELECT * FROM");
+                .GetQueryText();
+
+            act.Should().Throw<ArgumentException>();
         }
 
         [Test]
-        public void DigitalTwinsQueryBuilder_FromCustom_EmptyString()
+        public void DigitalTwinsQueryBuilder_FromCustom_EmptyString_Throws()
         {
-            new DigitalTwinsQueryBuilder()
+            Func<string> act = () => new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .FromCustom("")
                 .Build()
-                .GetQueryText()
-                .Should()
-                .Be("SELECT * FROM");
+                .GetQueryText();
+
+            act.Should().Throw<ArgumentException>();
         }
 
         [Test]
-        public void DigitalTwinsQueryBuilder_WhereLogic_Null()
+        public void DigitalTwinsQueryBuilder_WhereLogic_Null_Throws()
         {
-            new DigitalTwinsQueryBuilder()
+            Func<string> act = () => new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(DigitalTwinsCollection.DigitalTwins)
                 .Where(q => q.IsOfModel(null))
                 .Build()
-                .GetQueryText()
-                .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE IS_OF_MODEL('')");
+                .GetQueryText();
+
+            act.Should().Throw<ArgumentException>();
         }
 
         [Test]
-        public void DigitalTwinsQueryBuilder_WhereLogic_Is_Of_Type()
+        public void DigitalTwinsQueryBuilder_WhereLogic_Is_Of_Type_Throws()
         {
-            new DigitalTwinsQueryBuilder()
+            Func<string> act = () => new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(DigitalTwinsCollection.DigitalTwins)
                 .Where(q => q.IsOfType(null, DigitalTwinsDataType.DigitalTwinsBool))
                 .Build()
-                .GetQueryText()
-                .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE IS_BOOL()");
+                .GetQueryText();
+
+            act.Should().Throw<ArgumentNullException>();
         }
 
         [Test]
-        public void DigitalTwinsQueryBuilder_WhereLogic_StartsEndsWith_Null()
+        public void DigitalTwinsQueryBuilder_WhereLogic_StartsEndsWith_Null_Throws()
         {
-            new DigitalTwinsQueryBuilder()
+            Func<string> act = () => new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(DigitalTwinsCollection.DigitalTwins)
                 .Where(q => q.StartsWith(null, null))
                 .Build()
-                .GetQueryText()
-                .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE STARTSWITH(, '')");
+                .GetQueryText();
+
+            act.Should().Throw<ArgumentNullException>();
         }
 
         [Test]
-        public void DigitalTwinsQueryBuilder_WhereLogic_ContainsNotContains_Null()
+        public void DigitalTwinsQueryBuilder_WhereLogic_ContainsNotContains_Null_Throws()
         {
-            new DigitalTwinsQueryBuilder()
+            Func<string> act = () => new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(DigitalTwinsCollection.DigitalTwins)
                 .Where(q => q.Contains(null, null))
                 .Build()
-                .GetQueryText()
-                .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE IN []");
+                .GetQueryText();
+
+            act.Should().Throw<ArgumentNullException>();
         }
 
         [Test]
-        public void DigitalTwinsQueryBuilder_WhereLogic_Compare_Null()
+        public void DigitalTwinsQueryBuilder_WhereLogic_Compare_Null_Throws()
         {
-            new DigitalTwinsQueryBuilder()
+            Func<string> act = () => new DigitalTwinsQueryBuilder()
                 .SelectAll()
                 .From(DigitalTwinsCollection.DigitalTwins)
                 .Where(q => q.Compare(null, QueryComparisonOperator.Equal, 10))
                 .Build()
-                .GetQueryText()
-                .Should()
-                .Be("SELECT * FROM DigitalTwins WHERE = 10");
+                .GetQueryText();
+
+            act.Should().Throw<ArgumentNullException>();
         }
     }
 }
