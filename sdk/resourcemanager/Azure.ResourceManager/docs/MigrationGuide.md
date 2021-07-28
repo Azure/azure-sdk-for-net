@@ -139,10 +139,24 @@ var subnetResponse = networkClient.Subnets.Get(rgName, vnetName, subnetName);
 ```
 #### New
 ```C#
-string vnetName = vmName + "_vnet";
+string vnetName = "MYVM" + "_vnet";
 string subnetName = "mySubnet";
-var vnet = await resourceGroup.GetVirtualNetworks().Construct("10.0.0.0/16").CreateOrUpdateAsync(vnetName);
-var subnet = await vnet.GetSubnets().Construct("10.0.0.0/24").CreateOrUpdateAsync(subnetName);
+string[] adressPrefixes = { "10.0.0.0/16" };
+AddressSpace addressSpace = new AddressSpace(adressPrefixes);
+
+VirtualNetworkData vnetData = new VirtualNetworkData()
+{
+    AddressSpace = addressSpace,
+    Subnets =
+    {
+        new SubnetData()
+        {
+            Name = subnetName,
+            AddressPrefix = "10.0.0.0/24"
+        }
+    }
+};
+var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
 ```
 
 The main difference here is that a virtual network object is no longer needed to create a virtual network. One similarity is that subnets are defined inside virtual networks, however, with the new SDK you can get a subnets container using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
@@ -161,8 +175,9 @@ var nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgName);
 ```
 #### New
 ```C#
-string nsgName =  vmName + "_nsg";
- _ = await resourceGroup.GetNetworkSecurityGroups().Construct(80).CreateOrUpdateAsync(nsgName);
+string nsgName = vmName + "_nsg";
+NetworkSecurityGroupData nsgData = new NetworkSecurityGroupData() { Location = location };
+_ = resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(nsgName, nsgData);
 ```
 
 Creating a Network security group does not longer require a `NetworkSecurityGroup` object as a parameter.
