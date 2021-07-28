@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Models;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -34,5 +35,11 @@ namespace Azure.Storage.Blobs.Models
         /// Specifies the size of the new Page Blob.
         /// </summary>
         public long? Size { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
+        /// hashing on uploads.
+        /// </summary>
+        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
     }
 }
