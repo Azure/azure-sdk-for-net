@@ -141,13 +141,9 @@ namespace Azure.ResourceManager.Tests
         {
             var subscription = await Client.DefaultSubscription.GetAsync();
             Assert.NotNull(subscription.Value.Data.Id);
-        }
 
-        [RecordedTest]
-        public async Task TestTryGet()
-        {
-            Subscription sub = await Client.GetSubscriptions().GetIfExistsAsync(TestEnvironment.SubscriptionId);
-            Assert.AreEqual($"/subscriptions/{TestEnvironment.SubscriptionId}", sub.Data.Id.ToString());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetSubscriptionOperations($"/subscriptions/{new Guid()}").GetAsync());
+            Assert.AreEqual(404, ex.Status);
         }
 
         private string GetLongString(int length)

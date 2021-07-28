@@ -156,11 +156,21 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets a resource group operations object.
         /// </summary>
-        /// <param name="id"> The id of the resourcegroup </param>
+        /// <param name="id"> The id of the resourcegroup. </param>
         /// <returns> Resource operations of the resource. </returns>
         public virtual ResourceGroupOperations GetResourceGroupOperations(string id)
         {
             return new ResourceGroupOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+        }
+
+        /// <summary>
+        /// Gets a subscription operations object.
+        /// </summary>
+        /// <param name="id"> The id of the subscription. </param>
+        /// <returns> Resource operations of the subscription. </returns>
+        public virtual SubscriptionOperations GetSubscriptionOperations(string id)
+        {
+            return new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
         private Subscription GetDefaultSubscription()
