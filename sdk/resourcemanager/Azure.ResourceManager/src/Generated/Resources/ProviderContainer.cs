@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Provider> List(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<Provider> GetAll(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Page<Provider> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProviderContainer.List");
+                using var scope = Diagnostics.CreateScope("ProviderContainer.GetAll");
                 scope.Start();
 
                 try
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Provider> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProviderContainer.List");
+                using var scope = Diagnostics.CreateScope("ProviderContainer.GetAll");
                 scope.Start();
 
                 try
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Provider> ListAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Provider> GetAllAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<Provider>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProviderContainer.List");
+                using var scope = Diagnostics.CreateScope("ProviderContainer.GetAll");
                 scope.Start();
 
                 try
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Provider>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ProviderContainer.List");
+                using var scope = Diagnostics.CreateScope("ProviderContainer.GetAll");
                 scope.Start();
 
                 try

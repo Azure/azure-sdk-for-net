@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Azure.ResourceManager.Core;
@@ -344,6 +345,7 @@ namespace Azure.ResourceManager
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
             ResourceIdentifier resourceObj = obj as ResourceIdentifier;
@@ -356,6 +358,7 @@ namespace Azure.ResourceManager
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return ToString().GetHashCode();

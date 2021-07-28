@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 
@@ -183,6 +184,7 @@ namespace Azure.ResourceManager
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object other)
         {
             if (ReferenceEquals(this, other))
@@ -205,6 +207,7 @@ namespace Azure.ResourceManager
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return ToString().ToLower(CultureInfo.InvariantCulture).GetHashCode();

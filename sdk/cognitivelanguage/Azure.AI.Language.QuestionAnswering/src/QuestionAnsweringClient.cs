@@ -134,7 +134,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary>Answers the specified question using the text <paramref name="records"/>.</summary>
         /// <param name="question">The question to answer.</param>
         /// <param name="records">The text records to query.</param>
-        /// <param name="language">Optional language of the text <paramref name="records"/>.</param>
+        /// <param name="language">Optional language of the text records. This is the BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, uses &quot;en&quot; for English as default.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
@@ -145,7 +145,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary>Answers the specified question using the text <paramref name="records"/>.</summary>
         /// <param name="question">The question to answer.</param>
         /// <param name="records">The text records to query.</param>
-        /// <param name="language">Optional language of the text <paramref name="records"/>.</param>
+        /// <param name="language">Optional language of the text records. This is the BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, uses &quot;en&quot; for English as default.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
@@ -156,7 +156,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary>Answers the specified question using the text <paramref name="records"/>.</summary>
         /// <param name="question">The question to answer.</param>
         /// <param name="records">A collection of <see cref="TextRecord"/> to query.</param>
-        /// <param name="language">Optional language of the <paramref name="records"/>.</param>
+        /// <param name="language">Optional language of the text records. This is the BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, uses &quot;en&quot; for English as default.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
@@ -167,7 +167,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary>Answers the specified question using the text <paramref name="records"/>.</summary>
         /// <param name="question">The question to answer.</param>
         /// <param name="records">A collection of <see cref="TextRecord"/> to query.</param>
-        /// <param name="language">Optional language of the <paramref name="records"/>.</param>
+        /// <param name="language">Optional language of the text records. This is the BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, uses &quot;en&quot; for English as default.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns><see cref="TextAnswers"/> containing answers to the <paramref name="question"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>

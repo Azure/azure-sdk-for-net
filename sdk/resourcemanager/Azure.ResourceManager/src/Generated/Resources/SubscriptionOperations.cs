@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<LocationExpanded> ListLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LocationExpanded> GetLocationsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<LocationExpanded>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListLocations");
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.GetLocations");
                 scope.Start();
                 try
                 {
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<LocationExpanded> ListLocations(CancellationToken cancellationToken = default)
+        public virtual Pageable<LocationExpanded> GetLocations(CancellationToken cancellationToken = default)
         {
             Page<LocationExpanded> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListLocations");
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.GetLocations");
                 scope.Start();
                 try
                 {
@@ -197,11 +197,11 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Feature> ListFeatures(CancellationToken cancellationToken = default)
+        public virtual Pageable<Feature> GetFeatures(CancellationToken cancellationToken = default)
         {
             Page<Feature> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListFeatures");
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.GetFeatures");
                 scope.Start();
                 try
                 {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Feature> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListFeatures");
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.GetFeatures");
                 scope.Start();
                 try
                 {
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the preview features that are available through AFEC for the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Feature> ListFeaturesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Feature> GetFeaturesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<Feature>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListFeatures");
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.GetFeatures");
                 scope.Start();
                 try
                 {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Feature>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListFeatures");
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.GetFeatures");
                 scope.Start();
                 try
                 {

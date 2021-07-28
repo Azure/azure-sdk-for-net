@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets the tenants for your account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Tenant> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Tenant> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<Tenant>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantContainer.List");
+                using var scope = Diagnostics.CreateScope("TenantContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Tenant>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantContainer.List");
+                using var scope = Diagnostics.CreateScope("TenantContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets the tenants for your account. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Tenant> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<Tenant> GetAll(CancellationToken cancellationToken = default)
         {
             Page<Tenant> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantContainer.List");
+                using var scope = Diagnostics.CreateScope("TenantContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Tenant> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantContainer.List");
+                using var scope = Diagnostics.CreateScope("TenantContainer.GetAll");
                 scope.Start();
                 try
                 {

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Tests
             string expand = default)
         {
             var resExp = await (Client.DefaultSubscription.GetGenericResources()
-                .ListAsync(filter, expand)
+                .GetAllAsync(filter, expand)
                 .FirstOrDefaultAsync(r => r.Id.Equals(resourceId)));
 
             Assert.NotNull(resExp);
