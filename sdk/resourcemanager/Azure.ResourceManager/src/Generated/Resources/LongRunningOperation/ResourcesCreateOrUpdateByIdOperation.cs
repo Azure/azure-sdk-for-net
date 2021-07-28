@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ResourcesCreateOrUpdateByIdOperation : Operation<GenericResource>, IOperationSource<GenericResource>
     {
         private readonly OperationOrResponseInternals<GenericResource> _operation;
-        private readonly OperationsBase _parentOperation;
+        private readonly ResourceOperations _parentOperation;
 
         /// <summary> Initializes a new instance of ResourcesCreateOrUpdateByIdOperation for mocking. </summary>
         protected ResourcesCreateOrUpdateByIdOperation()
         {
         }
 
-        internal ResourcesCreateOrUpdateByIdOperation(OperationsBase parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ResourcesCreateOrUpdateByIdOperation(ResourceOperations parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationOrResponseInternals<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesCreateOrUpdateByIdOperation");
             _parentOperation = parentOperation;

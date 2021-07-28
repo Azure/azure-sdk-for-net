@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Management
     /// <summary>
     /// A class representing the operations that can be performed over a specific ManagementGroup.
     /// </summary>
-    public class ManagementGroupOperations : ResourceOperationsBase<ManagementGroup>
+    public class ManagementGroupOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ManagementGroupsRestOperations _restClient;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Management
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ManagementGroupOperations(OperationsBase options, ResourceIdentifier id)
+        protected internal ManagementGroupOperations(ResourceOperations options, ResourceIdentifier id)
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -46,18 +46,6 @@ namespace Azure.ResourceManager.Management
 
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceType;
-
-        /// <inheritdoc/>
-        public override Response<ManagementGroup> Get(CancellationToken cancellationToken = default)
-        {
-            return Get(null, null, null, null, cancellationToken);
-        }
-
-        /// <inheritdoc/>
-        public async override Task<Response<ManagementGroup>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            return await GetAsync(null, null, null, null, cancellationToken).ConfigureAwait(false);
-        }
 
         /// <summary>
         /// Get the details of the management group.
@@ -212,11 +200,11 @@ namespace Azure.ResourceManager.Management
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<DescendantInfo> ListDescendants(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DescendantInfo> GetDescendants(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<DescendantInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.ListDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -231,7 +219,7 @@ namespace Azure.ResourceManager.Management
             }
             Page<DescendantInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.ListDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -258,11 +246,11 @@ namespace Azure.ResourceManager.Management
         /// </param>
         /// <param name="top"> Number of elements to return when retrieving results. Passing this in will override $skipToken. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<DescendantInfo> ListDescendantsAsync(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DescendantInfo> GetDescendantsAsync(string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DescendantInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.ListDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -277,7 +265,7 @@ namespace Azure.ResourceManager.Management
             }
             async Task<Page<DescendantInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.ListDescendants");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupOperations.GetDescendants");
                 scope.Start();
                 try
                 {

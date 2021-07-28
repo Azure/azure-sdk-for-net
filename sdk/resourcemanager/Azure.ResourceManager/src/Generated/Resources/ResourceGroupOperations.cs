@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,18 +16,8 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific ResourceGroup.
     /// </summary>
-    public class ResourceGroupOperations : ResourceOperationsBase<ResourceGroup>
+    public class ResourceGroupOperations : ResourceOperations
     {
-        /// <summary>
-        /// Name of the CreateOrUpdate() method in [Resource]Container classes.
-        /// </summary>
-        private const string CreateOrUpdateMethodName = "CreateOrUpdate";
-
-        /// <summary>
-        /// Name of the CreateOrUpdateAsync() method in [Resource]Container classes.
-        /// </summary>
-        private const string CreateOrUpdateAsyncMethodName = "CreateOrUpdateAsync";
-
         /// <summary>
         /// Gets the resource type definition for a ResourceType.
         /// </summary>
@@ -56,7 +45,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected ResourceGroupOperations(ResourceOperationsBase options, ResourceIdentifier id)
+        protected ResourceGroupOperations(ResourceOperations options, ResourceIdentifier id)
             : base(options, id)
         {
         }
@@ -214,8 +203,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        public override Response<ResourceGroup> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets the current ResourceGroup from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ResourceGroup> Get(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Get");
             scope.Start();
@@ -232,8 +222,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        public override async Task<Response<ResourceGroup>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets the current ResourceGroup from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ResourceGroup>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Get");
             scope.Start();
@@ -346,62 +337,6 @@ namespace Azure.ResourceManager.Resources
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Create a resource with a ResourceGroupOperations.
-        /// </summary>
-        /// <param name="name"> A string representing the name of the resource />. </param>
-        /// <param name="model"> The model representing the object to create. />. </param>
-        /// <typeparam name="TContainer"> The type of the class containing the container for the specific resource. </typeparam>
-        /// <typeparam name="TOperations"> The type of the operations class for a specific resource. </typeparam>
-        /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
-        /// <returns> Returns a response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
-        /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        /// <exception cref="ArgumentNullException"> Model cannot be null. </exception>
-        public virtual Response<TOperations> CreateResource<TContainer, TOperations, TResource>(string name, TResource model)
-            where TResource : TrackedResource
-            where TOperations : ResourceOperationsBase<TOperations>
-            where TContainer : ResourceContainerBase<TOperations, TResource>
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException($"{nameof(name)} provided cannot be null or a whitespace.", nameof(name));
-            if (model is null)
-                throw new ArgumentNullException(nameof(model));
-
-            var myResource = model as TrackedResource;
-            TContainer container = Activator.CreateInstance(typeof(TContainer), ClientOptions, myResource) as TContainer;
-            var createOrUpdateMethod = typeof(TContainer).GetMethod(CreateOrUpdateMethodName);
-            return createOrUpdateMethod.Invoke(container, new object[] { name, model }) as Response<TOperations>;
-        }
-
-        /// <summary>
-        /// Create a resource with a ResourceGroupOperations.
-        /// </summary>
-        /// <param name="name"> A string representing the name of the resource />. </param>
-        /// <param name="model"> The model representing the object to create. />. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <typeparam name="TContainer"> The type of the class containing the container for the specific resource. </typeparam>
-        /// <typeparam name="TOperations"> The type of the resource identifier. </typeparam>
-        /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
-        /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        /// <exception cref="ArgumentNullException"> Model cannot be null. </exception>
-        public virtual Task<Response<TOperations>> CreateResourceAsync<TContainer, TOperations, TResource>(string name, TResource model, CancellationToken cancellationToken = default)
-            where TResource : TrackedResource
-            where TOperations : ResourceOperationsBase<TOperations>
-            where TContainer : ResourceContainerBase<TOperations, TResource>
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException($"{nameof(name)} provided cannot be null or a whitespace.", nameof(name));
-            if (model is null)
-                throw new ArgumentNullException(nameof(model));
-
-            var myResource = model as TrackedResource;
-
-            TContainer container = Activator.CreateInstance(typeof(TContainer), ClientOptions, myResource) as TContainer;
-            var createOrUpdateAsyncMethod = typeof(TContainer).GetMethod(CreateOrUpdateAsyncMethodName);
-            return createOrUpdateAsyncMethod.Invoke(container, new object[] { name, model, cancellationToken }) as Task<Response<TOperations>>;
         }
 
         /// <summary>
@@ -527,9 +462,9 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.ListAvailableLocations");
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.GetAvailableLocations");
             scope.Start();
 
             try
@@ -549,9 +484,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of location that may take multiple service requests to iterate over. </returns>
         /// <exception cref="InvalidOperationException"> The default subscription id is null. </exception>
-        public virtual async Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.ListAvailableLocations");
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.GetAvailableLocations");
             scope.Start();
 
             try

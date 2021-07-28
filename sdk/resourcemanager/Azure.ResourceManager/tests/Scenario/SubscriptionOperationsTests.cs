@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Tests
         public async Task TestListLocations()
         {
             var subOps = Client.DefaultSubscription;
-            var locations = await subOps.ListLocationsAsync().ToEnumerableAsync();
+            var locations = await subOps.GetLocationsAsync().ToEnumerableAsync();
             Assert.IsTrue(locations.Count != 0);
             var location = locations.First();
             Assert.IsNotNull(location.Metadata, "Metadata was null");
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Tests
         public async Task ListFeatures()
         {
             Feature testFeature = null;
-            await foreach (var feature in Client.DefaultSubscription.ListFeaturesAsync())
+            await foreach (var feature in Client.DefaultSubscription.GetFeaturesAsync())
             {
                 testFeature = feature;
                 break;

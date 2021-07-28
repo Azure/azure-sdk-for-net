@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Tests
         protected static async Task<int> GetResourceCountAsync(GenericResourceContainer genericResources, ResourceGroup rg = default)
         {
             int result = 0;
-            var pageable = rg == null ? genericResources.ListAsync() : genericResources.ListByResourceGroupAsync(rg.Id.Name);
+            var pageable = rg == null ? genericResources.GetAllAsync() : genericResources.GetByResourceGroupAsync(rg.Id.Name);
             await foreach (var resource in pageable)
                 result++;
             return result;

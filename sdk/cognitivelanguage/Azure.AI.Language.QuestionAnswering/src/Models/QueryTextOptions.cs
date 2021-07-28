@@ -17,7 +17,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         /// </summary>
         /// <param name="question">The question to ask.</param>
         /// <param name="records">The string records to query.</param>
-        /// <param name="language">The language of the records to query.</param>
+        /// <param name="language">The language of the text records. This is the BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, uses &quot;en&quot; for English as default.</param>
         /// <returns>A new instance of the <see cref="QueryTextOptions"/> from the given parameters.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
         internal static QueryTextOptions From(string question, IEnumerable<string> records, string language)
@@ -36,7 +36,7 @@ namespace Azure.AI.Language.QuestionAnswering.Models
         /// </summary>
         /// <param name="question">The question to ask.</param>
         /// <param name="records">The collection of <see cref="TextRecord"/> to query.</param>
-        /// <param name="language">The language of the records to query.</param>
+        /// <param name="language">The language of the text records. This is the BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, uses &quot;en&quot; for English as default.</param>
         /// <returns>A new instance of the <see cref="QueryTextOptions"/> from the given parameters.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="question"/> or <paramref name="records"/> is null.</exception>
         internal static QueryTextOptions From(string question, IEnumerable<TextRecord> records, string language) =>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific subscription.
     /// </summary>
-    public class TenantOperations : OperationsBase
+    public class TenantOperations : ResourceOperations
     {
         private ProviderRestOperations _providerRestOperations;
 
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ProviderInfo> ListProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProviderInfo> GetProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Page<ProviderInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantOperations.ListProviders");
+                using var scope = Diagnostics.CreateScope("TenantOperations.GetProviders");
                 scope.Start();
 
                 try
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<ProviderInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantOperations.ListProviders");
+                using var scope = Diagnostics.CreateScope("TenantOperations.GetProviders");
                 scope.Start();
 
                 try
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ProviderInfo> ListProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProviderInfo> GetProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ProviderInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantOperations.ListProviders");
+                using var scope = Diagnostics.CreateScope("TenantOperations.GetProviders");
                 scope.Start();
 
                 try
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ProviderInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("TenantOperations.ListProviders");
+                using var scope = Diagnostics.CreateScope("TenantOperations.GetProviders");
                 scope.Start();
 
                 try

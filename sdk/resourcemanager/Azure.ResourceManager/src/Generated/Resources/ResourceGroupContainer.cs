@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of ResourceGroupContainer and their operations over a ResourceGroup.
     /// </summary>
-    public class ResourceGroupContainer : ResourceContainerBase<ResourceGroup, ResourceGroupData>
+    public class ResourceGroupContainer : ResourceContainer
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupContainer"/> class for mocking.
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="managedBy"> Who the resource group is managed by. </param>
         /// <returns> A builder with <see cref="ResourceGroup"/> and <see cref="ResourceGroupData"/>. </returns>
         /// <exception cref="ArgumentNullException"> Location cannot be null. </exception>
-        public ResourceGroupBuilder Construct(Location location, IDictionary<string, string> tags = default, string managedBy = default)
+        internal ResourceGroupBuilder Construct(Location location, IDictionary<string, string> tags = default, string managedBy = default)
         {
             if (location is null)
                 throw new ArgumentNullException(nameof(location));
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var originalResponse = RestClient.CreateOrUpdate(name, resourceDetails, cancellationToken);
-                return new ResourceGroupCreateOrUpdateOperation(Parent, originalResponse);
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual Pageable<ResourceGroup> List(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceGroup> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<ResourceGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<ResourceGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -352,11 +352,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<ResourceGroup> ListAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceGroup> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ResourceGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetAll");
                 scope.Start();
                 try
                 {

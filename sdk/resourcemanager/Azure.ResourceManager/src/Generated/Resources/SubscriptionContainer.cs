@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of Subscription and their operations
     /// </summary>
-    public class SubscriptionContainer : ResourceContainerBase<Subscription, SubscriptionData>
+    public class SubscriptionContainer : ResourceContainer
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class for mocking.
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Resources
         /// The default value is <see cref="CancellationToken.None" />.</param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual Pageable<Subscription> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<Subscription> GetAll(CancellationToken cancellationToken = default)
         {
             Page<Subscription> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+                using var scope = Diagnostics.CreateScope("SubscriptionContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<Subscription> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+                using var scope = Diagnostics.CreateScope("SubscriptionContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Resources
         /// The default value is <see cref="CancellationToken.None" />.</param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<Subscription> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Subscription> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<Subscription>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+                using var scope = Diagnostics.CreateScope("SubscriptionContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<Subscription>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+                using var scope = Diagnostics.CreateScope("SubscriptionContainer.GetAll");
                 scope.Start();
                 try
                 {
