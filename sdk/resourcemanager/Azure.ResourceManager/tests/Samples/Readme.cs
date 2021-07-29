@@ -1,9 +1,9 @@
 ﻿#region Snippet:Readme_AuthClient
 using Azure.Identity;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using System;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
 #if !SNIPPET
 using NUnit.Framework;
 

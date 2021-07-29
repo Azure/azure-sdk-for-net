@@ -35,10 +35,10 @@ To authenticate to Azure and create an `ArmClient`, do the following:
 
 ```C# Snippet:Readme_AuthClient
 using Azure.Identity;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using System;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
 
 // Code omitted for brevity
 
@@ -113,7 +113,8 @@ Performing operations on resources that already exist is a common use case when 
 Here is an example how you to access an `AvailabilitySet` object and manage it directly with its id: 
 ```csharp
 using Azure.Identity;
-using Azure.ResourceManager.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Compute;
 using System;
 using System.Threading.Tasks;
@@ -148,10 +149,10 @@ AvailabilitySetOperations availabilitySetOperations = armClient.GetAvailabilityS
 AvailabilitySet availabilitySet = await availabilitySetOperations.GetAsync();
 ```
 
-### `tryGet` and `CheckIfExistss` convenience methods
-If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExistss()` methods, which can be invoque from any [Resource]Container class.
+### `GetIfExists()` and `CheckIfExists` convenience methods
+If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoque from any [Resource]Container class.
 
-`GetIfExists()` and `GetIfExistsAsync()` are going to return a null object if the specified resource name or id does not exists. On the other hand, `CheckIfExistss()` and `CheckIfExistssAsync()` is going to return a boolean, depending if the specified resource exists.
+`GetIfExists()` and `GetIfExistsAsync()` are going to return a null object if the specified resource name or id does not exists. On the other hand, `CheckIfExists()` and `CheckIfExistsAsync()` is going to return a boolean, depending if the specified resource exists.
 
 You can find an example for these methods [below](#check-if-resource-group-exists).
 
