@@ -17,6 +17,7 @@ using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using System.Net.Http.Headers;
+using Azure.Storage.Models;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -3523,6 +3524,90 @@ namespace Azure.Storage.Files.Shares
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the range to upload.
         /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileUploadInfo> UploadRange(
+            HttpRange range,
+            Stream content,
+            ShareFileUploadRangeOptions options,
+            CancellationToken cancellationToken = default) =>
+            UploadRangeInternal(
+                range,
+                content,
+                options,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeAsync(
+            HttpRange range,
+            Stream content,
+            ShareFileUploadRangeOptions options,
+            CancellationToken cancellationToken = default) =>
+            await UploadRangeInternal(
+                range,
+                content,
+                options,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadRange(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-range">
+        /// Put Range</see>.
+        /// </summary>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
         /// <param name="transactionalContentHash">
         /// Optional MD5 hash of the range content.
         ///
@@ -3562,9 +3647,18 @@ namespace Azure.Storage.Files.Shares
             UploadRangeInternal(
                 range,
                 content,
-                transactionalContentHash,
-                progressHandler,
-                conditions: conditions,
+                new ShareFileUploadRangeOptions
+                {
+                    TransactionalHashingOptions = transactionalContentHash != default
+                        ? new UploadTransactionalHashingOptions()
+                        {
+                            Algorithm = TransactionalHashAlgorithm.MD5,
+                            PrecalculatedHash = transactionalContentHash
+                        }
+                        : default,
+                    Conditions = conditions,
+                    ProgressHandler = progressHandler
+                },
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -3622,9 +3716,18 @@ namespace Azure.Storage.Files.Shares
             await UploadRangeInternal(
                 range,
                 content,
-                transactionalContentHash,
-                progressHandler,
-                conditions: conditions,
+                new ShareFileUploadRangeOptions
+                {
+                    TransactionalHashingOptions = transactionalContentHash != default
+                        ? new UploadTransactionalHashingOptions()
+                        {
+                            Algorithm = TransactionalHashAlgorithm.MD5,
+                            PrecalculatedHash = transactionalContentHash
+                        }
+                        : default,
+                    Conditions = conditions,
+                    ProgressHandler = progressHandler
+                },
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3681,9 +3784,17 @@ namespace Azure.Storage.Files.Shares
             UploadRangeInternal(
                 range,
                 content,
-                transactionalContentHash,
-                progressHandler,
-                conditions: default,
+                new ShareFileUploadRangeOptions
+                {
+                    TransactionalHashingOptions = transactionalContentHash != default
+                        ? new UploadTransactionalHashingOptions()
+                        {
+                            Algorithm = TransactionalHashAlgorithm.MD5,
+                            PrecalculatedHash = transactionalContentHash
+                        }
+                        : default,
+                    ProgressHandler = progressHandler
+                },
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -3740,9 +3851,17 @@ namespace Azure.Storage.Files.Shares
             await UploadRangeInternal(
                 range,
                 content,
-                transactionalContentHash,
-                progressHandler,
-                conditions: default,
+                new ShareFileUploadRangeOptions
+                {
+                    TransactionalHashingOptions = transactionalContentHash != default
+                        ? new UploadTransactionalHashingOptions()
+                        {
+                            Algorithm = TransactionalHashAlgorithm.MD5,
+                            PrecalculatedHash = transactionalContentHash
+                        }
+                        : default,
+                    ProgressHandler = progressHandler
+                },
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3761,22 +3880,8 @@ namespace Azure.Storage.Files.Shares
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content of the range to upload.
         /// </param>
-        /// <param name="transactionalContentHash">
-        /// Optional MD5 hash of the range content.
-        ///
-        /// This hash is used to verify the integrity of the range during transport. When this hash
-        /// is specified, the storage service compares the hash of the content
-        /// that has arrived with this value.  Note that this MD5 hash is not
-        /// stored with the file.  If the two hashes do not match, the
-        /// operation will fail with a <see cref="RequestFailedException"/>.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
-        /// on creating the file.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -3793,17 +3898,29 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ShareFileUploadInfo>> UploadRangeInternal(
+        internal async Task<Response<ShareFileUploadInfo>> UploadRangeInternal(
             HttpRange range,
             Stream content,
-            byte[] transactionalContentHash,
-            IProgress<long> progressHandler,
-            ShareFileRequestConditions conditions,
+            ShareFileUploadRangeOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
+                options ??= new ShareFileUploadRangeOptions();
+
+                // File shares only accept MD5 for transactional hashing
+                if (options.TransactionalHashingOptions != default)
+                {
+                    switch (options.TransactionalHashingOptions.Algorithm)
+                    {
+                        case TransactionalHashAlgorithm.MD5:
+                            break;
+                        default:
+                            throw new ArgumentException("Invalid transactional hash algorithm selected.");
+                    }
+                }
+
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
@@ -3815,7 +3932,11 @@ namespace Azure.Storage.Files.Shares
                 {
                     scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
-                    content = content.WithNoDispose().WithProgress(progressHandler);
+
+                    // compute hash BEFORE attaching progress handler
+                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHash(content, options.TransactionalHashingOptions);
+
+                    content = content.WithNoDispose().WithProgress(options.ProgressHandler);
 
                     ResponseWithHeaders<FileUploadRangeHeaders> response;
 
@@ -3826,8 +3947,8 @@ namespace Azure.Storage.Files.Shares
                             fileRangeWrite: ShareFileRangeWriteType.Update,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             optionalbody: content,
-                            contentMD5: transactionalContentHash,
-                            leaseAccessConditions: conditions,
+                            contentMD5: hashResult.MD5,
+                            leaseAccessConditions: options.Conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3838,8 +3959,8 @@ namespace Azure.Storage.Files.Shares
                             fileRangeWrite: ShareFileRangeWriteType.Update,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             optionalbody: content,
-                            contentMD5: transactionalContentHash,
-                            leaseAccessConditions: conditions,
+                            contentMD5: hashResult.MD5,
+                            leaseAccessConditions: options.Conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -4484,9 +4605,12 @@ namespace Azure.Storage.Files.Shares
                 return await UploadRangeInternal(
                     new HttpRange(0, length),
                     content,
-                    null,
-                    progressHandler,
-                    conditions,
+                    new ShareFileUploadRangeOptions
+                    {
+                        // TODO support hashing on multipart uploads
+                        ProgressHandler = progressHandler,
+                        Conditions = conditions
+                    },
                     async,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -4529,9 +4653,12 @@ namespace Azure.Storage.Files.Shares
                     response = await UploadRangeInternal(
                         new HttpRange(partition.ParentPosition - initalPosition, partition.Length),
                         partition,
-                        null,
-                        progressHandler,
-                        conditions,
+                        new ShareFileUploadRangeOptions
+                        {
+                            // TODO support hashing on multipart uploads
+                            ProgressHandler = progressHandler,
+                            Conditions = conditions
+                        },
                         async,
                         cancellationToken)
                         .ConfigureAwait(false);
@@ -5596,7 +5723,8 @@ namespace Azure.Storage.Files.Shares
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: options?.OpenConditions,
-                    progressHandler: options?.ProgressHandler);
+                    progressHandler: options?.ProgressHandler,
+                    hashingOptions: options?.TransactionalHashingOptions);
             }
             catch (Exception ex)
             {

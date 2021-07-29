@@ -286,9 +286,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 c => c.AppendInternal(
                     IsAny<Stream>(),
                     IsAny<long>(),
-                    IsAny<byte[]>(),
-                    IsAny<string>(),
-                    IsAny<IProgress<long>>(),
+                    IsAny<DataLakeFileAppendOptions>(),
                     _async,
                     s_cancellationToken
                 )).Returns<Stream, long, byte[], string, IProgress<long>, bool, CancellationToken>(sink.AppendInternal);

@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Models;
 using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake
@@ -22,10 +23,12 @@ namespace Azure.Storage.Files.DataLake
             long position,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
+            UploadTransactionalHashingOptions hashingOptions,
             bool? closeEvent) : base(
                 position,
                 bufferSize,
-                progressHandler)
+                progressHandler,
+                hashingOptions)
         {
             ValidateBufferSize(bufferSize);
             _fileClient = fileClient;
@@ -43,9 +46,12 @@ namespace Azure.Storage.Files.DataLake
                 await _fileClient.AppendInternal(
                     content: _buffer,
                     offset: _writeIndex,
-                    contentHash: default,
-                    leaseId: _conditions?.LeaseId,
-                    progressHandler: _progressHandler,
+                    options: new DataLakeFileAppendOptions
+                    {
+                        TransactionalHashingOptions = _hashingOptions,
+                        ProgressHandler = _progressHandler,
+                        LeaseId = _conditions?.LeaseId
+                    },
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

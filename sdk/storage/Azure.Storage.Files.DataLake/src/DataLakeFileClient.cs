@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Models;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -1688,7 +1689,100 @@ namespace Azure.Storage.Files.DataLake
 
         #region Append Data
         /// <summary>
-        /// The <see cref="Append"/> operation uploads data to be appended to a file.
+        /// The <see cref="Append(Stream, long, DataLakeFileAppendOptions, CancellationToken)"/> operation uploads data to be appended to a file.
+        /// Data can only be appended to a file.
+        /// To apply previously uploaded data to a file, call Flush Data.
+        /// Append is currently limited to 4000 MB per request.  To upload large files all at once, consider using <see cref="Upload(Stream)"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="offset">
+        /// This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.
+        /// It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.
+        /// The value must be the position where the data is to be appended. Uploaded data is not immediately flushed, or written, to the file.
+        /// To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length
+        /// of the file after all data has been written, and there must not be a request entity body included with the request.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the state
+        /// of the updated file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response Append(
+            Stream content,
+            long offset,
+            DataLakeFileAppendOptions options,
+            CancellationToken cancellationToken = default) =>
+            AppendInternal(
+                content,
+                offset,
+                options,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="AppendAsync(Stream, long, DataLakeFileAppendOptions, CancellationToken)"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
+        /// To apply perviously uploaded data to a file, call Flush Data.
+        /// Append is currently limited to 4000 MB per request.  To upload large files all at once, consider using <see cref="UploadAsync(Stream)"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update">
+        /// Update Path</see>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="offset">
+        /// This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.
+        /// It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.
+        /// The value must be the position where the data is to be appended. Uploaded data is not immediately flushed, or written, to the file.
+        /// To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length
+        /// of the file after all data has been written, and there must not be a request entity body included with the request.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the state
+        /// of the updated file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> AppendAsync(
+            Stream content,
+            long offset,
+            DataLakeFileAppendOptions options,
+            CancellationToken cancellationToken = default) =>
+            await AppendInternal(
+                content,
+                offset,
+                options,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="Append(Stream, long, byte[], string, IProgress{long}, CancellationToken)"/> operation uploads data to be appended to a file.
         /// Data can only be appended to a file.
         /// To apply previously uploaded data to a file, call Flush Data.
         /// Append is currently limited to 4000 MB per request.  To upload large files all at once, consider using <see cref="Upload(Stream)"/>.
@@ -1732,6 +1826,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response Append(
             Stream content,
             long offset,
@@ -1749,9 +1844,18 @@ namespace Azure.Storage.Files.DataLake
                 return AppendInternal(
                     content,
                     offset,
-                    contentHash,
-                    leaseId,
-                    progressHandler,
+                    new DataLakeFileAppendOptions()
+                    {
+                        TransactionalHashingOptions = contentHash != default
+                        ? new UploadTransactionalHashingOptions()
+                        {
+                            Algorithm = TransactionalHashAlgorithm.MD5,
+                            PrecalculatedHash = contentHash
+                        }
+                        : default,
+                        LeaseId = leaseId,
+                        ProgressHandler = progressHandler
+                    },
                     async: false,
                     cancellationToken)
                     .EnsureCompleted();
@@ -1768,7 +1872,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="AppendAsync"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
+        /// The <see cref="AppendAsync(Stream, long, byte[], string, IProgress{long}, CancellationToken)"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
         /// To apply perviously uploaded data to a file, call Flush Data.
         /// Append is currently limited to 4000 MB per request.  To upload large files all at once, consider using <see cref="UploadAsync(Stream)"/>.
         ///
@@ -1811,6 +1915,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> AppendAsync(
             Stream content,
             long offset,
@@ -1828,9 +1933,18 @@ namespace Azure.Storage.Files.DataLake
                 return await AppendInternal(
                     content,
                     offset,
-                    contentHash,
-                    leaseId,
-                    progressHandler,
+                    new DataLakeFileAppendOptions()
+                    {
+                        TransactionalHashingOptions = contentHash != default
+                        ? new UploadTransactionalHashingOptions()
+                        {
+                            Algorithm = TransactionalHashAlgorithm.MD5,
+                            PrecalculatedHash = contentHash
+                        }
+                        : default,
+                        LeaseId = leaseId,
+                        ProgressHandler = progressHandler
+                    },
                     async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -1864,18 +1978,8 @@ namespace Azure.Storage.Files.DataLake
         /// To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length
         /// of the file after all data has been written, and there must not be a request entity body included with the request.
         /// </param>
-        /// <param name="contentHash">
-        /// This hash is used to verify the integrity of the request content during transport. When this header is specified,
-        /// the storage service compares the hash of the content that has arrived with this header value. If the two hashes do not match,
-        /// the operation will fail with error code 400 (Bad Request). Note that this MD5 hash is not stored with the file. This header is
-        /// associated with the request content, and not with the stored content of the file itself.
-        /// </param>
-        /// <param name="leaseId">
-        /// Optional lease id.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1895,21 +1999,24 @@ namespace Azure.Storage.Files.DataLake
         internal virtual async Task<Response> AppendInternal(
             Stream content,
             long? offset,
-            byte[] contentHash,
-            string leaseId,
-            IProgress<long> progressHandler,
+            DataLakeFileAppendOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
-                content = content?.WithNoDispose().WithProgress(progressHandler);
+                options ??= new DataLakeFileAppendOptions();
+
+                // compute hash BEFORE attaching progress handler
+                ContentHasher.GetHashResult hashResult = ContentHasher.GetHash(content, options.TransactionalHashingOptions);
+
+                content = content?.WithNoDispose().WithProgress(options.ProgressHandler);
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(DataLakeFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(offset)}: {offset}\n" +
-                    $"{nameof(leaseId)}: {leaseId}\n");
+                    $"{nameof(options.LeaseId)}: {options.LeaseId}\n");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Append)}");
 
@@ -1925,8 +2032,9 @@ namespace Azure.Storage.Files.DataLake
                             body: content,
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: contentHash,
-                            leaseId: leaseId,
+                            transactionalContentHash: hashResult.MD5,
+                            transactionalContentCrc64: hashResult.StorageCrc64,
+                            leaseId: options.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1936,8 +2044,9 @@ namespace Azure.Storage.Files.DataLake
                             body: content,
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
-                            transactionalContentHash: contentHash,
-                            leaseId: leaseId,
+                            transactionalContentHash: hashResult.MD5,
+                            transactionalContentCrc64: hashResult.StorageCrc64,
+                            leaseId: options.LeaseId,
                             cancellationToken: cancellationToken);
                     }
 
@@ -4273,6 +4382,7 @@ namespace Azure.Storage.Files.DataLake
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
+                    hashingOptions: options?.TransactionalHashingOptions,
                     closeEvent: options?.Close);
             }
             catch (Exception ex)
@@ -4324,9 +4434,11 @@ namespace Azure.Storage.Files.DataLake
                     await client.AppendInternal(
                         stream,
                         offset: 0,
-                        contentHash: default,
-                        args.Conditions?.LeaseId,
-                        progressHandler,
+                        new DataLakeFileAppendOptions()
+                        {
+                            LeaseId = args.Conditions?.LeaseId,
+                            ProgressHandler = progressHandler
+                        },
                         async,
                         cancellationToken).ConfigureAwait(false);
 
@@ -4345,9 +4457,11 @@ namespace Azure.Storage.Files.DataLake
                     => await client.AppendInternal(
                         stream,
                         offset,
-                        contentHash: default,
-                        args?.Conditions?.LeaseId,
-                        progressHandler,
+                        new DataLakeFileAppendOptions()
+                        {
+                            LeaseId = args.Conditions?.LeaseId,
+                            ProgressHandler = progressHandler
+                        },
                         async,
                         cancellationToken).ConfigureAwait(false),
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken) =>

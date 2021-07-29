@@ -100,7 +100,7 @@ namespace Azure.Storage.Blobs
                 Response<PageInfo> response = await _pageBlobClient.UploadPagesInternal(
                     content: _buffer,
                     offset: _writeIndex,
-                    new PageBlobUploadPagesOptions()
+                    options: new PageBlobUploadPagesOptions()
                     {
                         TransactionalHashingOptions = _hashingOptions,
                         Conditions = _conditions,
