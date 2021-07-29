@@ -14,7 +14,7 @@ namespace Azure.Test.Perf
 {
     public abstract class PerfTest<TOptions> : IPerfTest where TOptions : PerfOptions
     {
-        private static readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _recordPlaybackHttpClient;
 
         private readonly HttpPipelineTransport _insecureTransport;
         private readonly TestProxyPolicy _testProxyPolicy;
@@ -50,6 +50,18 @@ namespace Azure.Test.Perf
 
             if (Options.TestProxy != null)
             {
+                if (Options.Insecure)
+                {
+                    _recordPlaybackHttpClient = new HttpClient(new HttpClientHandler()
+                    {
+                        ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+                    });
+                }
+                else
+                {
+                    _recordPlaybackHttpClient = new HttpClient();
+                }
+
                 _testProxyPolicy = new TestProxyPolicy(Options.TestProxy);
             }
         }
@@ -117,7 +129,7 @@ namespace Azure.Test.Perf
             message.Headers.Add("x-recording-id", _recordingId);
             message.Headers.Add("x-purge-inmemory-recording", bool.TrueString);
 
-            await _httpClient.SendAsync(message);
+            await _recordPlaybackHttpClient.SendAsync(message);
 
             // Stop redirecting requests to test proxy
             _testProxyPolicy.Mode = null;
@@ -172,7 +184,7 @@ namespace Azure.Test.Perf
         {
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/record/start"));
 
-            var response = await _httpClient.SendAsync(message);
+            var response = await _recordPlaybackHttpClient.SendAsync(message);
             _recordingId = response.Headers.GetValues("x-recording-id").Single();
         }
 
@@ -181,7 +193,7 @@ namespace Azure.Test.Perf
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/record/stop"));
             message.Headers.Add("x-recording-id", _recordingId);
 
-            await _httpClient.SendAsync(message);
+            await _recordPlaybackHttpClient.SendAsync(message);
         }
 
         private async Task StartPlayback()
@@ -189,7 +201,7 @@ namespace Azure.Test.Perf
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/playback/start"));
             message.Headers.Add("x-recording-id", _recordingId);
 
-            var response = await _httpClient.SendAsync(message);
+            var response = await _recordPlaybackHttpClient.SendAsync(message);
             _recordingId = response.Headers.GetValues("x-recording-id").Single();
         }
 
