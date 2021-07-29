@@ -56,12 +56,12 @@ namespace Azure.Test.Perf
 
         protected TClientOptions ConfigureClientOptions<TClientOptions>(TClientOptions clientOptions) where TClientOptions : ClientOptions
         {
-            if (Options.Insecure)
+            if (_insecureTransport != null)
             {
                 clientOptions.Transport = _insecureTransport;
             }
 
-            if (Options.TestProxy != null)
+            if (_testProxyPolicy != null)
             {
                 // TestProxyPolicy should be per-retry to run as late as possible in the pipeline.  For example, some
                 // clients compute a request signature as a per-retry policy, and TestProxyPolicy should run after the
