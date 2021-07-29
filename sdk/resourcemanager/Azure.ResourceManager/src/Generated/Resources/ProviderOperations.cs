@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var result = await RestClient.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
-                if (result.Value == null)
-                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+                var response = await RestClient.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
 
-                return Response.FromValue(new Provider(this, result), result.GetRawResponse());
+                return Response.FromValue(new Provider(this, response), response.GetRawResponse());
             }
             catch (Exception e)
             {
