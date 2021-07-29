@@ -31,7 +31,7 @@ namespace Azure.Monitor.Query.Tests
                 "AzureActivity | top 10 by TimeGenerated",
                 new DateTimeRange(TimeSpan.FromDays(1)));
 
-            LogsQueryResultTable table = response.Value.PrimaryTable;
+            LogsQueryResultTable table = response.Value.Tables.Single();
 
             foreach (var row in table.Rows)
             {
@@ -58,7 +58,7 @@ namespace Azure.Monitor.Query.Tests
                 "AzureActivity | top 10 by TimeGenerated",
                 new DateTimeRange(TimeSpan.FromDays(1)));
 
-            LogsQueryResultTable table = response.Value.PrimaryTable;
+            LogsQueryResultTable table = response.Value.Tables.Single();
 
             foreach (var column in table.Columns)
             {

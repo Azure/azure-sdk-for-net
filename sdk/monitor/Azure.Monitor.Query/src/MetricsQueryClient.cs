@@ -78,7 +78,7 @@ namespace Azure.Monitor.Query
         ///
         /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
         ///
-        /// Response&lt;MetricQueryResult&gt; results = await metricsClient.QueryAsync(
+        /// Response&lt;MetricsQueryResult&gt; results = await metricsClient.QueryAsync(
         ///     resourceId,
         ///     new[] {&quot;Microsoft.OperationalInsights/workspaces&quot;}
         /// );
@@ -103,8 +103,8 @@ namespace Azure.Monitor.Query
         /// <param name="metrics">The list of metrics to query.</param>
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="MetricQueryResult"/> instance containing the query results.</returns>
-        public virtual Response<MetricQueryResult> Query(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="MetricsQueryResult"/> instance containing the query results.</returns>
+        public virtual Response<MetricsQueryResult> Query(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(Query)}");
             scope.Start();
@@ -136,7 +136,7 @@ namespace Azure.Monitor.Query
         ///
         /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
         ///
-        /// Response&lt;MetricQueryResult&gt; results = await metricsClient.QueryAsync(
+        /// Response&lt;MetricsQueryResult&gt; results = await metricsClient.QueryAsync(
         ///     resourceId,
         ///     new[] {&quot;Microsoft.OperationalInsights/workspaces&quot;}
         /// );
@@ -161,8 +161,8 @@ namespace Azure.Monitor.Query
         /// <param name="metrics">The list of metrics to query.</param>
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="MetricQueryResult"/> instance with query results.</returns>
-        public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
+        /// <returns>The <see cref="MetricsQueryResult"/> instance with query results.</returns>
+        public virtual async Task<Response<MetricsQueryResult>> QueryAsync(string resourceId, IEnumerable<string> metrics, MetricsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(Query)}");
             scope.Start();

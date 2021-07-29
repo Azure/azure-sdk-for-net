@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricQueryResult
+    public partial class MetricsQueryResult
     {
-        internal static MetricQueryResult DeserializeMetricQueryResult(JsonElement element)
+        internal static MetricsQueryResult DeserializeMetricQueryResult(JsonElement element)
         {
             Optional<int> cost = default;
             string timespan = default;
@@ -70,7 +70,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricQueryResult(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
+            return new MetricsQueryResult(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
         }
     }
 }

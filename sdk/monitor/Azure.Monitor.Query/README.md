@@ -73,7 +73,7 @@ Response<LogsQueryResult> response = await client.QueryAsync(
     "AzureActivity | top 10 by TimeGenerated",
     new DateTimeRange(TimeSpan.FromDays(1)));
 
-LogsQueryResultTable table = response.Value.PrimaryTable;
+LogsQueryResultTable table = response.Value.Tables.Single();
 
 foreach (var row in table.Rows)
 {
@@ -177,7 +177,7 @@ Response<LogsQueryResult> response = await client.QueryAsync(
     "AzureActivity | top 10 by TimeGenerated",
     new DateTimeRange(TimeSpan.FromDays(1)));
 
-LogsQueryResultTable table = response.Value.PrimaryTable;
+LogsQueryResultTable table = response.Value.Tables.Single();
 
 foreach (var column in table.Columns)
 {
@@ -239,7 +239,7 @@ string resourceId =
 
 var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
 
-Response<MetricQueryResult> results = await metricsClient.QueryAsync(
+Response<MetricsQueryResult> results = await metricsClient.QueryAsync(
     resourceId,
     new[] {"Microsoft.OperationalInsights/workspaces"}
 );

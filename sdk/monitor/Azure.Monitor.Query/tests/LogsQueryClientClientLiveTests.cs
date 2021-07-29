@@ -214,7 +214,7 @@ namespace Azure.Monitor.Query.Tests
 
             var partialResult = response.Value.Results.Single(r => r.Id == id3);
             Assert.False(partialResult.HasFailed);
-            CollectionAssert.IsNotEmpty(partialResult.PrimaryTable.Rows);
+            CollectionAssert.IsNotEmpty(partialResult.Tables.Single().Rows);
             Assert.NotNull(partialResult.Error.Code);
             Assert.NotNull(partialResult.Error.Message);
         }
@@ -240,7 +240,7 @@ namespace Azure.Monitor.Query.Tests
                 "dynamic({\"a\":123, \"b\":\"hello\", \"c\":[1,2,3], \"d\":{}})" +
                 "]", _logsTestData.DataTimeRange);
 
-            LogsQueryResultRow row = results.Value.PrimaryTable.Rows[0];
+            LogsQueryResultRow row = results.Value.Tables.Single().Rows[0];
 
             var expectedDate = DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00");
             Assert.AreEqual(expectedDate, row.GetDateTimeOffset("DateTime"));
