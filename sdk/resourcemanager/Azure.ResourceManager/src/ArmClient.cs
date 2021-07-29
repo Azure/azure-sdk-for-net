@@ -183,6 +183,16 @@ namespace Azure.ResourceManager
             return new FeatureOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
+        /// <summary>
+        /// Gets a feature operations object.
+        /// </summary>
+        /// <param name="id"> The id of the feature. </param>
+        /// <returns> Resource operations of the feature. </returns>
+        public virtual ProviderOperations GetProviderOperations(string id)
+        {
+            return new ProviderOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+        }
+
         private Subscription GetDefaultSubscription()
         {
             var sub = GetSubscriptions().GetAll().FirstOrDefault();
