@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Version>1.0.0-preview.2</Version>
     <PackageId>Azure.ResourceManager.KeyVault</PackageId>
@@ -8,12 +8,10 @@
     </Description>
     <PackageTags>azure;management;keyvault</PackageTags>
     <!-- TODO: Temp workaround. Should be fixed prio release  -->
-    <NoWarn>$(NoWarn);AZC0008;</NoWarn>
-    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
+    <NoWarn>$(NoWarn);AZC0008;AZC0001;AZC0100;CS1591;IDT003;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
+    <ProjectReference Include="..\..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj" />
   </ItemGroup>
 </Project>
-
