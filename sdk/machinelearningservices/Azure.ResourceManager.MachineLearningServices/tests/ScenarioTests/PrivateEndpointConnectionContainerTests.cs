@@ -42,40 +42,34 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 },
                 Location = TestEnvironment.Location,
                 Subnets = {
-                    new Network.Models.Subnet() { Name = "frontendSubnet", AddressPrefix = "10.0.1.0/24"},
-                    new Network.Models.Subnet() { Name = "backendSubnet", AddressPrefix = "10.0.2.0/24"},
+                    new Network.Models.Subnet() { Name = "frontendSubnet", AddressPrefix = "10.0.1.0/24", PrivateLinkServiceNetworkPolicies = "Disabled"},
+                    new Network.Models.Subnet() { Name = "backendSubnet", AddressPrefix = "10.0.2.0/24", PrivateLinkServiceNetworkPolicies = "Disabled"},
                 }
             };
             var vnet = await (await networkClient.VirtualNetworks.StartCreateOrUpdateAsync(rg.Data.Name, vnetName, vnetParameter)).WaitForCompletionAsync();
 
             // Create a load balancer
             var loadName = Recording.GenerateAssetName("testmlload");
-            var frontend = new Network.Models.FrontendIPConfiguration()
-            {
-                Name = "mlfrontend",
-                PrivateIPAllocationMethod = Network.Models.IPAllocationMethod.Dynamic,
-                Subnet = vnet.Value.Subnets.Where(x => x.Name.Equals("frontendSubnet")).FirstOrDefault()
-            };
-            var backend = new Network.Models.BackendAddressPool() { Name = "myBackEndPool" };
-            var probe = new Network.Models.Probe()
-            {
-                Name = "myHealthProbe",
-                Protocol = Network.Models.ProbeProtocol.Tcp,
-                Port = 80,
-                IntervalInSeconds = 15,
-                NumberOfProbes = 2
-            };
             var loadParameter = new Network.Models.LoadBalancer()
             {
                 Location = TestEnvironment.Location,
                 Sku = new Network.Models.LoadBalancerSku() { Name = Network.Models.LoadBalancerSkuName.Standard },
-                FrontendIPConfigurations = { frontend },
-                BackendAddressPools = { backend },
+                FrontendIPConfigurations = {
+                    new Network.Models.FrontendIPConfiguration()
+                    {
+                        Name = "mlfrontend",
+                        PrivateIPAllocationMethod = Network.Models.IPAllocationMethod.Dynamic,
+                        Subnet = vnet.Value.Subnets.Where(x => x.Name.Equals("frontendSubnet")).FirstOrDefault()
+                    } },
+                BackendAddressPools = { new Network.Models.BackendAddressPool() { Name = "myBackEndPool" } },
                 InboundNatRules = {
                     new Network.Models.InboundNatRule()
                     {
                         Name = "RDP-VM0",
-                        FrontendIPConfiguration = frontend,
+                        FrontendIPConfiguration = new Network.Models.FrontendIPConfiguration()
+                        {
+                            Id =  $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rg.Data.Name}/providers/Microsoft.Network/loadBalancers/{loadName}/frontendIPConfigurations/mlfrontend"
+                        },
                         Protocol = Network.Models.TransportProtocol.Tcp,
                         FrontendPort = 3389,
                         BackendPort = 3389,
@@ -86,14 +80,33 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                     new Network.Models.LoadBalancingRule()
                     {
                         Name = "myHTTPRule",
-                        BackendAddressPool = backend,
-                        Probe = probe,
+                        FrontendIPConfiguration = new Network.Models.FrontendIPConfiguration()
+                        {
+                            Id =  $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rg.Data.Name}/providers/Microsoft.Network/loadBalancers/{loadName}/frontendIPConfigurations/mlfrontend"
+                        },
+                        BackendAddressPool = new Network.Models.BackendAddressPool()
+                        {
+                            Id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rg.Data.Name}/providers/Microsoft.Network/loadBalancers/{loadName}/backendAddressPools/myBackEndPool"
+                        },
+                        Probe = new Network.Models.Probe()
+                        {
+                            Id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{rg.Data.Name}/providers/Microsoft.Network/loadBalancers/{loadName}/probes/myHealthProbe"
+                        },
                         Protocol = Network.Models.TransportProtocol.Tcp,
                         FrontendPort = 80,
                         BackendPort = 80,
                         IdleTimeoutInMinutes = 15
                     }
-                }
+                },
+                Probes = {
+                    new Network.Models.Probe()
+                    {
+                        Name = "myHealthProbe",
+                        Protocol = Network.Models.ProbeProtocol.Tcp,
+                        Port = 80,
+                        IntervalInSeconds = 15,
+                        NumberOfProbes = 2
+                    }}
             };
             var loadBalancer = await (await networkClient.LoadBalancers.StartCreateOrUpdateAsync(rg.Data.Name, loadName, loadParameter)).WaitForCompletionAsync();
 
@@ -126,11 +139,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                     new Network.Models.PrivateLinkServiceConnection()
                     {
                         PrivateLinkServiceId = privateLink.Value.Id,
-                        GroupIds = { "TestGroup" },
+                        GroupIds = { "blob" },
                         RequestMessage = "Please approve my connection."
                     }
                 },
-                Subnet = vnet.Value.Subnets.FirstOrDefault()
+                Subnet = new Network.Models.Subnet() { Id = vnet.Value.Subnets.FirstOrDefault().Id }
             };
             var endpoint = await (await networkClient.PrivateEndpoints.StartCreateOrUpdateAsync(rg.Data.Name, endpointName, endpointParameter)).WaitForCompletionAsync();
 
