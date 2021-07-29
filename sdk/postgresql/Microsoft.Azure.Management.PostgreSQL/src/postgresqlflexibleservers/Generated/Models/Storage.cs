@@ -14,28 +14,26 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
     using System.Linq;
 
     /// <summary>
-    /// Storage Profile properties of a server
+    /// Storage properties of a server
     /// </summary>
-    public partial class StorageProfile
+    public partial class Storage
     {
         /// <summary>
-        /// Initializes a new instance of the StorageProfile class.
+        /// Initializes a new instance of the Storage class.
         /// </summary>
-        public StorageProfile()
+        public Storage()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageProfile class.
+        /// Initializes a new instance of the Storage class.
         /// </summary>
-        /// <param name="backupRetentionDays">Backup retention days for the
+        /// <param name="storageSizeGB">Max storage allowed for a
         /// server.</param>
-        /// <param name="storageMB">Max storage allowed for a server.</param>
-        public StorageProfile(int? backupRetentionDays = default(int?), int? storageMB = default(int?))
+        public Storage(int? storageSizeGB = default(int?))
         {
-            BackupRetentionDays = backupRetentionDays;
-            StorageMB = storageMB;
+            StorageSizeGB = storageSizeGB;
             CustomInit();
         }
 
@@ -45,16 +43,10 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets backup retention days for the server.
-        /// </summary>
-        [JsonProperty(PropertyName = "backupRetentionDays")]
-        public int? BackupRetentionDays { get; set; }
-
-        /// <summary>
         /// Gets or sets max storage allowed for a server.
         /// </summary>
-        [JsonProperty(PropertyName = "storageMB")]
-        public int? StorageMB { get; set; }
+        [JsonProperty(PropertyName = "storageSizeGB")]
+        public int? StorageSizeGB { get; set; }
 
     }
 }

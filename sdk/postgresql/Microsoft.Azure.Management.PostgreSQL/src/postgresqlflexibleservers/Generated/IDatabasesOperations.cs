@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ServerKeysOperations operations.
+    /// DatabasesOperations operations.
     /// </summary>
-    public partial interface IServerKeysOperations
+    public partial interface IDatabasesOperations
     {
         /// <summary>
-        /// Gets a list of  Server keys.
+        /// Creates a new database or updates an existing database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -32,65 +32,11 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ServerKey>>> ListWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets a PostgreSQL Server key.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='serverName'>
-        /// The name of the server.
-        /// </param>
-        /// <param name='keyName'>
-        /// The name of the PostgreSQL Server key to be retrieved.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ServerKey>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates or updates a PostgreSQL Server key.
-        /// </summary>
-        /// <param name='serverName'>
-        /// The name of the server.
-        /// </param>
-        /// <param name='keyName'>
-        /// The name of the PostgreSQL Server key to be operated on (updated or
-        /// created).
+        /// <param name='databaseName'>
+        /// The name of the database.
         /// </param>
         /// <param name='parameters'>
-        /// The requested PostgreSQL Server key resource state.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The required parameters for creating or updating a database.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -107,18 +53,18 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerKey>> CreateOrUpdateWithHttpMessagesAsync(string serverName, string keyName, ServerKey parameters, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Database>> CreateWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the PostgreSQL Server key with the given name.
+        /// Deletes a database.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='keyName'>
-        /// The name of the PostgreSQL Server key to be deleted.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// <param name='databaseName'>
+        /// The name of the database.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -132,22 +78,74 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string serverName, string keyName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a PostgreSQL Server key.
+        /// Gets information about a database.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='keyName'>
-        /// The name of the PostgreSQL Server key to be operated on (updated or
-        /// created).
+        /// <param name='databaseName'>
+        /// The name of the database.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Database>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all the databases in a given server.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the server.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<Database>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates a new database or updates an existing database.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the server.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database.
         /// </param>
         /// <param name='parameters'>
-        /// The requested PostgreSQL Server key resource state.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The required parameters for creating or updating a database.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -164,18 +162,18 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerKey>> BeginCreateOrUpdateWithHttpMessagesAsync(string serverName, string keyName, ServerKey parameters, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Database>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the PostgreSQL Server key with the given name.
+        /// Deletes a database.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='keyName'>
-        /// The name of the PostgreSQL Server key to be deleted.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// <param name='databaseName'>
+        /// The name of the database.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -189,9 +187,9 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string serverName, string keyName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of  Server keys.
+        /// List all the databases in a given server.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -211,6 +209,6 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ServerKey>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Database>>> ListByServerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

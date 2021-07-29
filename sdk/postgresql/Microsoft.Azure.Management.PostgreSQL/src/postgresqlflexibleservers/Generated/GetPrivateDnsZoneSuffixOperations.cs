@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
     using System.Threading.Tasks;
 
     /// <summary>
-    /// VirtualNetworkSubnetUsageOperations operations.
+    /// GetPrivateDnsZoneSuffixOperations operations.
     /// </summary>
-    internal partial class VirtualNetworkSubnetUsageOperations : IServiceOperations<PostgreSQLManagementClient>, IVirtualNetworkSubnetUsageOperations
+    internal partial class GetPrivateDnsZoneSuffixOperations : IServiceOperations<PostgreSQLManagementClient>, IGetPrivateDnsZoneSuffixOperations
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualNetworkSubnetUsageOperations class.
+        /// Initializes a new instance of the GetPrivateDnsZoneSuffixOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal VirtualNetworkSubnetUsageOperations(PostgreSQLManagementClient client)
+        internal GetPrivateDnsZoneSuffixOperations(PostgreSQLManagementClient client)
         {
             if (client == null)
             {
@@ -51,14 +51,8 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         public PostgreSQLManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get virtual network subnet usage for a given vNet resource id.
+        /// Get private DNS zone suffix in the cloud
         /// </summary>
-        /// <param name='locationName'>
-        /// The name of the location.
-        /// </param>
-        /// <param name='parameters'>
-        /// The required parameters for creating or updating a server.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -80,7 +74,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VirtualNetworkSubnetUsageResult>> ExecuteWithHttpMessagesAsync(string locationName, VirtualNetworkSubnetUsageParameter parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<string>> ExecuteWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -93,25 +87,6 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
                     throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
                 }
             }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (Client.SubscriptionId != null)
-            {
-                if (Client.SubscriptionId.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
-                }
-            }
-            if (locationName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "locationName");
-            }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -119,16 +94,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("locationName", locationName);
-                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Execute", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/checkVirtualNetworkSubnetUsage").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{locationName}", System.Uri.EscapeDataString(locationName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.DBforPostgreSQL/getPrivateDnsZoneSuffix").ToString();
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -172,12 +143,6 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -233,7 +198,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<VirtualNetworkSubnetUsageResult>();
+            var _result = new AzureOperationResponse<string>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -246,7 +211,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VirtualNetworkSubnetUsageResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

@@ -11,32 +11,31 @@
 namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Server version capabilities.
+    /// node type capability
     /// </summary>
-    public partial class ServerVersionCapability
+    public partial class NodeTypeCapability
     {
         /// <summary>
-        /// Initializes a new instance of the ServerVersionCapability class.
+        /// Initializes a new instance of the NodeTypeCapability class.
         /// </summary>
-        public ServerVersionCapability()
+        public NodeTypeCapability()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServerVersionCapability class.
+        /// Initializes a new instance of the NodeTypeCapability class.
         /// </summary>
-        /// <param name="name">server version</param>
+        /// <param name="name">note type name</param>
+        /// <param name="nodeType">note type</param>
         /// <param name="status">The status</param>
-        public ServerVersionCapability(string name = default(string), IList<VcoreCapability> supportedVcores = default(IList<VcoreCapability>), string status = default(string))
+        public NodeTypeCapability(string name = default(string), string nodeType = default(string), string status = default(string))
         {
             Name = name;
-            SupportedVcores = supportedVcores;
+            NodeType = nodeType;
             Status = status;
             CustomInit();
         }
@@ -47,15 +46,16 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets server version
+        /// Gets note type name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
+        /// Gets note type
         /// </summary>
-        [JsonProperty(PropertyName = "supportedVcores")]
-        public IList<VcoreCapability> SupportedVcores { get; private set; }
+        [JsonProperty(PropertyName = "nodeType")]
+        public string NodeType { get; private set; }
 
         /// <summary>
         /// Gets the status

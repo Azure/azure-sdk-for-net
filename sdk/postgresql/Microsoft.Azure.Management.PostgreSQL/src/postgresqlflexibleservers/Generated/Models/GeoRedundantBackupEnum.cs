@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
 {
 
     /// <summary>
-    /// Defines values for CreateMode.
+    /// Defines values for GeoRedundantBackupEnum.
     /// </summary>
-    public static class CreateMode
+    public static class GeoRedundantBackupEnum
     {
-        public const string Default = "Default";
-        public const string Create = "Create";
-        public const string Update = "Update";
-        public const string PointInTimeRestore = "PointInTimeRestore";
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }

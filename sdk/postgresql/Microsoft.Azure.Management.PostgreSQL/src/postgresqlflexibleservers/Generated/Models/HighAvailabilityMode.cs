@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
 {
 
     /// <summary>
-    /// Defines values for CreateMode.
+    /// Defines values for HighAvailabilityMode.
     /// </summary>
-    public static class CreateMode
+    public static class HighAvailabilityMode
     {
-        public const string Default = "Default";
-        public const string Create = "Create";
-        public const string Update = "Update";
-        public const string PointInTimeRestore = "PointInTimeRestore";
+        public const string Disabled = "Disabled";
+        public const string ZoneRedundant = "ZoneRedundant";
     }
 }

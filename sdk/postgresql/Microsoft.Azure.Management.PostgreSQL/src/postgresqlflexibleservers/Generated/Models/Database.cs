@@ -11,29 +11,26 @@
 namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Resource
+    /// Represents a Database.
     /// </summary>
-    /// <remarks>
-    /// Common fields that are returned in the response for all Azure Resource
-    /// Manager resources
-    /// </remarks>
-    public partial class Resource : IResource
+    [Rest.Serialization.JsonTransformation]
+    public partial class Database : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the Database class.
         /// </summary>
-        public Resource()
+        public Database()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the Database class.
         /// </summary>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
@@ -41,11 +38,16 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="charset">The charset of the database.</param>
+        /// <param name="collation">The collation of the database.</param>
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public Database(string id = default(string), string name = default(string), string type = default(string), string charset = default(string), string collation = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
+            Charset = charset;
+            Collation = collation;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -55,25 +57,22 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets fully qualified resource ID for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+        /// Gets or sets the charset of the database.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        [JsonProperty(PropertyName = "properties.charset")]
+        public string Charset { get; set; }
 
         /// <summary>
-        /// Gets the name of the resource
+        /// Gets or sets the collation of the database.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        [JsonProperty(PropertyName = "properties.collation")]
+        public string Collation { get; set; }
 
         /// <summary>
-        /// Gets the type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"
+        /// Gets the system metadata relating to this resource.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }
