@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListRequest(string location)
+        internal HttpMessage CreateGetAllRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<ServiceTagsListResult>> ListAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceTagsListResult>> GetAllAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListRequest(location);
+            using var message = CreateGetAllRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<ServiceTagsListResult> List(string location, CancellationToken cancellationToken = default)
+        public Response<ServiceTagsListResult> GetAll(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListRequest(location);
+            using var message = CreateGetAllRequest(location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

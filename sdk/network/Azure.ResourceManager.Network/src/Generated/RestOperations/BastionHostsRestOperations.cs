@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListRequest()
+        internal HttpMessage CreateGetAllRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -307,9 +307,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all Bastion Hosts in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<BastionHostListResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<BastionHostListResult>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest();
+            using var message = CreateGetAllRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -327,9 +327,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all Bastion Hosts in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<BastionHostListResult> List(CancellationToken cancellationToken = default)
+        public Response<BastionHostListResult> GetAll(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest();
+            using var message = CreateGetAllRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName)
+        internal HttpMessage CreateGetByResourceGroupRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -367,14 +367,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<BastionHostListResult>> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<BastionHostListResult>> GetByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName);
+            using var message = CreateGetByResourceGroupRequest(resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -394,14 +394,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<BastionHostListResult> ListByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<BastionHostListResult> GetByResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName);
+            using var message = CreateGetByResourceGroupRequest(resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -434,14 +434,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<BastionHostListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<BastionHostListResult>> GetAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListNextPageRequest(nextLink);
+            using var message = CreateGetAllNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -461,14 +461,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<BastionHostListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<BastionHostListResult> GetAllNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListNextPageRequest(nextLink);
+            using var message = CreateGetAllNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateGetByResourceGroupNextPageRequest(string nextLink, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<BastionHostListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<BastionHostListResult>> GetByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<BastionHostListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<BastionHostListResult> GetByResourceGroupNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal VirtualHubsUpdateTagsOperation(OperationsBase operationsBase, Response<VirtualHubData> response)
+        internal VirtualHubsUpdateTagsOperation(ResourceOperations operationsBase, Response<VirtualHubData> response)
         {
             _operation = new OperationOrResponseInternals<VirtualHub>(Response.FromValue(new VirtualHub(operationsBase, response.Value), response.GetRawResponse()));
         }

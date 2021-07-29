@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal NatGatewaysUpdateTagsOperation(OperationsBase operationsBase, Response<NatGatewayData> response)
+        internal NatGatewaysUpdateTagsOperation(ResourceOperations operationsBase, Response<NatGatewayData> response)
         {
             _operation = new OperationOrResponseInternals<NatGateway>(Response.FromValue(new NatGateway(operationsBase, response.Value), response.GetRawResponse()));
         }

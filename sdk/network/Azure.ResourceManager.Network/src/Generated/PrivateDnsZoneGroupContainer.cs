@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of PrivateDnsZoneGroup and their operations over a PrivateEndpoint. </summary>
-    public partial class PrivateDnsZoneGroupContainer : ResourceContainerBase<PrivateDnsZoneGroup, PrivateDnsZoneGroupData>
+    public partial class PrivateDnsZoneGroupContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="PrivateDnsZoneGroupContainer"/> class for mocking. </summary>
         protected PrivateDnsZoneGroupContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of PrivateDnsZoneGroupContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal PrivateDnsZoneGroupContainer(OperationsBase parent) : base(parent)
+        internal PrivateDnsZoneGroupContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -269,9 +269,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="privateDnsZoneGroupName"> The name of the private dns zone group. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -315,15 +315,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all private dns zone groups in a private endpoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateDnsZoneGroup" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<PrivateDnsZoneGroup> List(CancellationToken cancellationToken = default)
+        public Pageable<PrivateDnsZoneGroup> GetAll(CancellationToken cancellationToken = default)
         {
             Page<PrivateDnsZoneGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.Name, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -334,11 +334,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<PrivateDnsZoneGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.Name, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -353,15 +353,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all private dns zone groups in a private endpoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateDnsZoneGroup" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<PrivateDnsZoneGroup> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<PrivateDnsZoneGroup> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PrivateDnsZoneGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.Name, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<PrivateDnsZoneGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.Name, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PrivateDnsZoneGroup(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -394,15 +394,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(PrivateDnsZoneGroupOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -417,15 +417,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("PrivateDnsZoneGroupContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(PrivateDnsZoneGroupOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

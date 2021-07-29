@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<LocalNetworkGateway> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of LocalNetworkGatewaysCreateOrUpdateOperation for mocking. </summary>
         protected LocalNetworkGatewaysCreateOrUpdateOperation()
         {
         }
 
-        internal LocalNetworkGatewaysCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal LocalNetworkGatewaysCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<LocalNetworkGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LocalNetworkGatewaysCreateOrUpdateOperation");
             _operationBase = operationsBase;

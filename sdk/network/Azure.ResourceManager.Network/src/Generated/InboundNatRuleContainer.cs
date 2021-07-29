@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of InboundNatRule and their operations over a LoadBalancer. </summary>
-    public partial class InboundNatRuleContainer : ResourceContainerBase<InboundNatRule, InboundNatRuleData>
+    public partial class InboundNatRuleContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="InboundNatRuleContainer"/> class for mocking. </summary>
         protected InboundNatRuleContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of InboundNatRuleContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal InboundNatRuleContainer(OperationsBase parent) : base(parent)
+        internal InboundNatRuleContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -321,15 +321,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InboundNatRule" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<InboundNatRule> List(CancellationToken cancellationToken = default)
+        public Pageable<InboundNatRule> GetAll(CancellationToken cancellationToken = default)
         {
             Page<InboundNatRule> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<InboundNatRule> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -359,15 +359,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the inbound nat rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="InboundNatRule" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<InboundNatRule> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<InboundNatRule> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<InboundNatRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<InboundNatRule>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new InboundNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -400,15 +400,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(InboundNatRuleOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -423,15 +423,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("InboundNatRuleContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(InboundNatRuleOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

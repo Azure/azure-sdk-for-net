@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal ServiceEndpointPoliciesUpdateTagsOperation(OperationsBase operationsBase, Response<ServiceEndpointPolicyData> response)
+        internal ServiceEndpointPoliciesUpdateTagsOperation(ResourceOperations operationsBase, Response<ServiceEndpointPolicyData> response)
         {
             _operation = new OperationOrResponseInternals<ServiceEndpointPolicy>(Response.FromValue(new ServiceEndpointPolicy(operationsBase, response.Value), response.GetRawResponse()));
         }

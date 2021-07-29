@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Gets the currently advertised routes table summary associated with the express route circuit in a resource group. </summary>
-    public partial class ExpressRouteCircuitsListRoutesTableSummaryOperation : Operation<ExpressRouteCircuitsRoutesTableSummaryListResult>, IOperationSource<ExpressRouteCircuitsRoutesTableSummaryListResult>
+    public partial class ExpressRouteCircuitsGetRoutesTableSummaryOperation : Operation<ExpressRouteCircuitsRoutesTableSummaryListResult>, IOperationSource<ExpressRouteCircuitsRoutesTableSummaryListResult>
     {
         private readonly OperationInternals<ExpressRouteCircuitsRoutesTableSummaryListResult> _operation;
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitsListRoutesTableSummaryOperation for mocking. </summary>
-        protected ExpressRouteCircuitsListRoutesTableSummaryOperation()
+        /// <summary> Initializes a new instance of ExpressRouteCircuitsGetRoutesTableSummaryOperation for mocking. </summary>
+        protected ExpressRouteCircuitsGetRoutesTableSummaryOperation()
         {
         }
 
-        internal ExpressRouteCircuitsListRoutesTableSummaryOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCircuitsGetRoutesTableSummaryOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<ExpressRouteCircuitsRoutesTableSummaryListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCircuitsListRoutesTableSummaryOperation");
+            _operation = new OperationInternals<ExpressRouteCircuitsRoutesTableSummaryListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCircuitsGetRoutesTableSummaryOperation");
         }
 
         /// <inheritdoc />

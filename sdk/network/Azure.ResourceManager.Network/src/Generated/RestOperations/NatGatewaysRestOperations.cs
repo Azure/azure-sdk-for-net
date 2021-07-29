@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListAllRequest()
+        internal HttpMessage CreateGetBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -414,9 +414,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all the Nat Gateways in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<NatGatewayListResult>> ListAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<NatGatewayListResult>> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListAllRequest();
+            using var message = CreateGetBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -434,9 +434,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all the Nat Gateways in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<NatGatewayListResult> ListAll(CancellationToken cancellationToken = default)
+        public Response<NatGatewayListResult> GetBySubscription(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListAllRequest();
+            using var message = CreateGetBySubscriptionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -474,14 +474,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<NatGatewayListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<NatGatewayListResult>> GetAllAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListRequest(resourceGroupName);
+            using var message = CreateGetAllRequest(resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -501,14 +501,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<NatGatewayListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<NatGatewayListResult> GetAll(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListRequest(resourceGroupName);
+            using var message = CreateGetAllRequest(resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListAllNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetBySubscriptionNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -541,14 +541,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<NatGatewayListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<NatGatewayListResult>> GetBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListAllNextPageRequest(nextLink);
+            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -568,14 +568,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<NatGatewayListResult> ListAllNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<NatGatewayListResult> GetBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListAllNextPageRequest(nextLink);
+            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<NatGatewayListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<NatGatewayListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<NatGatewayListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<NatGatewayListResult> GetAllNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

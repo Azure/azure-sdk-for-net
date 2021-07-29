@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<VirtualNetworkTap> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of VirtualNetworkTapsCreateOrUpdateOperation for mocking. </summary>
         protected VirtualNetworkTapsCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualNetworkTapsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualNetworkTapsCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VirtualNetworkTap>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworkTapsCreateOrUpdateOperation");
             _operationBase = operationsBase;

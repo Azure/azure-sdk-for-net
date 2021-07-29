@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal NetworkInterfacesUpdateTagsOperation(OperationsBase operationsBase, Response<NetworkInterfaceData> response)
+        internal NetworkInterfacesUpdateTagsOperation(ResourceOperations operationsBase, Response<NetworkInterfaceData> response)
         {
             _operation = new OperationOrResponseInternals<NetworkInterface>(Response.FromValue(new NetworkInterface(operationsBase, response.Value), response.GetRawResponse()));
         }

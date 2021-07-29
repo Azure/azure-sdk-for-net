@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string routeTableName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string routeTableName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routeTableName"/> is null. </exception>
-        public async Task<Response<RouteListResult>> ListAsync(string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
+        public async Task<Response<RouteListResult>> GetAllAsync(string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, routeTableName);
+            using var message = CreateGetAllRequest(resourceGroupName, routeTableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="routeTableName"/> is null. </exception>
-        public Response<RouteListResult> List(string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
+        public Response<RouteListResult> GetAll(string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, routeTableName);
+            using var message = CreateGetAllRequest(resourceGroupName, routeTableName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string routeTableName)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string routeTableName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeTableName"/> is null. </exception>
-        public async Task<Response<RouteListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
+        public async Task<Response<RouteListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, routeTableName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, routeTableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="routeTableName"/> is null. </exception>
-        public Response<RouteListResult> ListNextPage(string nextLink, string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
+        public Response<RouteListResult> GetAllNextPage(string nextLink, string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(routeTableName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, routeTableName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, routeTableName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

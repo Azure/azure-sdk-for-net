@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of NetworkInterface and their operations over a ResourceGroup. </summary>
-    public partial class NetworkInterfaceContainer : ResourceContainerBase<NetworkInterface, NetworkInterfaceData>
+    public partial class NetworkInterfaceContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceContainer"/> class for mocking. </summary>
         protected NetworkInterfaceContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of NetworkInterfaceContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal NetworkInterfaceContainer(OperationsBase parent) : base(parent)
+        internal NetworkInterfaceContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -321,15 +321,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all network interfaces in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkInterface" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<NetworkInterface> List(CancellationToken cancellationToken = default)
+        public Pageable<NetworkInterface> GetAll(CancellationToken cancellationToken = default)
         {
             Page<NetworkInterface> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<NetworkInterface> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -359,15 +359,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all network interfaces in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkInterface" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<NetworkInterface> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<NetworkInterface> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<NetworkInterface>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<NetworkInterface>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -400,15 +400,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(NetworkInterfaceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -423,15 +423,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(NetworkInterfaceOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

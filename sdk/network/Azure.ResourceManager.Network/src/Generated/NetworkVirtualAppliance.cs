@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "NetworkVirtualAppliance"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal NetworkVirtualAppliance(OperationsBase options, NetworkVirtualApplianceData resource) : base(options, resource.Id)
+        internal NetworkVirtualAppliance(ResourceOperations options, NetworkVirtualApplianceData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

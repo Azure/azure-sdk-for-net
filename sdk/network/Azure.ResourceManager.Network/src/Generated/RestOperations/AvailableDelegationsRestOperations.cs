@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListRequest(string location)
+        internal HttpMessage CreateGetAllRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<AvailableDelegationsResult>> ListAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableDelegationsResult>> GetAllAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListRequest(location);
+            using var message = CreateGetAllRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<AvailableDelegationsResult> List(string location, CancellationToken cancellationToken = default)
+        public Response<AvailableDelegationsResult> GetAll(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListRequest(location);
+            using var message = CreateGetAllRequest(location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string location, string resourceGroupName)
+        internal HttpMessage CreateGetByResourceGroupRequest(string resourceGroupName, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -133,22 +133,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets all of the available subnet delegations for this resource group in this region. </summary>
-        /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<AvailableDelegationsResult>> ListByResourceGroupAsync(string location, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
+        public async Task<Response<AvailableDelegationsResult>> GetByResourceGroupAsync(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
 
-            using var message = CreateListByResourceGroupRequest(location, resourceGroupName);
+            using var message = CreateGetByResourceGroupRequest(resourceGroupName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -165,22 +165,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets all of the available subnet delegations for this resource group in this region. </summary>
-        /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<AvailableDelegationsResult> ListByResourceGroup(string location, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
+        public Response<AvailableDelegationsResult> GetByResourceGroup(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
 
-            using var message = CreateListByResourceGroupRequest(location, resourceGroupName);
+            using var message = CreateGetByResourceGroupRequest(resourceGroupName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string location)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<AvailableDelegationsResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableDelegationsResult>> GetAllNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, location);
+            using var message = CreateGetAllNextPageRequest(nextLink, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<AvailableDelegationsResult> ListNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
+        public Response<AvailableDelegationsResult> GetAllNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, location);
+            using var message = CreateGetAllNextPageRequest(nextLink, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string location, string resourceGroupName)
+        internal HttpMessage CreateGetByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -288,26 +288,26 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all of the available subnet delegations for this resource group in this region. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<AvailableDelegationsResult>> ListByResourceGroupNextPageAsync(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="location"/> is null. </exception>
+        public async Task<Response<AvailableDelegationsResult>> GetByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, location, resourceGroupName);
+            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -325,26 +325,26 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all of the available subnet delegations for this resource group in this region. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<AvailableDelegationsResult> ListByResourceGroupNextPage(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="location"/> is null. </exception>
+        public Response<AvailableDelegationsResult> GetByResourceGroupNextPage(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, location, resourceGroupName);
+            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

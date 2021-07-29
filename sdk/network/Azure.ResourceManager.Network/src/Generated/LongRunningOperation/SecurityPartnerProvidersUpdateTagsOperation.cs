@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal SecurityPartnerProvidersUpdateTagsOperation(OperationsBase operationsBase, Response<SecurityPartnerProviderData> response)
+        internal SecurityPartnerProvidersUpdateTagsOperation(ResourceOperations operationsBase, Response<SecurityPartnerProviderData> response)
         {
             _operation = new OperationOrResponseInternals<SecurityPartnerProvider>(Response.FromValue(new SecurityPartnerProvider(operationsBase, response.Value), response.GetRawResponse()));
         }

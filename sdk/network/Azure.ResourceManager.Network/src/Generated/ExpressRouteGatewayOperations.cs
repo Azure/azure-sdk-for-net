@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,7 +20,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific ExpressRouteGateway. </summary>
-    public partial class ExpressRouteGatewayOperations : ResourceOperationsBase<ExpressRouteGateway>
+    public partial class ExpressRouteGatewayOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ExpressRouteGatewaysRestOperations _restClient { get; }
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteGatewayOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ExpressRouteGatewayOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal ExpressRouteGatewayOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ExpressRouteGatewaysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -43,8 +44,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<ExpressRouteGateway>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Fetches the details of a ExpressRoute gateway in a resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<ExpressRouteGateway>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayOperations.Get");
             scope.Start();
@@ -60,8 +62,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <inheritdoc />
-        public override Response<ExpressRouteGateway> Get(CancellationToken cancellationToken = default)
+        /// <summary> Fetches the details of a ExpressRoute gateway in a resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ExpressRouteGateway> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayOperations.Get");
             scope.Start();
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -88,7 +91,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -157,6 +160,77 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _restClient.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
                 return new ExpressRouteGatewaysDeleteOperation(_clientDiagnostics, Pipeline, _restClient.CreateDeleteRequest(Id.ResourceGroupName, Id.Name).Request, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary> Lists ExpressRoute gateways under a given subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<IReadOnlyList<ExpressRouteGateway>>> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayOperations.GetBySubscription");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetBySubscriptionAsync(cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value.Select(data => new ExpressRouteGateway(this, data)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists ExpressRoute gateways under a given subscription. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<IReadOnlyList<ExpressRouteGateway>> GetBySubscription(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayOperations.GetBySubscription");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetBySubscription(cancellationToken);
+                return Response.FromValue(response.Value.Value.Select(data => new ExpressRouteGateway(this, data)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists ExpressRoute gateways in a given resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<IReadOnlyList<ExpressRouteGateway>>> GetByResourceGroupAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayOperations.GetByResourceGroup");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetByResourceGroupAsync(Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value.Select(data => new ExpressRouteGateway(this, data)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists ExpressRoute gateways in a given resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<IReadOnlyList<ExpressRouteGateway>> GetByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayOperations.GetByResourceGroup");
+            scope.Start();
+            try
+            {
+                var response = _restClient.GetByResourceGroup(Id.ResourceGroupName, cancellationToken);
+                return Response.FromValue(response.Value.Value.Select(data => new ExpressRouteGateway(this, data)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
             }
             catch (Exception e)
             {

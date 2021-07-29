@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ExpressRouteGateway> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of ExpressRouteGatewaysCreateOrUpdateOperation for mocking. </summary>
         protected ExpressRouteGatewaysCreateOrUpdateOperation()
         {
         }
 
-        internal ExpressRouteGatewaysCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteGatewaysCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ExpressRouteGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteGatewaysCreateOrUpdateOperation");
             _operationBase = operationsBase;

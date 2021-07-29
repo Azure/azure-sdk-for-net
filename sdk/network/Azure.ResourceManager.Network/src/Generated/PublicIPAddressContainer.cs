@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of PublicIPAddress and their operations over a ResourceGroup. </summary>
-    public partial class PublicIPAddressContainer : ResourceContainerBase<PublicIPAddress, PublicIPAddressData>
+    public partial class PublicIPAddressContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="PublicIPAddressContainer"/> class for mocking. </summary>
         protected PublicIPAddressContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of PublicIPAddressContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal PublicIPAddressContainer(OperationsBase parent) : base(parent)
+        internal PublicIPAddressContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="publicIpAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string publicIpAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -321,15 +321,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all public IP addresses in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PublicIPAddress" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<PublicIPAddress> List(CancellationToken cancellationToken = default)
+        public Pageable<PublicIPAddress> GetAll(CancellationToken cancellationToken = default)
         {
             Page<PublicIPAddress> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<PublicIPAddress> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -359,15 +359,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all public IP addresses in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PublicIPAddress" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<PublicIPAddress> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<PublicIPAddress> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PublicIPAddress>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<PublicIPAddress>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PublicIPAddress(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -400,15 +400,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(PublicIPAddressOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -423,15 +423,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("PublicIPAddressContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(PublicIPAddressOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

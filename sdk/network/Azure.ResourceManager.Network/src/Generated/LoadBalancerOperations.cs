@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific LoadBalancer. </summary>
-    public partial class LoadBalancerOperations : ResourceOperationsBase<LoadBalancer>
+    public partial class LoadBalancerOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private LoadBalancersRestOperations _restClient { get; }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="LoadBalancerOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal LoadBalancerOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal LoadBalancerOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -54,44 +54,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<LoadBalancer>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.Get");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <inheritdoc />
-        public override Response<LoadBalancer> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.Get");
-            scope.Start();
-            try
-            {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets the specified load balancer. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LoadBalancer>> GetAsync(string expand, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<LoadBalancer>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.Get");
             scope.Start();
@@ -110,7 +76,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified load balancer. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LoadBalancer> Get(string expand, CancellationToken cancellationToken = default)
+        public virtual Response<LoadBalancer> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.Get");
             scope.Start();
@@ -129,7 +95,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -137,7 +103,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -290,15 +256,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancer frontend IP configurations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FrontendIPConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FrontendIPConfiguration> ListLoadBalancerFrontendIPConfigurations(CancellationToken cancellationToken = default)
+        public virtual Pageable<FrontendIPConfiguration> GetLoadBalancerFrontendIPConfigurations(CancellationToken cancellationToken = default)
         {
             Page<FrontendIPConfiguration> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerFrontendIPConfigurations");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerFrontendIPConfigurations");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerFrontendIPConfigurationsRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerFrontendIPConfigurationsRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -309,11 +275,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<FrontendIPConfiguration> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerFrontendIPConfigurations");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerFrontendIPConfigurations");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerFrontendIPConfigurationsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerFrontendIPConfigurationsRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,15 +294,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancer frontend IP configurations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FrontendIPConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FrontendIPConfiguration> ListLoadBalancerFrontendIPConfigurationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FrontendIPConfiguration> GetLoadBalancerFrontendIPConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<FrontendIPConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerFrontendIPConfigurations");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerFrontendIPConfigurations");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerFrontendIPConfigurationsRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerFrontendIPConfigurationsRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -347,11 +313,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<FrontendIPConfiguration>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerFrontendIPConfigurations");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerFrontendIPConfigurations");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerFrontendIPConfigurationsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerFrontendIPConfigurationsRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -401,15 +367,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancing rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancingRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LoadBalancingRule> ListLoadBalancerLoadBalancingRules(CancellationToken cancellationToken = default)
+        public virtual Pageable<LoadBalancingRule> GetLoadBalancerLoadBalancingRules(CancellationToken cancellationToken = default)
         {
             Page<LoadBalancingRule> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerLoadBalancingRules");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerLoadBalancingRules");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerLoadBalancingRulesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerLoadBalancingRulesRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -420,11 +386,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<LoadBalancingRule> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerLoadBalancingRules");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerLoadBalancingRules");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerLoadBalancingRulesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerLoadBalancingRulesRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -439,15 +405,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancing rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadBalancingRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LoadBalancingRule> ListLoadBalancerLoadBalancingRulesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LoadBalancingRule> GetLoadBalancerLoadBalancingRulesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<LoadBalancingRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerLoadBalancingRules");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerLoadBalancingRules");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerLoadBalancingRulesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerLoadBalancingRulesRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -458,11 +424,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<LoadBalancingRule>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerLoadBalancingRules");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerLoadBalancingRules");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerLoadBalancingRulesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerLoadBalancingRulesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -512,15 +478,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the outbound rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OutboundRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OutboundRule> ListLoadBalancerOutboundRules(CancellationToken cancellationToken = default)
+        public virtual Pageable<OutboundRule> GetLoadBalancerOutboundRules(CancellationToken cancellationToken = default)
         {
             Page<OutboundRule> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerOutboundRules");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerOutboundRules");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerOutboundRulesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerOutboundRulesRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -531,11 +497,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<OutboundRule> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerOutboundRules");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerOutboundRules");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerOutboundRulesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerOutboundRulesRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -550,15 +516,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the outbound rules in a load balancer. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OutboundRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OutboundRule> ListLoadBalancerOutboundRulesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OutboundRule> GetLoadBalancerOutboundRulesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<OutboundRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerOutboundRules");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerOutboundRules");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerOutboundRulesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerOutboundRulesRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -569,11 +535,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<OutboundRule>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerOutboundRules");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerOutboundRules");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerOutboundRulesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerOutboundRulesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -588,15 +554,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets associated load balancer network interfaces. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkInterfaceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkInterfaceData> ListLoadBalancerNetworkInterfaces(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkInterfaceData> GetLoadBalancerNetworkInterfaces(CancellationToken cancellationToken = default)
         {
             Page<NetworkInterfaceData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerNetworkInterfaces");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerNetworkInterfaces");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerNetworkInterfacesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerNetworkInterfacesRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -607,11 +573,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<NetworkInterfaceData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerNetworkInterfaces");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerNetworkInterfaces");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerNetworkInterfacesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerNetworkInterfacesRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -626,15 +592,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets associated load balancer network interfaces. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkInterfaceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkInterfaceData> ListLoadBalancerNetworkInterfacesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkInterfaceData> GetLoadBalancerNetworkInterfacesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<NetworkInterfaceData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerNetworkInterfaces");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerNetworkInterfaces");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerNetworkInterfacesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerNetworkInterfacesRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -645,11 +611,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<NetworkInterfaceData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerNetworkInterfaces");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerNetworkInterfaces");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerNetworkInterfacesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerNetworkInterfacesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -699,15 +665,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancer probes. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Probe" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Probe> ListLoadBalancerProbes(CancellationToken cancellationToken = default)
+        public virtual Pageable<Probe> GetLoadBalancerProbes(CancellationToken cancellationToken = default)
         {
             Page<Probe> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerProbes");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerProbes");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerProbesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerProbesRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -718,11 +684,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<Probe> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerProbes");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerProbes");
                 scope.Start();
                 try
                 {
-                    var response = _loadBalancerProbesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _loadBalancerProbesRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -737,15 +703,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the load balancer probes. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Probe" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Probe> ListLoadBalancerProbesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Probe> GetLoadBalancerProbesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<Probe>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerProbes");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerProbes");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerProbesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerProbesRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -756,11 +722,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<Probe>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.ListLoadBalancerProbes");
+                using var scope = _clientDiagnostics.CreateScope("LoadBalancerOperations.GetLoadBalancerProbes");
                 scope.Start();
                 try
                 {
-                    var response = await _loadBalancerProbesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _loadBalancerProbesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

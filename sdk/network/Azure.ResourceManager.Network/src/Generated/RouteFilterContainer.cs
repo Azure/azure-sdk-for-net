@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of RouteFilter and their operations over a ResourceGroup. </summary>
-    public partial class RouteFilterContainer : ResourceContainerBase<RouteFilter, RouteFilterData>
+    public partial class RouteFilterContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="RouteFilterContainer"/> class for mocking. </summary>
         protected RouteFilterContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of RouteFilterContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal RouteFilterContainer(OperationsBase parent) : base(parent)
+        internal RouteFilterContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -321,15 +321,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all route filters in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RouteFilter" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<RouteFilter> List(CancellationToken cancellationToken = default)
+        public Pageable<RouteFilter> GetAll(CancellationToken cancellationToken = default)
         {
             Page<RouteFilter> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<RouteFilter> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -359,15 +359,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all route filters in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RouteFilter" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<RouteFilter> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<RouteFilter> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<RouteFilter>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<RouteFilter>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RouteFilter(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -400,15 +400,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(RouteFilterOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -423,15 +423,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("RouteFilterContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(RouteFilterOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

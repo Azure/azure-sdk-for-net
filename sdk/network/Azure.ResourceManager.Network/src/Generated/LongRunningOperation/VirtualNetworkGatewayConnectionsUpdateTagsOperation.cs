@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<VirtualNetworkGatewayConnection> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionsUpdateTagsOperation for mocking. </summary>
         protected VirtualNetworkGatewayConnectionsUpdateTagsOperation()
         {
         }
 
-        internal VirtualNetworkGatewayConnectionsUpdateTagsOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualNetworkGatewayConnectionsUpdateTagsOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VirtualNetworkGatewayConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualNetworkGatewayConnectionsUpdateTagsOperation");
             _operationBase = operationsBase;

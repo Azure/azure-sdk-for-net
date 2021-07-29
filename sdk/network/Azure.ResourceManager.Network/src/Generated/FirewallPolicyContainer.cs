@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of FirewallPolicy and their operations over a ResourceGroup. </summary>
-    public partial class FirewallPolicyContainer : ResourceContainerBase<FirewallPolicy, FirewallPolicyData>
+    public partial class FirewallPolicyContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="FirewallPolicyContainer"/> class for mocking. </summary>
         protected FirewallPolicyContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of FirewallPolicyContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal FirewallPolicyContainer(OperationsBase parent) : base(parent)
+        internal FirewallPolicyContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -321,15 +321,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all Firewall Policies in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FirewallPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<FirewallPolicy> List(CancellationToken cancellationToken = default)
+        public Pageable<FirewallPolicy> GetAll(CancellationToken cancellationToken = default)
         {
             Page<FirewallPolicy> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<FirewallPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -359,15 +359,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all Firewall Policies in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FirewallPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<FirewallPolicy> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<FirewallPolicy> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<FirewallPolicy>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<FirewallPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new FirewallPolicy(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -400,15 +400,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(FirewallPolicyOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -423,15 +423,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("FirewallPolicyContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(FirewallPolicyOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

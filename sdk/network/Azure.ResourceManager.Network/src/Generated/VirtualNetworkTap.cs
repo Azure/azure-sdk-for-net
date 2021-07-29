@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkTap"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualNetworkTap(OperationsBase options, VirtualNetworkTapData resource) : base(options, resource.Id)
+        internal VirtualNetworkTap(ResourceOperations options, VirtualNetworkTapData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

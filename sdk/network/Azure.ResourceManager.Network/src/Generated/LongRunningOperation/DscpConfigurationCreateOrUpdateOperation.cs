@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<DscpConfiguration> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of DscpConfigurationCreateOrUpdateOperation for mocking. </summary>
         protected DscpConfigurationCreateOrUpdateOperation()
         {
         }
 
-        internal DscpConfigurationCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DscpConfigurationCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<DscpConfiguration>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DscpConfigurationCreateOrUpdateOperation");
             _operationBase = operationsBase;

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal FlowLogsUpdateTagsOperation(OperationsBase operationsBase, Response<FlowLogData> response)
+        internal FlowLogsUpdateTagsOperation(ResourceOperations operationsBase, Response<FlowLogData> response)
         {
             _operation = new OperationOrResponseInternals<FlowLog>(Response.FromValue(new FlowLog(operationsBase, response.Value), response.GetRawResponse()));
         }

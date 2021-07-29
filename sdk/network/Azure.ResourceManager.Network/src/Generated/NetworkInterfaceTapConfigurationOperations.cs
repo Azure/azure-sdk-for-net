@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific NetworkInterfaceTapConfiguration. </summary>
-    public partial class NetworkInterfaceTapConfigurationOperations : ResourceOperationsBase<NetworkInterfaceTapConfiguration>
+    public partial class NetworkInterfaceTapConfigurationOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private NetworkInterfaceTapConfigurationsRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceTapConfigurationOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal NetworkInterfaceTapConfigurationOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal NetworkInterfaceTapConfigurationOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NetworkInterfaceTapConfigurationsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -43,8 +43,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<NetworkInterfaceTapConfiguration>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Get the specified tap configuration on a network interface. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<NetworkInterfaceTapConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationOperations.Get");
             scope.Start();
@@ -60,8 +61,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <inheritdoc />
-        public override Response<NetworkInterfaceTapConfiguration> Get(CancellationToken cancellationToken = default)
+        /// <summary> Get the specified tap configuration on a network interface. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<NetworkInterfaceTapConfiguration> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceTapConfigurationOperations.Get");
             scope.Start();
@@ -80,7 +82,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }

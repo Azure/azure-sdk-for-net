@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific VirtualNetworkGateway. </summary>
-    public partial class VirtualNetworkGatewayOperations : ResourceOperationsBase<VirtualNetworkGateway>
+    public partial class VirtualNetworkGatewayOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private VirtualNetworkGatewaysRestOperations _restClient { get; }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkGatewayOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal VirtualNetworkGatewayOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal VirtualNetworkGatewayOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new VirtualNetworkGatewaysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -44,8 +44,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<VirtualNetworkGateway>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets the specified virtual network gateway by resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<VirtualNetworkGateway>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.Get");
             scope.Start();
@@ -61,8 +62,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <inheritdoc />
-        public override Response<VirtualNetworkGateway> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets the specified virtual network gateway by resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VirtualNetworkGateway> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.Get");
             scope.Start();
@@ -81,7 +83,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -89,7 +91,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -254,15 +256,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the connections in a virtual network gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkGatewayConnectionListEntity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualNetworkGatewayConnectionListEntity> ListConnections(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualNetworkGatewayConnectionListEntity> GetConnections(CancellationToken cancellationToken = default)
         {
             Page<VirtualNetworkGatewayConnectionListEntity> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.ListConnections");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.GetConnections");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListConnections(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetConnections(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -273,11 +275,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<VirtualNetworkGatewayConnectionListEntity> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.ListConnections");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.GetConnections");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListConnectionsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetConnectionsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -292,15 +294,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all the connections in a virtual network gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkGatewayConnectionListEntity" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualNetworkGatewayConnectionListEntity> ListConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualNetworkGatewayConnectionListEntity> GetConnectionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualNetworkGatewayConnectionListEntity>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.ListConnections");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.GetConnections");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListConnectionsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetConnectionsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -311,11 +313,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<VirtualNetworkGatewayConnectionListEntity>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.ListConnections");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayOperations.GetConnections");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListConnectionsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetConnectionsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<DdosProtectionPlan> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of DdosProtectionPlansCreateOrUpdateOperation for mocking. </summary>
         protected DdosProtectionPlansCreateOrUpdateOperation()
         {
         }
 
-        internal DdosProtectionPlansCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DdosProtectionPlansCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<DdosProtectionPlan>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DdosProtectionPlansCreateOrUpdateOperation");
             _operationBase = operationsBase;

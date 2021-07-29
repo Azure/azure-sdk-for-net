@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string firewallPolicyName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string firewallPolicyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is null. </exception>
-        public async Task<Response<FirewallPolicyRuleCollectionGroupListResult>> ListAsync(string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<FirewallPolicyRuleCollectionGroupListResult>> GetAllAsync(string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(firewallPolicyName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, firewallPolicyName);
+            using var message = CreateGetAllRequest(resourceGroupName, firewallPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is null. </exception>
-        public Response<FirewallPolicyRuleCollectionGroupListResult> List(string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
+        public Response<FirewallPolicyRuleCollectionGroupListResult> GetAll(string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(firewallPolicyName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, firewallPolicyName);
+            using var message = CreateGetAllRequest(resourceGroupName, firewallPolicyName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string firewallPolicyName)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string firewallPolicyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="firewallPolicyName"/> is null. </exception>
-        public async Task<Response<FirewallPolicyRuleCollectionGroupListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<FirewallPolicyRuleCollectionGroupListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(firewallPolicyName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, firewallPolicyName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, firewallPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="firewallPolicyName"/> is null. </exception>
-        public Response<FirewallPolicyRuleCollectionGroupListResult> ListNextPage(string nextLink, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
+        public Response<FirewallPolicyRuleCollectionGroupListResult> GetAllNextPage(string nextLink, string resourceGroupName, string firewallPolicyName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(firewallPolicyName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, firewallPolicyName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, firewallPolicyName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

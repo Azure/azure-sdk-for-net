@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<CustomIpPrefix> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of CustomIPPrefixesCreateOrUpdateOperation for mocking. </summary>
         protected CustomIPPrefixesCreateOrUpdateOperation()
         {
         }
 
-        internal CustomIPPrefixesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal CustomIPPrefixesCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<CustomIpPrefix>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CustomIPPrefixesCreateOrUpdateOperation");
             _operationBase = operationsBase;

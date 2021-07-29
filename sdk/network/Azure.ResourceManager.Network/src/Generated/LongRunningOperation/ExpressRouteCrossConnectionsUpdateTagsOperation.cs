@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal ExpressRouteCrossConnectionsUpdateTagsOperation(OperationsBase operationsBase, Response<ExpressRouteCrossConnectionData> response)
+        internal ExpressRouteCrossConnectionsUpdateTagsOperation(ResourceOperations operationsBase, Response<ExpressRouteCrossConnectionData> response)
         {
             _operation = new OperationOrResponseInternals<ExpressRouteCrossConnection>(Response.FromValue(new ExpressRouteCrossConnection(operationsBase, response.Value), response.GetRawResponse()));
         }

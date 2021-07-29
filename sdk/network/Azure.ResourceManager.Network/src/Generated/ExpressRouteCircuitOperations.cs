@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific ExpressRouteCircuit. </summary>
-    public partial class ExpressRouteCircuitOperations : ResourceOperationsBase<ExpressRouteCircuit>
+    public partial class ExpressRouteCircuitOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ExpressRouteCircuitsRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ExpressRouteCircuitOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal ExpressRouteCircuitOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ExpressRouteCircuitsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -43,8 +43,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<ExpressRouteCircuit>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets information about the specified express route circuit. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<ExpressRouteCircuit>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.Get");
             scope.Start();
@@ -60,8 +61,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <inheritdoc />
-        public override Response<ExpressRouteCircuit> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets information about the specified express route circuit. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ExpressRouteCircuit> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.Get");
             scope.Start();
@@ -80,7 +82,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -276,13 +278,13 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised ARP table associated with the express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExpressRouteCircuitsArpTableListResult>> ListArpTableAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ExpressRouteCircuitsArpTableListResult>> GetArpTableAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.ListArpTable");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.GetArpTable");
             scope.Start();
             try
             {
-                var operation = await StartListArpTableAsync(cancellationToken).ConfigureAwait(false);
+                var operation = await StartGetArpTableAsync(cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -294,13 +296,13 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised ARP table associated with the express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteCircuitsArpTableListResult> ListArpTable(CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteCircuitsArpTableListResult> GetArpTable(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.ListArpTable");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.GetArpTable");
             scope.Start();
             try
             {
-                var operation = StartListArpTable(cancellationToken);
+                var operation = StartGetArpTable(cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -312,14 +314,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised ARP table associated with the express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteCircuitsListArpTableOperation> StartListArpTableAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCircuitsGetArpTableOperation> StartGetArpTableAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.StartListArpTable");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.StartGetArpTable");
             scope.Start();
             try
             {
-                var response = await _restClient.ListArpTableAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCircuitsListArpTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateListArpTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _restClient.GetArpTableAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new ExpressRouteCircuitsGetArpTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetArpTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -330,14 +332,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised ARP table associated with the express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteCircuitsListArpTableOperation StartListArpTable(CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCircuitsGetArpTableOperation StartGetArpTable(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.StartListArpTable");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.StartGetArpTable");
             scope.Start();
             try
             {
-                var response = _restClient.ListArpTable(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ExpressRouteCircuitsListArpTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateListArpTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = _restClient.GetArpTable(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                return new ExpressRouteCircuitsGetArpTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetArpTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -348,13 +350,13 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised routes table associated with the express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExpressRouteCircuitsRoutesTableListResult>> ListRoutesTableAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ExpressRouteCircuitsRoutesTableListResult>> GetRoutesTableAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.ListRoutesTable");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.GetRoutesTable");
             scope.Start();
             try
             {
-                var operation = await StartListRoutesTableAsync(cancellationToken).ConfigureAwait(false);
+                var operation = await StartGetRoutesTableAsync(cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -366,13 +368,13 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised routes table associated with the express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteCircuitsRoutesTableListResult> ListRoutesTable(CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteCircuitsRoutesTableListResult> GetRoutesTable(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.ListRoutesTable");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.GetRoutesTable");
             scope.Start();
             try
             {
-                var operation = StartListRoutesTable(cancellationToken);
+                var operation = StartGetRoutesTable(cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -384,14 +386,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised routes table associated with the express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteCircuitsListRoutesTableOperation> StartListRoutesTableAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCircuitsGetRoutesTableOperation> StartGetRoutesTableAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.StartListRoutesTable");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.StartGetRoutesTable");
             scope.Start();
             try
             {
-                var response = await _restClient.ListRoutesTableAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCircuitsListRoutesTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateListRoutesTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _restClient.GetRoutesTableAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new ExpressRouteCircuitsGetRoutesTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -402,14 +404,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised routes table associated with the express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteCircuitsListRoutesTableOperation StartListRoutesTable(CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCircuitsGetRoutesTableOperation StartGetRoutesTable(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.StartListRoutesTable");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.StartGetRoutesTable");
             scope.Start();
             try
             {
-                var response = _restClient.ListRoutesTable(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ExpressRouteCircuitsListRoutesTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateListRoutesTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = _restClient.GetRoutesTable(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                return new ExpressRouteCircuitsGetRoutesTableOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -420,13 +422,13 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised routes table summary associated with the express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExpressRouteCircuitsRoutesTableSummaryListResult>> ListRoutesTableSummaryAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ExpressRouteCircuitsRoutesTableSummaryListResult>> GetRoutesTableSummaryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.ListRoutesTableSummary");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.GetRoutesTableSummary");
             scope.Start();
             try
             {
-                var operation = await StartListRoutesTableSummaryAsync(cancellationToken).ConfigureAwait(false);
+                var operation = await StartGetRoutesTableSummaryAsync(cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -438,13 +440,13 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised routes table summary associated with the express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteCircuitsRoutesTableSummaryListResult> ListRoutesTableSummary(CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteCircuitsRoutesTableSummaryListResult> GetRoutesTableSummary(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.ListRoutesTableSummary");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.GetRoutesTableSummary");
             scope.Start();
             try
             {
-                var operation = StartListRoutesTableSummary(cancellationToken);
+                var operation = StartGetRoutesTableSummary(cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -456,14 +458,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised routes table summary associated with the express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ExpressRouteCircuitsListRoutesTableSummaryOperation> StartListRoutesTableSummaryAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<ExpressRouteCircuitsGetRoutesTableSummaryOperation> StartGetRoutesTableSummaryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.StartListRoutesTableSummary");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.StartGetRoutesTableSummary");
             scope.Start();
             try
             {
-                var response = await _restClient.ListRoutesTableSummaryAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new ExpressRouteCircuitsListRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _restClient.CreateListRoutesTableSummaryRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _restClient.GetRoutesTableSummaryAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new ExpressRouteCircuitsGetRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableSummaryRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -474,14 +476,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the currently advertised routes table summary associated with the express route circuit in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ExpressRouteCircuitsListRoutesTableSummaryOperation StartListRoutesTableSummary(CancellationToken cancellationToken = default)
+        public virtual ExpressRouteCircuitsGetRoutesTableSummaryOperation StartGetRoutesTableSummary(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.StartListRoutesTableSummary");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitOperations.StartGetRoutesTableSummary");
             scope.Start();
             try
             {
-                var response = _restClient.ListRoutesTableSummary(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return new ExpressRouteCircuitsListRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _restClient.CreateListRoutesTableSummaryRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
+                var response = _restClient.GetRoutesTableSummary(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                return new ExpressRouteCircuitsGetRoutesTableSummaryOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetRoutesTableSummaryRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {

@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VirtualNetworkGatewayNatRule and their operations over a VirtualNetworkGateway. </summary>
-    public partial class VirtualNetworkGatewayNatRuleContainer : ResourceContainerBase<VirtualNetworkGatewayNatRule, VirtualNetworkGatewayNatRuleData>
+    public partial class VirtualNetworkGatewayNatRuleContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkGatewayNatRuleContainer"/> class for mocking. </summary>
         protected VirtualNetworkGatewayNatRuleContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayNatRuleContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal VirtualNetworkGatewayNatRuleContainer(OperationsBase parent) : base(parent)
+        internal VirtualNetworkGatewayNatRuleContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -269,9 +269,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string natRuleName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string natRuleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string natRuleName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string natRuleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -315,15 +315,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves all nat rules for a particular virtual network gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualNetworkGatewayNatRule" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<VirtualNetworkGatewayNatRule> List(CancellationToken cancellationToken = default)
+        public Pageable<VirtualNetworkGatewayNatRule> GetAll(CancellationToken cancellationToken = default)
         {
             Page<VirtualNetworkGatewayNatRule> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListByVirtualNetworkGateway(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetByVirtualNetworkGateway(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -334,11 +334,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<VirtualNetworkGatewayNatRule> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListByVirtualNetworkGatewayNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetByVirtualNetworkGatewayNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -353,15 +353,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves all nat rules for a particular virtual network gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualNetworkGatewayNatRule" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VirtualNetworkGatewayNatRule> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<VirtualNetworkGatewayNatRule> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualNetworkGatewayNatRule>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListByVirtualNetworkGatewayAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetByVirtualNetworkGatewayAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<VirtualNetworkGatewayNatRule>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListByVirtualNetworkGatewayNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetByVirtualNetworkGatewayNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkGatewayNatRule(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -394,15 +394,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(VirtualNetworkGatewayNatRuleOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -417,15 +417,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(VirtualNetworkGatewayNatRuleOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Gets the currently advertised routes table associated with the express route circuit in a resource group. </summary>
-    public partial class ExpressRouteCircuitsListRoutesTableOperation : Operation<ExpressRouteCircuitsRoutesTableListResult>, IOperationSource<ExpressRouteCircuitsRoutesTableListResult>
+    public partial class ExpressRouteCircuitsGetRoutesTableOperation : Operation<ExpressRouteCircuitsRoutesTableListResult>, IOperationSource<ExpressRouteCircuitsRoutesTableListResult>
     {
         private readonly OperationInternals<ExpressRouteCircuitsRoutesTableListResult> _operation;
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitsListRoutesTableOperation for mocking. </summary>
-        protected ExpressRouteCircuitsListRoutesTableOperation()
+        /// <summary> Initializes a new instance of ExpressRouteCircuitsGetRoutesTableOperation for mocking. </summary>
+        protected ExpressRouteCircuitsGetRoutesTableOperation()
         {
         }
 
-        internal ExpressRouteCircuitsListRoutesTableOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCircuitsGetRoutesTableOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<ExpressRouteCircuitsRoutesTableListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCircuitsListRoutesTableOperation");
+            _operation = new OperationInternals<ExpressRouteCircuitsRoutesTableListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCircuitsGetRoutesTableOperation");
         }
 
         /// <inheritdoc />

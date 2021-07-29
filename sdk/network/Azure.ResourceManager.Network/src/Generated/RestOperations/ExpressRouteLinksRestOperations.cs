@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string expressRoutePortName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string expressRoutePortName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRoutePortName"/> is null. </exception>
-        public async Task<Response<ExpressRouteLinkListResult>> ListAsync(string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteLinkListResult>> GetAllAsync(string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, expressRoutePortName);
+            using var message = CreateGetAllRequest(resourceGroupName, expressRoutePortName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="expressRoutePortName"/> is null. </exception>
-        public Response<ExpressRouteLinkListResult> List(string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
+        public Response<ExpressRouteLinkListResult> GetAll(string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, expressRoutePortName);
+            using var message = CreateGetAllRequest(resourceGroupName, expressRoutePortName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string expressRoutePortName)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string expressRoutePortName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="expressRoutePortName"/> is null. </exception>
-        public async Task<Response<ExpressRouteLinkListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteLinkListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, expressRoutePortName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, expressRoutePortName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRoutePortName"> The name of the ExpressRoutePort resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="expressRoutePortName"/> is null. </exception>
-        public Response<ExpressRouteLinkListResult> ListNextPage(string nextLink, string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
+        public Response<ExpressRouteLinkListResult> GetAllNextPage(string nextLink, string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(expressRoutePortName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, expressRoutePortName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, expressRoutePortName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

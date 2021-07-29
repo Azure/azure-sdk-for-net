@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName, string serviceEndpointPolicyName)
+        internal HttpMessage CreateGetByResourceGroupRequest(string resourceGroupName, string serviceEndpointPolicyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceEndpointPolicyName"/> is null. </exception>
-        public async Task<Response<ServiceEndpointPolicyDefinitionListResult>> ListByResourceGroupAsync(string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceEndpointPolicyDefinitionListResult>> GetByResourceGroupAsync(string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName, serviceEndpointPolicyName);
+            using var message = CreateGetByResourceGroupRequest(resourceGroupName, serviceEndpointPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceEndpointPolicyName"/> is null. </exception>
-        public Response<ServiceEndpointPolicyDefinitionListResult> ListByResourceGroup(string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
+        public Response<ServiceEndpointPolicyDefinitionListResult> GetByResourceGroup(string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName, serviceEndpointPolicyName);
+            using var message = CreateGetByResourceGroupRequest(resourceGroupName, serviceEndpointPolicyName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string serviceEndpointPolicyName)
+        internal HttpMessage CreateGetByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string serviceEndpointPolicyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="serviceEndpointPolicyName"/> is null. </exception>
-        public async Task<Response<ServiceEndpointPolicyDefinitionListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceEndpointPolicyDefinitionListResult>> GetByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, serviceEndpointPolicyName);
+            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, serviceEndpointPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="serviceEndpointPolicyName"/> is null. </exception>
-        public Response<ServiceEndpointPolicyDefinitionListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
+        public Response<ServiceEndpointPolicyDefinitionListResult> GetByResourceGroupNextPage(string nextLink, string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, serviceEndpointPolicyName);
+            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, serviceEndpointPolicyName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

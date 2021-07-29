@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ApplicationGateway"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ApplicationGateway(OperationsBase options, ApplicationGatewayData resource) : base(options, resource.Id)
+        internal ApplicationGateway(ResourceOperations options, ApplicationGatewayData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string virtualWANName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string virtualWANName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualWANName"/> is null. </exception>
-        public async Task<Response> ListAsync(string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
+        public async Task<Response> GetAllAsync(string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualWANName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, virtualWANName);
+            using var message = CreateGetAllRequest(resourceGroupName, virtualWANName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualWANName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualWANName"/> is null. </exception>
-        public Response List(string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
+        public Response GetAll(string resourceGroupName, string virtualWANName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualWANName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, virtualWANName);
+            using var message = CreateGetAllRequest(resourceGroupName, virtualWANName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

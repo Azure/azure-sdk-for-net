@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Gets the currently advertised ARP table associated with the express route cross connection in a resource group. </summary>
-    public partial class ExpressRouteCrossConnectionsListArpTableOperation : Operation<ExpressRouteCircuitsArpTableListResult>, IOperationSource<ExpressRouteCircuitsArpTableListResult>
+    public partial class ExpressRouteCrossConnectionsGetArpTableOperation : Operation<ExpressRouteCircuitsArpTableListResult>, IOperationSource<ExpressRouteCircuitsArpTableListResult>
     {
         private readonly OperationInternals<ExpressRouteCircuitsArpTableListResult> _operation;
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionsListArpTableOperation for mocking. </summary>
-        protected ExpressRouteCrossConnectionsListArpTableOperation()
+        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionsGetArpTableOperation for mocking. </summary>
+        protected ExpressRouteCrossConnectionsGetArpTableOperation()
         {
         }
 
-        internal ExpressRouteCrossConnectionsListArpTableOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCrossConnectionsGetArpTableOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<ExpressRouteCircuitsArpTableListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCrossConnectionsListArpTableOperation");
+            _operation = new OperationInternals<ExpressRouteCircuitsArpTableListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCrossConnectionsGetArpTableOperation");
         }
 
         /// <inheritdoc />

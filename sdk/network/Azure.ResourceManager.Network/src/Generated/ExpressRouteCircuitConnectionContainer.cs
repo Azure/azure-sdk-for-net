@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteCircuitConnection and their operations over a ExpressRouteCircuitPeering. </summary>
-    public partial class ExpressRouteCircuitConnectionContainer : ResourceContainerBase<ExpressRouteCircuitConnection, ExpressRouteCircuitConnectionData>
+    public partial class ExpressRouteCircuitConnectionContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitConnectionContainer"/> class for mocking. </summary>
         protected ExpressRouteCircuitConnectionContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ExpressRouteCircuitConnectionContainer(OperationsBase parent) : base(parent)
+        internal ExpressRouteCircuitConnectionContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -269,9 +269,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionName"> The name of the express route circuit connection. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string connectionName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string connectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionName"> The name of the express route circuit connection. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string connectionName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -315,15 +315,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all global reach connections associated with a private peering in an express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCircuitConnection" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<ExpressRouteCircuitConnection> List(CancellationToken cancellationToken = default)
+        public Pageable<ExpressRouteCircuitConnection> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ExpressRouteCircuitConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -334,11 +334,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<ExpressRouteCircuitConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -353,15 +353,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all global reach connections associated with a private peering in an express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCircuitConnection" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<ExpressRouteCircuitConnection> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<ExpressRouteCircuitConnection> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ExpressRouteCircuitConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<ExpressRouteCircuitConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCircuitConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -394,15 +394,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(ExpressRouteCircuitConnectionOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -417,15 +417,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitConnectionContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(ExpressRouteCircuitConnectionOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

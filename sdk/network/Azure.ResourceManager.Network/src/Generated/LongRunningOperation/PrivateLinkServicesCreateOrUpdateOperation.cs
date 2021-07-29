@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<PrivateLinkService> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of PrivateLinkServicesCreateOrUpdateOperation for mocking. </summary>
         protected PrivateLinkServicesCreateOrUpdateOperation()
         {
         }
 
-        internal PrivateLinkServicesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PrivateLinkServicesCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<PrivateLinkService>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PrivateLinkServicesCreateOrUpdateOperation");
             _operationBase = operationsBase;

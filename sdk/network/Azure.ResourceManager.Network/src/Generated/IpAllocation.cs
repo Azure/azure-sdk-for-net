@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "IpAllocation"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal IpAllocation(OperationsBase options, IpAllocationData resource) : base(options, resource.Id)
+        internal IpAllocation(ResourceOperations options, IpAllocationData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

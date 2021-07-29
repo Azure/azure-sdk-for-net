@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<SecurityPartnerProvider> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of SecurityPartnerProvidersCreateOrUpdateOperation for mocking. </summary>
         protected SecurityPartnerProvidersCreateOrUpdateOperation()
         {
         }
 
-        internal SecurityPartnerProvidersCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal SecurityPartnerProvidersCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<SecurityPartnerProvider>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecurityPartnerProvidersCreateOrUpdateOperation");
             _operationBase = operationsBase;

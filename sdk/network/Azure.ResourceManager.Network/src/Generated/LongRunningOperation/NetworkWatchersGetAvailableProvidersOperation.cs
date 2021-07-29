@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> NOTE: This feature is currently in preview and still being tested for stability. Lists all available internet service providers for a specified Azure region. </summary>
-    public partial class NetworkWatchersListAvailableProvidersOperation : Operation<AvailableProvidersList>, IOperationSource<AvailableProvidersList>
+    public partial class NetworkWatchersGetAvailableProvidersOperation : Operation<AvailableProvidersList>, IOperationSource<AvailableProvidersList>
     {
         private readonly OperationInternals<AvailableProvidersList> _operation;
 
-        /// <summary> Initializes a new instance of NetworkWatchersListAvailableProvidersOperation for mocking. </summary>
-        protected NetworkWatchersListAvailableProvidersOperation()
+        /// <summary> Initializes a new instance of NetworkWatchersGetAvailableProvidersOperation for mocking. </summary>
+        protected NetworkWatchersGetAvailableProvidersOperation()
         {
         }
 
-        internal NetworkWatchersListAvailableProvidersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NetworkWatchersGetAvailableProvidersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<AvailableProvidersList>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersListAvailableProvidersOperation");
+            _operation = new OperationInternals<AvailableProvidersList>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetAvailableProvidersOperation");
         }
 
         /// <inheritdoc />

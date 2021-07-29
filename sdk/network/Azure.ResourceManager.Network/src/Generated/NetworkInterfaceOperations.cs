@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific NetworkInterface. </summary>
-    public partial class NetworkInterfaceOperations : ResourceOperationsBase<NetworkInterface>
+    public partial class NetworkInterfaceOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private NetworkInterfacesRestOperations _restClient { get; }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal NetworkInterfaceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal NetworkInterfaceOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -48,44 +48,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<NetworkInterface>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.Get");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <inheritdoc />
-        public override Response<NetworkInterface> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.Get");
-            scope.Start();
-            try
-            {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new NetworkInterface(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets information about the specified network interface. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<NetworkInterface>> GetAsync(string expand, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<NetworkInterface>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.Get");
             scope.Start();
@@ -104,7 +70,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets information about the specified network interface. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkInterface> Get(string expand, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkInterface> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.Get");
             scope.Start();
@@ -123,7 +89,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -131,7 +97,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -284,15 +250,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Get all ip configurations in a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkInterfaceIPConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkInterfaceIPConfiguration> ListNetworkInterfaceIPConfigurations(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkInterfaceIPConfiguration> GetNetworkInterfaceIPConfigurations(CancellationToken cancellationToken = default)
         {
             Page<NetworkInterfaceIPConfiguration> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.ListNetworkInterfaceIPConfigurations");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.GetNetworkInterfaceIPConfigurations");
                 scope.Start();
                 try
                 {
-                    var response = _networkInterfaceIPConfigurationsRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _networkInterfaceIPConfigurationsRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -303,11 +269,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<NetworkInterfaceIPConfiguration> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.ListNetworkInterfaceIPConfigurations");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.GetNetworkInterfaceIPConfigurations");
                 scope.Start();
                 try
                 {
-                    var response = _networkInterfaceIPConfigurationsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _networkInterfaceIPConfigurationsRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -322,15 +288,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Get all ip configurations in a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetworkInterfaceIPConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkInterfaceIPConfiguration> ListNetworkInterfaceIPConfigurationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkInterfaceIPConfiguration> GetNetworkInterfaceIPConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<NetworkInterfaceIPConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.ListNetworkInterfaceIPConfigurations");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.GetNetworkInterfaceIPConfigurations");
                 scope.Start();
                 try
                 {
-                    var response = await _networkInterfaceIPConfigurationsRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _networkInterfaceIPConfigurationsRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -341,11 +307,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<NetworkInterfaceIPConfiguration>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.ListNetworkInterfaceIPConfigurations");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.GetNetworkInterfaceIPConfigurations");
                 scope.Start();
                 try
                 {
-                    var response = await _networkInterfaceIPConfigurationsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _networkInterfaceIPConfigurationsRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -360,15 +326,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> List all load balancers in a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancerData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LoadBalancerData> ListNetworkInterfaceLoadBalancers(CancellationToken cancellationToken = default)
+        public virtual Pageable<LoadBalancerData> GetNetworkInterfaceLoadBalancers(CancellationToken cancellationToken = default)
         {
             Page<LoadBalancerData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.ListNetworkInterfaceLoadBalancers");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.GetNetworkInterfaceLoadBalancers");
                 scope.Start();
                 try
                 {
-                    var response = _networkInterfaceLoadBalancersRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _networkInterfaceLoadBalancersRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -379,11 +345,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<LoadBalancerData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.ListNetworkInterfaceLoadBalancers");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.GetNetworkInterfaceLoadBalancers");
                 scope.Start();
                 try
                 {
-                    var response = _networkInterfaceLoadBalancersRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _networkInterfaceLoadBalancersRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -398,15 +364,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> List all load balancers in a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadBalancerData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LoadBalancerData> ListNetworkInterfaceLoadBalancersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LoadBalancerData> GetNetworkInterfaceLoadBalancersAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<LoadBalancerData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.ListNetworkInterfaceLoadBalancers");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.GetNetworkInterfaceLoadBalancers");
                 scope.Start();
                 try
                 {
-                    var response = await _networkInterfaceLoadBalancersRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _networkInterfaceLoadBalancersRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -417,11 +383,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<LoadBalancerData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.ListNetworkInterfaceLoadBalancers");
+                using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.GetNetworkInterfaceLoadBalancers");
                 scope.Start();
                 try
                 {
-                    var response = await _networkInterfaceLoadBalancersRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _networkInterfaceLoadBalancersRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -507,13 +473,13 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all network security groups applied to a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<EffectiveNetworkSecurityGroupListResult>> ListEffectiveNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<EffectiveNetworkSecurityGroupListResult>> GetEffectiveNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.ListEffectiveNetworkSecurityGroups");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.GetEffectiveNetworkSecurityGroups");
             scope.Start();
             try
             {
-                var operation = await StartListEffectiveNetworkSecurityGroupsAsync(cancellationToken).ConfigureAwait(false);
+                var operation = await StartGetEffectiveNetworkSecurityGroupsAsync(cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -525,13 +491,13 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all network security groups applied to a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EffectiveNetworkSecurityGroupListResult> ListEffectiveNetworkSecurityGroups(CancellationToken cancellationToken = default)
+        public virtual Response<EffectiveNetworkSecurityGroupListResult> GetEffectiveNetworkSecurityGroups(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.ListEffectiveNetworkSecurityGroups");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.GetEffectiveNetworkSecurityGroups");
             scope.Start();
             try
             {
-                var operation = StartListEffectiveNetworkSecurityGroups(cancellationToken);
+                var operation = StartGetEffectiveNetworkSecurityGroups(cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -543,14 +509,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all network security groups applied to a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation> StartListEffectiveNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation> StartGetEffectiveNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.StartListEffectiveNetworkSecurityGroups");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.StartGetEffectiveNetworkSecurityGroups");
             scope.Start();
             try
             {
-                var response = await _restClient.ListEffectiveNetworkSecurityGroupsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation(_clientDiagnostics, Pipeline, _restClient.CreateListEffectiveNetworkSecurityGroupsRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _restClient.GetEffectiveNetworkSecurityGroupsAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveNetworkSecurityGroupsRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -561,14 +527,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all network security groups applied to a network interface. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation StartListEffectiveNetworkSecurityGroups(CancellationToken cancellationToken = default)
+        public virtual NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation StartGetEffectiveNetworkSecurityGroups(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.StartListEffectiveNetworkSecurityGroups");
+            using var scope = _clientDiagnostics.CreateScope("NetworkInterfaceOperations.StartGetEffectiveNetworkSecurityGroups");
             scope.Start();
             try
             {
-                var response = _restClient.ListEffectiveNetworkSecurityGroups(Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation(_clientDiagnostics, Pipeline, _restClient.CreateListEffectiveNetworkSecurityGroupsRequest(Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _restClient.GetEffectiveNetworkSecurityGroups(Id.ResourceGroupName, Id.Name, cancellationToken);
+                return new NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetEffectiveNetworkSecurityGroupsRequest(Id.ResourceGroupName, Id.Name).Request, response);
             }
             catch (Exception e)
             {

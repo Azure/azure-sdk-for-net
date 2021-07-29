@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<AvailableDelegation> ListAvailableDelegationsAsync(this ResourceGroupOperations resourceGroup, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AvailableDelegation> GetAvailableDelegationsAsync(this ResourceGroupOperations resourceGroup, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -475,11 +475,11 @@ namespace Azure.ResourceManager.Network
                 var restOperations = GetAvailableDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 async Task<Page<AvailableDelegation>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.ListAvailableDelegations");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegations");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -490,11 +490,11 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<AvailableDelegation>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.ListAvailableDelegations");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegations");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetAllNextPageAsync(nextLink, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<AvailableDelegation> ListAvailableDelegations(this ResourceGroupOperations resourceGroup, string location, CancellationToken cancellationToken = default)
+        public static Pageable<AvailableDelegation> GetAvailableDelegations(this ResourceGroupOperations resourceGroup, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -527,11 +527,11 @@ namespace Azure.ResourceManager.Network
                 var restOperations = GetAvailableDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 Page<AvailableDelegation> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.ListAvailableDelegations");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegations");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.List(location, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAll(location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -542,11 +542,11 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<AvailableDelegation> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.ListAvailableDelegations");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegations");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListNextPage(nextLink, location, cancellationToken: cancellationToken);
+                        var response = restOperations.GetAllNextPage(nextLink, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static AsyncPageable<AvailableDelegation> ListAvailableDelegationsByResourceGroupAsync(this ResourceGroupOperations resourceGroup, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AvailableDelegation> GetAvailableDelegationsByResourceGroupAsync(this ResourceGroupOperations resourceGroup, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -579,11 +579,11 @@ namespace Azure.ResourceManager.Network
                 var restOperations = GetAvailableDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 async Task<Page<AvailableDelegation>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.ListAvailableDelegationsByResourceGroup");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegationsByResourceGroup");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupAsync(location, resourceGroup.Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetByResourceGroupAsync(resourceGroup.Id.Name, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -594,11 +594,11 @@ namespace Azure.ResourceManager.Network
                 }
                 async Task<Page<AvailableDelegation>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.ListAvailableDelegationsByResourceGroup");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegationsByResourceGroup");
                     scope.Start();
                     try
                     {
-                        var response = await restOperations.ListByResourceGroupNextPageAsync(nextLink, location, resourceGroup.Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        var response = await restOperations.GetByResourceGroupNextPageAsync(nextLink, resourceGroup.Id.Name, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Pageable<AvailableDelegation> ListAvailableDelegationsByResourceGroup(this ResourceGroupOperations resourceGroup, string location, CancellationToken cancellationToken = default)
+        public static Pageable<AvailableDelegation> GetAvailableDelegationsByResourceGroup(this ResourceGroupOperations resourceGroup, string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -631,11 +631,11 @@ namespace Azure.ResourceManager.Network
                 var restOperations = GetAvailableDelegationsRestOperations(clientDiagnostics, credential, options, pipeline, resourceGroup.Id.SubscriptionId, baseUri);
                 Page<AvailableDelegation> FirstPageFunc(int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.ListAvailableDelegationsByResourceGroup");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegationsByResourceGroup");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroup(location, resourceGroup.Id.Name, cancellationToken: cancellationToken);
+                        var response = restOperations.GetByResourceGroup(resourceGroup.Id.Name, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
@@ -646,11 +646,11 @@ namespace Azure.ResourceManager.Network
                 }
                 Page<AvailableDelegation> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.ListAvailableDelegationsByResourceGroup");
+                    using var scope = clientDiagnostics.CreateScope("ResourceGroupExtensions.GetAvailableDelegationsByResourceGroup");
                     scope.Start();
                     try
                     {
-                        var response = restOperations.ListByResourceGroupNextPage(nextLink, location, resourceGroup.Id.Name, cancellationToken: cancellationToken);
+                        var response = restOperations.GetByResourceGroupNextPage(nextLink, resourceGroup.Id.Name, location, cancellationToken: cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)

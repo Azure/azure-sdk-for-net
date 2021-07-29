@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<VirtualHubRouteTableV2> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2SCreateOrUpdateOperation for mocking. </summary>
         protected VirtualHubRouteTableV2SCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualHubRouteTableV2SCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualHubRouteTableV2SCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<VirtualHubRouteTableV2>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualHubRouteTableV2SCreateOrUpdateOperation");
             _operationBase = operationsBase;

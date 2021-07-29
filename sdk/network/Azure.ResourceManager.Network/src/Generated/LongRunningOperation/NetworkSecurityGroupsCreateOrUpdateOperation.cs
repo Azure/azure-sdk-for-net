@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<NetworkSecurityGroup> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of NetworkSecurityGroupsCreateOrUpdateOperation for mocking. </summary>
         protected NetworkSecurityGroupsCreateOrUpdateOperation()
         {
         }
 
-        internal NetworkSecurityGroupsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NetworkSecurityGroupsCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<NetworkSecurityGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "NetworkSecurityGroupsCreateOrUpdateOperation");
             _operationBase = operationsBase;

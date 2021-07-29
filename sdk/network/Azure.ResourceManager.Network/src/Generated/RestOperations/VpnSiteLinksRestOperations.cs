@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListByVpnSiteRequest(string resourceGroupName, string vpnSiteName)
+        internal HttpMessage CreateGetByVpnSiteRequest(string resourceGroupName, string vpnSiteName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteName"> The name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
-        public async Task<Response<ListVpnSiteLinksResult>> ListByVpnSiteAsync(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListVpnSiteLinksResult>> GetByVpnSiteAsync(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteName));
             }
 
-            using var message = CreateListByVpnSiteRequest(resourceGroupName, vpnSiteName);
+            using var message = CreateGetByVpnSiteRequest(resourceGroupName, vpnSiteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteName"> The name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vpnSiteName"/> is null. </exception>
-        public Response<ListVpnSiteLinksResult> ListByVpnSite(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
+        public Response<ListVpnSiteLinksResult> GetByVpnSite(string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteName));
             }
 
-            using var message = CreateListByVpnSiteRequest(resourceGroupName, vpnSiteName);
+            using var message = CreateGetByVpnSiteRequest(resourceGroupName, vpnSiteName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListByVpnSiteNextPageRequest(string nextLink, string resourceGroupName, string vpnSiteName)
+        internal HttpMessage CreateGetByVpnSiteNextPageRequest(string nextLink, string resourceGroupName, string vpnSiteName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteName"> The name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vpnSiteName"/> is null. </exception>
-        public async Task<Response<ListVpnSiteLinksResult>> ListByVpnSiteNextPageAsync(string nextLink, string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListVpnSiteLinksResult>> GetByVpnSiteNextPageAsync(string nextLink, string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteName));
             }
 
-            using var message = CreateListByVpnSiteNextPageRequest(nextLink, resourceGroupName, vpnSiteName);
+            using var message = CreateGetByVpnSiteNextPageRequest(nextLink, resourceGroupName, vpnSiteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnSiteName"> The name of the VpnSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vpnSiteName"/> is null. </exception>
-        public Response<ListVpnSiteLinksResult> ListByVpnSiteNextPage(string nextLink, string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
+        public Response<ListVpnSiteLinksResult> GetByVpnSiteNextPage(string nextLink, string resourceGroupName, string vpnSiteName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(vpnSiteName));
             }
 
-            using var message = CreateListByVpnSiteNextPageRequest(nextLink, resourceGroupName, vpnSiteName);
+            using var message = CreateGetByVpnSiteNextPageRequest(nextLink, resourceGroupName, vpnSiteName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

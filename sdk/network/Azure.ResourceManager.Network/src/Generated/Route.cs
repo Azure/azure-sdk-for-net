@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "Route"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal Route(OperationsBase options, RouteData resource) : base(options, resource.Id)
+        internal Route(ResourceOperations options, RouteData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "NetworkInterface"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal NetworkInterface(OperationsBase options, NetworkInterfaceData resource) : base(options, resource.Id)
+        internal NetworkInterface(ResourceOperations options, NetworkInterfaceData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

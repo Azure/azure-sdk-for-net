@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string networkInterfaceName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string networkInterfaceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
-        public async Task<Response<NetworkInterfaceIPConfigurationListResult>> ListAsync(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkInterfaceIPConfigurationListResult>> GetAllAsync(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkInterfaceName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, networkInterfaceName);
+            using var message = CreateGetAllRequest(resourceGroupName, networkInterfaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="networkInterfaceName"/> is null. </exception>
-        public Response<NetworkInterfaceIPConfigurationListResult> List(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
+        public Response<NetworkInterfaceIPConfigurationListResult> GetAll(string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkInterfaceName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, networkInterfaceName);
+            using var message = CreateGetAllRequest(resourceGroupName, networkInterfaceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string networkInterfaceName)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string networkInterfaceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkInterfaceName"/> is null. </exception>
-        public async Task<Response<NetworkInterfaceIPConfigurationListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkInterfaceIPConfigurationListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkInterfaceName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, networkInterfaceName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, networkInterfaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="networkInterfaceName"/> is null. </exception>
-        public Response<NetworkInterfaceIPConfigurationListResult> ListNextPage(string nextLink, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
+        public Response<NetworkInterfaceIPConfigurationListResult> GetAllNextPage(string nextLink, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(networkInterfaceName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, networkInterfaceName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, networkInterfaceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

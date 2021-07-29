@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<NetworkVirtualAppliance> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of NetworkVirtualAppliancesCreateOrUpdateOperation for mocking. </summary>
         protected NetworkVirtualAppliancesCreateOrUpdateOperation()
         {
         }
 
-        internal NetworkVirtualAppliancesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NetworkVirtualAppliancesCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<NetworkVirtualAppliance>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "NetworkVirtualAppliancesCreateOrUpdateOperation");
             _operationBase = operationsBase;

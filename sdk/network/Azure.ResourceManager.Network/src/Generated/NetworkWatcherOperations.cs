@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific NetworkWatcher. </summary>
-    public partial class NetworkWatcherOperations : ResourceOperationsBase<NetworkWatcher>
+    public partial class NetworkWatcherOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private NetworkWatchersRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="NetworkWatcherOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal NetworkWatcherOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal NetworkWatcherOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new NetworkWatchersRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -43,8 +43,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<NetworkWatcher>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets the specified network watcher by resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<NetworkWatcher>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.Get");
             scope.Start();
@@ -60,8 +61,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <inheritdoc />
-        public override Response<NetworkWatcher> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets the specified network watcher by resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<NetworkWatcher> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.Get");
             scope.Start();
@@ -80,7 +82,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -1072,18 +1074,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that scope the list of available providers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<AvailableProvidersList>> ListAvailableProvidersAsync(AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<AvailableProvidersList>> GetAvailableProvidersAsync(AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.ListAvailableProviders");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.GetAvailableProviders");
             scope.Start();
             try
             {
-                var operation = await StartListAvailableProvidersAsync(parameters, cancellationToken).ConfigureAwait(false);
+                var operation = await StartGetAvailableProvidersAsync(parameters, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1097,18 +1099,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that scope the list of available providers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<AvailableProvidersList> ListAvailableProviders(AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
+        public virtual Response<AvailableProvidersList> GetAvailableProviders(AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.ListAvailableProviders");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.GetAvailableProviders");
             scope.Start();
             try
             {
-                var operation = StartListAvailableProviders(parameters, cancellationToken);
+                var operation = StartGetAvailableProviders(parameters, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -1122,19 +1124,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that scope the list of available providers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<NetworkWatchersListAvailableProvidersOperation> StartListAvailableProvidersAsync(AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
+        public async virtual Task<NetworkWatchersGetAvailableProvidersOperation> StartGetAvailableProvidersAsync(AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.StartListAvailableProviders");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.StartGetAvailableProviders");
             scope.Start();
             try
             {
-                var response = await _restClient.ListAvailableProvidersAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return new NetworkWatchersListAvailableProvidersOperation(_clientDiagnostics, Pipeline, _restClient.CreateListAvailableProvidersRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = await _restClient.GetAvailableProvidersAsync(Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new NetworkWatchersGetAvailableProvidersOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetAvailableProvidersRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {
@@ -1147,19 +1149,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that scope the list of available providers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual NetworkWatchersListAvailableProvidersOperation StartListAvailableProviders(AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
+        public virtual NetworkWatchersGetAvailableProvidersOperation StartGetAvailableProviders(AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.StartListAvailableProviders");
+            using var scope = _clientDiagnostics.CreateScope("NetworkWatcherOperations.StartGetAvailableProviders");
             scope.Start();
             try
             {
-                var response = _restClient.ListAvailableProviders(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return new NetworkWatchersListAvailableProvidersOperation(_clientDiagnostics, Pipeline, _restClient.CreateListAvailableProvidersRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
+                var response = _restClient.GetAvailableProviders(Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                return new NetworkWatchersGetAvailableProvidersOperation(_clientDiagnostics, Pipeline, _restClient.CreateGetAvailableProvidersRequest(Id.ResourceGroupName, Id.Name, parameters).Request, response);
             }
             catch (Exception e)
             {

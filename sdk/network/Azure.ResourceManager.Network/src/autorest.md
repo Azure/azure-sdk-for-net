@@ -9,8 +9,8 @@ library-name: Network
 namespace: Azure.ResourceManager.Network
 # require: https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/readme.md
 require: C:\Users\mingzhehuang\workspaces\azure\azure-rest-api-specs\specification\network\resource-manager\readme.md
-use: https://github.com/Azure/autorest.csharp/releases/download/v3.0.0-beta.20210722.1/autorest-csharp-3.0.0-beta.20210722.1.tgz
-# use: C:\Users\mingzhehuang\workspaces\archerzz\autorest.csharp\artifacts\bin\AutoRest.CSharp\Debug\netcoreapp3.1
+# use: https://github.com/Azure/autorest.csharp/releases/download/v3.0.0-beta.20210722.1/autorest-csharp-3.0.0-beta.20210722.1.tgz
+use: C:\Users\mingzhehuang\workspaces\archerzz\autorest.csharp\artifacts\bin\AutoRest.CSharp\Debug\netcoreapp3.1
 #tag: package-track2-preview
 
 output-folder: Generated/
@@ -252,6 +252,30 @@ directive:
     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability"].get.operationId
     transform: return "DnsNameAvailabilities_Check"
     reason: Original 'operationId' doesn't follow pattern
+# ddosProtectionPlan.json: ADO 6068
+  - where-model: DdosProtectionPlan
+    transform: >
+      return {
+        "description": "A DDoS protection plan in a resource group.",
+        "x-ms-azure-resource": true,
+        "properties": {
+          "properties": {
+            "x-ms-client-flatten": true,
+            "$ref": "#/definitions/DdosProtectionPlanPropertiesFormat",
+            "description": "Properties of the DDoS protection plan."
+          },
+          "etag": {
+            "readOnly": true,
+            "type": "string",
+            "description": "A unique read-only string that changes whenever the resource is updated."
+          }
+        },
+        "allOf": [
+            {
+              "$ref": "file:///C:/Users/mingzhehuang/workspaces/azure/azure-rest-api-specs/specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/network.json#/definitions/Resource"
+            }
+        ]
+      }
 # virtualWan.json
   - from: swagger-document
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders"].get.operationId

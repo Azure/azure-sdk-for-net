@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "DdosProtectionPlan"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DdosProtectionPlan(OperationsBase options, DdosProtectionPlanData resource) : base(options, resource.Id)
+        internal DdosProtectionPlan(ResourceOperations options, DdosProtectionPlanData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

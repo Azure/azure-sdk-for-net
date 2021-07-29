@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific PrivateLinkService. </summary>
-    public partial class PrivateLinkServiceOperations : ResourceOperationsBase<PrivateLinkService>
+    public partial class PrivateLinkServiceOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private PrivateLinkServicesRestOperations _restClient { get; }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="PrivateLinkServiceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal PrivateLinkServiceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal PrivateLinkServiceOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new PrivateLinkServicesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -44,44 +44,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<PrivateLinkService>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.Get");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PrivateLinkService(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <inheritdoc />
-        public override Response<PrivateLinkService> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.Get");
-            scope.Start();
-            try
-            {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new PrivateLinkService(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets the specified private link service by resource group. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PrivateLinkService>> GetAsync(string expand, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<PrivateLinkService>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.Get");
             scope.Start();
@@ -100,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified private link service by resource group. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkService> Get(string expand, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkService> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.Get");
             scope.Start();
@@ -119,7 +85,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -127,7 +93,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -294,15 +260,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all private end point connections for a specific private link service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateEndpointConnection> ListPrivateEndpointConnections(CancellationToken cancellationToken = default)
+        public virtual Pageable<PrivateEndpointConnection> GetPrivateEndpointConnections(CancellationToken cancellationToken = default)
         {
             Page<PrivateEndpointConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.ListPrivateEndpointConnections");
+                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.GetPrivateEndpointConnections");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListPrivateEndpointConnections(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetPrivateEndpointConnections(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -313,11 +279,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<PrivateEndpointConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.ListPrivateEndpointConnections");
+                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.GetPrivateEndpointConnections");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListPrivateEndpointConnectionsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetPrivateEndpointConnectionsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -332,15 +298,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all private end point connections for a specific private link service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateEndpointConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateEndpointConnection> ListPrivateEndpointConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PrivateEndpointConnection> GetPrivateEndpointConnectionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PrivateEndpointConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.ListPrivateEndpointConnections");
+                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.GetPrivateEndpointConnections");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListPrivateEndpointConnectionsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetPrivateEndpointConnectionsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -351,11 +317,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<PrivateEndpointConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.ListPrivateEndpointConnections");
+                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.GetPrivateEndpointConnections");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListPrivateEndpointConnectionsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetPrivateEndpointConnectionsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -370,15 +336,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutoApprovedPrivateLinkService> ListAutoApprovedPrivateLinkServicesByResourceGroup(CancellationToken cancellationToken = default)
+        public virtual Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroup(CancellationToken cancellationToken = default)
         {
             Page<AutoApprovedPrivateLinkService> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.ListAutoApprovedPrivateLinkServicesByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.GetAutoApprovedPrivateLinkServicesByResourceGroup");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListAutoApprovedPrivateLinkServicesByResourceGroup(Id.Name, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAutoApprovedPrivateLinkServicesByResourceGroup(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -389,11 +355,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<AutoApprovedPrivateLinkService> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.ListAutoApprovedPrivateLinkServicesByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.GetAutoApprovedPrivateLinkServicesByResourceGroup");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListAutoApprovedPrivateLinkServicesByResourceGroupNextPage(nextLink, Id.Name, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAutoApprovedPrivateLinkServicesByResourceGroupNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -408,15 +374,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutoApprovedPrivateLinkService> ListAutoApprovedPrivateLinkServicesByResourceGroupAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AutoApprovedPrivateLinkService>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.ListAutoApprovedPrivateLinkServicesByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.GetAutoApprovedPrivateLinkServicesByResourceGroup");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAutoApprovedPrivateLinkServicesByResourceGroupAsync(Id.Name, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAutoApprovedPrivateLinkServicesByResourceGroupAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -427,11 +393,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<AutoApprovedPrivateLinkService>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.ListAutoApprovedPrivateLinkServicesByResourceGroup");
+                using var scope = _clientDiagnostics.CreateScope("PrivateLinkServiceOperations.GetAutoApprovedPrivateLinkServicesByResourceGroup");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAutoApprovedPrivateLinkServicesByResourceGroupNextPageAsync(nextLink, Id.Name, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAutoApprovedPrivateLinkServicesByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -638,8 +604,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _restClient.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(Id.Name, Id.ResourceGroupName, privateLinkServiceAlias, cancellationToken).ConfigureAwait(false);
-                return new PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Id.Name, Id.ResourceGroupName, privateLinkServiceAlias).Request, response);
+                var response = await _restClient.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(Id.ResourceGroupName, Id.Name, privateLinkServiceAlias, cancellationToken).ConfigureAwait(false);
+                return new PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Id.ResourceGroupName, Id.Name, privateLinkServiceAlias).Request, response);
             }
             catch (Exception e)
             {
@@ -657,8 +623,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _restClient.CheckPrivateLinkServiceVisibilityByResourceGroup(Id.Name, Id.ResourceGroupName, privateLinkServiceAlias, cancellationToken);
-                return new PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Id.Name, Id.ResourceGroupName, privateLinkServiceAlias).Request, response);
+                var response = _restClient.CheckPrivateLinkServiceVisibilityByResourceGroup(Id.ResourceGroupName, Id.Name, privateLinkServiceAlias, cancellationToken);
+                return new PrivateLinkServicesCheckPrivateLinkServiceVisibilityByResourceGroupOperation(_clientDiagnostics, Pipeline, _restClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Id.ResourceGroupName, Id.Name, privateLinkServiceAlias).Request, response);
             }
             catch (Exception e)
             {

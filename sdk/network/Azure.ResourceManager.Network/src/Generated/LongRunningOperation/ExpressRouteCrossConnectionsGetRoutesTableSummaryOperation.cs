@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Gets the route table summary associated with the express route cross connection in a resource group. </summary>
-    public partial class ExpressRouteCrossConnectionsListRoutesTableSummaryOperation : Operation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>, IOperationSource<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>
+    public partial class ExpressRouteCrossConnectionsGetRoutesTableSummaryOperation : Operation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>, IOperationSource<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>
     {
         private readonly OperationInternals<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> _operation;
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionsListRoutesTableSummaryOperation for mocking. </summary>
-        protected ExpressRouteCrossConnectionsListRoutesTableSummaryOperation()
+        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionsGetRoutesTableSummaryOperation for mocking. </summary>
+        protected ExpressRouteCrossConnectionsGetRoutesTableSummaryOperation()
         {
         }
 
-        internal ExpressRouteCrossConnectionsListRoutesTableSummaryOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCrossConnectionsGetRoutesTableSummaryOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCrossConnectionsListRoutesTableSummaryOperation");
+            _operation = new OperationInternals<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCrossConnectionsGetRoutesTableSummaryOperation");
         }
 
         /// <inheritdoc />

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<PrivateDnsZoneGroup> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of PrivateDnsZoneGroupsCreateOrUpdateOperation for mocking. </summary>
         protected PrivateDnsZoneGroupsCreateOrUpdateOperation()
         {
         }
 
-        internal PrivateDnsZoneGroupsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal PrivateDnsZoneGroupsCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<PrivateDnsZoneGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "PrivateDnsZoneGroupsCreateOrUpdateOperation");
             _operationBase = operationsBase;

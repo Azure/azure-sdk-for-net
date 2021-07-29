@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<BackendAddressPool> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolsCreateOrUpdateOperation for mocking. </summary>
         protected LoadBalancerBackendAddressPoolsCreateOrUpdateOperation()
         {
         }
 
-        internal LoadBalancerBackendAddressPoolsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal LoadBalancerBackendAddressPoolsCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<BackendAddressPool>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LoadBalancerBackendAddressPoolsCreateOrUpdateOperation");
             _operationBase = operationsBase;

@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListRequest(string privateEndpointName, string resourceGroupName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string privateEndpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -346,22 +346,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets all private dns zone groups in a private endpoint. </summary>
-        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<PrivateDnsZoneGroupListResult>> ListAsync(string privateEndpointName, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="privateEndpointName"/> is null. </exception>
+        public async Task<Response<PrivateDnsZoneGroupListResult>> GetAllAsync(string resourceGroupName, string privateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
 
-            using var message = CreateListRequest(privateEndpointName, resourceGroupName);
+            using var message = CreateGetAllRequest(resourceGroupName, privateEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -378,22 +378,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets all private dns zone groups in a private endpoint. </summary>
-        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<PrivateDnsZoneGroupListResult> List(string privateEndpointName, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="privateEndpointName"/> is null. </exception>
+        public Response<PrivateDnsZoneGroupListResult> GetAll(string resourceGroupName, string privateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
 
-            using var message = CreateListRequest(privateEndpointName, resourceGroupName);
+            using var message = CreateGetAllRequest(resourceGroupName, privateEndpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string privateEndpointName, string resourceGroupName)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string privateEndpointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -424,26 +424,26 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all private dns zone groups in a private endpoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="privateEndpointName"/>, or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<PrivateDnsZoneGroupListResult>> ListNextPageAsync(string nextLink, string privateEndpointName, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateEndpointName"/> is null. </exception>
+        public async Task<Response<PrivateDnsZoneGroupListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string privateEndpointName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
 
-            using var message = CreateListNextPageRequest(nextLink, privateEndpointName, resourceGroupName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, privateEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -461,26 +461,26 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all private dns zone groups in a private endpoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="privateEndpointName"/>, or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<PrivateDnsZoneGroupListResult> ListNextPage(string nextLink, string privateEndpointName, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="privateEndpointName"/> is null. </exception>
+        public Response<PrivateDnsZoneGroupListResult> GetAllNextPage(string nextLink, string resourceGroupName, string privateEndpointName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (privateEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointName));
+            }
 
-            using var message = CreateListNextPageRequest(nextLink, privateEndpointName, resourceGroupName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, privateEndpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

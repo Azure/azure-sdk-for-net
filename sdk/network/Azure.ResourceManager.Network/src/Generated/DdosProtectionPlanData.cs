@@ -7,33 +7,30 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the DdosProtectionPlan data model. </summary>
-    public partial class DdosProtectionPlanData : TrackedResource
+    public partial class DdosProtectionPlanData : Resource
     {
         /// <summary> Initializes a new instance of DdosProtectionPlanData. </summary>
-        /// <param name="location"> The location. </param>
-        public DdosProtectionPlanData(Location location) : base(location)
+        public DdosProtectionPlanData()
         {
-            VirtualNetworks = new ChangeTrackingList<Models.SubResource>();
+            VirtualNetworks = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of DdosProtectionPlanData. </summary>
         /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="tags"> The tags. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DDoS protection plan resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the DDoS protection plan resource. </param>
         /// <param name="virtualNetworks"> The list of virtual networks associated with the DDoS protection plan resource. This list is read-only. </param>
-        internal DdosProtectionPlanData(ResourceIdentifier id, string name, ResourceType type, Location location, IDictionary<string, string> tags, string etag, string resourceGuid, ProvisioningState? provisioningState, IReadOnlyList<Models.SubResource> virtualNetworks) : base(id, name, type, location, tags)
+        internal DdosProtectionPlanData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string resourceGuid, ProvisioningState? provisioningState, IReadOnlyList<SubResource> virtualNetworks) : base(id, name, type, location, tags)
         {
             Etag = etag;
             ResourceGuid = resourceGuid;
@@ -48,6 +45,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the DDoS protection plan resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The list of virtual networks associated with the DDoS protection plan resource. This list is read-only. </summary>
-        public IReadOnlyList<Models.SubResource> VirtualNetworks { get; }
+        public IReadOnlyList<SubResource> VirtualNetworks { get; }
     }
 }

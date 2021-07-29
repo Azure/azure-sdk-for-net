@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal WebApplicationFirewallPoliciesCreateOrUpdateOperation(OperationsBase operationsBase, Response<WebApplicationFirewallPolicyData> response)
+        internal WebApplicationFirewallPoliciesCreateOrUpdateOperation(ResourceOperations operationsBase, Response<WebApplicationFirewallPolicyData> response)
         {
             _operation = new OperationOrResponseInternals<WebApplicationFirewallPolicy>(Response.FromValue(new WebApplicationFirewallPolicy(operationsBase, response.Value), response.GetRawResponse()));
         }

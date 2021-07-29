@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific VpnConnection. </summary>
-    public partial class VpnConnectionOperations : ResourceOperationsBase<VpnConnection>
+    public partial class VpnConnectionOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private VpnConnectionsRestOperations _restClient { get; }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="VpnConnectionOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal VpnConnectionOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal VpnConnectionOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new VpnConnectionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -48,8 +48,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<VpnConnection>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Retrieves the details of a vpn connection. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<VpnConnection>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VpnConnectionOperations.Get");
             scope.Start();
@@ -65,8 +66,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <inheritdoc />
-        public override Response<VpnConnection> Get(CancellationToken cancellationToken = default)
+        /// <summary> Retrieves the details of a vpn connection. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VpnConnection> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("VpnConnectionOperations.Get");
             scope.Start();
@@ -85,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -93,7 +95,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -173,15 +175,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VpnSiteLinkConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VpnSiteLinkConnection> ListVpnLinkConnectionsByVpnConnection(CancellationToken cancellationToken = default)
+        public virtual Pageable<VpnSiteLinkConnection> GetVpnLinkConnections(CancellationToken cancellationToken = default)
         {
             Page<VpnSiteLinkConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VpnConnectionOperations.ListVpnLinkConnectionsByVpnConnection");
+                using var scope = _clientDiagnostics.CreateScope("VpnConnectionOperations.GetVpnLinkConnections");
                 scope.Start();
                 try
                 {
-                    var response = _vpnLinkConnectionsRestClient.ListByVpnConnection(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _vpnLinkConnectionsRestClient.GetByVpnConnection(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -192,11 +194,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<VpnSiteLinkConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VpnConnectionOperations.ListVpnLinkConnectionsByVpnConnection");
+                using var scope = _clientDiagnostics.CreateScope("VpnConnectionOperations.GetVpnLinkConnections");
                 scope.Start();
                 try
                 {
-                    var response = _vpnLinkConnectionsRestClient.ListByVpnConnectionNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _vpnLinkConnectionsRestClient.GetByVpnConnectionNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,15 +213,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VpnSiteLinkConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VpnSiteLinkConnection> ListVpnLinkConnectionsByVpnConnectionAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VpnSiteLinkConnection> GetVpnLinkConnectionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<VpnSiteLinkConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VpnConnectionOperations.ListVpnLinkConnectionsByVpnConnection");
+                using var scope = _clientDiagnostics.CreateScope("VpnConnectionOperations.GetVpnLinkConnections");
                 scope.Start();
                 try
                 {
-                    var response = await _vpnLinkConnectionsRestClient.ListByVpnConnectionAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _vpnLinkConnectionsRestClient.GetByVpnConnectionAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -230,11 +232,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<VpnSiteLinkConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("VpnConnectionOperations.ListVpnLinkConnectionsByVpnConnection");
+                using var scope = _clientDiagnostics.CreateScope("VpnConnectionOperations.GetVpnLinkConnections");
                 scope.Start();
                 try
                 {
-                    var response = await _vpnLinkConnectionsRestClient.ListByVpnConnectionNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _vpnLinkConnectionsRestClient.GetByVpnConnectionNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

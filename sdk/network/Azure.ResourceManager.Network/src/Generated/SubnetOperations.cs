@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific Subnet. </summary>
-    public partial class SubnetOperations : ResourceOperationsBase<Subnet>
+    public partial class SubnetOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private SubnetsRestOperations _restClient { get; }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="SubnetOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal SubnetOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal SubnetOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new SubnetsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -47,44 +47,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<Subnet>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SubnetOperations.Get");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <inheritdoc />
-        public override Response<Subnet> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SubnetOperations.Get");
-            scope.Start();
-            try
-            {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
-                return Response.FromValue(new Subnet(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets the specified subnet by virtual network and resource group. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Subnet>> GetAsync(string expand, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<Subnet>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SubnetOperations.Get");
             scope.Start();
@@ -103,7 +69,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the specified subnet by virtual network and resource group. </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Subnet> Get(string expand, CancellationToken cancellationToken = default)
+        public virtual Response<Subnet> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SubnetOperations.Get");
             scope.Start();
@@ -122,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -130,7 +96,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -208,13 +174,13 @@ namespace Azure.ResourceManager.Network
         }
         /// <summary> Gets a list of resource navigation links for a subnet. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<ResourceNavigationLink>>> ListResourceNavigationLinksAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<ResourceNavigationLink>>> GetResourceNavigationLinksAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubnetOperations.ListResourceNavigationLinks");
+            using var scope = _clientDiagnostics.CreateScope("SubnetOperations.GetResourceNavigationLinks");
             scope.Start();
             try
             {
-                var response = await _resourceNavigationLinksRestClient.ListAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceNavigationLinksRestClient.GetAllAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -226,13 +192,13 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of resource navigation links for a subnet. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<ResourceNavigationLink>> ListResourceNavigationLinks(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<ResourceNavigationLink>> GetResourceNavigationLinks(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubnetOperations.ListResourceNavigationLinks");
+            using var scope = _clientDiagnostics.CreateScope("SubnetOperations.GetResourceNavigationLinks");
             scope.Start();
             try
             {
-                var response = _resourceNavigationLinksRestClient.List(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _resourceNavigationLinksRestClient.GetAll(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,13 +210,13 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of service association links for a subnet. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<ServiceAssociationLink>>> ListServiceAssociationLinksAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<ServiceAssociationLink>>> GetServiceAssociationLinksAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubnetOperations.ListServiceAssociationLinks");
+            using var scope = _clientDiagnostics.CreateScope("SubnetOperations.GetServiceAssociationLinks");
             scope.Start();
             try
             {
-                var response = await _serviceAssociationLinksRestClient.ListAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceAssociationLinksRestClient.GetAllAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)
@@ -262,13 +228,13 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets a list of service association links for a subnet. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<ServiceAssociationLink>> ListServiceAssociationLinks(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<ServiceAssociationLink>> GetServiceAssociationLinks(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SubnetOperations.ListServiceAssociationLinks");
+            using var scope = _clientDiagnostics.CreateScope("SubnetOperations.GetServiceAssociationLinks");
             scope.Start();
             try
             {
-                var response = _serviceAssociationLinksRestClient.List(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _serviceAssociationLinksRestClient.GetAll(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)

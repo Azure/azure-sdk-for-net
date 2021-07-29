@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListRequest(string location)
+        internal HttpMessage CreateGetAllRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<AvailableServiceAliasesResult>> ListAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableServiceAliasesResult>> GetAllAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListRequest(location);
+            using var message = CreateGetAllRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<AvailableServiceAliasesResult> List(string location, CancellationToken cancellationToken = default)
+        public Response<AvailableServiceAliasesResult> GetAll(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListRequest(location);
+            using var message = CreateGetAllRequest(location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName, string location)
+        internal HttpMessage CreateGetByResourceGroupRequest(string resourceGroupName, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<AvailableServiceAliasesResult>> ListByResourceGroupAsync(string resourceGroupName, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableServiceAliasesResult>> GetByResourceGroupAsync(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName, location);
+            using var message = CreateGetByResourceGroupRequest(resourceGroupName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
-        public Response<AvailableServiceAliasesResult> ListByResourceGroup(string resourceGroupName, string location, CancellationToken cancellationToken = default)
+        public Response<AvailableServiceAliasesResult> GetByResourceGroup(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName, location);
+            using var message = CreateGetByResourceGroupRequest(resourceGroupName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string location)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<AvailableServiceAliasesResult>> ListNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableServiceAliasesResult>> GetAllNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, location);
+            using var message = CreateGetAllNextPageRequest(nextLink, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<AvailableServiceAliasesResult> ListNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
+        public Response<AvailableServiceAliasesResult> GetAllNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, location);
+            using var message = CreateGetAllNextPageRequest(nextLink, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string location)
+        internal HttpMessage CreateGetByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="location"/> is null. </exception>
-        public async Task<Response<AvailableServiceAliasesResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailableServiceAliasesResult>> GetByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, location);
+            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="location"/> is null. </exception>
-        public Response<AvailableServiceAliasesResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
+        public Response<AvailableServiceAliasesResult> GetByResourceGroupNextPage(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, location);
+            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

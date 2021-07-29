@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal PublicIPPrefixesUpdateTagsOperation(OperationsBase operationsBase, Response<PublicIPPrefixData> response)
+        internal PublicIPPrefixesUpdateTagsOperation(ResourceOperations operationsBase, Response<PublicIPPrefixData> response)
         {
             _operation = new OperationOrResponseInternals<PublicIPPrefix>(Response.FromValue(new PublicIPPrefix(operationsBase, response.Value), response.GetRawResponse()));
         }

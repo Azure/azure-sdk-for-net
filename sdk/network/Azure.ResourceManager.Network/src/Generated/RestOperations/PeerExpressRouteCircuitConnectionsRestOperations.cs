@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string circuitName, string peeringName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string circuitName, string peeringName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
-        public async Task<Response<PeerExpressRouteCircuitConnectionListResult>> ListAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
+        public async Task<Response<PeerExpressRouteCircuitConnectionListResult>> GetAllAsync(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, circuitName, peeringName);
+            using var message = CreateGetAllRequest(resourceGroupName, circuitName, peeringName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
-        public Response<PeerExpressRouteCircuitConnectionListResult> List(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
+        public Response<PeerExpressRouteCircuitConnectionListResult> GetAll(string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, circuitName, peeringName);
+            using var message = CreateGetAllRequest(resourceGroupName, circuitName, peeringName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string circuitName, string peeringName)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string circuitName, string peeringName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
-        public async Task<Response<PeerExpressRouteCircuitConnectionListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
+        public async Task<Response<PeerExpressRouteCircuitConnectionListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, circuitName, peeringName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, circuitName, peeringName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, or <paramref name="peeringName"/> is null. </exception>
-        public Response<PeerExpressRouteCircuitConnectionListResult> ListNextPage(string nextLink, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
+        public Response<PeerExpressRouteCircuitConnectionListResult> GetAllNextPage(string nextLink, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(peeringName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, circuitName, peeringName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, circuitName, peeringName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

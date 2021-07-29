@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Gets all network security groups applied to a network interface. </summary>
-    public partial class NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation : Operation<EffectiveNetworkSecurityGroupListResult>, IOperationSource<EffectiveNetworkSecurityGroupListResult>
+    public partial class NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation : Operation<EffectiveNetworkSecurityGroupListResult>, IOperationSource<EffectiveNetworkSecurityGroupListResult>
     {
         private readonly OperationInternals<EffectiveNetworkSecurityGroupListResult> _operation;
 
-        /// <summary> Initializes a new instance of NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation for mocking. </summary>
-        protected NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation()
+        /// <summary> Initializes a new instance of NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation for mocking. </summary>
+        protected NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation()
         {
         }
 
-        internal NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<EffectiveNetworkSecurityGroupListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkInterfacesListEffectiveNetworkSecurityGroupsOperation");
+            _operation = new OperationInternals<EffectiveNetworkSecurityGroupListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkInterfacesGetEffectiveNetworkSecurityGroupsOperation");
         }
 
         /// <inheritdoc />

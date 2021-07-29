@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ConnectionMonitor and their operations over a NetworkWatcher. </summary>
-    public partial class ConnectionMonitorContainer : ResourceContainerBase<ConnectionMonitor, ConnectionMonitorData>
+    public partial class ConnectionMonitorContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="ConnectionMonitorContainer"/> class for mocking. </summary>
         protected ConnectionMonitorContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of ConnectionMonitorContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ConnectionMonitorContainer(OperationsBase parent) : base(parent)
+        internal ConnectionMonitorContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -273,9 +273,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string connectionMonitorName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -296,9 +296,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -319,15 +319,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all connection monitors for the specified Network Watcher. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConnectionMonitor" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<ConnectionMonitor> List(CancellationToken cancellationToken = default)
+        public Pageable<ConnectionMonitor> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ConnectionMonitor> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitor(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -342,15 +342,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all connection monitors for the specified Network Watcher. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConnectionMonitor" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<ConnectionMonitor> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<ConnectionMonitor> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ConnectionMonitor>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ConnectionMonitor(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -368,15 +368,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(ConnectionMonitorOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -391,15 +391,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("ConnectionMonitorContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(ConnectionMonitorOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

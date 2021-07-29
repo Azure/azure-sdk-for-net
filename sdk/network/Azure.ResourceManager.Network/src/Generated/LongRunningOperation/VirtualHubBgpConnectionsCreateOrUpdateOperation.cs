@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<BgpConnection> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of VirtualHubBgpConnectionsCreateOrUpdateOperation for mocking. </summary>
         protected VirtualHubBgpConnectionsCreateOrUpdateOperation()
         {
         }
 
-        internal VirtualHubBgpConnectionsCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualHubBgpConnectionsCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<BgpConnection>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualHubBgpConnectionsCreateOrUpdateOperation");
             _operationBase = operationsBase;

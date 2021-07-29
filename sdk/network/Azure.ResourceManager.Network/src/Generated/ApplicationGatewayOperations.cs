@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific ApplicationGateway. </summary>
-    public partial class ApplicationGatewayOperations : ResourceOperationsBase<ApplicationGateway>
+    public partial class ApplicationGatewayOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ApplicationGatewaysRestOperations _restClient { get; }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ApplicationGatewayOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal ApplicationGatewayOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ApplicationGatewaysRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -46,8 +46,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<ApplicationGateway>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets the specified application gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<ApplicationGateway>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.Get");
             scope.Start();
@@ -63,8 +64,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <inheritdoc />
-        public override Response<ApplicationGateway> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets the specified application gateway. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ApplicationGateway> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.Get");
             scope.Start();
@@ -83,7 +85,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -91,7 +93,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -208,15 +210,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all private link resources on an application gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationGatewayPrivateLinkResource> ListApplicationGatewayPrivateLinkResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             Page<ApplicationGatewayPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.ListApplicationGatewayPrivateLinkResources");
+                using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.GetApplicationGatewayPrivateLinkResources");
                 scope.Start();
                 try
                 {
-                    var response = _applicationGatewayPrivateLinkResourcesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _applicationGatewayPrivateLinkResourcesRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -227,11 +229,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<ApplicationGatewayPrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.ListApplicationGatewayPrivateLinkResources");
+                using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.GetApplicationGatewayPrivateLinkResources");
                 scope.Start();
                 try
                 {
-                    var response = _applicationGatewayPrivateLinkResourcesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _applicationGatewayPrivateLinkResourcesRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -246,15 +248,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all private link resources on an application gateway. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationGatewayPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationGatewayPrivateLinkResource> ListApplicationGatewayPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ApplicationGatewayPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.ListApplicationGatewayPrivateLinkResources");
+                using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.GetApplicationGatewayPrivateLinkResources");
                 scope.Start();
                 try
                 {
-                    var response = await _applicationGatewayPrivateLinkResourcesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _applicationGatewayPrivateLinkResourcesRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -265,11 +267,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<ApplicationGatewayPrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.ListApplicationGatewayPrivateLinkResources");
+                using var scope = _clientDiagnostics.CreateScope("ApplicationGatewayOperations.GetApplicationGatewayPrivateLinkResources");
                 scope.Start();
                 try
                 {
-                    var response = await _applicationGatewayPrivateLinkResourcesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _applicationGatewayPrivateLinkResourcesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

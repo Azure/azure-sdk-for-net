@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteCrossConnection and their operations over a ResourceGroup. </summary>
-    public partial class ExpressRouteCrossConnectionContainer : ResourceContainerBase<ExpressRouteCrossConnection, ExpressRouteCrossConnectionData>
+    public partial class ExpressRouteCrossConnectionContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionContainer"/> class for mocking. </summary>
         protected ExpressRouteCrossConnectionContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ExpressRouteCrossConnectionContainer(OperationsBase parent) : base(parent)
+        internal ExpressRouteCrossConnectionContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -269,9 +269,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection (service key of the circuit). </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string crossConnectionName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection (service key of the circuit). </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string crossConnectionName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -315,15 +315,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves all the ExpressRouteCrossConnections in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCrossConnection" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<ExpressRouteCrossConnection> List(CancellationToken cancellationToken = default)
+        public Pageable<ExpressRouteCrossConnection> GetAll(CancellationToken cancellationToken = default)
         {
             Page<ExpressRouteCrossConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetByResourceGroup(Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -334,11 +334,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<ExpressRouteCrossConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    var response = _restClient.GetByResourceGroupNextPage(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -353,15 +353,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Retrieves all the ExpressRouteCrossConnections in a resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCrossConnection" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<ExpressRouteCrossConnection> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<ExpressRouteCrossConnection> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ExpressRouteCrossConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetByResourceGroupAsync(Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<ExpressRouteCrossConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetByResourceGroupNextPageAsync(nextLink, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ExpressRouteCrossConnection(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -394,15 +394,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(ExpressRouteCrossConnectionOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -417,15 +417,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteCrossConnectionContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(ExpressRouteCrossConnectionOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

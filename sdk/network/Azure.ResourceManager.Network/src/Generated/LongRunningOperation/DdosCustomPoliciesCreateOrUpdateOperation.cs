@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<DdosCustomPolicy> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of DdosCustomPoliciesCreateOrUpdateOperation for mocking. </summary>
         protected DdosCustomPoliciesCreateOrUpdateOperation()
         {
         }
 
-        internal DdosCustomPoliciesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DdosCustomPoliciesCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<DdosCustomPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DdosCustomPoliciesCreateOrUpdateOperation");
             _operationBase = operationsBase;

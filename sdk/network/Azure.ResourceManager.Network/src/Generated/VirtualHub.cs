@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VirtualHub"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualHub(OperationsBase options, VirtualHubData resource) : base(options, resource.Id)
+        internal VirtualHub(ResourceOperations options, VirtualHubData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

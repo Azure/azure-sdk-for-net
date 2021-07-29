@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +18,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of ExpressRouteGateway and their operations over a ResourceGroup. </summary>
-    public partial class ExpressRouteGatewayContainer : ResourceContainerBase<ExpressRouteGateway, ExpressRouteGatewayData>
+    public partial class ExpressRouteGatewayContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteGatewayContainer"/> class for mocking. </summary>
         protected ExpressRouteGatewayContainer()
@@ -29,7 +27,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of ExpressRouteGatewayContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal ExpressRouteGatewayContainer(OperationsBase parent) : base(parent)
+        internal ExpressRouteGatewayContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -269,9 +267,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -292,9 +290,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -312,57 +310,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists ExpressRoute gateways in a given resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<ExpressRouteGateway>>> ListAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.List");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.ListByResourceGroupAsync(Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value.Select(data => new ExpressRouteGateway(Parent, data)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists ExpressRoute gateways in a given resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<ExpressRouteGateway>> List(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.List");
-            scope.Start();
-            try
-            {
-                var response = _restClient.ListByResourceGroup(Id.ResourceGroupName, cancellationToken);
-                return Response.FromValue(response.Value.Value.Select(data => new ExpressRouteGateway(Parent, data)).ToArray() as IReadOnlyList<ExpressRouteGateway>, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Filters the list of <see cref="ExpressRouteGateway" /> for this resource group represented as generic resources. </summary>
         /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(ExpressRouteGatewayOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -377,15 +339,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("ExpressRouteGatewayContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(ExpressRouteGatewayOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

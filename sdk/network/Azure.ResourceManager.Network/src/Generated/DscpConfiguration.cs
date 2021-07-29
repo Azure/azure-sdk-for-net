@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "DscpConfiguration"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DscpConfiguration(OperationsBase options, DscpConfigurationData resource) : base(options, resource.Id)
+        internal DscpConfiguration(ResourceOperations options, DscpConfigurationData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

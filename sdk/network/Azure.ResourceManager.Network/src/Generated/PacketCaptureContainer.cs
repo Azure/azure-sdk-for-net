@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of PacketCapture and their operations over a NetworkWatcher. </summary>
-    public partial class PacketCaptureContainer : ResourceContainerBase<PacketCapture, PacketCaptureData>
+    public partial class PacketCaptureContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="PacketCaptureContainer"/> class for mocking. </summary>
         protected PacketCaptureContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of PacketCaptureContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal PacketCaptureContainer(OperationsBase parent) : base(parent)
+        internal PacketCaptureContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -269,9 +269,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string packetCaptureName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string packetCaptureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string packetCaptureName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string packetCaptureName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -315,15 +315,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all packet capture sessions within the specified resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PacketCapture" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<PacketCapture> List(CancellationToken cancellationToken = default)
+        public Pageable<PacketCapture> GetAll(CancellationToken cancellationToken = default)
         {
             Page<PacketCapture> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new PacketCapture(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -338,15 +338,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all packet capture sessions within the specified resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PacketCapture" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<PacketCapture> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<PacketCapture> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PacketCapture>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new PacketCapture(Parent, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -364,15 +364,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(PacketCaptureOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -387,15 +387,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("PacketCaptureContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(PacketCaptureOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

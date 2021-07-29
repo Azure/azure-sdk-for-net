@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "FirewallPolicy"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal FirewallPolicy(OperationsBase options, FirewallPolicyData resource) : base(options, resource.Id)
+        internal FirewallPolicy(ResourceOperations options, FirewallPolicyData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

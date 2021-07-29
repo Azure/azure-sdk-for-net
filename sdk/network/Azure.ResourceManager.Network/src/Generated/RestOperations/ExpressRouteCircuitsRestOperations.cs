@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListArpTableRequest(string resourceGroupName, string circuitName, string peeringName, string devicePath)
+        internal HttpMessage CreateGetArpTableRequest(string resourceGroupName, string circuitName, string peeringName, string devicePath)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
-        public async Task<Response> ListArpTableAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
+        public async Task<Response> GetArpTableAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(devicePath));
             }
 
-            using var message = CreateListArpTableRequest(resourceGroupName, circuitName, peeringName, devicePath);
+            using var message = CreateGetArpTableRequest(resourceGroupName, circuitName, peeringName, devicePath);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
-        public Response ListArpTable(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
+        public Response GetArpTable(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(devicePath));
             }
 
-            using var message = CreateListArpTableRequest(resourceGroupName, circuitName, peeringName, devicePath);
+            using var message = CreateGetArpTableRequest(resourceGroupName, circuitName, peeringName, devicePath);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListRoutesTableRequest(string resourceGroupName, string circuitName, string peeringName, string devicePath)
+        internal HttpMessage CreateGetRoutesTableRequest(string resourceGroupName, string circuitName, string peeringName, string devicePath)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
-        public async Task<Response> ListRoutesTableAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
+        public async Task<Response> GetRoutesTableAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(devicePath));
             }
 
-            using var message = CreateListRoutesTableRequest(resourceGroupName, circuitName, peeringName, devicePath);
+            using var message = CreateGetRoutesTableRequest(resourceGroupName, circuitName, peeringName, devicePath);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
-        public Response ListRoutesTable(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
+        public Response GetRoutesTable(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(devicePath));
             }
 
-            using var message = CreateListRoutesTableRequest(resourceGroupName, circuitName, peeringName, devicePath);
+            using var message = CreateGetRoutesTableRequest(resourceGroupName, circuitName, peeringName, devicePath);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListRoutesTableSummaryRequest(string resourceGroupName, string circuitName, string peeringName, string devicePath)
+        internal HttpMessage CreateGetRoutesTableSummaryRequest(string resourceGroupName, string circuitName, string peeringName, string devicePath)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
-        public async Task<Response> ListRoutesTableSummaryAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
+        public async Task<Response> GetRoutesTableSummaryAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(devicePath));
             }
 
-            using var message = CreateListRoutesTableSummaryRequest(resourceGroupName, circuitName, peeringName, devicePath);
+            using var message = CreateGetRoutesTableSummaryRequest(resourceGroupName, circuitName, peeringName, devicePath);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="devicePath"> The path of the device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="circuitName"/>, <paramref name="peeringName"/>, or <paramref name="devicePath"/> is null. </exception>
-        public Response ListRoutesTableSummary(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
+        public Response GetRoutesTableSummary(string resourceGroupName, string circuitName, string peeringName, string devicePath, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(devicePath));
             }
 
-            using var message = CreateListRoutesTableSummaryRequest(resourceGroupName, circuitName, peeringName, devicePath);
+            using var message = CreateGetRoutesTableSummaryRequest(resourceGroupName, circuitName, peeringName, devicePath);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -887,14 +887,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ExpressRouteCircuitListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteCircuitListResult>> GetAllAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListRequest(resourceGroupName);
+            using var message = CreateGetAllRequest(resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -914,14 +914,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ExpressRouteCircuitListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ExpressRouteCircuitListResult> GetAll(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListRequest(resourceGroupName);
+            using var message = CreateGetAllRequest(resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListAllRequest()
+        internal HttpMessage CreateGetBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -955,9 +955,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all the express route circuits in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ExpressRouteCircuitListResult>> ListAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteCircuitListResult>> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListAllRequest();
+            using var message = CreateGetBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -975,9 +975,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all the express route circuits in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ExpressRouteCircuitListResult> ListAll(CancellationToken cancellationToken = default)
+        public Response<ExpressRouteCircuitListResult> GetBySubscription(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListAllRequest();
+            using var message = CreateGetBySubscriptionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ExpressRouteCircuitListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteCircuitListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1022,7 +1022,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ExpressRouteCircuitListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<ExpressRouteCircuitListResult> GetAllNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1054,7 +1054,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListAllNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetBySubscriptionNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1087,14 +1087,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ExpressRouteCircuitListResult>> ListAllNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<ExpressRouteCircuitListResult>> GetBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListAllNextPageRequest(nextLink);
+            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1114,14 +1114,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ExpressRouteCircuitListResult> ListAllNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<ExpressRouteCircuitListResult> GetBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListAllNextPageRequest(nextLink);
+            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

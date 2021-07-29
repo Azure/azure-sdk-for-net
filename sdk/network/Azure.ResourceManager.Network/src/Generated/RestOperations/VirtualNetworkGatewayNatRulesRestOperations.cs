@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListByVirtualNetworkGatewayRequest(string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateGetByVirtualNetworkGatewayRequest(string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response<ListVirtualNetworkGatewayNatRulesResult>> ListByVirtualNetworkGatewayAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListVirtualNetworkGatewayNatRulesResult>> GetByVirtualNetworkGatewayAsync(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
             }
 
-            using var message = CreateListByVirtualNetworkGatewayRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetByVirtualNetworkGatewayRequest(resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response<ListVirtualNetworkGatewayNatRulesResult> ListByVirtualNetworkGateway(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public Response<ListVirtualNetworkGatewayNatRulesResult> GetByVirtualNetworkGateway(string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
             }
 
-            using var message = CreateListByVirtualNetworkGatewayRequest(resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetByVirtualNetworkGatewayRequest(resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListByVirtualNetworkGatewayNextPageRequest(string nextLink, string resourceGroupName, string virtualNetworkGatewayName)
+        internal HttpMessage CreateGetByVirtualNetworkGatewayNextPageRequest(string nextLink, string resourceGroupName, string virtualNetworkGatewayName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public async Task<Response<ListVirtualNetworkGatewayNatRulesResult>> ListByVirtualNetworkGatewayNextPageAsync(string nextLink, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public async Task<Response<ListVirtualNetworkGatewayNatRulesResult>> GetByVirtualNetworkGatewayNextPageAsync(string nextLink, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
             }
 
-            using var message = CreateListByVirtualNetworkGatewayNextPageRequest(nextLink, resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetByVirtualNetworkGatewayNextPageRequest(nextLink, resourceGroupName, virtualNetworkGatewayName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public Response<ListVirtualNetworkGatewayNatRulesResult> ListByVirtualNetworkGatewayNextPage(string nextLink, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public Response<ListVirtualNetworkGatewayNatRulesResult> GetByVirtualNetworkGatewayNextPage(string nextLink, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(virtualNetworkGatewayName));
             }
 
-            using var message = CreateListByVirtualNetworkGatewayNextPageRequest(nextLink, resourceGroupName, virtualNetworkGatewayName);
+            using var message = CreateGetByVirtualNetworkGatewayNextPageRequest(nextLink, resourceGroupName, virtualNetworkGatewayName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

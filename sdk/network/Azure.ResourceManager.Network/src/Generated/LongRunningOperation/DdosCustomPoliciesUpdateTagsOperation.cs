@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal DdosCustomPoliciesUpdateTagsOperation(OperationsBase operationsBase, Response<DdosCustomPolicyData> response)
+        internal DdosCustomPoliciesUpdateTagsOperation(ResourceOperations operationsBase, Response<DdosCustomPolicyData> response)
         {
             _operation = new OperationOrResponseInternals<DdosCustomPolicy>(Response.FromValue(new DdosCustomPolicy(operationsBase, response.Value), response.GetRawResponse()));
         }

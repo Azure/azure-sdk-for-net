@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Gets the currently advertised ARP table associated with the express route circuit in a resource group. </summary>
-    public partial class ExpressRouteCircuitsListArpTableOperation : Operation<ExpressRouteCircuitsArpTableListResult>, IOperationSource<ExpressRouteCircuitsArpTableListResult>
+    public partial class ExpressRouteCircuitsGetArpTableOperation : Operation<ExpressRouteCircuitsArpTableListResult>, IOperationSource<ExpressRouteCircuitsArpTableListResult>
     {
         private readonly OperationInternals<ExpressRouteCircuitsArpTableListResult> _operation;
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitsListArpTableOperation for mocking. </summary>
-        protected ExpressRouteCircuitsListArpTableOperation()
+        /// <summary> Initializes a new instance of ExpressRouteCircuitsGetArpTableOperation for mocking. </summary>
+        protected ExpressRouteCircuitsGetArpTableOperation()
         {
         }
 
-        internal ExpressRouteCircuitsListArpTableOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ExpressRouteCircuitsGetArpTableOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<ExpressRouteCircuitsArpTableListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCircuitsListArpTableOperation");
+            _operation = new OperationInternals<ExpressRouteCircuitsArpTableListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCircuitsGetArpTableOperation");
         }
 
         /// <inheritdoc />

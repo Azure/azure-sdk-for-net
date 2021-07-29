@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal RouteTablesUpdateTagsOperation(OperationsBase operationsBase, Response<RouteTableData> response)
+        internal RouteTablesUpdateTagsOperation(ResourceOperations operationsBase, Response<RouteTableData> response)
         {
             _operation = new OperationOrResponseInternals<RouteTable>(Response.FromValue(new RouteTable(operationsBase, response.Value), response.GetRawResponse()));
         }

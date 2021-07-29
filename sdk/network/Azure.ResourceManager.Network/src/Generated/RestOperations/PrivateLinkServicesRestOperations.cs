@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -317,14 +317,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<PrivateLinkServiceListResult>> ListAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkServiceListResult>> GetAllAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListRequest(resourceGroupName);
+            using var message = CreateGetAllRequest(resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -344,14 +344,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<PrivateLinkServiceListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkServiceListResult> GetAll(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListRequest(resourceGroupName);
+            using var message = CreateGetAllRequest(resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest()
+        internal HttpMessage CreateGetBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -385,9 +385,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all private link service in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<PrivateLinkServiceListResult>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkServiceListResult>> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBySubscriptionRequest();
+            using var message = CreateGetBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -405,9 +405,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets all private link service in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<PrivateLinkServiceListResult> ListBySubscription(CancellationToken cancellationToken = default)
+        public Response<PrivateLinkServiceListResult> GetBySubscription(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBySubscriptionRequest();
+            using var message = CreateGetBySubscriptionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListPrivateEndpointConnectionsRequest(string resourceGroupName, string serviceName)
+        internal HttpMessage CreateGetPrivateEndpointConnectionsRequest(string resourceGroupName, string serviceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionListResult>> ListPrivateEndpointConnectionsAsync(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateEndpointConnectionListResult>> GetPrivateEndpointConnectionsAsync(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceName));
             }
 
-            using var message = CreateListPrivateEndpointConnectionsRequest(resourceGroupName, serviceName);
+            using var message = CreateGetPrivateEndpointConnectionsRequest(resourceGroupName, serviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionListResult> ListPrivateEndpointConnections(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<PrivateEndpointConnectionListResult> GetPrivateEndpointConnections(string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceName));
             }
 
-            using var message = CreateListPrivateEndpointConnectionsRequest(resourceGroupName, serviceName);
+            using var message = CreateGetPrivateEndpointConnectionsRequest(resourceGroupName, serviceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(string location, string resourceGroupName, string privateLinkServiceAlias)
+        internal HttpMessage CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(string resourceGroupName, string location, string privateLinkServiceAlias)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -909,23 +909,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
-        /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="location"> The location of the domain name. </param>
         /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(string location, string resourceGroupName, string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
+        public async Task<Response> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(string resourceGroupName, string location, string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
 
-            using var message = CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(location, resourceGroupName, privateLinkServiceAlias);
+            using var message = CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroupName, location, privateLinkServiceAlias);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -938,23 +938,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Checks whether the subscription is visible to private link service in the specified resource group. </summary>
-        /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="location"> The location of the domain name. </param>
         /// <param name="privateLinkServiceAlias"> The alias of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response CheckPrivateLinkServiceVisibilityByResourceGroup(string location, string resourceGroupName, string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
+        public Response CheckPrivateLinkServiceVisibilityByResourceGroup(string resourceGroupName, string location, string privateLinkServiceAlias = null, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
 
-            using var message = CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(location, resourceGroupName, privateLinkServiceAlias);
+            using var message = CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(resourceGroupName, location, privateLinkServiceAlias);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListAutoApprovedPrivateLinkServicesRequest(string location)
+        internal HttpMessage CreateGetAutoApprovedPrivateLinkServicesRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -988,14 +988,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<AutoApprovedPrivateLinkServicesResult>> ListAutoApprovedPrivateLinkServicesAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AutoApprovedPrivateLinkServicesResult>> GetAutoApprovedPrivateLinkServicesAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListAutoApprovedPrivateLinkServicesRequest(location);
+            using var message = CreateGetAutoApprovedPrivateLinkServicesRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1015,14 +1015,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<AutoApprovedPrivateLinkServicesResult> ListAutoApprovedPrivateLinkServices(string location, CancellationToken cancellationToken = default)
+        public Response<AutoApprovedPrivateLinkServicesResult> GetAutoApprovedPrivateLinkServices(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListAutoApprovedPrivateLinkServicesRequest(location);
+            using var message = CreateGetAutoApprovedPrivateLinkServicesRequest(location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1038,7 +1038,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListAutoApprovedPrivateLinkServicesByResourceGroupRequest(string location, string resourceGroupName)
+        internal HttpMessage CreateGetAutoApprovedPrivateLinkServicesByResourceGroupRequest(string resourceGroupName, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1059,22 +1059,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
-        /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<AutoApprovedPrivateLinkServicesResult>> ListAutoApprovedPrivateLinkServicesByResourceGroupAsync(string location, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
+        public async Task<Response<AutoApprovedPrivateLinkServicesResult>> GetAutoApprovedPrivateLinkServicesByResourceGroupAsync(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
 
-            using var message = CreateListAutoApprovedPrivateLinkServicesByResourceGroupRequest(location, resourceGroupName);
+            using var message = CreateGetAutoApprovedPrivateLinkServicesByResourceGroupRequest(resourceGroupName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1091,22 +1091,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
-        /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<AutoApprovedPrivateLinkServicesResult> ListAutoApprovedPrivateLinkServicesByResourceGroup(string location, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="location"/> is null. </exception>
+        public Response<AutoApprovedPrivateLinkServicesResult> GetAutoApprovedPrivateLinkServicesByResourceGroup(string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
 
-            using var message = CreateListAutoApprovedPrivateLinkServicesByResourceGroupRequest(location, resourceGroupName);
+            using var message = CreateGetAutoApprovedPrivateLinkServicesByResourceGroupRequest(resourceGroupName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1140,7 +1140,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<PrivateLinkServiceListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkServiceListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<PrivateLinkServiceListResult> ListNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkServiceListResult> GetAllNextPage(string nextLink, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1199,7 +1199,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetBySubscriptionNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1216,14 +1216,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<PrivateLinkServiceListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkServiceListResult>> GetBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1243,14 +1243,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<PrivateLinkServiceListResult> ListBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkServiceListResult> GetBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1266,7 +1266,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListPrivateEndpointConnectionsNextPageRequest(string nextLink, string resourceGroupName, string serviceName)
+        internal HttpMessage CreateGetPrivateEndpointConnectionsNextPageRequest(string nextLink, string resourceGroupName, string serviceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="serviceName"/> is null. </exception>
-        public async Task<Response<PrivateEndpointConnectionListResult>> ListPrivateEndpointConnectionsNextPageAsync(string nextLink, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateEndpointConnectionListResult>> GetPrivateEndpointConnectionsNextPageAsync(string nextLink, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1300,7 +1300,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceName));
             }
 
-            using var message = CreateListPrivateEndpointConnectionsNextPageRequest(nextLink, resourceGroupName, serviceName);
+            using var message = CreateGetPrivateEndpointConnectionsNextPageRequest(nextLink, resourceGroupName, serviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1322,7 +1322,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="serviceName"/> is null. </exception>
-        public Response<PrivateEndpointConnectionListResult> ListPrivateEndpointConnectionsNextPage(string nextLink, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<PrivateEndpointConnectionListResult> GetPrivateEndpointConnectionsNextPage(string nextLink, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1337,7 +1337,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(serviceName));
             }
 
-            using var message = CreateListPrivateEndpointConnectionsNextPageRequest(nextLink, resourceGroupName, serviceName);
+            using var message = CreateGetPrivateEndpointConnectionsNextPageRequest(nextLink, resourceGroupName, serviceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1353,7 +1353,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListAutoApprovedPrivateLinkServicesNextPageRequest(string nextLink, string location)
+        internal HttpMessage CreateGetAutoApprovedPrivateLinkServicesNextPageRequest(string nextLink, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1371,7 +1371,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<AutoApprovedPrivateLinkServicesResult>> ListAutoApprovedPrivateLinkServicesNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AutoApprovedPrivateLinkServicesResult>> GetAutoApprovedPrivateLinkServicesNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1382,7 +1382,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListAutoApprovedPrivateLinkServicesNextPageRequest(nextLink, location);
+            using var message = CreateGetAutoApprovedPrivateLinkServicesNextPageRequest(nextLink, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1403,7 +1403,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<AutoApprovedPrivateLinkServicesResult> ListAutoApprovedPrivateLinkServicesNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
+        public Response<AutoApprovedPrivateLinkServicesResult> GetAutoApprovedPrivateLinkServicesNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1414,7 +1414,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListAutoApprovedPrivateLinkServicesNextPageRequest(nextLink, location);
+            using var message = CreateGetAutoApprovedPrivateLinkServicesNextPageRequest(nextLink, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1430,7 +1430,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal HttpMessage CreateListAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(string nextLink, string location, string resourceGroupName)
+        internal HttpMessage CreateGetAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1445,26 +1445,26 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<AutoApprovedPrivateLinkServicesResult>> ListAutoApprovedPrivateLinkServicesByResourceGroupNextPageAsync(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="location"/> is null. </exception>
+        public async Task<Response<AutoApprovedPrivateLinkServicesResult>> GetAutoApprovedPrivateLinkServicesByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
 
-            using var message = CreateListAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(nextLink, location, resourceGroupName);
+            using var message = CreateGetAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(nextLink, resourceGroupName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1482,26 +1482,26 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="location"> The location of the domain name. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="location"/>, or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<AutoApprovedPrivateLinkServicesResult> ListAutoApprovedPrivateLinkServicesByResourceGroupNextPage(string nextLink, string location, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="location"/> is null. </exception>
+        public Response<AutoApprovedPrivateLinkServicesResult> GetAutoApprovedPrivateLinkServicesByResourceGroupNextPage(string nextLink, string resourceGroupName, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
 
-            using var message = CreateListAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(nextLink, location, resourceGroupName);
+            using var message = CreateGetAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(nextLink, resourceGroupName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

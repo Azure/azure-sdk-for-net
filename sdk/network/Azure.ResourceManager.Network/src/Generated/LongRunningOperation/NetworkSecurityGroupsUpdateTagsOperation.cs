@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal NetworkSecurityGroupsUpdateTagsOperation(OperationsBase operationsBase, Response<NetworkSecurityGroupData> response)
+        internal NetworkSecurityGroupsUpdateTagsOperation(ResourceOperations operationsBase, Response<NetworkSecurityGroupData> response)
         {
             _operation = new OperationOrResponseInternals<NetworkSecurityGroup>(Response.FromValue(new NetworkSecurityGroup(operationsBase, response.Value), response.GetRawResponse()));
         }

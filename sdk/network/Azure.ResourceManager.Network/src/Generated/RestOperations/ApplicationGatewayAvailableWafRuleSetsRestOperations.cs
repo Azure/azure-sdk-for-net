@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListRequest()
+        internal HttpMessage CreateGetAllRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all available web application firewall rule sets. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ApplicationGatewayAvailableWafRuleSetsResult>> ListAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGatewayAvailableWafRuleSetsResult>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest();
+            using var message = CreateGetAllRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Lists all available web application firewall rule sets. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ApplicationGatewayAvailableWafRuleSetsResult> List(CancellationToken cancellationToken = default)
+        public Response<ApplicationGatewayAvailableWafRuleSetsResult> GetAll(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest();
+            using var message = CreateGetAllRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

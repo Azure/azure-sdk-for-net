@@ -16,18 +16,18 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Gives the list of VpnServerConfigurations associated with Virtual Wan in a resource group. </summary>
-    public partial class VpnServerConfigurationsAssociatedWithVirtualWanListOperation : Operation<VpnServerConfigurationsResponse>, IOperationSource<VpnServerConfigurationsResponse>
+    public partial class VpnServerConfigurationsAssociatedWithVirtualWanGetAllOperation : Operation<VpnServerConfigurationsResponse>, IOperationSource<VpnServerConfigurationsResponse>
     {
         private readonly OperationInternals<VpnServerConfigurationsResponse> _operation;
 
-        /// <summary> Initializes a new instance of VpnServerConfigurationsAssociatedWithVirtualWanListOperation for mocking. </summary>
-        protected VpnServerConfigurationsAssociatedWithVirtualWanListOperation()
+        /// <summary> Initializes a new instance of VpnServerConfigurationsAssociatedWithVirtualWanGetAllOperation for mocking. </summary>
+        protected VpnServerConfigurationsAssociatedWithVirtualWanGetAllOperation()
         {
         }
 
-        internal VpnServerConfigurationsAssociatedWithVirtualWanListOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VpnServerConfigurationsAssociatedWithVirtualWanGetAllOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<VpnServerConfigurationsResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VpnServerConfigurationsAssociatedWithVirtualWanListOperation");
+            _operation = new OperationInternals<VpnServerConfigurationsResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VpnServerConfigurationsAssociatedWithVirtualWanGetAllOperation");
         }
 
         /// <inheritdoc />

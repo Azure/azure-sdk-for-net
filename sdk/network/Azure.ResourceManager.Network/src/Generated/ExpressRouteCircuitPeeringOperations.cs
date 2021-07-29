@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the operations that can be performed over a specific ExpressRouteCircuitPeering. </summary>
-    public partial class ExpressRouteCircuitPeeringOperations : ResourceOperationsBase<ExpressRouteCircuitPeering>
+    public partial class ExpressRouteCircuitPeeringOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ExpressRouteCircuitPeeringsRestOperations _restClient { get; }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitPeeringOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal ExpressRouteCircuitPeeringOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal ExpressRouteCircuitPeeringOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new ExpressRouteCircuitPeeringsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -46,8 +46,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<ExpressRouteCircuitPeering>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets the specified peering for the express route circuit. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<ExpressRouteCircuitPeering>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringOperations.Get");
             scope.Start();
@@ -63,8 +64,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <inheritdoc />
-        public override Response<ExpressRouteCircuitPeering> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets the specified peering for the express route circuit. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ExpressRouteCircuitPeering> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringOperations.Get");
             scope.Start();
@@ -83,7 +85,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -91,7 +93,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -206,15 +208,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all global reach peer connections associated with a private peering in an express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeerExpressRouteCircuitConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PeerExpressRouteCircuitConnection> ListPeerExpressRouteCircuitConnections(CancellationToken cancellationToken = default)
+        public virtual Pageable<PeerExpressRouteCircuitConnection> GetPeerExpressRouteCircuitConnections(CancellationToken cancellationToken = default)
         {
             Page<PeerExpressRouteCircuitConnection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringOperations.ListPeerExpressRouteCircuitConnections");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringOperations.GetPeerExpressRouteCircuitConnections");
                 scope.Start();
                 try
                 {
-                    var response = _peerExpressRouteCircuitConnectionsRestClient.List(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _peerExpressRouteCircuitConnectionsRestClient.GetAll(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -225,11 +227,11 @@ namespace Azure.ResourceManager.Network
             }
             Page<PeerExpressRouteCircuitConnection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringOperations.ListPeerExpressRouteCircuitConnections");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringOperations.GetPeerExpressRouteCircuitConnections");
                 scope.Start();
                 try
                 {
-                    var response = _peerExpressRouteCircuitConnectionsRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _peerExpressRouteCircuitConnectionsRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -244,15 +246,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets all global reach peer connections associated with a private peering in an express route circuit. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeerExpressRouteCircuitConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PeerExpressRouteCircuitConnection> ListPeerExpressRouteCircuitConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PeerExpressRouteCircuitConnection> GetPeerExpressRouteCircuitConnectionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PeerExpressRouteCircuitConnection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringOperations.ListPeerExpressRouteCircuitConnections");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringOperations.GetPeerExpressRouteCircuitConnections");
                 scope.Start();
                 try
                 {
-                    var response = await _peerExpressRouteCircuitConnectionsRestClient.ListAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _peerExpressRouteCircuitConnectionsRestClient.GetAllAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -263,11 +265,11 @@ namespace Azure.ResourceManager.Network
             }
             async Task<Page<PeerExpressRouteCircuitConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringOperations.ListPeerExpressRouteCircuitConnections");
+                using var scope = _clientDiagnostics.CreateScope("ExpressRouteCircuitPeeringOperations.GetPeerExpressRouteCircuitConnections");
                 scope.Start();
                 try
                 {
-                    var response = await _peerExpressRouteCircuitConnectionsRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _peerExpressRouteCircuitConnectionsRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

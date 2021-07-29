@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly OperationInternals<ServiceEndpointPolicy> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of ServiceEndpointPoliciesCreateOrUpdateOperation for mocking. </summary>
         protected ServiceEndpointPoliciesCreateOrUpdateOperation()
         {
         }
 
-        internal ServiceEndpointPoliciesCreateOrUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ServiceEndpointPoliciesCreateOrUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<ServiceEndpointPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ServiceEndpointPoliciesCreateOrUpdateOperation");
             _operationBase = operationsBase;

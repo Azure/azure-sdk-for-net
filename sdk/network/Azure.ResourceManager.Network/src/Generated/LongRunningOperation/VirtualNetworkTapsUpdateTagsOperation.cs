@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
-        internal VirtualNetworkTapsUpdateTagsOperation(OperationsBase operationsBase, Response<VirtualNetworkTapData> response)
+        internal VirtualNetworkTapsUpdateTagsOperation(ResourceOperations operationsBase, Response<VirtualNetworkTapData> response)
         {
             _operation = new OperationOrResponseInternals<VirtualNetworkTap>(Response.FromValue(new VirtualNetworkTap(operationsBase, response.Value), response.GetRawResponse()));
         }

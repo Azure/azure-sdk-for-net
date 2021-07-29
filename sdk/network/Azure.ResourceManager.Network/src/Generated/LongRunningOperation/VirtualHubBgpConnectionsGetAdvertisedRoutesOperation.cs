@@ -15,19 +15,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Retrieves a list of routes the virtual hub bgp connection has learned. </summary>
-    public partial class VirtualHubBgpConnectionsListLearnedRoutesOperation : Operation<PeerRouteList>, IOperationSource<PeerRouteList>
+    /// <summary> Retrieves a list of routes the virtual hub bgp connection is advertising to the specified peer. </summary>
+    public partial class VirtualHubBgpConnectionsGetAdvertisedRoutesOperation : Operation<PeerRouteList>, IOperationSource<PeerRouteList>
     {
         private readonly OperationInternals<PeerRouteList> _operation;
 
-        /// <summary> Initializes a new instance of VirtualHubBgpConnectionsListLearnedRoutesOperation for mocking. </summary>
-        protected VirtualHubBgpConnectionsListLearnedRoutesOperation()
+        /// <summary> Initializes a new instance of VirtualHubBgpConnectionsGetAdvertisedRoutesOperation for mocking. </summary>
+        protected VirtualHubBgpConnectionsGetAdvertisedRoutesOperation()
         {
         }
 
-        internal VirtualHubBgpConnectionsListLearnedRoutesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal VirtualHubBgpConnectionsGetAdvertisedRoutesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<PeerRouteList>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualHubBgpConnectionsListLearnedRoutesOperation");
+            _operation = new OperationInternals<PeerRouteList>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualHubBgpConnectionsGetAdvertisedRoutesOperation");
         }
 
         /// <inheritdoc />
