@@ -11,4 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestTemplate\" />
+  </ItemGroup>
 </Project>
