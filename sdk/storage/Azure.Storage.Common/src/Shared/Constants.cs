@@ -182,6 +182,7 @@ namespace Azure.Storage
             public const string ServerBusy = "ServerBusy";
             public const string ContainerAlreadyExists = "ContainerAlreadyExists";
             public const string BlobAlreadyExists = "BlobAlreadyExists";
+            public const string InvalidRange = "InvalidRange";
         }
 
         /// <summary>

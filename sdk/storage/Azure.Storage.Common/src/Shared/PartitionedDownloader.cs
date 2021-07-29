@@ -161,51 +161,23 @@ namespace Azure.Storage
 
                 try
                 {
-                    if (async)
-                    {
-                        initialResponse = await _singleDownloadInternal(
+                    initialResponse = await GetInitialResponse(
                             initialRange,
                             conditions,
                             rangeGetContentHash: false,
-                            async: true,
+                            async,
                             cancellationToken)
                             .ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        initialResponse = _singleDownloadInternal(
-                            initialRange,
-                            conditions,
-                            rangeGetContentHash: false,
-                            async: false,
-                            cancellationToken)
-                            .EnsureCompleted();
-                    }
                 }
-                // TODO: Move errors common to multiple services to common library
-                // (i.e. from ShareErrorCode/BlobErrorCode), remove string literal
-                catch (RequestFailedException ex) when (ex.ErrorCode == "InvalidRange")
+                catch (RequestFailedException ex) when (ex.ErrorCode == Constants.ErrorCodes.InvalidRange)
                 {
-                    if (async)
-                    {
-                        initialResponse = await _singleDownloadInternal(
+                    initialResponse = await GetInitialResponse(
                             range: default,
                             conditions,
                             rangeGetContentHash: false,
-                            async: true,
+                            async,
                             cancellationToken)
                             .ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        initialResponse = _singleDownloadInternal(
-                            range: default,
-                            conditions,
-                            rangeGetContentHash: false,
-                            async: false,
-                            cancellationToken)
-                            .EnsureCompleted();
-                    }
                 }
 
                 // If the initial request returned no content (i.e., a 304),
@@ -278,6 +250,35 @@ namespace Azure.Storage
             finally
             {
                 scope.Dispose();
+            }
+        }
+
+        private async Task<Response<TCompleteDownloadReturn>> GetInitialResponse(
+            HttpRange range,
+            TServiceSpecificArgs conditions,
+            bool rangeGetContentHash,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            if (async)
+            {
+                return await _singleDownloadInternal(
+                    range,
+                    conditions,
+                    rangeGetContentHash,
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                return _singleDownloadInternal(
+                    range,
+                    conditions,
+                    rangeGetContentHash,
+                    async,
+                    cancellationToken)
+                    .EnsureCompleted();
             }
         }
 
