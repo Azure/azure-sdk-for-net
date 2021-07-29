@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
-    public class FirewallPolicyTests : NetworkTestsManagementClientBase
+    public class FirewallPolicyTests : NetworkServiceClientTestBase
     {
         public FirewallPolicyTests(bool isAsync) : base(isAsync)
         {

@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -20,9 +21,9 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.Network.Tests.Helpers
 {
     [RunFrequency(RunTestFrequency.Manually)]
-    public class NetworkTestsManagementClientBase : ManagementRecordedTestBase<NetworkManagementTestEnvironment>
+    public class NetworkServiceClientTestBase : ManagementRecordedTestBase<NetworkManagementTestEnvironment>
     {
-        public NetworkTestsManagementClientBase(bool isAsync) : base(isAsync)
+        public NetworkServiceClientTestBase(bool isAsync) : base(isAsync)
         {
         }
 
@@ -33,28 +34,49 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         public ResourcesManagementClient ResourceManagementClient { get; set; }
         public StorageManagementClient StorageManagementClient { get; set; }
         public ComputeManagementClient ComputeManagementClient { get; set; }
-        public NetworkManagementClient NetworkManagementClient { get; set; }
+        public ArmClient ArmClient { get; set; }
 
-        public NetworkInterfacesOperations NetworkInterfacesOperations { get; set; }
+        public Resources.Subscription Subscription
+        {
+            get
+            {
+                return ArmClient.GetSubscriptions().Get(TestEnvironment.SubscriptionId).Value;
+            }
+        }
+
+        public Resources.ResourceGroup ResourceGroup
+        {
+            get
+            {
+                return Subscription.GetResourceGroups().Get(TestEnvironment.ResourceGroup).Value;
+            }
+        }
+
+        public Resources.ResourceGroup GetResourceGroup(string name)
+        {
+            return Subscription.GetResourceGroups().Get(name).Value;
+        }
+
+        //public NetworkInterfacesOperations NetworkInterfacesOperations { get; set; }
         public ProvidersOperations ProvidersOperations { get; set; }
         public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
         public ResourcesOperations ResourcesOperations { get; set; }
-        public NetworkManagementOperations ServiceOperations { get; set; }
-        public PrivateLinkServicesOperations PrivateLinkServicesOperations { get; set; }
+        //public NetworkManagementOperations ServiceOperations { get; set; }
+        //public PrivateLinkServicesOperations PrivateLinkServicesOperations { get; set; }
 
         protected void Initialize()
         {
             ResourceManagementClient = GetResourceManagementClient();
             StorageManagementClient = GetStorageManagementClient();
             ComputeManagementClient = GetComputeManagementClient();
-            NetworkManagementClient = GetNetworkManagementClient();
+            ArmClient = GetArmClient();
 
-            NetworkInterfacesOperations = NetworkManagementClient.NetworkInterfaces;
+            //NetworkInterfacesOperations = NetworkManagementClient.NetworkInterfaces;
             ProvidersOperations = ResourceManagementClient.Providers;
             ResourceGroupsOperations = ResourceManagementClient.ResourceGroups;
             ResourcesOperations = ResourceManagementClient.Resources;
-            ServiceOperations = NetworkManagementClient.NetworkManagement;
-            PrivateLinkServicesOperations = NetworkManagementClient.PrivateLinkServices;
+            //ServiceOperations = NetworkManagementClient.NetworkManagement;
+            //PrivateLinkServicesOperations = NetworkManagementClient.PrivateLinkServices;
         }
 
         private StorageManagementClient GetStorageManagementClient()
@@ -71,11 +93,22 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                  InstrumentClientOptions(new ComputeManagementClientOptions())));
         }
 
-        private NetworkManagementClient GetNetworkManagementClient()
+        private ArmClient GetArmClient()
         {
-            return InstrumentClient(new NetworkManagementClient(TestEnvironment.SubscriptionId,
-                 TestEnvironment.Credential,
-                 InstrumentClientOptions(new NetworkManagementClientOptions())));
+            if (string.IsNullOrEmpty(TestEnvironment.SubscriptionId))
+            {
+                return new ArmClient(TestEnvironment.Credential);
+            } else
+            {
+                return new ArmClient(TestEnvironment.SubscriptionId, TestEnvironment.Credential);
+            }
+        }
+
+        protected async Task<Response<Resources.ResourceGroup>> CreateResourceGroup(string name)
+        {
+            string location = TestEnvironment.Location;
+            await ResourceGroupsOperations.CreateOrUpdateAsync(name, new Resources.Models.ResourceGroup(location));
+            return await ArmClient.DefaultSubscription.GetResourceGroups().GetAsync(name);
         }
 
         public async Task CreateVm(
@@ -137,24 +170,23 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             await WaitForCompletionAsync(deploymentWait);
         }
 
-        public async Task<ExpressRouteCircuit> CreateDefaultExpressRouteCircuit(string resourceGroupName, string circuitName, string location,
-    NetworkManagementClient nrpClient)
+        public async Task<ExpressRouteCircuit> CreateDefaultExpressRouteCircuit(string resourceGroupName, string circuitName, string location)
         {
-            ExpressRouteCircuitSku sku = new ExpressRouteCircuitSku
+            var sku = new ExpressRouteCircuitSku
             {
                 Name = "Premium_MeteredData",
                 Tier = "Premium",
                 Family = "MeteredData"
             };
 
-            ExpressRouteCircuitServiceProviderProperties provider = new ExpressRouteCircuitServiceProviderProperties
+            var provider = new ExpressRouteCircuitServiceProviderProperties
             {
                 BandwidthInMbps = Convert.ToInt32(ExpressRouteTests.Circuit_BW),
                 PeeringLocation = ExpressRouteTests.Circuit_Location,
                 ServiceProviderName = ExpressRouteTests.Circuit_Provider
             };
 
-            ExpressRouteCircuit circuit = new ExpressRouteCircuit()
+            var circuit = new ExpressRouteCircuitData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
@@ -163,18 +195,18 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             // Put circuit
-            Operation<ExpressRouteCircuit> circuitOperation = await nrpClient.ExpressRouteCircuits.StartCreateOrUpdateAsync(resourceGroupName, circuitName, circuit);
+            var circuitContainer = GetResourceGroup(resourceGroupName).GetExpressRouteCircuits();
+            Operation<ExpressRouteCircuit> circuitOperation = await circuitContainer.StartCreateOrUpdateAsync(circuitName, circuit);
             Response<ExpressRouteCircuit> circuitResponse = await WaitForCompletionAsync(circuitOperation);
-            Assert.AreEqual("Succeeded", circuitResponse.Value.ProvisioningState.ToString());
-            Response<ExpressRouteCircuit> getCircuitResponse = await nrpClient.ExpressRouteCircuits.GetAsync(resourceGroupName, circuitName);
+            Assert.AreEqual("Succeeded", circuitResponse.Value.Data.ProvisioningState.ToString());
+            Response<ExpressRouteCircuit> getCircuitResponse = await circuitContainer.GetAsync(circuitName);
 
             return getCircuitResponse;
         }
 
-        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(string resourceGroupName, string circuitName,
-            NetworkManagementClient nrpClient)
+        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(string resourceGroupName, string circuitName)
         {
-            ExpressRouteCircuitPeering peering = new ExpressRouteCircuitPeering()
+            var peering = new ExpressRouteCircuitPeeringData()
             {
                 Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
                 PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
@@ -191,18 +223,18 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 },
             };
 
-            Operation<ExpressRouteCircuitPeering> peerOperation = await nrpClient.ExpressRouteCircuitPeerings.StartCreateOrUpdateAsync(resourceGroupName, circuitName, ExpressRouteTests.Peering_Microsoft, peering);
+            var circuitContainer = GetResourceGroup(resourceGroupName).GetExpressRouteCircuits();
+            Operation<ExpressRouteCircuitPeering> peerOperation = await circuitContainer.Get(circuitName).Value.GetExpressRouteCircuitPeerings().StartCreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeering> peerResponse = await WaitForCompletionAsync(peerOperation);
-            Assert.AreEqual("Succeeded", peerResponse.Value.ProvisioningState.ToString());
-            Response<ExpressRouteCircuit> getCircuitResponse = await nrpClient.ExpressRouteCircuits.GetAsync(resourceGroupName, circuitName);
+            Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
+            Response<ExpressRouteCircuit> getCircuitResponse = await circuitContainer.GetAsync(circuitName);
 
             return getCircuitResponse;
         }
 
-        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(string resourceGroupName, string circuitName,
-            NetworkManagementClient nrpClient)
+        public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(string resourceGroupName, string circuitName)
         {
-            Ipv6ExpressRouteCircuitPeeringConfig ipv6Peering = new Ipv6ExpressRouteCircuitPeeringConfig()
+            var ipv6Peering = new Ipv6ExpressRouteCircuitPeeringConfig()
             {
                 PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix_V6,
                 SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix_V6,
@@ -215,7 +247,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 },
             };
 
-            ExpressRouteCircuitPeering peering = new ExpressRouteCircuitPeering()
+            var peering = new ExpressRouteCircuitPeeringData()
             {
                 Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
                 PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
@@ -224,18 +256,19 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Ipv6PeeringConfig = ipv6Peering
             };
 
-            Operation<ExpressRouteCircuitPeering> peerOperation = await nrpClient.ExpressRouteCircuitPeerings.StartCreateOrUpdateAsync(resourceGroupName, circuitName, ExpressRouteTests.Peering_Microsoft, peering);
+            var circuitContainer = GetResourceGroup(resourceGroupName).GetExpressRouteCircuits();
+            Operation<ExpressRouteCircuitPeering> peerOperation = await circuitContainer.Get(circuitName).Value.GetExpressRouteCircuitPeerings().StartCreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeering> peerResponse = await WaitForCompletionAsync(peerOperation);
-            Assert.AreEqual("Succeeded", peerResponse.Value.ProvisioningState.ToString());
-            Response<ExpressRouteCircuit> getCircuitResponse = await nrpClient.ExpressRouteCircuits.GetAsync(resourceGroupName, circuitName);
+            Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
+            Response<ExpressRouteCircuit> getCircuitResponse = await circuitContainer.GetAsync(circuitName);
 
             return getCircuitResponse;
         }
 
         public async Task<ExpressRouteCircuit> UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(string resourceGroupName, string circuitName,
-            RouteFilter filter, NetworkManagementClient nrpClient)
+            RouteFilter filter)
         {
-            ExpressRouteCircuitPeering peering = new ExpressRouteCircuitPeering()
+            var peering = new ExpressRouteCircuitPeeringData()
             {
                 Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
                 PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
@@ -253,68 +286,17 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 RouteFilter = { Id = filter.Id }
             };
 
-            Operation<ExpressRouteCircuitPeering> peerOperation = await nrpClient.ExpressRouteCircuitPeerings.StartCreateOrUpdateAsync(resourceGroupName, circuitName, ExpressRouteTests.Peering_Microsoft, peering);
+            Operation<ExpressRouteCircuitPeering> peerOperation = await GetResourceGroup(resourceGroupName).GetExpressRouteCircuits().Get(circuitName).Value.GetExpressRouteCircuitPeerings().StartCreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
             Response<ExpressRouteCircuitPeering> peerResponse = await WaitForCompletionAsync(peerOperation);
-            Assert.AreEqual("Succeeded", peerResponse.Value.ProvisioningState.ToString());
-            Response<ExpressRouteCircuit> getCircuitResponse = await nrpClient.ExpressRouteCircuits.GetAsync(resourceGroupName, circuitName);
+            Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
+            Response<ExpressRouteCircuit> getCircuitResponse = await GetResourceGroup(resourceGroupName).GetExpressRouteCircuits().GetAsync(circuitName);
 
             return getCircuitResponse;
         }
 
-        public async Task<RouteFilter> CreateDefaultRouteFilter(string resourceGroupName, string filterName, string location,
-            NetworkManagementClient nrpClient, bool containsRule = false)
+        public async Task<PublicIPAddress> CreateDefaultPublicIpAddress(string name, string resourceGroupName, string domainNameLabel, string location)
         {
-            var filter = new RouteFilter()
-            {
-                Location = location,
-                Tags = { { "key", "value" } }
-            };
-
-            if (containsRule)
-            {
-                RouteFilterRule rule = new RouteFilterRule()
-                {
-                    Name = "test",
-                    Access = ExpressRouteTests.Filter_Access,
-                    Communities = { ExpressRouteTests.Filter_Commmunity },
-                    Location = location
-                };
-
-                filter.Rules.Add(rule);
-            }
-
-            // Put route filter
-            Operation<RouteFilter> filterOperation = await nrpClient.RouteFilters.StartCreateOrUpdateAsync(resourceGroupName, filterName, filter);
-            Response<RouteFilter> filterResponse = await WaitForCompletionAsync(filterOperation);
-            Assert.AreEqual("Succeeded", filterResponse.Value.ProvisioningState.ToString());
-            Response<RouteFilter> getFilterResponse = await nrpClient.RouteFilters.GetAsync(resourceGroupName, filterName);
-
-            return getFilterResponse;
-        }
-
-        public async Task<RouteFilter> CreateDefaultRouteFilterRule(string resourceGroupName, string filterName, string ruleName, string location,
-            NetworkManagementClient nrpClient)
-        {
-            RouteFilterRule rule = new RouteFilterRule()
-            {
-                Access = ExpressRouteTests.Filter_Access,
-                Communities = { ExpressRouteTests.Filter_Commmunity },
-                Location = location
-            };
-
-            // Put route filter rule
-            Operation<RouteFilterRule> ruleOperation = await nrpClient.RouteFilterRules.StartCreateOrUpdateAsync(resourceGroupName, filterName, ruleName, rule);
-            Response<RouteFilterRule> ruleResponse = await WaitForCompletionAsync(ruleOperation);
-            Assert.AreEqual("Succeeded", ruleResponse.Value.ProvisioningState.ToString());
-            Response<RouteFilter> getFilterResponse = await nrpClient.RouteFilters.GetAsync(resourceGroupName, filterName);
-
-            return getFilterResponse;
-        }
-
-        public async Task<PublicIPAddress> CreateDefaultPublicIpAddress(string name, string resourceGroupName, string domainNameLabel, string location,
-            NetworkManagementClient nrpClient)
-        {
-            PublicIPAddress publicIp = new PublicIPAddress()
+            var publicIp = new PublicIPAddressData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
@@ -323,18 +305,19 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             // Put nic1PublicIpAddress
-            Operation<PublicIPAddress> putPublicIpAddressOperation = await nrpClient.PublicIPAddresses.StartCreateOrUpdateAsync(resourceGroupName, name, publicIp);
+            var publicIPAddressContainer = GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
+            Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(name, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await WaitForCompletionAsync(putPublicIpAddressOperation);
-            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.ProvisioningState.ToString());
-            Response<PublicIPAddress> getPublicIpAddressResponse = await nrpClient.PublicIPAddresses.GetAsync(resourceGroupName, name);
+            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
+            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(resourceGroupName, name);
 
             return getPublicIpAddressResponse;
         }
 
-        public static async Task<NetworkInterface> CreateNetworkInterface(string name, string resourceGroupName, string publicIpAddressId, string subnetId,
-            string location, string ipConfigName, NetworkManagementClient client)
+        public async Task<NetworkInterface> CreateNetworkInterface(string name, string resourceGroupName, string publicIpAddressId, string subnetId,
+            string location, string ipConfigName)
         {
-            NetworkInterface nicParameters = new NetworkInterface()
+            var nicParameters = new NetworkInterfaceData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
@@ -343,33 +326,33 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                         Subnet = new Subnet() { Id = subnetId }
+                         //Subnet = new SubnetData() { Id = subnetId }
                     }
                 }
             };
 
             if (!string.IsNullOrEmpty(publicIpAddressId))
             {
-                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIPAddress() { Id = publicIpAddressId };
+                nicParameters.IpConfigurations[0].PublicIPAddress = new PublicIPAddressData() { /*Id = publicIpAddressId*/ };
             }
 
             // Test NIC apis
-            await client.NetworkInterfaces.StartCreateOrUpdateAsync(resourceGroupName, name, nicParameters);
-            Response<NetworkInterface> getNicResponse = await client.NetworkInterfaces.GetAsync(resourceGroupName, name);
-            Assert.AreEqual(getNicResponse.Value.Name, name);
+            var networkInterfaceContainer = GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
+            await networkInterfaceContainer.StartCreateOrUpdateAsync(name, nicParameters);
+            Response<NetworkInterface> getNicResponse = await networkInterfaceContainer.GetAsync(resourceGroupName, name);
+            Assert.AreEqual(getNicResponse.Value.Data.Name, name);
 
             // because its a single CA nic, primaryOnCA is always true
-            Assert.True(getNicResponse.Value.IpConfigurations[0].Primary);
+            Assert.True(getNicResponse.Value.Data.IpConfigurations[0].Primary);
 
-            Assert.AreEqual("Succeeded", getNicResponse.Value.ProvisioningState.ToString());
+            Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
 
             return getNicResponse;
         }
 
-        public static async Task<VirtualNetwork> CreateVirtualNetwork(string vnetName, string subnetName, string resourceGroupName, string location,
-            NetworkManagementClient client)
+        public async Task<VirtualNetwork> CreateVirtualNetwork(string vnetName, string subnetName, string resourceGroupName, string location)
         {
-            VirtualNetwork vnet = new VirtualNetwork()
+            var vnet = new VirtualNetworkData()
             {
                 Location = location,
 
@@ -381,11 +364,12 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new Subnet() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
+                Subnets = { new SubnetData() { Name = subnetName, AddressPrefix = "10.0.0.0/24", } }
             };
 
-            await client.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
-            Response<VirtualNetwork> getVnetResponse = await client.VirtualNetworks.GetAsync(resourceGroupName, vnetName);
+            var virtualNetworkContainer = GetResourceGroup(resourceGroupName).GetVirtualNetworks();
+            await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
+            Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
 
             return getVnetResponse;
         }
@@ -400,6 +384,56 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     lbname,
                     childResourceType,
                     childResourceName);
+        }
+
+        protected ApplicationGatewayContainer GetApplicationGatewayContainer(string resourceGroupName)
+        {
+            return GetResourceGroup(resourceGroupName).GetApplicationGateways();
+        }
+
+        protected LoadBalancerContainer GetLoadBalancerContainer(string resourceGroupName)
+        {
+            return GetResourceGroup(resourceGroupName).GetLoadBalancers();
+        }
+
+        protected PublicIPAddressContainer GetPublicIPAddressContainer(string resourceGroupName)
+        {
+            return GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
+        }
+
+        protected VirtualNetworkContainer GetVirtualNetworkContainer(string resourceGroupName)
+        {
+            return GetResourceGroup(resourceGroupName).GetVirtualNetworks();
+        }
+
+        protected NetworkInterfaceContainer GetNetworkInterfaceContainer(string resourceGroupName)
+        {
+            return GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
+        }
+
+        protected NetworkSecurityGroupContainer GetNetworkSecurityGroupContainer(string resourceGroupName)
+        {
+            return GetResourceGroup(resourceGroupName).GetNetworkSecurityGroups();
+        }
+
+        protected RouteTableContainer GetRouteTableContainer(string resourceGroupName)
+        {
+            return GetResourceGroup(resourceGroupName).GetRouteTables();
+        }
+
+        protected RouteFilterContainer GetRouteFilterContainer(string resourceGroupName)
+        {
+            return GetResourceGroup(resourceGroupName).GetRouteFilters();
+        }
+
+        protected NetworkWatcherContainer GetNetworkWatcherContainer(string resourceGroupName)
+        {
+            return GetResourceGroup(resourceGroupName).GetNetworkWatchers();
+        }
+
+        protected VirtualNetworkGatewayContainer GetVirtualNetworkGatewayContainer(string resourceGroupName)
+        {
+            return GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
         }
     }
 }

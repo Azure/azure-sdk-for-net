@@ -15,7 +15,7 @@ using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
-    public class TroubleshootTests : NetworkTestsManagementClientBase
+    public class TroubleshootTests : NetworkServiceClientTestBase
     {
         public TroubleshootTests(bool isAsync) : base(isAsync)
         {
@@ -43,28 +43,28 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
 
             // CreateVirtualNetworkGateway API
             // Prerequisite:- Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location, NetworkManagementClient);
+            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
 
             //Prerequisite:-Create Virtual Network using Put VirtualNetwork API
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = "GatewaySubnet";
 
-            await CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, NetworkManagementClient);
+            await CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location);
 
-            Response<Subnet> getSubnetResponse = await NetworkManagementClient.Subnets.GetAsync(resourceGroupName, vnetName, subnetName);
+            Response<Subnet> getSubnetResponse = await GetVirtualNetworkContainer(resourceGroupName).Get(vnetName).Value.GetSubnets().GetAsync(subnetName);
 
             // CreateVirtualNetworkGateway API
             string virtualNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
             string ipConfigName = Recording.GenerateAssetName("azsmnet");
 
-            VirtualNetworkGateway virtualNetworkGateway = new VirtualNetworkGateway()
+            var virtualNetworkGateway = new VirtualNetworkGatewayData()
             {
                 Location = location,
                 Tags = { { "key", "value" } },
@@ -84,18 +84,19 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.Basic, Tier = VirtualNetworkGatewaySkuTier.Basic }
             };
 
+            var virtualNetworkGatewayContainer = GetVirtualNetworkGatewayContainer(resourceGroupName);
             VirtualNetworkGatewaysCreateOrUpdateOperation putVirtualNetworkGatewayResponseOperation =
-                await NetworkManagementClient.VirtualNetworkGateways.StartCreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayName, virtualNetworkGateway);
+                await virtualNetworkGatewayContainer.StartCreateOrUpdateAsync(virtualNetworkGatewayName, virtualNetworkGateway);
             await WaitForCompletionAsync(putVirtualNetworkGatewayResponseOperation);
             // GetVirtualNetworkGateway API
             Response<VirtualNetworkGateway> getVirtualNetworkGatewayResponse =
-                await NetworkManagementClient.VirtualNetworkGateways.GetAsync(resourceGroupName, virtualNetworkGatewayName);
+                await virtualNetworkGatewayContainer.GetAsync(virtualNetworkGatewayName);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
+            //await networkWatcherContainer.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
 
             //Create storage
             string storageName = Recording.GenerateAssetName("azsmnet");
@@ -106,12 +107,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             TroubleshootingParameters parameters = new TroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id, account.Value.Id, "https://nwtestdbdzq4xsvskrei6.blob.core.windows.net/vhds");
 
             //Get troubleshooting
-            NetworkWatchersGetTroubleshootingOperation troubleshootOperation = await NetworkManagementClient.NetworkWatchers.StartGetTroubleshootingAsync("NetworkWatcherRG", "NetworkWatcher_westus2", parameters);
+            var networkWatcherContainer = GetNetworkWatcherContainer("NetworkWatcherRG");
+            NetworkWatchersGetTroubleshootingOperation troubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingAsync(parameters);
             await WaitForCompletionAsync(troubleshootOperation);
-            QueryTroubleshootingParameters qParameters = new QueryTroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id);
+            //QueryTroubleshootingParameters qParameters = new QueryTroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id);
 
             //Query last troubleshoot
-            NetworkWatchersGetTroubleshootingResultOperation queryTroubleshootOperation = await NetworkManagementClient.NetworkWatchers.StartGetTroubleshootingResultAsync("NetworkWatcherRG", "NetworkWatcher_westus2", qParameters);
+            NetworkWatchersGetTroubleshootingResultOperation queryTroubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingResultAsync();
             await WaitForCompletionAsync(queryTroubleshootOperation);
             //TODO: make verification once fixed for troubleshoot API deployed
         }

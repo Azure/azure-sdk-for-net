@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
-    public class AzureReachabilityReportTests : NetworkTestsManagementClientBase
+    public class AzureReachabilityReportTests : NetworkServiceClientTestBase
     {
         public AzureReachabilityReportTests(bool isAsync) : base(isAsync)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 AzureLocations = { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await NetworkManagementClient.NetworkWatchers.StartGetAzureReachabilityReportAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
+            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.StartGetAzureReachabilityReportAsync(parameters);
             Response<AzureReachabilityReport> report = await WaitForCompletionAsync(reportOperation);
 
             //Validation
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 AzureLocations = { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await NetworkManagementClient.NetworkWatchers.StartGetAzureReachabilityReportAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
+            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.StartGetAzureReachabilityReportAsync(parameters);
             Response<AzureReachabilityReport> report = await WaitForCompletionAsync(reportOperation);
 
             //Validation
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             {
                 AzureLocations = { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await NetworkManagementClient.NetworkWatchers.StartGetAzureReachabilityReportAsync("NetworkWatcherRG", "NetworkWatcher_westus", parameters);
+            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.StartGetAzureReachabilityReportAsync(parameters);
             Response<AzureReachabilityReport> report = await WaitForCompletionAsync(reportOperation);
 
             //Validation

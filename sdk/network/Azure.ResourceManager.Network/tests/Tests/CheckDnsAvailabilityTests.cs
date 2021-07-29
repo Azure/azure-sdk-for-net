@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
-    public class CheckDnsAvailabilityTests : NetworkTestsManagementClientBase
+    public class CheckDnsAvailabilityTests : NetworkServiceClientTestBase
     {
         public CheckDnsAvailabilityTests(bool isAsync) : base(isAsync)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             string domainNameLabel = Recording.GenerateAssetName("domainnamelabel");
 
-            Response<Models.DnsNameAvailabilityResult> dnsNameAvailability = await ServiceOperations.CheckDnsNameAvailabilityAsync(location, domainNameLabel);
+            Response<Models.DnsNameAvailabilityResult> dnsNameAvailability = await ArmClient.DefaultSubscription.GetDnsNameAvailabilityckAsync(location, domainNameLabel);
 
             Assert.True(dnsNameAvailability.Value.Available);
         }
