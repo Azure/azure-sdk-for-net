@@ -37,7 +37,7 @@ namespace Azure.ResourceManager
         /// <param name="childResourceName"> The name of the resource. </param>
         /// <returns> The combined resource id. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        internal static ResourceIdentifier AppendChildResource(this ResourceIdentifier identifier, string childResourceType, string childResourceName)
+        public static ResourceIdentifier AppendChildResource(this ResourceIdentifier identifier, string childResourceType, string childResourceName)
         {
             ValidateChildResourceParameters(childResourceType, childResourceName);
             return new ResourceIdentifier(identifier, childResourceType, childResourceName);
