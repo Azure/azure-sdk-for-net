@@ -150,7 +150,6 @@ Copy-Item "${DocCommonGenDir}/docfx.json" -Destination "${DocOutDir}" -Force
 $headerTemplateLocation = "${DocOutDir}/templates/matthews/partials/head.tmpl.partial"
 
 if (Test-Path $headerTemplateLocation){
-    Write-Host "I'm in here!"
     $headerTemplateContent = Get-Content -Path $headerTemplateLocation -Raw
     $headerTemplateContent = $headerTemplateContent -replace "GA_CAMPAIGN_ID", $GACampaignId
     Set-Content -Path $headerTemplateLocation -Value $headerTemplateContent -NoNewline
