@@ -168,7 +168,9 @@ stages:
             inputs:
               targetType: F
               targetArgument: '$(Build.SourcesDirectory)/azure-sdk-for-net/sdk'
+              optionsRulesDBPath: '$(Build.SourcesDirectory)/azure-sdk-build-tools/tools/policheck-rules-db/dotnet.mdb'
               result: PoliCheck.sarif
+              optionsPE: 1|2|3|4
               optionsFC: 1
               optionsXS: 1
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
