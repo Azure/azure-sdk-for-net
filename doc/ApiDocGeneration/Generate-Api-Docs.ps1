@@ -77,6 +77,7 @@ $DocOutHtmlDir = "${DocOutDir}/_site"
 $MDocTool = "${BinDirectory}/mdoc/mdoc.exe"
 $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
 $DocCommonGenDir = "${RepoRoot}/eng/common/docgeneration"
+$GACampaignId = "UA-62780441-41"
 
 if ($LibType -eq 'management') {
     $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
@@ -160,6 +161,14 @@ Copy-Item "${DocCommonGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -
 Write-Verbose "Copy index.html and toc.yml out."
 $destFolder = "${DocOutHtmlDir}/"
 Copy-Item -Path "${DocOutHtmlDir}/api/index.html" -Destination $destFolder -Confirm:$false -Force
+
+$headerTemplateLocation = "${DocOutDir}/templates/matthews/partials/head.tmpl.partial"
+
+if (Test-Path $headerTemplateLocation){
+    $headerTemplateContent = Get-Content -Path $headerTemplateLocation -Raw
+    $headerTemplateContent = $headerTemplateContent -replace "GA_CAMPAIGN_ID", $GACampaignId
+    Set-Content -Path $headerTemplateLocation -Value $headerTemplateContent -NoNewline
+}
 
 # Change the relative path inside index.html.
 Write-Verbose "Make changes on relative path on page index.html."
