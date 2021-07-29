@@ -110,7 +110,10 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = RestClient.GetAtScope(Id, cancellationToken);
-                return Response.FromValue<TagResource>(new TagResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
+                return Response.FromValue(new TagResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -132,7 +135,10 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await RestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue<TagResource>(new TagResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
+                return Response.FromValue(new TagResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 Start by creating a new resource group, like we did above:
 
 ```C# Snippet:Creating_A_Virtual_Network_CreateResourceGroup
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ResourceGroupContainer rgContainer = armClient.DefaultSubscription.GetResourceGroups();
 string rgName = "myResourceGroup";
 ResourceGroup resourceGroup = await rgContainer.Construct(Location.WestUS2).CreateOrUpdateAsync(rgName);
