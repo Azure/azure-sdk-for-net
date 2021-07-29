@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage
 {
     internal struct ContentRange
     {

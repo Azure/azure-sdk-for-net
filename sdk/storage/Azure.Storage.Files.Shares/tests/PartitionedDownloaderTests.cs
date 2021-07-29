@@ -42,7 +42,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
             SetupDownload(fileClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(fileClient.Object);
+            PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader =
+                new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
+                    ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object));
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -60,7 +62,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
             SetupDownload(fileClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(fileClient.Object);
+            PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader =
+                new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
+                    ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object));
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -79,13 +83,14 @@ namespace Azure.Storage.Files.Shares.Tests
 
             SetupDownload(fileClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(
-                fileClient.Object,
-                new StorageTransferOptions()
-                {
-                    MaximumTransferLength = 10,
-                    InitialTransferLength = 20
-                });
+            PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader =
+                new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
+                    ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object),
+                    new StorageTransferOptions()
+                    {
+                        MaximumTransferLength = 10,
+                        InitialTransferLength = 20
+                    });
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -105,13 +110,14 @@ namespace Azure.Storage.Files.Shares.Tests
 
             SetupDownload(fileClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(
-                fileClient.Object,
-                new StorageTransferOptions()
-                {
-                    MaximumTransferLength = 40,
-                    InitialTransferLength = 10
-                });
+            PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader =
+                new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
+                    ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object),
+                    new StorageTransferOptions()
+                    {
+                        MaximumTransferLength = 40,
+                        InitialTransferLength = 10
+                    });
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -131,13 +137,14 @@ namespace Azure.Storage.Files.Shares.Tests
 
             SetupDownload(fileClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(
-                fileClient.Object,
-                new StorageTransferOptions()
-                {
-                    MaximumTransferLength = 10,
-                    InitialTransferLength = 10
-                });
+            PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader =
+                new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
+                    ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object),
+                    new StorageTransferOptions()
+                    {
+                        MaximumTransferLength = 10,
+                        InitialTransferLength = 10
+                    });
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -157,18 +164,22 @@ namespace Azure.Storage.Files.Shares.Tests
             Mock<ShareFileClient> fileClient = new Mock<ShareFileClient>(MockBehavior.Strict, new Uri("http://mock"), new ShareClientOptions());
             fileClient.SetupGet(c => c.ClientConfiguration).CallBase();
 
-            if (_async)
-            {
-                fileClient.Setup(c => c.DownloadAsync(It.IsAny<HttpRange>(), false, It.IsAny<ShareFileRequestConditions>(), s_cancellationToken))
-                    .ThrowsAsync(e);
-            }
-            else
-            {
-                fileClient.Setup(c => c.Download(It.IsAny<HttpRange>(), false, It.IsAny<ShareFileRequestConditions>(), s_cancellationToken))
-                    .Throws(e);
-            }
+            fileClient.Setup(
+                c => c.DownloadInternal(
+                    It.IsAny<HttpRange>(),
+                    false,
+                    It.IsAny<ShareFileRequestConditions>(),
+                    _async,
+                    s_cancellationToken))
+                .ThrowsAsync(e);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(fileClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10});
+            PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader =
+                new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
+                    ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object),
+                    new StorageTransferOptions()
+                    {
+                        MaximumTransferLength = 10
+                    });
 
             Exception thrown = Assert.ThrowsAsync<Exception>(async () => await InvokeDownloadToAsync(downloader, stream));
 
@@ -188,28 +199,23 @@ namespace Azure.Storage.Files.Shares.Tests
 
         private void SetupDownload(Mock<ShareFileClient> fileClient, MockDataSource dataSource)
         {
-            if (_async)
-            {
-                fileClient.Setup(c => c.DownloadAsync(It.IsAny<HttpRange>(), false, It.IsAny<ShareFileRequestConditions>(), s_cancellationToken))
-                    .Returns<HttpRange, bool, ShareFileRequestConditions, CancellationToken>(dataSource.GetStreamAsync);
-            }
-            else
-            {
-                fileClient.Setup(c => c.Download(It.IsAny<HttpRange>(), false, It.IsAny<ShareFileRequestConditions>(), s_cancellationToken))
-                    .Returns<HttpRange, bool, ShareFileRequestConditions, CancellationToken>(dataSource.GetStream);
-            }
+            fileClient.Setup(
+                c => c.DownloadInternal(
+                    It.IsAny<HttpRange>(),
+                    false,
+                    It.IsAny<ShareFileRequestConditions>(),
+                    _async,
+                    s_cancellationToken))
+                .Returns<HttpRange, bool, ShareFileRequestConditions, bool, CancellationToken>(dataSource.GetStream);
         }
 
-        private async Task<Response> InvokeDownloadToAsync(PartitionedDownloader downloader, Stream stream)
+        private async Task<Response> InvokeDownloadToAsync(PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader, Stream stream)
         {
-            if (_async)
-            {
-                return await downloader.DownloadToAsync(stream, s_conditions, s_cancellationToken);
-            }
-            else
-            {
-                return downloader.DownloadTo(stream, s_conditions, s_cancellationToken);
-            }
+            return await downloader.DownloadInternal(
+                stream,
+                s_conditions,
+                _async,
+                s_cancellationToken);
         }
 
         private class MockDataSource
@@ -223,16 +229,15 @@ namespace Azure.Storage.Files.Shares.Tests
                 _length = length;
             }
 
-            public async Task<Response<ShareFileDownloadInfo>> GetStreamAsync(HttpRange range, bool hash = default, ShareFileRequestConditions conditions = default, CancellationToken token = default)
-            {
-                await Task.Delay(25);
-                return GetStream(range, hash, conditions, token);
-            }
-
             public HttpRange FullRange => new HttpRange(0, _length);
 
-            public Response<ShareFileDownloadInfo> GetStream(HttpRange range, bool hash, ShareFileRequestConditions conditions, CancellationToken token)
+            public async Task<Response<ShareFileDownloadInfo>> GetStream(HttpRange range, bool hash, ShareFileRequestConditions conditions, bool async, CancellationToken token)
             {
+                if (async)
+                {
+                    await Task.Delay(25);
+                }
+
                 lock (Requests)
                 {
                     Requests.Add((range, conditions));
@@ -255,6 +260,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 MockResponse responseWithHeaders = new MockResponse(200);
                 responseWithHeaders.AddHeader(new Core.HttpHeader("ETag", $"\"{s_etag}\""));
+                responseWithHeaders.AddHeader(new Core.HttpHeader("Content-Length", $"{contentLength}"));
+                responseWithHeaders.AddHeader(new Core.HttpHeader("Content-Range", $"bytes {range.Offset}-{range.Offset + contentLength}/{_length}"));
 
                 return Response.FromValue(new ShareFileDownloadInfo()
                 {

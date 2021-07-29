@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Test.Shared
 {
     /// <summary>
     /// Stream that executes a function on any operation.

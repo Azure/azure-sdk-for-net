@@ -16,8 +16,5 @@ namespace Azure.Storage.Files.Shares
             string fileClient,
             string shareClient) =>
             new InvalidOperationException($"{leaseClient} requires either a {fileClient} or {shareClient}");
-
-        public static ArgumentException ParsingFullHttpRangeFailed(string range)
-            => new ArgumentException("Could not obtain the total length from HTTP range " + range);
     }
 }

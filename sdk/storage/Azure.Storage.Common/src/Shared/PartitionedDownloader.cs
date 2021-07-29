@@ -19,7 +19,7 @@ namespace Azure.Storage
     {
         #region Definitions
         // Injected behaviors for services to use partitioned downloads
-        public delegate Task<Response<TCompleteDownloadReturn>> DownloadInternal(
+        public delegate Task<Response<TCompleteDownloadReturn>> SingleDownloadInternal(
             HttpRange range,
             TServiceSpecificArgs args,
             bool rangeGetContentHash,
@@ -43,7 +43,7 @@ namespace Azure.Storage
 
         public struct Behaviors
         {
-            public DownloadInternal Download { get; set; }
+            public SingleDownloadInternal SingleDownload { get; set; }
             public CopyToAsync CopyToAsync { get; set; }
             public CopyTo CopyTo { get; set; }
             public CheckForEtagChange CheckForEtagChange { get; set; }
@@ -55,7 +55,7 @@ namespace Azure.Storage
         public static readonly CheckForEtagChange CheckEtagNoOp = (response, etag) => { return; };
         #endregion
 
-        private readonly DownloadInternal _downloadInternal;
+        private readonly SingleDownloadInternal _singleDownloadInternal;
         private readonly CopyToAsync _copyToAsync;
         private readonly CopyTo _copyTo;
         private readonly ModifyConditions _modifyConditions;
@@ -92,8 +92,8 @@ namespace Azure.Storage
             // unique to particular services and can use a no-op; the rest are required
             _modifyConditions = behaviors.ModifyConditions ?? ModifyConditionsNoOp;
             _checkForEtagChange = behaviors.CheckForEtagChange ?? CheckEtagNoOp;
-            _downloadInternal = behaviors.Download
-                ?? throw Errors.ArgumentNull(nameof(behaviors.Download));
+            _singleDownloadInternal = behaviors.SingleDownload
+                ?? throw Errors.ArgumentNull(nameof(behaviors.SingleDownload));
             _copyToAsync = behaviors.CopyToAsync
                 ?? throw Errors.ArgumentNull(nameof(behaviors.CopyToAsync));
             _copyTo = behaviors.CopyTo
@@ -137,9 +137,10 @@ namespace Azure.Storage
             _operationName = operationName;
         }
 
-        public async Task<Response> DownloadToAsync(
+        public async Task<Response> DownloadInternal(
             Stream destination,
             TServiceSpecificArgs conditions,
+            bool async,
             CancellationToken cancellationToken)
         {
             // Wrap the download range calls in a Download span for distributed
@@ -154,177 +155,62 @@ namespace Azure.Storage
                 // a large file, we'll get its full size in Content-Range and
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
-                Task<Response<TCompleteDownloadReturn>> initialResponseTask =
-                    _downloadInternal(
-                        initialRange,
-                        conditions,
-                        rangeGetContentHash: false,
-                        async: true,
-                        cancellationToken);
-
                 Response<TCompleteDownloadReturn> initialResponse = null;
+
                 try
                 {
-                    initialResponse = await initialResponseTask.ConfigureAwait(false);
-                }
-                // TODO: Move errors common to multiple services to common library
-                // (i.e. from ShareErrors/BlobErrors), remove string literal
-                catch (RequestFailedException ex) when (ex.ErrorCode == "InvalidRange")
-                {
-                    initialResponse = await _downloadInternal(
-                        range: default,
-                        conditions,
-                        rangeGetContentHash: false,
-                        async: true,
-                        cancellationToken)
-                        .ConfigureAwait(false);
-                }
-
-                // If the first segment was the entire file, we'll copy that to
-                // the output stream and finish now
-                long initialLength = initialResponse.GetRawResponse().Headers.ContentLength.GetValueOrDefault();
-                long totalLength = initialResponse.GetRawResponse().Headers.TryGetValue("Content-Range", out string value) ?
-                    ParseRangeTotalLength(value) :
-                    0;
-
-                if (initialLength == totalLength)
-                {
-                    await _copyToAsync(
-                        initialResponse,
-                        destination,
-                        cancellationToken)
-                        .ConfigureAwait(false);
-                    return initialResponse.GetRawResponse();
-                }
-
-                // Capture the etag from the first segment and use it
-                // later to ensure the file doesn't change while we're
-                // downloading the remaining segments (Blobs service will
-                // inject it into conditions)
-                ETag etag = initialResponse.GetRawResponse().Headers.ETag.GetValueOrDefault();
-                TServiceSpecificArgs newConditions = _modifyConditions(conditions, etag);
-
-                // Create a queue of tasks that will each download one segment
-                // of the file.  The queue maintains the order of the segments
-                // so we can keep appending to the end of the destination
-                // stream when each segment finishes.
-                var runningTasks = new Queue<Task<Response<TCompleteDownloadReturn>>>();
-                runningTasks.Enqueue(initialResponseTask);
-                if (_maxWorkerCount <= 1)
-                {
-                    // Consume initial task immediately if _maxWorkerCount is 1 (or less to be safe). Otherwise loop below would have 2 concurrent tasks.
-                    await ConsumeQueuedTask().ConfigureAwait(false);
-                }
-
-                // Fill the queue with tasks to download each of the remaining
-                // ranges in the file
-                foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
-                {
-                    // Add the next Task (which will start the download but
-                    // return before it's completed downloading)
-                    runningTasks.Enqueue(_downloadInternal(
-                        httpRange,
-                        newConditions,
-                        rangeGetContentHash: false,
-                        async: true,
-                        cancellationToken));
-
-                    // If we have fewer tasks than alotted workers, then just
-                    // continue adding tasks until we have _maxWorkerCount
-                    // running in parallel
-                    if (runningTasks.Count < _maxWorkerCount)
+                    if (async)
                     {
-                        continue;
+                        initialResponse = await _singleDownloadInternal(
+                            initialRange,
+                            conditions,
+                            rangeGetContentHash: false,
+                            async: true,
+                            cancellationToken)
+                            .ConfigureAwait(false);
                     }
-
-                    // Once all the workers are busy, wait for the first
-                    // segment to finish downloading before we create more work
-                    await ConsumeQueuedTask().ConfigureAwait(false);
-                }
-
-                // Wait for all of the remaining segments to download
-                while (runningTasks.Count > 0)
-                {
-                    await ConsumeQueuedTask().ConfigureAwait(false);
-                }
-
-                return initialResponse.GetRawResponse();
-
-                // Wait for the first segment in the queue of tasks to complete
-                // downloading and copy it to the destination stream
-                async Task ConsumeQueuedTask()
-                {
-                    // Don't need to worry about 304s here because the ETag
-                    // condition will turn into a 412 and throw a proper
-                    // RequestFailedException
-                    Response<TCompleteDownloadReturn> result =
-                        await runningTasks.Dequeue().ConfigureAwait(false);
-
-                    _checkForEtagChange(result, etag);
-
-                    using TCompleteDownloadReturn resultInfo =
-                        result;
-
-                    // Even though the BlobDownloadInfo is returned immediately,
-                    // CopyToAsync causes ConsumeQueuedTask to wait until the
-                    // download is complete
-                    await _copyToAsync(
-                        resultInfo,
-                        destination,
-                        cancellationToken)
-                        .ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
-        public Response DownloadTo(
-            Stream destination,
-            TServiceSpecificArgs conditions,
-            CancellationToken cancellationToken)
-        {
-            // Wrap the download range calls in a Download span for distributed
-            // tracing
-            DiagnosticScope scope = _createScope(_operationName);
-            try
-            {
-                scope.Start();
-
-                // Just start downloading using an initial range.  If it's a
-                // small file, we'll get the whole thing in one shot.  If it's
-                // a large file, we'll get its full size in Content-Range and
-                // can keep downloading it in segments.
-                var initialRange = new HttpRange(0, _initialRangeSize);
-                Response<TCompleteDownloadReturn> initialResponse;
-
-                try
-                {
-                    initialResponse = _downloadInternal(
-                        initialRange,
-                        conditions,
-                        rangeGetContentHash: false,
-                        async: false,
-                        cancellationToken)
-                        .EnsureCompleted();
+                    else
+                    {
+                        initialResponse = _singleDownloadInternal(
+                            initialRange,
+                            conditions,
+                            rangeGetContentHash: false,
+                            async: false,
+                            cancellationToken)
+                            .EnsureCompleted();
+                    }
                 }
                 // TODO: Move errors common to multiple services to common library
-                // (i.e. from ShareErrors/BlobErrors), remove string literal
+                // (i.e. from ShareErrorCode/BlobErrorCode), remove string literal
                 catch (RequestFailedException ex) when (ex.ErrorCode == "InvalidRange")
                 {
-                    initialResponse = _downloadInternal(
-                        range: default,
-                        conditions,
-                        rangeGetContentHash: false,
-                        async: false,
-                        cancellationToken)
-                        .EnsureCompleted();
+                    if (async)
+                    {
+                        initialResponse = await _singleDownloadInternal(
+                            range: default,
+                            conditions,
+                            rangeGetContentHash: false,
+                            async: true,
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        initialResponse = _singleDownloadInternal(
+                            range: default,
+                            conditions,
+                            rangeGetContentHash: false,
+                            async: false,
+                            cancellationToken)
+                            .EnsureCompleted();
+                    }
+                }
+
+                // If the initial request returned no content (i.e., a 304),
+                // we'll pass that back to the user immediately
+                if (initialResponse.IsUnavailable())
+                {
+                    return initialResponse.GetRawResponse();
                 }
 
                 // If the first segment was the entire file, we'll write to
@@ -334,7 +220,18 @@ namespace Azure.Storage
                     ParseRangeTotalLength(value) :
                     0;
 
-                _copyTo(initialResponse, destination, cancellationToken);
+                if (async)
+                {
+                    await _copyToAsync(
+                        initialResponse,
+                        destination,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    _copyTo(initialResponse, destination, cancellationToken);
+                }
 
                 if (initialLength == totalLength)
                 {
@@ -347,25 +244,26 @@ namespace Azure.Storage
                 ETag etag = initialResponse.GetRawResponse().Headers.ETag.GetValueOrDefault();
                 TServiceSpecificArgs newConditions = _modifyConditions(conditions, etag);
 
-                // Download each of the remaining ranges in the file
-                foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
+                if (async)
                 {
-                    // Don't need to worry about 304s here because the ETag
-                    // condition will turn into a 412 and throw a proper
-                    // RequestFailedException
-                    Response<TCompleteDownloadReturn> result = _downloadInternal(
-                        httpRange,
+                    await DownloadRemainingInParallelAsync(
+                        destination,
+                        initialLength,
+                        totalLength,
                         newConditions,
-                        rangeGetContentHash: false,
-                        async: false,
+                        etag,
                         cancellationToken)
-                        .EnsureCompleted();
-
-                    // Make sure the ETag for this chunk matches the originally
-                    // recorded one
-                    _checkForEtagChange(result, etag);
-
-                    _copyTo(result.Value, destination, cancellationToken);
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    DownloadRemainingInSequence(
+                        destination,
+                        initialLength,
+                        totalLength,
+                        newConditions,
+                        etag,
+                        cancellationToken);
                 }
 
                 return initialResponse.GetRawResponse();
@@ -381,18 +279,117 @@ namespace Azure.Storage
             }
         }
 
+        private async Task DownloadRemainingInParallelAsync(
+            Stream destination,
+            long initialLength,
+            long totalLength,
+            TServiceSpecificArgs conditions,
+            ETag etag,
+            CancellationToken cancellationToken
+            )
+        {
+            // Create a queue of tasks that will each download one segment
+             // of the file.  The queue maintains the order of the segments
+             // so we can keep appending to the end of the destination
+             // stream when each segment finishes.
+            var runningTasks = new Queue<Task<Response<TCompleteDownloadReturn>>>();
+
+            // Fill the queue with tasks to download each of the remaining
+            // ranges in the file
+            foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
+            {
+                // Add the next Task (which will start the download but
+                // return before it's completed downloading)
+                runningTasks.Enqueue(_singleDownloadInternal(
+                    httpRange,
+                    conditions,
+                    rangeGetContentHash: false,
+                    async: true,
+                    cancellationToken));
+
+                // If we have fewer tasks than alotted workers, then just
+                // continue adding tasks until we have _maxWorkerCount
+                // running in parallel
+                if (runningTasks.Count < _maxWorkerCount)
+                {
+                    continue;
+                }
+
+                // Once all the workers are busy, wait for the first
+                // segment to finish downloading before we create more work
+                await ConsumeQueuedTask().ConfigureAwait(false);
+            }
+
+            // Wait for all of the remaining segments to download
+            while (runningTasks.Count > 0)
+            {
+                await ConsumeQueuedTask().ConfigureAwait(false);
+            }
+
+            // Wait for the first segment in the queue of tasks to complete
+            // downloading and copy it to the destination stream
+            async Task ConsumeQueuedTask()
+            {
+                // Don't need to worry about 304s here because the ETag
+                // condition will turn into a 412 and throw a proper
+                // RequestFailedException
+                Response<TCompleteDownloadReturn> result =
+                    await runningTasks.Dequeue().ConfigureAwait(false);
+
+                _checkForEtagChange(result, etag);
+
+                using TCompleteDownloadReturn resultInfo =
+                    result;
+
+                // Even though the BlobDownloadInfo is returned immediately,
+                // CopyToAsync causes ConsumeQueuedTask to wait until the
+                // download is complete
+                await _copyToAsync(
+                    resultInfo,
+                    destination,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+        }
+
+        private void DownloadRemainingInSequence(
+            Stream destination,
+            long initialLength,
+            long totalLength,
+            TServiceSpecificArgs conditions,
+            ETag etag,
+            CancellationToken cancellationToken
+            )
+        {
+            // Download each of the remaining ranges in the file
+            foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
+            {
+                // Don't need to worry about 304s here because the ETag
+                // condition will turn into a 412 and throw a proper
+                // RequestFailedException
+                Response<TCompleteDownloadReturn> result = _singleDownloadInternal(
+                    httpRange,
+                    conditions,
+                    rangeGetContentHash: false,
+                    async: false,
+                    cancellationToken)
+                    .EnsureCompleted();
+
+                // Make sure the ETag for this chunk matches the originally
+                // recorded one
+                _checkForEtagChange(result, etag);
+
+                _copyTo(result.Value, destination, cancellationToken);
+            }
+        }
+
         private static long ParseRangeTotalLength(string range)
         {
-            if (range == null)
-            {
-                return 0;
-            }
-            int lengthSeparator = range.IndexOf("/", StringComparison.InvariantCultureIgnoreCase);
-            if (lengthSeparator == -1)
-            {
-                throw new ArgumentException("Could not obtain the total length from HTTP range " + range);
-            }
-            return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
+            ContentRange? contentRange = string.IsNullOrWhiteSpace(range)
+                ? default
+                : ContentRange.Parse(range);
+
+            return (long)contentRange?.Size.GetValueOrDefault();
         }
 
         private IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength)

@@ -1099,7 +1099,7 @@ namespace Azure.Storage.Blobs.Specialized
                 cancellationToken)
                 .ConfigureAwait(false);
 
-        private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
+        internal virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             HttpRange range,
             BlobRequestConditions conditions,
             bool rangeGetContentHash,
@@ -2025,21 +2025,13 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 ClientSideDecryptor.BeginContentEncryptionKeyCaching();
             }
-            if (async)
-            {
-                return await downloader.DownloadToAsync(
-                    destination,
-                    conditions,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            else
-            {
-                return downloader.DownloadTo(
-                    destination,
-                    conditions,
-                    cancellationToken);
-            }
+
+            return await downloader.DownloadInternal(
+                destination,
+                conditions,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
         #endregion Parallel Download
 
@@ -5814,7 +5806,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>.Behaviors
             {
-                Download = async (range, args, rangeGetContentHash, async, cancellationToken)
+                SingleDownload = async (range, args, rangeGetContentHash, async, cancellationToken)
                     => await client.DownloadStreamingInternal(
                         range,
                         args,

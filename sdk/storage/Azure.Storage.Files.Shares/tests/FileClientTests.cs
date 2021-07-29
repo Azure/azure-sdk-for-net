@@ -1864,6 +1864,239 @@ namespace Azure.Storage.Files.Shares.Tests
                 });
         }
 
+        private async Task ParallelDownloadFileAndVerify(
+            long size,
+            long singleBlockThreshold,
+            StorageTransferOptions transferOptions)
+        {
+            var data = GetRandomBuffer(size);
+            var path = Path.GetTempFileName();
+
+            try
+            {
+                await using DisposingFile test = await GetTestFileAsync();
+                ShareFileClient file = test.File;
+                await file.CreateAsync(size);
+
+                using (var stream = new MemoryStream(data))
+                {
+                    await file.UploadAsync(stream);
+                }
+
+                // Create a special file client for downloading that will
+                // assign client request IDs based on the range so that out
+                // of order operations still get predictable IDs and the
+                // recordings work correctly
+                var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+                ShareFileClient downloadingFile = InstrumentClient(new ShareFileClient(file.Uri, credential, GetOptions()));
+
+                using (FileStream fileStream = File.OpenWrite(path))
+                {
+                    await downloadingFile.StagedDownloadAsync(
+                        fileStream,
+                        transferOptions: transferOptions);
+                }
+
+                using (FileStream resultStream = File.OpenRead(path))
+                {
+                    TestHelper.AssertSequenceEqual(data, resultStream.AsBytes());
+                }
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
+        [RecordedTest]
+        [TestCase(512)]
+        [TestCase(1 * Constants.KB)]
+        [TestCase(2 * Constants.KB)]
+        [TestCase(4 * Constants.KB)]
+        [TestCase(10 * Constants.KB)]
+        [TestCase(20 * Constants.KB)]
+        [TestCase(30 * Constants.KB)]
+        [TestCase(50 * Constants.KB)]
+        [TestCase(501 * Constants.KB)]
+        public async Task DownloadFileAsync_Parallel_SmallBlobs(long size) =>
+             // Use a 1KB threshold so we get a lot of individual blocks
+             await ParallelDownloadFileAndVerify(size, Constants.KB, new StorageTransferOptions { MaximumTransferLength = Constants.KB });
+
+        [Ignore("These tests currently take 40 mins for little additional coverage")]
+        [Test]
+        [Category("Live")]
+        [TestCase(33 * Constants.MB, 1)]
+        [TestCase(33 * Constants.MB, 4)]
+        [TestCase(33 * Constants.MB, 8)]
+        [TestCase(33 * Constants.MB, 16)]
+        [TestCase(33 * Constants.MB, null)]
+        [TestCase(257 * Constants.MB, 1)]
+        [TestCase(257 * Constants.MB, 4)]
+        [TestCase(257 * Constants.MB, 8)]
+        [TestCase(257 * Constants.MB, 16)]
+        [TestCase(257 * Constants.MB, null)]
+        [TestCase(1 * Constants.GB, 1)]
+        [TestCase(1 * Constants.GB, 4)]
+        [TestCase(1 * Constants.GB, 8)]
+        [TestCase(1 * Constants.GB, 16)]
+        [TestCase(1 * Constants.GB, null)]
+        public async Task DownloadFileAsync_Parallel_LargeBlobs(long size, int? maximumThreadCount)
+        {
+            // TODO: #6781 We don't want to add 1GB of random data in the recordings
+            if (Mode == RecordedTestMode.Live)
+            {
+                await ParallelDownloadFileAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
+            }
+        }
+
+        [RecordedTest]
+        public async Task DownloadToAsync_ZeroSizeFile()
+        {
+            // Arrange
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+            await file.CreateAsync(0);
+
+            // Act
+            using Stream resultStream = new MemoryStream();
+            await file.DownloadToAsync(resultStream);
+        }
+
+        [RecordedTest]
+        [Ignore("Don't want to record 300 MB of data in the tests")]
+        public async Task DownloadToAsync_LargeStream()
+        {
+            var data = GetRandomBuffer(300 * Constants.MB);
+
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+            using (var resultStream = new MemoryStream(data))
+            {
+                await file.DownloadToAsync(resultStream);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+        }
+
+        [RecordedTest]
+        public async Task DownloadTo_ReplacedDuringDownload()
+        {
+            await using DisposingFile test = await GetTestFileAsync();
+
+            // Upload a large blob
+            ShareFileClient file = test.File;
+            await file.CreateAsync(10 * Constants.KB);
+            using (var stream = new MemoryStream(GetRandomBuffer(10 * Constants.KB)))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            // Check the error we get when a download fails because the blob
+            // was replaced while we're downloading
+            Assert.CatchAsync<ShareFileModifiedException>(
+                async () =>
+                {
+                    // Create a stream that replaces the blob as soon as it starts downloading
+                    bool replaced = false;
+                    await file.StagedDownloadAsync(
+                        new FuncStream(
+                            Stream.Null,
+                            async () =>
+                            {
+                                if (!replaced)
+                                {
+                                    replaced = true;
+                                    using var newStream = new MemoryStream(GetRandomBuffer(Constants.KB));
+                                    await file.UploadAsync(newStream);
+                                }
+                            }),
+                        transferOptions:
+                            new StorageTransferOptions
+                            {
+                                MaximumConcurrency = 1,
+                                MaximumTransferLength = Constants.KB,
+                                InitialTransferLength = Constants.KB
+                            });
+                });
+        }
+
+        [RecordedTest]
+        public async Task DownloadToAsync_PathOverloads()
+        {
+            var path = Path.GetTempFileName();
+            try
+            {
+                var data = GetRandomBuffer(Constants.KB);
+
+                await using DisposingFile test = await GetTestFileAsync();
+                ShareFileClient file = test.File;
+                await file.CreateAsync(Constants.KB);
+
+                using (var stream = new MemoryStream(data))
+                {
+                    await file.UploadAsync(stream);
+                }
+                await Verify(await file.DownloadToAsync(path));
+                await Verify(await file.DownloadToAsync(path, CancellationToken.None));
+
+                async Task Verify(Response response)
+                {
+                    Assert.AreEqual(data.Length, File.ReadAllBytes(path).Length);
+                    using var actual = new MemoryStream();
+                    using (FileStream resultStream = File.OpenRead(path))
+                    {
+                        await resultStream.CopyToAsync(actual);
+                        TestHelper.AssertSequenceEqual(data, actual.ToArray());
+                    }
+                }
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task DownloadToAsync_StreamOverloads()
+        {
+            var data = GetRandomBuffer(Constants.KB);
+
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+            await file.CreateAsync(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+            using (var resultStream = new MemoryStream(data))
+            {
+                await file.DownloadToAsync(resultStream);
+                Verify(resultStream);
+            }
+            using (var resultStream = new MemoryStream())
+            {
+                await file.DownloadToAsync(resultStream, CancellationToken.None);
+                Verify(resultStream);
+            }
+
+            void Verify(MemoryStream resultStream)
+            {
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+        }
+
         [RecordedTest]
         public async Task GetRangeListAsync()
         {

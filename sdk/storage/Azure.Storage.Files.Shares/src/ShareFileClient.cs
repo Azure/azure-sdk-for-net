@@ -1827,7 +1827,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ShareFileDownloadInfo>> DownloadInternal(
+        internal virtual async Task<Response<ShareFileDownloadInfo>> DownloadInternal(
             HttpRange range,
             bool rangeGetContentHash,
             ShareFileRequestConditions conditions,
@@ -2413,21 +2413,12 @@ namespace Azure.Storage.Files.Shares
                 transferOptions: transferOptions,
                 operationName: $"{nameof(ShareFileClient)}.{nameof(DownloadTo)}");
 
-            if (async)
-            {
-                return await downloader.DownloadToAsync(
-                    destination,
-                    conditions,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            else
-            {
-                return downloader.DownloadTo(
-                    destination,
-                    conditions,
-                    cancellationToken);
-            }
+            return await downloader.DownloadInternal(
+                destination,
+                conditions,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
         #endregion Parallel Download
 
@@ -6149,7 +6140,7 @@ namespace Azure.Storage.Files.Shares
         {
             return new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>.Behaviors
             {
-                Download = async (range, args, rangeGetContentHash, async, cancellationToken)
+                SingleDownload = async (range, args, rangeGetContentHash, async, cancellationToken)
                     => await client.DownloadInternal(
                         range,
                         rangeGetContentHash,
@@ -6181,15 +6172,18 @@ namespace Azure.Storage.Files.Shares
                     // recorded one
                     if (etag != response.GetRawResponse().Headers.ETag)
                     {
-                        ContentRangeHeaderValue range = ContentRangeHeaderValue.Parse(response.Value.Details.ContentRange);
+                        ContentRange? contentRange = string.IsNullOrWhiteSpace(response.Value.Details.ContentRange)
+                            ? default
+                            : ContentRange.Parse(response.Value.Details.ContentRange);
+
                         throw new ShareFileModifiedException(
                             "File has been modified concurrently",
                             client.Uri,
                             etag,
                             response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                             new HttpRange(
-                                range.From.GetValueOrDefault(),
-                                range.To.GetValueOrDefault() - range.From.GetValueOrDefault())); // TODO: Refactor ContentRange logic out from Blob models?
+                                (long)contentRange?.Start.GetValueOrDefault(),
+                                contentRange?.End - contentRange?.Start));
                     }
                 },
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
