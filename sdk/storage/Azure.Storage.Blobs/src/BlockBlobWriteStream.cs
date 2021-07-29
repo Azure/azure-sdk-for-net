@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Models;
 using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
@@ -29,10 +30,12 @@ namespace Azure.Storage.Blobs
             IProgress<long> progressHandler,
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
-            IDictionary<string, string> tags) : base(
+            IDictionary<string, string> tags,
+            UploadTransactionalHashingOptions hashingOptions) : base(
                 position,
                 bufferSize,
-                progressHandler)
+                progressHandler,
+                hashingOptions)
         {
             ValidateBufferSize(bufferSize);
             _blockBlobClient = blockBlobClient;
@@ -66,7 +69,7 @@ namespace Azure.Storage.Blobs
                     content: _buffer,
                     new BlockBlobStageBlockOptions()
                     {
-                        // TODO inject SDK-managed transactional hashing // TransactionalHashingOptions = null
+                        TransactionalHashingOptions = _hashingOptions,
                         Conditions = conditions,
                         ProgressHandler = _progressHandler
                     },

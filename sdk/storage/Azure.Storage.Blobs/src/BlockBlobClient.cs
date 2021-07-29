@@ -2754,7 +2754,8 @@ namespace Azure.Storage.Blobs.Specialized
                     progressHandler: options?.ProgressHandler,
                     blobHttpHeaders: options?.HttpHeaders,
                     metadata: options?.Metadata,
-                    tags: options?.Tags);
+                    tags: options?.Tags,
+                    hashingOptions: options?.TransactionalHashingOptions);
             }
             catch (Exception ex)
             {
