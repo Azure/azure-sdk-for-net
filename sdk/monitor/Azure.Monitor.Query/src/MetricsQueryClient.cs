@@ -74,7 +74,7 @@ namespace Azure.Monitor.Query
         /// Queries metrics for a resource.
         /// <code snippet="Snippet:QueryMetrics" language="csharp">
         /// string resourceId =
-        ///     &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/Microsoft.OperationalInsights/workspaces/&lt;workspace_name&gt;&quot;;
+        ///     &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         ///
         /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
         ///
@@ -99,7 +99,12 @@ namespace Azure.Monitor.Query
         /// </code>
         /// </summary>
         /// <param name="resourceId">The resource name.
-        /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
+
+        /// For example:
+        /// <para><c>/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;</c>,</para>
+        /// <para><c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Storage/storageAccounts/mystorage</c>,</para>
+        /// <para><c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Compute/virtualMachines/myvm</c></para>
+        /// </param>
         /// <param name="metrics">The list of metrics to query.</param>
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -132,7 +137,7 @@ namespace Azure.Monitor.Query
         /// Queries metrics for a resource.
         /// <code snippet="Snippet:QueryMetrics" language="csharp">
         /// string resourceId =
-        ///     &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/Microsoft.OperationalInsights/workspaces/&lt;workspace_name&gt;&quot;;
+        ///     &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;&quot;;
         ///
         /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
         ///
@@ -157,7 +162,12 @@ namespace Azure.Monitor.Query
         /// </code>
         /// </summary>
         /// <param name="resourceId">The resource name.
-        /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
+
+        /// For example:
+        /// <para><c>/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;</c>,</para>
+        /// <para><c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Storage/storageAccounts/mystorage</c>,</para>
+        /// <para><c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Compute/virtualMachines/myvm</c></para>
+        /// </param>
         /// <param name="metrics">The list of metrics to query.</param>
         /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -190,7 +200,12 @@ namespace Azure.Monitor.Query
         /// Gets metric definitions for a particular resource and metric namespace.
         /// </summary>
         /// <param name="resourceId">The resource name.
-        /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
+
+        /// For example:
+        /// <para><c>/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;</c>,</para>
+        /// <para><c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Storage/storageAccounts/mystorage</c>,</para>
+        /// <para><c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Compute/virtualMachines/myvm</c></para>
+        /// </param>
         /// <param name="metricsNamespace">The metric namespace.
         /// For example: <c>Microsoft.OperationalInsights/workspaces</c>.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -216,7 +231,12 @@ namespace Azure.Monitor.Query
         /// Gets metric definitions for a particular resource and metric namespace.
         /// </summary>
         /// <param name="resourceId">The resource name.
-        /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
+        ///
+        /// For example:
+        /// <para><c>/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;</c>,</para>
+        /// <para><c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Storage/storageAccounts/mystorage</c>,</para>
+        /// <para><c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Compute/virtualMachines/myvm</c></para>
+        /// </param>
         /// <param name="metricsNamespace">The metric namespace.
         /// For example: <c>Microsoft.OperationalInsights/workspaces</c>.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
@@ -242,7 +262,12 @@ namespace Azure.Monitor.Query
         /// Gets metric namespaces for a particular resource.
         /// </summary>
         /// <param name="resourceId">The resource name.
-        /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
+
+        /// For example:
+        /// <para><c>/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/&lt;resource_provider&gt;/&lt;resource&gt;</c>,</para>
+        /// <para><c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Storage/storageAccounts/mystorage</c>,</para>
+        /// <para><c>/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/resource-group/providers/Microsoft.Compute/virtualMachines/myvm</c></para>
+        /// </param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A list of metric namespaces.</returns>
         public virtual Response<IReadOnlyList<MetricNamespace>> GetMetricNamespaces(string resourceId, CancellationToken cancellationToken = default)
