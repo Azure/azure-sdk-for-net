@@ -147,6 +147,15 @@ New-Item -Path "${DocOutDir}" -Name templates -ItemType directory
 Copy-Item "${DocCommonGenDir}/templates/**" -Destination "${DocOutDir}/templates" -Recurse -Force
 Copy-Item "${DocCommonGenDir}/docfx.json" -Destination "${DocOutDir}" -Force
 
+$headerTemplateLocation = "${DocOutDir}/templates/matthews/partials/head.tmpl.partial"
+
+if (Test-Path $headerTemplateLocation){
+    Write-Host "I'm in here!"
+    $headerTemplateContent = Get-Content -Path $headerTemplateLocation -Raw
+    $headerTemplateContent = $headerTemplateContent -replace "GA_CAMPAIGN_ID", $GACampaignId
+    Set-Content -Path $headerTemplateLocation -Value $headerTemplateContent -NoNewline
+}
+
 Write-Verbose "Create Toc for Site Navigation"
 New-Item "${DocOutDir}/toc.yml" -Force
 Add-Content -Path "${DocOutDir}/toc.yml" -Value "- name: ${ArtifactName}`r`n  href: index.md"
@@ -161,14 +170,6 @@ Copy-Item "${DocCommonGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -
 Write-Verbose "Copy index.html and toc.yml out."
 $destFolder = "${DocOutHtmlDir}/"
 Copy-Item -Path "${DocOutHtmlDir}/api/index.html" -Destination $destFolder -Confirm:$false -Force
-
-$headerTemplateLocation = "${DocOutDir}/templates/matthews/partials/head.tmpl.partial"
-
-if (Test-Path $headerTemplateLocation){
-    $headerTemplateContent = Get-Content -Path $headerTemplateLocation -Raw
-    $headerTemplateContent = $headerTemplateContent -replace "GA_CAMPAIGN_ID", $GACampaignId
-    Set-Content -Path $headerTemplateLocation -Value $headerTemplateContent -NoNewline
-}
 
 # Change the relative path inside index.html.
 Write-Verbose "Make changes on relative path on page index.html."
