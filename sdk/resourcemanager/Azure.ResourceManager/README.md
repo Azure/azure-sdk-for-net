@@ -262,7 +262,7 @@ VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
 
 // Next we loop over all vms in the container
 // Each vm is a [Resource] object from above
-await foreach(VirtualMachine vm in vmContainer.ListAsync())
+await foreach(VirtualMachine vm in vmContainer.GetAll())
 {
     // We access the [Resource]Data properties from vm.Data
     if(!vm.Data.Tags.ContainsKey("owner"))
