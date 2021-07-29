@@ -314,6 +314,16 @@ namespace Azure.Identity
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } }
         public string Username { get { throw null; } set { } }
     }
+    public partial class StaticTokenCredential : Azure.Core.TokenCredential
+    {
+        protected StaticTokenCredential() { }
+        public StaticTokenCredential(Azure.Core.AccessToken accessToken) { }
+        public StaticTokenCredential(Azure.Core.AccessToken accessToken, Azure.Identity.TokenCredentialOptions options) { }
+        public StaticTokenCredential(string tokenString) { }
+        public StaticTokenCredential(string tokenString, Azure.Identity.TokenCredentialOptions options) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class TokenCachePersistenceOptions
     {
         public TokenCachePersistenceOptions() { }
