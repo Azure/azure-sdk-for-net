@@ -73,16 +73,9 @@ It also has access to all of the operations and like the **[Resource]Operations*
 to a specific resource in Azure.
 
 ### Structured Resource Identifier
-Instead of implementing your own parsing logic, you can implicitly cast a resource identifier string into an object which will do the parsing for you.
+Resource IDs contains useful information about the resource itself, but they are plain strings that have to be parsed. Instead of implementing your own parsing logic, you can implicitly cast a resource identifier string into an object which will do the parsing for you.
 
-There are 3 types of ResourceIdentifiers and they correspond to which level the resource lives at:
-- A resource that lives on a tenant will have a `TenantResourceIdentifier`.
-- A resource that lives under a subscription will have a `SubscriptionResourceIdentifer`.  
-- A resource that lives under a resource group will have a `ResourceGroupResourceIdentifier`.
-
-You can usually tell by the id string itself which type it is, but if you are unsure you can always cast it onto a `ResourceIdentifier` and use the Try methods to retrieve the values.
-
-#### Casting to a specific type
+#### Casting a plain resource ID into a `ResourceIdentifier`
 ```C# Snippet:Readme_CastToSpecificType
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
 // We know the subnet is a resource group level identifier since it has a resource group name in its string
@@ -92,8 +85,8 @@ Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
 Console.WriteLine($"Vnet: {id.Parent.Name}");
 Console.WriteLine($"Subnet: {id.Name}");
 ```
-
-#### Casting to the base resource identifier
+However, keep in mind that some of those properties could be null. You can usually tell by the id string itself which type a resource ID is, but if you are unsure, use the Try methods to retrieve the values as it's shown below:
+#### Casting unknown plain resource ID
 ```C# Snippet:Readme_CastToBaseResourceIdentifier
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
 // Assume we don't know what type of resource id we have we can cast to the base type
