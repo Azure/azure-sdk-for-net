@@ -29,31 +29,12 @@ extends:
     Artifacts:
     - name: Azure.Search.Documents
       safeName: AzureSearchDocuments
-    - name: Microsoft.Azure.Search
-      safeName: MicrosoftAzureSearch
-      skipPublishPackage: true
-      skipSymbolsUpload: true
-      skipPublishDocMs: true
-      skipPublishDocGithubIo: true
-      skipUpdatePackageVersion: true
-    - name: Microsoft.Azure.Search.Common
-      safeName: MicrosoftAzureSearchCommon
-      skipPublishPackage: true
-      skipSymbolsUpload: true
-      skipPublishDocMs: true
-      skipPublishDocGithubIo: true
-      skipUpdatePackageVersion: true
-    - name: Microsoft.Azure.Search.Data
-      safeName: MicrosoftAzureSearchData
-      skipPublishPackage: true
-      skipSymbolsUpload: true
-      skipPublishDocMs: true
-      skipPublishDocGithubIo: true
-      skipUpdatePackageVersion: true
-    - name: Microsoft.Azure.Search.Service
-      safeName: MicrosoftAzureSearchService
-      skipPublishPackage: true
-      skipSymbolsUpload: true
-      skipPublishDocMs: true
-      skipPublishDocGithubIo: true
-      skipUpdatePackageVersion: true
+    # Skip track 1 Microsoft.Azure.* packages for the release jobs
+    # - name: Microsoft.Azure.Search
+      # safeName: MicrosoftAzureSearch
+    # - name: Microsoft.Azure.Search.Common
+      # safeName: MicrosoftAzureSearchCommon
+    # - name: Microsoft.Azure.Search.Data
+      # safeName: MicrosoftAzureSearchData
+    # - name: Microsoft.Azure.Search.Service
+      # safeName: MicrosoftAzureSearchService
