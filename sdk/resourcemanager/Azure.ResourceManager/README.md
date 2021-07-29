@@ -73,24 +73,24 @@ It also has access to all of the operations and like the **[Resource]Operations*
 to a specific resource in Azure.
 
 ### Structured Resource Identifier
-Resource IDs contains useful information about the resource itself, but they are plain strings that have to be parsed. Instead of implementing your own parsing logic, you can implicitly cast a resource identifier string into an object which will do the parsing for you.
+Resource IDs contains useful information about the resource itself, but they are plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object which will do the parsing for you: `new ResourceIdentifer("myid");`.
 
-#### Casting a plain resource ID into a `ResourceIdentifier`
+#### Example: Parsing an ID using a ResourceIdentifier object 
 ```C# Snippet:Readme_CastToSpecificType
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
 // We know the subnet is a resource group level identifier since it has a resource group name in its string
-ResourceIdentifier id = resourceId;
+ResourceIdentifier id = new ResourceIdentifier(resourceId);
 Console.WriteLine($"Subscription: {id.SubscriptionId}");
 Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
 Console.WriteLine($"Vnet: {id.Parent.Name}");
 Console.WriteLine($"Subnet: {id.Name}");
 ```
 However, keep in mind that some of those properties could be null. You can usually tell by the id string itself which type a resource ID is, but if you are unsure, use the Try methods to retrieve the values as it's shown below:
-#### Casting unknown plain resource ID
+#### Example: Check if the properties are null
 ```C# Snippet:Readme_CastToBaseResourceIdentifier
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
 // Assume we don't know what type of resource id we have we can cast to the base type
-ResourceIdentifier id = resourceId;
+ResourceIdentifier id = new ResourceIdentifier(resourceId);
 string property;
 if (id.TryGetSubscriptionId(out property))
     Console.WriteLine($"Subscription: {property}");
@@ -162,7 +162,7 @@ ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 // With the container, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-var rgData = new ResourceGroupData(location);
+ResourceGroupData rgData = new ResourceGroupData(location);
 ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
 ```
 
