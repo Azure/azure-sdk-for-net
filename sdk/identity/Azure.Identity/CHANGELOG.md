@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `StaticTokenCredential`, which authenticates with the provided access token.
+
 ### Breaking Changes
 
 ### Bugs Fixed
