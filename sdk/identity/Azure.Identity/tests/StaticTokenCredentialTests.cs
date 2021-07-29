@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -14,7 +15,7 @@ namespace Azure.Identity.Tests
         { }
 
         [Test]
-        public async void ValidStaticTokenString()
+        public async Task ValidStaticTokenString()
         {
             string expectedToken = "token";
             StaticTokenCredential credential = InstrumentClient(new StaticTokenCredential(expectedToken));
@@ -25,7 +26,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async void ValidStaticAccessToken()
+        public async Task ValidStaticAccessToken()
         {
             AccessToken expectedToken = new AccessToken("token", DateTimeOffset.MinValue);
             StaticTokenCredential credential = InstrumentClient(new StaticTokenCredential(expectedToken));
