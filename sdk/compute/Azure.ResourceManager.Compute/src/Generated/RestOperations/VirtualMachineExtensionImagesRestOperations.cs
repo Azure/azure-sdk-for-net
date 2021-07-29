@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListTypesRequest(string location, string publisherName)
+        internal HttpMessage CreateGetTypesRequest(string location, string publisherName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineExtensionImage>>> ListTypesAsync(string location, string publisherName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineExtensionImage>>> GetTypesAsync(string location, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(publisherName));
             }
 
-            using var message = CreateListTypesRequest(location, publisherName);
+            using var message = CreateGetTypesRequest(location, publisherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
-        public Response<IReadOnlyList<VirtualMachineExtensionImage>> ListTypes(string location, string publisherName, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<VirtualMachineExtensionImage>> GetTypes(string location, string publisherName, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(publisherName));
             }
 
-            using var message = CreateListTypesRequest(location, publisherName);
+            using var message = CreateGetTypesRequest(location, publisherName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListVersionsRequest(string location, string publisherName, string type, string filter, int? top, string orderby)
+        internal HttpMessage CreateGetVersionsRequest(string location, string publisherName, string type, string filter, int? top, string orderby)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, or <paramref name="type"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineExtensionImage>>> ListVersionsAsync(string location, string publisherName, string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineExtensionImage>>> GetVersionsAsync(string location, string publisherName, string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(type));
             }
 
-            using var message = CreateListVersionsRequest(location, publisherName, type, filter, top, orderby);
+            using var message = CreateGetVersionsRequest(location, publisherName, type, filter, top, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, or <paramref name="type"/> is null. </exception>
-        public Response<IReadOnlyList<VirtualMachineExtensionImage>> ListVersions(string location, string publisherName, string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<VirtualMachineExtensionImage>> GetVersions(string location, string publisherName, string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(type));
             }
 
-            using var message = CreateListVersionsRequest(location, publisherName, type, filter, top, orderby);
+            using var message = CreateGetVersionsRequest(location, publisherName, type, filter, top, orderby);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

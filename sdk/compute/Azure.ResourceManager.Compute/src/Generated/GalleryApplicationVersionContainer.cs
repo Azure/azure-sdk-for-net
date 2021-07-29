@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of GalleryApplicationVersion and their operations over a GalleryApplication. </summary>
-    public partial class GalleryApplicationVersionContainer : ResourceContainerBase<GalleryApplicationVersion, GalleryApplicationVersionData>
+    public partial class GalleryApplicationVersionContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="GalleryApplicationVersionContainer"/> class for mocking. </summary>
         protected GalleryApplicationVersionContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of GalleryApplicationVersionContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal GalleryApplicationVersionContainer(OperationsBase parent) : base(parent)
+        internal GalleryApplicationVersionContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string galleryApplicationVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -321,15 +321,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> List gallery Application Versions in a gallery Application Definition. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GalleryApplicationVersion" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<GalleryApplicationVersion> List(CancellationToken cancellationToken = default)
+        public Pageable<GalleryApplicationVersion> GetAll(CancellationToken cancellationToken = default)
         {
             Page<GalleryApplicationVersion> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListByGalleryApplication(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetByGalleryApplication(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<GalleryApplicationVersion> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListByGalleryApplicationNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetByGalleryApplicationNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -359,15 +359,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> List gallery Application Versions in a gallery Application Definition. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GalleryApplicationVersion" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GalleryApplicationVersion> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<GalleryApplicationVersion> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<GalleryApplicationVersion>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListByGalleryApplicationAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetByGalleryApplicationAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<GalleryApplicationVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListByGalleryApplicationNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetByGalleryApplicationNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new GalleryApplicationVersion(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -400,15 +400,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(GalleryApplicationVersionOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -423,15 +423,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationVersionContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(GalleryApplicationVersionOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of SharedGalleryImage and their operations over a SharedGallery. </summary>
-    public partial class SharedGalleryImageContainer : ResourceContainerBase<SharedGalleryImage, SharedGalleryImageData>
+    public partial class SharedGalleryImageContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="SharedGalleryImageContainer"/> class for mocking. </summary>
         protected SharedGalleryImageContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of SharedGalleryImageContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal SharedGalleryImageContainer(OperationsBase parent) : base(parent)
+        internal SharedGalleryImageContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string galleryImageName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string galleryImageName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -196,15 +196,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SharedGalleryImage" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<SharedGalleryImage> List(SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public Pageable<SharedGalleryImage> GetAll(SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             Page<SharedGalleryImage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.List(Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAll(Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SharedGalleryImage(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<SharedGalleryImage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListNextPage(nextLink, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAllNextPage(nextLink, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SharedGalleryImage(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -235,15 +235,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SharedGalleryImage" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<SharedGalleryImage> ListAsync(SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<SharedGalleryImage> GetAllAsync(SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SharedGalleryImage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAsync(Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllAsync(Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SharedGalleryImage(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -254,11 +254,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<SharedGalleryImage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListNextPageAsync(nextLink, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAllNextPageAsync(nextLink, Id.Parent.Name, Id.Name, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SharedGalleryImage(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -276,15 +276,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(SharedGalleryImageOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -299,15 +299,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(SharedGalleryImageOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref = "VirtualMachine"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualMachine(OperationsBase options, VirtualMachineData resource) : base(options, resource.Id)
+        internal VirtualMachine(ResourceOperations options, VirtualMachineData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

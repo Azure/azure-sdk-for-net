@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of UpdateDomain and their operations over a CloudService. </summary>
-    public partial class UpdateDomainContainer : ResourceContainerBase<UpdateDomain, UpdateDomainData>
+    public partial class UpdateDomainContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="UpdateDomainContainer"/> class for mocking. </summary>
         protected UpdateDomainContainer()
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of UpdateDomainContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal UpdateDomainContainer(OperationsBase parent) : base(parent)
+        internal UpdateDomainContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string updateDomain, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string updateDomain, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string updateDomain, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string updateDomain, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -194,15 +194,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all update domains in a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="UpdateDomain" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<UpdateDomain> List(CancellationToken cancellationToken = default)
+        public Pageable<UpdateDomain> GetAll(CancellationToken cancellationToken = default)
         {
             Page<UpdateDomain> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListUpdateDomains(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetUpdateDomains(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new UpdateDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<UpdateDomain> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListUpdateDomainsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetUpdateDomainsNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new UpdateDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -232,15 +232,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all update domains in a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="UpdateDomain" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<UpdateDomain> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<UpdateDomain> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<UpdateDomain>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListUpdateDomainsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetUpdateDomainsAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new UpdateDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -251,11 +251,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<UpdateDomain>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListUpdateDomainsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetUpdateDomainsNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new UpdateDomain(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -273,15 +273,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(UpdateDomainOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -296,15 +296,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(UpdateDomainOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

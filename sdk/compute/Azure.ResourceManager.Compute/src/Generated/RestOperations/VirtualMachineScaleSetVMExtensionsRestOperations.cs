@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string vmScaleSetName, string instanceId, string expand)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string vmScaleSetName, string instanceId, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="instanceId"/> is null. </exception>
-        public async Task<Response<VirtualMachineScaleSetVMExtensionsListResult>> ListAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSetVMExtensionsListResult>> GetAllAsync(string resourceGroupName, string vmScaleSetName, string instanceId, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var message = CreateListRequest(resourceGroupName, vmScaleSetName, instanceId, expand);
+            using var message = CreateGetAllRequest(resourceGroupName, vmScaleSetName, instanceId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="instanceId"/> is null. </exception>
-        public Response<VirtualMachineScaleSetVMExtensionsListResult> List(string resourceGroupName, string vmScaleSetName, string instanceId, string expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSetVMExtensionsListResult> GetAll(string resourceGroupName, string vmScaleSetName, string instanceId, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(instanceId));
             }
 
-            using var message = CreateListRequest(resourceGroupName, vmScaleSetName, instanceId, expand);
+            using var message = CreateGetAllRequest(resourceGroupName, vmScaleSetName, instanceId, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

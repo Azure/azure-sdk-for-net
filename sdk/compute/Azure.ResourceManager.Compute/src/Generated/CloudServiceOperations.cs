@@ -21,7 +21,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the operations that can be performed over a specific CloudService. </summary>
-    public partial class CloudServiceOperations : ResourceOperationsBase<CloudService>
+    public partial class CloudServiceOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private CloudServicesRestOperations _restClient { get; }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref="CloudServiceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal CloudServiceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal CloudServiceOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new CloudServicesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -49,8 +49,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<CloudService>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Display information about a cloud service. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<CloudService>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.Get");
             scope.Start();
@@ -66,8 +67,9 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <inheritdoc />
-        public override Response<CloudService> Get(CancellationToken cancellationToken = default)
+        /// <summary> Display information about a cloud service. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CloudService> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.Get");
             scope.Start();
@@ -86,7 +88,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -418,9 +420,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Retrieves information about the run-time state of a role instance in a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RoleInstanceView>> GetInstanceViewCloudServiceRoleInstanceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleInstanceView>> GetCloudServiceRoleInstanceInstanceViewAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetInstanceViewCloudServiceRoleInstance");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetCloudServiceRoleInstanceInstanceView");
             scope.Start();
             try
             {
@@ -436,9 +438,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Retrieves information about the run-time state of a role instance in a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RoleInstanceView> GetInstanceViewCloudServiceRoleInstance(CancellationToken cancellationToken = default)
+        public virtual Response<RoleInstanceView> GetCloudServiceRoleInstanceInstanceView(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetInstanceViewCloudServiceRoleInstance");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetCloudServiceRoleInstanceInstanceView");
             scope.Start();
             try
             {
@@ -454,9 +456,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a remote desktop file for a role instance in a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Stream>> GetRemoteDesktopFileCloudServiceRoleInstanceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetCloudServiceRoleInstanceRemoteDesktopFileAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetRemoteDesktopFileCloudServiceRoleInstance");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetCloudServiceRoleInstanceRemoteDesktopFile");
             scope.Start();
             try
             {
@@ -472,9 +474,9 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a remote desktop file for a role instance in a cloud service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Stream> GetRemoteDesktopFileCloudServiceRoleInstance(CancellationToken cancellationToken = default)
+        public virtual Response<Stream> GetCloudServiceRoleInstanceRemoteDesktopFile(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetRemoteDesktopFileCloudServiceRoleInstance");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetCloudServiceRoleInstanceRemoteDesktopFile");
             scope.Start();
             try
             {
@@ -492,15 +494,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleInstance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RoleInstance> ListCloudServiceRoleInstances(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<RoleInstance> GetCloudServiceRoleInstances(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Page<RoleInstance> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.ListCloudServiceRoleInstances");
+                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetCloudServiceRoleInstances");
                 scope.Start();
                 try
                 {
-                    var response = _cloudServiceRoleInstancesRestClient.List(Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    var response = _cloudServiceRoleInstancesRestClient.GetAll(Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -511,11 +513,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<RoleInstance> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.ListCloudServiceRoleInstances");
+                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetCloudServiceRoleInstances");
                 scope.Start();
                 try
                 {
-                    var response = _cloudServiceRoleInstancesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    var response = _cloudServiceRoleInstancesRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -531,15 +533,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleInstance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RoleInstance> ListCloudServiceRoleInstancesAsync(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RoleInstance> GetCloudServiceRoleInstancesAsync(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<RoleInstance>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.ListCloudServiceRoleInstances");
+                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetCloudServiceRoleInstances");
                 scope.Start();
                 try
                 {
-                    var response = await _cloudServiceRoleInstancesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cloudServiceRoleInstancesRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -550,11 +552,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<RoleInstance>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.ListCloudServiceRoleInstances");
+                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetCloudServiceRoleInstances");
                 scope.Start();
                 try
                 {
-                    var response = await _cloudServiceRoleInstancesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cloudServiceRoleInstancesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -604,15 +606,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all roles in a cloud service. Use nextLink property in the response to get the next page of roles. Do this till nextLink is null to fetch all the roles. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CloudServiceRole" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CloudServiceRole> ListCloudServiceRoles(CancellationToken cancellationToken = default)
+        public virtual Pageable<CloudServiceRole> GetCloudServiceRoles(CancellationToken cancellationToken = default)
         {
             Page<CloudServiceRole> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.ListCloudServiceRoles");
+                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetCloudServiceRoles");
                 scope.Start();
                 try
                 {
-                    var response = _cloudServiceRolesRestClient.List(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cloudServiceRolesRestClient.GetAll(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -623,11 +625,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<CloudServiceRole> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.ListCloudServiceRoles");
+                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetCloudServiceRoles");
                 scope.Start();
                 try
                 {
-                    var response = _cloudServiceRolesRestClient.ListNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _cloudServiceRolesRestClient.GetAllNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -642,15 +644,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of all roles in a cloud service. Use nextLink property in the response to get the next page of roles. Do this till nextLink is null to fetch all the roles. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CloudServiceRole" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CloudServiceRole> ListCloudServiceRolesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CloudServiceRole> GetCloudServiceRolesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CloudServiceRole>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.ListCloudServiceRoles");
+                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetCloudServiceRoles");
                 scope.Start();
                 try
                 {
-                    var response = await _cloudServiceRolesRestClient.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cloudServiceRolesRestClient.GetAllAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -661,11 +663,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<CloudServiceRole>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.ListCloudServiceRoles");
+                using var scope = _clientDiagnostics.CreateScope("CloudServiceOperations.GetCloudServiceRoles");
                 scope.Start();
                 try
                 {
-                    var response = await _cloudServiceRolesRestClient.ListNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _cloudServiceRolesRestClient.GetAllNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

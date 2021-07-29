@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        internal AvailabilitySetsUpdateOperation(OperationsBase operationsBase, Response<AvailabilitySetData> response)
+        internal AvailabilitySetsUpdateOperation(ResourceOperations operationsBase, Response<AvailabilitySetData> response)
         {
             _operation = new OperationOrResponseInternals<AvailabilitySet>(Response.FromValue(new AvailabilitySet(operationsBase, response.Value), response.GetRawResponse()));
         }

@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string vmName, string expand)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string vmName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
-        public async Task<Response<VirtualMachineRunCommandsListResult>> ListAsync(string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineRunCommandsListResult>> GetAllAsync(string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, vmName, expand);
+            using var message = CreateGetAllRequest(resourceGroupName, vmName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
-        public Response<VirtualMachineRunCommandsListResult> List(string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineRunCommandsListResult> GetAll(string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, vmName, expand);
+            using var message = CreateGetAllRequest(resourceGroupName, vmName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string vmName, string expand)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string vmName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vmName"/> is null. </exception>
-        public async Task<Response<VirtualMachineRunCommandsListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineRunCommandsListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, vmName, expand);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, vmName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vmName"/> is null. </exception>
-        public Response<VirtualMachineRunCommandsListResult> ListNextPage(string nextLink, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineRunCommandsListResult> GetAllNextPage(string nextLink, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, vmName, expand);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, vmName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

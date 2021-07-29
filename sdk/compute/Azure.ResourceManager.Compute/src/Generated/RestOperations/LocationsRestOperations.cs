@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListVirtualMachineRunCommandsRequest(string location)
+        internal HttpMessage CreateGetVirtualMachineRunCommandsRequest(string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response<RunCommandListResult>> ListVirtualMachineRunCommandsAsync(string location, CancellationToken cancellationToken = default)
+        public async Task<Response<RunCommandListResult>> GetVirtualMachineRunCommandsAsync(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListVirtualMachineRunCommandsRequest(location);
+            using var message = CreateGetVirtualMachineRunCommandsRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -86,14 +86,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response<RunCommandListResult> ListVirtualMachineRunCommands(string location, CancellationToken cancellationToken = default)
+        public Response<RunCommandListResult> GetVirtualMachineRunCommands(string location, CancellationToken cancellationToken = default)
         {
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListVirtualMachineRunCommandsRequest(location);
+            using var message = CreateGetVirtualMachineRunCommandsRequest(location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListVirtualMachineRunCommandsNextPageRequest(string nextLink, string location)
+        internal HttpMessage CreateGetVirtualMachineRunCommandsNextPageRequest(string nextLink, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<RunCommandListResult>> ListVirtualMachineRunCommandsNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<RunCommandListResult>> GetVirtualMachineRunCommandsNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListVirtualMachineRunCommandsNextPageRequest(nextLink, location);
+            using var message = CreateGetVirtualMachineRunCommandsNextPageRequest(nextLink, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
-        public Response<RunCommandListResult> ListVirtualMachineRunCommandsNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
+        public Response<RunCommandListResult> GetVirtualMachineRunCommandsNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(location));
             }
 
-            using var message = CreateListVirtualMachineRunCommandsNextPageRequest(nextLink, location);
+            using var message = CreateGetVirtualMachineRunCommandsNextPageRequest(nextLink, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

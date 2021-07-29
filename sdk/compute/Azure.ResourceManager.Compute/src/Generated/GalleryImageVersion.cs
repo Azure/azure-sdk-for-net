@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref = "GalleryImageVersion"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal GalleryImageVersion(OperationsBase options, GalleryImageVersionData resource) : base(options, resource.Id)
+        internal GalleryImageVersion(ResourceOperations options, GalleryImageVersionData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

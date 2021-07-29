@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListByRestorePointRequest(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName)
+        internal HttpMessage CreateGetByRestorePointRequest(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="vmRestorePointName"/> is null. </exception>
-        public async Task<Response<DiskRestorePointList>> ListByRestorePointAsync(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
+        public async Task<Response<DiskRestorePointList>> GetByRestorePointAsync(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmRestorePointName));
             }
 
-            using var message = CreateListByRestorePointRequest(resourceGroupName, restorePointCollectionName, vmRestorePointName);
+            using var message = CreateGetByRestorePointRequest(resourceGroupName, restorePointCollectionName, vmRestorePointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="vmRestorePointName"/> is null. </exception>
-        public Response<DiskRestorePointList> ListByRestorePoint(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
+        public Response<DiskRestorePointList> GetByRestorePoint(string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmRestorePointName));
             }
 
-            using var message = CreateListByRestorePointRequest(resourceGroupName, restorePointCollectionName, vmRestorePointName);
+            using var message = CreateGetByRestorePointRequest(resourceGroupName, restorePointCollectionName, vmRestorePointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListByRestorePointNextPageRequest(string nextLink, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName)
+        internal HttpMessage CreateGetByRestorePointNextPageRequest(string nextLink, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="vmRestorePointName"/> is null. </exception>
-        public async Task<Response<DiskRestorePointList>> ListByRestorePointNextPageAsync(string nextLink, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
+        public async Task<Response<DiskRestorePointList>> GetByRestorePointNextPageAsync(string nextLink, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmRestorePointName));
             }
 
-            using var message = CreateListByRestorePointNextPageRequest(nextLink, resourceGroupName, restorePointCollectionName, vmRestorePointName);
+            using var message = CreateGetByRestorePointNextPageRequest(nextLink, resourceGroupName, restorePointCollectionName, vmRestorePointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, or <paramref name="vmRestorePointName"/> is null. </exception>
-        public Response<DiskRestorePointList> ListByRestorePointNextPage(string nextLink, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
+        public Response<DiskRestorePointList> GetByRestorePointNextPage(string nextLink, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmRestorePointName));
             }
 
-            using var message = CreateListByRestorePointNextPageRequest(nextLink, resourceGroupName, restorePointCollectionName, vmRestorePointName);
+            using var message = CreateGetByRestorePointNextPageRequest(nextLink, resourceGroupName, restorePointCollectionName, vmRestorePointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

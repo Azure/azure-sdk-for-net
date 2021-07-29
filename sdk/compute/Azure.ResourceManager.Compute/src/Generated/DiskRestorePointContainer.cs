@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of DiskRestorePoint and their operations over a RestorePoint. </summary>
-    public partial class DiskRestorePointContainer : ResourceContainerBase<DiskRestorePoint, DiskRestorePointData>
+    public partial class DiskRestorePointContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="DiskRestorePointContainer"/> class for mocking. </summary>
         protected DiskRestorePointContainer()
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Initializes a new instance of DiskRestorePointContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal DiskRestorePointContainer(OperationsBase parent) : base(parent)
+        internal DiskRestorePointContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool DoesExist(string diskRestorePointName, CancellationToken cancellationToken = default)
+        public virtual bool CheckIfExists(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskRestorePointName"> The name of the disk restore point created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> DoesExistAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
+        public async virtual Task<bool> CheckIfExistsAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.DoesExist");
+            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.CheckIfExists");
             scope.Start();
             try
             {
@@ -194,15 +194,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists diskRestorePoints under a vmRestorePoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DiskRestorePoint" /> that may take multiple service requests to iterate over. </returns>
-        public Pageable<DiskRestorePoint> List(CancellationToken cancellationToken = default)
+        public Pageable<DiskRestorePoint> GetAll(CancellationToken cancellationToken = default)
         {
             Page<DiskRestorePoint> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListByRestorePoint(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetByRestorePoint(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DiskRestorePoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<DiskRestorePoint> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListByRestorePointNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetByRestorePointNextPage(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DiskRestorePoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -232,15 +232,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists diskRestorePoints under a vmRestorePoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DiskRestorePoint" /> that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<DiskRestorePoint> ListAsync(CancellationToken cancellationToken = default)
+        public AsyncPageable<DiskRestorePoint> GetAllAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DiskRestorePoint>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListByRestorePointAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetByRestorePointAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DiskRestorePoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -251,11 +251,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<DiskRestorePoint>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListByRestorePointNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetByRestorePointNextPageAsync(nextLink, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DiskRestorePoint(Parent, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -273,15 +273,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResourceExpanded> ListAsGenericResource(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResourceExpanded> GetAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(DiskRestorePointOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContext(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {
@@ -296,15 +296,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResourceExpanded> ListAsGenericResourceAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResourceExpanded> GetAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.ListAsGenericResource");
+            using var scope = _clientDiagnostics.CreateScope("DiskRestorePointContainer.GetAsGenericResources");
             scope.Start();
             try
             {
                 var filters = new ResourceFilterCollection(DiskRestorePointOperations.ResourceType);
                 filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
+                return ResourceListOperations.GetAtContextAsync(Parent as ResourceGroupOperations, filters, expand, top, cancellationToken);
             }
             catch (Exception e)
             {

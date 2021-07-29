@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref = "VirtualMachineScaleSetRollingUpgrade"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualMachineScaleSetRollingUpgrade(OperationsBase options, VirtualMachineScaleSetRollingUpgradeData resource) : base(options)
+        internal VirtualMachineScaleSetRollingUpgrade(ResourceOperations options, VirtualMachineScaleSetRollingUpgradeData resource) : base(options)
         {
             Data = resource;
         }

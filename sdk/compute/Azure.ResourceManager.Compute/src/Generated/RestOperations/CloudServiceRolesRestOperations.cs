@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetRequest(string roleName, string resourceGroupName, string cloudServiceName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string cloudServiceName, string roleName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,17 +59,13 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a role from a cloud service. </summary>
-        /// <param name="roleName"> Name of the role. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/>, <paramref name="resourceGroupName"/>, or <paramref name="cloudServiceName"/> is null. </exception>
-        public async Task<Response<CloudServiceRole>> GetAsync(string roleName, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleName"/> is null. </exception>
+        public async Task<Response<CloudServiceRole>> GetAsync(string resourceGroupName, string cloudServiceName, string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -78,8 +74,12 @@ namespace Azure.ResourceManager.Compute
             {
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
+            if (roleName == null)
+            {
+                throw new ArgumentNullException(nameof(roleName));
+            }
 
-            using var message = CreateGetRequest(roleName, resourceGroupName, cloudServiceName);
+            using var message = CreateGetRequest(resourceGroupName, cloudServiceName, roleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -96,17 +96,13 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a role from a cloud service. </summary>
-        /// <param name="roleName"> Name of the role. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="roleName"> Name of the role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/>, <paramref name="resourceGroupName"/>, or <paramref name="cloudServiceName"/> is null. </exception>
-        public Response<CloudServiceRole> Get(string roleName, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/>, or <paramref name="roleName"/> is null. </exception>
+        public Response<CloudServiceRole> Get(string resourceGroupName, string cloudServiceName, string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -115,8 +111,12 @@ namespace Azure.ResourceManager.Compute
             {
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
+            if (roleName == null)
+            {
+                throw new ArgumentNullException(nameof(roleName));
+            }
 
-            using var message = CreateGetRequest(roleName, resourceGroupName, cloudServiceName);
+            using var message = CreateGetRequest(resourceGroupName, cloudServiceName, roleName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, string cloudServiceName)
+        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string cloudServiceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
-        public async Task<Response<CloudServiceRoleListResult>> ListAsync(string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudServiceRoleListResult>> GetAllAsync(string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, cloudServiceName);
+            using var message = CreateGetAllRequest(resourceGroupName, cloudServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
-        public Response<CloudServiceRoleListResult> List(string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
+        public Response<CloudServiceRoleListResult> GetAll(string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var message = CreateListRequest(resourceGroupName, cloudServiceName);
+            using var message = CreateGetAllRequest(resourceGroupName, cloudServiceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceGroupName, string cloudServiceName)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string cloudServiceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="cloudServiceName"/> is null. </exception>
-        public async Task<Response<CloudServiceRoleListResult>> ListNextPageAsync(string nextLink, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudServiceRoleListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, cloudServiceName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, cloudServiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cloudServiceName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="cloudServiceName"/> is null. </exception>
-        public Response<CloudServiceRoleListResult> ListNextPage(string nextLink, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
+        public Response<CloudServiceRoleListResult> GetAllNextPage(string nextLink, string resourceGroupName, string cloudServiceName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(cloudServiceName));
             }
 
-            using var message = CreateListNextPageRequest(nextLink, resourceGroupName, cloudServiceName);
+            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, cloudServiceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

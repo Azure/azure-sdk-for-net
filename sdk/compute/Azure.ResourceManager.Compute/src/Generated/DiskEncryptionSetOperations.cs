@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the operations that can be performed over a specific DiskEncryptionSet. </summary>
-    public partial class DiskEncryptionSetOperations : ResourceOperationsBase<DiskEncryptionSet>
+    public partial class DiskEncryptionSetOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private DiskEncryptionSetsRestOperations _restClient { get; }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref="DiskEncryptionSetOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal DiskEncryptionSetOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal DiskEncryptionSetOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new DiskEncryptionSetsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -44,8 +44,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<DiskEncryptionSet>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets information about a disk encryption set. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<DiskEncryptionSet>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.Get");
             scope.Start();
@@ -61,8 +62,9 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <inheritdoc />
-        public override Response<DiskEncryptionSet> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets information about a disk encryption set. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DiskEncryptionSet> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.Get");
             scope.Start();
@@ -81,7 +83,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<Location>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<IEnumerable<Location>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
         }
@@ -89,7 +91,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all available geo-locations. </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<Location> ListAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual IEnumerable<Location> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             return ListAvailableLocations(ResourceType, cancellationToken);
         }
@@ -341,15 +343,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all resources that are encrypted with this disk encryption set. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> ListAssociatedResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<string> GetAssociatedResources(CancellationToken cancellationToken = default)
         {
             Page<string> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.ListAssociatedResources");
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.GetAssociatedResources");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListAssociatedResources(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAssociatedResources(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -360,11 +362,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<string> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.ListAssociatedResources");
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.GetAssociatedResources");
                 scope.Start();
                 try
                 {
-                    var response = _restClient.ListAssociatedResourcesNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restClient.GetAssociatedResourcesNextPage(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -379,15 +381,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all resources that are encrypted with this disk encryption set. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> ListAssociatedResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<string> GetAssociatedResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.ListAssociatedResources");
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.GetAssociatedResources");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAssociatedResourcesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAssociatedResourcesAsync(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -398,11 +400,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<string>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.ListAssociatedResources");
+                using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetOperations.GetAssociatedResources");
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.ListAssociatedResourcesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetAssociatedResourcesNextPageAsync(nextLink, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

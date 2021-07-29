@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref = "DiskAccess"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DiskAccess(OperationsBase options, DiskAccessData resource) : base(options, resource.Id)
+        internal DiskAccess(ResourceOperations options, DiskAccessData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListByGalleryRequest(string resourceGroupName, string galleryName)
+        internal HttpMessage CreateGetByGalleryRequest(string resourceGroupName, string galleryName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
-        public async Task<Response<GalleryImageList>> ListByGalleryAsync(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryImageList>> GetByGalleryAsync(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateListByGalleryRequest(resourceGroupName, galleryName);
+            using var message = CreateGetByGalleryRequest(resourceGroupName, galleryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
-        public Response<GalleryImageList> ListByGallery(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        public Response<GalleryImageList> GetByGallery(string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateListByGalleryRequest(resourceGroupName, galleryName);
+            using var message = CreateGetByGalleryRequest(resourceGroupName, galleryName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListByGalleryNextPageRequest(string nextLink, string resourceGroupName, string galleryName)
+        internal HttpMessage CreateGetByGalleryNextPageRequest(string nextLink, string resourceGroupName, string galleryName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
-        public async Task<Response<GalleryImageList>> ListByGalleryNextPageAsync(string nextLink, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryImageList>> GetByGalleryNextPageAsync(string nextLink, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateListByGalleryNextPageRequest(nextLink, resourceGroupName, galleryName);
+            using var message = CreateGetByGalleryNextPageRequest(nextLink, resourceGroupName, galleryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryName"> The name of the Shared Image Gallery from which Image Definitions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="galleryName"/> is null. </exception>
-        public Response<GalleryImageList> ListByGalleryNextPage(string nextLink, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
+        public Response<GalleryImageList> GetByGalleryNextPage(string nextLink, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(galleryName));
             }
 
-            using var message = CreateListByGalleryNextPageRequest(nextLink, resourceGroupName, galleryName);
+            using var message = CreateGetByGalleryNextPageRequest(nextLink, resourceGroupName, galleryName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

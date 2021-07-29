@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Compute.Models
     {
         private readonly OperationInternals<Disk> _operation;
 
-        private readonly OperationsBase _operationBase;
+        private readonly ResourceOperations _operationBase;
 
         /// <summary> Initializes a new instance of DisksUpdateOperation for mocking. </summary>
         protected DisksUpdateOperation()
         {
         }
 
-        internal DisksUpdateOperation(OperationsBase operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DisksUpdateOperation(ResourceOperations operationsBase, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationInternals<Disk>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DisksUpdateOperation");
             _operationBase = operationsBase;
