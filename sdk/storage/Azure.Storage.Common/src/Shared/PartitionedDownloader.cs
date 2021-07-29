@@ -88,6 +88,8 @@ namespace Azure.Storage
             StorageTransferOptions transferOptions = default,
             string operationName = null)
         {
+            // TODO: Check on differences between defaults for blobs/files
+
             // Modifying conditions and manually checking the Etag for changes are behaviors
             // unique to particular services and can use a no-op; the rest are required
             _modifyConditions = behaviors.ModifyConditions ?? ModifyConditionsNoOp;
