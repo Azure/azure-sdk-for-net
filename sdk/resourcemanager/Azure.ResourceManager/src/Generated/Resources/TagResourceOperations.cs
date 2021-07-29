@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// The tag client.
     /// </summary>
-    public class TagResourceOperations : OperationsBase
+    public class TagResourceOperations : ResourceOperations
     {
         /// <summary> Initializes a new instance of the <see cref="TagResourceOperations"/> class for mocking. </summary>
         protected TagResourceOperations()
         {
         }
 
-        internal TagResourceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        internal TagResourceOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -110,7 +110,10 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = RestClient.GetAtScope(Id, cancellationToken);
-                return Response.FromValue<TagResource>(new TagResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
+                return Response.FromValue(new TagResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -132,7 +135,10 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await RestClient.GetAtScopeAsync(Id, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue<TagResource>(new TagResource(this, response.Value), response.GetRawResponse());
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
+                return Response.FromValue(new TagResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

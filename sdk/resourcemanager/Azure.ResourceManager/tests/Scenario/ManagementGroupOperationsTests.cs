@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.Tests
         {
             var mgmtGroup = await Client.GetManagementGroupOperations(_mgmtGroup.Id).GetAsync();
             CompareMgmtGroups(_mgmtGroup, mgmtGroup.Value);
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroupOperations(_mgmtGroup.Id + "x").GetAsync());
+            Assert.AreEqual(403, ex.Status);
         }
 
         [RecordedTest]
@@ -56,7 +58,7 @@ namespace Azure.ResourceManager.Tests
         {
             ManagementGroup mgmtGroup = await Client.GetManagementGroupOperations(_mgmtGroup.Id).GetAsync();
             DescendantInfo descendant = null;
-            await foreach(var desc in mgmtGroup.ListDescendantsAsync())
+            await foreach(var desc in mgmtGroup.GetDescendantsAsync())
             {
                 descendant = desc;
                 break;

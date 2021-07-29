@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing collection of ResourceGroupContainer and their operations over a ResourceGroup.
     /// </summary>
-    public class ResourceGroupContainer : ResourceContainerBase<ResourceGroup, ResourceGroupData>
+    public class ResourceGroupContainer : ResourceContainer
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupContainer"/> class for mocking.
@@ -59,18 +59,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual ResourceGroup TryGet(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroup> GetIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.TryGet");
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetIfExists");
             scope.Start();
 
             try
             {
-                return Get(resourceGroupName, cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = RestClient.Get(resourceGroupName, cancellationToken);
+                return response.Value == null
+                   ? Response.FromValue<ResourceGroup>(null, response.GetRawResponse())
+                   : Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -86,18 +85,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<ResourceGroup> TryGetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroup>> GetIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.TryGet");
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetIfExists");
             scope.Start();
 
             try
             {
-                return await GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await RestClient.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                     ? Response.FromValue<ResourceGroup>(null, response.GetRawResponse())
+                     : Response.FromValue(new ResourceGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,13 +111,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool CheckIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CheckIfExists");
             scope.Start();
             try
             {
-                return RestClient.CheckExistence(resourceGroupName, cancellationToken).Value;
+                var response = GetIfExists(resourceGroupName, cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,14 +134,14 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<bool> CheckIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CheckIfExists");
             scope.Start();
             try
             {
-                var response = await RestClient.CheckExistenceAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
-                return response.Value;
+                var response = await GetIfExistsAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="managedBy"> Who the resource group is managed by. </param>
         /// <returns> A builder with <see cref="ResourceGroup"/> and <see cref="ResourceGroupData"/>. </returns>
         /// <exception cref="ArgumentNullException"> Location cannot be null. </exception>
-        public ResourceGroupBuilder Construct(Location location, IDictionary<string, string> tags = default, string managedBy = default)
+        internal ResourceGroupBuilder Construct(Location location, IDictionary<string, string> tags = default, string managedBy = default)
         {
             if (location is null)
                 throw new ArgumentNullException(nameof(location));
@@ -258,7 +257,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var originalResponse = RestClient.CreateOrUpdate(name, resourceDetails, cancellationToken);
-                return new ResourceGroupCreateOrUpdateOperation(Parent, originalResponse);
+                return new ResourceGroupCreateOrUpdateOperation(this, originalResponse);
             }
             catch (Exception e)
             {
@@ -309,11 +308,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual Pageable<ResourceGroup> List(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceGroup> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Page<ResourceGroup> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -328,7 +327,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<ResourceGroup> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -352,11 +351,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<ResourceGroup> ListAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceGroup> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceGroup>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -371,7 +370,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ResourceGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+                using var scope = Diagnostics.CreateScope("ResourceGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -402,6 +401,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var result = RestClient.Get(resourceGroupName, cancellationToken);
+                if (result.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+
                 return Response.FromValue(new ResourceGroup(Parent, result), result.GetRawResponse());
             }
             catch (Exception e)
@@ -426,6 +428,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var result = await RestClient.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
+                if (result.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+
                 return Response.FromValue(new ResourceGroup(Parent, result), result.GetRawResponse());
             }
             catch (Exception e)

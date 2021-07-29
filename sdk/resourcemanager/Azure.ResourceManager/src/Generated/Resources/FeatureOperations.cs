@@ -12,24 +12,24 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific Feature.
     /// </summary>
-    public class FeatureOperations : ResourceOperationsBase<Feature>
+    public class FeatureOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private FeaturesRestOperations _restClient { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceGroupOperations"/> class for mocking.
+        /// Initializes a new instance of the <see cref="FeatureOperations"/> class for mocking.
         /// </summary>
         protected FeatureOperations()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceGroupOperations"/> class.
+        /// Initializes a new instance of the <see cref="FeatureOperations"/> class.
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The id of the feature to use. </param>
-        protected FeatureOperations(ResourceOperationsBase options, ResourceIdentifier id)
+        protected FeatureOperations(ResourceOperations options, ResourceIdentifier id)
             : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceGroupOperations"/> class.
+        /// Initializes a new instance of the <see cref="FeatureOperations"/> class.
         /// </summary>
-        /// <param name="featureName"> The name of the feature to use. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        internal FeatureOperations(string featureName, ProviderOperations options)
-            : base(options, options.Id.Parent.AppendProviderResource(options.Id.Provider, ResourceType.Type, featureName))
+        /// <param name="id"> The id of the resource group to use. </param>
+        internal FeatureOperations(ClientContext options, ResourceIdentifier id)
+            : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new FeaturesRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -65,14 +65,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        public override Response<Feature> Get(CancellationToken cancellationToken = default)
+        /// <summary> Gets the current Feature from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Feature> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FeatureOperations.Get");
             scope.Start();
             try
             {
                 var response = _restClient.Get(Id.ResourceType.Namespace, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
                 return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -82,14 +86,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <inheritdoc/>
-        public override async Task<Response<Feature>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets the current Feature from Azure. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<Feature>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("FeatureOperations.Get");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
                 return Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

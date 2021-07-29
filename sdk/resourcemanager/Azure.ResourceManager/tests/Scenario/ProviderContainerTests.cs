@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Tests
     public class ProviderContainerTests : ResourceManagerTestBase
     {
         public ProviderContainerTests(bool isAsync)
-            : base(isAsync) //, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -20,9 +20,11 @@ namespace Azure.ResourceManager.Tests
             var providerContainer = Client.DefaultSubscription.GetProviders();
             var result = await providerContainer.GetAsync(resourceNamespace);
             Assert.IsNotNull(result);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await providerContainer.GetAsync("DoesNotExist"));
+            Assert.AreEqual(404, ex.Status);
         }
 
-        [TestCase]
         [RecordedTest]
         public void GetNullException()
         {
@@ -30,7 +32,6 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => {await providerContainer.GetAsync(null); });
         }
 
-        [TestCase]
         [RecordedTest]
         public void GetEmptyException()
         {
@@ -38,17 +39,36 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<ArgumentException>(async () => {await providerContainer.GetAsync(""); });
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task List()
         {
             var providerContainer = Client.DefaultSubscription.GetProviders();
-            var x = providerContainer.ListAsync();
+            var x = providerContainer.GetAllAsync();
             Assert.IsNotNull(x);
             await foreach (var p in x)
             {
                 Assert.IsNotNull(p.Data.Id);
             }
+        }
+
+        [RecordedTest]
+        public async Task TryGet()
+        {
+            ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
+            Provider provider = await providerContainer.GetIfExistsAsync("microsoft.insights");
+            Assert.IsNotNull(provider);
+
+            var response = await providerContainer.GetIfExistsAsync("DoesNotExist");
+            Assert.IsNull(response.Value);
+        }
+
+        [RecordedTest]
+        public async Task CheckIfExists()
+        {
+            ProviderContainer providerContainer = Client.DefaultSubscription.GetProviders();
+            Assert.IsTrue(await providerContainer.CheckIfExistsAsync("microsoft.insights"));
+            var response = await providerContainer.CheckIfExistsAsync("DoesNotExist");
+            Assert.False(response);
         }
     }
 }

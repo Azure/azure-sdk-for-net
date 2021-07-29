@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Core;
 
@@ -105,6 +106,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(this, obj))
@@ -114,6 +116,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return HashCodeBuilder.Combine(SystemAssignedIdentity, UserAssignedIdentities);

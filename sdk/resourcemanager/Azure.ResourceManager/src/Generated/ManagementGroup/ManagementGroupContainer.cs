@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Management
     /// <summary>
     /// A class representing collection of ManagementGroupContainer and their operations over a ManagementGroup.
     /// </summary>
-    public class ManagementGroupContainer : ResourceContainerBase<ManagementGroup, ManagementGroupData>
+    public class ManagementGroupContainer : ResourceContainer
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private ManagementGroupsRestOperations _restClient;
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Management
         /// .
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ManagementGroupInfo> List(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagementGroupInfo> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Page<ManagementGroupInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Management
             }
             Page<ManagementGroupInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Management
         /// .
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ManagementGroupInfo> ListAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagementGroupInfo> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagementGroupInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Management
             }
             async Task<Page<ManagementGroupInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.List");
+                using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetAll");
                 scope.Start();
                 try
                 {
@@ -156,6 +156,9 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = _restClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken);
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
                 return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -182,6 +185,9 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = await _restClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
                 return Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,17 +207,16 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ManagementGroup TryGet(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroup> GetIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetIfExists");
             scope.Start();
             try
             {
-                return Get(groupId, expand, recurse, filter, cacheControl, cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<ManagementGroup>(null, response.GetRawResponse())
+                    : Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,17 +235,16 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ManagementGroup> TryGetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ManagementGroup>> GetIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.GetIfExists");
             scope.Start();
             try
             {
-                return await GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<ManagementGroup>(null, response.GetRawResponse())
+                    : Response.FromValue(new ManagementGroup(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -259,13 +263,14 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual bool CheckIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CheckIfExists");
             scope.Start();
             try
             {
-                return TryGet(groupId, expand, recurse, filter, cacheControl, cancellationToken) != null;
+                var response = GetIfExists(groupId, expand, recurse, filter, cacheControl, cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -284,13 +289,14 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CheckIfExists");
             scope.Start();
             try
             {
-                return await TryGetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
