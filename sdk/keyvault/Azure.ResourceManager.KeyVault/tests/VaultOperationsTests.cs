@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 vaultList.Add(vaultValue);
             }
 
-            var vaults = VaultContainer.ListAsync(top);
+            var vaults = VaultContainer.GetAllAsync(top);
 
             await foreach (var v in vaults)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             Assert.True(resourceIds.Count == 0);
 
-            var allVaults = VaultContainer.ListAsync(top);
+            var allVaults = VaultContainer.GetAllAsync(top);
             Assert.NotNull(vaults);
 
             // Delete
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Assert.IsTrue(deletedVault.Value.Data.Name.Equals(createdVault.Data.Name));
             }
 
-            var deletedVaults = DeletedVaultContainer.ListAsync().ToEnumerableAsync().Result;
+            var deletedVaults = DeletedVaultContainer.GetAllAsync().ToEnumerableAsync().Result;
             Assert.NotNull(deletedVaults);
 
             foreach (var v in deletedVaults)

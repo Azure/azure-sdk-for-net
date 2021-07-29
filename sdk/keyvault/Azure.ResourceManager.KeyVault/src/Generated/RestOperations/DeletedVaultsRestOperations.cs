@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest()
+        internal HttpMessage CreateGetBySubscriptionRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets information about the deleted vaults in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DeletedVaultListResult>> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedVaultListResult>> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBySubscriptionRequest();
+            using var message = CreateGetBySubscriptionRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Gets information about the deleted vaults in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DeletedVaultListResult> ListBySubscription(CancellationToken cancellationToken = default)
+        public Response<DeletedVaultListResult> GetBySubscription(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBySubscriptionRequest();
+            using var message = CreateGetBySubscriptionRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetRequest(string vaultName, string location)
+        internal HttpMessage CreateGetRequest(string location, string vaultName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -116,22 +116,22 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets the deleted Azure key vault. </summary>
-        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<DeletedVaultData>> GetAsync(string vaultName, string location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
+        public async Task<Response<DeletedVaultData>> GetAsync(string location, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
 
-            using var message = CreateGetRequest(vaultName, location);
+            using var message = CreateGetRequest(location, vaultName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -148,22 +148,22 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets the deleted Azure key vault. </summary>
-        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="location"/> is null. </exception>
-        public Response<DeletedVaultData> Get(string vaultName, string location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
+        public Response<DeletedVaultData> Get(string location, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
 
-            using var message = CreateGetRequest(vaultName, location);
+            using var message = CreateGetRequest(location, vaultName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreatePurgeRequest(string vaultName, string location)
+        internal HttpMessage CreatePurgeRequest(string location, string vaultName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -200,22 +200,22 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
-        /// <param name="vaultName"> The name of the soft-deleted vault. </param>
         /// <param name="location"> The location of the soft-deleted vault. </param>
+        /// <param name="vaultName"> The name of the soft-deleted vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response> PurgeAsync(string vaultName, string location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
+        public async Task<Response> PurgeAsync(string location, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
 
-            using var message = CreatePurgeRequest(vaultName, location);
+            using var message = CreatePurgeRequest(location, vaultName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -228,22 +228,22 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Permanently deletes the specified vault. aka Purges the deleted Azure key vault. </summary>
-        /// <param name="vaultName"> The name of the soft-deleted vault. </param>
         /// <param name="location"> The location of the soft-deleted vault. </param>
+        /// <param name="vaultName"> The name of the soft-deleted vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="location"/> is null. </exception>
-        public Response Purge(string vaultName, string location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vaultName"/> is null. </exception>
+        public Response Purge(string location, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
 
-            using var message = CreatePurgeRequest(vaultName, location);
+            using var message = CreatePurgeRequest(location, vaultName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetBySubscriptionNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -272,14 +272,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DeletedVaultListResult>> ListBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedVaultListResult>> GetBySubscriptionNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -299,14 +299,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DeletedVaultListResult> ListBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<DeletedVaultListResult> GetBySubscriptionNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink);
+            using var message = CreateGetBySubscriptionNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Initializes a new instance of the <see cref = "DeletedVault"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DeletedVault(OperationsBase options, DeletedVaultData resource) : base(options, resource.Id)
+        internal DeletedVault(ResourceOperations options, DeletedVaultData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string resourceGroupName, int? top)
+        internal HttpMessage CreateGetByResourceGroupRequest(string resourceGroupName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -411,14 +411,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ManagedHsmListResult>> ListByResourceGroupAsync(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedHsmListResult>> GetByResourceGroupAsync(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName, top);
+            using var message = CreateGetByResourceGroupRequest(resourceGroupName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -439,14 +439,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ManagedHsmListResult> ListByResourceGroup(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<ManagedHsmListResult> GetByResourceGroup(string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupRequest(resourceGroupName, top);
+            using var message = CreateGetByResourceGroupRequest(resourceGroupName, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest(int? top)
+        internal HttpMessage CreateGetBySubscriptionRequest(int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -485,9 +485,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription. </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ManagedHsmListResult>> ListBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedHsmListResult>> GetBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBySubscriptionRequest(top);
+            using var message = CreateGetBySubscriptionRequest(top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -506,9 +506,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription. </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ManagedHsmListResult> ListBySubscription(int? top = null, CancellationToken cancellationToken = default)
+        public Response<ManagedHsmListResult> GetBySubscription(int? top = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBySubscriptionRequest(top);
+            using var message = CreateGetBySubscriptionRequest(top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListDeletedRequest()
+        internal HttpMessage CreateGetDeletedRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -542,9 +542,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the deleted managed HSMs associated with the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DeletedManagedHsmListResult>> ListDeletedAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedManagedHsmListResult>> GetDeletedAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListDeletedRequest();
+            using var message = CreateGetDeletedRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -562,9 +562,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the deleted managed HSMs associated with the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DeletedManagedHsmListResult> ListDeleted(CancellationToken cancellationToken = default)
+        public Response<DeletedManagedHsmListResult> GetDeleted(CancellationToken cancellationToken = default)
         {
-            using var message = CreateListDeletedRequest();
+            using var message = CreateGetDeletedRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateGetDeletedRequest(string name, string location)
+        internal HttpMessage CreateGetDeletedRequest(string location, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -600,22 +600,22 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets the specified deleted managed HSM. </summary>
-        /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response<DeletedManagedHsm>> GetDeletedAsync(string name, string location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
+        public async Task<Response<DeletedManagedHsm>> GetDeletedAsync(string location, string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreateGetDeletedRequest(name, location);
+            using var message = CreateGetDeletedRequest(location, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -632,22 +632,22 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets the specified deleted managed HSM. </summary>
-        /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="location"/> is null. </exception>
-        public Response<DeletedManagedHsm> GetDeleted(string name, string location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
+        public Response<DeletedManagedHsm> GetDeleted(string location, string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreateGetDeletedRequest(name, location);
+            using var message = CreateGetDeletedRequest(location, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreatePurgeDeletedRequest(string name, string location)
+        internal HttpMessage CreatePurgeDeletedRequest(string location, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -684,22 +684,22 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Permanently deletes the specified managed HSM. </summary>
-        /// <param name="name"> The name of the soft-deleted managed HSM. </param>
         /// <param name="location"> The location of the soft-deleted managed HSM. </param>
+        /// <param name="name"> The name of the soft-deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="location"/> is null. </exception>
-        public async Task<Response> PurgeDeletedAsync(string name, string location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
+        public async Task<Response> PurgeDeletedAsync(string location, string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreatePurgeDeletedRequest(name, location);
+            using var message = CreatePurgeDeletedRequest(location, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -711,22 +711,22 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Permanently deletes the specified managed HSM. </summary>
-        /// <param name="name"> The name of the soft-deleted managed HSM. </param>
         /// <param name="location"> The location of the soft-deleted managed HSM. </param>
+        /// <param name="name"> The name of the soft-deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="location"/> is null. </exception>
-        public Response PurgeDeleted(string name, string location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
+        public Response PurgeDeleted(string location, string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
             if (location == null)
             {
                 throw new ArgumentNullException(nameof(location));
             }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
-            using var message = CreatePurgeDeletedRequest(name, location);
+            using var message = CreatePurgeDeletedRequest(location, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, int? top)
+        internal HttpMessage CreateGetByResourceGroupNextPageRequest(string nextLink, string resourceGroupName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public async Task<Response<ManagedHsmListResult>> ListByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedHsmListResult>> GetByResourceGroupNextPageAsync(string nextLink, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, top);
+            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        public Response<ManagedHsmListResult> ListByResourceGroupNextPage(string nextLink, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<ManagedHsmListResult> GetByResourceGroupNextPage(string nextLink, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(resourceGroupName));
             }
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, resourceGroupName, top);
+            using var message = CreateGetByResourceGroupNextPageRequest(nextLink, resourceGroupName, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, int? top)
+        internal HttpMessage CreateGetBySubscriptionNextPageRequest(string nextLink, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -834,14 +834,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ManagedHsmListResult>> ListBySubscriptionNextPageAsync(string nextLink, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagedHsmListResult>> GetBySubscriptionNextPageAsync(string nextLink, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, top);
+            using var message = CreateGetBySubscriptionNextPageRequest(nextLink, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -862,14 +862,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ManagedHsmListResult> ListBySubscriptionNextPage(string nextLink, int? top = null, CancellationToken cancellationToken = default)
+        public Response<ManagedHsmListResult> GetBySubscriptionNextPage(string nextLink, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, top);
+            using var message = CreateGetBySubscriptionNextPageRequest(nextLink, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateListDeletedNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetDeletedNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -902,14 +902,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DeletedManagedHsmListResult>> ListDeletedNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedManagedHsmListResult>> GetDeletedNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListDeletedNextPageRequest(nextLink);
+            using var message = CreateGetDeletedNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -929,14 +929,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DeletedManagedHsmListResult> ListDeletedNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<DeletedManagedHsmListResult> GetDeletedNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListDeletedNextPageRequest(nextLink);
+            using var message = CreateGetDeletedNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

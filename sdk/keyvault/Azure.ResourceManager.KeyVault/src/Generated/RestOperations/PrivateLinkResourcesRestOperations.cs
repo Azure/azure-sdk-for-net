@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateListByVaultRequest(string resourceGroupName, string vaultName)
+        internal HttpMessage CreateGetByVaultRequest(string resourceGroupName, string vaultName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
-        public async Task<Response<PrivateLinkResourceListResult>> ListByVaultAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateLinkResourceListResult>> GetByVaultAsync(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateListByVaultRequest(resourceGroupName, vaultName);
+            using var message = CreateGetByVaultRequest(resourceGroupName, vaultName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="vaultName"> The name of the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
-        public Response<PrivateLinkResourceListResult> ListByVault(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
+        public Response<PrivateLinkResourceListResult> GetByVault(string resourceGroupName, string vaultName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentNullException(nameof(vaultName));
             }
 
-            using var message = CreateListByVaultRequest(resourceGroupName, vaultName);
+            using var message = CreateGetByVaultRequest(resourceGroupName, vaultName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

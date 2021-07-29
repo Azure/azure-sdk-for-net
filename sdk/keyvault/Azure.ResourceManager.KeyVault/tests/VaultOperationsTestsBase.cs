@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Location = "North Central US";
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg");
-            var rgResponse = await Client.DefaultSubscription.GetResourceGroups().Construct(Location).CreateOrUpdateAsync(ResGroupName).ConfigureAwait(false);
+            var rgResponse = await Client.DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
             ResourceGroup = rgResponse.Value;
 
             VaultContainer = ResourceGroup.GetVaults();

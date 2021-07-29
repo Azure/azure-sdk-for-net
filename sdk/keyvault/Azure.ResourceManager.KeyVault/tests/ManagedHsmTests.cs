@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             resourceIds.Add(managedHsm.Value.Id);
             vaultList.Add(managedHsm.Value);
 
-            var vaults = ManagedHsmContainer.ListAsync();
+            var vaults = ManagedHsmContainer.GetAllAsync();
 
             await foreach (var v in vaults)
             {
