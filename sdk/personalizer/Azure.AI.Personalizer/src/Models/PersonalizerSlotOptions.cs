@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> A slot with it&apos;s associated features and list of excluded actions. </summary>
     [CodeGenModel("SlotRequest")]

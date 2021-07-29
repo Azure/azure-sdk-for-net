@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.AI.Personalizer.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.Personalizer.Tests

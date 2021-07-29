@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Reward given to a rank response. </summary>
     public partial class PersonalizerRewardOptions

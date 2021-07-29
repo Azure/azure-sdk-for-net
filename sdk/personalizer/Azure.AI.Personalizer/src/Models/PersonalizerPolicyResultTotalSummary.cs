@@ -3,9 +3,9 @@
 
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> The aggregate total of the Offline Evaluation. </summary>
     [CodeGenModel("PolicyResultTotalSummary")]
-    public partial class PersonalizerPolicyResultTotalSummary {}
+    internal partial class PersonalizerPolicyResultTotalSummary {}
 }

@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Reward given to a list of slots. </summary>
     [CodeGenModel("MultiSlotRewardRequest")]

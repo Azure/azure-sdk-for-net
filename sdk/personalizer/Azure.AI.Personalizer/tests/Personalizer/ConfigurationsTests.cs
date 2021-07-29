@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Personalizer.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.Personalizer.Tests
@@ -18,7 +17,7 @@ namespace Azure.AI.Personalizer.Tests
         public async Task GetServiceConfiguration()
         {
             PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
-            PersonalizerServiceProperties  defaultConfig = await client.GetPersonalizerConfigurationAsync();
+            PersonalizerServiceProperties  defaultConfig = await client.GetPersonalizerPropertiesAsync();
             Assert.AreEqual(TimeSpan.FromMinutes(1), defaultConfig.RewardWaitTime);
             Assert.AreEqual(TimeSpan.FromHours(1), defaultConfig.ModelExportFrequency);
             Assert.AreEqual(1, defaultConfig.DefaultReward);
@@ -63,7 +62,7 @@ namespace Azure.AI.Personalizer.Tests
         public async Task GetPolicy()
         {
             PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
-            PersonalizerPolicyOptions policy = await client.GetPersonalizerPolicyAsync();
+            PersonalizerPolicy policy = await client.GetPersonalizerPolicyAsync();
             Assert.AreEqual("app1", policy.Name);
             Assert.AreEqual("--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2",
             policy.Arguments);
@@ -73,11 +72,11 @@ namespace Azure.AI.Personalizer.Tests
         public async Task UpdatePolicy()
         {
             PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
-            var policy = new PersonalizerPolicyOptions(
+            var policy = new PersonalizerPolicy(
                 name: "app1",
                 arguments: "--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2"
             );
-            PersonalizerPolicyOptions updatedPolicy = await client.UpdatePersonalizerPolicyAsync(policy);
+            PersonalizerPolicy updatedPolicy = await client.UpdatePersonalizerPolicyAsync(policy);
             Assert.NotNull(updatedPolicy);
             Assert.AreEqual(policy.Arguments, updatedPolicy.Arguments);
         }
@@ -86,7 +85,7 @@ namespace Azure.AI.Personalizer.Tests
         public async Task ResetPolicy()
         {
             PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
-            PersonalizerPolicyOptions policy = await client.ResetPersonalizerPolicyAsync();
+            PersonalizerPolicy policy = await client.ResetPersonalizerPolicyAsync();
             Assert.AreEqual("--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2",
             policy.Arguments);
         }

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Evaluation type (manual or through Automatic Optimization). </summary>
     public readonly partial struct PersonalizerEvaluationType : IEquatable<PersonalizerEvaluationType>

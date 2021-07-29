@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> This class contains the Learning Settings information and the results of the Offline Evaluation using that policy. </summary>
     public partial class PersonalizerPolicyResult
@@ -25,7 +25,7 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="policySource"> The source of the Learning Settings. </param>
         /// <param name="summary"> The aggregate results of the Offline Evaluation. </param>
         /// <param name="totalSummary"> The aggregate total of the Offline Evaluation. </param>
-        internal PersonalizerPolicyResult(string name, string arguments, PersonalizerPolicySource? policySource, IReadOnlyList<PersonalizerPolicyResultSummary> summary, PersonalizerPolicyResultTotalSummary totalSummary)
+        internal PersonalizerPolicyResult(string name, string arguments, PersonalizerPolicySource? policySource, IReadOnlyList<PersonalizerPolicyResultSummary> summary, PersonalizerPolicyResultSummary totalSummary)
         {
             Name = name;
             Arguments = arguments;
@@ -42,7 +42,5 @@ namespace Azure.AI.Personalizer.Models
         public PersonalizerPolicySource? PolicySource { get; }
         /// <summary> The aggregate results of the Offline Evaluation. </summary>
         public IReadOnlyList<PersonalizerPolicyResultSummary> Summary { get; }
-        /// <summary> The aggregate total of the Offline Evaluation. </summary>
-        public PersonalizerPolicyResultTotalSummary TotalSummary { get; }
     }
 }

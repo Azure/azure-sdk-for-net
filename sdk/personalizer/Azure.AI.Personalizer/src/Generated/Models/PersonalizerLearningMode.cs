@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Learning Modes for Personalizer. </summary>
     public readonly partial struct PersonalizerLearningMode : IEquatable<PersonalizerLearningMode>

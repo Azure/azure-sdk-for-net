@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Properties related to the trained model. </summary>
     public partial class PersonalizerModelProperties

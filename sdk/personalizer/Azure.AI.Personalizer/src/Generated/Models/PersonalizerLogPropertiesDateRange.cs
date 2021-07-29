@@ -7,10 +7,10 @@
 
 using System;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Date range. </summary>
-    public partial class PersonalizerLogPropertiesDateRange : PersonalizerDateRange
+    internal partial class PersonalizerLogPropertiesDateRange : PersonalizerDateRange
     {
         /// <summary> Initializes a new instance of PersonalizerLogPropertiesDateRange. </summary>
         internal PersonalizerLogPropertiesDateRange()
@@ -18,9 +18,9 @@ namespace Azure.AI.Personalizer.Models
         }
 
         /// <summary> Initializes a new instance of PersonalizerLogPropertiesDateRange. </summary>
-        /// <param name="start"> Start date for the range. </param>
-        /// <param name="end"> End date for the range. </param>
-        internal PersonalizerLogPropertiesDateRange(DateTimeOffset? start, DateTimeOffset? end) : base(start, end)
+        /// <param name="from"> Start date for the range. </param>
+        /// <param name="to"> End date for the range. </param>
+        internal PersonalizerLogPropertiesDateRange(DateTimeOffset? @from, DateTimeOffset? to) : base(@from, to)
         {
         }
     }

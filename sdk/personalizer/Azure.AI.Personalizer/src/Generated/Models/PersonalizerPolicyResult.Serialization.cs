@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     public partial class PersonalizerPolicyResult
     {
@@ -19,7 +19,7 @@ namespace Azure.AI.Personalizer.Models
             Optional<string> arguments = default;
             Optional<PersonalizerPolicySource> policySource = default;
             Optional<IReadOnlyList<PersonalizerPolicyResultSummary>> summary = default;
-            Optional<PersonalizerPolicyResultTotalSummary> totalSummary = default;
+            Optional<PersonalizerPolicyResultSummary> totalSummary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -64,7 +64,7 @@ namespace Azure.AI.Personalizer.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    totalSummary = PersonalizerPolicyResultTotalSummary.DeserializePersonalizerPolicyResultTotalSummary(property.Value);
+                    totalSummary = PersonalizerPolicyResultSummary.DeserializePersonalizerPolicyResultSummary(property.Value);
                     continue;
                 }
             }

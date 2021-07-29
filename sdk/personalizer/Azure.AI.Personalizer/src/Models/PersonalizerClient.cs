@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Personalizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using static System.Net.WebRequestMethods;
 
 namespace Azure.AI.Personalizer
 {
@@ -141,7 +139,7 @@ namespace Azure.AI.Personalizer
         /// https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerRankResult>> RankAsync(IList<PersonalizerRankableAction> actions, IList<object> contextFeatures, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerRankResult>> RankAsync(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<object> contextFeatures, CancellationToken cancellationToken = default)
         {
             PersonalizerRankOptions options = new PersonalizerRankOptions(actions, contextFeatures);
             return await RankAsync(options, cancellationToken).ConfigureAwait(false);
@@ -184,7 +182,7 @@ namespace Azure.AI.Personalizer
         /// https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerRankResult> Rank(IList<PersonalizerRankableAction> actions, IList<object> contextFeatures, CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerRankResult> Rank(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<object> contextFeatures, CancellationToken cancellationToken = default)
         {
             PersonalizerRankOptions options = new PersonalizerRankOptions(actions, contextFeatures);
             return Rank(options, cancellationToken);

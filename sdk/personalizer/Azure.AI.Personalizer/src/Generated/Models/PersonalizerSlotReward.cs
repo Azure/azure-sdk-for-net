@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> The SlotReward. </summary>
     public partial class PersonalizerSlotReward

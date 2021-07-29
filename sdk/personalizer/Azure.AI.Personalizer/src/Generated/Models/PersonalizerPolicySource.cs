@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> The source of the Learning Settings. </summary>
     public readonly partial struct PersonalizerPolicySource : IEquatable<PersonalizerPolicySource>

@@ -9,7 +9,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.AI.Personalizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -83,7 +82,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get the Learning Settings currently used by the Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerPolicyOptions>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyClient.Get");
             scope.Start();
@@ -100,7 +99,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Get the Learning Settings currently used by the Personalizer service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerPolicyOptions> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerPolicy> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyClient.Get");
             scope.Start();
@@ -118,7 +117,7 @@ namespace Azure.AI.Personalizer
         /// <summary> Update the Learning Settings that the Personalizer service will use to train models. </summary>
         /// <param name="policy"> The learning settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerPolicyOptions>> UpdateAsync(PersonalizerPolicyOptions policy, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerPolicy>> UpdateAsync(PersonalizerPolicy policy, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyClient.Update");
             scope.Start();
@@ -136,7 +135,7 @@ namespace Azure.AI.Personalizer
         /// <summary> Update the Learning Settings that the Personalizer service will use to train models. </summary>
         /// <param name="policy"> The learning settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerPolicyOptions> Update(PersonalizerPolicyOptions policy, CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerPolicy> Update(PersonalizerPolicy policy, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyClient.Update");
             scope.Start();
@@ -153,7 +152,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Resets the learning settings of the Personalizer service to default. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersonalizerPolicyOptions>> ResetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonalizerPolicy>> ResetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyClient.Reset");
             scope.Start();
@@ -170,7 +169,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Resets the learning settings of the Personalizer service to default. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersonalizerPolicyOptions> Reset(CancellationToken cancellationToken = default)
+        public virtual Response<PersonalizerPolicy> Reset(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PolicyClient.Reset");
             scope.Start();

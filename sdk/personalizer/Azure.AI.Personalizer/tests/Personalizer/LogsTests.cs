@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Personalizer.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.Personalizer.Tests
@@ -15,13 +14,13 @@ namespace Azure.AI.Personalizer.Tests
         }
 
         [Test]
-        public async Task GetLogsProperties()
+        public async Task GetLogProperties()
         {
             PersonalizerAdministrationClient client = GetPersonalizerAdministrationClient();
             PersonalizerLogProperties properties = await client.GetPersonalizerLogPropertiesAsync();
 
-            Assert.AreEqual(new DateTime(0001, 01, 01), new DateTime(properties.DateRange.Start.Value.Year, properties.DateRange.Start.Value.Month, properties.DateRange.Start.Value.Day));
-            Assert.AreEqual(new DateTime(0001, 01, 01), new DateTime(properties.DateRange.End.Value.Year, properties.DateRange.End.Value.Month, properties.DateRange.End.Value.Day));
+            Assert.AreEqual(new DateTime(0001, 01, 01), new DateTime(properties.StartTime.Value.Year, properties.StartTime.Value.Month, properties.StartTime.Value.Day));
+            Assert.AreEqual(new DateTime(0001, 01, 01), new DateTime(properties.EndTime.Value.Year, properties.EndTime.Value.Month, properties.EndTime.Value.Day));
         }
 
         [Test]

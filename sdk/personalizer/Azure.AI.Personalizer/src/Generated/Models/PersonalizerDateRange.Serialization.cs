@@ -9,9 +9,9 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
-    public partial class PersonalizerDateRange
+    internal partial class PersonalizerDateRange
     {
         internal static PersonalizerDateRange DeserializePersonalizerDateRange(JsonElement element)
         {

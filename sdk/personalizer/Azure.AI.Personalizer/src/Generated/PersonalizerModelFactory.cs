@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Personalizer;
 
 namespace Azure.AI.Personalizer.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="evaluationType"> Evaluation type (manual or through Automatic Optimization). </param>
         /// <param name="optimalPolicy"> Thr optimal policy. </param>
         /// <param name="creationTime"> Creation time. </param>
-        /// <returns> A new <see cref="Models.PersonalizerEvaluation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Personalizer.PersonalizerEvaluation"/> instance for mocking. </returns>
         public static PersonalizerEvaluation PersonalizerEvaluation(string id = null, string name = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string jobId = null, PersonalizerEvaluationJobStatus? status = null, IEnumerable<PersonalizerPolicyResult> policyResults = null, IEnumerable<IList<string>> featureImportance = null, PersonalizerEvaluationType? evaluationType = null, string optimalPolicy = null, DateTimeOffset? creationTime = null)
         {
             policyResults ??= new List<PersonalizerPolicyResult>();
@@ -41,8 +42,8 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="policySource"> The source of the Learning Settings. </param>
         /// <param name="summary"> The aggregate results of the Offline Evaluation. </param>
         /// <param name="totalSummary"> The aggregate total of the Offline Evaluation. </param>
-        /// <returns> A new <see cref="Models.PersonalizerPolicyResult"/> instance for mocking. </returns>
-        public static PersonalizerPolicyResult PersonalizerPolicyResult(string name = null, string arguments = null, PersonalizerPolicySource? policySource = null, IEnumerable<PersonalizerPolicyResultSummary> summary = null, PersonalizerPolicyResultTotalSummary totalSummary = null)
+        /// <returns> A new <see cref="Personalizer.PersonalizerPolicyResult"/> instance for mocking. </returns>
+        public static PersonalizerPolicyResult PersonalizerPolicyResult(string name = null, string arguments = null, PersonalizerPolicySource? policySource = null, IEnumerable<PersonalizerPolicyResultSummary> summary = null, PersonalizerPolicyResultSummary totalSummary = null)
         {
             summary ??= new List<PersonalizerPolicyResultSummary>();
 
@@ -63,33 +64,16 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="sumOfSquares"> Sum of Squares for the Policy evaluation results. </param>
         /// <param name="confidenceInterval"> Gaussian confidence interval for the Policy evaluation. </param>
         /// <param name="averageReward"> Average reward. </param>
-        /// <returns> A new <see cref="Models.PersonalizerPolicyResultSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Personalizer.PersonalizerPolicyResultSummary"/> instance for mocking. </returns>
         public static PersonalizerPolicyResultSummary PersonalizerPolicyResultSummary(DateTimeOffset? timeStamp = null, float? ipsEstimatorNumerator = null, float? ipsEstimatorDenominator = null, float? snipsEstimatorDenominator = null, TimeSpan? aggregateTimeWindow = null, float? nonZeroProbability = null, float? sumOfSquares = null, float? confidenceInterval = null, float? averageReward = null)
         {
             return new PersonalizerPolicyResultSummary(timeStamp, ipsEstimatorNumerator, ipsEstimatorDenominator, snipsEstimatorDenominator, aggregateTimeWindow, nonZeroProbability, sumOfSquares, confidenceInterval, averageReward);
         }
 
-        /// <summary> Initializes a new instance of PersonalizerLogProperties. </summary>
-        /// <param name="dateRange"> Date range. </param>
-        /// <returns> A new <see cref="Models.PersonalizerLogProperties"/> instance for mocking. </returns>
-        public static PersonalizerLogProperties PersonalizerLogProperties(PersonalizerLogPropertiesDateRange dateRange = null)
-        {
-            return new PersonalizerLogProperties(dateRange);
-        }
-
-        /// <summary> Initializes a new instance of PersonalizerDateRange. </summary>
-        /// <param name="start"> Start date for the range. </param>
-        /// <param name="end"> End date for the range. </param>
-        /// <returns> A new <see cref="Models.PersonalizerDateRange"/> instance for mocking. </returns>
-        public static PersonalizerDateRange PersonalizerDateRange(DateTimeOffset? start = null, DateTimeOffset? end = null)
-        {
-            return new PersonalizerDateRange(start, end);
-        }
-
         /// <summary> Initializes a new instance of PersonalizerModelProperties. </summary>
         /// <param name="creationTime"> Creation time of the model. </param>
         /// <param name="lastModifiedTime"> Last time the model was modified. </param>
-        /// <returns> A new <see cref="Models.PersonalizerModelProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Personalizer.PersonalizerModelProperties"/> instance for mocking. </returns>
         public static PersonalizerModelProperties PersonalizerModelProperties(DateTimeOffset? creationTime = null, DateTimeOffset? lastModifiedTime = null)
         {
             return new PersonalizerModelProperties(creationTime, lastModifiedTime);
@@ -98,7 +82,7 @@ namespace Azure.AI.Personalizer.Models
         /// <summary> Initializes a new instance of PersonalizerMultiSlotRankResult. </summary>
         /// <param name="slots"> Each slot has a corresponding rewardActionID which is the action ID recommended by Personalizer. </param>
         /// <param name="eventId"> The eventId for the round trip from request to response. </param>
-        /// <returns> A new <see cref="Models.PersonalizerMultiSlotRankResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Personalizer.PersonalizerMultiSlotRankResult"/> instance for mocking. </returns>
         public static PersonalizerMultiSlotRankResult PersonalizerMultiSlotRankResult(IEnumerable<PersonalizerSlotResult> slots = null, string eventId = null)
         {
             slots ??= new List<PersonalizerSlotResult>();
@@ -109,7 +93,7 @@ namespace Azure.AI.Personalizer.Models
         /// <summary> Initializes a new instance of PersonalizerSlotResult. </summary>
         /// <param name="slotId"> Id is the slot ID. </param>
         /// <param name="rewardActionId"> RewardActionID is the action ID recommended by Personalizer. </param>
-        /// <returns> A new <see cref="Models.PersonalizerSlotResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Personalizer.PersonalizerSlotResult"/> instance for mocking. </returns>
         public static PersonalizerSlotResult PersonalizerSlotResult(string slotId = null, string rewardActionId = null)
         {
             return new PersonalizerSlotResult(slotId, rewardActionId);
@@ -123,7 +107,7 @@ namespace Azure.AI.Personalizer.Models
         /// This is the action your application should display, and for which to report the reward.
         /// This might not be the first found in &apos;ranking&apos;.
         /// </param>
-        /// <returns> A new <see cref="Models.PersonalizerRankResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Personalizer.PersonalizerRankResult"/> instance for mocking. </returns>
         public static PersonalizerRankResult PersonalizerRankResult(IEnumerable<PersonalizerRankedAction> ranking = null, string eventId = null, string rewardActionId = null)
         {
             ranking ??= new List<PersonalizerRankedAction>();
@@ -134,7 +118,7 @@ namespace Azure.AI.Personalizer.Models
         /// <summary> Initializes a new instance of PersonalizerRankedAction. </summary>
         /// <param name="id"> Id of the action. </param>
         /// <param name="probability"> Probability of the action. </param>
-        /// <returns> A new <see cref="Models.PersonalizerRankedAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Personalizer.PersonalizerRankedAction"/> instance for mocking. </returns>
         public static PersonalizerRankedAction PersonalizerRankedAction(string id = null, float? probability = null)
         {
             return new PersonalizerRankedAction(id, probability);

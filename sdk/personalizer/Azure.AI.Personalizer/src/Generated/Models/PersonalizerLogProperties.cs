@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Properties related to data used to train the model. </summary>
     public partial class PersonalizerLogProperties
@@ -21,8 +21,5 @@ namespace Azure.AI.Personalizer.Models
         {
             DateRange = dateRange;
         }
-
-        /// <summary> Date range. </summary>
-        public PersonalizerLogPropertiesDateRange DateRange { get; }
     }
 }

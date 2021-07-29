@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> The configuration of the service. </summary>
     [CodeGenModel("ServiceConfiguration")]

@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> An action with its associated features used for ranking. </summary>
     [CodeGenModel("RankableAction")]

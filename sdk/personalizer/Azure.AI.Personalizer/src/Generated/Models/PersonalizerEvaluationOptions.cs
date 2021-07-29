@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> A counterfactual evaluation. </summary>
     public partial class PersonalizerEvaluationOptions
@@ -20,7 +20,7 @@ namespace Azure.AI.Personalizer.Models
         /// <param name="endTime"> The end time of the evaluation. </param>
         /// <param name="policies"> Additional learning settings to evaluate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="policies"/> is null. </exception>
-        public PersonalizerEvaluationOptions(string name, DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<PersonalizerPolicyOptions> policies)
+        public PersonalizerEvaluationOptions(string name, DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<PersonalizerPolicy> policies)
         {
             if (name == null)
             {
@@ -46,6 +46,6 @@ namespace Azure.AI.Personalizer.Models
         /// <summary> The end time of the evaluation. </summary>
         public DateTimeOffset EndTime { get; }
         /// <summary> Additional learning settings to evaluate. </summary>
-        public IList<PersonalizerPolicyOptions> Policies { get; }
+        public IList<PersonalizerPolicy> Policies { get; }
     }
 }

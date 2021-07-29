@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Request a set of actions to be ranked by the Personalizer service. </summary>
     public partial class PersonalizerRankOptions
@@ -32,22 +31,9 @@ namespace Azure.AI.Personalizer.Models
             }
 
             ContextFeatures = new ChangeTrackingList<object>();
-            Actions = actions.ToList();
+            Actions = actions;
             ExcludedActions = new ChangeTrackingList<string>();
         }
-        /// <summary>
-        /// The set of actions the Personalizer service can pick from.
-        /// The set should not contain more than 50 actions.
-        /// The order of the actions does not affect the rank result but the order
-        /// should match the sequence your application would have used to display them.
-        /// The first item in the array will be used as Baseline item in Offline Evaluations.
-        /// </summary>
-        public IList<PersonalizerRankableAction> Actions { get; }
-        /// <summary>
-        /// The set of action ids to exclude from ranking.
-        /// Personalizer will consider the first non-excluded item in the array as the Baseline action when performing Offline Evaluations.
-        /// </summary>
-        public IList<string> ExcludedActions { get; }
         /// <summary>
         /// Optionally pass an eventId that uniquely identifies this Rank event.
         /// If null, the service generates a unique eventId. The eventId will be used for

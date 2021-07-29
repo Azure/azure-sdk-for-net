@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> A counterfactual evaluation. </summary>
     [CodeGenModel("EvaluationContract")]

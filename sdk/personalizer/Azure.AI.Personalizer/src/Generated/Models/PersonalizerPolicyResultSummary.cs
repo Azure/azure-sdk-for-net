@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> This class contains the summary of evaluating a policy on a counterfactual evaluation. </summary>
     public partial class PersonalizerPolicyResultSummary

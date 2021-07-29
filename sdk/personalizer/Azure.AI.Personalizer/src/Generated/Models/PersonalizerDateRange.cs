@@ -7,10 +7,10 @@
 
 using System;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> A date range starting at From and ending at To. </summary>
-    public partial class PersonalizerDateRange
+    internal partial class PersonalizerDateRange
     {
         /// <summary> Initializes a new instance of PersonalizerDateRange. </summary>
         internal PersonalizerDateRange()
@@ -18,12 +18,17 @@ namespace Azure.AI.Personalizer.Models
         }
 
         /// <summary> Initializes a new instance of PersonalizerDateRange. </summary>
-        /// <param name="start"> Start date for the range. </param>
-        /// <param name="end"> End date for the range. </param>
-        internal PersonalizerDateRange(DateTimeOffset? start, DateTimeOffset? end)
+        /// <param name="from"> Start date for the range. </param>
+        /// <param name="to"> End date for the range. </param>
+        internal PersonalizerDateRange(DateTimeOffset? @from, DateTimeOffset? to)
         {
-            Start = start;
-            End = end;
+            From = @from;
+            To = to;
         }
+
+        /// <summary> Start date for the range. </summary>
+        public DateTimeOffset? From { get; }
+        /// <summary> End date for the range. </summary>
+        public DateTimeOffset? To { get; }
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> The status of the job processing the evaluation. </summary>
     public readonly partial struct PersonalizerEvaluationJobStatus : IEquatable<PersonalizerEvaluationJobStatus>

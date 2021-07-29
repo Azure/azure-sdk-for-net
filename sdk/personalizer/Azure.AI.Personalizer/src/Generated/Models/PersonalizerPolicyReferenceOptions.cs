@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Reference to the policy within the evaluation. </summary>
     public partial class PersonalizerPolicyReferenceOptions

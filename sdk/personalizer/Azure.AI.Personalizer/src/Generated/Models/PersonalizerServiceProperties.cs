@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> The configuration of the service. </summary>
     public partial class PersonalizerServiceProperties

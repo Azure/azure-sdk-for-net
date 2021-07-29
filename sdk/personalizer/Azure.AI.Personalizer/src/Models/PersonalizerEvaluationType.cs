@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Evaluation type (manual or through Automatic Optimization). </summary>
     [CodeGenModel("EvaluationType")]

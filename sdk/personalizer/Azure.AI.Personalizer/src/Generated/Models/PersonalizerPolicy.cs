@@ -7,16 +7,16 @@
 
 using System;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Learning settings specifying how to train the model. </summary>
-    public partial class PersonalizerPolicyOptions
+    public partial class PersonalizerPolicy
     {
-        /// <summary> Initializes a new instance of PersonalizerPolicyOptions. </summary>
+        /// <summary> Initializes a new instance of PersonalizerPolicy. </summary>
         /// <param name="name"> Name of the learning settings. </param>
         /// <param name="arguments"> Arguments of the learning settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        public PersonalizerPolicyOptions(string name, string arguments)
+        public PersonalizerPolicy(string name, string arguments)
         {
             if (name == null)
             {

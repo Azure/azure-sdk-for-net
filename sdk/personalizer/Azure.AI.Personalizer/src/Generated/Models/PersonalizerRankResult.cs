@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Returns which action to use as rewardActionId, and additional information about each action as a result of a Rank request. </summary>
     public partial class PersonalizerRankResult

@@ -9,9 +9,9 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
-    public partial class PersonalizerLogPropertiesDateRange
+    internal partial class PersonalizerLogPropertiesDateRange
     {
         internal static PersonalizerLogPropertiesDateRange DeserializePersonalizerLogPropertiesDateRange(JsonElement element)
         {

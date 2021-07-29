@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> A ranked action with its resulting probability. </summary>
     public partial class PersonalizerRankedAction

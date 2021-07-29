@@ -3,9 +3,9 @@
 
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Date range. </summary>
     [CodeGenModel("LogsPropertiesDateRange")]
-    public partial class PersonalizerLogPropertiesDateRange { }
+    internal partial class PersonalizerLogPropertiesDateRange { }
 }

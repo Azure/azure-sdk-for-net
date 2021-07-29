@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     [CodeGenModel("RankRequest")]
     public partial class PersonalizerRankOptions
@@ -18,7 +18,22 @@ namespace Azure.AI.Personalizer.Models
         /// unique UserIDs, or precise timestamps.
         /// Need to be JSON serializable. https://docs.microsoft.com/azure/cognitive-services/personalizer/concepts-features.
         /// </summary>
-        public IList<object> ContextFeatures { get; }
+        public IEnumerable<object> ContextFeatures { get; }
+
+        /// <summary>
+        /// The set of actions the Personalizer service can pick from.
+        /// The set should not contain more than 50 actions.
+        /// The order of the actions does not affect the rank result but the order
+        /// should match the sequence your application would have used to display them.
+        /// The first item in the array will be used as Baseline item in Offline Evaluations.
+        /// </summary>
+        public IEnumerable<PersonalizerRankableAction> Actions { get; }
+
+        /// <summary>
+        /// The set of action ids to exclude from ranking.
+        /// Personalizer will consider the first non-excluded item in the array as the Baseline action when performing Offline Evaluations.
+        /// </summary>
+        public IEnumerable<string> ExcludedActions { get; }
 
         /// <summary>
         /// Initializes a new instance of the RankRequest class.
@@ -60,7 +75,7 @@ namespace Azure.AI.Personalizer.Models
         /// the default Reward to the event. Send true if it is possible the user will not
         /// see the action specified in the rank results, because the page is rendering
         /// later, or the Rank results may be overridden by code further downstream.</param>
-        public PersonalizerRankOptions(IList<PersonalizerRankableAction> actions, IList<object> contextFeatures = default, IList<string> excludedActions = default, string eventId = default, bool? deferActivation = default)
+        public PersonalizerRankOptions(IEnumerable<PersonalizerRankableAction> actions, IEnumerable<object> contextFeatures = default, IEnumerable<string> excludedActions = default, string eventId = default, bool? deferActivation = default)
         {
             ContextFeatures = contextFeatures ?? new ChangeTrackingList<object>();
             Actions = actions;

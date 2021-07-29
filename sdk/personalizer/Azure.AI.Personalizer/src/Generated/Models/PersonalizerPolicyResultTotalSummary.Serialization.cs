@@ -9,9 +9,9 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
-    public partial class PersonalizerPolicyResultTotalSummary
+    internal partial class PersonalizerPolicyResultTotalSummary
     {
         internal static PersonalizerPolicyResultTotalSummary DeserializePersonalizerPolicyResultTotalSummary(JsonElement element)
         {

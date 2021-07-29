@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> A Counterfactual Evaluation. </summary>
     [CodeGenModel("Evaluation")]

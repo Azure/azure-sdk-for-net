@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.Personalizer.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.Personalizer.Tests

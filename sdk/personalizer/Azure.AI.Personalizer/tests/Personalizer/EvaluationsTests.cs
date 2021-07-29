@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.Personalizer.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.Personalizer.Tests
@@ -39,7 +37,7 @@ namespace Azure.AI.Personalizer.Tests
             Assert.NotNull(eval0);
             Assert.NotNull(eval1);
             Assert.AreEqual("PersonalizerEvaluation", eval0.GetType().Name);
-            Assert.AreEqual("Azure.AI.Personalizer.Models.PersonalizerEvaluation", eval0.GetType().FullName);
+            Assert.AreEqual("Azure.AI.Personalizer.PersonalizerEvaluation", eval0.GetType().FullName);
             Assert.False(evaluations.Equals(eval1));
             var policyResult = eval0.PolicyResults;
             Assert.AreEqual(1, policyResult.Count);
@@ -59,9 +57,9 @@ namespace Azure.AI.Personalizer.Tests
                 name: "sdkTestEvaluation",
                 startTime: DateTime.SpecifyKind(new DateTime(2021, 06, 01), DateTimeKind.Utc),
                 endTime: DateTime.SpecifyKind(new DateTime(2021, 06, 30), DateTimeKind.Utc),
-                policies: new PersonalizerPolicyOptions[]
+                policies: new PersonalizerPolicy[]
                 {
-                    new PersonalizerPolicyOptions(name: "Custom Policy 1", arguments: "--cb_explore_adf --epsilon 0.2 --dsjson --cb_type ips -l 0.5 --l1 1E-07 --power_t 0.5")
+                    new PersonalizerPolicy(name: "Custom Policy 1", arguments: "--cb_explore_adf --epsilon 0.2 --dsjson --cb_type ips -l 0.5 --l1 1E-07 --power_t 0.5")
                 });
             evaluation.EnableOfflineExperimentation = true;
             PersonalizerCreateEvaluationOperation createdEvaluation = await client.CreatePersonalizerEvaluationAsync(evaluation);

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> The MultiSlotRankResponse. </summary>
     public partial class PersonalizerMultiSlotRankResult

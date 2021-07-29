@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary>
     /// An <see cref="Operation{PersonalizerEvaluation}"/> for tracking the status of a

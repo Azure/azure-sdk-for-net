@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
-    public partial class PersonalizerPolicyOptions : IUtf8JsonSerializable
+    public partial class PersonalizerPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.AI.Personalizer.Models
             writer.WriteEndObject();
         }
 
-        internal static PersonalizerPolicyOptions DeserializePersonalizerPolicyOptions(JsonElement element)
+        internal static PersonalizerPolicy DeserializePersonalizerPolicy(JsonElement element)
         {
             string name = default;
             string arguments = default;
@@ -39,7 +39,7 @@ namespace Azure.AI.Personalizer.Models
                     continue;
                 }
             }
-            return new PersonalizerPolicyOptions(name, arguments);
+            return new PersonalizerPolicy(name, arguments);
         }
     }
 }

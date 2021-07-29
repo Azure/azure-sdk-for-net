@@ -3,9 +3,9 @@
 
 using Azure.Core;
 
-namespace Azure.AI.Personalizer.Models
+namespace Azure.AI.Personalizer
 {
     /// <summary> Learning settings specifying how to train the model. </summary>
     [CodeGenModel("PolicyContract")]
-    public partial class PersonalizerPolicyOptions {}
+    public partial class PersonalizerPolicy {}
 }
