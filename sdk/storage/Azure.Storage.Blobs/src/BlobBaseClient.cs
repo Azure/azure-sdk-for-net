@@ -5806,7 +5806,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>.Behaviors
             {
-                SingleDownload = async (range, args, rangeGetContentHash, async, cancellationToken)
+                SingleDownload = async (range, args, rangeGetContentHash, async, cancellationToken, etag)
                     => await client.DownloadStreamingInternal(
                         range,
                         args,
@@ -5814,28 +5814,10 @@ namespace Azure.Storage.Blobs.Specialized
                         $"{nameof(BlobBaseClient)}.{nameof(DownloadTo)}",
                         async,
                         cancellationToken).ConfigureAwait(false),
-                CopyToAsync = async (result, destination, cancellationToken)
-                    =>
-                {
-                    using Stream source = result.Content;
-
-                    await source.CopyToAsync(
-                        destination,
-                        Constants.DefaultDownloadCopyBufferSize,
-                        cancellationToken)
-                        .ConfigureAwait(false);
-                },
-                CopyTo = (result, destination, cancellationToken)
-                    =>
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
-                    result.Content.Dispose();
-                },
                 ModifyConditions = (args, etag)
                     => args?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag },
-            Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
-                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}")
+                Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
+                        ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}")
             };
         }
         #endregion

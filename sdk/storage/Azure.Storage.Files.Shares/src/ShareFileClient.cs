@@ -16,7 +16,6 @@ using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using System.Net.Http.Headers;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -6140,51 +6139,29 @@ namespace Azure.Storage.Files.Shares
         {
             return new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>.Behaviors
             {
-                SingleDownload = async (range, args, rangeGetContentHash, async, cancellationToken)
-                    => await client.DownloadInternal(
-                        range,
-                        rangeGetContentHash,
-                        args,
-                        async,
-                        cancellationToken).ConfigureAwait(false),
-                CopyToAsync = async (result, destination, cancellationToken)
+                SingleDownload = async (range, args, rangeGetContentHash, async, cancellationToken, etag)
                     =>
                 {
-                    using Stream source = result.Content;
+                    Response<ShareFileDownloadInfo> response = await client.DownloadInternal(
+                    range,
+                    rangeGetContentHash,
+                    args,
+                    async,
+                    cancellationToken).ConfigureAwait(false);
 
-                    await source.CopyToAsync(
-                        destination,
-                        Constants.DefaultDownloadCopyBufferSize,
-                        cancellationToken)
-                        .ConfigureAwait(false);
-                },
-                CopyTo = (result, destination, cancellationToken)
-                    =>
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
-                    result.Content.Dispose();
-                },
-                CheckForEtagChange = (response, etag)
-                    =>
-                {
-                    // Make sure the ETag for this chunk matches the originally
-                    // recorded one
-                    if (etag != response.GetRawResponse().Headers.ETag)
+                    // Make sure the ETag matches the one returned from the
+                    // initial request
+                    if (etag != null && etag != response.GetRawResponse().Headers.ETag)
                     {
-                        ContentRange? contentRange = string.IsNullOrWhiteSpace(response.Value.Details.ContentRange)
-                            ? default
-                            : ContentRange.Parse(response.Value.Details.ContentRange);
-
                         throw new ShareFileModifiedException(
-                            "File has been modified concurrently",
-                            client.Uri,
-                            etag,
-                            response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
-                            new HttpRange(
-                                (long)contentRange?.Start.GetValueOrDefault(),
-                                contentRange?.End - contentRange?.Start));
+                               "File has been modified concurrently",
+                               client.Uri,
+                               etag,
+                               response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                               range);
                     }
+
+                    return response;
                 },
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
                     ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(Shares)}.{nameof(ShareFileClient)}.{nameof(Storage.Files.Shares.ShareFileClient.DownloadTo)}")

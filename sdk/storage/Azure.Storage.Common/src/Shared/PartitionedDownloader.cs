@@ -15,7 +15,7 @@ using Azure.Storage.Shared;
 namespace Azure.Storage
 {
     internal class PartitionedDownloader<TServiceSpecificArgs, TCompleteDownloadReturn>
-        where TCompleteDownloadReturn : IDisposable
+        where TCompleteDownloadReturn : IDisposable, IDownloadedContent
     {
         #region Definitions
         // Injected behaviors for services to use partitioned downloads
@@ -24,18 +24,8 @@ namespace Azure.Storage
             TServiceSpecificArgs args,
             bool rangeGetContentHash,
             bool async,
-            CancellationToken cancellationToken);
-        public delegate Task CopyToAsync(
-            TCompleteDownloadReturn result,
-            Stream destination,
-            CancellationToken cancellationToken);
-        public delegate void CopyTo(
-            TCompleteDownloadReturn result,
-            Stream destination,
-            CancellationToken cancellationToken);
-        public delegate void CheckForEtagChange(
-            Response<TCompleteDownloadReturn> response,
-            ETag etag);
+            CancellationToken cancellationToken,
+            ETag etag = default);
         public delegate TServiceSpecificArgs ModifyConditions(
             TServiceSpecificArgs args,
             ETag etag);
@@ -44,22 +34,15 @@ namespace Azure.Storage
         public struct Behaviors
         {
             public SingleDownloadInternal SingleDownload { get; set; }
-            public CopyToAsync CopyToAsync { get; set; }
-            public CopyTo CopyTo { get; set; }
-            public CheckForEtagChange CheckForEtagChange { get; set; }
             public ModifyConditions ModifyConditions { get; set; }
             public CreateScope Scope { get; set; }
         }
 
         public static readonly ModifyConditions ModifyConditionsNoOp = (args, etag) => args;
-        public static readonly CheckForEtagChange CheckEtagNoOp = (response, etag) => { return; };
         #endregion
 
         private readonly SingleDownloadInternal _singleDownloadInternal;
-        private readonly CopyToAsync _copyToAsync;
-        private readonly CopyTo _copyTo;
         private readonly ModifyConditions _modifyConditions;
-        private readonly CheckForEtagChange _checkForEtagChange;
         private readonly CreateScope _createScope;
 
         /// <summary>
@@ -90,16 +73,11 @@ namespace Azure.Storage
         {
             // TODO: Check on differences between defaults for blobs/files
 
-            // Modifying conditions and manually checking the Etag for changes are behaviors
-            // unique to particular services and can use a no-op; the rest are required
+            // Modifying conditions to add Etag is only necessary for blobs,
+            // files can use a no-op
             _modifyConditions = behaviors.ModifyConditions ?? ModifyConditionsNoOp;
-            _checkForEtagChange = behaviors.CheckForEtagChange ?? CheckEtagNoOp;
             _singleDownloadInternal = behaviors.SingleDownload
                 ?? throw Errors.ArgumentNull(nameof(behaviors.SingleDownload));
-            _copyToAsync = behaviors.CopyToAsync
-                ?? throw Errors.ArgumentNull(nameof(behaviors.CopyToAsync));
-            _copyTo = behaviors.CopyTo
-                ?? throw Errors.ArgumentNull(nameof(behaviors.CopyTo));
             _createScope = behaviors.Scope
                 ?? throw Errors.ArgumentNull(nameof(behaviors.Scope));
 
@@ -196,7 +174,7 @@ namespace Azure.Storage
 
                 if (async)
                 {
-                    await _copyToAsync(
+                    await CopyToAsync(
                         initialResponse,
                         destination,
                         cancellationToken)
@@ -204,7 +182,7 @@ namespace Azure.Storage
                 }
                 else
                 {
-                    _copyTo(initialResponse, destination, cancellationToken);
+                    CopyTo(initialResponse, destination, cancellationToken);
                 }
 
                 if (initialLength == totalLength)
@@ -308,7 +286,8 @@ namespace Azure.Storage
                     conditions,
                     rangeGetContentHash: false,
                     async: true,
-                    cancellationToken));
+                    cancellationToken,
+                    etag));
 
                 // If we have fewer tasks than alotted workers, then just
                 // continue adding tasks until we have _maxWorkerCount
@@ -336,19 +315,14 @@ namespace Azure.Storage
                 // Don't need to worry about 304s here because the ETag
                 // condition will turn into a 412 and throw a proper
                 // RequestFailedException
-                Response<TCompleteDownloadReturn> result =
+                using TCompleteDownloadReturn result =
                     await runningTasks.Dequeue().ConfigureAwait(false);
-
-                _checkForEtagChange(result, etag);
-
-                using TCompleteDownloadReturn resultInfo =
-                    result;
 
                 // Even though the BlobDownloadInfo is returned immediately,
                 // CopyToAsync causes ConsumeQueuedTask to wait until the
                 // download is complete
-                await _copyToAsync(
-                    resultInfo,
+                await CopyToAsync(
+                    result,
                     destination,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -375,15 +349,35 @@ namespace Azure.Storage
                     conditions,
                     rangeGetContentHash: false,
                     async: false,
-                    cancellationToken)
+                    cancellationToken,
+                    etag)
                     .EnsureCompleted();
 
-                // Make sure the ETag for this chunk matches the originally
-                // recorded one
-                _checkForEtagChange(result, etag);
-
-                _copyTo(result.Value, destination, cancellationToken);
+                CopyTo(result.Value, destination, cancellationToken);
             }
+        }
+        private static async Task CopyToAsync(
+            TCompleteDownloadReturn result,
+            Stream destination,
+            CancellationToken cancellationToken)
+        {
+            using Stream source = result.Content;
+
+            await source.CopyToAsync(
+                destination,
+                Constants.DefaultDownloadCopyBufferSize,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        private static void CopyTo(
+            TCompleteDownloadReturn result,
+            Stream destination,
+            CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            result.Content.CopyTo(destination, Constants.DefaultDownloadCopyBufferSize);
+            result.Content.Dispose();
         }
 
         private static long ParseRangeTotalLength(string range)
