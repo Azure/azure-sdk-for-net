@@ -169,7 +169,7 @@ stages:
               targetType: F
               targetArgument: '$(Build.SourcesDirectory)/azure-sdk-for-net/sdk'
               result: PoliCheck.sarif
-              optionsFC: 0
+              optionsFC: 1
               optionsXS: 1
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
             displayName: 'Publish Security Analysis Logs'
