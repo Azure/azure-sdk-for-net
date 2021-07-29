@@ -176,6 +176,14 @@ namespace Azure.AI.Personalizer
     }
     public static partial class PersonalizerModelFactory
     {
+        public static Azure.AI.Personalizer.PersonalizerEvaluation PersonalizerEvaluation(string id = null, string name = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string jobId = null, Azure.AI.Personalizer.PersonalizerEvaluationJobStatus? status = default(Azure.AI.Personalizer.PersonalizerEvaluationJobStatus?), System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.PersonalizerPolicyResult> policyResults = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> featureImportance = null, Azure.AI.Personalizer.PersonalizerEvaluationType? evaluationType = default(Azure.AI.Personalizer.PersonalizerEvaluationType?), string optimalPolicy = null, System.DateTimeOffset? creationTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Personalizer.PersonalizerModelProperties PersonalizerModelProperties(System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Personalizer.PersonalizerMultiSlotRankResult PersonalizerMultiSlotRankResult(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.PersonalizerSlotResult> slots = null, string eventId = null) { throw null; }
+        public static Azure.AI.Personalizer.PersonalizerPolicyResult PersonalizerPolicyResult(string name = null, string arguments = null, Azure.AI.Personalizer.PersonalizerPolicySource? policySource = default(Azure.AI.Personalizer.PersonalizerPolicySource?), System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.PersonalizerPolicyResultSummary> summary = null, Azure.AI.Personalizer.PersonalizerPolicyResultSummary totalSummary = null) { throw null; }
+        public static Azure.AI.Personalizer.PersonalizerPolicyResultSummary PersonalizerPolicyResultSummary(System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), float? ipsEstimatorNumerator = default(float?), float? ipsEstimatorDenominator = default(float?), float? snipsEstimatorDenominator = default(float?), System.TimeSpan? aggregateTimeWindow = default(System.TimeSpan?), float? nonZeroProbability = default(float?), float? sumOfSquares = default(float?), float? confidenceInterval = default(float?), float? averageReward = default(float?)) { throw null; }
+        public static Azure.AI.Personalizer.PersonalizerRankedAction PersonalizerRankedAction(string id = null, float? probability = default(float?)) { throw null; }
+        public static Azure.AI.Personalizer.PersonalizerRankResult PersonalizerRankResult(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.PersonalizerRankedAction> ranking = null, string eventId = null, string rewardActionId = null) { throw null; }
+        public static Azure.AI.Personalizer.PersonalizerSlotResult PersonalizerSlotResult(string slotId = null, string rewardActionId = null) { throw null; }
     }
     public partial class PersonalizerModelProperties
     {
@@ -333,19 +341,5 @@ namespace Azure.AI.Personalizer
         public PersonalizerSlotReward(string slotId, float value) { }
         public string SlotId { get { throw null; } }
         public float Value { get { throw null; } }
-    }
-}
-namespace Azure.AI.Personalizer.Models
-{
-    public static partial class PersonalizerModelFactory
-    {
-        public static Azure.AI.Personalizer.PersonalizerEvaluation PersonalizerEvaluation(string id = null, string name = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string jobId = null, Azure.AI.Personalizer.PersonalizerEvaluationJobStatus? status = default(Azure.AI.Personalizer.PersonalizerEvaluationJobStatus?), System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.PersonalizerPolicyResult> policyResults = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> featureImportance = null, Azure.AI.Personalizer.PersonalizerEvaluationType? evaluationType = default(Azure.AI.Personalizer.PersonalizerEvaluationType?), string optimalPolicy = null, System.DateTimeOffset? creationTime = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.AI.Personalizer.PersonalizerModelProperties PersonalizerModelProperties(System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedTime = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.AI.Personalizer.PersonalizerMultiSlotRankResult PersonalizerMultiSlotRankResult(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.PersonalizerSlotResult> slots = null, string eventId = null) { throw null; }
-        public static Azure.AI.Personalizer.PersonalizerPolicyResult PersonalizerPolicyResult(string name = null, string arguments = null, Azure.AI.Personalizer.PersonalizerPolicySource? policySource = default(Azure.AI.Personalizer.PersonalizerPolicySource?), System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.PersonalizerPolicyResultSummary> summary = null, Azure.AI.Personalizer.PersonalizerPolicyResultSummary totalSummary = null) { throw null; }
-        public static Azure.AI.Personalizer.PersonalizerPolicyResultSummary PersonalizerPolicyResultSummary(System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), float? ipsEstimatorNumerator = default(float?), float? ipsEstimatorDenominator = default(float?), float? snipsEstimatorDenominator = default(float?), System.TimeSpan? aggregateTimeWindow = default(System.TimeSpan?), float? nonZeroProbability = default(float?), float? sumOfSquares = default(float?), float? confidenceInterval = default(float?), float? averageReward = default(float?)) { throw null; }
-        public static Azure.AI.Personalizer.PersonalizerRankedAction PersonalizerRankedAction(string id = null, float? probability = default(float?)) { throw null; }
-        public static Azure.AI.Personalizer.PersonalizerRankResult PersonalizerRankResult(System.Collections.Generic.IEnumerable<Azure.AI.Personalizer.PersonalizerRankedAction> ranking = null, string eventId = null, string rewardActionId = null) { throw null; }
-        public static Azure.AI.Personalizer.PersonalizerSlotResult PersonalizerSlotResult(string slotId = null, string rewardActionId = null) { throw null; }
     }
 }
