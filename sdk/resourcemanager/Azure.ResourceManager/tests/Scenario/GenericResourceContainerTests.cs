@@ -80,6 +80,20 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task TryGet()
+        {
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
+
+            GenericResource resource = await Client.DefaultSubscription.GetGenericResources().GetIfExistsAsync(aset.Data.Id);
+            Assert.AreEqual(aset.Data.Id, resource.Data.Id);
+
+            var response = await Client.DefaultSubscription.GetGenericResources().GetIfExistsAsync(aset.Data.Id + "1");
+            Assert.IsNull(response.Value);
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task CreateOrUpdate()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));

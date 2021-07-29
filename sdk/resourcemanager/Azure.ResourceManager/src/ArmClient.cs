@@ -109,7 +109,7 @@ namespace Azure.ResourceManager
             _tenant = new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
-                : GetSubscriptions().TryGet(defaultSubscriptionId);
+                : GetSubscriptions().GetIfExists(defaultSubscriptionId);
             ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
@@ -156,11 +156,41 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets a resource group operations object.
         /// </summary>
-        /// <param name="id"> The id of the resourcegroup </param>
+        /// <param name="id"> The id of the resourcegroup. </param>
         /// <returns> Resource operations of the resource. </returns>
         public virtual ResourceGroupOperations GetResourceGroupOperations(string id)
         {
             return new ResourceGroupOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+        }
+
+        /// <summary>
+        /// Gets a subscription operations object.
+        /// </summary>
+        /// <param name="id"> The id of the subscription. </param>
+        /// <returns> Resource operations of the subscription. </returns>
+        public virtual SubscriptionOperations GetSubscriptionOperations(string id)
+        {
+            return new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+        }
+
+        /// <summary>
+        /// Gets a feature operations object.
+        /// </summary>
+        /// <param name="id"> The id of the feature. </param>
+        /// <returns> Resource operations of the feature. </returns>
+        public virtual FeatureOperations GetFeatureOperations(string id)
+        {
+            return new FeatureOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+        }
+
+        /// <summary>
+        /// Gets a feature operations object.
+        /// </summary>
+        /// <param name="id"> The id of the feature. </param>
+        /// <returns> Resource operations of the feature. </returns>
+        public virtual ProviderOperations GetProviderOperations(string id)
+        {
+            return new ProviderOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
         private Subscription GetDefaultSubscription()

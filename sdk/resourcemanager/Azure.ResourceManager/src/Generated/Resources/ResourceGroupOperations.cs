@@ -212,8 +212,11 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var originalResponse = RestClient.Get(Id.Name, cancellationToken);
-                return Response.FromValue(new ResourceGroup(this, originalResponse), originalResponse.GetRawResponse());
+                var result = RestClient.Get(Id.Name, cancellationToken);
+                if (result.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+
+                return Response.FromValue(new ResourceGroup(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -231,8 +234,11 @@ namespace Azure.ResourceManager.Resources
 
             try
             {
-                var originalResponse = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ResourceGroup(this, originalResponse), originalResponse.GetRawResponse());
+                var response = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+
+                return Response.FromValue(new ResourceGroup(this, response), response.GetRawResponse());
             }
             catch (Exception e)
             {

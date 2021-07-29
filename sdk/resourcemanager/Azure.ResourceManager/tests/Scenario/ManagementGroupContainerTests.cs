@@ -48,13 +48,17 @@ namespace Azure.ResourceManager.Tests
         {
             ManagementGroup mgmtGroup = await Client.GetManagementGroups().GetAsync(_mgmtGroupName, cacheControl: "no-cache");
             CompareMgmtGroups(_mgmtGroup, mgmtGroup);
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroups().GetAsync("NotThere", cacheControl: "no-cache"));
+            Assert.AreEqual(403, ex.Status);
         }
 
         [RecordedTest]
         public async Task TryGet()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().TryGetAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache");
+            ManagementGroup mgmtGroup = await Client.GetManagementGroups().GetIfExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache");
             CompareMgmtGroups(_mgmtGroup, mgmtGroup);
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroups().GetAsync("NotThere", cacheControl: "no-cache"));
+            Assert.AreEqual(403, ex.Status);
         }
 
         [RecordedTest]

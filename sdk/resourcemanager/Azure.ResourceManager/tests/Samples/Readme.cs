@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
 // Code omitted for brevity
 
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 #endregion Snippet:Readme_AuthClient
         }
 
@@ -61,18 +61,18 @@ var armClient = new ArmClient(new DefaultAzureCredential());
         public async Task CheckIfResourceGroupExists()
         {
             #region Snippet:Readme_CheckIfExistssRG
-            var armClient = new ArmClient(new DefaultAzureCredential());
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.DefaultSubscription;
             string rgName = "myRgName";
 
-            var exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
+            bool exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
 
             if (exists)
             {
                 Console.WriteLine($"Resource Group {rgName} exists.");
 
                 // We can get the resource group now that we are sure it exists.
-                var myRG = await subscription.GetResourceGroups().GetAsync(rgName);
+                ResourceGroup myRG = await subscription.GetResourceGroups().GetAsync(rgName);
             }
             else
             {
@@ -86,11 +86,11 @@ var armClient = new ArmClient(new DefaultAzureCredential());
         public async Task TryGetResourceGroup()
         {
             #region Snippet:Readme_TryGetRG
-            var armClient = new ArmClient(new DefaultAzureCredential());
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             Subscription subscription = armClient.DefaultSubscription;
             string rgName = "myRgName";
 
-            var myRG = await subscription.GetResourceGroups().TryGetAsync(rgName);
+            ResourceGroup myRG = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
 
             if (myRG == null)
             {

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources;
 The following code shows how to get the default subscription:
 
 ```C# Snippet:Hello_World_Async_DefaultSubscription
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 Console.WriteLine(subscription.Id);
 ```
@@ -22,7 +22,7 @@ It's possible to get a specific subscription as follows:
 
 ```C# Snippet:Hello_World_Async_SpecificSubscription
 string subscriptionId = "your-subscription-id";
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = await armClient.GetSubscriptions().GetAsync(subscriptionId);
 Console.WriteLine(subscription.Id);
 ```

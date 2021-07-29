@@ -128,6 +128,9 @@ namespace Azure.ResourceManager.Tests
             GenericResource aset2 = await aset.GetAsync();
 
             AssertAreEqual(aset, aset2);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetGenericResourceOperations(aset2.Id + "x").GetAsync());
+            Assert.AreEqual(404, ex.Status);
         }
 
         [TestCase]

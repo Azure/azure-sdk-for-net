@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Resources
         /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
-        /// <param name="subscriptionGuid"> The Guid of the subscription. </param>
-        internal SubscriptionOperations(ClientContext clientContext, string subscriptionGuid)
-            : base(clientContext,  new ResourceIdentifier(ResourceIdentifier.RootResourceIdentifier, ResourceType, subscriptionGuid))
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal SubscriptionOperations(ClientContext clientContext, ResourceIdentifier id)
+            : base(clientContext,  id)
         {
         }
 
@@ -108,6 +108,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = RestClient.Get(Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
                 return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -126,6 +129,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+
                 return Response.FromValue(new Subscription(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

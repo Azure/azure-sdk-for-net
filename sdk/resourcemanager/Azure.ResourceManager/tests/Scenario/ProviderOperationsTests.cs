@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Tests
     public class ProviderOperationsTests : ResourceManagerTestBase
     {
         public ProviderOperationsTests(bool isAsync)
-         : base(isAsync) //, RecordedTestMode.Record)
+         : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -21,6 +21,9 @@ namespace Azure.ResourceManager.Tests
             Response<Provider> response = await providerContainer.GetAsync("microsoft.insights");
             Provider result = response.Value;
             Assert.IsNotNull(result);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetProviderOperations(result.Data.Id + "x").GetAsync());
+            Assert.AreEqual(404, ex.Status);
         }
 
         [TestCase]

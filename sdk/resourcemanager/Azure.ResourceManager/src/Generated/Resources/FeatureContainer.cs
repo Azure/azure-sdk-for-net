@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Management;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -130,6 +131,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _restClient.Get(Id.Provider, featureName, cancellationToken);
+                if (response.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(response.GetRawResponse());
+
                 return Response.FromValue(new Feature(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -149,6 +153,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _restClient.GetAsync(Id.Provider, featureName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+
                 return Response.FromValue(new Feature(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,18 +172,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual Feature TryGet(string featureName, CancellationToken cancellationToken = default)
+        public virtual Response<Feature> GetIfExists(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("FeatureContainer.TryGet");
+            using var scope = Diagnostics.CreateScope("FeatureContainer.GetIfExists");
             scope.Start();
 
             try
             {
-                return Get(featureName, cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.Provider, featureName, cancellationToken);
+                return response.Value == null
+                   ? Response.FromValue<Feature>(null, response.GetRawResponse())
+                   : Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -192,18 +198,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<Feature> TryGetAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Feature>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("FeatureContainer.TryGet");
+            using var scope = Diagnostics.CreateScope("FeatureContainer.GetIfExists");
             scope.Start();
 
             try
             {
-                return await GetAsync(featureName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.Provider, featureName, cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                   ? Response.FromValue<Feature>(null, response.GetRawResponse())
+                   : Response.FromValue(new Feature(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,11 +224,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool CheckIfExists(string featureName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string featureName, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("FeatureContainer.CheckIfExists");
             scope.Start();
-            return TryGet(featureName, cancellationToken) != null;
+
+            try
+            {
+                var response = GetIfExists(featureName, cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -233,11 +248,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<bool> CheckIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("FeatureContainer.CheckIfExists");
             scope.Start();
-            return await TryGetAsync(featureName, cancellationToken).ConfigureAwait(false) != null;
+
+            try
+            {
+                var response = await GetIfExistsAsync(featureName, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
