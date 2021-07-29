@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Same issue as Update in VirtualMachineOperationsTests")]
+        [Ignore("We have a bug in OperationInternals which breaks the LRO of PATCH")]
         public async Task Update()
         {
             var vmssName = Recording.GenerateAssetName("testVMSS-");

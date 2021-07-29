@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task DoesExist()
+        public async Task CheckIfExists()
         {
             var container = await GetVirtualMachineContainerAsync();
             var vmName = Recording.GenerateAssetName("testVM-");
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = VirtualMachineHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             VirtualMachine vm = await container.CreateOrUpdateAsync(vmName, input);
-            Assert.IsTrue(await container.DoesExistAsync(vmName));
-            Assert.IsFalse(await container.DoesExistAsync(vmName + "1"));
+            Assert.IsTrue(await container.CheckIfExistsAsync(vmName));
+            Assert.IsFalse(await container.CheckIfExistsAsync(vmName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.DoesExistAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
         }
 
         [TestCase]
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(vmName1, input1);
             _ = await container.CreateOrUpdateAsync(vmName2, input2);
             int count = 0;
-            await foreach (var vm in container.ListAsync())
+            await foreach (var vm in container.GetAllAsync())
             {
                 count++;
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(vmName2, input2);
 
             VirtualMachine vm1 = null, vm2 = null;
-            await foreach (var vm in DefaultSubscription.ListVirtualMachinesAsync())
+            await foreach (var vm in DefaultSubscription.GetVirtualMachinesAsync())
             {
                 if (vm.Data.Name == vmName1)
                     vm1 = vm;

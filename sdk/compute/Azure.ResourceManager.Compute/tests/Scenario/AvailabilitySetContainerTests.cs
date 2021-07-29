@@ -61,28 +61,28 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task DoesExist()
+        public async Task CheckIfExists()
         {
             var container = await GetAvailabilitySetContainerAsync();
             var setName = Recording.GenerateAssetName("testAS-");
             var input = AvailabilitySetHelper.GetBasicAvailabilitySetData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
             AvailabilitySet availabilitySet = await container.CreateOrUpdateAsync(setName, input);
-            Assert.IsTrue(await container.DoesExistAsync(setName));
-            Assert.IsFalse(await container.DoesExistAsync(setName + "1"));
+            Assert.IsTrue(await container.CheckIfExistsAsync(setName));
+            Assert.IsFalse(await container.CheckIfExistsAsync(setName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.DoesExistAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task List()
+        public async Task GetAll()
         {
             var container = await GetAvailabilitySetContainerAsync();
             var input = AvailabilitySetHelper.GetBasicAvailabilitySetData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
             _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testAS-"), input);
             _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testAs-"), input);
             int count = 0;
-            await foreach (var availabilitySet in container.ListAsync())
+            await foreach (var availabilitySet in container.GetAllAsync())
             {
                 count++;
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task ListBySubscription()
+        public async Task GetAllInSubscription()
         {
             var container = await GetAvailabilitySetContainerAsync();
             var setName1 = Recording.GenerateAssetName("testAS-");
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(setName2, input);
 
             AvailabilitySet set1 = null, set2 = null;
-            await foreach (var availabilitySet in DefaultSubscription.ListAvailabilitySetsAsync())
+            await foreach (var availabilitySet in DefaultSubscription.GetAvailabilitySetsAsync())
             {
                 if (availabilitySet.Data.Name == setName1)
                     set1 = availabilitySet;

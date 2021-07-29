@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task DoesExist()
+        public async Task CheckIfExists()
         {
             var container = await GetVirtualMachineScaleSetContainerAsync();
             var vmssName = Recording.GenerateAssetName("testVMSS-");
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var input = VirtualMachineScaleSetHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             VirtualMachineScaleSet vmss = await container.CreateOrUpdateAsync(vmssName, input);
-            Assert.IsTrue(await container.DoesExistAsync(vmssName));
-            Assert.IsFalse(await container.DoesExistAsync(vmssName + "1"));
+            Assert.IsTrue(await container.CheckIfExistsAsync(vmssName));
+            Assert.IsFalse(await container.CheckIfExistsAsync(vmssName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.DoesExistAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task List()
+        public async Task GetAll()
         {
             var container = await GetVirtualMachineScaleSetContainerAsync();
             var vmssName1 = Recording.GenerateAssetName("testVMSS-");
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(vmssName1, input1);
             _ = await container.CreateOrUpdateAsync(vmssName2, input2);
             int count = 0;
-            await foreach (var vmss in container.ListAsync())
+            await foreach (var vmss in container.GetAllAsync())
             {
                 count++;
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task ListBySubscription()
+        public async Task GetAllInSubscription()
         {
             var container = await GetVirtualMachineScaleSetContainerAsync();
             var vmssName1 = Recording.GenerateAssetName("testVMSS-");
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(vmssName2, input2);
 
             VirtualMachineScaleSet vmss1 = null, vmss2 = null;
-            await foreach (var vmss in DefaultSubscription.ListVirtualMachineScaleSetsAsync())
+            await foreach (var vmss in DefaultSubscription.GetVirtualMachineScaleSetsAsync())
             {
                 if (vmss.Data.Name == vmssName1)
                     vmss1 = vmss;

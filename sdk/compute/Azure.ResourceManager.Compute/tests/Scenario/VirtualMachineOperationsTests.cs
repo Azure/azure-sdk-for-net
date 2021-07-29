@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("The update operation does not return the full model of virtual machine, instead it returns some data related with polling. Therefore we will get internal exceptions of validation failure on ID")]
+        [Ignore("We have a bug in OperationInternals which breaks the LRO of PATCH")]
         public async Task Update()
         {
             var vmName = Recording.GenerateAssetName("testVM-");

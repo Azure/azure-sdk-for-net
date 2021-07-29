@@ -66,20 +66,20 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task DoesExist()
+        public async Task CheckIfExistsAsync()
         {
             var container = await GetGalleryImageContainerAsync();
             var name = Recording.GenerateAssetName("testImage_");
             GalleryImage image = await container.CreateOrUpdateAsync(name, BasicGalleryImageData);
-            Assert.IsTrue(await container.DoesExistAsync(name));
-            Assert.IsFalse(await container.DoesExistAsync(name + "1"));
+            Assert.IsTrue(await container.CheckIfExistsAsync(name));
+            Assert.IsFalse(await container.CheckIfExistsAsync(name + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.DoesExistAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task List()
+        public async Task GetAll()
         {
             var container = await GetGalleryImageContainerAsync();
             var name1 = Recording.GenerateAssetName("testImage_");
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(name1, input1);
             _ = await container.CreateOrUpdateAsync(name2, input2);
             int count = 0;
-            await foreach (var galleryImage in container.ListAsync())
+            await foreach (var galleryImage in container.GetAllAsync())
             {
                 count++;
             }

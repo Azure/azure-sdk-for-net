@@ -59,28 +59,28 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task DoesExist()
+        public async Task CheckIfExistsAsync()
         {
             var container = await GetDiskContainerAsync();
             var diskName = Recording.GenerateAssetName("testDisk-");
             var input = DiskHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
             Disk disk = await container.CreateOrUpdateAsync(diskName, input);
-            Assert.IsTrue(await container.DoesExistAsync(diskName));
-            Assert.IsFalse(await container.DoesExistAsync(diskName + "1"));
+            Assert.IsTrue(await container.CheckIfExistsAsync(diskName));
+            Assert.IsFalse(await container.CheckIfExistsAsync(diskName + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.DoesExistAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task List()
+        public async Task GetAll()
         {
             var container = await GetDiskContainerAsync();
             var input = DiskHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
             _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testDisk-"), input);
             _ = await container.CreateOrUpdateAsync(Recording.GenerateAssetName("testDisk-"), input);
             int count = 0;
-            await foreach (var disk in container.ListAsync())
+            await foreach (var disk in container.GetAllAsync())
             {
                 count++;
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task ListBySubscription()
+        public async Task GetAllInSubscription()
         {
             var container = await GetDiskContainerAsync();
             var diskName1 = Recording.GenerateAssetName("testDisk-");
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(diskName2, input);
 
             Disk disk1 = null, disk2 = null;
-            await foreach (var disk in DefaultSubscription.ListDisksAsync())
+            await foreach (var disk in DefaultSubscription.GetDisksAsync())
             {
                 if (disk.Data.Name == diskName1)
                     disk1 = disk;

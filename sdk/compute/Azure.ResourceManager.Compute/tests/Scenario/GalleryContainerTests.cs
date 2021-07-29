@@ -51,21 +51,21 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task DoesExist()
+        public async Task CheckIfExists()
         {
             var container = await GetGalleryContainerAsync();
             var name = Recording.GenerateAssetName("testGallery_");
             var input = GalleryHelper.GetBasicGalleryData(DefaultLocation);
             Gallery gallery = await container.CreateOrUpdateAsync(name, input);
-            Assert.IsTrue(await container.DoesExistAsync(name));
-            Assert.IsFalse(await container.DoesExistAsync(name + "1"));
+            Assert.IsTrue(await container.CheckIfExistsAsync(name));
+            Assert.IsFalse(await container.CheckIfExistsAsync(name + "1"));
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.DoesExistAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await container.CheckIfExistsAsync(null));
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task List()
+        public async Task GetAll()
         {
             var container = await GetGalleryContainerAsync();
             var name1 = Recording.GenerateAssetName("testGallery_");
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(name1, input1);
             _ = await container.CreateOrUpdateAsync(name2, input2);
             int count = 0;
-            await foreach (var gallery in container.ListAsync())
+            await foreach (var gallery in container.GetAllAsync())
             {
                 count++;
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task ListBySubscription()
+        public async Task GetAllInSubscription()
         {
             var container = await GetGalleryContainerAsync();
             var name1 = Recording.GenerateAssetName("testGallery_");
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await container.CreateOrUpdateAsync(name2, input2);
 
             Gallery gallery1 = null, gallery2 = null;
-            await foreach (var gallery in DefaultSubscription.ListGalleriesAsync())
+            await foreach (var gallery in DefaultSubscription.GetGalleriesAsync())
             {
                 if (gallery.Data.Name == name1)
                     gallery1 = gallery;
