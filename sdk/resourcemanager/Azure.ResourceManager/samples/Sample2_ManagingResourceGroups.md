@@ -43,7 +43,7 @@ ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 // With the container, we can create a new resource group with an specific name
 string rgName = "myRgName";
 Location location = Location.WestUS2;
-var rgData = new ResourceGroupData(location);
+ResourceGroupData rgData = new ResourceGroupData(location);
 ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
 ```
 
