@@ -156,7 +156,6 @@ stages:
   - stage: PoliCheck
     displayName: PoliCheck Evaluation
     dependsOn: []
-    condition: ne(variables['ServiceDirectoryName'], '')
     jobs:
       - job: PoliCheckRunAndPublish
         timeoutInMinutes: 120
@@ -168,20 +167,10 @@ stages:
             displayName: 'Run PoliCheck'
             inputs:
               targetType: F
-              targetArgument: '$(Agent.BuildDirectory)/s/azure-sdk-for-net/sdk/$(ServiceDirectoryName)'
+              targetArgument: '$(Build.SourcesDirectory)/azure-sdk-for-net/sdk'
               result: PoliCheck.sarif
               optionsFC: 0
               optionsXS: 1
-          - task: PowerShell@2
-            displayName: 'Filter PoliCheck Results using AllowList'
-            inputs:
-              pwsh: true
-              filePath: '$(Agent.BuildDirectory)/s/azure-sdk-for-net/eng/common/scripts/FilterPoliCheckResults.ps1'
-              workingDirectory: $(Pipeline.Workspace)
-              arguments: >
-                -PoliCheckResultFilePath '$(Agent.BuildDirectory)/.gdn/.r/PoliCheck/001/PoliCheck.sarif'
-                -ServiceDirectory '$(ServiceDirectoryName)'
-                -AllowListLocation: '$(Agent.BuildDirectory)/s/azure-sdk-build-tools/tools/policheck-allow-list/dotnet'
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
             displayName: 'Publish Security Analysis Logs'
             condition: succeededOrFailed()
