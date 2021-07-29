@@ -14,21 +14,21 @@ namespace Azure.AI.TextAnalytics
     public static partial class TextAnalyticsModelFactory
     {
 
-        /// <summary> Initializes new instance of HealthcareEntityAssertion class. </summary>
+        /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>
         /// <param name="conditionality"> Describes any conditionality on the entity. </param>
         /// <param name="certainty"> Describes the entities certainty and polarity. </param>
         /// <param name="association"> Describes if the entity is the subject of the text or if it describes someone else. </param>
         /// <returns> A new <see cref="TextAnalytics.HealthcareEntityAssertion"/> instance for mocking. </returns>
-        public static HealthcareEntityAssertion HealthcareEntityAssertion(EntityConditionality? conditionality = default, EntityCertainty? certainty = default, EntityAssociation? association = default)
+        public static HealthcareEntityAssertion HealthcareEntityAssertion(EntityConditionality? conditionality = null, EntityCertainty? certainty = null, EntityAssociation? association = null)
         {
             return new HealthcareEntityAssertion(conditionality, certainty, association);
         }
 
-        /// <summary> Initializes new instance of EntityDataSource class. </summary>
+        /// <summary> Initializes a new instance of EntityDataSource. </summary>
         /// <param name="name"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
         /// <param name="entityId"> Entity id in the given source catalog. </param>
         /// <returns> A new <see cref="TextAnalytics.EntityDataSource"/> instance for mocking. </returns>
-        public static EntityDataSource EntityDataSource(string name = default, string entityId = default)
+        public static EntityDataSource EntityDataSource(string name = null, string entityId = null)
         {
             return new EntityDataSource(name, entityId);
         }

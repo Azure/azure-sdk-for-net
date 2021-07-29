@@ -371,11 +371,6 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     message.Header.FirstAcquirer = sourceMessage.Header.FirstAcquirer;
                 }
-
-                if (sourceMessage.Header.DeliveryCount.HasValue)
-                {
-                    message.Header.DeliveryCount = sourceMessage.Header.DeliveryCount;
-                }
             }
 
             // Properties

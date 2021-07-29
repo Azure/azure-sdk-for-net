@@ -1,6 +1,19 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+- Properties `Suffix` and `Prefix` are now available under `TranslationSource` instead of in type `DocumentFilter`.
+- Type `DocumentTranslationError` is now a struct.
+- Type `StorageInputType` is now a regular enum instead of an extensible enum.
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.3 (2021-07-07)
 ### Breaking changes
 
 - Renamed property `DocumentId` to `Id`in `DocumentStatusResult`.

@@ -12,15 +12,15 @@ namespace Azure.Data.Tables.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class TableModelFactory
     {
-        /// <summary> Initializes new instance of TableServiceStatistics class. </summary>
+        /// <summary> Initializes a new instance of TableServiceStatistics. </summary>
         /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>
         /// <returns> A new <see cref="Models.TableServiceStatistics"/> instance for mocking. </returns>
-        public static TableServiceStatistics TableServiceStatistics(TableGeoReplicationInfo geoReplication = default)
+        public static TableServiceStatistics TableServiceStatistics(TableGeoReplicationInfo geoReplication = null)
         {
             return new TableServiceStatistics(geoReplication);
         }
 
-        /// <summary> Initializes new instance of TableGeoReplicationInfo class. </summary>
+        /// <summary> Initializes a new instance of TableGeoReplicationInfo. </summary>
         /// <param name="status"> The status of the secondary location. </param>
         /// <param name="lastSyncedOn"> A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads. </param>
         /// <returns> A new <see cref="Models.TableGeoReplicationInfo"/> instance for mocking. </returns>

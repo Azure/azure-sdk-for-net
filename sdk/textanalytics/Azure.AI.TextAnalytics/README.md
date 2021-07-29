@@ -19,15 +19,15 @@ Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 ```PowerShell
 dotnet add package Azure.AI.TextAnalytics
 ```
-> Note: This version of the client library defaults to the `v3.1-preview.5` version of the service.
+> Note: This version of the client library defaults to the `v3.1` version of the service.
 
 This table shows the relationship between SDK versions and supported API versions of the service:
 
 |SDK version|Supported API version of service
 |-|- |
-|5.1.0-beta.7 (latest Beta) | 3.0, 3.1-preview.5
-|5.0.0 (latest GA) | 3.0
-|1.0.0, 1.0.1 | 3.0
+|5.1.0  | 3.0, 3.1 (default)
+|5.0.0  | 3.0
+|1.0.X | 3.0
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
@@ -833,7 +833,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [mock_client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com
 [moq]: https://github.com/Moq/moq4/

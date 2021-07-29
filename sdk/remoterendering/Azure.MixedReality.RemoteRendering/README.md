@@ -38,7 +38,7 @@ Add a package reference:
 
 ### Prerequisites
 
-You will need an [Azure subscription](https://azure.microsoft.com/free/) and an [Azure Remote Rendering account](https://docs.microsoft.com/azure/remote-rendering/how-tos/create-an-account) to use this package.
+You will need an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an [Azure Remote Rendering account](https://docs.microsoft.com/azure/remote-rendering/how-tos/create-an-account) to use this package.
 
 ### Authenticate the client
 

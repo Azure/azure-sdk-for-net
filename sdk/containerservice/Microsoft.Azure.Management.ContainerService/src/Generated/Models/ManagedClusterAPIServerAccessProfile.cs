@@ -33,14 +33,20 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// Initializes a new instance of the
         /// ManagedClusterAPIServerAccessProfile class.
         /// </summary>
-        /// <param name="authorizedIPRanges">Authorized IP Ranges to kubernetes
-        /// API server.</param>
+        /// <param name="authorizedIPRanges">The IP ranges authorized to access
+        /// the Kubernetes API server.</param>
         /// <param name="enablePrivateCluster">Whether to create the cluster as
         /// a private cluster or not.</param>
-        public ManagedClusterAPIServerAccessProfile(IList<string> authorizedIPRanges = default(IList<string>), bool? enablePrivateCluster = default(bool?))
+        /// <param name="privateDNSZone">The private DNS zone mode for the
+        /// cluster.</param>
+        /// <param name="enablePrivateClusterPublicFQDN">Whether to create
+        /// additional public FQDN for private cluster or not.</param>
+        public ManagedClusterAPIServerAccessProfile(IList<string> authorizedIPRanges = default(IList<string>), bool? enablePrivateCluster = default(bool?), string privateDNSZone = default(string), bool? enablePrivateClusterPublicFQDN = default(bool?))
         {
             AuthorizedIPRanges = authorizedIPRanges;
             EnablePrivateCluster = enablePrivateCluster;
+            PrivateDNSZone = privateDNSZone;
+            EnablePrivateClusterPublicFQDN = enablePrivateClusterPublicFQDN;
             CustomInit();
         }
 
@@ -50,8 +56,16 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets authorized IP Ranges to kubernetes API server.
+        /// Gets or sets the IP ranges authorized to access the Kubernetes API
+        /// server.
         /// </summary>
+        /// <remarks>
+        /// IP ranges are specified in CIDR format, e.g. 137.117.106.88/29.
+        /// This feature is not compatible with clusters that use Public IP Per
+        /// Node, or clusters that are using a Basic Load Balancer. For more
+        /// information see [API server authorized IP
+        /// ranges](https://docs.microsoft.com/azure/aks/api-server-authorized-ip-ranges).
+        /// </remarks>
         [JsonProperty(PropertyName = "authorizedIPRanges")]
         public IList<string> AuthorizedIPRanges { get; set; }
 
@@ -59,8 +73,30 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// Gets or sets whether to create the cluster as a private cluster or
         /// not.
         /// </summary>
+        /// <remarks>
+        /// For more details, see [Creating a private AKS
+        /// cluster](https://docs.microsoft.com/azure/aks/private-clusters).
+        /// </remarks>
         [JsonProperty(PropertyName = "enablePrivateCluster")]
         public bool? EnablePrivateCluster { get; set; }
+
+        /// <summary>
+        /// Gets or sets the private DNS zone mode for the cluster.
+        /// </summary>
+        /// <remarks>
+        /// The default is System. For more details see [configure private DNS
+        /// zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone).
+        /// Allowed values are 'system' and 'none'.
+        /// </remarks>
+        [JsonProperty(PropertyName = "privateDNSZone")]
+        public string PrivateDNSZone { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to create additional public FQDN for private
+        /// cluster or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "enablePrivateClusterPublicFQDN")]
+        public bool? EnablePrivateClusterPublicFQDN { get; set; }
 
     }
 }

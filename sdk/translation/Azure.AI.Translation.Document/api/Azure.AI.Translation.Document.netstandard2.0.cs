@@ -1,15 +1,5 @@
 namespace Azure.AI.Translation.Document
 {
-    public static partial class BatchDocumentTranslationModelFactory
-    {
-        public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IReadOnlyList<string> fileExtensions = null, System.Collections.Generic.IReadOnlyList<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IReadOnlyList<string> formatVersions = null) { throw null; }
-    }
-    public partial class DocumentFilter
-    {
-        public DocumentFilter() { }
-        public string Prefix { get { throw null; } set { } }
-        public string Suffix { get { throw null; } set { } }
-    }
     public partial class DocumentStatus
     {
         internal DocumentStatus() { }
@@ -56,9 +46,11 @@ namespace Azure.AI.Translation.Document
             V1_0 = 1,
         }
     }
-    public partial class DocumentTranslationError
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DocumentTranslationError
     {
-        internal DocumentTranslationError() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public Azure.AI.Translation.Document.DocumentTranslationErrorCode ErrorCode { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
@@ -159,23 +151,10 @@ namespace Azure.AI.Translation.Document
         public string Format { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> FormatVersions { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageInputType : System.IEquatable<Azure.AI.Translation.Document.StorageInputType>
+    public enum StorageInputType
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageInputType(string value) { throw null; }
-        public static Azure.AI.Translation.Document.StorageInputType File { get { throw null; } }
-        public static Azure.AI.Translation.Document.StorageInputType Folder { get { throw null; } }
-        public bool Equals(Azure.AI.Translation.Document.StorageInputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Translation.Document.StorageInputType left, Azure.AI.Translation.Document.StorageInputType right) { throw null; }
-        public static implicit operator Azure.AI.Translation.Document.StorageInputType (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Translation.Document.StorageInputType left, Azure.AI.Translation.Document.StorageInputType right) { throw null; }
-        public override string ToString() { throw null; }
+        File = 0,
+        Folder = 1,
     }
     public partial class TranslationGlossary
     {
@@ -187,9 +166,10 @@ namespace Azure.AI.Translation.Document
     public partial class TranslationSource
     {
         public TranslationSource(System.Uri sourceUri) { }
-        public Azure.AI.Translation.Document.DocumentFilter Filter { get { throw null; } set { } }
         public string LanguageCode { get { throw null; } set { } }
+        public string Prefix { get { throw null; } set { } }
         public System.Uri SourceUri { get { throw null; } }
+        public string Suffix { get { throw null; } set { } }
     }
     public partial class TranslationStatus
     {
@@ -201,7 +181,7 @@ namespace Azure.AI.Translation.Document
         public int DocumentsNotStarted { get { throw null; } }
         public int DocumentsSucceeded { get { throw null; } }
         public int DocumentsTotal { get { throw null; } }
-        public Azure.AI.Translation.Document.DocumentTranslationError Error { get { throw null; } }
+        public Azure.AI.Translation.Document.DocumentTranslationError? Error { get { throw null; } }
         public string Id { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public Azure.AI.Translation.Document.DocumentTranslationStatus Status { get { throw null; } }
@@ -214,5 +194,12 @@ namespace Azure.AI.Translation.Document
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationGlossary> Glossaries { get { throw null; } }
         public string LanguageCode { get { throw null; } }
         public System.Uri TargetUri { get { throw null; } }
+    }
+}
+namespace Azure.AI.Translation.Document.Models
+{
+    public static partial class BatchDocumentTranslationModelFactory
+    {
+        public static Azure.AI.Translation.Document.FileFormat FileFormat(string format = null, System.Collections.Generic.IEnumerable<string> fileExtensions = null, System.Collections.Generic.IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IEnumerable<string> formatVersions = null) { throw null; }
     }
 }

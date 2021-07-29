@@ -50,10 +50,16 @@ $releaseReplaceRegex = "(https://github.com/$RepoId/(?:blob|tree)/)(?:master|mai
 $TITLE_REGEX = "(\#\s+(?<filetitle>Azure .+? (?:client|plugin|shared) library for (?:JavaScript|Java|Python|\.NET|C)))"
 
 function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata) {
-  # Normalize service name "Key Vault" -> "keyvault"
-  # TODO: Use taxonomy for service name -- https://github.com/Azure/azure-sdk-tools/issues/1442
-  # probably from metadata
-  $service = $PackageMetadata.ServiceName.ToLower().Replace(" ", "")
+  # The $PackageMetadata could be $null if there is no associated metadata entry
+  # based on how the metadata CSV is filtered
+  $service = $PackageInfo.ServiceDirectory.ToLower()
+  if ($PackageMetadata -and $PackageMetadata.ServiceName) {
+    # Normalize service name "Key Vault" -> "keyvault"
+    # TODO: Use taxonomy for service name -- https://github.com/Azure/azure-sdk-tools/issues/1442
+    # probably from metadata
+    $service = $PackageMetadata.ServiceName.ToLower().Replace(" ", "")
+  }
+
   # Generate the release tag for use in link substitution
   $tag = "$($PackageInfo.Name)_$($PackageInfo.Version)"
   $date = Get-Date -Format "MM/dd/yyyy"
@@ -78,7 +84,7 @@ keywords: Azure, $Language, SDK, API, $($PackageInfo.Name), $service
 author: maggiepint
 ms.author: magpint
 ms.date: $date
-ms.topic: article
+ms.topic: reference
 ms.prod: azure
 ms.technology: azure
 ms.devlang: $Language
@@ -110,11 +116,14 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
 
   $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name -and $_.GroupId -eq $packageInfo.Group -and $_.Hide -ne 'true' -and $_.New -eq 'true' })
   if ($packageMetadataArray.Count -eq 0) { 
-    LogError "Could not retrieve metadata for $($packageInfo.Name) from metadata CSV"
+    LogWarning "Could not retrieve metadata for $($packageInfo.Name) from metadata CSV. Using best effort defaults."
+    $packageMetadata = $null
   } elseif ($packageMetadataArray.Count -gt 1) { 
     LogWarning "Multiple metadata entries for $($packageInfo.Name) in metadata CSV. Using first entry."
+    $packageMetadata = $packageMetadataArray[0]
+  } else {
+    $packageMetadata = $packageMetadataArray[0]
   }
-  $packageMetadata = $packageMetadataArray[0]
 
   $readmeContent = Get-Content $packageInfo.ReadMePath -Raw
   $outputReadmeContent = "" 

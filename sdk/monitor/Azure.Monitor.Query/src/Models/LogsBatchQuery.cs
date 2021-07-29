@@ -9,7 +9,7 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// Represents a batch that consists out of multiple log queries.
+    /// Represents a batch that consists of multiple log queries.
     /// </summary>
     public class LogsBatchQuery
     {
@@ -29,11 +29,11 @@ namespace Azure.Monitor.Query
         /// string countQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     TimeSpan.FromDays(1));
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     TimeSpan.FromDays(1));
+        ///     new DateTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResults&gt; response = await client.QueryBatchAsync(batch);
         ///

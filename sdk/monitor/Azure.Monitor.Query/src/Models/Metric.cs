@@ -21,12 +21,12 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The name of the metric. </summary>
         public string Name => LocalizedName.Value;
 
-        /// <summary> the time series returned when a data query is performed. </summary>
+        /// <summary> The time series returned when a data query is performed. </summary>
         [CodeGenMember("Timeseries")]
         public IReadOnlyList<TimeSeriesElement> TimeSeries { get; }
 
         /// <summary>
-        /// Gets the error that occured while querying the metric.
+        /// Gets the error that occurred while querying the metric.
         /// </summary>
         public ResponseError Error => ErrorCode == SuccessErrorCode ? null : new ResponseError(ErrorCode, ErrorMessage, null, null, null);
     }

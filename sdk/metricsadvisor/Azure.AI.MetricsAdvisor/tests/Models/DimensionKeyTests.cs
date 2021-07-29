@@ -19,8 +19,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [Test]
         public void TryGetValueValidatesArguments()
         {
-            var columns = new Dictionary<string, string>();
-            var dimensionKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>();
+            var dimensionKey = new DimensionKey(dimensions);
 
             Assert.That(() => dimensionKey.TryGetValue(null, out var _), Throws.ArgumentNullException);
             Assert.That(() => dimensionKey.TryGetValue("", out var _), Throws.ArgumentException);
@@ -29,8 +29,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [Test]
         public void TryGetValueGetsValues()
         {
-            var columns = new Dictionary<string, string>() { { "name1", "value1" }, { "name2", "value2" } };
-            var dimensionKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { "name1", "value1" }, { "name2", "value2" } };
+            var dimensionKey = new DimensionKey(dimensions);
 
             Assert.That(dimensionKey.TryGetValue("name1", out string value1));
             Assert.That(dimensionKey.TryGetValue("name2", out string value2));
@@ -42,8 +42,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [Test]
         public void TryGetValueReturnsFalseForMissingValue()
         {
-            var columns = new Dictionary<string, string>() { { "name", "value" } };
-            var dimensionKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { "name", "value" } };
+            var dimensionKey = new DimensionKey(dimensions);
 
             Assert.That(dimensionKey.TryGetValue("otherName", out string value), Is.False);
             Assert.That(value, Is.Null);
@@ -52,37 +52,37 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [Test]
         public void ContainsValidatesArguments()
         {
-            var columns = new Dictionary<string, string>();
-            var dimensionKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>();
+            var dimensionKey = new DimensionKey(dimensions);
 
             Assert.That(() => dimensionKey.Contains(null), Throws.ArgumentNullException);
             Assert.That(() => dimensionKey.Contains(""), Throws.ArgumentException);
         }
 
         [Test]
-        public void ContainsChecksColumns()
+        public void ContainsChecksDimensions()
         {
-            var columns = new Dictionary<string, string>() { { "name", "value" } };
-            var dimensionKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { "name", "value" } };
+            var dimensionKey = new DimensionKey(dimensions);
 
             Assert.That(dimensionKey.Contains("name"));
             Assert.That(dimensionKey.Contains("otherName"), Is.False);
         }
 
         [Test]
-        public void DimensionKeyEnumeratesColumns()
+        public void DimensionKeyEnumeratesDimensions()
         {
-            var columns = new Dictionary<string, string>() { { "name1", "value1" }, { "name2", "value2" } };
-            var dimensionKey = new DimensionKey(columns);
+            var dimensions = new Dictionary<string, string>() { { "name1", "value1" }, { "name2", "value2" } };
+            var dimensionKey = new DimensionKey(dimensions);
 
-            var enumeratedColumns = new Dictionary<string, string>();
+            var enumeratedDimensions = new Dictionary<string, string>();
 
             foreach (KeyValuePair<string, string> column in dimensionKey)
             {
-                enumeratedColumns.Add(column.Key, column.Value);
+                enumeratedDimensions.Add(column.Key, column.Value);
             }
 
-            Assert.That(enumeratedColumns, Is.EquivalentTo(columns));
+            Assert.That(enumeratedDimensions, Is.EquivalentTo(dimensions));
         }
     }
 }

@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
 
@@ -21,7 +19,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 GetMockedReceiverConnection(),
                 "fakeQueue",
                 options: new ServiceBusSessionReceiverOptions(),
-                plugins: new ServiceBusPlugin[] { },
                 cancellationToken: CancellationToken.None);
 
             Assert.That(async () => await receiver.RenewMessageLockAsync(
@@ -33,7 +30,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         public async Task GetSessionStateAsyncValidatesClientIsNotDisposed()
         {
             await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
-            await using var receiver = new ServiceBusSessionReceiver(client.Connection, "fake", default, default, CancellationToken.None);
+            await using var receiver = new ServiceBusSessionReceiver(client.Connection, "fake", default, CancellationToken.None);
 
             await client.DisposeAsync();
             Assert.That(async () => await receiver.GetSessionStateAsync(),
@@ -44,7 +41,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         public async Task SetSessionStateAsyncValidatesClientIsNotDisposed()
         {
             await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
-            await using var receiver = new ServiceBusSessionReceiver(client.Connection, "fake", default, default, CancellationToken.None);
+            await using var receiver = new ServiceBusSessionReceiver(client.Connection, "fake", default, CancellationToken.None);
 
             await client.DisposeAsync();
             Assert.That(async () => await receiver.SetSessionStateAsync(new BinaryData("new!")),

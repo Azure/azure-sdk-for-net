@@ -32,14 +32,14 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// Initializes a new instance of the ContainerServiceNetworkProfile
         /// class.
         /// </summary>
-        /// <param name="networkPlugin">Network plugin used for building
+        /// <param name="networkPlugin">Network plugin used for building the
         /// Kubernetes network. Possible values include: 'azure',
         /// 'kubenet'</param>
-        /// <param name="networkPolicy">Network policy used for building
+        /// <param name="networkPolicy">Network policy used for building the
         /// Kubernetes network. Possible values include: 'calico',
         /// 'azure'</param>
-        /// <param name="networkMode">Network mode used for building Kubernetes
-        /// network. Possible values include: 'transparent', 'bridge'</param>
+        /// <param name="networkMode">The network mode Azure CNI is configured
+        /// with.</param>
         /// <param name="podCidr">A CIDR notation IP range from which to assign
         /// pod IPs when kubenet is used.</param>
         /// <param name="serviceCidr">A CIDR notation IP range from which to
@@ -51,11 +51,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="dockerBridgeCidr">A CIDR notation IP range assigned to
         /// the Docker bridge network. It must not overlap with any Subnet IP
         /// ranges or the Kubernetes service address range.</param>
-        /// <param name="outboundType">The outbound (egress) routing method.
-        /// Possible values include: 'loadBalancer',
-        /// 'userDefinedRouting'</param>
+        /// <param name="outboundType">The outbound (egress) routing
+        /// method.</param>
         /// <param name="loadBalancerSku">The load balancer sku for the managed
-        /// cluster. Possible values include: 'standard', 'basic'</param>
+        /// cluster.</param>
         /// <param name="loadBalancerProfile">Profile of the cluster load
         /// balancer.</param>
         public ContainerServiceNetworkProfile(string networkPlugin = default(string), string networkPolicy = default(string), string networkMode = default(string), string podCidr = default(string), string serviceCidr = default(string), string dnsServiceIP = default(string), string dockerBridgeCidr = default(string), string outboundType = default(string), string loadBalancerSku = default(string), ManagedClusterLoadBalancerProfile loadBalancerProfile = default(ManagedClusterLoadBalancerProfile))
@@ -79,23 +78,26 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets network plugin used for building Kubernetes network.
-        /// Possible values include: 'azure', 'kubenet'
+        /// Gets or sets network plugin used for building the Kubernetes
+        /// network. Possible values include: 'azure', 'kubenet'
         /// </summary>
         [JsonProperty(PropertyName = "networkPlugin")]
         public string NetworkPlugin { get; set; }
 
         /// <summary>
-        /// Gets or sets network policy used for building Kubernetes network.
-        /// Possible values include: 'calico', 'azure'
+        /// Gets or sets network policy used for building the Kubernetes
+        /// network. Possible values include: 'calico', 'azure'
         /// </summary>
         [JsonProperty(PropertyName = "networkPolicy")]
         public string NetworkPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets network mode used for building Kubernetes network.
-        /// Possible values include: 'transparent', 'bridge'
+        /// Gets or sets the network mode Azure CNI is configured with.
         /// </summary>
+        /// <remarks>
+        /// This cannot be specified if networkPlugin is anything other than
+        /// 'azure'. Possible values include: 'transparent', 'bridge'
+        /// </remarks>
         [JsonProperty(PropertyName = "networkMode")]
         public string NetworkMode { get; set; }
 
@@ -130,16 +132,26 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string DockerBridgeCidr { get; set; }
 
         /// <summary>
-        /// Gets or sets the outbound (egress) routing method. Possible values
-        /// include: 'loadBalancer', 'userDefinedRouting'
+        /// Gets or sets the outbound (egress) routing method.
         /// </summary>
+        /// <remarks>
+        /// This can only be set at cluster creation time and cannot be changed
+        /// later. For more information see [egress outbound
+        /// type](https://docs.microsoft.com/azure/aks/egress-outboundtype).
+        /// Possible values include: 'loadBalancer', 'userDefinedRouting'
+        /// </remarks>
         [JsonProperty(PropertyName = "outboundType")]
         public string OutboundType { get; set; }
 
         /// <summary>
         /// Gets or sets the load balancer sku for the managed cluster.
-        /// Possible values include: 'standard', 'basic'
         /// </summary>
+        /// <remarks>
+        /// The default is 'standard'. See [Azure Load Balancer
+        /// SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more
+        /// information about the differences between load balancer SKUs.
+        /// Possible values include: 'standard', 'basic'
+        /// </remarks>
         [JsonProperty(PropertyName = "loadBalancerSku")]
         public string LoadBalancerSku { get; set; }
 

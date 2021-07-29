@@ -167,6 +167,8 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Simple
                 {
+                    searchClient = GetOriginal(searchClient);
+
                     #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender1
                     await using SearchIndexingBufferedSender<Product> indexer =
                         new SearchIndexingBufferedSender<Product>(searchClient);

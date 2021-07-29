@@ -216,11 +216,88 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public void ConnectionStringConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var options = new EventHubProducerClientOptions { Identifier = expected };
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+            var producer = new EventHubProducerClient(connectionString, options);
+
+            Assert.That(producer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void TokenCredentialConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
+            var options = new EventHubProducerClientOptions { Identifier = expected };
+            var producer = new EventHubProducerClient("namespace", "eventHub", credential.Object, options);
+
+            Assert.That(producer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var credential = new AzureNamedKeyCredential("key", "value");
+            var options = new EventHubProducerClientOptions { Identifier = expected };
+            var producer = new EventHubProducerClient("namespace", "eventHub", credential, options);
+
+            Assert.That(producer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
+            var options = new EventHubProducerClientOptions { Identifier = expected };
+            var producer = new EventHubProducerClient("namespace", "eventHub", credential, options);
+
+            Assert.That(producer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConnectionConstructorSetsTheIdentifier()
+        {
+            var expected = "Test-Identifier";
+            var options = new EventHubProducerClientOptions { Identifier = expected };
+            var mockConnection = new MockConnection();
+            var producer = new EventHubProducerClient(mockConnection, options);
+
+            Assert.That(producer.Identifier, Is.SameAs(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
         public void ConnectionStringConstructorCreatesDefaultOptions()
         {
             var expected = new EventHubProducerClientOptions().RetryOptions;
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+
             var producer = new EventHubProducerClient(connectionString);
+            Assert.That(producer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(producer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -239,7 +316,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var expected = new EventHubProducerClientOptions().RetryOptions;
+
             var producer = new EventHubProducerClient("namespace", "eventHub", credential.Object);
+            Assert.That(producer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(producer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -258,7 +337,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new AzureNamedKeyCredential("key", "value");
             var expected = new EventHubProducerClientOptions().RetryOptions;
+
             var producer = new EventHubProducerClient("namespace", "eventHub", credential);
+            Assert.That(producer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(producer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -277,7 +358,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
             var expected = new EventHubProducerClientOptions().RetryOptions;
+
             var producer = new EventHubProducerClient("namespace", "eventHub", credential);
+            Assert.That(producer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(producer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -296,7 +379,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var expected = new EventHubProducerClientOptions().RetryOptions;
             var mockConnection = new MockConnection();
+
             var producer = new EventHubProducerClient(mockConnection);
+            Assert.That(producer.Identifier, Is.Not.Null.And.Not.Empty, "A default identifier should have been generated.");
 
             var policy = GetRetryPolicy(producer);
             Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
@@ -803,7 +888,7 @@ namespace Azure.Messaging.EventHubs.Tests
             clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptions());
             clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptions());
 
-            var connection = new MockConnection((partition, feature, options, retry) =>
+            var connection = new MockConnection((partition, identifier, feature, options, retry) =>
             {
                 requestedFeatures = feature;
                 requestedOptions = options;
@@ -1359,7 +1444,7 @@ namespace Azure.Messaging.EventHubs.Tests
             clientOptions.PartitionOptions.Add("0", new PartitionPublishingOptions());
             clientOptions.PartitionOptions.Add("1", new PartitionPublishingOptions());
 
-            var connection = new MockConnection((partition, feature, options, retry) =>
+            var connection = new MockConnection((partition, identifier, feature, options, retry) =>
             {
                 requestedFeatures = feature;
                 requestedOptions = options;
@@ -2605,15 +2690,15 @@ namespace Azure.Messaging.EventHubs.Tests
             public Mock<TransportClient> InnerClientMock = null;
             public bool WasClosed = false;
 
-            public Func<string, TransportProducerFeatures, PartitionPublishingOptions, EventHubsRetryPolicy, TransportProducer> TransportProducerFactory =
-                (partition, features, options, retry) => Mock.Of<TransportProducer>();
+            public Func<string, string, TransportProducerFeatures, PartitionPublishingOptions, EventHubsRetryPolicy, TransportProducer> TransportProducerFactory =
+                (partition, identifier, features, options, retry) => Mock.Of<TransportProducer>();
 
             public MockConnection(string namespaceName = "fakeNamespace",
                                   string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>()).Object)
             {
             }
 
-            public MockConnection(Func<string, TransportProducerFeatures, PartitionPublishingOptions, EventHubsRetryPolicy, TransportProducer> transportProducerFactory,
+            public MockConnection(Func<string, string, TransportProducerFeatures, PartitionPublishingOptions, EventHubsRetryPolicy, TransportProducer> transportProducerFactory,
                                   string namespaceName,
                                   string eventHubName) : this(namespaceName, eventHubName)
             {
@@ -2622,11 +2707,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public MockConnection(Func<TransportProducer> transportProducerFactory,
                                   string namespaceName,
-                                  string eventHubName) : this((partition, features, options, retry) => transportProducerFactory(), namespaceName, eventHubName)
+                                  string eventHubName) : this((partition, identifier, features, options, retry) => transportProducerFactory(), namespaceName, eventHubName)
             {
             }
 
-            public MockConnection(Func<string, TransportProducerFeatures, PartitionPublishingOptions, EventHubsRetryPolicy, TransportProducer> transportProducerFactory)
+            public MockConnection(Func<string, string, TransportProducerFeatures, PartitionPublishingOptions, EventHubsRetryPolicy, TransportProducer> transportProducerFactory)
                 : this(transportProducerFactory, "fakeNamespace", "fakeEventHub")
             {
             }
@@ -2658,9 +2743,10 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             internal override TransportProducer CreateTransportProducer(string partitionId,
+                                                                        string producerIdentifier,
                                                                         TransportProducerFeatures requestedFeatures,
                                                                         PartitionPublishingOptions partitionOptions,
-                                                                        EventHubsRetryPolicy retryPolicy) => TransportProducerFactory(partitionId, requestedFeatures, partitionOptions, retryPolicy);
+                                                                        EventHubsRetryPolicy retryPolicy) => TransportProducerFactory(partitionId, producerIdentifier, requestedFeatures, partitionOptions, retryPolicy);
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                     string eventHubName, EventHubTokenCredential credential,
@@ -2750,7 +2836,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                              EventHubConnection connection,
                                              EventHubsRetryPolicy retryPolicy,
                                              ConcurrentDictionary<string, PoolItem> pool = default,
-                                             TimeSpan? expirationInterval = default) : base(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), pool, expirationInterval)
+                                             TimeSpan? expirationInterval = default) : base(partition => connection.CreateTransportProducer(partition, null, TransportProducerFeatures.None, null, retryPolicy), pool, expirationInterval)
             {
                 MockPooledProducer = new MockPooledProducer(transportProducer);
             }
