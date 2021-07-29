@@ -46,7 +46,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} | distinct * |" +
                 $"project {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName}, {LogsTestData.BoolColumnName}, {LogsTestData.FloatColumnName} |" +
                 $"order by {LogsTestData.StringColumnName} asc",
                 _logsTestData.DataTimeRange);
@@ -73,7 +73,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
                 _logsTestData.DataTimeRange);
 
             CollectionAssert.AreEqual(new[] {"a", "b", "c"}, results.Value);
@@ -99,7 +99,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc",
                 _logsTestData.DataTimeRange, new LogsQueryOptions()
                 {
                     AdditionalWorkspaces = { TestEnvironment.SecondaryWorkspaceId }
@@ -113,7 +113,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync<int>(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | count",
+            var results = await client.QueryAsync<int>(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | count",
                 _logsTestData.DataTimeRange);
 
             Assert.AreEqual(_logsTestData.TableA.Count, results.Value[0]);
@@ -125,7 +125,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<TestModel>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} | distinct * |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"order by Name asc",
                 _logsTestData.DataTimeRange);
@@ -144,7 +144,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<Dictionary<string, object>>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} | distinct * |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"project Name, Age |" +
                 $"order by Name asc",
@@ -164,7 +164,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<IDictionary<string, object>>(TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} | distinct * |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"project Name, Age |" +
                 $"order by Name asc",
@@ -432,7 +432,7 @@ namespace Azure.Monitor.Query.Tests
             var client = CreateClient();
             var results = await client.QueryAsync<DateTimeOffset>(
                 TestEnvironment.WorkspaceId,
-                $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}",
+                $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}",
                 timespan);
 
             // We should get the second and the third events
@@ -451,8 +451,8 @@ namespace Azure.Monitor.Query.Tests
 
             var client = CreateClient();
             LogsBatchQuery batch = new LogsBatchQuery();
-            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}", _logsTestData.DataTimeRange);
-            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}", timespan);
+            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", _logsTestData.DataTimeRange);
+            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | distinct * | project {LogsTestData.TimeGeneratedColumnName}", timespan);
             Response<LogsBatchQueryResults> response = await client.QueryBatchAsync(batch);
 
             var result1 = response.Value.GetResult<DateTimeOffset>(id1);

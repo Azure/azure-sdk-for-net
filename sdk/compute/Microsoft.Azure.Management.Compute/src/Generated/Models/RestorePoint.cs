@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Restore Point details.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class RestorePoint : ProxyResource
     {
         /// <summary>
@@ -34,6 +37,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="excludeDisks">List of disk resource ids that the
+        /// customer wishes to exclude from the restore point. If no disks are
+        /// specified, all disks will be included.</param>
         /// <param name="sourceMetadata">Gets the details of the VM captured at
         /// the time of the restore point creation.</param>
         /// <param name="provisioningState">Gets the provisioning state of the
@@ -44,17 +50,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'FileSystemConsistent', 'ApplicationConsistent'</param>
         /// <param name="provisioningDetails">Gets the provisioning details set
         /// by the server during Create restore point operation.</param>
-        /// <param name="excludeDisks">List of disk resource ids that the
-        /// customer wishes to exclude from the restore point. If no disks are
-        /// specified, all disks will be included.</param>
-        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), RestorePointSourceMetadata sourceMetadata = default(RestorePointSourceMetadata), string provisioningState = default(string), string consistencyMode = default(string), RestorePointProvisioningDetails provisioningDetails = default(RestorePointProvisioningDetails), IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>))
+        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), RestorePointSourceMetadata sourceMetadata = default(RestorePointSourceMetadata), string provisioningState = default(string), string consistencyMode = default(string), RestorePointProvisioningDetails provisioningDetails = default(RestorePointProvisioningDetails))
             : base(id, name, type)
         {
+            ExcludeDisks = excludeDisks;
             SourceMetadata = sourceMetadata;
             ProvisioningState = provisioningState;
             ConsistencyMode = consistencyMode;
             ProvisioningDetails = provisioningDetails;
-            ExcludeDisks = excludeDisks;
             CustomInit();
         }
 
@@ -64,16 +67,24 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets list of disk resource ids that the customer wishes to
+        /// exclude from the restore point. If no disks are specified, all
+        /// disks will be included.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.excludeDisks")]
+        public IList<ApiEntityReference> ExcludeDisks { get; set; }
+
+        /// <summary>
         /// Gets the details of the VM captured at the time of the restore
         /// point creation.
         /// </summary>
-        [JsonProperty(PropertyName = "sourceMetadata")]
+        [JsonProperty(PropertyName = "properties.sourceMetadata")]
         public RestorePointSourceMetadata SourceMetadata { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the restore point.
         /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
+        [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
@@ -82,28 +93,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// include: 'CrashConsistent', 'FileSystemConsistent',
         /// 'ApplicationConsistent'
         /// </summary>
-        [JsonProperty(PropertyName = "consistencyMode")]
+        [JsonProperty(PropertyName = "properties.consistencyMode")]
         public string ConsistencyMode { get; private set; }
 
         /// <summary>
         /// Gets the provisioning details set by the server during Create
         /// restore point operation.
         /// </summary>
-        [JsonProperty(PropertyName = "provisioningDetails")]
+        [JsonProperty(PropertyName = "properties.provisioningDetails")]
         public RestorePointProvisioningDetails ProvisioningDetails { get; private set; }
-
-        /// <summary>
-        /// Gets or sets list of disk resource ids that the customer wishes to
-        /// exclude from the restore point. If no disks are specified, all
-        /// disks will be included.
-        /// </summary>
-        [JsonProperty(PropertyName = "excludeDisks")]
-        public IList<ApiEntityReference> ExcludeDisks { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

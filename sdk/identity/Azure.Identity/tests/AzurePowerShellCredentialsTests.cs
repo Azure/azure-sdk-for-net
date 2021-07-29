@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace Azure.Identity.Tests
             [Values(null, TenantId)] string explicitTenantId)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            var options = new AzurePowerShellCredentialOptions { TenantId = explicitTenantId, AllowMultiTenantAuthentication = allowMultiTenantAuthentication};
+            var options = new AzurePowerShellCredentialOptions { TenantId = explicitTenantId, AllowMultiTenantAuthentication = allowMultiTenantAuthentication };
             string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, options.AllowMultiTenantAuthentication);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
 
@@ -77,11 +78,36 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task HandlesAlternateDateTimeFormats([Values("en-US", "nl-NL")] string culture)
+        {
+            CultureInfo curCulture = CultureInfo.CurrentCulture;
+            CultureInfo.CurrentCulture = new CultureInfo(culture);
+            try
+            {
+                var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
+                TestContext.WriteLine(processOutput);
+                var testProcess = new TestProcess
+                {
+                    Output = processOutput,
+                };
+                AzurePowerShellCredential credential = InstrumentClient(
+                    new AzurePowerShellCredential(
+                        new AzurePowerShellCredentialOptions(),
+                        CredentialPipeline.GetInstance(null),
+                        new TestProcessService(testProcess, true)));
+                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = new CultureInfo(curCulture.Name);
+            }
+        }
+
+        [Test]
         [RunOnlyOnPlatforms(Windows = true)]
         public async Task FallsBackToLegacyPowershell()
         {
             bool fellBackToPowerShell = false;
-            //var testProcess = new TestProcess { Output = "'pwsh' is not recognized as an internal or external command," };
             var testProcess = new TestProcess
             {
                 Output = "'pwsh' is not recognized as an internal or external command,",

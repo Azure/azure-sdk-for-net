@@ -138,6 +138,260 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Grants access to a diskRestorePoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='restorePointCollectionName'>
+            /// The name of the restore point collection that the disk restore point
+            /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+            /// maximum name length is 80 characters.
+            /// </param>
+            /// <param name='vmRestorePointName'>
+            /// The name of the vm restore point that the disk disk restore point belongs.
+            /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+            /// length is 80 characters.
+            /// </param>
+            /// <param name='diskRestorePointName'>
+            /// The name of the disk restore point created. Supported characters for the
+            /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+            /// </param>
+            /// <param name='grantAccessData'>
+            /// Access data object supplied in the body of the get disk access operation.
+            /// </param>
+            public static AccessUri GrantAccess(this IDiskRestorePointOperations operations, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData)
+            {
+                return operations.GrantAccessAsync(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, grantAccessData).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Grants access to a diskRestorePoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='restorePointCollectionName'>
+            /// The name of the restore point collection that the disk restore point
+            /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+            /// maximum name length is 80 characters.
+            /// </param>
+            /// <param name='vmRestorePointName'>
+            /// The name of the vm restore point that the disk disk restore point belongs.
+            /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+            /// length is 80 characters.
+            /// </param>
+            /// <param name='diskRestorePointName'>
+            /// The name of the disk restore point created. Supported characters for the
+            /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+            /// </param>
+            /// <param name='grantAccessData'>
+            /// Access data object supplied in the body of the get disk access operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AccessUri> GrantAccessAsync(this IDiskRestorePointOperations operations, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GrantAccessWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, grantAccessData, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Revokes access to a diskRestorePoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='restorePointCollectionName'>
+            /// The name of the restore point collection that the disk restore point
+            /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+            /// maximum name length is 80 characters.
+            /// </param>
+            /// <param name='vmRestorePointName'>
+            /// The name of the vm restore point that the disk disk restore point belongs.
+            /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+            /// length is 80 characters.
+            /// </param>
+            /// <param name='diskRestorePointName'>
+            /// The name of the disk restore point created. Supported characters for the
+            /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+            /// </param>
+            public static void RevokeAccess(this IDiskRestorePointOperations operations, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName)
+            {
+                operations.RevokeAccessAsync(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Revokes access to a diskRestorePoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='restorePointCollectionName'>
+            /// The name of the restore point collection that the disk restore point
+            /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+            /// maximum name length is 80 characters.
+            /// </param>
+            /// <param name='vmRestorePointName'>
+            /// The name of the vm restore point that the disk disk restore point belongs.
+            /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+            /// length is 80 characters.
+            /// </param>
+            /// <param name='diskRestorePointName'>
+            /// The name of the disk restore point created. Supported characters for the
+            /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RevokeAccessAsync(this IDiskRestorePointOperations operations, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RevokeAccessWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Grants access to a diskRestorePoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='restorePointCollectionName'>
+            /// The name of the restore point collection that the disk restore point
+            /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+            /// maximum name length is 80 characters.
+            /// </param>
+            /// <param name='vmRestorePointName'>
+            /// The name of the vm restore point that the disk disk restore point belongs.
+            /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+            /// length is 80 characters.
+            /// </param>
+            /// <param name='diskRestorePointName'>
+            /// The name of the disk restore point created. Supported characters for the
+            /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+            /// </param>
+            /// <param name='grantAccessData'>
+            /// Access data object supplied in the body of the get disk access operation.
+            /// </param>
+            public static AccessUri BeginGrantAccess(this IDiskRestorePointOperations operations, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData)
+            {
+                return operations.BeginGrantAccessAsync(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, grantAccessData).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Grants access to a diskRestorePoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='restorePointCollectionName'>
+            /// The name of the restore point collection that the disk restore point
+            /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+            /// maximum name length is 80 characters.
+            /// </param>
+            /// <param name='vmRestorePointName'>
+            /// The name of the vm restore point that the disk disk restore point belongs.
+            /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+            /// length is 80 characters.
+            /// </param>
+            /// <param name='diskRestorePointName'>
+            /// The name of the disk restore point created. Supported characters for the
+            /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+            /// </param>
+            /// <param name='grantAccessData'>
+            /// Access data object supplied in the body of the get disk access operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AccessUri> BeginGrantAccessAsync(this IDiskRestorePointOperations operations, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGrantAccessWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, grantAccessData, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Revokes access to a diskRestorePoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='restorePointCollectionName'>
+            /// The name of the restore point collection that the disk restore point
+            /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+            /// maximum name length is 80 characters.
+            /// </param>
+            /// <param name='vmRestorePointName'>
+            /// The name of the vm restore point that the disk disk restore point belongs.
+            /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+            /// length is 80 characters.
+            /// </param>
+            /// <param name='diskRestorePointName'>
+            /// The name of the disk restore point created. Supported characters for the
+            /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+            /// </param>
+            public static void BeginRevokeAccess(this IDiskRestorePointOperations operations, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName)
+            {
+                operations.BeginRevokeAccessAsync(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Revokes access to a diskRestorePoint.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='restorePointCollectionName'>
+            /// The name of the restore point collection that the disk restore point
+            /// belongs. Supported characters for the name are a-z, A-Z, 0-9 and _. The
+            /// maximum name length is 80 characters.
+            /// </param>
+            /// <param name='vmRestorePointName'>
+            /// The name of the vm restore point that the disk disk restore point belongs.
+            /// Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name
+            /// length is 80 characters.
+            /// </param>
+            /// <param name='diskRestorePointName'>
+            /// The name of the disk restore point created. Supported characters for the
+            /// name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRevokeAccessAsync(this IDiskRestorePointOperations operations, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRevokeAccessWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Lists diskRestorePoints under a vmRestorePoint.
             /// </summary>
             /// <param name='operations'>

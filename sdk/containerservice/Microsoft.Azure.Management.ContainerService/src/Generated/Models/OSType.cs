@@ -16,7 +16,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     /// </summary>
     public static class OSType
     {
+        /// <summary>
+        /// Use Linux.
+        /// </summary>
         public const string Linux = "Linux";
+        /// <summary>
+        /// Use Windows.
+        /// </summary>
         public const string Windows = "Windows";
     }
 }

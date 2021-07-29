@@ -25,7 +25,11 @@ namespace Azure.Messaging.WebPubSub
         /// <inheritdoc/>
         public override void OnSendingRequest(HttpMessage message)
         {
-            string audience = message.Request.Uri.ToUri().AbsoluteUri;
+            string audience;
+            if (!TryGetAudience(message, out audience)) {
+                audience = message.Request.Uri.ToUri().AbsoluteUri;
+            }
+
             var now = DateTimeOffset.UtcNow;
             var expiresAt = now + TimeSpan.FromMinutes(5);
 
@@ -53,6 +57,25 @@ namespace Azure.Messaging.WebPubSub
             });
 
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
+        }
+
+        // this is to support API Management Server
+        private const string AUDIENCE_SETTING = nameof(WebPubSubAuthenticationPolicy) + ".Audience";
+        public static void SetAudience(HttpMessage message, Uri audience)
+        {
+            message.SetProperty(AUDIENCE_SETTING, audience.AbsoluteUri);
+        }
+
+        private static bool TryGetAudience(HttpMessage message, out string audience)
+        {
+            if (message.TryGetProperty(AUDIENCE_SETTING, out var jwtAudience) &&
+            	jwtAudience is string uri)
+            {
+            	audience = uri;
+                return true;
+            }
+            audience = default;
+            return false;
         }
 
         private sealed class KeyBytesCache

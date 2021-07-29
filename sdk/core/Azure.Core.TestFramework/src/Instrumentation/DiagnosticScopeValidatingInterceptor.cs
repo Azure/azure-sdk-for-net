@@ -155,7 +155,7 @@ namespace Azure.Core.TestFramework
             var expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
             bool strict = !methodInfo.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
 
-            bool expectFailure = false;
+            Exception lastException = null;
             bool skipChecks = false;
             T result;
 
@@ -166,7 +166,7 @@ namespace Azure.Core.TestFramework
             }
             catch (Exception ex)
             {
-                expectFailure = true;
+                lastException = ex;
 
                 if (ex is ArgumentException)
                 {
@@ -198,9 +198,9 @@ namespace Azure.Core.TestFramework
                             throw new InvalidOperationException($"All diagnostic scopes should have 'az.namespace' attribute, make sure the assembly containing **ClientOptions type is marked with the AzureResourceProviderNamespace attribute specifying the appropriate provider. This attribute should be included in AssemblyInfo, and can be included by pulling in AzureResourceProviderNamespaceAttribute.cs using the AzureCoreSharedSources alias.");
                         }
 
-                        if (expectFailure && !e.IsFailed)
+                        if (lastException != null && !e.IsFailed)
                         {
-                            throw new InvalidOperationException($"Expected scope {expectedName} to be marked as failed but it succeeded");
+                            throw new InvalidOperationException($"Expected scope {expectedName} to be marked as failed but it succeeded{Environment.NewLine}Exception: {lastException}");
                         }
                     }
                     else
@@ -221,6 +221,11 @@ namespace Azure.Core.TestFramework
             private readonly AsyncPageable<T> _pageable;
             private readonly MethodInfo _methodInfo;
             private readonly bool _overridesGetAsyncEnumerator;
+
+            //for mocking
+            protected DiagnosticScopeValidatingAsyncEnumerable()
+            {
+            }
 
             public DiagnosticScopeValidatingAsyncEnumerable(AsyncPageable<T> pageable, MethodInfo methodInfo)
             {

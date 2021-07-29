@@ -53,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             var entity = new ServiceBusEntity
             {
                 MessageSender = messageSender,
-                ServiceBusEntityType = _attribute.ServiceBusEntityType,
+                ServiceBusEntityType = _attribute.EntityType,
             };
 
             return await BindAsync(entity, context.ValueContext).ConfigureAwait(false);

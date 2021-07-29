@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public WebPubSubConnection(Uri url)
         {
-            Url = url.ToString();
+            Url = url.AbsoluteUri;
             BaseUrl = $"{url.Scheme}://{url.Authority}{url.AbsolutePath}";
             AccessToken = HttpUtility.ParseQueryString(url.Query)["access_token"];
         }

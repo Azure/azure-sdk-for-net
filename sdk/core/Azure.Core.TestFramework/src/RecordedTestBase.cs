@@ -63,9 +63,10 @@ namespace Azure.Core.TestFramework
             Mode = mode ?? TestEnvironment.GlobalTestMode;
         }
 
-        public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
+        public T InstrumentClientOptions<T>(T clientOptions, TestRecording recording = default) where T : ClientOptions
         {
-            clientOptions.Transport = Recording.CreateTransport(clientOptions.Transport);
+            recording ??= Recording;
+            clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
             if (Mode == RecordedTestMode.Playback)
             {
                 // Not making the timeout zero so retry code still goes async
@@ -75,7 +76,7 @@ namespace Azure.Core.TestFramework
             return clientOptions;
         }
 
-        private string GetSessionFilePath()
+        protected string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
 
@@ -99,7 +100,7 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
-        /// Add a static TestEventListener which will redirect SDK logging
+        /// Add a static <see cref="Diagnostics.AzureEventSourceListener"/> which will redirect SDK logging
         /// to Console.Out for easy debugging.
         /// </summary>
         private static TestLogger Logger { get; set; }
@@ -181,8 +182,19 @@ namespace Azure.Core.TestFramework
         {
             return ProxyGenerator.CreateClassProxyWithTarget(
                 operationType,
-                new[] {typeof(IInstrumented)},
+                new[] { typeof(IInstrumented) },
                 operation,
+                new GetOriginalInterceptor(operation),
+                new OperationInterceptor(Mode == RecordedTestMode.Playback));
+        }
+
+        protected object InstrumentMgmtOperation(Type operationType, object operation, ManagementInterceptor managementInterceptor)
+        {
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                operationType,
+                new[] { typeof(IInstrumented) },
+                operation,
+                managementInterceptor,
                 new GetOriginalInterceptor(operation),
                 new OperationInterceptor(Mode == RecordedTestMode.Playback));
         }

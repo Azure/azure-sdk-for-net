@@ -103,6 +103,14 @@ var client = new DocumentTranslationClient(new Uri(endpoint), new DefaultAzureCr
 ```
 
 ## Key concepts
+The Document Translation service requires that you upload your files to an Azure Blob Storage source container and provide
+a target container where the translated documents can be written. SAS tokens to the containers (or files) are used to
+access the documents and create the translated documents in the target container. Additional information about setting this up can be found in
+the service documentation:
+
+- [Set up Azure Blob Storage containers][source_containers] with your documents.
+- Optionally apply [glossaries][glossary] or a [custom model for translation][custom_model].
+- Generate [SAS tokens][sas_token] to your containers (or files) with the appropriate [permissions][sas_token_permissions].
 
 ### DocumentTranslationClient
 A `DocumentTranslationClient` is the primary interface for developers using the Document Translation client library.  It provides both synchronous and asynchronous methods to perform the following operations:
@@ -231,8 +239,8 @@ int docsFailed = 0;
 
 await foreach (TranslationStatus translationStatus in client.GetAllTranslationStatusesAsync())
 {
-    if (translationStatus.Status != DocumentTranslationStatus.Failed &&
-          translationStatus.Status != DocumentTranslationStatus.Succeeded)
+    if (translationStatus.Status == DocumentTranslationStatus.NotStarted ||
+        translationStatus.Status == DocumentTranslationStatus.Running)
     {
         DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.Id, client);
         await operation.WaitForCompletionAsync();
@@ -448,6 +456,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_portal_create_DT_resource]: https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesTextTranslation
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
+[source_containers]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#create-your-azure-blob-storage-containers
+[custom_model]: https://docs.microsoft.com/azure/cognitive-services/translator/custom-translator/quickstart-build-deploy-custom-model
+[glossary]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview#supported-glossary-formats
+[sas_token]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/create-sas-tokens?tabs=Containers#create-your-sas-tokens-with-azure-storage-explorer
+[sas_token_permissions]: https://aka.ms/azsdk/documenttranslation/sas-permissions
 
 [documenttranslation_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Document/src/DocumentTranslationClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md

@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
-
-namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
+namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ManagedPrivateEndpointsModelFactory

@@ -1305,7 +1305,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get all type definitions in Atlas in bulk. </summary>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true when search filter type=term_template.
+        /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="options"> The request options. </param>
@@ -1349,7 +1349,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get all type definitions in Atlas in bulk. </summary>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true when search filter type=term_template.
+        /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="options"> The request options. </param>
@@ -1393,7 +1393,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create Request for <see cref="GetAllTypeDefinitions"/> and <see cref="GetAllTypeDefinitionsAsync"/> operations. </summary>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true when search filter type=term_template.
+        /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="options"> The request options. </param>
@@ -1436,37 +1436,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>classificationDefs</term>
         ///     <term>AtlasClassificationDef[]</term>
         ///     <term></term>
-        ///     <term> An array of classification definitions. </term>
+        ///     <term>An array of classification definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityDefs</term>
         ///     <term>AtlasEntityDef[]</term>
         ///     <term></term>
-        ///     <term> An array of entity definitions. </term>
+        ///     <term>An array of entity definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>enumDefs</term>
         ///     <term>AtlasEnumDef[]</term>
         ///     <term></term>
-        ///     <term> An array of enum definitions. </term>
+        ///     <term>An array of enum definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipDefs</term>
         ///     <term>AtlasRelationshipDef[]</term>
         ///     <term></term>
-        ///     <term> An array of relationship definitions. </term>
+        ///     <term>An array of relationship definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>structDefs</term>
         ///     <term>AtlasStructDef[]</term>
         ///     <term></term>
-        ///     <term> An array of struct definitions. </term>
+        ///     <term>An array of struct definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>termTemplateDefs</term>
         ///     <term>TermTemplateDef[]</term>
         ///     <term></term>
-        ///     <term> An array of term template definitions. </term>
+        ///     <term>An array of term template definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassificationDef</c>:
@@ -1481,98 +1481,97 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term>
-        /// Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        ///     <term>Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
         /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
@@ -1581,20 +1580,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
         /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
         /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;.
-        /// </term>
+        /// &lt;/ul&gt;</term>
         ///   </item>
         ///   <item>
         ///     <term>subTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of sub types. </term>
+        ///     <term>An array of sub types.</term>
         ///   </item>
         ///   <item>
         ///     <term>superTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of super types. </term>
+        ///     <term>An array of super types.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntityDef</c>:
@@ -1609,109 +1607,109 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>subTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of sub types. </term>
+        ///     <term>An array of sub types.</term>
         ///   </item>
         ///   <item>
         ///     <term>superTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of super types. </term>
+        ///     <term>An array of super types.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipAttributeDefs</term>
         ///     <term>AtlasRelationshipAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of relationship attributes. </term>
+        ///     <term>An array of relationship attributes.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEnumDef</c>:
@@ -1726,97 +1724,97 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value. </term>
+        ///     <term>The default value.</term>
         ///   </item>
         ///   <item>
         ///     <term>elementDefs</term>
         ///     <term>AtlasEnumElementDef[]</term>
         ///     <term></term>
-        ///     <term> An array of enum element definitions. </term>
+        ///     <term>An array of enum element definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipDef</c>:
@@ -1831,116 +1829,111 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDef1</term>
         ///     <term>AtlasRelationshipEndDef</term>
         ///     <term></term>
-        ///     <term>
-        /// The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        /// </term>
+        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDef2</term>
         ///     <term>AtlasRelationshipEndDef</term>
         ///     <term></term>
-        ///     <term>
-        /// The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        /// </term>
+        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipCategory</term>
         ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
         ///     <term></term>
-        ///     <term>
-        /// The Relationship category determines the style of relationship around containment and lifecycle.
+        ///     <term>The Relationship category determines the style of relationship around containment and lifecycle.
         /// UML terminology is used for the values.
         /// &lt;p&gt;
         /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
@@ -1948,14 +1941,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;p&gt;
         /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        /// </term>
+        /// of the container and children are totally independent.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipLabel</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasStructDef</c>:
@@ -1970,91 +1962,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TermTemplateDef</c>:
@@ -2069,91 +2061,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>DateFormat</c>:
@@ -2168,55 +2160,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of available locales. </term>
+        ///     <term>An array of available locales.</term>
         ///   </item>
         ///   <item>
         ///     <term>calendar</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>dateInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateTimeInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>instance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>lenient</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines the leniency of the date format. </term>
+        ///     <term>Determines the leniency of the date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>numberFormat</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>TimeZone</term>
         ///     <term></term>
-        ///     <term> The timezone information. </term>
+        ///     <term>The timezone information.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipEndDef</c>:
@@ -2231,37 +2223,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the relationship end definition. </term>
+        ///     <term>The description of the relationship end definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>isContainer</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is container. </term>
+        ///     <term>Determines if it is container.</term>
         ///   </item>
         ///   <item>
         ///     <term>isLegacyAttribute</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is a legacy attribute. </term>
+        ///     <term>Determines if it is a legacy attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the relationship end definition. </term>
+        ///     <term>The name of the relationship end definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>type</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The type of the relationship end. </term>
+        ///     <term>The type of the relationship end.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasAttributeDef</c>:
@@ -2276,79 +2268,79 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>constraints</term>
         ///     <term>AtlasConstraintDef[]</term>
         ///     <term></term>
-        ///     <term> An array of constraints. </term>
+        ///     <term>An array of constraints.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value of the attribute. </term>
+        ///     <term>The default value of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the attribute. </term>
+        ///     <term>The description of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>includeInNotification</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is included in notification. </term>
+        ///     <term>Determines if it is included in notification.</term>
         ///   </item>
         ///   <item>
         ///     <term>isIndexable</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is indexable. </term>
+        ///     <term>Determines if it is indexable.</term>
         ///   </item>
         ///   <item>
         ///     <term>isOptional</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is optional. </term>
+        ///     <term>Determines if it is optional.</term>
         ///   </item>
         ///   <item>
         ///     <term>isUnique</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it unique. </term>
+        ///     <term>Determines if it unique.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the attribute. </term>
+        ///     <term>The name of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the attribute. </term>
+        ///     <term>The options for the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMaxCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum count of the values. </term>
+        ///     <term>The maximum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMinCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum count of the values. </term>
+        ///     <term>The minimum count of the values.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>NumberFormat</c>:
@@ -2363,85 +2355,85 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>currency</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The currency. </term>
+        ///     <term>The currency.</term>
         ///   </item>
         ///   <item>
         ///     <term>currencyInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>groupingUsed</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if grouping is used. </term>
+        ///     <term>Determines if grouping is used.</term>
         ///   </item>
         ///   <item>
         ///     <term>instance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>integerInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>maximumFractionDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum of fraction digits. </term>
+        ///     <term>The maximum of fraction digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>maximumIntegerDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum of integer digits. </term>
+        ///     <term>The maximum of integer digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>minimumFractionDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum of fraction digits. </term>
+        ///     <term>The minimum of fraction digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>minimumIntegerDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum of integer digits. </term>
+        ///     <term>The minimum of integer digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>numberInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>parseIntegerOnly</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if only integer is parsed. </term>
+        ///     <term>Determines if only integer is parsed.</term>
         ///   </item>
         ///   <item>
         ///     <term>percentInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>roundingMode</term>
         ///     <term>&quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of rounding mode. </term>
+        ///     <term>The enum of rounding mode.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeZone</c>:
@@ -2456,37 +2448,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>dstSavings</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The value of the daylight saving time. </term>
+        ///     <term>The value of the daylight saving time.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The ID of the timezone. </term>
+        ///     <term>The ID of the timezone.</term>
         ///   </item>
         ///   <item>
         ///     <term>availableIds</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of available IDs. </term>
+        ///     <term>An array of available IDs.</term>
         ///   </item>
         ///   <item>
         ///     <term>default</term>
         ///     <term>TimeZone</term>
         ///     <term></term>
-        ///     <term> The timezone information. </term>
+        ///     <term>The timezone information.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display name of the timezone. </term>
+        ///     <term>The display name of the timezone.</term>
         ///   </item>
         ///   <item>
         ///     <term>rawOffset</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The raw offset of the timezone. </term>
+        ///     <term>The raw offset of the timezone.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipAttributeDef</c>:
@@ -2501,91 +2493,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>constraints</term>
         ///     <term>AtlasConstraintDef[]</term>
         ///     <term></term>
-        ///     <term> An array of constraints. </term>
+        ///     <term>An array of constraints.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value of the attribute. </term>
+        ///     <term>The default value of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the attribute. </term>
+        ///     <term>The description of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>includeInNotification</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is included in notification. </term>
+        ///     <term>Determines if it is included in notification.</term>
         ///   </item>
         ///   <item>
         ///     <term>isIndexable</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is indexable. </term>
+        ///     <term>Determines if it is indexable.</term>
         ///   </item>
         ///   <item>
         ///     <term>isOptional</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is optional. </term>
+        ///     <term>Determines if it is optional.</term>
         ///   </item>
         ///   <item>
         ///     <term>isUnique</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it unique. </term>
+        ///     <term>Determines if it unique.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the attribute. </term>
+        ///     <term>The name of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the attribute. </term>
+        ///     <term>The options for the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMaxCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum count of the values. </term>
+        ///     <term>The maximum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMinCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum count of the values. </term>
+        ///     <term>The minimum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>isLegacyAttribute</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is a legacy attribute. </term>
+        ///     <term>Determines if it is a legacy attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipTypeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the relationship type. </term>
+        ///     <term>The name of the relationship type.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEnumElementDef</c>:
@@ -2600,19 +2592,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the enum element definition. </term>
+        ///     <term>The description of the enum element definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>ordinal</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The ordinal of the enum element definition. </term>
+        ///     <term>The ordinal of the enum element definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>value</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The value of the enum element definition. </term>
+        ///     <term>The value of the enum element definition.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasConstraintDef</c>:
@@ -2627,13 +2619,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>params</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The parameters of the constraint definition. </term>
+        ///     <term>The parameters of the constraint definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>type</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The type of the constraint. </term>
+        ///     <term>The type of the constraint.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -2693,37 +2685,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>classificationDefs</term>
         ///     <term>AtlasClassificationDef[]</term>
         ///     <term></term>
-        ///     <term> An array of classification definitions. </term>
+        ///     <term>An array of classification definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityDefs</term>
         ///     <term>AtlasEntityDef[]</term>
         ///     <term></term>
-        ///     <term> An array of entity definitions. </term>
+        ///     <term>An array of entity definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>enumDefs</term>
         ///     <term>AtlasEnumDef[]</term>
         ///     <term></term>
-        ///     <term> An array of enum definitions. </term>
+        ///     <term>An array of enum definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipDefs</term>
         ///     <term>AtlasRelationshipDef[]</term>
         ///     <term></term>
-        ///     <term> An array of relationship definitions. </term>
+        ///     <term>An array of relationship definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>structDefs</term>
         ///     <term>AtlasStructDef[]</term>
         ///     <term></term>
-        ///     <term> An array of struct definitions. </term>
+        ///     <term>An array of struct definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>termTemplateDefs</term>
         ///     <term>TermTemplateDef[]</term>
         ///     <term></term>
-        ///     <term> An array of term template definitions. </term>
+        ///     <term>An array of term template definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassificationDef</c>:
@@ -2738,98 +2730,97 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term>
-        /// Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        ///     <term>Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
         /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
@@ -2838,20 +2829,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
         /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
         /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;.
-        /// </term>
+        /// &lt;/ul&gt;</term>
         ///   </item>
         ///   <item>
         ///     <term>subTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of sub types. </term>
+        ///     <term>An array of sub types.</term>
         ///   </item>
         ///   <item>
         ///     <term>superTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of super types. </term>
+        ///     <term>An array of super types.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntityDef</c>:
@@ -2866,109 +2856,109 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>subTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of sub types. </term>
+        ///     <term>An array of sub types.</term>
         ///   </item>
         ///   <item>
         ///     <term>superTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of super types. </term>
+        ///     <term>An array of super types.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipAttributeDefs</term>
         ///     <term>AtlasRelationshipAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of relationship attributes. </term>
+        ///     <term>An array of relationship attributes.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEnumDef</c>:
@@ -2983,97 +2973,97 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value. </term>
+        ///     <term>The default value.</term>
         ///   </item>
         ///   <item>
         ///     <term>elementDefs</term>
         ///     <term>AtlasEnumElementDef[]</term>
         ///     <term></term>
-        ///     <term> An array of enum element definitions. </term>
+        ///     <term>An array of enum element definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipDef</c>:
@@ -3088,116 +3078,111 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDef1</term>
         ///     <term>AtlasRelationshipEndDef</term>
         ///     <term></term>
-        ///     <term>
-        /// The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        /// </term>
+        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDef2</term>
         ///     <term>AtlasRelationshipEndDef</term>
         ///     <term></term>
-        ///     <term>
-        /// The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        /// </term>
+        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipCategory</term>
         ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
         ///     <term></term>
-        ///     <term>
-        /// The Relationship category determines the style of relationship around containment and lifecycle.
+        ///     <term>The Relationship category determines the style of relationship around containment and lifecycle.
         /// UML terminology is used for the values.
         /// &lt;p&gt;
         /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
@@ -3205,14 +3190,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;p&gt;
         /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        /// </term>
+        /// of the container and children are totally independent.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipLabel</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasStructDef</c>:
@@ -3227,91 +3211,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TermTemplateDef</c>:
@@ -3326,91 +3310,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>DateFormat</c>:
@@ -3425,55 +3409,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of available locales. </term>
+        ///     <term>An array of available locales.</term>
         ///   </item>
         ///   <item>
         ///     <term>calendar</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>dateInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateTimeInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>instance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>lenient</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines the leniency of the date format. </term>
+        ///     <term>Determines the leniency of the date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>numberFormat</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>TimeZone</term>
         ///     <term></term>
-        ///     <term> The timezone information. </term>
+        ///     <term>The timezone information.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipEndDef</c>:
@@ -3488,37 +3472,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the relationship end definition. </term>
+        ///     <term>The description of the relationship end definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>isContainer</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is container. </term>
+        ///     <term>Determines if it is container.</term>
         ///   </item>
         ///   <item>
         ///     <term>isLegacyAttribute</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is a legacy attribute. </term>
+        ///     <term>Determines if it is a legacy attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the relationship end definition. </term>
+        ///     <term>The name of the relationship end definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>type</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The type of the relationship end. </term>
+        ///     <term>The type of the relationship end.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasAttributeDef</c>:
@@ -3533,79 +3517,79 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>constraints</term>
         ///     <term>AtlasConstraintDef[]</term>
         ///     <term></term>
-        ///     <term> An array of constraints. </term>
+        ///     <term>An array of constraints.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value of the attribute. </term>
+        ///     <term>The default value of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the attribute. </term>
+        ///     <term>The description of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>includeInNotification</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is included in notification. </term>
+        ///     <term>Determines if it is included in notification.</term>
         ///   </item>
         ///   <item>
         ///     <term>isIndexable</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is indexable. </term>
+        ///     <term>Determines if it is indexable.</term>
         ///   </item>
         ///   <item>
         ///     <term>isOptional</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is optional. </term>
+        ///     <term>Determines if it is optional.</term>
         ///   </item>
         ///   <item>
         ///     <term>isUnique</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it unique. </term>
+        ///     <term>Determines if it unique.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the attribute. </term>
+        ///     <term>The name of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the attribute. </term>
+        ///     <term>The options for the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMaxCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum count of the values. </term>
+        ///     <term>The maximum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMinCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum count of the values. </term>
+        ///     <term>The minimum count of the values.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>NumberFormat</c>:
@@ -3620,85 +3604,85 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>currency</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The currency. </term>
+        ///     <term>The currency.</term>
         ///   </item>
         ///   <item>
         ///     <term>currencyInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>groupingUsed</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if grouping is used. </term>
+        ///     <term>Determines if grouping is used.</term>
         ///   </item>
         ///   <item>
         ///     <term>instance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>integerInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>maximumFractionDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum of fraction digits. </term>
+        ///     <term>The maximum of fraction digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>maximumIntegerDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum of integer digits. </term>
+        ///     <term>The maximum of integer digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>minimumFractionDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum of fraction digits. </term>
+        ///     <term>The minimum of fraction digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>minimumIntegerDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum of integer digits. </term>
+        ///     <term>The minimum of integer digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>numberInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>parseIntegerOnly</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if only integer is parsed. </term>
+        ///     <term>Determines if only integer is parsed.</term>
         ///   </item>
         ///   <item>
         ///     <term>percentInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>roundingMode</term>
         ///     <term>&quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of rounding mode. </term>
+        ///     <term>The enum of rounding mode.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeZone</c>:
@@ -3713,37 +3697,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>dstSavings</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The value of the daylight saving time. </term>
+        ///     <term>The value of the daylight saving time.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The ID of the timezone. </term>
+        ///     <term>The ID of the timezone.</term>
         ///   </item>
         ///   <item>
         ///     <term>availableIds</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of available IDs. </term>
+        ///     <term>An array of available IDs.</term>
         ///   </item>
         ///   <item>
         ///     <term>default</term>
         ///     <term>TimeZone</term>
         ///     <term></term>
-        ///     <term> The timezone information. </term>
+        ///     <term>The timezone information.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display name of the timezone. </term>
+        ///     <term>The display name of the timezone.</term>
         ///   </item>
         ///   <item>
         ///     <term>rawOffset</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The raw offset of the timezone. </term>
+        ///     <term>The raw offset of the timezone.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipAttributeDef</c>:
@@ -3758,91 +3742,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>constraints</term>
         ///     <term>AtlasConstraintDef[]</term>
         ///     <term></term>
-        ///     <term> An array of constraints. </term>
+        ///     <term>An array of constraints.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value of the attribute. </term>
+        ///     <term>The default value of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the attribute. </term>
+        ///     <term>The description of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>includeInNotification</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is included in notification. </term>
+        ///     <term>Determines if it is included in notification.</term>
         ///   </item>
         ///   <item>
         ///     <term>isIndexable</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is indexable. </term>
+        ///     <term>Determines if it is indexable.</term>
         ///   </item>
         ///   <item>
         ///     <term>isOptional</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is optional. </term>
+        ///     <term>Determines if it is optional.</term>
         ///   </item>
         ///   <item>
         ///     <term>isUnique</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it unique. </term>
+        ///     <term>Determines if it unique.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the attribute. </term>
+        ///     <term>The name of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the attribute. </term>
+        ///     <term>The options for the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMaxCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum count of the values. </term>
+        ///     <term>The maximum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMinCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum count of the values. </term>
+        ///     <term>The minimum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>isLegacyAttribute</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is a legacy attribute. </term>
+        ///     <term>Determines if it is a legacy attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipTypeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the relationship type. </term>
+        ///     <term>The name of the relationship type.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEnumElementDef</c>:
@@ -3857,19 +3841,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the enum element definition. </term>
+        ///     <term>The description of the enum element definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>ordinal</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The ordinal of the enum element definition. </term>
+        ///     <term>The ordinal of the enum element definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>value</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The value of the enum element definition. </term>
+        ///     <term>The value of the enum element definition.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasConstraintDef</c>:
@@ -3884,13 +3868,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>params</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The parameters of the constraint definition. </term>
+        ///     <term>The parameters of the constraint definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>type</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The type of the constraint. </term>
+        ///     <term>The type of the constraint.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -3966,37 +3950,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>classificationDefs</term>
         ///     <term>AtlasClassificationDef[]</term>
         ///     <term></term>
-        ///     <term> An array of classification definitions. </term>
+        ///     <term>An array of classification definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityDefs</term>
         ///     <term>AtlasEntityDef[]</term>
         ///     <term></term>
-        ///     <term> An array of entity definitions. </term>
+        ///     <term>An array of entity definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>enumDefs</term>
         ///     <term>AtlasEnumDef[]</term>
         ///     <term></term>
-        ///     <term> An array of enum definitions. </term>
+        ///     <term>An array of enum definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipDefs</term>
         ///     <term>AtlasRelationshipDef[]</term>
         ///     <term></term>
-        ///     <term> An array of relationship definitions. </term>
+        ///     <term>An array of relationship definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>structDefs</term>
         ///     <term>AtlasStructDef[]</term>
         ///     <term></term>
-        ///     <term> An array of struct definitions. </term>
+        ///     <term>An array of struct definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>termTemplateDefs</term>
         ///     <term>TermTemplateDef[]</term>
         ///     <term></term>
-        ///     <term> An array of term template definitions. </term>
+        ///     <term>An array of term template definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassificationDef</c>:
@@ -4011,98 +3995,97 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term>
-        /// Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        ///     <term>Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
         /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
@@ -4111,20 +4094,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
         /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
         /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;.
-        /// </term>
+        /// &lt;/ul&gt;</term>
         ///   </item>
         ///   <item>
         ///     <term>subTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of sub types. </term>
+        ///     <term>An array of sub types.</term>
         ///   </item>
         ///   <item>
         ///     <term>superTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of super types. </term>
+        ///     <term>An array of super types.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntityDef</c>:
@@ -4139,109 +4121,109 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>subTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of sub types. </term>
+        ///     <term>An array of sub types.</term>
         ///   </item>
         ///   <item>
         ///     <term>superTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of super types. </term>
+        ///     <term>An array of super types.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipAttributeDefs</term>
         ///     <term>AtlasRelationshipAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of relationship attributes. </term>
+        ///     <term>An array of relationship attributes.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEnumDef</c>:
@@ -4256,97 +4238,97 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value. </term>
+        ///     <term>The default value.</term>
         ///   </item>
         ///   <item>
         ///     <term>elementDefs</term>
         ///     <term>AtlasEnumElementDef[]</term>
         ///     <term></term>
-        ///     <term> An array of enum element definitions. </term>
+        ///     <term>An array of enum element definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipDef</c>:
@@ -4361,116 +4343,111 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDef1</term>
         ///     <term>AtlasRelationshipEndDef</term>
         ///     <term></term>
-        ///     <term>
-        /// The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        /// </term>
+        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDef2</term>
         ///     <term>AtlasRelationshipEndDef</term>
         ///     <term></term>
-        ///     <term>
-        /// The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        /// </term>
+        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipCategory</term>
         ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
         ///     <term></term>
-        ///     <term>
-        /// The Relationship category determines the style of relationship around containment and lifecycle.
+        ///     <term>The Relationship category determines the style of relationship around containment and lifecycle.
         /// UML terminology is used for the values.
         /// &lt;p&gt;
         /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
@@ -4478,14 +4455,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;p&gt;
         /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        /// </term>
+        /// of the container and children are totally independent.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipLabel</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasStructDef</c>:
@@ -4500,91 +4476,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TermTemplateDef</c>:
@@ -4599,91 +4575,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>DateFormat</c>:
@@ -4698,55 +4674,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of available locales. </term>
+        ///     <term>An array of available locales.</term>
         ///   </item>
         ///   <item>
         ///     <term>calendar</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>dateInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateTimeInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>instance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>lenient</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines the leniency of the date format. </term>
+        ///     <term>Determines the leniency of the date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>numberFormat</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>TimeZone</term>
         ///     <term></term>
-        ///     <term> The timezone information. </term>
+        ///     <term>The timezone information.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipEndDef</c>:
@@ -4761,37 +4737,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the relationship end definition. </term>
+        ///     <term>The description of the relationship end definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>isContainer</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is container. </term>
+        ///     <term>Determines if it is container.</term>
         ///   </item>
         ///   <item>
         ///     <term>isLegacyAttribute</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is a legacy attribute. </term>
+        ///     <term>Determines if it is a legacy attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the relationship end definition. </term>
+        ///     <term>The name of the relationship end definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>type</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The type of the relationship end. </term>
+        ///     <term>The type of the relationship end.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasAttributeDef</c>:
@@ -4806,79 +4782,79 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>constraints</term>
         ///     <term>AtlasConstraintDef[]</term>
         ///     <term></term>
-        ///     <term> An array of constraints. </term>
+        ///     <term>An array of constraints.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value of the attribute. </term>
+        ///     <term>The default value of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the attribute. </term>
+        ///     <term>The description of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>includeInNotification</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is included in notification. </term>
+        ///     <term>Determines if it is included in notification.</term>
         ///   </item>
         ///   <item>
         ///     <term>isIndexable</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is indexable. </term>
+        ///     <term>Determines if it is indexable.</term>
         ///   </item>
         ///   <item>
         ///     <term>isOptional</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is optional. </term>
+        ///     <term>Determines if it is optional.</term>
         ///   </item>
         ///   <item>
         ///     <term>isUnique</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it unique. </term>
+        ///     <term>Determines if it unique.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the attribute. </term>
+        ///     <term>The name of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the attribute. </term>
+        ///     <term>The options for the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMaxCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum count of the values. </term>
+        ///     <term>The maximum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMinCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum count of the values. </term>
+        ///     <term>The minimum count of the values.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>NumberFormat</c>:
@@ -4893,85 +4869,85 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>currency</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The currency. </term>
+        ///     <term>The currency.</term>
         ///   </item>
         ///   <item>
         ///     <term>currencyInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>groupingUsed</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if grouping is used. </term>
+        ///     <term>Determines if grouping is used.</term>
         ///   </item>
         ///   <item>
         ///     <term>instance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>integerInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>maximumFractionDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum of fraction digits. </term>
+        ///     <term>The maximum of fraction digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>maximumIntegerDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum of integer digits. </term>
+        ///     <term>The maximum of integer digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>minimumFractionDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum of fraction digits. </term>
+        ///     <term>The minimum of fraction digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>minimumIntegerDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum of integer digits. </term>
+        ///     <term>The minimum of integer digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>numberInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>parseIntegerOnly</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if only integer is parsed. </term>
+        ///     <term>Determines if only integer is parsed.</term>
         ///   </item>
         ///   <item>
         ///     <term>percentInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>roundingMode</term>
         ///     <term>&quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of rounding mode. </term>
+        ///     <term>The enum of rounding mode.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeZone</c>:
@@ -4986,37 +4962,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>dstSavings</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The value of the daylight saving time. </term>
+        ///     <term>The value of the daylight saving time.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The ID of the timezone. </term>
+        ///     <term>The ID of the timezone.</term>
         ///   </item>
         ///   <item>
         ///     <term>availableIds</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of available IDs. </term>
+        ///     <term>An array of available IDs.</term>
         ///   </item>
         ///   <item>
         ///     <term>default</term>
         ///     <term>TimeZone</term>
         ///     <term></term>
-        ///     <term> The timezone information. </term>
+        ///     <term>The timezone information.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display name of the timezone. </term>
+        ///     <term>The display name of the timezone.</term>
         ///   </item>
         ///   <item>
         ///     <term>rawOffset</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The raw offset of the timezone. </term>
+        ///     <term>The raw offset of the timezone.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipAttributeDef</c>:
@@ -5031,91 +5007,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>constraints</term>
         ///     <term>AtlasConstraintDef[]</term>
         ///     <term></term>
-        ///     <term> An array of constraints. </term>
+        ///     <term>An array of constraints.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value of the attribute. </term>
+        ///     <term>The default value of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the attribute. </term>
+        ///     <term>The description of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>includeInNotification</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is included in notification. </term>
+        ///     <term>Determines if it is included in notification.</term>
         ///   </item>
         ///   <item>
         ///     <term>isIndexable</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is indexable. </term>
+        ///     <term>Determines if it is indexable.</term>
         ///   </item>
         ///   <item>
         ///     <term>isOptional</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is optional. </term>
+        ///     <term>Determines if it is optional.</term>
         ///   </item>
         ///   <item>
         ///     <term>isUnique</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it unique. </term>
+        ///     <term>Determines if it unique.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the attribute. </term>
+        ///     <term>The name of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the attribute. </term>
+        ///     <term>The options for the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMaxCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum count of the values. </term>
+        ///     <term>The maximum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMinCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum count of the values. </term>
+        ///     <term>The minimum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>isLegacyAttribute</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is a legacy attribute. </term>
+        ///     <term>Determines if it is a legacy attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipTypeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the relationship type. </term>
+        ///     <term>The name of the relationship type.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEnumElementDef</c>:
@@ -5130,19 +5106,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the enum element definition. </term>
+        ///     <term>The description of the enum element definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>ordinal</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The ordinal of the enum element definition. </term>
+        ///     <term>The ordinal of the enum element definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>value</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The value of the enum element definition. </term>
+        ///     <term>The value of the enum element definition.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasConstraintDef</c>:
@@ -5157,13 +5133,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>params</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The parameters of the constraint definition. </term>
+        ///     <term>The parameters of the constraint definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>type</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The type of the constraint. </term>
+        ///     <term>The type of the constraint.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -5220,37 +5196,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>classificationDefs</term>
         ///     <term>AtlasClassificationDef[]</term>
         ///     <term></term>
-        ///     <term> An array of classification definitions. </term>
+        ///     <term>An array of classification definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityDefs</term>
         ///     <term>AtlasEntityDef[]</term>
         ///     <term></term>
-        ///     <term> An array of entity definitions. </term>
+        ///     <term>An array of entity definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>enumDefs</term>
         ///     <term>AtlasEnumDef[]</term>
         ///     <term></term>
-        ///     <term> An array of enum definitions. </term>
+        ///     <term>An array of enum definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipDefs</term>
         ///     <term>AtlasRelationshipDef[]</term>
         ///     <term></term>
-        ///     <term> An array of relationship definitions. </term>
+        ///     <term>An array of relationship definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>structDefs</term>
         ///     <term>AtlasStructDef[]</term>
         ///     <term></term>
-        ///     <term> An array of struct definitions. </term>
+        ///     <term>An array of struct definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>termTemplateDefs</term>
         ///     <term>TermTemplateDef[]</term>
         ///     <term></term>
-        ///     <term> An array of term template definitions. </term>
+        ///     <term>An array of term template definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassificationDef</c>:
@@ -5265,98 +5241,97 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term>
-        /// Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        ///     <term>Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
         /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
@@ -5365,20 +5340,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
         /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
         /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;.
-        /// </term>
+        /// &lt;/ul&gt;</term>
         ///   </item>
         ///   <item>
         ///     <term>subTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of sub types. </term>
+        ///     <term>An array of sub types.</term>
         ///   </item>
         ///   <item>
         ///     <term>superTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of super types. </term>
+        ///     <term>An array of super types.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntityDef</c>:
@@ -5393,109 +5367,109 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>subTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of sub types. </term>
+        ///     <term>An array of sub types.</term>
         ///   </item>
         ///   <item>
         ///     <term>superTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of super types. </term>
+        ///     <term>An array of super types.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipAttributeDefs</term>
         ///     <term>AtlasRelationshipAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of relationship attributes. </term>
+        ///     <term>An array of relationship attributes.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEnumDef</c>:
@@ -5510,97 +5484,97 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value. </term>
+        ///     <term>The default value.</term>
         ///   </item>
         ///   <item>
         ///     <term>elementDefs</term>
         ///     <term>AtlasEnumElementDef[]</term>
         ///     <term></term>
-        ///     <term> An array of enum element definitions. </term>
+        ///     <term>An array of enum element definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipDef</c>:
@@ -5615,116 +5589,111 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDef1</term>
         ///     <term>AtlasRelationshipEndDef</term>
         ///     <term></term>
-        ///     <term>
-        /// The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        /// </term>
+        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDef2</term>
         ///     <term>AtlasRelationshipEndDef</term>
         ///     <term></term>
-        ///     <term>
-        /// The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        /// </term>
+        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipCategory</term>
         ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
         ///     <term></term>
-        ///     <term>
-        /// The Relationship category determines the style of relationship around containment and lifecycle.
+        ///     <term>The Relationship category determines the style of relationship around containment and lifecycle.
         /// UML terminology is used for the values.
         /// &lt;p&gt;
         /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
@@ -5732,14 +5701,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;p&gt;
         /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        /// </term>
+        /// of the container and children are totally independent.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipLabel</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasStructDef</c>:
@@ -5754,91 +5722,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TermTemplateDef</c>:
@@ -5853,91 +5821,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>DateFormat</c>:
@@ -5952,55 +5920,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of available locales. </term>
+        ///     <term>An array of available locales.</term>
         ///   </item>
         ///   <item>
         ///     <term>calendar</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>dateInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateTimeInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>instance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>lenient</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines the leniency of the date format. </term>
+        ///     <term>Determines the leniency of the date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>numberFormat</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>TimeZone</term>
         ///     <term></term>
-        ///     <term> The timezone information. </term>
+        ///     <term>The timezone information.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipEndDef</c>:
@@ -6015,37 +5983,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the relationship end definition. </term>
+        ///     <term>The description of the relationship end definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>isContainer</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is container. </term>
+        ///     <term>Determines if it is container.</term>
         ///   </item>
         ///   <item>
         ///     <term>isLegacyAttribute</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is a legacy attribute. </term>
+        ///     <term>Determines if it is a legacy attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the relationship end definition. </term>
+        ///     <term>The name of the relationship end definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>type</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The type of the relationship end. </term>
+        ///     <term>The type of the relationship end.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasAttributeDef</c>:
@@ -6060,79 +6028,79 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>constraints</term>
         ///     <term>AtlasConstraintDef[]</term>
         ///     <term></term>
-        ///     <term> An array of constraints. </term>
+        ///     <term>An array of constraints.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value of the attribute. </term>
+        ///     <term>The default value of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the attribute. </term>
+        ///     <term>The description of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>includeInNotification</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is included in notification. </term>
+        ///     <term>Determines if it is included in notification.</term>
         ///   </item>
         ///   <item>
         ///     <term>isIndexable</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is indexable. </term>
+        ///     <term>Determines if it is indexable.</term>
         ///   </item>
         ///   <item>
         ///     <term>isOptional</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is optional. </term>
+        ///     <term>Determines if it is optional.</term>
         ///   </item>
         ///   <item>
         ///     <term>isUnique</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it unique. </term>
+        ///     <term>Determines if it unique.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the attribute. </term>
+        ///     <term>The name of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the attribute. </term>
+        ///     <term>The options for the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMaxCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum count of the values. </term>
+        ///     <term>The maximum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMinCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum count of the values. </term>
+        ///     <term>The minimum count of the values.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>NumberFormat</c>:
@@ -6147,85 +6115,85 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>currency</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The currency. </term>
+        ///     <term>The currency.</term>
         ///   </item>
         ///   <item>
         ///     <term>currencyInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>groupingUsed</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if grouping is used. </term>
+        ///     <term>Determines if grouping is used.</term>
         ///   </item>
         ///   <item>
         ///     <term>instance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>integerInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>maximumFractionDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum of fraction digits. </term>
+        ///     <term>The maximum of fraction digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>maximumIntegerDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum of integer digits. </term>
+        ///     <term>The maximum of integer digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>minimumFractionDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum of fraction digits. </term>
+        ///     <term>The minimum of fraction digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>minimumIntegerDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum of integer digits. </term>
+        ///     <term>The minimum of integer digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>numberInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>parseIntegerOnly</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if only integer is parsed. </term>
+        ///     <term>Determines if only integer is parsed.</term>
         ///   </item>
         ///   <item>
         ///     <term>percentInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>roundingMode</term>
         ///     <term>&quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of rounding mode. </term>
+        ///     <term>The enum of rounding mode.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeZone</c>:
@@ -6240,37 +6208,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>dstSavings</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The value of the daylight saving time. </term>
+        ///     <term>The value of the daylight saving time.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The ID of the timezone. </term>
+        ///     <term>The ID of the timezone.</term>
         ///   </item>
         ///   <item>
         ///     <term>availableIds</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of available IDs. </term>
+        ///     <term>An array of available IDs.</term>
         ///   </item>
         ///   <item>
         ///     <term>default</term>
         ///     <term>TimeZone</term>
         ///     <term></term>
-        ///     <term> The timezone information. </term>
+        ///     <term>The timezone information.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display name of the timezone. </term>
+        ///     <term>The display name of the timezone.</term>
         ///   </item>
         ///   <item>
         ///     <term>rawOffset</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The raw offset of the timezone. </term>
+        ///     <term>The raw offset of the timezone.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipAttributeDef</c>:
@@ -6285,91 +6253,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>constraints</term>
         ///     <term>AtlasConstraintDef[]</term>
         ///     <term></term>
-        ///     <term> An array of constraints. </term>
+        ///     <term>An array of constraints.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value of the attribute. </term>
+        ///     <term>The default value of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the attribute. </term>
+        ///     <term>The description of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>includeInNotification</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is included in notification. </term>
+        ///     <term>Determines if it is included in notification.</term>
         ///   </item>
         ///   <item>
         ///     <term>isIndexable</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is indexable. </term>
+        ///     <term>Determines if it is indexable.</term>
         ///   </item>
         ///   <item>
         ///     <term>isOptional</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is optional. </term>
+        ///     <term>Determines if it is optional.</term>
         ///   </item>
         ///   <item>
         ///     <term>isUnique</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it unique. </term>
+        ///     <term>Determines if it unique.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the attribute. </term>
+        ///     <term>The name of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the attribute. </term>
+        ///     <term>The options for the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMaxCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum count of the values. </term>
+        ///     <term>The maximum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMinCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum count of the values. </term>
+        ///     <term>The minimum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>isLegacyAttribute</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is a legacy attribute. </term>
+        ///     <term>Determines if it is a legacy attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipTypeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the relationship type. </term>
+        ///     <term>The name of the relationship type.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEnumElementDef</c>:
@@ -6384,19 +6352,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the enum element definition. </term>
+        ///     <term>The description of the enum element definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>ordinal</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The ordinal of the enum element definition. </term>
+        ///     <term>The ordinal of the enum element definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>value</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The value of the enum element definition. </term>
+        ///     <term>The value of the enum element definition.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasConstraintDef</c>:
@@ -6411,13 +6379,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>params</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The parameters of the constraint definition. </term>
+        ///     <term>The parameters of the constraint definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>type</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The type of the constraint. </term>
+        ///     <term>The type of the constraint.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -6493,37 +6461,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>classificationDefs</term>
         ///     <term>AtlasClassificationDef[]</term>
         ///     <term></term>
-        ///     <term> An array of classification definitions. </term>
+        ///     <term>An array of classification definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityDefs</term>
         ///     <term>AtlasEntityDef[]</term>
         ///     <term></term>
-        ///     <term> An array of entity definitions. </term>
+        ///     <term>An array of entity definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>enumDefs</term>
         ///     <term>AtlasEnumDef[]</term>
         ///     <term></term>
-        ///     <term> An array of enum definitions. </term>
+        ///     <term>An array of enum definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipDefs</term>
         ///     <term>AtlasRelationshipDef[]</term>
         ///     <term></term>
-        ///     <term> An array of relationship definitions. </term>
+        ///     <term>An array of relationship definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>structDefs</term>
         ///     <term>AtlasStructDef[]</term>
         ///     <term></term>
-        ///     <term> An array of struct definitions. </term>
+        ///     <term>An array of struct definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>termTemplateDefs</term>
         ///     <term>TermTemplateDef[]</term>
         ///     <term></term>
-        ///     <term> An array of term template definitions. </term>
+        ///     <term>An array of term template definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassificationDef</c>:
@@ -6538,98 +6506,97 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term>
-        /// Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        ///     <term>Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
         /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
@@ -6638,20 +6605,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
         /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
         /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;.
-        /// </term>
+        /// &lt;/ul&gt;</term>
         ///   </item>
         ///   <item>
         ///     <term>subTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of sub types. </term>
+        ///     <term>An array of sub types.</term>
         ///   </item>
         ///   <item>
         ///     <term>superTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of super types. </term>
+        ///     <term>An array of super types.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntityDef</c>:
@@ -6666,109 +6632,109 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>subTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of sub types. </term>
+        ///     <term>An array of sub types.</term>
         ///   </item>
         ///   <item>
         ///     <term>superTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of super types. </term>
+        ///     <term>An array of super types.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipAttributeDefs</term>
         ///     <term>AtlasRelationshipAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of relationship attributes. </term>
+        ///     <term>An array of relationship attributes.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEnumDef</c>:
@@ -6783,97 +6749,97 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value. </term>
+        ///     <term>The default value.</term>
         ///   </item>
         ///   <item>
         ///     <term>elementDefs</term>
         ///     <term>AtlasEnumElementDef[]</term>
         ///     <term></term>
-        ///     <term> An array of enum element definitions. </term>
+        ///     <term>An array of enum element definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipDef</c>:
@@ -6888,116 +6854,111 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDef1</term>
         ///     <term>AtlasRelationshipEndDef</term>
         ///     <term></term>
-        ///     <term>
-        /// The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        /// </term>
+        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDef2</term>
         ///     <term>AtlasRelationshipEndDef</term>
         ///     <term></term>
-        ///     <term>
-        /// The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        /// </term>
+        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipCategory</term>
         ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
         ///     <term></term>
-        ///     <term>
-        /// The Relationship category determines the style of relationship around containment and lifecycle.
+        ///     <term>The Relationship category determines the style of relationship around containment and lifecycle.
         /// UML terminology is used for the values.
         /// &lt;p&gt;
         /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
@@ -7005,14 +6966,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;p&gt;
         /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        /// </term>
+        /// of the container and children are totally independent.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipLabel</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasStructDef</c>:
@@ -7027,91 +6987,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TermTemplateDef</c>:
@@ -7126,91 +7086,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>DateFormat</c>:
@@ -7225,55 +7185,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of available locales. </term>
+        ///     <term>An array of available locales.</term>
         ///   </item>
         ///   <item>
         ///     <term>calendar</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>dateInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateTimeInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>instance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>lenient</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines the leniency of the date format. </term>
+        ///     <term>Determines the leniency of the date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>numberFormat</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>TimeZone</term>
         ///     <term></term>
-        ///     <term> The timezone information. </term>
+        ///     <term>The timezone information.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipEndDef</c>:
@@ -7288,37 +7248,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the relationship end definition. </term>
+        ///     <term>The description of the relationship end definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>isContainer</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is container. </term>
+        ///     <term>Determines if it is container.</term>
         ///   </item>
         ///   <item>
         ///     <term>isLegacyAttribute</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is a legacy attribute. </term>
+        ///     <term>Determines if it is a legacy attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the relationship end definition. </term>
+        ///     <term>The name of the relationship end definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>type</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The type of the relationship end. </term>
+        ///     <term>The type of the relationship end.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasAttributeDef</c>:
@@ -7333,79 +7293,79 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>constraints</term>
         ///     <term>AtlasConstraintDef[]</term>
         ///     <term></term>
-        ///     <term> An array of constraints. </term>
+        ///     <term>An array of constraints.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value of the attribute. </term>
+        ///     <term>The default value of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the attribute. </term>
+        ///     <term>The description of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>includeInNotification</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is included in notification. </term>
+        ///     <term>Determines if it is included in notification.</term>
         ///   </item>
         ///   <item>
         ///     <term>isIndexable</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is indexable. </term>
+        ///     <term>Determines if it is indexable.</term>
         ///   </item>
         ///   <item>
         ///     <term>isOptional</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is optional. </term>
+        ///     <term>Determines if it is optional.</term>
         ///   </item>
         ///   <item>
         ///     <term>isUnique</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it unique. </term>
+        ///     <term>Determines if it unique.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the attribute. </term>
+        ///     <term>The name of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the attribute. </term>
+        ///     <term>The options for the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMaxCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum count of the values. </term>
+        ///     <term>The maximum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMinCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum count of the values. </term>
+        ///     <term>The minimum count of the values.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>NumberFormat</c>:
@@ -7420,85 +7380,85 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>currency</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The currency. </term>
+        ///     <term>The currency.</term>
         ///   </item>
         ///   <item>
         ///     <term>currencyInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>groupingUsed</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if grouping is used. </term>
+        ///     <term>Determines if grouping is used.</term>
         ///   </item>
         ///   <item>
         ///     <term>instance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>integerInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>maximumFractionDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum of fraction digits. </term>
+        ///     <term>The maximum of fraction digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>maximumIntegerDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum of integer digits. </term>
+        ///     <term>The maximum of integer digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>minimumFractionDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum of fraction digits. </term>
+        ///     <term>The minimum of fraction digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>minimumIntegerDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum of integer digits. </term>
+        ///     <term>The minimum of integer digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>numberInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>parseIntegerOnly</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if only integer is parsed. </term>
+        ///     <term>Determines if only integer is parsed.</term>
         ///   </item>
         ///   <item>
         ///     <term>percentInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>roundingMode</term>
         ///     <term>&quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of rounding mode. </term>
+        ///     <term>The enum of rounding mode.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeZone</c>:
@@ -7513,37 +7473,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>dstSavings</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The value of the daylight saving time. </term>
+        ///     <term>The value of the daylight saving time.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The ID of the timezone. </term>
+        ///     <term>The ID of the timezone.</term>
         ///   </item>
         ///   <item>
         ///     <term>availableIds</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of available IDs. </term>
+        ///     <term>An array of available IDs.</term>
         ///   </item>
         ///   <item>
         ///     <term>default</term>
         ///     <term>TimeZone</term>
         ///     <term></term>
-        ///     <term> The timezone information. </term>
+        ///     <term>The timezone information.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display name of the timezone. </term>
+        ///     <term>The display name of the timezone.</term>
         ///   </item>
         ///   <item>
         ///     <term>rawOffset</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The raw offset of the timezone. </term>
+        ///     <term>The raw offset of the timezone.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipAttributeDef</c>:
@@ -7558,91 +7518,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>constraints</term>
         ///     <term>AtlasConstraintDef[]</term>
         ///     <term></term>
-        ///     <term> An array of constraints. </term>
+        ///     <term>An array of constraints.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value of the attribute. </term>
+        ///     <term>The default value of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the attribute. </term>
+        ///     <term>The description of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>includeInNotification</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is included in notification. </term>
+        ///     <term>Determines if it is included in notification.</term>
         ///   </item>
         ///   <item>
         ///     <term>isIndexable</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is indexable. </term>
+        ///     <term>Determines if it is indexable.</term>
         ///   </item>
         ///   <item>
         ///     <term>isOptional</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is optional. </term>
+        ///     <term>Determines if it is optional.</term>
         ///   </item>
         ///   <item>
         ///     <term>isUnique</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it unique. </term>
+        ///     <term>Determines if it unique.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the attribute. </term>
+        ///     <term>The name of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the attribute. </term>
+        ///     <term>The options for the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMaxCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum count of the values. </term>
+        ///     <term>The maximum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMinCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum count of the values. </term>
+        ///     <term>The minimum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>isLegacyAttribute</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is a legacy attribute. </term>
+        ///     <term>Determines if it is a legacy attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipTypeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the relationship type. </term>
+        ///     <term>The name of the relationship type.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEnumElementDef</c>:
@@ -7657,19 +7617,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the enum element definition. </term>
+        ///     <term>The description of the enum element definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>ordinal</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The ordinal of the enum element definition. </term>
+        ///     <term>The ordinal of the enum element definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>value</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The value of the enum element definition. </term>
+        ///     <term>The value of the enum element definition.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasConstraintDef</c>:
@@ -7684,13 +7644,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>params</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The parameters of the constraint definition. </term>
+        ///     <term>The parameters of the constraint definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>type</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The type of the constraint. </term>
+        ///     <term>The type of the constraint.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -7747,37 +7707,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>classificationDefs</term>
         ///     <term>AtlasClassificationDef[]</term>
         ///     <term></term>
-        ///     <term> An array of classification definitions. </term>
+        ///     <term>An array of classification definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityDefs</term>
         ///     <term>AtlasEntityDef[]</term>
         ///     <term></term>
-        ///     <term> An array of entity definitions. </term>
+        ///     <term>An array of entity definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>enumDefs</term>
         ///     <term>AtlasEnumDef[]</term>
         ///     <term></term>
-        ///     <term> An array of enum definitions. </term>
+        ///     <term>An array of enum definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipDefs</term>
         ///     <term>AtlasRelationshipDef[]</term>
         ///     <term></term>
-        ///     <term> An array of relationship definitions. </term>
+        ///     <term>An array of relationship definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>structDefs</term>
         ///     <term>AtlasStructDef[]</term>
         ///     <term></term>
-        ///     <term> An array of struct definitions. </term>
+        ///     <term>An array of struct definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>termTemplateDefs</term>
         ///     <term>TermTemplateDef[]</term>
         ///     <term></term>
-        ///     <term> An array of term template definitions. </term>
+        ///     <term>An array of term template definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasClassificationDef</c>:
@@ -7792,98 +7752,97 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>entityTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term>
-        /// Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        ///     <term>Specifying a list of entityType names in the classificationDef, ensures that classifications can
         /// only be applied to those entityTypes.
         /// &lt;ul&gt;
         /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
@@ -7892,20 +7851,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
         /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
         /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
-        /// &lt;/ul&gt;.
-        /// </term>
+        /// &lt;/ul&gt;</term>
         ///   </item>
         ///   <item>
         ///     <term>subTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of sub types. </term>
+        ///     <term>An array of sub types.</term>
         ///   </item>
         ///   <item>
         ///     <term>superTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of super types. </term>
+        ///     <term>An array of super types.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEntityDef</c>:
@@ -7920,109 +7878,109 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>subTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of sub types. </term>
+        ///     <term>An array of sub types.</term>
         ///   </item>
         ///   <item>
         ///     <term>superTypes</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of super types. </term>
+        ///     <term>An array of super types.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipAttributeDefs</term>
         ///     <term>AtlasRelationshipAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of relationship attributes. </term>
+        ///     <term>An array of relationship attributes.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEnumDef</c>:
@@ -8037,97 +7995,97 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value. </term>
+        ///     <term>The default value.</term>
         ///   </item>
         ///   <item>
         ///     <term>elementDefs</term>
         ///     <term>AtlasEnumElementDef[]</term>
         ///     <term></term>
-        ///     <term> An array of enum element definitions. </term>
+        ///     <term>An array of enum element definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipDef</c>:
@@ -8142,116 +8100,111 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDef1</term>
         ///     <term>AtlasRelationshipEndDef</term>
         ///     <term></term>
-        ///     <term>
-        /// The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        /// </term>
+        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDef2</term>
         ///     <term>AtlasRelationshipEndDef</term>
         ///     <term></term>
-        ///     <term>
-        /// The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
-        /// attribute name, cardinality and whether it  is the container end of the relationship.
-        /// </term>
+        ///     <term>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipCategory</term>
         ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
         ///     <term></term>
-        ///     <term>
-        /// The Relationship category determines the style of relationship around containment and lifecycle.
+        ///     <term>The Relationship category determines the style of relationship around containment and lifecycle.
         /// UML terminology is used for the values.
         /// &lt;p&gt;
         /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
@@ -8259,14 +8212,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// &lt;p&gt;
         /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
         /// the children cannot exist without the container. For AGGREGATION, the life cycles
-        /// of the container and children are totally independent.
-        /// </term>
+        /// of the container and children are totally independent.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipLabel</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The label of the relationship. </term>
+        ///     <term>The label of the relationship.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasStructDef</c>:
@@ -8281,91 +8233,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         ///   <item>
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TermTemplateDef</c>:
@@ -8380,91 +8332,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>attributeDefs</term>
         ///     <term>AtlasAttributeDef[]</term>
         ///     <term></term>
-        ///     <term> An array of attribute definitions. </term>
+        ///     <term>An array of attribute definitions.</term>
         ///   </item>
         ///   <item>
         ///     <term>category</term>
         ///     <term>&quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of type category. </term>
+        ///     <term>The enum of type category.</term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The created time of the record. </term>
+        ///     <term>The created time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who created the record. </term>
+        ///     <term>The user who created the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateFormatter</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the type definition. </term>
+        ///     <term>The description of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>guid</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The GUID of the type definition. </term>
+        ///     <term>The GUID of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type definition. </term>
+        ///     <term>The name of the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the type definition. </term>
+        ///     <term>The options for the type definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>serviceType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The service type. </term>
+        ///     <term>The service type.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeVersion</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The version of the type. </term>
+        ///     <term>The version of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>updateTime</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The update time of the record. </term>
+        ///     <term>The update time of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>updatedBy</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The user who updated the record. </term>
+        ///     <term>The user who updated the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>version</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The version of the record. </term>
+        ///     <term>The version of the record.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastModifiedTS</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
+        ///     <term>ETag for concurrency control.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>DateFormat</c>:
@@ -8479,55 +8431,55 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of available locales. </term>
+        ///     <term>An array of available locales.</term>
         ///   </item>
         ///   <item>
         ///     <term>calendar</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///    <term></term>
+        ///     <term></term>
         ///   </item>
         ///   <item>
         ///     <term>dateInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>dateTimeInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>instance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>lenient</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines the leniency of the date format. </term>
+        ///     <term>Determines the leniency of the date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>numberFormat</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeInstance</term>
         ///     <term>DateFormat</term>
         ///     <term></term>
-        ///     <term> The date format. </term>
+        ///     <term>The date format.</term>
         ///   </item>
         ///   <item>
         ///     <term>timeZone</term>
         ///     <term>TimeZone</term>
         ///     <term></term>
-        ///     <term> The timezone information. </term>
+        ///     <term>The timezone information.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipEndDef</c>:
@@ -8542,37 +8494,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the relationship end definition. </term>
+        ///     <term>The description of the relationship end definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>isContainer</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is container. </term>
+        ///     <term>Determines if it is container.</term>
         ///   </item>
         ///   <item>
         ///     <term>isLegacyAttribute</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is a legacy attribute. </term>
+        ///     <term>Determines if it is a legacy attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the relationship end definition. </term>
+        ///     <term>The name of the relationship end definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>type</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The type of the relationship end. </term>
+        ///     <term>The type of the relationship end.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasAttributeDef</c>:
@@ -8587,79 +8539,79 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>constraints</term>
         ///     <term>AtlasConstraintDef[]</term>
         ///     <term></term>
-        ///     <term> An array of constraints. </term>
+        ///     <term>An array of constraints.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value of the attribute. </term>
+        ///     <term>The default value of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the attribute. </term>
+        ///     <term>The description of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>includeInNotification</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is included in notification. </term>
+        ///     <term>Determines if it is included in notification.</term>
         ///   </item>
         ///   <item>
         ///     <term>isIndexable</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is indexable. </term>
+        ///     <term>Determines if it is indexable.</term>
         ///   </item>
         ///   <item>
         ///     <term>isOptional</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is optional. </term>
+        ///     <term>Determines if it is optional.</term>
         ///   </item>
         ///   <item>
         ///     <term>isUnique</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it unique. </term>
+        ///     <term>Determines if it unique.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the attribute. </term>
+        ///     <term>The name of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the attribute. </term>
+        ///     <term>The options for the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMaxCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum count of the values. </term>
+        ///     <term>The maximum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMinCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum count of the values. </term>
+        ///     <term>The minimum count of the values.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>NumberFormat</c>:
@@ -8674,85 +8626,85 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>availableLocales</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>currency</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The currency. </term>
+        ///     <term>The currency.</term>
         ///   </item>
         ///   <item>
         ///     <term>currencyInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>groupingUsed</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if grouping is used. </term>
+        ///     <term>Determines if grouping is used.</term>
         ///   </item>
         ///   <item>
         ///     <term>instance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>integerInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>maximumFractionDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum of fraction digits. </term>
+        ///     <term>The maximum of fraction digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>maximumIntegerDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum of integer digits. </term>
+        ///     <term>The maximum of integer digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>minimumFractionDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum of fraction digits. </term>
+        ///     <term>The minimum of fraction digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>minimumIntegerDigits</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum of integer digits. </term>
+        ///     <term>The minimum of integer digits.</term>
         ///   </item>
         ///   <item>
         ///     <term>numberInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>parseIntegerOnly</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if only integer is parsed. </term>
+        ///     <term>Determines if only integer is parsed.</term>
         ///   </item>
         ///   <item>
         ///     <term>percentInstance</term>
         ///     <term>NumberFormat</term>
         ///     <term></term>
-        ///     <term> The number format. </term>
+        ///     <term>The number format.</term>
         ///   </item>
         ///   <item>
         ///     <term>roundingMode</term>
         ///     <term>&quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;</term>
         ///     <term></term>
-        ///     <term> The enum of rounding mode. </term>
+        ///     <term>The enum of rounding mode.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>TimeZone</c>:
@@ -8767,37 +8719,37 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>dstSavings</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The value of the daylight saving time. </term>
+        ///     <term>The value of the daylight saving time.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The ID of the timezone. </term>
+        ///     <term>The ID of the timezone.</term>
         ///   </item>
         ///   <item>
         ///     <term>availableIds</term>
         ///     <term>string[]</term>
         ///     <term></term>
-        ///     <term> An array of available IDs. </term>
+        ///     <term>An array of available IDs.</term>
         ///   </item>
         ///   <item>
         ///     <term>default</term>
         ///     <term>TimeZone</term>
         ///     <term></term>
-        ///     <term> The timezone information. </term>
+        ///     <term>The timezone information.</term>
         ///   </item>
         ///   <item>
         ///     <term>displayName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The display name of the timezone. </term>
+        ///     <term>The display name of the timezone.</term>
         ///   </item>
         ///   <item>
         ///     <term>rawOffset</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The raw offset of the timezone. </term>
+        ///     <term>The raw offset of the timezone.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasRelationshipAttributeDef</c>:
@@ -8812,91 +8764,91 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>cardinality</term>
         ///     <term>&quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;</term>
         ///     <term></term>
-        ///     <term> single-valued attribute or multi-valued attribute. </term>
+        ///     <term>single-valued attribute or multi-valued attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>constraints</term>
         ///     <term>AtlasConstraintDef[]</term>
         ///     <term></term>
-        ///     <term> An array of constraints. </term>
+        ///     <term>An array of constraints.</term>
         ///   </item>
         ///   <item>
         ///     <term>defaultValue</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The default value of the attribute. </term>
+        ///     <term>The default value of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the attribute. </term>
+        ///     <term>The description of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>includeInNotification</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is included in notification. </term>
+        ///     <term>Determines if it is included in notification.</term>
         ///   </item>
         ///   <item>
         ///     <term>isIndexable</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is indexable. </term>
+        ///     <term>Determines if it is indexable.</term>
         ///   </item>
         ///   <item>
         ///     <term>isOptional</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is optional. </term>
+        ///     <term>Determines if it is optional.</term>
         ///   </item>
         ///   <item>
         ///     <term>isUnique</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it unique. </term>
+        ///     <term>Determines if it unique.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the attribute. </term>
+        ///     <term>The name of the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>options</term>
         ///     <term>Dictionary&lt;string, string&gt;</term>
         ///     <term></term>
-        ///     <term> The options for the attribute. </term>
+        ///     <term>The options for the attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>typeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the type. </term>
+        ///     <term>The name of the type.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMaxCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The maximum count of the values. </term>
+        ///     <term>The maximum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>valuesMinCount</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The minimum count of the values. </term>
+        ///     <term>The minimum count of the values.</term>
         ///   </item>
         ///   <item>
         ///     <term>isLegacyAttribute</term>
         ///     <term>boolean</term>
         ///     <term></term>
-        ///     <term> Determines if it is a legacy attribute. </term>
+        ///     <term>Determines if it is a legacy attribute.</term>
         ///   </item>
         ///   <item>
         ///     <term>relationshipTypeName</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The name of the relationship type. </term>
+        ///     <term>The name of the relationship type.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasEnumElementDef</c>:
@@ -8911,19 +8863,19 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The description of the enum element definition. </term>
+        ///     <term>The description of the enum element definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>ordinal</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> The ordinal of the enum element definition. </term>
+        ///     <term>The ordinal of the enum element definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>value</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The value of the enum element definition. </term>
+        ///     <term>The value of the enum element definition.</term>
         ///   </item>
         /// </list>
         /// Schema for <c>AtlasConstraintDef</c>:
@@ -8938,13 +8890,13 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>params</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term> The parameters of the constraint definition. </term>
+        ///     <term>The parameters of the constraint definition.</term>
         ///   </item>
         ///   <item>
         ///     <term>type</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> The type of the constraint. </term>
+        ///     <term>The type of the constraint.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -9008,7 +8960,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> List all type definitions returned as a list of minimal information header. </summary>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true when search filter type=term_template.
+        /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="options"> The request options. </param>
@@ -9052,7 +9004,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> List all type definitions returned as a list of minimal information header. </summary>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true when search filter type=term_template.
+        /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="options"> The request options. </param>
@@ -9096,7 +9048,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create Request for <see cref="GetTypeDefinitionHeaders"/> and <see cref="GetTypeDefinitionHeadersAsync"/> operations. </summary>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true when search filter type=term_template.
+        /// This is always true when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="options"> The request options. </param>

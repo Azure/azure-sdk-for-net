@@ -16,17 +16,30 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class MetricsQueryClient
     {
+        private static readonly Uri _defaultEndpoint = new Uri("https://management.azure.com");
+
         private readonly MetricDefinitionsRestClient _metricDefinitionsClient;
         private readonly MetricsRestClient _metricsRestClient;
         private readonly MetricNamespacesRestClient _namespacesRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsQueryClient"/>.
+        /// Initializes a new instance of <see cref="MetricsQueryClient"/>. Uses the default 'https://management.azure.com' endpoint.
+        /// <code snippet="Snippet:CreateMetricsClient" language="csharp">
+        /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+        /// </code>
         /// </summary>
-        /// <param name="endpoint">The resource manager service endpoint to use. For example, <c>https://management.azure.com/</c> for public cloud.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        public MetricsQueryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, null)
+        public MetricsQueryClient(TokenCredential credential) : this(credential, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="MetricsQueryClient"/>. Uses the default 'https://management.azure.com' endpoint.
+        /// </summary>
+        /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
+        /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
+        public MetricsQueryClient(TokenCredential credential, MetricsQueryClientOptions options) : this(_defaultEndpoint, credential, options)
         {
         }
 
@@ -36,7 +49,7 @@ namespace Azure.Monitor.Query
         /// <param name="endpoint">The resource manager service endpoint to use. For example <c>https://management.azure.com/</c> for public cloud.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
-        public MetricsQueryClient(Uri endpoint, TokenCredential credential, MetricsQueryClientOptions options)
+        public MetricsQueryClient(Uri endpoint, TokenCredential credential, MetricsQueryClientOptions options = null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -60,11 +73,10 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Queries metrics for a resource.
         /// <code snippet="Snippet:QueryMetrics" language="csharp">
-        /// var endpoint = new Uri(&quot;https://management.azure.com&quot;);
         /// string resourceId =
         ///     &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/Microsoft.OperationalInsights/workspaces/&lt;workspace_name&gt;&quot;;
         ///
-        /// var metricsClient = new MetricsQueryClient(endpoint, new DefaultAzureCredential());
+        /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
         ///
         /// Response&lt;MetricQueryResult&gt; results = await metricsClient.QueryAsync(
         ///     resourceId,
@@ -119,11 +131,10 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Queries metrics for a resource.
         /// <code snippet="Snippet:QueryMetrics" language="csharp">
-        /// var endpoint = new Uri(&quot;https://management.azure.com&quot;);
         /// string resourceId =
         ///     &quot;/subscriptions/&lt;subscription_id&gt;/resourceGroups/&lt;resource_group_name&gt;/providers/Microsoft.OperationalInsights/workspaces/&lt;workspace_name&gt;&quot;;
         ///
-        /// var metricsClient = new MetricsQueryClient(endpoint, new DefaultAzureCredential());
+        /// var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
         ///
         /// Response&lt;MetricQueryResult&gt; results = await metricsClient.QueryAsync(
         ///     resourceId,
