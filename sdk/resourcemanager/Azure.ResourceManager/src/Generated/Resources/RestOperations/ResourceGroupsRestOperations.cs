@@ -308,6 +308,10 @@ namespace Azure.ResourceManager.Resources
                         value = ResourceGroupData.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    {
+                        return Response.FromValue<ResourceGroupData>(null, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -334,6 +338,10 @@ namespace Azure.ResourceManager.Resources
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ResourceGroupData.DeserializeResourceGroup(document.RootElement);
                         return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    {
+                        return Response.FromValue<ResourceGroupData>(null, message.Response);
                     }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);

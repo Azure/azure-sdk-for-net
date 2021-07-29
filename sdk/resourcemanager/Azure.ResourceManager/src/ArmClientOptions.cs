@@ -21,6 +21,11 @@ namespace Azure.ResourceManager
         public ApiVersions ApiVersions { get; private set; }
 
         /// <summary>
+        /// Gets the ApiVersions object
+        /// </summary>
+        public string Scope { get; set; } = "https://management.core.windows.net/.default";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
         /// </summary>
         public ArmClientOptions()

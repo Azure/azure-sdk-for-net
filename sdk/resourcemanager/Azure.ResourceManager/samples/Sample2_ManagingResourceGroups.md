@@ -12,14 +12,14 @@ using Azure.ResourceManager.Resources.Models;
 When you first create your ARM client, choose the subscription you're going to work in. There's a convenient `DefaultSubscription` property that returns the default subscription configured for your user:
 
 ```C# Snippet:Managing_Resource_Groups_DefaultSubscription
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via container objects. Or you can access individual children by ID.
 
 ```C# Snippet:Managing_Resource_Groups_GetResourceGroupContainer
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
@@ -35,7 +35,7 @@ Using the container object, we can perform collection-level operations such as l
 
 ```C# Snippet:Managing_Resource_Groups_CreateAResourceGroup
 // First, initialize the ArmClient and get the default subscription
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Now we get a ResourceGroup container for that subscription
 Subscription subscription = armClient.DefaultSubscription;
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
@@ -50,12 +50,12 @@ ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpda
 
 ```C# Snippet:Managing_Resource_Groups_ListAllResourceGroup
 // First, initialize the ArmClient and get the default subscription
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 // Now we get a ResourceGroup container for that subscription
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 // With ListAsync(), we can get a list of the resources in the container
-AsyncPageable<ResourceGroup> response = rgContainer.ListAsync();
+AsyncPageable<ResourceGroup> response = rgContainer.GetAllAsync();
 await foreach (ResourceGroup rg in response)
 {
     Console.WriteLine(rg.Data.Name);
@@ -68,7 +68,7 @@ Using the operation object we can perform entity-level operations, such as updat
 
 ```C# Snippet:Managing_Resource_Groups_UpdateAResourceGroup
 // Note: Resource group named 'myRgName' should exist for this example to work.
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
@@ -78,7 +78,7 @@ resourceGroup = await resourceGroup.AddTagAsync("key", "value");
 ***Delete a resource group***
 
 ```C# Snippet:Managing_Resource_Groups_DeleteResourceGroup
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);

@@ -104,12 +104,12 @@ namespace Azure.ResourceManager
             Credential = credential;
             BaseUri = baseUri ?? new Uri(DefaultUri);
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
-            Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, options ?? ClientOptions);
+            Pipeline = ManagementPipelineBuilder.Build(Credential, options.Scope, options ?? ClientOptions);
 
             _tenant = new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
-                : GetSubscriptions().TryGet(defaultSubscriptionId);
+                : GetSubscriptions().GetIfExists(defaultSubscriptionId);
             ClientOptions.ApiVersions.SetProviderClient(this);
         }
 
@@ -156,16 +156,46 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets a resource group operations object.
         /// </summary>
-        /// <param name="id"> The id of the resourcegroup </param>
+        /// <param name="id"> The id of the resourcegroup. </param>
         /// <returns> Resource operations of the resource. </returns>
         public virtual ResourceGroupOperations GetResourceGroupOperations(string id)
         {
             return new ResourceGroupOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
 
+        /// <summary>
+        /// Gets a subscription operations object.
+        /// </summary>
+        /// <param name="id"> The id of the subscription. </param>
+        /// <returns> Resource operations of the subscription. </returns>
+        public virtual SubscriptionOperations GetSubscriptionOperations(string id)
+        {
+            return new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+        }
+
+        /// <summary>
+        /// Gets a feature operations object.
+        /// </summary>
+        /// <param name="id"> The id of the feature. </param>
+        /// <returns> Resource operations of the feature. </returns>
+        public virtual FeatureOperations GetFeatureOperations(string id)
+        {
+            return new FeatureOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+        }
+
+        /// <summary>
+        /// Gets a feature operations object.
+        /// </summary>
+        /// <param name="id"> The id of the feature. </param>
+        /// <returns> Resource operations of the feature. </returns>
+        public virtual ProviderOperations GetProviderOperations(string id)
+        {
+            return new ProviderOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
+        }
+
         private Subscription GetDefaultSubscription()
         {
-            var sub = GetSubscriptions().List().FirstOrDefault();
+            var sub = GetSubscriptions().GetAll().FirstOrDefault();
             if (sub is null)
                 throw new Exception("No subscriptions found for the given credentials");
             return sub;
@@ -248,19 +278,22 @@ namespace Azure.ResourceManager
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ProviderInfo> ListProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.ListProviders(top, expand, cancellationToken);
+        [ForwardsClientCalls]
+        public virtual Pageable<ProviderInfo> GetProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetProviders(top, expand, cancellationToken);
 
         /// <summary> Gets all resource providers for a subscription. </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ProviderInfo> ListProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.ListProvidersAsync(top, expand, cancellationToken);
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<ProviderInfo> GetProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetProvidersAsync(top, expand, cancellationToken);
 
         /// <summary> Gets the specified resource provider at the tenant level. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ProviderInfo> GetProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetProvider(resourceProviderNamespace, expand, cancellationToken);
 
         /// <summary> Gets the specified resource provider at the tenant level. </summary>
@@ -268,6 +301,7 @@ namespace Azure.ResourceManager
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ProviderInfo>> GetProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => await _tenant.GetProviderAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
 
         /// <summary>

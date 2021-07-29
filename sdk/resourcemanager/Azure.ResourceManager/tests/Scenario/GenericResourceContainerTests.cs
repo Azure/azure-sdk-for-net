@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Tests
             count = await GetResourceCountAsync(genericResources, rg2);
             Assert.AreEqual(1, count);
 
-            Assert.Throws<ArgumentNullException>(() => { genericResources.ListByResourceGroupAsync(null); });
+            Assert.Throws<ArgumentNullException>(() => { genericResources.GetByResourceGroupAsync(null); });
         }
 
         [TestCase]
@@ -75,6 +75,20 @@ namespace Azure.ResourceManager.Tests
 
             Assert.IsTrue(await Client.DefaultSubscription.GetGenericResources().CheckIfExistsAsync(aset.Data.Id));
             Assert.IsFalse(await Client.DefaultSubscription.GetGenericResources().CheckIfExistsAsync(aset.Data.Id + "1"));
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task TryGet()
+        {
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(Location.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
+
+            GenericResource resource = await Client.DefaultSubscription.GetGenericResources().GetIfExistsAsync(aset.Data.Id);
+            Assert.AreEqual(aset.Data.Id, resource.Data.Id);
+
+            var response = await Client.DefaultSubscription.GetGenericResources().GetIfExistsAsync(aset.Data.Id + "1");
+            Assert.IsNull(response.Value);
         }
 
         [TestCase]
