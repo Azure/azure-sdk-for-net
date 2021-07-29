@@ -31,10 +31,10 @@ extends:
       safeName: AzureSearchDocuments
     # Skip track 1 Microsoft.Azure.* packages for the release jobs
     # - name: Microsoft.Azure.Search
-      # safeName: MicrosoftAzureSearch
+    #   safeName: MicrosoftAzureSearch
     # - name: Microsoft.Azure.Search.Common
-      # safeName: MicrosoftAzureSearchCommon
+    #   safeName: MicrosoftAzureSearchCommon
     # - name: Microsoft.Azure.Search.Data
-      # safeName: MicrosoftAzureSearchData
+    #   safeName: MicrosoftAzureSearchData
     # - name: Microsoft.Azure.Search.Service
-      # safeName: MicrosoftAzureSearchService
+    #   safeName: MicrosoftAzureSearchService
