@@ -233,7 +233,7 @@ There are several different Azure services that act as [event handlers](https://
 
 Note: if using Webhooks for event delivery of the *Event Grid schema*, Event Grid requires you to prove ownership of your Webhook endpoint before it starts delivering events to that endpoint. At the time of event subscription creation, Event Grid sends a subscription validation event to your endpoint, as seen below. Learn more about completing the handshake here: [Webhook event delivery](https://docs.microsoft.com/azure/event-grid/webhook-event-delivery). For the *CloudEvents schema*, the service validates the connection using the HTTP options method. Learn more here: [CloudEvents validation](https://github.com/cloudevents/spec/blob/v1.0/http-webhook.md#4-abuse-protection).
 
-Once events are delivered to the event handler, we can deserialize the JSON payload into list of events.
+Once events are delivered to the event handler, we can deserialize the JSON payload into a list of events.
 
 Using `EventGridEvent`:
 ```C# Snippet:EGEventParseJson
