@@ -174,6 +174,9 @@ namespace Azure.AI.Personalizer
         public System.DateTimeOffset? EndTime { get { throw null; } }
         public System.DateTimeOffset? StartTime { get { throw null; } }
     }
+    public static partial class PersonalizerModelFactory
+    {
+    }
     public partial class PersonalizerModelProperties
     {
         internal PersonalizerModelProperties() { }
