@@ -81,7 +81,7 @@ namespace Azure.AI.Translation.Document.Samples
 
             // Generate SAS tokens for source & target
             Uri srcSasUri = sourceContainerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Read, DateTime.UtcNow.AddMinutes(30));
-            Uri tgtSasUri = targetContainerClient.GenerateSasUri(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write | BlobContainerSasPermissions.Delete, DateTime.UtcNow.AddMinutes(30));
+            Uri tgtSasUri = targetContainerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write | BlobContainerSasPermissions.Delete, DateTime.UtcNow.AddMinutes(30));
 
             // Submit the translation operation and wait for it to finish
             var operationRequest = new DocumentTranslationInput(srcSasUri, tgtSasUri, "es");
