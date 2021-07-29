@@ -85,8 +85,8 @@ Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
 Console.WriteLine($"Vnet: {id.Parent.Name}");
 Console.WriteLine($"Subnet: {id.Name}");
 ```
-However, keep in mind that some of those properties could be null. You can usually tell by the id string itself which type a resource ID is, but if you are unsure, use the Try methods to retrieve the values as it's shown below:
-#### Example: Check if the properties are null
+However, keep in mind that some of those properties could be null. You can usually tell by the id string itself which type a resource ID is, but if you are unsure, check if the properties are null or use the Try methods to retrieve the values as it's shown below:
+#### Example: ResourceIdentifier TryGet methods 
 ```C# Snippet:Readme_CastToBaseResourceIdentifier
 string resourceId = "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet";
 // Assume we don't know what type of resource id we have we can cast to the base type
