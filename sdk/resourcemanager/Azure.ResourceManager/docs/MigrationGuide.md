@@ -103,11 +103,12 @@ string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{
 #### New
 ```C#
 string vmName = "quickstartvm";
-var aset = await resourceGroup.GetAvailabilitySets().Construct("Aligned").CreateOrUpdateAsync(vmName + "_aSet");
+AvailabilitySetData aSetData = new AvailabilitySetData(location);
+var aset = (await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", aSetData)).Value;
 string asetId = aset.Id;
 ```
 
-Now there's no need to create an `AvailabilitySet` object, thus less code is needed. The availability set is created using  the `GetAvailabilitySets()` extension method instead of using another client. 
+Parameters can be specified via the `AvailabilitySetData` object, in here, the basic default only requires the location. The availability set is created using  the `GetAvailabilitySets()` extension method instead of using another client. 
 
 ### Create a Virtual Network and Subnet
 #### Old
@@ -288,11 +289,18 @@ var vm = VMcomputeClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, in
 ```
 #### New
 ```C#
-var vm = await resourceGroup.GetVirtualMachines().Construct("hostname", "admin-user", "p4$$w0rd", nic.Id, asetId).CreateOrUpdateAsync(vmName);
+VirtualMachineData vmData = new VirtualMachineData(location);
+vmData.OsProfile.AdminUsername = "admin-username";
+vmData.OsProfile.AdminPassword = "admin-p4$$w0rd";
+vmData.OsProfile.ComputerName = "computer-name";
+vmData.AvailabilitySet = asetId;
+vmData.NetworkProfile.NetworkInterfaces.Add(nic);
+
+var vm = (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, vmData)).Value;
 Console.WriteLine("VM ID: " + vm.Id);
 ```
 
-Finally, as it can be seen here, with the new SDK a single virtual machine can be created in just a single line of code. No need to create a `VirtualMachine` object and set it up.
+Finally, as it can be seen here, from the resource group you can get the Virtual Machine container and create a new one using the `VirtualMachineData` for the parameters.
 
 ## Next steps
 Check out [more examples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
