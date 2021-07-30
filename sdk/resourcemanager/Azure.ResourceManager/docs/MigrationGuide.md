@@ -176,8 +176,6 @@ NetworkSecurityGroupData nsgData = new NetworkSecurityGroupData() { Location = l
 _ = resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(nsgName, nsgData);
 ```
 
-Creating a Network security group does not longer require a `NetworkSecurityGroup` object as a parameter.
-
 ### Create a Network Interface
 #### Old
 ```C#
