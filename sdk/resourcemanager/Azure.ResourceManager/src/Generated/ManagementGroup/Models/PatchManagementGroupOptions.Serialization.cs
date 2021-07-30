@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Management.Models
 {
-    public partial class PatchManagementGroupRequest : IUtf8JsonSerializable
+    public partial class PatchManagementGroupOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
