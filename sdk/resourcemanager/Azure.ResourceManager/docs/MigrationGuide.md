@@ -31,13 +31,13 @@ using System.Threading.Tasks;
 #### Old
 ```C#
 ServiceClientCredentials credentials = getMyCredentials();
-var computeClient = new ComputeManagementClient(credentials);
-var networkClient = new NetworkManagementClient(credentials);
-var managedServiceIdentityClient = new ManagedServiceIdentityClient(credentials);
+ComputeManagementClient computeClient = new ComputeManagementClient(credentials);
+NetworkManagementClient networkClient = new NetworkManagementClient(credentials);
+ManagedServiceIdentityClient managedServiceIdentityClient = new ManagedServiceIdentityClient(credentials);
 ```
 #### New
 ```C#
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 As you can see, authentication is now handled by Azure.Identity, and now just a single client is needed, from which you can get the `DefaultSubscription` and start managing your resources. 
 
@@ -45,7 +45,7 @@ As you can see, authentication is now handled by Azure.Identity, and now just a 
 #### Old
 ```C#
 ServiceClientCredentials credentials = getMyCredentials(); 
-var resourcesClient = new ResourceManagementClient(credentials);
+ResourceManagementClient resourcesClient = new ResourceManagementClient(credentials);
 
 string rgName = "QuickStartRG";
 string location = "WestUS2";
@@ -59,14 +59,13 @@ resourcesClient.ResourceGroups.CreateOrUpdate(
 ```
 #### New
 ```C#
-var armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 
 Location location = Location.WestUS2;
 string rgName = "QuickStartRG";
 
-var rgData = new ResourceGroupData(location);
+ResourceGroupData rgData = new ResourceGroupData(location);
 ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
 ```
 The main difference is that the prevoius libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionContainer` to manage the resources in a particular subscripations. In this example, a `resourceGroupContainer` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupContainer. With that `ResoueceGroup` you will be able to get the resource containers to manage all the resources that will be inside it, as it is shown in the next part of this guide.
@@ -76,7 +75,7 @@ Another thing is that the new preview SDK provides some common classes to repres
 ### Create an Availability Set
 #### Old
 ```C#
-var inputAvailabilitySet = new AvailabilitySet
+AvailabilitySet inputAvailabilitySet = new AvailabilitySet
 {
     Location = location,
     Tags = new Dictionary<string, string>()
@@ -116,7 +115,7 @@ Parameters can be specified via the `AvailabilitySetData` object, in here, the b
 string vnetName = vmName + "_vnet";
 string subnetName = "mySubnet";
 
-var vnet = new VirtualNetwork()
+VirtualNetwork vnet = new VirtualNetwork()
 {
     Location = location,
     AddressSpace = new AddressSpace()
@@ -166,7 +165,7 @@ The main difference here is that a virtual network object is no longer needed to
 #### Old
 ```C#
 string nsgName = vmName + "_nsg";
-var nsgParameters = new NetworkSecurityGroup()
+NetworkSecurityGroup nsgParameters = new NetworkSecurityGroup()
 {
     Location = location
 };
@@ -189,7 +188,7 @@ Creating a Network security group does not longer require a `NetworkSecurityGrou
 string nicname = vmName + "_nic";
 string ipConfigName = vmName + "_IP";
 
-var nicParameters = new NetworkInterface()
+NetworkInterface nicParameters = new NetworkInterface()
 {
     Location = location,
     Tags = new Dictionary<string, string>()
@@ -213,7 +212,7 @@ var nicResponse = networkClient.NetworkInterfaces.Get(rgName, nicname);
 ```
 #### New
 ```C#
-var nic = new NetworkInterface()
+NetworkInterface nic = new NetworkInterface()
 {
     Location = location,
     IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
@@ -239,7 +238,7 @@ This step is similar to the old SDK, however, notice that the `StartCreateOrUpda
 #### Old
 ```C#
 string vmSize = VirtualMachineSizeTypes.StandardA1V2
-var inputVM = new VirtualMachine
+VirtualMachine inputVM = new VirtualMachine
 {
     Location = location,
     Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
