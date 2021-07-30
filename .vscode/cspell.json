@@ -88,6 +88,17 @@
         "Skus",
         "Undelete"
       ]
+    },
+    {
+      "filename": "**/sdk/textanalytics/**/*.cs",
+      "words": [
+        "Brcpf",
+        "Idrg",
+        "Esdni",
+        "Eugps",
+        "Plregon",
+        "Usuk"
+      ]
     }
   ],
   "allowCompoundWords": true

@@ -3,7 +3,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class LocationExpandedTests : ResourceManagerTestBase
     {
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task VerifyMetadata()
         {
-            var listLocs = Client.DefaultSubscription.ListLocationsAsync();
+            var listLocs = Client.DefaultSubscription.GetLocationsAsync();
             await foreach (LocationExpanded loc in listLocs)
             {
                 Assert.IsNotNull(loc.Metadata);

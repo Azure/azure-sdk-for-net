@@ -4,13 +4,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     public class ResourceManagerTestBase : ManagementRecordedTestBase<ResourceManagerTestEnvironment>
     {
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Core.Tests
             return data;
         }
 
-        protected async Task<GenericResource> CreateGenericAvailabilitySetAsync(ResourceGroupResourceIdentifier rgId)
+        protected async Task<GenericResource> CreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
             var genericResources = Client.DefaultSubscription.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Core.Tests
             return await genericResources.CreateOrUpdateAsync(asetId, data);
         }
 
-        protected async Task<ResourcesCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceGroupResourceIdentifier rgId)
+        protected async Task<ResourcesCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
             var genericResources = Client.DefaultSubscription.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Core.Tests
         protected static async Task<int> GetResourceCountAsync(GenericResourceContainer genericResources, ResourceGroup rg = default)
         {
             int result = 0;
-            var pageable = rg == null ? genericResources.ListAsync() : genericResources.ListByResourceGroupAsync(rg.Id.Name);
+            var pageable = rg == null ? genericResources.GetAllAsync() : genericResources.GetByResourceGroupAsync(rg.Id.Name);
             await foreach (var resource in pageable)
                 result++;
             return result;

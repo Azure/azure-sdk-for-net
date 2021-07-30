@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "TagResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal TagResource(OperationsBase options, TagResourceData resource)
+        internal TagResource(ResourceOperations options, TagResourceData resource)
             : base(options, resource.Id)
         {
             Data = resource;

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> The predefined tag client. </summary>
-    public class PredefinedTagOperations : ResourceOperationsBase
+    public class PredefinedTagOperations : ResourceOperations
     {
         /// <summary>
         /// The resource type for predefined tag.
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Resources
         /// Initializes a new instance of the <see cref="PredefinedTagOperations"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
-        /// <param name="subscriptionGuid"> The Guid of the subscription. </param>
-        internal PredefinedTagOperations(ClientContext clientContext, string subscriptionGuid)
-            : base(clientContext, new SubscriptionResourceIdentifier(subscriptionGuid))
+        /// <param name="id"> The id of the subscription. </param>
+        internal PredefinedTagOperations(ClientContext clientContext, ResourceIdentifier id)
+            : base(clientContext, id)
         {
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private TagRestOperations RestClient => new TagRestOperations(Diagnostics, Pipeline, ((SubscriptionResourceIdentifier)Id).SubscriptionId, BaseUri);
+        private TagRestOperations RestClient => new TagRestOperations(Diagnostics, Pipeline, Id.SubscriptionId, BaseUri);
 
         /// <summary> This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource. </summary>
         /// <param name="tagName"> The name of the tag. </param>

@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     class ArmClientTests : ResourceManagerTestBase
     {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task LocalOneTimeSetup()
         {
             _rgName = SessionRecording.GenerateAssetName("testRg-");
-            var subscription = await GlobalClient.GetSubscriptions().TryGetAsync(SessionEnvironment.SubscriptionId);
+            Subscription subscription = await GlobalClient.GetSubscriptions().GetIfExistsAsync(SessionEnvironment.SubscriptionId);
             _ = subscription.GetResourceGroups().Construct(_location).StartCreateOrUpdateAsync(_rgName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
             StopSessionRecording();
         }
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var ids = new List<string>()
             {
-                $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1/",
-                $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-2/",
-                $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-3/",
-                $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-4/"
+                $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1",
+                $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-2",
+                $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-3",
+                $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-4"
             };
 
             var genericResourceOperationsList = Client.GetGenericResourceOperations(ids);
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.Core.Tests
         public void GetGenericResourcesOperationsTests()
         {
             string id = $"/providers/Microsoft.Compute/virtualMachines/myVm";
-            Assert.AreEqual(id, Client.GetGenericResourceOperations(new TenantResourceIdentifier(id)).Id.StringValue);
+            Assert.AreEqual(id, Client.GetGenericResourceOperations(new ResourceIdentifier(id)).Id.StringValue);
         }
 
         [TestCase]
         public void GetGenericResourceOperationsSingleIDTests()
         {
-            string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1/";
+            string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
             Assert.AreEqual(id, Client.GetGenericResourceOperations(id).Id.StringValue);
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task GetGenericResourceOperationsWithSingleValidResource()
         {
-            string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}/";
+            string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
             var genericResourceOperations = Client.GetGenericResourceOperations(id);
             var genericResource = await genericResourceOperations.GetAsync();
             Assert.AreEqual(200, genericResource.GetRawResponse().Status);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public void GetGenericResourceOperationsWithSingleInvalidResource()
         {
-            string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1/";
+            string id = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
             var genericResourceOperations = Client.GetGenericResourceOperations(id);
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
             Assert.AreEqual(404, exception.Status);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var ids = new List<string>()
             {
-                $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}/"
+                $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}"
             };
 
             var genericResourceOperationsList = Client.GetGenericResourceOperations(ids);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var ids = new List<string>()
             {
-                $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/non-existent/"
+                $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/non-existent"
             };
 
             var genericResourceOperationsList = Client.GetGenericResourceOperations(ids);

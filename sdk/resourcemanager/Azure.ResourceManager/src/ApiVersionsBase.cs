@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 
 namespace Azure.ResourceManager.Core
@@ -9,7 +10,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing Azure resource API versions base.
     /// </summary>
-    public class ApiVersionsBase : IEquatable<string>, IComparable<string>
+    internal class ApiVersionsBase : IEquatable<string>, IComparable<string>
     {
         private readonly string _value;
 
@@ -171,6 +172,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="other"> The object to compare. </param>
         /// <returns> Comparison result in boolean. Equal returns true otherwise returns false. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object other)
         {
             if (other is ApiVersionsBase)
@@ -185,6 +187,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the hash code of the API version value.
         /// </summary>
         /// <returns> The hash code of the API version value. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
             return _value.GetHashCode();

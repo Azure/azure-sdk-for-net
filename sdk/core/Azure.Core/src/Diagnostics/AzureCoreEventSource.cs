@@ -14,6 +14,9 @@ namespace Azure.Core.Diagnostics
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
         private const int RequestContentTextEvent = 17;
+        private const int RequestRedirectEvent = 20;
+        private const int RequestRedirectBlockedEvent = 21;
+        private const int RequestRedirectCountExceededEvent = 22;
         private const int ResponseEvent = 5;
         private const int ResponseContentEvent = 6;
         private const int ResponseDelayEvent = 7;
@@ -132,6 +135,24 @@ namespace Azure.Core.Diagnostics
         public void ExceptionResponse(string requestId, string exception)
         {
             WriteEvent(ExceptionResponseEvent, requestId, exception);
+        }
+
+        [Event(RequestRedirectEvent, Level = EventLevel.Verbose, Message = "Request [{0}] Redirecting from {1} to {2} in response to status code {3}")]
+        public void RequestRedirect(string requestId, string from, string to, int status)
+        {
+            WriteEvent(RequestRedirectEvent, requestId, from, to, status);
+        }
+
+        [Event(RequestRedirectBlockedEvent, Level = EventLevel.Warning, Message = "Request [{0}] Insecure HTTPS to HTTP redirect from {1} to {2} was blocked.")]
+        public void RequestRedirectBlocked(string requestId, string from, string to)
+        {
+            WriteEvent(RequestRedirectBlockedEvent, requestId, from, to);
+        }
+
+        [Event(RequestRedirectCountExceededEvent, Level = EventLevel.Warning, Message = "Request [{0}] Exceeded max number of redirects. Redirect from {1} to {2} blocked.")]
+        public void RequestRedirectCountExceeded(string requestId, string from, string to)
+        {
+            WriteEvent(RequestRedirectCountExceededEvent, requestId, from, to);
         }
     }
 }

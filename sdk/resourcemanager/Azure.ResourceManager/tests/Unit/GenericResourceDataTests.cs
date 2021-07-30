@@ -6,7 +6,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests
+namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
     public class GenericResourceDataTests
@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void SerializationTestType1()
         {
             string expected = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "GenericResourceData", "SerializationTestType1.json"));
-            ResourceGroupResourceIdentifier id = Id;
+            ResourceIdentifier id = Id;
             Plan plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
             Sku sku = new Sku("NameForSku", "TierForSku", "SizeForSku", "FamilyForSku", "ModelForSku", 15464547);
             GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, Location.EastUS, null, plan, null, "KindForResource", "ManagedByForResource", sku, null);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void SerializationTestType2()
         {
             string expected = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "GenericResourceData", "SerializationTestType2.json"));
-            ResourceGroupResourceIdentifier id = Id;
+            ResourceIdentifier id = Id;
             var plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
             var kind = "KindForResource";
             var managedBy = "ManagedByForResource";
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void InvalidSerializationTest()
         {
             string expected = "{\"properties\":{\"location\":\"eastus\",\"tags\":{}}}";
-            ResourceGroupResourceIdentifier id = Id;
+            ResourceIdentifier id = Id;
             GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, Location.EastUS, null, null, null, null, null, null, null);
 
             var json = JsonHelper.SerializePropertiesToString(data);
