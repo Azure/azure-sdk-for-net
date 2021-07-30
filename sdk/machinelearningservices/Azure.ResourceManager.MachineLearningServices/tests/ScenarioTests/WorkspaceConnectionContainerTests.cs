@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -9,9 +9,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 {
-    public class TemplateContainerTests : MachineLearningServicesManagerTestBase
+    public class WorkspaceConnectionContainerTests : MachineLearningServicesManagerTestBase
     {
-        private const string ResourceGroupNamePrefix = "test-TemplateContainer";
+        private const string ResourceGroupNamePrefix = "test-WorkspaceConnectionContainer";
         private const string WorkspacePrefix = "test-workspace";
         private const string ResourceNamePrefix = "test-resource";
         private readonly Location _defaultLocation = Location.WestUS2;
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         private string _workspaceName = WorkspacePrefix;
         private string _resourceName = ResourceNamePrefix;
 
-        public TemplateContainerTests(bool isAsync)
+        public WorkspaceConnectionContainerTests(bool isAsync)
          : base(isAsync)
         {
         }
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
 
-            Assert.DoesNotThrowAsync(async () => _ = await ws.GetTemplates().CreateOrUpdateAsync(
+            Assert.DoesNotThrowAsync(async () => _ = await ws.GetWorkspaceConnections().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData()));
+                DataHelper.GenerateWorkspaceConnectionData()));
 
-            var count = (await ws.GetTemplates().GetAllAsync().ToEnumerableAsync()).Count;
+            var count = (await ws.GetWorkspaceConnections().GetAllAsync().ToEnumerableAsync()).Count;
             Assert.AreEqual(count, 1);
         }
 
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
 
-            Assert.DoesNotThrowAsync(async () => _ = await ws.GetTemplates().CreateOrUpdateAsync(
+            Assert.DoesNotThrowAsync(async () => _ = await ws.GetWorkspaceConnections().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData()));
+                DataHelper.GenerateWorkspaceConnectionData()));
 
-            Assert.DoesNotThrowAsync(async () => await ws.GetTemplates().GetAsync(_resourceName));
-            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await ws.GetTemplates().GetAsync("NonExistant"));
+            Assert.DoesNotThrowAsync(async () => await ws.GetWorkspaceConnections().GetAsync(_resourceName));
+            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await ws.GetWorkspaceConnections().GetAsync("NonExistant"));
         }
 
         [TestCase]
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
 
-            Template resource = null;
-            Assert.DoesNotThrowAsync(async () => resource = await ws.GetTemplates().CreateOrUpdateAsync(
+            WorkspaceConnection resource = null;
+            Assert.DoesNotThrowAsync(async () => resource = await ws.GetWorkspaceConnections().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData()));
+                DataHelper.GenerateWorkspaceConnectionData()));
 
-            resource.Data.Description = "Updated";
-            Assert.DoesNotThrowAsync(async () => resource = await ws.GetTemplates().CreateOrUpdateAsync(
+            resource.Data.Value = "Updated";
+            Assert.DoesNotThrowAsync(async () => resource = await ws.GetWorkspaceConnections().CreateOrUpdateAsync(
                 _resourceName,
                 resource.Data));
-            Assert.AreEqual("Updated", resource.Data.Description);
+            Assert.AreEqual("Updated", resource.Data.Value);
         }
 
         [TestCase]
@@ -96,16 +96,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
 
-            Template resource = null;
-            Assert.DoesNotThrowAsync(async () => resource = await (await ws.GetTemplates().StartCreateOrUpdateAsync(
+            WorkspaceConnection resource = null;
+            Assert.DoesNotThrowAsync(async () => resource = await (await ws.GetWorkspaceConnections().StartCreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData())).WaitForCompletionAsync());
+                DataHelper.GenerateWorkspaceConnectionData())).WaitForCompletionAsync());
 
-            resource.Data.Description = "Updated";
-            Assert.DoesNotThrowAsync(async () => resource = await (await ws.GetTemplates().StartCreateOrUpdateAsync(
+            resource.Data.Value = "Updated";
+            Assert.DoesNotThrowAsync(async () => resource = await (await ws.GetWorkspaceConnections().StartCreateOrUpdateAsync(
                 _resourceName,
                 resource.Data)).WaitForCompletionAsync());
-            Assert.AreEqual("Updated", resource.Data.Description);
+            Assert.AreEqual("Updated", resource.Data.Value);
         }
 
         [TestCase]
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
 
-            Assert.DoesNotThrowAsync(async () => _ = await (await ws.GetTemplates().StartCreateOrUpdateAsync(
+            Assert.DoesNotThrowAsync(async () => _ = await (await ws.GetWorkspaceConnections().StartCreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData())).WaitForCompletionAsync());
+                DataHelper.GenerateWorkspaceConnectionData())).WaitForCompletionAsync());
 
-            Assert.IsTrue(await ws.GetTemplates().CheckIfExistsAsync(_resourceName));
-            Assert.IsFalse(await ws.GetTemplates().CheckIfExistsAsync(_resourceName + "xyz"));
+            Assert.IsTrue(await ws.GetWorkspaceConnections().CheckIfExistsAsync(_resourceName));
+            Assert.IsFalse(await ws.GetWorkspaceConnections().CheckIfExistsAsync(_resourceName + "xyz"));
         }
     }
 }

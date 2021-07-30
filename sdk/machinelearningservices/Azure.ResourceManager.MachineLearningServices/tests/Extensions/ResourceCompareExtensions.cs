@@ -25,8 +25,29 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
             Assert.AreEqual(ws.Data.Location, ws2.Data.Location);
             Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
             //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this WorkspaceConnection ws, WorkspaceConnection ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this EnvironmentContainerResource ws, EnvironmentContainerResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
             //Assert.IsTrue(ws.Data.Sku.Equals(ws2.Data.Sku));
             //Assert.IsTrue(ws.Data.Identity.Equals(ws2.Data.Identity));
+        }
+
+        internal static void AssertAreEqual(this EnvironmentSpecificationVersionResource ws, EnvironmentSpecificationVersionResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
         }
     }
 }

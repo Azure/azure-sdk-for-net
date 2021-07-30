@@ -90,14 +90,25 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
             throw new NotImplementedException();
         }
 
-        public EnvironmentContainerResourceData GenerateEnvironmentContainerResourceData()
+        public EnvironmentContainer GenerateEnvironmentContainerResourceData()
         {
-            throw new NotImplementedException();
+            return new EnvironmentContainer
+            {
+                Description = "Test"
+            };
         }
 
-        public EnvironmentSpecificationVersionResourceData GenerateEnvironmentSpecificationVersionResourceData()
+        public EnvironmentSpecificationVersion GenerateEnvironmentSpecificationVersionResourceData()
         {
-            throw new NotImplementedException();
+            return new EnvironmentSpecificationVersion
+            {
+                Description = "Test",
+                Docker = new DockerSpecification()
+                {
+                    DockerSpecificationType = new DockerSpecificationType("FROM python:3.7-slim"),
+                    Platform = new DockerImagePlatform(OperatingSystemType.Linux)
+                }
+            };
         }
 
         public JobBaseResourceData GenerateJobBaseResourceData()
