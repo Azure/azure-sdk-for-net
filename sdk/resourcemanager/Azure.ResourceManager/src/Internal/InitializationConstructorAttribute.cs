@@ -11,11 +11,5 @@ namespace Azure.ResourceManager.Core
     [AttributeUsage(AttributeTargets.Constructor)]
     internal class InitializationConstructorAttribute : Attribute
     {
-        /// <summary>
-        /// Instatiate a new InitializationConstructor attribute.
-        /// </summary>
-        public InitializationConstructorAttribute()
-        {
-        }
     }
 }

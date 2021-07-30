@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Core
 {
@@ -24,7 +23,8 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Instatiate a new reference type attribute.
         /// </summary>
-        public PropertyReferenceTypeAttribute() : this(null)
+        public PropertyReferenceTypeAttribute()
+            : this(Array.Empty<Type>())
         {
         }
 
