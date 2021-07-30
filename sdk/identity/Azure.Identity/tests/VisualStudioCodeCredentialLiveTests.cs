@@ -2,21 +2,37 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
+    [NonParallelizable]
     public class VisualStudioCodeCredentialLiveTests : IdentityRecordedTestBase
     {
         private const string ExpectedServiceName = "VS Code Azure";
+        private AzureEventSourceListener _logListener;
 
         public VisualStudioCodeCredentialLiveTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        [SetUp]
+        public void EnableLogging()
+        {
+            _logListener = new AzureEventSourceListener((_, message) => TestContext.WriteLine(message), EventLevel.Verbose);
+        }
+
+        [TearDown]
+        public void DisableLogging()
+        {
+            _logListener.Dispose();
         }
 
         [Test]
