@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Core
             dest.Clear();
             foreach (var kv in src)
             {
-                dest.Add(kv.Key, kv.Value);
+                dest.Add(kv);
             }
 
             return dest;
