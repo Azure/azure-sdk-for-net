@@ -65,22 +65,22 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="id">Sets the <see cref="DocumentStatus.Id"/> property.</param>
         /// <param name="sourceDocumentUri">Sets the <see cref="DocumentStatus.SourceDocumentUri"/> property.</param>
+        /// <param name="error">Sets the <see cref="DocumentStatus.Error"/> property.</param>
         /// <param name="createdOn">Sets the <see cref="DocumentStatus.CreatedOn"/> property.</param>
         /// <param name="lastModified">Sets the <see cref="DocumentStatus.LastModified"/> property.</param>
         /// <param name="status">Sets the <see cref="DocumentStatus.Status"/> property.</param>
         /// <param name="translatedTo">Sets the <see cref="DocumentStatus.TranslatedTo"/> property.</param>
-        /// <param name="error">Sets the <see cref="DocumentStatus.Error"/> property.</param>
         /// <param name="progress">Sets the <see cref="DocumentStatus.Progress"/> property.</param>
         /// <param name="charactersCharged">Sets the <see cref="DocumentStatus.CharactersCharged"/> property.</param>
         /// <returns>A new instance of <see cref="Document.DocumentStatus"/> for mocking purposes.</returns>
         public static DocumentStatus DocumentStatus(
             string id,
             Uri sourceDocumentUri,
+            DocumentTranslationError error,
             DateTimeOffset createdOn,
             DateTimeOffset lastModified,
             DocumentTranslationStatus status,
             string translatedTo,
-            DocumentTranslationError error,
             float progress,
             long charactersCharged
             )
