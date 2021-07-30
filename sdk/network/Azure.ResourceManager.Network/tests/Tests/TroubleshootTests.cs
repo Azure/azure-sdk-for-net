@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         [Ignore("Track2: The NetworkWathcer is involved, so disable the test")]
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var virtualNetworkGatewayContainer = GetVirtualNetworkGatewayContainer(resourceGroupName);
             VirtualNetworkGatewaysCreateOrUpdateOperation putVirtualNetworkGatewayResponseOperation =
                 await virtualNetworkGatewayContainer.StartCreateOrUpdateAsync(virtualNetworkGatewayName, virtualNetworkGateway);
-            await WaitForCompletionAsync(putVirtualNetworkGatewayResponseOperation);
+            await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();;
             // GetVirtualNetworkGateway API
             Response<VirtualNetworkGateway> getVirtualNetworkGatewayResponse =
                 await virtualNetworkGatewayContainer.GetAsync(virtualNetworkGatewayName);
@@ -103,18 +103,18 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var storageParameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardLRS), Kind.Storage, location);
 
             Operation<StorageAccount> accountOperation = await StorageManagementClient.StorageAccounts.StartCreateAsync(resourceGroupName, storageName, storageParameters);
-            Response<StorageAccount> account = await WaitForCompletionAsync(accountOperation);
+            Response<StorageAccount> account = await accountOperation.WaitForCompletionAsync();;
             TroubleshootingParameters parameters = new TroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id, account.Value.Id, "https://nwtestdbdzq4xsvskrei6.blob.core.windows.net/vhds");
 
             //Get troubleshooting
             var networkWatcherContainer = GetNetworkWatcherContainer("NetworkWatcherRG");
             NetworkWatchersGetTroubleshootingOperation troubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingAsync(parameters);
-            await WaitForCompletionAsync(troubleshootOperation);
+            await troubleshootOperation.WaitForCompletionAsync();;
             //QueryTroubleshootingParameters qParameters = new QueryTroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id);
 
             //Query last troubleshoot
             NetworkWatchersGetTroubleshootingResultOperation queryTroubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingResultAsync();
-            await WaitForCompletionAsync(queryTroubleshootOperation);
+            await queryTroubleshootOperation.WaitForCompletionAsync();;
             //TODO: make verification once fixed for troubleshoot API deployed
         }
     }

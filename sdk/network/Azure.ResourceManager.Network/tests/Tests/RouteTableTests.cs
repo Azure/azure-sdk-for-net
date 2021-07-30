@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         public async Task EmptyRouteTableTest()
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Put RouteTable
             var routeTableContainer = GetRouteTableContainer(resourceGroupName);
             RouteTablesCreateOrUpdateOperation putRouteTableResponseOperation = await routeTableContainer.StartCreateOrUpdateAsync(routeTableName, routeTable);
-            Response<RouteTable> putRouteTableResponse = await WaitForCompletionAsync(putRouteTableResponseOperation);
+            Response<RouteTable> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
 
             // Get RouteTable
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Delete RouteTable
             RouteTablesDeleteOperation deleteOperation = await getRouteTableResponse.Value.StartDeleteAsync();
-            await WaitForCompletionAsync(deleteOperation);
+            await deleteOperation.WaitForCompletionResponseAsync();;
 
             // Verify delete
             listRouteTableResponseAP = routeTableContainer.GetAllAsync();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Put RouteTable
             var routeTableContainer = GetRouteTableContainer(resourceGroupName);
             RouteTablesCreateOrUpdateOperation putRouteTableResponseOperation = await routeTableContainer.StartCreateOrUpdateAsync(routeTableName, routeTable);
-            Response<RouteTable> putRouteTableResponse = await WaitForCompletionAsync(putRouteTableResponseOperation);
+            Response<RouteTable> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
 
             // Get RouteTable
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Delete RouteTable
             RouteTablesDeleteOperation deleteOperation = await getRouteTableResponse.Value.StartDeleteAsync();
-            await WaitForCompletionAsync(deleteOperation);
+            await deleteOperation.WaitForCompletionResponseAsync();;
 
             // Verify delete
             AsyncPageable<RouteTable> listRouteTableResponseAP = routeTableContainer.GetAllAsync();
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Put RouteTable
             var routeTableContainer = GetRouteTableContainer(resourceGroupName);
             RouteTablesCreateOrUpdateOperation putRouteTableResponseOperation = await routeTableContainer.StartCreateOrUpdateAsync(routeTableName, routeTable);
-            Response<RouteTable> putRouteTableResponse = await WaitForCompletionAsync(putRouteTableResponseOperation);
+            Response<RouteTable> putRouteTableResponse = await putRouteTableResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putRouteTableResponse.Value.Data.ProvisioningState.ToString());
 
             // Get RouteTable
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await GetVirtualNetworkContainer(resourceGroupName).StartCreateOrUpdateAsync(vnetName, vnet);
-            Response<VirtualNetwork> putVnetResponse = await WaitForCompletionAsync(putVnetResponseOperation);
+            Response<VirtualNetwork> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 
             Response<Subnet> getSubnetResponse = await putVnetResponse.Value.GetSubnets().GetAsync(subnetName);

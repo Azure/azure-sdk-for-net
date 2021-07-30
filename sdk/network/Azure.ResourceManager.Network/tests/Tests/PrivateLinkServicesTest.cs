@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         public async Task CheckPrivateLinkServiceVisibilityTest()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // TODO: What's the correct test sceanrio?
             //var checkRawResponse = await GetResourceGroup(resourceGroupName).GetPrivateLinkServices().Get("mypls").Value.StartCheckPrivateLinkServiceVisibilityByResourceGroupAsync("mypls.00000000-0000-0000-0000-000000000000.azure.privatelinkservice");
             //PrivateLinkServicesOperations.StartCheckPrivateLinkServiceVisibilityByResourceGroupAsync(location, resourceGroupName, param);
-            //PrivateLinkServiceVisibility response = await WaitForCompletionAsync(checkRawResponse);
+            //PrivateLinkServiceVisibility response = await checkRawResponse.WaitForCompletionAsync();;
             //Assert.False(response.Visible);
         }
     }

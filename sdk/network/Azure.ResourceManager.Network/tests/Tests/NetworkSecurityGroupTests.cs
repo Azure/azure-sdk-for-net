@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         public async Task NetworkSecurityGroupApiTest()
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Put Nsg
             var networkSecurityGroupContainer = GetNetworkSecurityGroupContainer(resourceGroupName);
             NetworkSecurityGroupsCreateOrUpdateOperation putNsgResponseOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
-            Response<NetworkSecurityGroup> putNsgResponse = await WaitForCompletionAsync(putNsgResponseOperation);
+            Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
 
             // Get NSG
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Put Nsg
             var networkSecurityGroupContainer = GetNetworkSecurityGroupContainer(resourceGroupName);
             NetworkSecurityGroupsCreateOrUpdateOperation putNsgResponseOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
-            Response<NetworkSecurityGroup> putNsgResponse = await WaitForCompletionAsync(putNsgResponseOperation);
+            Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
 
             // Get NSG
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             networkSecurityGroup.SecurityRules.Add(SecurityRule);
 
             putNsgResponseOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
-            await WaitForCompletionAsync(putNsgResponseOperation);
+            await putNsgResponseOperation.WaitForCompletionAsync();;
             // Get NSG
             getNsgResponse = await networkSecurityGroupContainer.GetAsync(networkSecurityGroupName);
 

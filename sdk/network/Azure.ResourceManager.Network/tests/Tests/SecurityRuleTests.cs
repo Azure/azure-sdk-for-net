@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         public async Task SecurityRuleWithRulesApiTest()
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Put Nsg
             var networkSecurityGroupContainer = GetNetworkSecurityGroupContainer(resourceGroupName);
             NetworkSecurityGroupsCreateOrUpdateOperation putNsgResponseOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
-            Response<NetworkSecurityGroup> putNsgResponse = await WaitForCompletionAsync(putNsgResponseOperation);
+            Response<NetworkSecurityGroup> putNsgResponse = await putNsgResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putNsgResponse.Value.Data.ProvisioningState.ToString());
 
             // Get NSG
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             SecurityRulesCreateOrUpdateOperation putSecurityRuleResponseOperation = await getNsgResponse.Value.GetSecurityRules().StartCreateOrUpdateAsync(securityRule2, securityRule);
-            Response<SecurityRule> putSecurityRuleResponse = await WaitForCompletionAsync(putSecurityRuleResponseOperation);
+            Response<SecurityRule> putSecurityRuleResponse = await putSecurityRuleResponseOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putSecurityRuleResponse.Value.Data.ProvisioningState.ToString());
 
             // Get NSG

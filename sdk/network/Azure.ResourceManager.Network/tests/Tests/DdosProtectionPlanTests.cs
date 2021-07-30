@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         [TearDown]
         public async Task CleanupResourceGroup()
         {
-            await CleanupResourceGroupsAsync();
+            //await CleanupResourceGroupsAsync();
 
             // need to cleanup created plans, since only one plan is allowed per location
             var ddosProtectionPlans = await GetContainer().GetAllAsync().ToEnumerableAsync();

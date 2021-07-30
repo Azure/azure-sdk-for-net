@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         private ConnectionMonitorContainer ConnectionMonitors
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             var putConnectionMonitorOperation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName, cm);
-            Response<ConnectionMonitor> putConnectionMonitor = await WaitForCompletionAsync(putConnectionMonitorOperation);
+            Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
 
             Assert.AreEqual("Running", putConnectionMonitor.Value.Data.MonitoringStatus);
             Assert.AreEqual("centraluseuap", putConnectionMonitor.Value.Data.Location);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
@@ -174,11 +174,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             var putConnectionMonitorOperation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName, cm);
-            Response<ConnectionMonitor> putConnectionMonitor = await WaitForCompletionAsync(putConnectionMonitorOperation);
+            Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
             Assert.AreEqual("NotStarted", putConnectionMonitor.Value.Data.MonitoringStatus);
 
             Operation connectionMonitorsStartOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartStartAsync();
-            await WaitForCompletionAsync(connectionMonitorsStartOperation);
+            await connectionMonitorsStartOperation.WaitForCompletionResponseAsync();;
 
             Response<ConnectionMonitor> getConnectionMonitor = await ConnectionMonitors.GetAsync(connectionMonitorName);
             Assert.AreEqual("Running", getConnectionMonitor.Value.Data.MonitoringStatus);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             var putConnectionMonitorOperation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName, cm);
-            Response<ConnectionMonitor> putConnectionMonitor = await WaitForCompletionAsync(putConnectionMonitorOperation);
+            Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
             Assert.AreEqual("Running", putConnectionMonitor.Value.Data.MonitoringStatus);
 
             Operation connectionMonitorsStopOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartStopAsync();
-            await WaitForCompletionAsync(connectionMonitorsStopOperation);
+            await connectionMonitorsStopOperation.WaitForCompletionResponseAsync();;
 
             Response<ConnectionMonitor> getConnectionMonitor = await ConnectionMonitors.GetAsync(connectionMonitorName);
             Assert.AreEqual("Stopped", getConnectionMonitor.Value.Data.MonitoringStatus);
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
@@ -312,16 +312,16 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             var putConnectionMonitorOperation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName, cm);
-            await WaitForCompletionAsync(putConnectionMonitorOperation);
+            await putConnectionMonitorOperation.WaitForCompletionAsync();;
 
             Operation connectionMonitorsStartOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartStartAsync();
-            await WaitForCompletionAsync(connectionMonitorsStartOperation);
+            await connectionMonitorsStartOperation.WaitForCompletionResponseAsync();;
 
             Operation connectionMonitorsStopOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartStopAsync();
-            await WaitForCompletionAsync(connectionMonitorsStopOperation);
+            await connectionMonitorsStopOperation.WaitForCompletionResponseAsync();;
 
             Operation<ConnectionMonitorQueryResult> queryResultOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.StartQueryAsync();
-            Response<ConnectionMonitorQueryResult> queryResult = await WaitForCompletionAsync(queryResultOperation);
+            Response<ConnectionMonitorQueryResult> queryResult = await queryResultOperation.WaitForCompletionAsync();;
             //Has.One.EqualTo(queryResult.States);
             Assert.AreEqual("Reachable", queryResult.Value.States[0].ConnectionState);
             Assert.AreEqual("InProgress", queryResult.Value.States[0].EvaluationState);
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
@@ -387,12 +387,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             var putConnectionMonitorOperation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName, cm);
-            Response<ConnectionMonitor> putConnectionMonitor = await WaitForCompletionAsync(putConnectionMonitorOperation);
+            Response<ConnectionMonitor> putConnectionMonitor = await putConnectionMonitorOperation.WaitForCompletionAsync();;
             Assert.AreEqual(30, putConnectionMonitor.Value.Data.MonitoringIntervalInSeconds);
 
             cm.MonitoringIntervalInSeconds = 60;
             var updateConnectionMonitorOperation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName, cm);
-            Response<ConnectionMonitor> updateConnectionMonitor = await WaitForCompletionAsync(updateConnectionMonitorOperation);
+            Response<ConnectionMonitor> updateConnectionMonitor = await updateConnectionMonitorOperation.WaitForCompletionAsync();;
             Assert.AreEqual(60, updateConnectionMonitor.Value.Data.MonitoringIntervalInSeconds);
         }
 
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
@@ -457,19 +457,19 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             var connectionMonitor1Operation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName1, cm);
-            await WaitForCompletionAsync(connectionMonitor1Operation);
+            await connectionMonitor1Operation.WaitForCompletionAsync();;
             var connectionMonitor2Operation = await ConnectionMonitors.StartCreateOrUpdateAsync(connectionMonitorName2, cm);
-            await WaitForCompletionAsync(connectionMonitor2Operation);
+            await connectionMonitor2Operation.WaitForCompletionAsync();;
 
             AsyncPageable<ConnectionMonitor> getConnectionMonitors1AP = ConnectionMonitors.GetAllAsync();
             Task<List<ConnectionMonitor>> getConnectionMonitors1 = getConnectionMonitors1AP.ToEnumerableAsync();
             Assert.AreEqual(2, getConnectionMonitors1.Result.Count);
 
             var operation = await ArmClient.GetGenericResourceOperations(ConnectionMonitors.Get(connectionMonitorName2).Value.Data.Id).StartDeleteAsync();
-            await WaitForCompletionAsync(operation);
+            await operation.WaitForCompletionResponseAsync();
             // TODO: restore to use Delete of the specific resource container: ADO 5998
             //Operation connectionMonitorsDeleteOperation = await ConnectionMonitors.Get(connectionMonitorName2).Value.StartDeleteAsync();
-            //await WaitForCompletionAsync(connectionMonitorsDeleteOperation);
+            //await connectionMonitorsDeleteOperation.WaitForCompletionAsync();;
             AsyncPageable<ConnectionMonitor> getConnectionMonitors2 = ConnectionMonitors.GetAllAsync();
             Has.One.EqualTo(getConnectionMonitors2);
         }

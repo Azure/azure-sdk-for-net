@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         [Ignore("Track2: Need OperationalInsightsManagementClient")]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Put Nsg
             var securityGroupContainer = GetResourceGroup(resourceGroupName).GetNetworkSecurityGroups();
             NetworkSecurityGroupsCreateOrUpdateOperation putNsgResponseOperation = await securityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, networkSecurityGroup);
-            await WaitForCompletionAsync(putNsgResponseOperation);
+            await putNsgResponseOperation.WaitForCompletionAsync();;
             // Get NSG
             Response<NetworkSecurityGroup> getNsgResponse = await securityGroupContainer.GetAsync(networkSecurityGroupName);
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var storageParameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardLRS), Kind.Storage, location);
 
             Operation<StorageAccount> storageAccountOperation = await StorageManagementClient.StorageAccounts.StartCreateAsync(resourceGroupName, storageName, storageParameters);
-            Response<StorageAccount> storageAccount = await WaitForCompletionAsync(storageAccountOperation);
+            Response<StorageAccount> storageAccount = await storageAccountOperation.WaitForCompletionAsync();;
 
             //create workspace
             string workspaceName = Recording.GenerateAssetName("azsmnet");
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             //configure flowlog and TA
             NetworkWatchersSetFlowLogConfigurationOperation configureFlowLog1Operation = await networkWatcherContainer.Get(networkWatcherName).Value.StartSetFlowLogConfigurationAsync(configParameters);
-            await WaitForCompletionAsync(configureFlowLog1Operation);
+            await configureFlowLog1Operation.WaitForCompletionAsync();;
 
             //FlowLogStatusParameters flowLogParameters = new FlowLogStatusParameters(getNsgResponse.Value.Id); No need, auto expand
             NetworkWatchersGetFlowLogStatusOperation queryFlowLogStatus1Operation = await networkWatcherContainer.Get(networkWatcherName).Value.StartGetFlowLogStatusAsync();
-            Response<FlowLogInformation> queryFlowLogStatus1 = await WaitForCompletionAsync(queryFlowLogStatus1Operation);
+            Response<FlowLogInformation> queryFlowLogStatus1 = await queryFlowLogStatus1Operation.WaitForCompletionAsync();;
             //check both flowlog and TA config and enabled status
             Assert.AreEqual(queryFlowLogStatus1.Value.TargetResourceId, configParameters.TargetResourceId);
             Assert.True(queryFlowLogStatus1.Value.Enabled);
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //disable TA
             configParameters.FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration.Enabled = false;
             NetworkWatchersSetFlowLogConfigurationOperation configureFlowLog2Operation = await networkWatcherContainer.Get(networkWatcherName).Value.StartSetFlowLogConfigurationAsync(configParameters);
-            await WaitForCompletionAsync(configureFlowLog2Operation);
+            await configureFlowLog2Operation.WaitForCompletionAsync();;
 
             NetworkWatchersGetFlowLogStatusOperation queryFlowLogStatus2Operation = await networkWatcherContainer.Get(networkWatcherName).Value.StartGetFlowLogStatusAsync();
-            Response<FlowLogInformation> queryFlowLogStatus2 = await WaitForCompletionAsync(queryFlowLogStatus2Operation);
+            Response<FlowLogInformation> queryFlowLogStatus2 = await queryFlowLogStatus2Operation.WaitForCompletionAsync();;
 
             //check TA disabled and ensure flowlog config is unchanged
             Assert.AreEqual(queryFlowLogStatus2.Value.StorageId, configParameters.StorageId);
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //disable flowlog (and TA)
             configParameters.Enabled = false;
             NetworkWatchersSetFlowLogConfigurationOperation configureFlowLog3Operation = await networkWatcherContainer.Get(networkWatcherName).Value.StartSetFlowLogConfigurationAsync(configParameters);
-            await WaitForCompletionAsync(configureFlowLog3Operation);
+            await configureFlowLog3Operation.WaitForCompletionAsync();;
 
             NetworkWatchersGetFlowLogStatusOperation queryFlowLogStatus3Operation = await networkWatcherContainer.Get(networkWatcherName).Value.StartGetFlowLogStatusAsync();
-            Response<FlowLogInformation> queryFlowLogStatus3 = await WaitForCompletionAsync(queryFlowLogStatus3Operation);
+            Response<FlowLogInformation> queryFlowLogStatus3 = await queryFlowLogStatus3Operation.WaitForCompletionAsync();;
 
             //check both flowlog and TA disabled
             Assert.False(queryFlowLogStatus3.Value.Enabled);

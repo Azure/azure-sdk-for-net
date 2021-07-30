@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         [Ignore("Track2: The NetworkWathcer is involved, so disable the test")]
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Response<NetworkSecurityGroup> nsg = await networkSecurityGroupContainer.GetAsync(resourceGroupName, networkSecurityGroupName);
             nsg.Value.Data.SecurityRules.Add(SecurityRule);
             NetworkSecurityGroupsCreateOrUpdateOperation createOrUpdateOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, nsg.Value.Data);
-            Response<NetworkSecurityGroup> networkSecurityGroup = await WaitForCompletionAsync(createOrUpdateOperation);
+            Response<NetworkSecurityGroup> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //Get view security group rules
             //SecurityGroupViewParameters sgvProperties = new SecurityGroupViewParameters(getVm.Value.Id);
             NetworkWatchersGetVMSecurityRulesOperation viewNSGRulesOperation = await GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.StartGetVMSecurityRulesAsync();
-            Response<SecurityGroupViewResult> viewNSGRules = await WaitForCompletionAsync(viewNSGRulesOperation);
+            Response<SecurityGroupViewResult> viewNSGRules = await viewNSGRulesOperation.WaitForCompletionAsync();;
 
             //Verify effective security rule defined earlier
             IEnumerable<EffectiveNetworkSecurityRule> getEffectiveSecurityRule = viewNSGRules.Value.NetworkInterfaces.FirstOrDefault().SecurityRuleAssociations.EffectiveSecurityRules.Where(x => x.Name == "UserRule_" + securityRule1);

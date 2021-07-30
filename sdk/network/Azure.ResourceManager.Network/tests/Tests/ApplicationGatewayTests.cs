@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         private static string GetChildAppGwResourceId(string subscriptionId,
                                                 string resourceGroupName,
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroupName);
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
-            await WaitForCompletionAsync(putVnetResponseOperation);
+            await putVnetResponseOperation.WaitForCompletionAsync();;
             Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
             Response<Subnet> getSubnetResponse = await getVnetResponse.Value.GetSubnets().GetAsync(gwSubnetName);
             Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Value.Data.Id);
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Put AppGw
             var applicationGatewayContainer = GetApplicationGatewayContainer(resourceGroupName);
             Operation<ApplicationGateway> putAppGw = await applicationGatewayContainer.StartCreateOrUpdateAsync(appGwName, appGw);
-            Response<ApplicationGateway> putAppGwResponse = await WaitForCompletionAsync(putAppGw);
+            Response<ApplicationGateway> putAppGwResponse = await putAppGw.WaitForCompletionAsync();;
             Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
 
             // Get AppGw
@@ -609,14 +609,14 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Put Nics
             var networkInterfaceContainer = GetNetworkInterfaceContainer(resourceGroupName);
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Result.Data);
-            await WaitForCompletionAsync(createOrUpdateOperation1);
+            await createOrUpdateOperation1.WaitForCompletionAsync();;
 
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Result.Data);
-            await WaitForCompletionAsync(createOrUpdateOperation2);
+            await createOrUpdateOperation2.WaitForCompletionAsync();;
 
             // Get AppGw backend health
             Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.StartBackendHealthAsync("true");
-            Response<ApplicationGatewayBackendHealth> backendHealth = await WaitForCompletionAsync(backendHealthOperation);
+            Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();;
 
             Assert.AreEqual(2, backendHealth.Value.BackendAddressPools.Count);
             Assert.AreEqual(1, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection.Count);

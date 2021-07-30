@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         public async Task ExpandResourceTest()
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Create the loadBalancer
             var loadBalancerContainer = GetResourceGroup(resourceGroupName).GetLoadBalancers();
             Operation<LoadBalancer> putLoadBalancerOperation = await loadBalancerContainer.StartCreateOrUpdateAsync(lbName, loadBalancer);
-            await WaitForCompletionAsync(putLoadBalancerOperation);
+            await putLoadBalancerOperation.WaitForCompletionAsync();;
             Response<LoadBalancer> getLoadBalancer = await loadBalancerContainer.GetAsync(lbName);
 
             // Associate the nic with LB
@@ -203,13 +203,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             // Put Nics
             var networkInterfaceContainer = GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Data);
-            await WaitForCompletionAsync(createOrUpdateOperation1);
+            await createOrUpdateOperation1.WaitForCompletionAsync();;
 
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Data);
-            await WaitForCompletionAsync(createOrUpdateOperation2);
+            await createOrUpdateOperation2.WaitForCompletionAsync();;
 
             NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation3 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic3name, nic3.Data);
-            await WaitForCompletionAsync(createOrUpdateOperation3);
+            await createOrUpdateOperation3.WaitForCompletionAsync();;
 
             // Get Nics
             await networkInterfaceContainer.GetAsync(resourceGroupName, nic1name);
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Delete LoadBalancer
             Operation deleteOperation = await loadBalancerContainer.Get(lbName).Value.StartDeleteAsync();
-            await WaitForCompletionAsync(deleteOperation);
+            await deleteOperation.WaitForCompletionResponseAsync();;
 
             // Verify Delete
             AsyncPageable<LoadBalancer> listLoadBalancerAP = loadBalancerContainer.GetAllAsync();

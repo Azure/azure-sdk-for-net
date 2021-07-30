@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         public async Task SubnetApiTest()
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroupName);
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
-            var vnetResponse = await WaitForCompletionAsync(putVnetResponseOperation);
+            var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             // Create a Subnet
             // Populate paramters for a Subnet
             var subnet = new SubnetData()
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             #region Verification
             SubnetsCreateOrUpdateOperation putSubnetResponseOperation = await vnetResponse.Value.GetSubnets().StartCreateOrUpdateAsync(subnet2Name, subnet);
-            await WaitForCompletionAsync(putSubnetResponseOperation);
+            await putSubnetResponseOperation.WaitForCompletionAsync();;
             Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
             Assert.AreEqual(2, getVnetResponse.Value.Data.Subnets.Count());
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroupName);
             VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
-            var vnetResponse = await WaitForCompletionAsync(putVnetResponseOperation);
+            var vnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
             Response<Subnet> getSubnetResponse = await vnetResponse.Value.GetSubnets().GetAsync(subnetName);
             Assert.Null(getSubnetResponse.Value.Data.ResourceNavigationLinks);
 

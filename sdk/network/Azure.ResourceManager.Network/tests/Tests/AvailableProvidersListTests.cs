@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         [Ignore("Track2: The NetworkWathcer is involved, so disable the test")]
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
             Operation<AvailableProvidersList> providersListOperation =
                 await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.StartGetAvailableProvidersAsync(parameters);
-            Response<AvailableProvidersList> providersList = await WaitForCompletionAsync(providersListOperation);
+            Response<AvailableProvidersList> providersList = await providersListOperation.WaitForCompletionAsync();;
             Assert.AreEqual("United States", providersList.Value.Countries[0].CountryName);
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 State = "washington"
             };
             Operation<AvailableProvidersList> providersListOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.StartGetAvailableProvidersAsync(parameters);
-            Response<AvailableProvidersList> providersList = await WaitForCompletionAsync(providersListOperation);
+            Response<AvailableProvidersList> providersList = await providersListOperation.WaitForCompletionAsync();;
             Assert.AreEqual("United States", providersList.Value.Countries[0].CountryName);
             Assert.AreEqual("washington", providersList.Value.Countries[0].States[0].StateName);
         }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 City = "seattle"
             };
             Operation<AvailableProvidersList> providersListOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.StartGetAvailableProvidersAsync(parameters);
-            Response<AvailableProvidersList> providersList = await WaitForCompletionAsync(providersListOperation);
+            Response<AvailableProvidersList> providersList = await providersListOperation.WaitForCompletionAsync();;
             Assert.AreEqual("United States", providersList.Value.Countries[0].CountryName);
             Assert.AreEqual("washington", providersList.Value.Countries[0].States[0].StateName);
             Assert.AreEqual("seattle", providersList.Value.Countries[0].States[0].Cities[0].CityName);

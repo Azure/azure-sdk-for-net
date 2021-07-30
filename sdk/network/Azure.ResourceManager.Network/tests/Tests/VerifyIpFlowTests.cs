@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         [Ignore("Track2: The NetworkWathcer is involved, so disable the test")]
@@ -91,13 +91,13 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Response<NetworkSecurityGroup> nsg = await networkSecurityGroupContainer.GetAsync(networkSecurityGroupName);
             nsg.Value.Data.SecurityRules.Add(SecurityRule);
             NetworkSecurityGroupsCreateOrUpdateOperation createOrUpdateOperation = await networkSecurityGroupContainer.StartCreateOrUpdateAsync(networkSecurityGroupName, nsg.Value.Data);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await createOrUpdateOperation.WaitForCompletionAsync();;
 
             VerificationIPFlowParameters ipFlowProperties = new VerificationIPFlowParameters(getVm1.Value.Id, "Outbound", "TCP", "80", "80", localIPAddress, "12.11.12.14");
 
             //Verify IP flow from a VM to a location given the configured  rule
             NetworkWatchersVerifyIPFlowOperation verifyIpFlowOperation = await GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.StartVerifyIPFlowAsync(ipFlowProperties);
-            Response<VerificationIPFlowResult> verifyIpFlow = await WaitForCompletionAsync(verifyIpFlowOperation);
+            Response<VerificationIPFlowResult> verifyIpFlow = await verifyIpFlowOperation.WaitForCompletionAsync();;
             //Verify validity of the result
             Assert.AreEqual("Deny", verifyIpFlow.Value.Access.ToString());
             Assert.AreEqual("securityRules/" + securityRule1, verifyIpFlow.Value.RuleName);

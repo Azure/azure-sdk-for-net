@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         private const string Filter_Commmunity = "12076:51004";
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put route filter
             Operation<RouteFilter> filterOperation = await filterContainer.StartCreateOrUpdateAsync(filterName, filter);
-            return await WaitForCompletionAsync(filterOperation);
+            return await filterOperation.WaitForCompletionAsync();;
         }
 
         private async Task<RouteFilterRule> CreateDefaultRouteFilterRule(RouteFilter filter,  string ruleName)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             // Put route filter rule
             Operation<RouteFilterRule> ruleOperation = await filter.GetRouteFilterRules().StartCreateOrUpdateAsync(ruleName, rule);
-            Response<RouteFilterRule> ruleResponse = await WaitForCompletionAsync(ruleOperation);
+            Response<RouteFilterRule> ruleResponse = await ruleOperation.WaitForCompletionAsync();;
             return ruleResponse;
         }
     }

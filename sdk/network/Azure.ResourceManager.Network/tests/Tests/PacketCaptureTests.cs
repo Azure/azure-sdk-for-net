@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         public async Task PacketCaptureApiTest()
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             var packetCaptureContainer = GetNetworkWatcherContainer("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetPacketCaptures();
             PacketCapturesCreateOperation createPacketCapture1Operation = await packetCaptureContainer.StartCreateOrUpdateAsync(pcName1, pcProperties);
-            var createPacketCapture1 = await WaitForCompletionAsync(createPacketCapture1Operation);
+            var createPacketCapture1 = await createPacketCapture1Operation.WaitForCompletionAsync();;
             Response<PacketCapture> getPacketCapture = await packetCaptureContainer.GetAsync(pcName1);
             PacketCapturesGetStatusOperation queryPCOperation = await getPacketCapture.Value.StartGetStatusAsync();
-            await WaitForCompletionAsync(queryPCOperation);
+            await queryPCOperation.WaitForCompletionAsync();;
 
             //Validation
             Assert.AreEqual(pcName1, createPacketCapture1.Value.Data.Name);
@@ -101,19 +101,19 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.AreEqual("Succeeded", getPacketCapture.Value.Data.ProvisioningState.ToString());
 
             PacketCapturesCreateOperation packetCapturesCreateOperation = await packetCaptureContainer.StartCreateOrUpdateAsync(pcName2, pcProperties);
-            await WaitForCompletionAsync(packetCapturesCreateOperation);
+            await packetCapturesCreateOperation.WaitForCompletionAsync();;
 
             AsyncPageable<PacketCapture> listPCByRg1AP = packetCaptureContainer.GetAllAsync();
             List<PacketCapture> listPCByRg1 = await listPCByRg1AP.ToEnumerableAsync();
 
             PacketCapturesStopOperation packetCapturesStopOperation = await getPacketCapture.Value.StartStopAsync();
-            await WaitForCompletionAsync(packetCapturesStopOperation);
+            await packetCapturesStopOperation.WaitForCompletionResponseAsync();;
 
             PacketCapturesGetStatusOperation queryPCAfterStopOperation = await getPacketCapture.Value.StartGetStatusAsync();
-            Response<PacketCaptureQueryStatusResult> queryPCAfterStop = await WaitForCompletionAsync(queryPCAfterStopOperation);
+            Response<PacketCaptureQueryStatusResult> queryPCAfterStop = await queryPCAfterStopOperation.WaitForCompletionAsync();;
 
             PacketCapturesDeleteOperation packetCapturesDeleteOperation = await getPacketCapture.Value.StartDeleteAsync();
-            await WaitForCompletionAsync(packetCapturesDeleteOperation);
+            await packetCapturesDeleteOperation.WaitForCompletionResponseAsync();;
             AsyncPageable<PacketCapture> listPCByRg2 = packetCaptureContainer.GetAllAsync();
 
             //Validation

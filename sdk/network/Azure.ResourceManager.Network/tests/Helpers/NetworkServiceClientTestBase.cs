@@ -79,6 +79,16 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             //PrivateLinkServicesOperations = NetworkManagementClient.PrivateLinkServices;
         }
 
+        protected ResourcesManagementClient GetResourceManagementClient()
+        {
+            var options = InstrumentClientOptions(new ResourcesManagementClientOptions());
+
+            return CreateClient<ResourcesManagementClient>(
+                TestEnvironment.SubscriptionId,
+                TestEnvironment.Credential,
+                options);
+        }
+
         private StorageManagementClient GetStorageManagementClient()
         {
             return InstrumentClient(new StorageManagementClient(TestEnvironment.SubscriptionId,
@@ -93,16 +103,16 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                  InstrumentClientOptions(new ComputeManagementClientOptions())));
         }
 
-        private ArmClient GetArmClient()
-        {
-            if (string.IsNullOrEmpty(TestEnvironment.SubscriptionId))
-            {
-                return new ArmClient(TestEnvironment.Credential);
-            } else
-            {
-                return new ArmClient(TestEnvironment.SubscriptionId, TestEnvironment.Credential);
-            }
-        }
+        //private ArmClient GetArmClient()
+        //{
+            //if (string.IsNullOrEmpty(TestEnvironment.SubscriptionId))
+            //{
+            //    return new ArmClient(TestEnvironment.Credential);
+            //} else
+            //{
+            //    return new ArmClient(TestEnvironment.SubscriptionId, TestEnvironment.Credential);
+            //}
+        //}
 
         protected async Task<Response<Resources.ResourceGroup>> CreateResourceGroup(string name)
         {
@@ -154,7 +164,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             Deployment deploymentModel = new Deployment(deploymentProperties);
 
             Operation<DeploymentExtended> deploymentWait = await resourcesClient.Deployments.StartCreateOrUpdateAsync(resourceGroupName, deploymentName, deploymentModel);
-            await WaitForCompletionAsync(deploymentWait);
+            await deploymentWait.WaitForCompletionAsync();
         }
 
         public async Task CreateVmss(ResourcesManagementClient resourcesClient, string resourceGroupName, string deploymentName)
@@ -167,7 +177,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
             Deployment deploymentModel = new Deployment(deploymentProperties);
             Operation<DeploymentExtended> deploymentWait = await resourcesClient.Deployments.StartCreateOrUpdateAsync(resourceGroupName, deploymentName, deploymentModel);
-            await WaitForCompletionAsync(deploymentWait);
+            await deploymentWait.WaitForCompletionAsync();
         }
 
         public async Task<ExpressRouteCircuit> CreateDefaultExpressRouteCircuit(string resourceGroupName, string circuitName, string location)
@@ -197,7 +207,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             // Put circuit
             var circuitContainer = GetResourceGroup(resourceGroupName).GetExpressRouteCircuits();
             Operation<ExpressRouteCircuit> circuitOperation = await circuitContainer.StartCreateOrUpdateAsync(circuitName, circuit);
-            Response<ExpressRouteCircuit> circuitResponse = await WaitForCompletionAsync(circuitOperation);
+            Response<ExpressRouteCircuit> circuitResponse = await circuitOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", circuitResponse.Value.Data.ProvisioningState.ToString());
             Response<ExpressRouteCircuit> getCircuitResponse = await circuitContainer.GetAsync(circuitName);
 
@@ -225,7 +235,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             var circuitContainer = GetResourceGroup(resourceGroupName).GetExpressRouteCircuits();
             Operation<ExpressRouteCircuitPeering> peerOperation = await circuitContainer.Get(circuitName).Value.GetExpressRouteCircuitPeerings().StartCreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
-            Response<ExpressRouteCircuitPeering> peerResponse = await WaitForCompletionAsync(peerOperation);
+            Response<ExpressRouteCircuitPeering> peerResponse = await peerOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
             Response<ExpressRouteCircuit> getCircuitResponse = await circuitContainer.GetAsync(circuitName);
 
@@ -258,7 +268,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             var circuitContainer = GetResourceGroup(resourceGroupName).GetExpressRouteCircuits();
             Operation<ExpressRouteCircuitPeering> peerOperation = await circuitContainer.Get(circuitName).Value.GetExpressRouteCircuitPeerings().StartCreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
-            Response<ExpressRouteCircuitPeering> peerResponse = await WaitForCompletionAsync(peerOperation);
+            Response<ExpressRouteCircuitPeering> peerResponse = await peerOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
             Response<ExpressRouteCircuit> getCircuitResponse = await circuitContainer.GetAsync(circuitName);
 
@@ -287,7 +297,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             };
 
             Operation<ExpressRouteCircuitPeering> peerOperation = await GetResourceGroup(resourceGroupName).GetExpressRouteCircuits().Get(circuitName).Value.GetExpressRouteCircuitPeerings().StartCreateOrUpdateAsync(ExpressRouteTests.Peering_Microsoft, peering);
-            Response<ExpressRouteCircuitPeering> peerResponse = await WaitForCompletionAsync(peerOperation);
+            Response<ExpressRouteCircuitPeering> peerResponse = await peerOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", peerResponse.Value.Data.ProvisioningState.ToString());
             Response<ExpressRouteCircuit> getCircuitResponse = await GetResourceGroup(resourceGroupName).GetExpressRouteCircuits().GetAsync(circuitName);
 
@@ -307,7 +317,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             // Put nic1PublicIpAddress
             var publicIPAddressContainer = GetResourceGroup(resourceGroupName).GetPublicIPAddresses();
             Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(name, publicIp);
-            Response<PublicIPAddress> putPublicIpAddressResponse = await WaitForCompletionAsync(putPublicIpAddressOperation);
+            Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
             Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(resourceGroupName, name);
 
