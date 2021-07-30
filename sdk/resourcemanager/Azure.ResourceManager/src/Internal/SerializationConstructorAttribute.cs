@@ -11,11 +11,5 @@ namespace Azure.ResourceManager.Core
     [AttributeUsage(AttributeTargets.Constructor)]
     internal class SerializationConstructorAttribute : Attribute
     {
-        /// <summary>
-        /// Instatiate a new SerializationConstructor attribute.
-        /// </summary>
-        public SerializationConstructorAttribute()
-        {
-        }
     }
 }
