@@ -1,14 +1,12 @@
 # Release History
 
-## 11.4.0-beta.2 (Unreleased)
+## 11.4.0-beta.2 (2021-08-10)
 
 ### Features Added
-
-### Breaking Changes
+- Support for [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/authentication/) based authentication. Users can specify a [`TokenCredential`](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential) when creating a `SearchClient`, `SearchIndexClient` or a `SearchIndexerClient`. The tokens use the "https://search.azure.com/.default" scope.
 
 ### Bugs Fixed
-
-### Other Changes
+- https://github.com/Azure/azure-sdk-for-net/issues/22808
 
 ## 11.4.0-beta.1 (2021-07-06)
 
