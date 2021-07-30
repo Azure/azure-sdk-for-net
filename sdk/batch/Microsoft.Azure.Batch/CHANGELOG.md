@@ -2,7 +2,7 @@
 
 ## 15.0.0 (2021-06-01)
 
-### Features
+### Features Added
 
 - Add ability to assign user-assigned managed identities to `CloudPool`. These identities will be made available on each node in the pool, and can be used to access various resources.
 - Added `IdentityReference` property to the following models to support accessing resources via managed identity:
@@ -19,12 +19,6 @@
 - Added `MaxParallelTasks` property on `CloudJob` to control the maximum allowed tasks per job (defaults to -1, meaning unlimited).
 - Added `VirtualMachineInfo` property on `ComputeNode` which contains information about the current state of the virtual machine, including the exact version of the marketplace image the VM is using.
 - Added `RecurrenceInterval` property to `Schedule` to control the interval between the start times of two successive job under a job schedule.
-
-## 14.1.0-beta.1 (Unreleased)
-
-### Bug fixes
-
-- Updated dependency versions.
 
 ## 14.0.0 (2020-09-10)
 
