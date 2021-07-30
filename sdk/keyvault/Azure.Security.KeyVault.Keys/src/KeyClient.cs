@@ -1174,9 +1174,9 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <param name="count">The requested number of random bytes.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A byte array containing random values from a managed hardware security module (HSM).</returns>
+        /// <returns><see cref="RandomBytes"/> containing random values from a managed hardware security module (HSM).</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="count"/> is less than 0.</exception>
-        public virtual Response<byte[]> GetRandomBytes(int count, CancellationToken cancellationToken = default)
+        public virtual Response<RandomBytes> GetRandomBytes(int count, CancellationToken cancellationToken = default)
         {
             // Service currently documents 1 to 128 inclusive but we must not tightly couple to service constraints.
             Argument.AssertInRange(count, 1, int.MaxValue, nameof(count));
@@ -1186,8 +1186,7 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-                Response<RandomBytes> response = _pipeline.SendRequest(RequestMethod.Post, new GetRandomBytesRequest(count), () => new RandomBytes(), cancellationToken, RngPath);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                return _pipeline.SendRequest(RequestMethod.Post, new GetRandomBytesRequest(count), () => new RandomBytes(), cancellationToken, RngPath);
             }
             catch (Exception e)
             {
@@ -1201,9 +1200,9 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <param name="count">The requested number of random bytes.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A byte array containing random values from a managed hardware security module (HSM).</returns>
+        /// <returns><see cref="RandomBytes"/> containing random values from a managed hardware security module (HSM).</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="count"/> is less than 0.</exception>
-        public virtual async Task<Response<byte[]>> GetRandomBytesAsync(int count, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RandomBytes>> GetRandomBytesAsync(int count, CancellationToken cancellationToken = default)
         {
             // Service currently documents 1 to 128 inclusive but we must not tightly couple to service constraints.
             Argument.AssertInRange(count, 1, int.MaxValue, nameof(count));
@@ -1213,8 +1212,121 @@ namespace Azure.Security.KeyVault.Keys
 
             try
             {
-                Response<RandomBytes> response = await _pipeline.SendRequestAsync(RequestMethod.Post, new GetRandomBytesRequest(count), () => new RandomBytes(), cancellationToken, RngPath).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, new GetRandomBytesRequest(count), () => new RandomBytes(), cancellationToken, RngPath).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Releases a key.
+        /// </summary>
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// The key must be exportable.
+        /// This operation requires the keys/release permission.
+        /// </remarks>
+        /// <returns>The key release result containing the released key.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default) =>
+            ReleaseKey(name, null, target, options, cancellationToken);
+
+        /// <summary>
+        /// Releases a key.
+        /// </summary>
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="version">Optional version of the key to release.</param>
+        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// The key must be exportable.
+        /// This operation requires the keys/release permission.
+        /// </remarks>
+        /// <returns>The key release result containing the released key.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<ReleaseKeyResult> ReleaseKey(string name, string version, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(target, nameof(target));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
+            scope.AddAttribute("key", name);
+            scope.Start();
+
+            options ??= new();
+            options.Target = target;
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, options, () => new ReleaseKeyResult(), cancellationToken, KeysPath, name, "/", version, "/release");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Releases a key.
+        /// </summary>
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// The key must be exportable.
+        /// This operation requires the keys/release permission.
+        /// </remarks>
+        /// <returns>The key release result containing the released key.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default) =>
+            ReleaseKeyAsync(name, null, target, options, cancellationToken);
+
+        /// <summary>
+        /// Releases a key.
+        /// </summary>
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="version">Optional version of the key to release.</param>
+        /// <param name="target">The attestation assertion for the target of the key release.</param>
+        /// <param name="options">Optional <see cref="ReleaseKeyOptions"/> containing additional options to release a key.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// The key must be exportable.
+        /// This operation requires the keys/release permission.
+        /// </remarks>
+        /// <returns>The key release result containing the released key.</returns>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="target"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="target"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(string name, string version, string target, ReleaseKeyOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(target, nameof(target));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
+            scope.AddAttribute("key", name);
+            scope.Start();
+
+            options ??= new();
+            options.Target = target;
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, options, () => new ReleaseKeyResult(), cancellationToken, KeysPath, name, "/", version, "/release").ConfigureAwait(false);
             }
             catch (Exception e)
             {

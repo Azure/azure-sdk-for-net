@@ -12,9 +12,11 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-    public class KeyClientLiveTests : KeysTestBase
+    public partial class KeyClientLiveTests : KeysTestBase
     {
         private const int PagedKeyCount = 2;
+
+        private readonly KeyClientOptions.ServiceVersion _serviceVersion;
 
         public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
             : this(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
@@ -24,6 +26,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         protected KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, serviceVersion, mode)
         {
+            _serviceVersion = serviceVersion;
+
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
             Matcher = new RecordMatcher(compareBodies: false);
         }

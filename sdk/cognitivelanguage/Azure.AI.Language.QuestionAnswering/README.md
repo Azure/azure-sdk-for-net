@@ -78,12 +78,12 @@ The following examples show common scenarios using the `client` [created above](
 
 The only input required to a ask a question using an existing knowledge base is just the question itself:
 
-```C# Snippet:QuestionAnsweringClient_QueryKnowledgebase
-KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should my Surface battery last?");
+```C# Snippet:QuestionAnsweringClient_QueryKnowledgeBase
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should my Surface battery last?");
 
-Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("FAQ", options);
+Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
 
-foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
     Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");
@@ -99,15 +99,15 @@ If your knowledge base is configured for [chit-chat][questionanswering_docs_chat
 
 ```C# Snippet:QuestionAnsweringClient_Chat
 // Answers are ordered by their ConfidenceScore so assume the user choose the first answer below:
-KnowledgebaseAnswer previousAnswer = answers.Answers.First();
-KnowledgebaseQueryOptions options = new KnowledgebaseQueryOptions("How long should charging take?")
+KnowledgeBaseAnswer previousAnswer = answers.Answers.First();
+QueryKnowledgeBaseOptions options = new QueryKnowledgeBaseOptions("How long should charging take?")
 {
-    Context = new KnowledgebaseAnswerRequestContext(previousAnswer.Id.Value)
+    Context = new KnowledgeBaseAnswerRequestContext(previousAnswer.Id.Value)
 };
 
-Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("FAQ", options);
+Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("FAQ", options);
 
-foreach (KnowledgebaseAnswer answer in response.Value.Answers)
+foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 {
     Console.WriteLine($"({answer.ConfidenceScore:P2}) {answer.Answer}");
     Console.WriteLine($"Source: {answer.Source}");
@@ -126,7 +126,7 @@ For example, if you submit a question to a non-existant knowledge base, a `400` 
 ```C# Snippet:QuestionAnsweringClient_BadRequest
 try
 {
-    Response<KnowledgebaseAnswers> response = client.QueryKnowledgebase("invalid-knowledgebase", options);
+    Response<KnowledgeBaseAnswers> response = client.QueryKnowledgeBase("invalid-knowledgebase", options);
 }
 catch (RequestFailedException ex)
 {

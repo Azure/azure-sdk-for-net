@@ -63,7 +63,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -115,7 +114,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -167,7 +165,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="endDateTime"> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -319,121 +316,113 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>boundaryId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the boundary object for which weather data is being fetched. </term>
+        ///     <term>The id of the boundary object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the farmer object for which weather data is being fetched. </term>
+        ///     <term>The id of the farmer object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the extension to be used for the providerInput. eg. DTN.ClearAg. </term>
+        ///     <term>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionApiName</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Extension api name to which request is to be made. </term>
+        ///     <term>Extension api name to which request is to be made.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionApiInput</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term>Yes</term>
-        ///     <term> Extension api input dictionary which would be used to feed request query/body/parameter information. </term>
+        ///     <term>Extension api input dictionary which would be used to feed request query/body/parameter information.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionDataProviderAppId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> App id of the weather data provider. </term>
+        ///     <term>App id of the weather data provider.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionDataProviderApiKey</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Api key of the weather data provider. </term>
+        ///     <term>Api key of the weather data provider.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -491,121 +480,113 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>boundaryId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the boundary object for which weather data is being fetched. </term>
+        ///     <term>The id of the boundary object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the farmer object for which weather data is being fetched. </term>
+        ///     <term>The id of the farmer object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the extension to be used for the providerInput. eg. DTN.ClearAg. </term>
+        ///     <term>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionApiName</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Extension api name to which request is to be made. </term>
+        ///     <term>Extension api name to which request is to be made.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionApiInput</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term>Yes</term>
-        ///     <term> Extension api input dictionary which would be used to feed request query/body/parameter information. </term>
+        ///     <term>Extension api input dictionary which would be used to feed request query/body/parameter information.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionDataProviderAppId</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> App id of the weather data provider. </term>
+        ///     <term>App id of the weather data provider.</term>
         ///   </item>
         ///   <item>
         ///     <term>extensionDataProviderApiKey</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Api key of the weather data provider. </term>
+        ///     <term>Api key of the weather data provider.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -782,121 +763,113 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>extensionId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the extension to be used for the providerInput. eg. DTN.ClearAg. </term>
+        ///     <term>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</term>
         ///   </item>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the farmer object for which weather data is being fetched. </term>
+        ///     <term>The id of the farmer object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>boundaryId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the boundary object for which weather data is being fetched. </term>
+        ///     <term>The id of the boundary object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>weatherDataType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;. </term>
+        ///     <term>Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>granularity</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;. </term>
+        ///     <term>Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>startDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -954,121 +927,113 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>extensionId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the extension to be used for the providerInput. eg. DTN.ClearAg. </term>
+        ///     <term>ID of the extension to be used for the providerInput. eg. DTN.ClearAg.</term>
         ///   </item>
         ///   <item>
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the farmer object for which weather data is being fetched. </term>
+        ///     <term>The id of the farmer object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>boundaryId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> The id of the boundary object for which weather data is being fetched. </term>
+        ///     <term>The id of the boundary object for which weather data is being fetched.</term>
         ///   </item>
         ///   <item>
         ///     <term>weatherDataType</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;. </term>
+        ///     <term>Type of weather data. Possible values include: &apos;forecast&apos; , &apos;historical&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>granularity</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;. </term>
+        ///     <term>Granularity of weather data. Possible values include: &apos;daily&apos; , &apos;hourly&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>startDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Weather data start UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Weather data end UTC date-time (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>id</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Unique job id. </term>
+        ///     <term>Unique job id.</term>
         ///   </item>
         ///   <item>
         ///     <term>status</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term>
-        /// Status of the job.
-        /// 
-        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
-        /// </term>
+        ///     <term>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</term>
         ///   </item>
         ///   <item>
         ///     <term>durationInSeconds</term>
         ///     <term>number</term>
         ///     <term></term>
-        ///     <term> Duration of the job in seconds. </term>
+        ///     <term>Duration of the job in seconds.</term>
         ///   </item>
         ///   <item>
         ///     <term>message</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Status message to capture more details of the job. </term>
+        ///     <term>Status message to capture more details of the job.</term>
         ///   </item>
         ///   <item>
         ///     <term>createdDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>lastActionDateTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>startTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>endTime</term>
         ///     <term>string (ISO 8601 Format)</term>
         ///     <term></term>
-        ///     <term> Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ. </term>
+        ///     <term>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</term>
         ///   </item>
         ///   <item>
         ///     <term>name</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Name to identify resource. </term>
+        ///     <term>Name to identify resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>description</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> Textual description of the resource. </term>
+        ///     <term>Textual description of the resource.</term>
         ///   </item>
         ///   <item>
         ///     <term>properties</term>
         ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
         ///     <term></term>
-        ///     <term>
-        /// A collection of key value pairs that belongs to the resource.
-        /// 
+        ///     <term>A collection of key value pairs that belongs to the resource.
         /// Each pair must not have a key greater than 50 characters
-        /// 
         /// and must not have a value greater than 150 characters.
-        /// 
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// </term>
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</term>
         ///   </item>
         /// </list>
         /// </remarks>
