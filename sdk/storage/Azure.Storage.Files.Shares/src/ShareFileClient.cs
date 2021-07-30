@@ -2012,7 +2012,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response DownloadTo(Stream destination) =>
             DownloadTo(destination, CancellationToken.None);
 
@@ -2030,7 +2029,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response DownloadTo(string path) =>
             DownloadTo(path, CancellationToken.None);
 
@@ -2048,7 +2046,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response> DownloadToAsync(Stream destination) =>
             await DownloadToAsync(destination, CancellationToken.None).ConfigureAwait(false);
 
@@ -2066,7 +2063,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response> DownloadToAsync(string path) =>
             await DownloadToAsync(path, CancellationToken.None).ConfigureAwait(false);
 
@@ -2089,7 +2085,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response DownloadTo(
             Stream destination,
             CancellationToken cancellationToken) =>
@@ -2117,7 +2112,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response DownloadTo(
             string path,
             CancellationToken cancellationToken) =>
@@ -2145,7 +2139,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response> DownloadToAsync(
             Stream destination,
             CancellationToken cancellationToken) =>
@@ -2174,7 +2167,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response> DownloadToAsync(
             string path,
             CancellationToken cancellationToken) =>
@@ -2211,7 +2203,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response DownloadTo(
             Stream destination,
             ShareFileRequestConditions conditions = default,
@@ -2258,7 +2249,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response DownloadTo(
             string path,
             ShareFileRequestConditions conditions = default,
@@ -2308,7 +2298,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response> DownloadToAsync(
             Stream destination,
             ShareFileRequestConditions conditions = default,
@@ -2355,7 +2344,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response> DownloadToAsync(
             string path,
             ShareFileRequestConditions conditions = default,
@@ -6180,37 +6168,47 @@ namespace Azure.Storage.Files.Shares
                     ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(Shares)}.{nameof(ShareFileClient)}.{nameof(Storage.Files.Shares.ShareFileClient.DownloadTo)}")
             };
         }
+
         internal static StorageTransferOptions SanitizePartitionedDownloaderOptions(
             StorageTransferOptions transferOptions)
         {
             // TODO: Set defaults for shares under Constants and change below references
+            StorageTransferOptions sanitizedOptions = new StorageTransferOptions();
 
             // Set _maxWorkerCount
-            if (!transferOptions.MaximumConcurrency.HasValue
-                || !(transferOptions.MaximumConcurrency > 0))
+            if (transferOptions.MaximumConcurrency.HasValue
+                && transferOptions.MaximumConcurrency > 0)
             {
-                transferOptions.MaximumConcurrency = Constants.Blob.Block.DefaultConcurrentTransfersCount;
+                sanitizedOptions.MaximumConcurrency = transferOptions.MaximumConcurrency.Value;
+            }
+            else
+            {
+                sanitizedOptions.MaximumConcurrency = Constants.Blob.Block.DefaultConcurrentTransfersCount;
             }
 
             // Set _initialRangeSize
-            if (!transferOptions.InitialTransferSize.HasValue
-                || !(transferOptions.InitialTransferSize.Value > 0))
+            if (transferOptions.InitialTransferSize.HasValue
+                && transferOptions.InitialTransferSize.Value > 0)
             {
-                transferOptions.InitialTransferSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
+                sanitizedOptions.InitialTransferSize = transferOptions.InitialTransferSize.Value;
+            }
+            else
+            {
+                sanitizedOptions.InitialTransferSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
 
             // Set _rangeSize
             if (transferOptions.MaximumTransferSize.HasValue
                 && transferOptions.MaximumTransferSize.Value > 0)
             {
-                transferOptions.MaximumTransferSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
+                sanitizedOptions.MaximumTransferSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
             }
             else
             {
-                transferOptions.MaximumTransferSize = Constants.DefaultBufferSize;
+                sanitizedOptions.MaximumTransferSize = Constants.DefaultBufferSize;
             }
 
-            return transferOptions;
+            return sanitizedOptions;
         }
         #endregion
     }

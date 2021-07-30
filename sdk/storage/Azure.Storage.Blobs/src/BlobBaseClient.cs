@@ -5820,35 +5820,46 @@ namespace Azure.Storage.Blobs.Specialized
                         ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}")
             };
         }
+
         internal static StorageTransferOptions SanitizePartitionedDownloaderOptions(
             StorageTransferOptions transferOptions)
         {
+            StorageTransferOptions sanitizedOptions = new StorageTransferOptions();
+
             // Set _maxWorkerCount
-            if (!transferOptions.MaximumConcurrency.HasValue
-                || !(transferOptions.MaximumConcurrency > 0))
+            if (transferOptions.MaximumConcurrency.HasValue
+                && transferOptions.MaximumConcurrency > 0)
             {
-                transferOptions.MaximumConcurrency = Constants.Blob.Block.DefaultConcurrentTransfersCount;
+                sanitizedOptions.MaximumConcurrency = transferOptions.MaximumConcurrency.Value;
+            }
+            else
+            {
+                sanitizedOptions.MaximumConcurrency = Constants.Blob.Block.DefaultConcurrentTransfersCount;
             }
 
             // Set _initialRangeSize
-            if (!transferOptions.InitialTransferSize.HasValue
-                || !(transferOptions.InitialTransferSize.Value > 0))
+            if (transferOptions.InitialTransferSize.HasValue
+                && transferOptions.InitialTransferSize.Value > 0)
             {
-                transferOptions.InitialTransferSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
+                sanitizedOptions.InitialTransferSize = transferOptions.InitialTransferSize.Value;
+            }
+            else
+            {
+                sanitizedOptions.InitialTransferSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
 
             // Set _rangeSize
             if (transferOptions.MaximumTransferSize.HasValue
                 && transferOptions.MaximumTransferSize.Value > 0)
             {
-                transferOptions.MaximumTransferSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
+                sanitizedOptions.MaximumTransferSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
             }
             else
             {
-                transferOptions.MaximumTransferSize = Constants.DefaultBufferSize;
+                sanitizedOptions.MaximumTransferSize = Constants.DefaultBufferSize;
             }
 
-            return transferOptions;
+            return sanitizedOptions;
         }
         #endregion
     }

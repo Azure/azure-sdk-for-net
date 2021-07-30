@@ -68,7 +68,7 @@ namespace Azure.Storage
 
         public PartitionedDownloader(
             Behaviors behaviors,
-            StorageTransferOptions transferOptions = default,
+            StorageTransferOptions transferOptions,
             string operationName = null)
         {
             // Modifying conditions to add Etag is only necessary for blobs,
@@ -141,8 +141,6 @@ namespace Azure.Storage
                 long totalLength = initialResponse.GetRawResponse().Headers.TryGetValue("Content-Range", out string value) ?
                     ParseRangeTotalLength(value) :
                     0;
-
-                Console.WriteLine($"\n\n\nInitial Length: {initialLength}\nTotal Length: {totalLength}\n\n\n");
 
                 if (async)
                 {

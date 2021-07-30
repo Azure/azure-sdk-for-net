@@ -44,7 +44,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader =
                 new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
-                    ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object));
+                    ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object),
+                    ShareFileClient.SanitizePartitionedDownloaderOptions(new StorageTransferOptions()));
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -64,7 +65,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader =
                 new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
-                    ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object));
+                    ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object),
+                    ShareFileClient.SanitizePartitionedDownloaderOptions(new StorageTransferOptions()));
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -86,11 +88,12 @@ namespace Azure.Storage.Files.Shares.Tests
             PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader =
                 new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
                     ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object),
-                    new StorageTransferOptions()
-                    {
-                        MaximumTransferLength = 10,
-                        InitialTransferLength = 20
-                    });
+                    ShareFileClient.SanitizePartitionedDownloaderOptions(
+                        new StorageTransferOptions()
+                        {
+                            MaximumTransferLength = 10,
+                            InitialTransferLength = 20
+                        }));
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -113,11 +116,12 @@ namespace Azure.Storage.Files.Shares.Tests
             PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader =
                 new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
                     ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object),
-                    new StorageTransferOptions()
-                    {
-                        MaximumTransferLength = 40,
-                        InitialTransferLength = 10
-                    });
+                    ShareFileClient.SanitizePartitionedDownloaderOptions(
+                        new StorageTransferOptions()
+                        {
+                            MaximumTransferLength = 40,
+                            InitialTransferLength = 10
+                        }));
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -140,11 +144,12 @@ namespace Azure.Storage.Files.Shares.Tests
             PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader =
                 new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
                     ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object),
-                    new StorageTransferOptions()
-                    {
-                        MaximumTransferLength = 10,
-                        InitialTransferLength = 10
-                    });
+                    ShareFileClient.SanitizePartitionedDownloaderOptions(
+                        new StorageTransferOptions()
+                        {
+                            MaximumTransferLength = 10,
+                            InitialTransferLength = 10
+                        }));
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -176,10 +181,11 @@ namespace Azure.Storage.Files.Shares.Tests
             PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo> downloader =
                 new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
                     ShareFileClient.GetPartitionedDownloaderBehaviors(fileClient.Object),
-                    new StorageTransferOptions()
-                    {
-                        MaximumTransferLength = 10
-                    });
+                    ShareFileClient.SanitizePartitionedDownloaderOptions(
+                        new StorageTransferOptions()
+                        {
+                            MaximumTransferLength = 10
+                        }));
 
             Exception thrown = Assert.ThrowsAsync<Exception>(async () => await InvokeDownloadToAsync(downloader, stream));
 

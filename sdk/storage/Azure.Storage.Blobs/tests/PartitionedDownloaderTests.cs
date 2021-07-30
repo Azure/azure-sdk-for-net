@@ -47,7 +47,8 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult> downloader =
                 new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>(
-                    BlobBaseClient.GetPartitionedDownloaderBehaviors(blockClient.Object));
+                    BlobBaseClient.GetPartitionedDownloaderBehaviors(blockClient.Object),
+                    BlobBaseClient.SanitizePartitionedDownloaderOptions(new StorageTransferOptions()));
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -68,7 +69,8 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult> downloader =
                 new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>(
-                    BlobBaseClient.GetPartitionedDownloaderBehaviors(blockClient.Object));
+                    BlobBaseClient.GetPartitionedDownloaderBehaviors(blockClient.Object),
+                    BlobBaseClient.SanitizePartitionedDownloaderOptions(new StorageTransferOptions()));
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -90,11 +92,12 @@ namespace Azure.Storage.Blobs.Test
             PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult> downloader =
                 new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>(
                     BlobBaseClient.GetPartitionedDownloaderBehaviors(blockClient.Object),
-                    new StorageTransferOptions()
-                    {
-                        MaximumTransferLength = 10,
-                        InitialTransferLength = 20
-                    });
+                    BlobBaseClient.SanitizePartitionedDownloaderOptions(
+                        new StorageTransferOptions()
+                        {
+                            MaximumTransferLength = 10,
+                            InitialTransferLength = 20
+                        }));
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -117,11 +120,12 @@ namespace Azure.Storage.Blobs.Test
             PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult> downloader =
                 new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>(
                     BlobBaseClient.GetPartitionedDownloaderBehaviors(blockClient.Object),
-                    new StorageTransferOptions()
-                    {
-                        MaximumTransferLength = 40,
-                        InitialTransferLength = 10
-                    });
+                    BlobBaseClient.SanitizePartitionedDownloaderOptions(
+                        new StorageTransferOptions()
+                        {
+                            MaximumTransferLength = 40,
+                            InitialTransferLength = 10
+                        }));
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -144,11 +148,12 @@ namespace Azure.Storage.Blobs.Test
             PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult> downloader =
                 new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>(
                     BlobBaseClient.GetPartitionedDownloaderBehaviors(blockClient.Object),
-                    new StorageTransferOptions()
-                    {
-                        MaximumTransferLength = 10,
-                        InitialTransferLength = 10
-                    });
+                    BlobBaseClient.SanitizePartitionedDownloaderOptions(
+                        new StorageTransferOptions()
+                        {
+                            MaximumTransferLength = 10,
+                            InitialTransferLength = 10
+                        }));
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -196,9 +201,11 @@ namespace Azure.Storage.Blobs.Test
             PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult> downloader =
                 new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>(
                     BlobBaseClient.GetPartitionedDownloaderBehaviors(blockClient.Object),
-                    new StorageTransferOptions() {
-                        MaximumTransferLength = 10
-                    });
+                    BlobBaseClient.SanitizePartitionedDownloaderOptions(
+                        new StorageTransferOptions()
+                        {
+                            MaximumTransferLength = 10
+                        }));
 
             Exception thrown = Assert.ThrowsAsync<Exception>(async () => await InvokeDownloadToAsync(downloader, stream));
 
