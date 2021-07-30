@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Management.Models
 {
-    public partial class CreateManagementGroupRequest : IUtf8JsonSerializable
+    public partial class CreateManagementGroupOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

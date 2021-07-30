@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl)
+        internal HttpMessage CreateCreateOrUpdateRequest(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ManagementGroupsCreateOrUpdateHeaders>> CreateOrUpdateAsync(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ManagementGroupsCreateOrUpdateHeaders>> CreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public ResponseWithHeaders<ManagementGroupsCreateOrUpdateHeaders> CreateOrUpdate(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ManagementGroupsCreateOrUpdateHeaders> CreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(CheckNameAvailabilityRequest checkNameAvailabilityRequest)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(CheckNameAvailabilityOptions checkNameAvailabilityRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityRequest == null)
             {
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
             if (checkNameAvailabilityRequest == null)
             {

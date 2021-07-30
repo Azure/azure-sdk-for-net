@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.Management.Models
 {
     /// <summary> Management group creation parameters. </summary>
-    public partial class CreateManagementGroupRequest
+    public partial class CreateManagementGroupOptions
     {
         /// <summary> Initializes a new instance of CreateManagementGroupRequest. </summary>
-        public CreateManagementGroupRequest()
+        public CreateManagementGroupOptions()
         {
-            Children = new ChangeTrackingList<CreateManagementGroupChildInfo>();
+            Children = new ChangeTrackingList<ManagementGroupChildOptions>();
         }
 
         /// <summary> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Management.Models
         /// <summary> The details of a management group used during creation. </summary>
         public CreateManagementGroupDetails Details { get; set; }
         /// <summary> The list of children. </summary>
-        public IReadOnlyList<CreateManagementGroupChildInfo> Children { get; }
+        public IReadOnlyList<ManagementGroupChildOptions> Children { get; }
     }
 }

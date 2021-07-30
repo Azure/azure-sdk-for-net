@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public virtual Response<ManagementGroup> CreateOrUpdate(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroup> CreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroup>> CreateOrUpdateAsync(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<ManagementGroup>> CreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public virtual ManagementGroupsCreateOrUpdateOperation StartCreateOrUpdate(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual ManagementGroupsCreateOrUpdateOperation StartCreateOrUpdate(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public async virtual Task<ManagementGroupsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async virtual Task<ManagementGroupsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             if (groupId == null)
             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Management
         /// <summary> Checks if the specified management group name is valid and unique. </summary>
         /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CheckNameAvailability");
             scope.Start();
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Management
         /// <summary> Checks if the specified management group name is valid and unique. </summary>
         /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagementGroupContainer.CheckNameAvailability");
             scope.Start();
