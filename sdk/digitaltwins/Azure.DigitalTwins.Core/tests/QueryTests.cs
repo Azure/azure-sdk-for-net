@@ -119,7 +119,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 await client.CreateOrReplaceDigitalTwinAsync(roomTwinId, roomTwin).ConfigureAwait(false);
 
                 // Build query using AdtQueryBuilder helper object
-                DigitalTwinsQueryBuilder builtQuery = new DigitalTwinsQueryBuilder()
+                DigitalTwinsQueryBuilderV1 builtQuery = new DigitalTwinsQueryBuilderV1()
                     .SelectAll()
                     .From(DigitalTwinsCollection.DigitalTwins)
                     .Build();
