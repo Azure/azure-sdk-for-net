@@ -4,7 +4,7 @@ languages:
 - csharp
 products:
 - azure
-- azure-resource-manager-compute
+- azure-resource-manager
 name: Azure.ResourceManager.Compute samples for .NET
 description: Samples for the Azure.ResourceManager.Compute client library
 ---
