@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Batch
     using System.Net.Http;
 
     /// <summary>
-    /// The Batch Management Client.
+    /// Batch Client
     /// </summary>
     public partial class BatchManagementClient : ServiceClient<BatchManagementClient>, IBatchManagementClient, IAzureClient
     {
