@@ -42,7 +42,7 @@ using Azure.ResourceManager.Resources;
 
 // Code omitted for brevity
 
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
 Additional documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
@@ -149,9 +149,9 @@ AvailabilitySet availabilitySet = await availabilitySetOperations.GetAsync();
 ```
 
 ### `tryGet` and `CheckIfExistss` convenience methods
-If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `tryGet()` or `CheckIfExistss()` methods, which can be invoque from any [Resource]Container class.
+If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExistss()` methods, which can be invoque from any [Resource]Container class.
 
-`tryGet()` and `tryGetAsync()` are going to return a null object if the specified resource name or id does not exists. On the other hand, `CheckIfExistss()` and `CheckIfExistssAsync()` is going to return a boolean, depending if the specified resource exists.
+`GetIfExists()` and `GetIfExistsAsync()` are going to return a null object if the specified resource name or id does not exists. On the other hand, `CheckIfExistss()` and `CheckIfExistssAsync()` is going to return a boolean, depending if the specified resource exists.
 
 You can find an example for these methods [below](#check-if-resource-group-exists).
 
@@ -160,7 +160,7 @@ You can find an example for these methods [below](#check-if-resource-group-exist
 ### Create a resource group
 ```C# Snippet:Managing_Resource_Groups_CreateAResourceGroup
 // First, initialize the ArmClient and get the default subscription
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 // Now we get a ResourceGroup container for that subscription
 Subscription subscription = armClient.DefaultSubscription;
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
@@ -174,7 +174,7 @@ ResourceGroup resourceGroup = await rgContainer.Construct(location).CreateOrUpda
 ### List all resource groups
 ```C# Snippet:Managing_Resource_Groups_ListAllResourceGroup
 // First, initialize the ArmClient and get the default subscription
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 // Now we get a ResourceGroup container for that subscription
 ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
@@ -189,7 +189,7 @@ await foreach (ResourceGroup rg in response)
 ### Update a resource group
 ```C# Snippet:Managing_Resource_Groups_UpdateAResourceGroup
 // Note: Resource group named 'myRgName' should exist for this example to work.
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
@@ -198,7 +198,7 @@ resourceGroup = await resourceGroup.AddTagAsync("key", "value");
 
 ### Delete a resource group
 ```C# Snippet:Managing_Resource_Groups_DeleteResourceGroup
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
@@ -207,18 +207,18 @@ await resourceGroup.DeleteAsync();
 
 ### Check if Resource Group exists
 ```C# Snippet:Readme_CheckIfExistssRG
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 string rgName = "myRgName";
 
-var exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
+bool exists = await subscription.GetResourceGroups().CheckIfExistsAsync(rgName);
 
 if (exists)
 {
     Console.WriteLine($"Resource Group {rgName} exists.");
 
     // We can get the resource group now that we are sure it exists.
-    var myRG = await subscription.GetResourceGroups().GetAsync(rgName);
+    ResourceGroup myRG = await subscription.GetResourceGroups().GetAsync(rgName);
 }
 else
 {
@@ -226,14 +226,14 @@ else
 }
 ```
 
-Another way to do this is by using `tryGet()`:
+Another way to do this is by using `GetIfExists()`:
 
 ```C# Snippet:Readme_TryGetRG
-var armClient = new ArmClient(new DefaultAzureCredential());
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
 string rgName = "myRgName";
 
-var myRG = await subscription.GetResourceGroups().TryGetAsync(rgName);
+ResourceGroup myRG = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
 
 if (myRG == null)
 {
@@ -262,7 +262,7 @@ VirtualMachineContainer vmContainer = resourceGroup.GetVirtualMachines();
 
 // Next we loop over all vms in the container
 // Each vm is a [Resource] object from above
-await foreach(VirtualMachine vm in vmContainer.ListAsync())
+await foreach(VirtualMachine vm in vmContainer.GetAll())
 {
     // We access the [Resource]Data properties from vm.Data
     if(!vm.Data.Tags.ContainsKey("owner"))

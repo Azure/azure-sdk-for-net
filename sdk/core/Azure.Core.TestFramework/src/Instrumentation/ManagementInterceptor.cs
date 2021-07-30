@@ -89,7 +89,7 @@ namespace Azure.Core.TestFramework
             if (elementType.BaseType == typeof(object))
                 return false;
 
-            if (elementType.BaseType.Name == "OperationsBase")
+            if (elementType.BaseType.Name == "ResourceOperations")
                 return true;
 
             return InheritsFromOperationBase(elementType.BaseType);

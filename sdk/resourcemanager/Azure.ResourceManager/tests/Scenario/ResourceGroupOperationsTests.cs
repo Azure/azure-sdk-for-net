@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.Tests
 
             rg1.Id.Name = null;
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.GetAsync());
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetResourceGroupOperations(rg1.Data.Id + "x").GetAsync());
+            Assert.AreEqual(404, ex.Status);
         }
 
         [TestCase]

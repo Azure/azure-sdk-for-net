@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Stopped loading `$PROFILE` and checking for updates when using `AzurePowerShellCredential`.
+
 ### Other Changes
 
 ## 1.5.0-beta.2 (2021-07-12)

@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.Tests
         {
             var mgmtGroup = await Client.GetManagementGroupOperations(_mgmtGroup.Id).GetAsync();
             CompareMgmtGroups(_mgmtGroup, mgmtGroup.Value);
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroupOperations(_mgmtGroup.Id + "x").GetAsync());
+            Assert.AreEqual(403, ex.Status);
         }
 
         [RecordedTest]

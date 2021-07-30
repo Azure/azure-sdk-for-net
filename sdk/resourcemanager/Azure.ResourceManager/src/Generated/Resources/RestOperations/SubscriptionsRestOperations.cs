@@ -137,6 +137,10 @@ namespace Azure.ResourceManager.Resources
                         value = SubscriptionData.DeserializeSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    {
+                        return Response.FromValue<SubscriptionData>(null, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -163,6 +167,10 @@ namespace Azure.ResourceManager.Resources
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SubscriptionData.DeserializeSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    {
+                        return Response.FromValue<SubscriptionData>(null, message.Response);
                     }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);

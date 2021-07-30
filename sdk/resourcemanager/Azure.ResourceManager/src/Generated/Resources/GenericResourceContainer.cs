@@ -74,6 +74,9 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(resourceId, cancellationToken);
                 var result = RestClient.GetById(resourceId, apiVersion, cancellationToken);
+                if (result.Value == null)
+                    throw Diagnostics.CreateRequestFailedException(result.GetRawResponse());
+
                 return Response.FromValue(new GenericResource(this, result), result.GetRawResponse());
             }
             catch (Exception e)
@@ -97,8 +100,11 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = await GetApiVersionAsync(resourceId, cancellationToken).ConfigureAwait(false);
-                var result = await RestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(this, result), result.GetRawResponse());
+                var response = await RestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+
+                return Response.FromValue(new GenericResource(this, response), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -426,22 +432,22 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Returns the resource from Azure if it exists.
         /// </summary>
-        /// <param name="resourceName"> The name of the resource you want to get. </param>
+        /// <param name="resourceId"> The id of the resource you want to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual GenericResource TryGet(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<GenericResource> GetIfExists(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.TryGet");
+            using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetIfExists");
             scope.Start();
 
             try
             {
-                return Get(resourceName, cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var apiVersion = GetApiVersion(resourceId, cancellationToken);
+                var response = RestClient.GetById(resourceId, apiVersion, cancellationToken);
+                return response.Value == null
+                   ? Response.FromValue<GenericResource>(null, response.GetRawResponse())
+                   : Response.FromValue(new GenericResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -453,22 +459,22 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Returns the resource from Azure if it exists.
         /// </summary>
-        /// <param name="resourceName"> The name of the resource you want to get. </param>
+        /// <param name="resourceId"> The id of the resource you want to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<GenericResource> TryGetAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GenericResource>> GetIfExistsAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("GenericResourceContainer.TryGet");
+            using var scope = Diagnostics.CreateScope("GenericResourceContainer.GetIfExists");
             scope.Start();
 
             try
             {
-                return await GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var apiVersion = await GetApiVersionAsync(resourceId, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                   ? Response.FromValue<GenericResource>(null, response.GetRawResponse())
+                   : Response.FromValue(new GenericResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -480,29 +486,49 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Determines whether or not the azure resource exists in this container.
         /// </summary>
-        /// <param name="resourceName"> The name of the resource you want to check. </param>
+        /// <param name="resourceId"> The id of the resource you want to check. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool CheckIfExists(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string resourceId, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceContainer.CheckIfExists");
             scope.Start();
-            return TryGet(resourceName, cancellationToken) != null;
+
+            try
+            {
+                var response = GetIfExists(resourceId, cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Determines whether or not the azure resource exists in this container.
         /// </summary>
-        /// <param name="resourceName"> The name of the resource you want to check. </param>
+        /// <param name="resourceId"> The id of the resource you want to check. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual async Task<bool> CheckIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckIfExistsAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceContainer.CheckIfExists");
             scope.Start();
-            return await TryGetAsync(resourceName, cancellationToken).ConfigureAwait(false) != null;
+
+            try
+            {
+                var response = await GetIfExistsAsync(resourceId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
