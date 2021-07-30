@@ -14,9 +14,9 @@ namespace Azure.Test.Perf
 {
     public abstract class PerfTest<TOptions> : IPerfTest where TOptions : PerfOptions
     {
-        private readonly HttpClient _recordPlaybackHttpClient;
-
         private readonly HttpPipelineTransport _insecureTransport;
+
+        private readonly HttpClient _recordPlaybackHttpClient;
         private readonly TestProxyPolicy _testProxyPolicy;
 
         private string _recordingId;
