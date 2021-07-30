@@ -92,11 +92,7 @@ AvailabilitySet inputAvailabilitySet = new AvailabilitySet
 };
 string aSetName = "quickstartvm_aSet";
 
-var asCreateOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(
-    rgName,
-    aSetName,
-    inputAvailabilitySet
-);
+AvailabilitySet asCreateOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(rgName,aSetName,inputAvailabilitySet);
 string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Compute/availabilitySets/{aSetName}";
 ```
 #### New
@@ -134,8 +130,8 @@ VirtualNetwork vnet = new VirtualNetwork()
                 }
             }
 };
-var putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(rgName, vnetName, vnet);
-var subnetResponse = networkClient.Subnets.Get(rgName, vnetName, subnetName);
+VirtualNetwork putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(rgName, vnetName, vnet);
+VirtualNetwork subnetResponse = networkClient.Subnets.Get(rgName, vnetName, subnetName);
 ```
 #### New
 ```C#
@@ -170,8 +166,8 @@ NetworkSecurityGroup nsgParameters = new NetworkSecurityGroup()
     Location = location
 };
 
-var putNSgResponse = networkClient.NetworkSecurityGroups.CreateOrUpdate(rgName, nsgName, nsgParameters);
-var nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgName);
+NetworkSecurityGroup putNSgResponse = networkClient.NetworkSecurityGroups.CreateOrUpdate(rgName, nsgName, nsgParameters);
+NetworkSecurityGroup nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgName);
 ```
 #### New
 ```C#
@@ -207,8 +203,8 @@ NetworkInterface nicParameters = new NetworkInterface()
     NetworkSecurityGroup = nsg
 };
 
-var putNicResponse = networkClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
-var nicResponse = networkClient.NetworkInterfaces.Get(rgName, nicname);
+NetworkInterface putNicResponse = networkClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
+NetworkInterface nicResponse = networkClient.NetworkInterfaces.Get(rgName, nicname);
 ```
 #### New
 ```C#
@@ -283,7 +279,7 @@ vmNetworkProfile.NetworkInterfaces = new List<NetworkInterfaceReference>
 };
 inputVM.NetworkProfile = vmNetworkProfile;
 
-var vm = VMcomputeClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
+VirtualMachine vm = VMcomputeClient.VirtualMachines.CreateOrUpdate(rgName, inputVM.Name, inputVM);
 ```
 #### New
 ```C#
