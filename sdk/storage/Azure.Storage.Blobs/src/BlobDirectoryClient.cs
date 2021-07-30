@@ -237,7 +237,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobDirectoryClient(Uri blobDirectoryUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobDirectoryUri, credential.AsPolicy(), options, null)
+            : this(blobDirectoryUri, credential.AsPolicy(options), options, null)
         {
             Errors.VerifyHttpsTokenAuth(blobDirectoryUri);
         }
@@ -638,10 +638,6 @@ namespace Azure.Storage.Blobs.Specialized
                     if (remotePath != null)
                         targetUri = targetUri.AppendToPath(remotePath);
 
-                    targetUri = options.UploadToSubdirectory.HasValue && (bool)options.UploadToSubdirectory
-                        ? targetUri.AppendToPath(localPath.Split('\\').Last())
-                        : targetUri;
-
                     BlobUploadScheduler scheduler = new BlobUploadScheduler(targetUri, ClientConfiguration, ClientSideEncryption);
 
                     return await scheduler.StartTransfer(
@@ -862,7 +858,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// TODO: remove static
         internal async Task<IEnumerable<Response>> StagedDownloadAsync(
             string targetPath,
-            BlobDirectoryDownloadOptions options = default,
+            BlobDirectoryDownloadOptions options,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -872,7 +868,7 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobDirectoryClient),
                     message:
                     $"{nameof(targetPath)}: {targetPath}\n" +
-                    $"{nameof(conditions)}: {conditions}");
+                    $"{nameof(options)}: {options}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobDirectoryClient)}.{nameof(Download)}");
 
@@ -881,7 +877,7 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
 
                     BlobDownloadScheduler scheduler = new BlobDownloadScheduler(Uri, ClientConfiguration, ClientSideEncryption);
-                    return await scheduler.StartTransfer(targetPath, transferOptions, conditions, async, cancellationToken).ConfigureAwait(false);
+                    return await scheduler.StartTransfer(targetPath, options, async, cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -1224,17 +1220,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobCopyInfo> SyncCopyFromUri(
+        public virtual IEnumerable<Response<BlobCopyInfo>> SyncCopyFromUri(
             Uri source,
-            BlobCopyFromUriOptions options = default,
+            BlobDirectoryCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
             => SyncCopyFromUriInternal(
                 source: source,
-                metadata: options?.Metadata,
-                tags: options?.Tags,
-                accessTier: options?.AccessTier,
-                sourceConditions: options?.SourceConditions,
-                destinationConditions: options?.DestinationConditions,
+                options: options,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -1274,17 +1266,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobCopyInfo>> SyncCopyFromUriAsync(
+        public virtual async Task<IEnumerable<Response<BlobCopyInfo>>> SyncCopyFromUriAsync(
             Uri source,
-            BlobCopyFromUriOptions options = default,
+            BlobDirectoryCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
             => await SyncCopyFromUriInternal(
                 source: source,
-                metadata: options?.Metadata,
-                tags: options?.Tags,
-                accessTier: options?.AccessTier,
-                sourceConditions: options?.SourceConditions,
-                destinationConditions: options?.DestinationConditions,
+                options: options,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -1309,23 +1297,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// source blob is greater than 256 MB, the request will fail with 409 (Conflict). The blob type of
         /// the source blob has to be block blob.
         /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this blob.
-        /// </param>
-        /// <param name="tags">
-        /// Optional tags to set for this blob.
-        /// </param>
-        /// <param name="accessTier">
-        /// Optional <see cref="AccessTier"/>
-        /// Indicates the tier to be set on the blob.
-        /// </param>
-        /// <param name="sourceConditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on the copying of data from this source blob.
-        /// </param>
-        /// <param name="destinationConditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// the copying of data to this blob.
+        /// <param name="options">
+        /// <see cref="BlobDirectoryCopyFromUriOptions"/> specifying
+        /// options for this transfer.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1342,77 +1316,28 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobCopyInfo>> SyncCopyFromUriInternal(
+        private async Task<IEnumerable<Response<BlobCopyInfo>>> SyncCopyFromUriInternal(
             Uri source,
-            Metadata metadata,
-            Tags tags,
-            AccessTier? accessTier,
-            BlobRequestConditions sourceConditions,
-            BlobRequestConditions destinationConditions,
+            BlobDirectoryCopyFromUriOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobDirectoryClient)))
             {
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SyncCopyFromUri)}");
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                nameof(BlobDirectoryClient),
+                message:
+                $"{nameof(Uri)}: {Uri}\n" +
+                $"{nameof(options)}: {options}\n");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobDirectoryClient)}.{nameof(SyncCopyFromUri)}");
 
                 try
                 {
-                    ClientConfiguration.Pipeline.LogMethodEnter(
-                    nameof(BlobBaseClient),
-                    message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(source)}: {source}\n" +
-                    $"{nameof(sourceConditions)}: {sourceConditions}\n" +
-                    $"{nameof(destinationConditions)}: {destinationConditions}");
-
                     scope.Start();
 
-                    ResponseWithHeaders<BlobCopyFromURLHeaders> response;
-
-                    if (async)
-                    {
-                        response = await BlobRestClient.CopyFromURLAsync(
-                            copySource: source.AbsoluteUri,
-                            metadata: metadata,
-                            tier: accessTier,
-                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
-                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
-                            sourceIfMatch: sourceConditions?.IfMatch.ToString(),
-                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
-                            ifModifiedSince: destinationConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
-                            ifMatch: destinationConditions?.IfMatch?.ToString(),
-                            ifNoneMatch: destinationConditions?.IfNoneMatch?.ToString(),
-                            ifTags: destinationConditions?.TagConditions,
-                            leaseId: destinationConditions?.LeaseId,
-                            blobTagsString: tags?.ToTagsString(),
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        response = BlobRestClient.CopyFromURL(
-                            copySource: source.AbsoluteUri,
-                            metadata: metadata,
-                            tier: accessTier,
-                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
-                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
-                            sourceIfMatch: sourceConditions?.IfMatch.ToString(),
-                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch.ToString(),
-                            ifModifiedSince: destinationConditions?.IfModifiedSince,
-                            ifUnmodifiedSince: destinationConditions?.IfUnmodifiedSince,
-                            ifMatch: destinationConditions?.IfMatch?.ToString(),
-                            ifNoneMatch: destinationConditions?.IfNoneMatch?.ToString(),
-                            ifTags: destinationConditions?.TagConditions,
-                            leaseId: destinationConditions?.LeaseId,
-                            blobTagsString: tags?.ToTagsString(),
-                            cancellationToken: cancellationToken);
-                    }
-
-                    return Response.FromValue(
-                        response.ToBlobCopyInfo(),
-                        response.GetRawResponse());
+                    BlobCopyScheduler scheduler = new BlobCopyScheduler(Uri, ClientConfiguration, ClientSideEncryption);
+                    return await scheduler.StartTransfer(source, options, async, cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

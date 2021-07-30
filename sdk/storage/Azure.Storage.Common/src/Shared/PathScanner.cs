@@ -7,11 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-<<<<<<< HEAD:sdk/storage/Azure.Storage.Common/src/Shared/PathScanner.cs
 namespace Azure.Storage
-=======
-namespace Azure.Storage.DataMovement
->>>>>>> upstream/feature/storage/data-movement:sdk/storage/Azure.Storage.DataMovement/src/PathScanner.cs
 {
     internal class PathScanner
     {

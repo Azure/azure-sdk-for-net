@@ -59,10 +59,10 @@ namespace Azure.Storage.Blobs
         // TODO: Add options object usage and remove pragma
         public async Task<IEnumerable<Response<BlobContentInfo>>> StartTransfer(
             string localPath,
-            StorageTransferOptions transferOptions,
 #pragma warning disable CA1801 // Review unused parameters
-            BlobDirectoryUploadOptions options,
+            StorageTransferOptions transferOptions,
 #pragma warning restore CA1801 // Review unused parameters
+            BlobDirectoryUploadOptions options,
             bool async,
             CancellationToken cancellationToken = default)
         {
@@ -72,7 +72,7 @@ namespace Azure.Storage.Blobs
             PathScanner scanner = scannerFactory.BuildPathScanner();
             IEnumerable<FileSystemInfo> fileList = scanner.Scan();
 
-            int concurrency = (int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1);
+            int concurrency = (int)(options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ? options.TransferOptions.MaximumConcurrency : 1);
             TaskThrottler throttler = new TaskThrottler(concurrency);
 
             List<Response<BlobContentInfo>> responses = new List<Response<BlobContentInfo>>();

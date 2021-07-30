@@ -51,10 +51,7 @@ namespace Azure.Storage.Blobs
         // TODO: Add options object usage and remove pragma
         public async Task<IEnumerable<Response>> StartTransfer(
             string targetPath,
-            StorageTransferOptions transferOptions,
-#pragma warning disable CA1801 // Review unused parameters
-            BlobRequestConditions conditions,
-#pragma warning restore CA1801 // Review unused parameters
+            BlobDirectoryDownloadOptions options,
             bool async,
             CancellationToken cancellationToken = default)
         {
@@ -77,7 +74,13 @@ namespace Azure.Storage.Blobs
 
             Pageable<BlobItem> blobs = containerClient.GetBlobs(default, default, directoryName, cancellationToken);
 
-            int concurrency = (int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1);
+            BlobRequestConditions conditions = new BlobRequestConditions()
+            {
+                IfModifiedSince = options.DirectoryRequestConditions.IfModifiedSince ?? null,
+                IfUnmodifiedSince = options.DirectoryRequestConditions.IfUnmodifiedSince ?? null,
+            };
+
+            int concurrency = (int)(options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ? options.TransferOptions.MaximumConcurrency : 1);
             TaskThrottler throttler = new TaskThrottler(concurrency);
 
             List<Response> responses = new List<Response>();
@@ -95,7 +98,7 @@ namespace Azure.Storage.Blobs
                         responses.Add(await client.DownloadToAsync(
                             destination,
                             conditions,
-                            transferOptions,
+                            options.TransferOptions,
                             cancellationToken)
                             .ConfigureAwait(false));
                     }

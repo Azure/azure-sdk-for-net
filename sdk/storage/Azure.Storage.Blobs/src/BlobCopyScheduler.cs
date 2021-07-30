@@ -59,10 +59,7 @@ namespace Azure.Storage.Blobs
         // TODO: Add options object usage and remove pragma
         public async Task<IEnumerable<Response<BlobCopyInfo>>> StartTransfer(
             Uri sourceUri,
-            StorageTransferOptions transferOptions,
-#pragma warning disable CA1801 // Review unused parameters
-            BlobDirectoryUploadOptions options,
-#pragma warning restore CA1801 // Review unused parameters
+            BlobDirectoryCopyFromUriOptions options,
             bool async,
             CancellationToken cancellationToken = default)
         {
@@ -70,7 +67,25 @@ namespace Azure.Storage.Blobs
 
             Pageable<BlobItem> sourceBlobs = sourceDirectory.GetBlobs(default, default, default, cancellationToken);
 
-            int concurrency = (int)(transferOptions.MaximumConcurrency.HasValue && transferOptions.MaximumConcurrency > 0 ? transferOptions.MaximumConcurrency : 1);
+            BlobCopyFromUriOptions blobOptions = new BlobCopyFromUriOptions()
+            {
+                Tags = options.Tags,
+                Metadata = options.Metadata,
+                AccessTier = options.AccessTier,
+                SourceConditions = new BlobRequestConditions()
+                {
+                    IfModifiedSince = options.SourceConditions.IfModifiedSince ?? null,
+                    IfUnmodifiedSince = options.SourceConditions.IfUnmodifiedSince ?? null,
+                },
+                DestinationConditions = new BlobRequestConditions()
+                {
+                    IfModifiedSince = options.DestinationConditions.IfModifiedSince ?? null,
+                    IfUnmodifiedSince = options.DestinationConditions.IfUnmodifiedSince ?? null,
+                },
+                RehydratePriority = options.RehydratePriority
+            };
+
+            int concurrency = (int)(options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ? options.TransferOptions.MaximumConcurrency : 1);
             TaskThrottler throttler = new TaskThrottler(concurrency);
 
             List<Response<BlobCopyInfo>> responses = new List<Response<BlobCopyInfo>>();
@@ -83,14 +98,14 @@ namespace Azure.Storage.Blobs
                 };
                 Uri sourceBlobUri = builder.ToUri();
 
-                string destBlobName = sourceBlobUri.ToString().Substring(sourceUri.ToString().Length + 1);
+                string destBlobName = sourceBlobUri.AbsoluteUri.Substring(sourceUri.AbsoluteUri.Length + 1);
 
                 throttler.AddTask(async () =>
                 {
                     responses.Add(await GetBlobClient(destBlobName)
                        .SyncCopyFromUriAsync(
                            sourceBlobUri,
-                           default,
+                           blobOptions,
                            cancellationToken)
                        .ConfigureAwait(false));
                 });

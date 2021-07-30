@@ -4,6 +4,7 @@
 using System;
 using System.Text;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -22,6 +23,13 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata Metadata { get; set; }
 #pragma warning restore CA2227 // Collection properties should be readonly
+
+        /// <summary>
+        /// Options tags to be set on the blobs within the directory.
+        /// </summary>
+#pragma warning disable CA2227 // Collection properties should be read only
+        public Tags Tags { get; set; }
+#pragma warning restore CA2227 // Collection properties should be read only
 
         /// <summary>
         /// Optional <see cref="AccessTier"/>
@@ -54,5 +62,11 @@ namespace Azure.Storage.Blobs.Models
         /// as well as collect paths that failed to change Access Control.
         /// </summary>
         public IProgress<Response<BlobCopyInfo>> ProgressHandler { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </summary>
+        public StorageTransferOptions TransferOptions { get; set; }
     }
 }

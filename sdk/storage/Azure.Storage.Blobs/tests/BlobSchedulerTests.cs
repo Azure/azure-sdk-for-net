@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Tests
         //      threading behavior in its own tests)
 
         [RecordedTest]
-        public async Task UploadDirectoryAsync_RemoteUnspecifiedNoSubfolder()
+        public async Task UploadDirectoryAsync_RemoteUnspecified()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -67,50 +67,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task UploadDirectoryAsync_RemoteUnspecifiedWithSubfolder()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            string dirName = GetNewBlobName();
-            BlobDirectoryClient client = test.Container.GetBlobDirectoryClient(dirName);
-
-            string folder = CreateRandomDirectory(Path.GetTempPath());
-            string openChild = CreateRandomFile(folder);
-            string lockedChild = CreateRandomFile(folder);
-
-            string openSubfolder = CreateRandomDirectory(folder);
-            string openSubchild = CreateRandomFile(openSubfolder);
-
-            string lockedSubfolder = CreateRandomDirectory(folder);
-            string lockedSubchild = CreateRandomFile(lockedSubfolder);
-
-            string localDirName = folder.Split('\\').Last();
-
-            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
-            options.UploadToSubdirectory = true;
-
-            // Act
-            await client.UploadAsync(folder, default, options);
-
-            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                .Select((BlobItem blob) => blob.Name).ToList();
-
-            // Assert
-            Assert.Multiple(() =>
-            {
-                CollectionAssert.Contains(blobs, dirName + "/" + localDirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(blobs, dirName + "/" + localDirName + "/" + lockedChild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(blobs, dirName + "/" + localDirName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(blobs, dirName + "/" + localDirName + "/" + lockedSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
-            });
-
-            // Cleanup
-            Directory.Delete(folder, true);
-        }
-
-        [RecordedTest]
-        public async Task UploadDirectoryAsync_RemoteGivenNoSubfolder()
+        public async Task UploadDirectoryAsync_RemoteGiven()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -151,50 +108,6 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task UploadDirectoryAsync_RemoteGivenWithSubfolder()
-        {
-            // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            string dirName = GetNewBlobName();
-            string remoteTargetDir = GetNewBlobName();
-            BlobDirectoryClient client = test.Container.GetBlobDirectoryClient(dirName);
-
-            string folder = CreateRandomDirectory(Path.GetTempPath());
-            string openChild = CreateRandomFile(folder);
-            string lockedChild = CreateRandomFile(folder);
-
-            string openSubfolder = CreateRandomDirectory(folder);
-            string openSubchild = CreateRandomFile(openSubfolder);
-
-            string lockedSubfolder = CreateRandomDirectory(folder);
-            string lockedSubchild = CreateRandomFile(lockedSubfolder);
-
-            string localDirName = folder.Split('\\').Last();
-
-            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
-            options.UploadToSubdirectory = true;
-
-            // Act
-            await client.UploadAsync(folder, remoteTargetDir, default, options);
-
-            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                .Select((BlobItem blob) => blob.Name).ToList();
-
-            // Assert
-            Assert.Multiple(() =>
-            {
-                CollectionAssert.Contains(blobs, dirName + "/" + remoteTargetDir + "/" + localDirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(blobs, dirName + "/" + remoteTargetDir + "/" + localDirName + "/" + lockedChild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(blobs, dirName + "/" + remoteTargetDir + "/" + localDirName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(blobs, dirName + "/" + remoteTargetDir + "/" + localDirName + "/" + lockedSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
-            });
-
-            // Cleanup
-            Directory.Delete(folder, true);
-        }
-
-        [RecordedTest]
         public async Task DownloadDirectoryAsync()
         {
             // Arrange
@@ -222,7 +135,10 @@ namespace Azure.Storage.Blobs.Tests
 
             Directory.Delete(folder, true);
 
-            await client.DownloadAsync(folder);
+            await client.DownloadAsync(folder, options: new BlobDirectoryDownloadOptions()
+            {
+                DirectoryRequestConditions = new BlobDirectoryRequestConditions()
+            });
 
             List<string> localItemsAfterDownload = Directory.GetFiles(folder, "*", SearchOption.AllDirectories).ToList();
 
@@ -233,6 +149,55 @@ namespace Azure.Storage.Blobs.Tests
                 CollectionAssert.Contains(localItemsAfterDownload, lockedChild);
                 CollectionAssert.Contains(localItemsAfterDownload, openSubchild);
                 CollectionAssert.Contains(localItemsAfterDownload, lockedSubchild);
+            });
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
+        public async Task CopyDirectoryAsync()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            string destName = GetNewBlobName();
+            BlobDirectoryClient source = test.Container.GetBlobDirectoryClient(GetNewBlobName());
+            BlobDirectoryClient dest = test.Container.GetBlobDirectoryClient(destName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+            string openChild = CreateRandomFile(folder);
+            string lockedChild = CreateRandomFile(folder);
+
+            string openSubfolder = CreateRandomDirectory(folder);
+            string openSubchild = CreateRandomFile(openSubfolder);
+
+            string lockedSubfolder = CreateRandomDirectory(folder);
+            string lockedSubchild = CreateRandomFile(lockedSubfolder);
+
+            string localDirName = folder.Split('\\').Last();
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+
+            // Act
+            await source.UploadAsync(folder, default, options);
+
+            await dest.SyncCopyFromUriAsync(source.Uri, new BlobDirectoryCopyFromUriOptions()
+            {
+                SourceConditions = new BlobDirectoryRequestConditions(),
+                DestinationConditions = new BlobDirectoryRequestConditions()
+            }, default);
+
+            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync(prefix: destName).ToListAsync())
+                .Select((BlobItem blob) => blob.Name).ToList();
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                CollectionAssert.Contains(blobs, destName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, destName + "/" + lockedChild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, destName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, destName + "/" + lockedSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
             });
 
             // Cleanup
