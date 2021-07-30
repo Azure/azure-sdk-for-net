@@ -26,7 +26,7 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void EnableLogging()
         {
-            _logListener = new AzureEventSourceListener((_, message) => TestContext.WriteLine(message), EventLevel.Verbose);
+            _logListener = new AzureEventSourceListener((_, message) => Console.WriteLine(message), EventLevel.Verbose);
         }
 
         [TearDown]
