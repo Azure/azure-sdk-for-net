@@ -95,39 +95,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="createdOn">Sets the <see cref="TranslationStatus.CreatedOn"/> property.</param>
         /// <param name="lastModified">Sets the <see cref="TranslationStatus.LastModified"/> property.</param>
         /// <param name="status">Sets the <see cref="TranslationStatus.Status"/> property.</param>
-        /// <param name="total">Sets the <see cref="StatusSummary.Total"/> and the <see cref="TranslationStatus.DocumentsTotal"/> properties.</param>
-        /// <param name="failed">Sets the <see cref="StatusSummary.Failed"/> and the <see cref="TranslationStatus.DocumentsFailed"/> properties.</param>
-        /// <param name="success">Sets the <see cref="StatusSummary.Success"/> and the <see cref="TranslationStatus.DocumentsSucceeded"/> properties.</param>
-        /// <param name="inProgress">Sets the <see cref="StatusSummary.InProgress"/> and the <see cref="TranslationStatus.DocumentsInProgress"/> properties.</param>
-        /// <param name="notYetStarted">Sets the <see cref="StatusSummary.NotYetStarted"/> and the <see cref="TranslationStatus.DocumentsNotStarted"/> properties.</param>
-        /// <param name="cancelled">Sets the <see cref="StatusSummary.Cancelled"/> and the <see cref="TranslationStatus.DocumentsCancelled"/> properties.</param>
-        /// <param name="totalCharacterCharged">Sets the <see cref="StatusSummary.TotalCharacterCharged"/> and the <see cref="TranslationStatus.TotalCharactersCharged"/> properties.</param>
-        /// <returns>A new instance of <see cref="Document.TranslationStatus"/> for mocking purposes.</returns>
-        public static TranslationStatus TranslationStatus(
-            string id,
-            DateTimeOffset createdOn,
-            DateTimeOffset lastModified,
-            DocumentTranslationStatus status,
-            int total,
-            int failed,
-            int success,
-            int inProgress,
-            int notYetStarted,
-            int cancelled,
-            long totalCharacterCharged
-            )
-        {
-            StatusSummary newSummary = new StatusSummary(total, failed, success, inProgress, notYetStarted, cancelled, totalCharacterCharged);
-            return new TranslationStatus(id, createdOn, lastModified, status, default, newSummary);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="Document.TranslationStatus"/> for mocking purposes.
-        /// </summary>
-        /// <param name="id">Sets the <see cref="TranslationStatus.Id"/> property.</param>
-        /// <param name="createdOn">Sets the <see cref="TranslationStatus.CreatedOn"/> property.</param>
-        /// <param name="lastModified">Sets the <see cref="TranslationStatus.LastModified"/> property.</param>
-        /// <param name="status">Sets the <see cref="TranslationStatus.Status"/> property.</param>
         /// <param name="error">Sets the <see cref="TranslationStatus.Error"/> property.</param>
         /// <param name="total">Sets the <see cref="StatusSummary.Total"/> and the <see cref="TranslationStatus.DocumentsTotal"/> properties.</param>
         /// <param name="failed">Sets the <see cref="StatusSummary.Failed"/> and the <see cref="TranslationStatus.DocumentsFailed"/> properties.</param>
