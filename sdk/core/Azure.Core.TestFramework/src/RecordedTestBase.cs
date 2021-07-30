@@ -9,6 +9,7 @@ using System.Linq;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 
 namespace Azure.Core.TestFramework
 {
@@ -79,7 +80,6 @@ namespace Azure.Core.TestFramework
         protected string GetSessionFilePath()
         {
             TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
-
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
             string additionalParameterName = testAdapter.Properties.ContainsKey(ClientTestFixtureAttribute.RecordingDirectorySuffixKey) ?
                 testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey).ToString() :
@@ -125,6 +125,12 @@ namespace Azure.Core.TestFramework
         [OneTimeTearDown]
         public void StopLoggingEvents()
         {
+            if (TestEnvironment.GlobalIsRunningInCI)
+            {
+                var tempFileName = Path.GetTempFileName();
+                File.WriteAllText(tempFileName, TestExecutionContext.CurrentContext.CurrentResult.Output);
+                TestContext.AddTestAttachment(tempFileName, "Test Output");
+            }
             Logger?.Dispose();
             Logger = null;
         }
