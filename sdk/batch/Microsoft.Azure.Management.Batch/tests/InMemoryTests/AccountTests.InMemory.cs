@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.Batch;
 using Microsoft.Azure.Management.Batch.Models;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -901,6 +902,19 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("sampleautostorageaccountname.blob.core.windows.net", endpoint.Endpoints[0].DomainName);
             Assert.Equal("AutoStorage endpoint for this Batch account. Applicable to all Azure Batch pools under this account.", endpoint.Endpoints[0].Description);
             Assert.Equal(443, endpoint.Endpoints[0].EndpointDetails[0].Port);
+        }
+
+        [Fact]
+        public void UserAssignedIdentitiesShouldSubstituteForBatchAccountIdentityUserAssignedIdentitiesValue()
+        {
+            string principalId = "TestPrincipal";
+            string tenantId = "TestTenant";
+            BatchAccountIdentityUserAssignedIdentitiesValue testIdentity = new BatchAccountIdentityUserAssignedIdentitiesValue();
+            BatchAccountIdentity identity = new BatchAccountIdentity(ResourceIdentityType.UserAssigned, principalId, tenantId, new Dictionary<string, BatchAccountIdentityUserAssignedIdentitiesValue> { { "", testIdentity } });
+
+            Assert.True(testIdentity is UserAssignedIdentities);
+            Assert.Equal(principalId, identity.PrincipalId);
+            Assert.Equal(tenantId, identity.TenantId);
         }
     }
 }
