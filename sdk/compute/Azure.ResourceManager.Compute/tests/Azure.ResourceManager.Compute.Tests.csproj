@@ -2,8 +2,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <TestHelperProjects>;</TestHelperProjects>
-    <UseNewMgmtFramework>true</UseNewMgmtFramework>
-    <IsMgmtLibrary>true</IsMgmtLibrary>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Compute.csproj" />

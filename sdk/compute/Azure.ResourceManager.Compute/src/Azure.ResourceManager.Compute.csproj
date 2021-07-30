@@ -8,7 +8,6 @@
     </Description>
     <PackageTags>azure;management;compute</PackageTags>
     <NoWarn>$(NoWarn);CS1591;</NoWarn>
-    <IsMgmtLibrary>true</IsMgmtLibrary>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager"/>
