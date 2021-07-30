@@ -70,7 +70,7 @@ ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, rgDa
 ```
 The main difference is that the previous libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionContainer` to manage the resources in a particular subscription. In this example, a `resourceGroupContainer` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupContainer. With that `ResourceGroup` you will be able to get the resource containers to manage all the resources that will be inside it, as it is shown in the next part of this guide.
 
-Another thing is that the new preview SDK provides some common classes to represent commonly-used constructs, like `Location`, and allow you to use them directly throughout the APIs, again, making it easier to discover how to properly configure resources.
+The new preview SDK also provides some common classes to represent commonly-used constructs, like `Location`, and allows you to use them directly throughout the APIs, making it easier to discover how to properly configure resources.
 
 ### Create an Availability Set
 #### Old
@@ -103,7 +103,7 @@ AvailabilitySet aset = (await resourceGroup.GetAvailabilitySets().CreateOrUpdate
 string asetId = aset.Id;
 ```
 
-Parameters can be specified via the `AvailabilitySetData` object, in here, the basic default only requires the location. The availability set is created using  the `GetAvailabilitySets()` extension method instead of using another client. 
+Parameters can be specified via the `AvailabilitySetData` object, in here, the basic default only requires the location. The availability set is created using  the AvailabilitySetsContainer returned from the `GetAvailabilitySets()` extension method instead of using another client. 
 
 ### Create a Virtual Network and Subnet
 #### Old
@@ -155,7 +155,7 @@ VirtualNetworkData vnetData = new VirtualNetworkData()
 VirtualNetwork vnet = (await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData)).Value;
 ```
 
-The main difference here is that a virtual network object is no longer needed to create a virtual network. One similarity is that subnets are defined inside virtual networks, however, with the new SDK you can get a subnets container using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
+In both libraries, subnets are defined inside virtual networks, however, with the new SDK you can get a subnets container using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
 
 ### Create a Security Group
 #### Old
@@ -227,7 +227,7 @@ NetworkInterfaceData nicData = new NetworkInterfaceData()
 NetworkInterface nic = (await networkInterfaceContainer.CreateOrUpdateAsync(nicName, nicData)).Value;
 ```
 
-This step is similar to the old SDK, however, notice that the `StartCreateOrUpdate()` method returns the network interface that has been created. 
+This step is similar to the old SDK, however, notice that the `CreateOrUpdateAsync()` method returns the network interface that has been created. 
 
 ### Create a Virtual Machine
 #### Old

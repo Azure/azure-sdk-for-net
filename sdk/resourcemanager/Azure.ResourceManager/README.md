@@ -73,7 +73,7 @@ It also has access to all of the operations and like the **[Resource]Operations*
 to a specific resource in Azure.
 
 ### Structured Resource Identifier
-Resource IDs contains useful information about the resource itself, but they are plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object which will do the parsing for you: `new ResourceIdentifer("myid");`.
+Resource IDs contain useful information about the resource itself, but they are plain strings that have to be parsed. Instead of implementing your own parsing logic, you can use a `ResourceIdentifier` object which will do the parsing for you: `new ResourceIdentifer("myid");`.
 
 #### Example: Parsing an ID using a ResourceIdentifier object 
 ```C# Snippet:Readme_CastToSpecificType
@@ -143,9 +143,9 @@ AvailabilitySet availabilitySet = await availabilitySetOperations.GetAsync();
 ```
 
 ### `GetIfExists()` and `CheckIfExists` convenience methods
-If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoke from any [Resource]Container class.
+If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoked from any [Resource]Container class.
 
-`GetIfExists()` and `GetIfExistsAsync()` are going to return a null object if the specified resource name or id does not exists. On the other hand, `CheckIfExists()` and `CheckIfExistsAsync()` is going to return a boolean, depending if the specified resource exists.
+`GetIfExists()` and `GetIfExistsAsync()` return a null object if the specified resource does not exist. On the other hand, `CheckIfExists()` and `CheckIfExistsAsync()` return ```false``` if the specified resource does not exist.
 
 You can find an example for these methods [below](#check-if-resource-group-exists).
 
