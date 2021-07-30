@@ -59,6 +59,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = _restClient.Get(Id.Name, galleryUniqueName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SharedGallery(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -83,6 +85,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = await _restClient.GetAsync(Id.Name, galleryUniqueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SharedGallery(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -95,9 +99,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual SharedGallery TryGet(string galleryUniqueName, CancellationToken cancellationToken = default)
+        public virtual Response<SharedGallery> GetIfExists(string galleryUniqueName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("SharedGalleryContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -106,11 +110,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryUniqueName));
                 }
 
-                return Get(galleryUniqueName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.Name, galleryUniqueName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<SharedGallery>(null, response.GetRawResponse())
+                    : Response.FromValue(new SharedGallery(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -122,9 +125,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<SharedGallery> TryGetAsync(string galleryUniqueName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SharedGallery>> GetIfExistsAsync(string galleryUniqueName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("SharedGalleryContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -133,11 +136,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryUniqueName));
                 }
 
-                return await GetAsync(galleryUniqueName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.Name, galleryUniqueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<SharedGallery>(null, response.GetRawResponse())
+                    : Response.FromValue(new SharedGallery(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +151,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string galleryUniqueName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SharedGalleryContainer.CheckIfExists");
             scope.Start();
@@ -160,7 +162,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryUniqueName));
                 }
 
-                return TryGet(galleryUniqueName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(galleryUniqueName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,7 +175,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string galleryUniqueName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SharedGalleryContainer.CheckIfExists");
             scope.Start();
@@ -183,7 +186,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryUniqueName));
                 }
 
-                return await TryGetAsync(galleryUniqueName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(galleryUniqueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

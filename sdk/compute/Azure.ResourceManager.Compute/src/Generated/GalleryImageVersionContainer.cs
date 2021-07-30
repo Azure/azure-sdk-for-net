@@ -180,6 +180,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GalleryImageVersion(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,6 +207,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new GalleryImageVersion(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,9 +222,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual GalleryImageVersion TryGet(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryImageVersion> GetIfExists(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -229,11 +233,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryImageVersionName));
                 }
 
-                return Get(galleryImageVersionName, expand, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<GalleryImageVersion>(null, response.GetRawResponse())
+                    : Response.FromValue(new GalleryImageVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,9 +249,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<GalleryImageVersion> TryGetAsync(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<GalleryImageVersion>> GetIfExistsAsync(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -257,11 +260,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryImageVersionName));
                 }
 
-                return await GetAsync(galleryImageVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryImageVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<GalleryImageVersion>(null, response.GetRawResponse())
+                    : Response.FromValue(new GalleryImageVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +276,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.CheckIfExists");
             scope.Start();
@@ -285,7 +287,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryImageVersionName));
                 }
 
-                return TryGet(galleryImageVersionName, expand, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(galleryImageVersionName, expand, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -298,7 +301,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string galleryImageVersionName, ReplicationStatusTypes? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryImageVersionContainer.CheckIfExists");
             scope.Start();
@@ -309,7 +312,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryImageVersionName));
                 }
 
-                return await TryGetAsync(galleryImageVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(galleryImageVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

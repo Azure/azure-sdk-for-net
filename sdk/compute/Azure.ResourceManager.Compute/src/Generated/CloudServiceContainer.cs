@@ -163,6 +163,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudService(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -187,6 +189,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CloudService(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,9 +203,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual CloudService TryGet(string cloudServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<CloudService> GetIfExists(string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -210,11 +214,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(cloudServiceName));
                 }
 
-                return Get(cloudServiceName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<CloudService>(null, response.GetRawResponse())
+                    : Response.FromValue(new CloudService(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,9 +229,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<CloudService> TryGetAsync(string cloudServiceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<CloudService>> GetIfExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -237,11 +240,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(cloudServiceName));
                 }
 
-                return await GetAsync(cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<CloudService>(null, response.GetRawResponse())
+                    : Response.FromValue(new CloudService(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -253,7 +255,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string cloudServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string cloudServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.CheckIfExists");
             scope.Start();
@@ -264,7 +266,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(cloudServiceName));
                 }
 
-                return TryGet(cloudServiceName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(cloudServiceName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -276,7 +279,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string cloudServiceName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CloudServiceContainer.CheckIfExists");
             scope.Start();
@@ -287,7 +290,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(cloudServiceName));
                 }
 
-                return await TryGetAsync(cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(cloudServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

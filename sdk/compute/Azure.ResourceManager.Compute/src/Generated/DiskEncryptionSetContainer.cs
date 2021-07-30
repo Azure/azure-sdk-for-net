@@ -179,6 +179,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DiskEncryptionSet(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,6 +205,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new DiskEncryptionSet(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,9 +219,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual DiskEncryptionSet TryGet(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public virtual Response<DiskEncryptionSet> GetIfExists(string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -226,11 +230,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(diskEncryptionSetName));
                 }
 
-                return Get(diskEncryptionSetName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<DiskEncryptionSet>(null, response.GetRawResponse())
+                    : Response.FromValue(new DiskEncryptionSet(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,9 +245,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<DiskEncryptionSet> TryGetAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<DiskEncryptionSet>> GetIfExistsAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -253,11 +256,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(diskEncryptionSetName));
                 }
 
-                return await GetAsync(diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<DiskEncryptionSet>(null, response.GetRawResponse())
+                    : Response.FromValue(new DiskEncryptionSet(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.CheckIfExists");
             scope.Start();
@@ -280,7 +282,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(diskEncryptionSetName));
                 }
 
-                return TryGet(diskEncryptionSetName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(diskEncryptionSetName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -292,7 +295,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9 and _. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DiskEncryptionSetContainer.CheckIfExists");
             scope.Start();
@@ -303,7 +306,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(diskEncryptionSetName));
                 }
 
-                return await TryGetAsync(diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(diskEncryptionSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

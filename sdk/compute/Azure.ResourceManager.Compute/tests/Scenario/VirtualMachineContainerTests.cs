@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task List()
+        public async Task GetAll()
         {
             var container = await GetVirtualMachineContainerAsync();
             var vmName1 = Recording.GenerateAssetName("testVM-");
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task ListBySubscription()
+        public async Task GetAllInSubscription()
         {
             var container = await GetVirtualMachineContainerAsync();
             var vmName1 = Recording.GenerateAssetName("testVM-");

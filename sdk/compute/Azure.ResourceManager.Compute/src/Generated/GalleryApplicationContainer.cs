@@ -179,6 +179,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GalleryApplication(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,6 +205,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new GalleryApplication(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,9 +219,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual GalleryApplication TryGet(string galleryApplicationName, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryApplication> GetIfExists(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -226,11 +230,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryApplicationName));
                 }
 
-                return Get(galleryApplicationName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<GalleryApplication>(null, response.GetRawResponse())
+                    : Response.FromValue(new GalleryApplication(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,9 +245,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<GalleryApplication> TryGetAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<GalleryApplication>> GetIfExistsAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -253,11 +256,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryApplicationName));
                 }
 
-                return await GetAsync(galleryApplicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, galleryApplicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<GalleryApplication>(null, response.GetRawResponse())
+                    : Response.FromValue(new GalleryApplication(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string galleryApplicationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.CheckIfExists");
             scope.Start();
@@ -280,7 +282,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryApplicationName));
                 }
 
-                return TryGet(galleryApplicationName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(galleryApplicationName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -292,7 +295,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GalleryApplicationContainer.CheckIfExists");
             scope.Start();
@@ -303,7 +306,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryApplicationName));
                 }
 
-                return await TryGetAsync(galleryApplicationName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(galleryApplicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

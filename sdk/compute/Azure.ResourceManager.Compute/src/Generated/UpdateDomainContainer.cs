@@ -58,6 +58,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = _restClient.GetUpdateDomain(Id.ResourceGroupName, Id.Name, updateDomain, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new UpdateDomain(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -82,6 +84,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = await _restClient.GetUpdateDomainAsync(Id.ResourceGroupName, Id.Name, updateDomain, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new UpdateDomain(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -94,9 +98,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual UpdateDomain TryGet(string updateDomain, CancellationToken cancellationToken = default)
+        public virtual Response<UpdateDomain> GetIfExists(string updateDomain, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -105,11 +109,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(updateDomain));
                 }
 
-                return Get(updateDomain, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.GetUpdateDomain(Id.ResourceGroupName, Id.Name, updateDomain, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<UpdateDomain>(null, response.GetRawResponse())
+                    : Response.FromValue(new UpdateDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,9 +124,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<UpdateDomain> TryGetAsync(string updateDomain, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<UpdateDomain>> GetIfExistsAsync(string updateDomain, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -132,11 +135,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(updateDomain));
                 }
 
-                return await GetAsync(updateDomain, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetUpdateDomainAsync(Id.ResourceGroupName, Id.Name, updateDomain, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<UpdateDomain>(null, response.GetRawResponse())
+                    : Response.FromValue(new UpdateDomain(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,7 +150,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string updateDomain, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string updateDomain, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.CheckIfExists");
             scope.Start();
@@ -159,7 +161,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(updateDomain));
                 }
 
-                return TryGet(updateDomain, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(updateDomain, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,7 +174,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="updateDomain"> Specifies an integer value that identifies the update domain. Update domains are identified with a zero-based index: the first update domain has an ID of 0, the second has an ID of 1, and so on. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string updateDomain, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string updateDomain, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("UpdateDomainContainer.CheckIfExists");
             scope.Start();
@@ -182,7 +185,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(updateDomain));
                 }
 
-                return await TryGetAsync(updateDomain, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(updateDomain, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

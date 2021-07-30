@@ -149,9 +149,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             string rgName = "myRgName";
             ResourceGroup resourceGroup = await rgContainer.GetAsync(rgName);
             AvailabilitySetContainer availabilitySetContainer = resourceGroup.GetAvailabilitySets();
-            // TODO -- code not sync yet
             string availabilitySetName = "myAvailabilitySet";
-            AvailabilitySet availabilitySet = await availabilitySetContainer.TryGetAsync(availabilitySetName);
+            AvailabilitySet availabilitySet = await availabilitySetContainer.GetIfExistsAsync(availabilitySetName);
 
             if (availabilitySet == null)
             {

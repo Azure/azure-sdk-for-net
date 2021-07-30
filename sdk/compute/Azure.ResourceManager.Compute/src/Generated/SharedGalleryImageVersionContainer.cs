@@ -59,6 +59,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = _restClient.Get(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SharedGalleryImageVersion(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -83,6 +85,8 @@ namespace Azure.ResourceManager.Compute
                 }
 
                 var response = await _restClient.GetAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new SharedGalleryImageVersion(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -95,9 +99,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual SharedGalleryImageVersion TryGet(string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<SharedGalleryImageVersion> GetIfExists(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -106,11 +110,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryImageVersionName));
                 }
 
-                return Get(galleryImageVersionName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<SharedGalleryImageVersion>(null, response.GetRawResponse())
+                    : Response.FromValue(new SharedGalleryImageVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -122,9 +125,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<SharedGalleryImageVersion> TryGetAsync(string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<SharedGalleryImageVersion>> GetIfExistsAsync(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -133,11 +136,10 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryImageVersionName));
                 }
 
-                return await GetAsync(galleryImageVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<SharedGalleryImageVersion>(null, response.GetRawResponse())
+                    : Response.FromValue(new SharedGalleryImageVersion(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +151,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionContainer.CheckIfExists");
             scope.Start();
@@ -160,7 +162,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryImageVersionName));
                 }
 
-                return TryGet(galleryImageVersionName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(galleryImageVersionName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,7 +175,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SharedGalleryImageVersionContainer.CheckIfExists");
             scope.Start();
@@ -183,7 +186,8 @@ namespace Azure.ResourceManager.Compute
                     throw new ArgumentNullException(nameof(galleryImageVersionName));
                 }
 
-                return await TryGetAsync(galleryImageVersionName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(galleryImageVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

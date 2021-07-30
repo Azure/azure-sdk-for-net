@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new Snapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -70,6 +72,8 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Snapshot(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
