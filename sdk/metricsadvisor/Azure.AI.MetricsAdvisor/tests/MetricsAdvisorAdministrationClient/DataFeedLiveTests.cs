@@ -58,6 +58,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
         }
 
+        private DateTimeOffset IngestionStartsOnForCustom
+        {
+            get
+            {
+                DateTimeOffset startsOn = Recording.UtcNow.Subtract(TimeSpan.FromDays(2));
+                return new DateTimeOffset(startsOn.Year, startsOn.Month, startsOn.Day, startsOn.Hour, startsOn.Minute, 0, TimeSpan.Zero);
+            }
+        }
+
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
@@ -84,13 +93,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureApplicationInsightsDataFeedSource(DataSourceAppId, DataSourceKey, DataSourceCloud, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidateAzureApplicationInsightsDataSource(createdDataFeed.DataSource as AzureApplicationInsightsDataFeedSource);
         }
 
@@ -118,13 +128,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureBlobDataFeedSource(DataSourceConnectionString, DataSourceContainer, DataSourceTemplate);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidateAzureBlobDataSource(createdDataFeed.DataSource as AzureBlobDataFeedSource);
         }
 
@@ -152,13 +163,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureCosmosDbDataFeedSource(DataSourceConnectionString, DataSourceQuery, DataSourceDatabase, DataSourceCollectionId);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidateAzureCosmosDbDataSource(createdDataFeed.DataSource as AzureCosmosDbDataFeedSource);
         }
 
@@ -186,13 +198,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureDataExplorerDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidateAzureDataExplorerDataSource(createdDataFeed.DataSource as AzureDataExplorerDataFeedSource);
         }
 
@@ -220,13 +233,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureDataLakeStorageDataFeedSource(DataSourceAccount, DataSourceKey, DataSourceFileSystem, DataSourceDirectory, DataSourceFile);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidateAzureDataLakeStorageDataSource(createdDataFeed.DataSource as AzureDataLakeStorageDataFeedSource);
         }
 
@@ -256,13 +270,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureEventHubsDataFeedSource(DataSourceConnectionString, DataSourceConsumerGroup);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidateAzureEventHubsDataSource(createdDataFeed.DataSource as AzureEventHubsDataFeedSource);
         }
 
@@ -290,13 +305,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new AzureTableDataFeedSource(DataSourceConnectionString, DataSourceTable, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidateAzureTableDataSource(createdDataFeed.DataSource as AzureTableDataFeedSource);
         }
 
@@ -324,13 +340,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new InfluxDbDataFeedSource(DataSourceConnectionString, DataSourceDatabase, DataSourceUsername, DataSourcePassword, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidateInfluxDbDataSource(createdDataFeed.DataSource as InfluxDbDataFeedSource);
         }
 
@@ -358,13 +375,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new LogAnalyticsDataFeedSource(DataSourceWorkspaceId, DataSourceQuery, DataSourceClientId, DataSourceClientSecret, DataSourceTenantId);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidateLogAnalyticsDataSource(createdDataFeed.DataSource as LogAnalyticsDataFeedSource);
         }
 
@@ -392,13 +410,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new MongoDbDataFeedSource(DataSourceConnectionString, DataSourceDatabase, DataSourceCommand);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidateMongoDbDataSource(createdDataFeed.DataSource as MongoDbDataFeedSource);
         }
 
@@ -426,13 +445,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new MySqlDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidateMySqlDataSource(createdDataFeed.DataSource as MySqlDataFeedSource);
         }
 
@@ -460,13 +480,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new PostgreSqlDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidatePostgreSqlDataSource(createdDataFeed.DataSource as PostgreSqlDataFeedSource);
         }
 
@@ -494,13 +515,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
             var dataSource = new SqlServerDataFeedSource(DataSourceConnectionString, DataSourceQuery);
-            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+            var ingestionStartsOn = IngestionStartsOnForCustom;
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource, ingestionStartsOn);
 
             await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
 
             DataFeed createdDataFeed = disposableDataFeed.DataFeed;
 
-            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName);
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, dataFeedName, ingestionStartsOn);
             ValidateSqlServerDataSource(createdDataFeed.DataSource as SqlServerDataFeedSource);
         }
 
@@ -1798,11 +1820,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
             };
         }
 
-        private DataFeed GetDataFeedWithOptionalMembersSet(string name, DataFeedSource dataSource)
+        private DataFeed GetDataFeedWithOptionalMembersSet(string name, DataFeedSource dataSource, DateTimeOffset ingestionStartsOn)
         {
-            var ingestionStartTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
-
-            var ingestionSettings = new DataFeedIngestionSettings(ingestionStartTime)
+            var ingestionSettings = new DataFeedIngestionSettings(ingestionStartsOn)
             {
                 IngestionStartOffset = TimeSpan.FromMinutes(30),
                 IngestionRetryDelay = TimeSpan.FromSeconds(80),
@@ -1926,10 +1946,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.IngestionSettings.DataSourceRequestConcurrency, Is.EqualTo(-1));
         }
 
-        private void ValidateDataFeedWithOptionalMembersSet(DataFeed dataFeed, string expectedName)
+        private void ValidateDataFeedWithOptionalMembersSet(DataFeed dataFeed, string expectedName, DateTimeOffset expectedIngestionStartsOn)
         {
-            var ingestionStartTime = DateTimeOffset.Parse("2020-08-01T00:00:00Z");
-
             Assert.That(dataFeed, Is.Not.Null);
             Assert.That(dataFeed.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(dataFeed.Name, Is.EqualTo(expectedName));
@@ -1990,7 +2008,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataFeed.Schema.TimestampColumn, Is.EqualTo("timestamp"));
 
             Assert.That(dataFeed.IngestionSettings, Is.Not.Null);
-            Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.EqualTo(ingestionStartTime));
+            Assert.That(dataFeed.IngestionSettings.IngestionStartsOn, Is.EqualTo(expectedIngestionStartsOn));
             Assert.That(dataFeed.IngestionSettings.IngestionStartOffset, Is.EqualTo(TimeSpan.FromMinutes(30)));
             Assert.That(dataFeed.IngestionSettings.IngestionRetryDelay, Is.EqualTo(TimeSpan.FromSeconds(80)));
             Assert.That(dataFeed.IngestionSettings.StopRetryAfter, Is.EqualTo(TimeSpan.FromMinutes(10)));

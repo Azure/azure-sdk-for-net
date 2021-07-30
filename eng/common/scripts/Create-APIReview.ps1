@@ -15,7 +15,7 @@ Param (
 )
 
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
-function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
+function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel, $releaseStatus)
 {
     $multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
     $FileStream = [System.IO.FileStream]::new($filePath, [System.IO.FileMode]::Open)
@@ -33,6 +33,17 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel)
     $StringContent = [System.Net.Http.StringContent]::new($apiLabel)
     $StringContent.Headers.ContentDisposition = $stringHeader
     $multipartContent.Add($stringContent)
+    Write-Host "Request param, label: $apiLabel"
+
+    if ($releaseStatus -and ($releaseStatus -ne "Unreleased"))
+    {
+        $compareAllParam = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
+        $compareAllParam.Name = "compareAllRevisions"
+        $compareAllParamContent = [System.Net.Http.StringContent]::new($true)
+        $compareAllParamContent.Headers.ContentDisposition = $compareAllParam
+        $multipartContent.Add($compareAllParamContent)
+        Write-Host "Request param, compareAllRevisions: true"
+    }
 
     $headers = @{
         "ApiKey" = $apiKey;
@@ -103,13 +114,14 @@ if ($packages)
 
         Write-Host "Version: $($version)"
         Write-Host "SDK Type: $($pkgInfo.SdkType)"
+        Write-Host "Release Status: $($pkgInfo.ReleaseStatus)"
 
         # Run create review step only if build is triggered from main branch or if version is GA.
         # This is to avoid invalidating review status by a build triggered from feature branch
         if ( ($SourceBranch -eq $DefaultBranch) -or (-not $version.IsPrerelease))
         {
             Write-Host "Submitting API Review for package $($pkg)"
-            $respCode = Submit-APIReview -packagename $pkg -filePath $pkgPath -uri $APIViewUri -apiKey $APIKey -apiLabel $APILabel
+            $respCode = Submit-APIReview -packagename $pkg -filePath $pkgPath -uri $APIViewUri -apiKey $APIKey -apiLabel $APILabel -releaseStatus $pkgInfo.ReleaseStatus
             Write-Host "HTTP Response code: $($respCode)"
             # HTTP status 200 means API is in approved status
             if ($respCode -eq '200')

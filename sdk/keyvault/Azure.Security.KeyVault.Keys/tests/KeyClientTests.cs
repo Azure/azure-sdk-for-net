@@ -206,6 +206,22 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual("count", ex.ParamName);
         }
 
+        [Test]
+        public void ReleaseKeyParameterValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.ReleaseKeyAsync(null, null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.ReleaseKeyAsync(string.Empty, null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.ReleaseKeyAsync("test", null));
+            Assert.AreEqual("target", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(async () => await Client.ReleaseKeyAsync("test", string.Empty));
+            Assert.AreEqual("target", ex.ParamName);
+        }
+
         private class MockCredential : TokenCredential
         {
             public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
