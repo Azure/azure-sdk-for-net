@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Management.Models
 {
     /// <summary> Management group patch parameters. </summary>
-    public partial class PatchManagementGroupRequest
+    public partial class PatchManagementGroupOptions
     {
         /// <summary> Initializes a new instance of PatchManagementGroupRequest. </summary>
-        public PatchManagementGroupRequest()
+        public PatchManagementGroupOptions()
         {
         }
 

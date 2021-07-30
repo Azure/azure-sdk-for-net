@@ -10,17 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Management.Models
 {
-    public partial class CreateManagementGroupRequest : IUtf8JsonSerializable
+    public partial class PatchManagementGroupOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
@@ -34,12 +27,18 @@ namespace Azure.ResourceManager.Management.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(Details))
+            if (Optional.IsDefined(ParentGroupId))
             {
-                writer.WritePropertyName("details");
-                writer.WriteObjectValue(Details);
+                if (ParentGroupId != null)
+                {
+                    writer.WritePropertyName("parentGroupId");
+                    writer.WriteStringValue(ParentGroupId);
+                }
+                else
+                {
+                    writer.WriteNull("parentGroupId");
+                }
             }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

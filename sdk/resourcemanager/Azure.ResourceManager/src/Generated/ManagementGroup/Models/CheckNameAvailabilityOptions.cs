@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Management.Models
 {
     /// <summary> Management group name availability check parameters. </summary>
-    public partial class CheckNameAvailabilityRequest
+    public partial class CheckNameAvailabilityOptions
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityRequest. </summary>
-        public CheckNameAvailabilityRequest()
+        public CheckNameAvailabilityOptions()
         {
             Type = "Microsoft.Management/managementGroups";
         }
