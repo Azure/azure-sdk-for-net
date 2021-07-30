@@ -134,17 +134,18 @@ namespace Compute.Tests.VMScaleSetTests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                 EnsureClientsInitialized(context);
 
                 // Create resource group
-                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                string rgName = TestUtilities.GenerateName(TestPrefix);
                 var vmssName = TestUtilities.GenerateName("vmss");
                 string storageAccountName = TestUtilities.GenerateName(TestPrefix);
                 var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
                 IList<VMGalleryApplication> galleryApplications = new List<VMGalleryApplication>()
                 {
-                    new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8")
+                    // for recording the test ensure that a real galley application version exists at the location
+                    // creating a gallery application version is beyond the sope of this test
+                    new VMGalleryApplication("/subscriptions/503e278a-1302-4a03-a590-45ad324acbb1/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8")
                 };
 
                 VirtualMachineScaleSet inputVMScaleSet;
@@ -152,16 +153,6 @@ namespace Compute.Tests.VMScaleSetTests
                 {
                     vmss.VirtualMachineProfile.ApplicationProfile = new ApplicationProfile(galleryApplications);
                 };
-
-                //Action<VirtualMachineScaleSet> vmProfileCustomizer = vmss =>
-                //{
-                //    vmss.VirtualMachineProfile.DiagnosticsProfile = new DiagnosticsProfile(
-                //        new BootDiagnostics
-                //        {
-                //            Enabled = true,
-                //            StorageUri = string.Format(Constants.StorageAccountBlobUriTemplate, storageAccountName)
-                //        });
-                //};
 
                 try
                 {
