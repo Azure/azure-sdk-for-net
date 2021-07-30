@@ -122,7 +122,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
-    <PackageReference Include="Azure.ResourceManagement" />
+    <PackageReference Include="Azure.ResourceManager" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true'">
