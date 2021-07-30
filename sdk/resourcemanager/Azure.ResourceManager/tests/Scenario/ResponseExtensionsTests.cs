@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Tests
 
             await pipeline.SendAsync(message, default).ConfigureAwait(false);
             var response = message.Response;
-            Assert.AreEqual(correlationId, ResponseExtensions.GetCorrelationId(response));
+            Assert.AreEqual(correlationId, response.GetCorrelationId());
         }
     }
 }

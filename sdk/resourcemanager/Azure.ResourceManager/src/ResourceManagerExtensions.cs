@@ -9,9 +9,9 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// Extension methods for Operation class that apply to management use cases.
+    /// Extension class for resource manager.
     /// </summary>
-    public static class OperationExtensions
+    public static class ResourceManagerExtensions
     {
         /// <summary>
         /// Waits for the completion of the long running operations.
@@ -75,6 +75,16 @@ namespace Azure.ResourceManager.Core
 
                 Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);
             }
+        }
+
+        /// <summary>
+        /// Gets the correlation id from x-ms-correlation-id.
+        /// </summary>
+        public static string GetCorrelationId(this Response response)
+        {
+            string correlationId = null;
+            response.Headers.TryGetValue("x-ms-correlation-request-id", out correlationId);
+            return correlationId;
         }
     }
 }

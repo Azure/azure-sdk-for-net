@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Core
 {
@@ -9,27 +10,27 @@ namespace Azure.ResourceManager.Core
     /// An attribute class indicating a reference type for code generation.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class ReferenceTypeAttribute : Attribute
+    internal class PropertyReferenceTypeAttribute : Attribute
     {
         /// <summary>
         /// Instatiate a new reference type attribute.
         /// </summary>
-        /// <param name="genericType"> The generic type for this reference type. </param>
-        public ReferenceTypeAttribute(Type genericType)
+        /// <param name="skipTypes"> An array of types to skip for this reference type. </param>
+        public PropertyReferenceTypeAttribute(Type[] skipTypes)
         {
-            GenericType = genericType;
+            SkipTypes = skipTypes;
         }
 
         /// <summary>
         /// Instatiate a new reference type attribute.
         /// </summary>
-        public ReferenceTypeAttribute() : this(null)
+        public PropertyReferenceTypeAttribute() : this(null)
         {
         }
 
         /// <summary>
-        /// Get the generic type for this reference type.
+        /// Get an array of types to skip for this reference type.
         /// </summary>
-        public Type GenericType { get; }
+        public Type[] SkipTypes { get; }
     }
 }
