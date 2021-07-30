@@ -33,22 +33,9 @@ namespace Azure.Analytics.Synapse.Spark
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="sparkPoolName"/>, or <paramref name="livyApiVersion"/> is null. </exception>
         public SparkBatchRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (sparkPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(sparkPoolName));
-            }
-            if (livyApiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(livyApiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.sparkPoolName = sparkPoolName;
-            this.livyApiVersion = livyApiVersion;
+            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            this.sparkPoolName = sparkPoolName ?? throw new ArgumentNullException(nameof(sparkPoolName));
+            this.livyApiVersion = livyApiVersion ?? throw new ArgumentNullException(nameof(livyApiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
