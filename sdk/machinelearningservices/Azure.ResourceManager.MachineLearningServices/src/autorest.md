@@ -32,4 +32,41 @@ directive:
     where: $.definitions.ComputeNodesInformation.properties
     transform: delete $.nextLink;
     reason: Duplicated "nextLink" property defined in schema 'AmlComputeNodesInformation' and 'ComputeNodesInformation'
+  - from: swagger-document
+    where: $.definitions.Compute.properties.provisioningErrors
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.AmlCompute.allOf[?(@.type=="object")].properties.properties.properties.subnet
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.AmlCompute.allOf[?(@.type=="object")].properties.properties.properties.errors
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.AmlCompute.allOf[?(@.type=="object")].properties.properties.properties.virtualMachineImage
+    transform: >
+        $["x-nullable"] = true;
+#BUG: Patch does not return scaledown time PATCH
+  - from: swagger-document
+    where: $.definitions.ScaleSettings.properties.nodeIdleTimeBeforeScaleDown
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.AmlCompute.allOf[?(@.type=="object")].properties.properties.properties.currentNodeCount
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.AmlCompute.allOf[?(@.type=="object")].properties.properties.properties.targetNodeCount
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.AmlCompute.allOf[?(@.type=="object")].properties.properties.properties.nodeStateCounts
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.AmlCompute.allOf[?(@.type=="object")].properties.properties.properties.allocationState
+    transform: >
+        $["x-nullable"] = true;
 ```

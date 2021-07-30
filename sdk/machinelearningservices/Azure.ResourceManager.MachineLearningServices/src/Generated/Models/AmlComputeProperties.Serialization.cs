@@ -34,8 +34,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             if (Optional.IsDefined(VirtualMachineImage))
             {
-                writer.WritePropertyName("virtualMachineImage");
-                writer.WriteObjectValue(VirtualMachineImage);
+                if (VirtualMachineImage != null)
+                {
+                    writer.WritePropertyName("virtualMachineImage");
+                    writer.WriteObjectValue(VirtualMachineImage);
+                }
+                else
+                {
+                    writer.WriteNull("virtualMachineImage");
+                }
             }
             if (Optional.IsDefined(IsolatedNetwork))
             {
@@ -54,8 +61,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             if (Optional.IsDefined(Subnet))
             {
-                writer.WritePropertyName("subnet");
-                writer.WriteObjectValue(Subnet);
+                if (Subnet != null)
+                {
+                    writer.WritePropertyName("subnet");
+                    writer.WriteObjectValue(Subnet);
+                }
+                else
+                {
+                    writer.WriteNull("subnet");
+                }
             }
             if (Optional.IsDefined(RemoteLoginPortPublicAccess))
             {
@@ -81,11 +95,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<UserAccountCredentials> userAccountCredentials = default;
             Optional<ResourceId> subnet = default;
             Optional<RemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
-            Optional<AllocationState> allocationState = default;
+            Optional<AllocationState?> allocationState = default;
             Optional<DateTimeOffset> allocationStateTransitionTime = default;
             Optional<IReadOnlyList<ErrorResponse>> errors = default;
-            Optional<int> currentNodeCount = default;
-            Optional<int> targetNodeCount = default;
+            Optional<int?> currentNodeCount = default;
+            Optional<int?> targetNodeCount = default;
             Optional<NodeStateCounts> nodeStateCounts = default;
             Optional<bool> enableNodePublicIp = default;
             foreach (var property in element.EnumerateObject())
@@ -119,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        virtualMachineImage = null;
                         continue;
                     }
                     virtualMachineImage = VirtualMachineImage.DeserializeVirtualMachineImage(property.Value);
@@ -159,7 +173,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        subnet = null;
                         continue;
                     }
                     subnet = ResourceId.DeserializeResourceId(property.Value);
@@ -179,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        allocationState = null;
                         continue;
                     }
                     allocationState = new AllocationState(property.Value.GetString());
@@ -199,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        errors = null;
                         continue;
                     }
                     List<ErrorResponse> array = new List<ErrorResponse>();
@@ -214,7 +228,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        currentNodeCount = null;
                         continue;
                     }
                     currentNodeCount = property.Value.GetInt32();
@@ -224,7 +238,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        targetNodeCount = null;
                         continue;
                     }
                     targetNodeCount = property.Value.GetInt32();
@@ -234,7 +248,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        nodeStateCounts = null;
                         continue;
                     }
                     nodeStateCounts = NodeStateCounts.DeserializeNodeStateCounts(property.Value);

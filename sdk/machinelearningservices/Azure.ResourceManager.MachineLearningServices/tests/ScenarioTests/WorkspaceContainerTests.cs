@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 {
-    public partial class WorkspaceContainerTests : MachineLearningServicesManagerTestBase
+    public class WorkspaceContainerTests : MachineLearningServicesManagerTestBase
     {
         private const string ResourceGroupNamePrefix = "test-WorkspaceContainer";
         private const string ResourceNamePrefix = "test-resource";
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             _resourceName = SessionRecording.GenerateAssetName(ResourceNamePrefix);
             _resourceGroupName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
 
-            ResourceGroup rg = await GlobalClient.DefaultSubscription.GetResourceGroups()
+            _ = await GlobalClient.DefaultSubscription.GetResourceGroups()
                 .CreateOrUpdateAsync(_resourceGroupName, new ResourceGroupData(_defaultLocation));
             StopSessionRecording();
         }
@@ -103,8 +103,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
 
-            Workspace resource = null;
-            Assert.DoesNotThrowAsync(async () => resource = await (await rg.GetWorkspaces().StartCreateOrUpdateAsync(
+            Assert.DoesNotThrowAsync(async () => _ = await (await rg.GetWorkspaces().StartCreateOrUpdateAsync(
                 _resourceName,
                 DataHelper.GenerateWorkspaceData())).WaitForCompletionAsync());
 

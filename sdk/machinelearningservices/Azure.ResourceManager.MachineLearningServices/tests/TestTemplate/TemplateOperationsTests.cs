@@ -11,15 +11,17 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 {
-    public partial class WorkspaceOperationsTests : MachineLearningServicesManagerTestBase
+    public class ComputeResourceOperationsTests : MachineLearningServicesManagerTestBase
     {
-        private const string ResourceGroupNamePrefix = "test-WorkspaceOperations";
+        private const string ResourceGroupNamePrefix = "test-ComputeResourceOperations";
+        private const string WorkspacePrefix = "test-workspace";
         private const string ResourceNamePrefix = "test-resource";
         private readonly Location _defaultLocation = Location.WestUS2;
         private string _resourceName = ResourceNamePrefix;
+        private string _workspaceName = WorkspacePrefix;
         private string _resourceGroupName = ResourceGroupNamePrefix;
 
-        public WorkspaceOperationsTests(bool isAsync)
+        public ComputeResourceOperationsTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -33,9 +35,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             // Create RG and Res with GlobalClient
             ResourceGroup rg = await GlobalClient.DefaultSubscription.GetResourceGroups()
                 .CreateOrUpdateAsync(_resourceGroupName, new ResourceGroupData(_defaultLocation));
-            _ = await rg.GetWorkspaces().CreateOrUpdateAsync(
-                _resourceName,
+
+            Workspace ws = await rg.GetWorkspaces().CreateOrUpdateAsync(
+                _workspaceName,
                 DataHelper.GenerateWorkspaceData());
+
+            _ = await ws.GetComputeResources().CreateOrUpdateAsync(
+                _resourceName,
+                DataHelper.GenerateComputeResourceData());
             StopSessionRecording();
         }
 
@@ -44,12 +51,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         public async Task Delete()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
+            Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
+
             var deleteResourceName = Recording.GenerateAssetName(ResourceNamePrefix) + "_delete";
-            Workspace ws = null;
-            Assert.DoesNotThrowAsync(async () => ws = await rg.GetWorkspaces().CreateOrUpdateAsync(
+            ComputeResource res = null;
+            Assert.DoesNotThrowAsync(async () => res = await ws.GetComputeResources().CreateOrUpdateAsync(
                 deleteResourceName,
-                DataHelper.GenerateWorkspaceData()));
-            Assert.DoesNotThrowAsync(async () => _ = await ws.DeleteAsync());
+                DataHelper.GenerateComputeResourceData()));
+            Assert.DoesNotThrowAsync(async () => _ = await res.DeleteAsync());
         }
 
         [TestCase]
@@ -57,8 +66,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         public async Task Get()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
-            Workspace resource = await rg.GetWorkspaces().GetAsync(_resourceName);
-            Workspace resource1 = await resource.GetAsync();
+            Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
+
+            ComputeResource resource = await ws.GetComputeResources().GetAsync(_resourceName);
+            ComputeResource resource1 = await resource.GetAsync();
             resource.AssertAreEqual(resource1);
         }
 
@@ -67,10 +78,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         public async Task Update()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
-            Workspace resource = await rg.GetWorkspaces().GetAsync(_resourceName);
-            var update = new WorkspaceUpdateParameters { Description = "Updated" };
-            Workspace updatedResource = await resource.UpdateAsync(update);
-            Assert.AreEqual("Updated", updatedResource.Data.Description);
+            Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
+
+            ComputeResource resource = await ws.GetComputeResources().GetAsync(_resourceName);
+            var update = new ScaleSettings(5);
+            ComputeResource updatedResource = await resource.UpdateAsync(update);
+            Assert.AreEqual("Updated", updatedResource.Data.Properties.Description);
         }
     }
 }

@@ -6,12 +6,17 @@
     <IsMgmtLibrary>true</IsMgmtLibrary>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="TestTemplate\TemplateContainerTests.cs" />
+    <Compile Remove="TestTemplate\TemplateOperationsTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestTemplate\TemplateContainerTests.cs" />
+    <None Include="TestTemplate\TemplateOperationsTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.MachineLearningServices.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestTemplate\" />
   </ItemGroup>
 </Project>
