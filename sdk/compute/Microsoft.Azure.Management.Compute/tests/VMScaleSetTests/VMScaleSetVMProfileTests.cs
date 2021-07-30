@@ -145,7 +145,7 @@ namespace Compute.Tests.VMScaleSetTests
                 {
                     // for recording the test ensure that a real galley application version exists at the location
                     // creating a gallery application version is beyond the sope of this test
-                    new VMGalleryApplication("/subscriptions/503e278a-1302-4a03-a590-45ad324acbb1/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8")
+                    new VMGalleryApplication("/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8")
                 };
 
                 VirtualMachineScaleSet inputVMScaleSet;
