@@ -18,9 +18,11 @@ if ($ServiceDirectory -and ($ServiceDirectory -ne "*")) {
 
 if (-not (Test-Path env:TF_BUILD)) { $StrictMode = $true }
 
-dotnet tool install Azure.Sdk.Tools.SnippetGenerator `
--g --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v3/index.json" `
---version 1.0.0-dev*
+dotnet tool install --global `
+ --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" `
+ --version 1.0.0-dev.20210730.3 `
+ Azure.Sdk.Tools.SnippetGenerator
+
 
 try
 {
@@ -32,6 +34,6 @@ try
 }
 catch
 {
-    Write-Error "Could not find assembly at ${generatorAssembly}"
+    Write-Error "snippet-generator run failed."
     exit 1
 }
