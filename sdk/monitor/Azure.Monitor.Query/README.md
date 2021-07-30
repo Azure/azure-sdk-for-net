@@ -73,7 +73,7 @@ Response<LogsQueryResult> response = await client.QueryAsync(
     "AzureActivity | top 10 by TimeGenerated",
     new DateTimeRange(TimeSpan.FromDays(1)));
 
-LogsQueryResultTable table = response.Value.Tables.Single();
+LogsQueryResultTable table = response.Value.PrimaryTable;
 
 foreach (var row in table.Rows)
 {
@@ -177,7 +177,7 @@ Response<LogsQueryResult> response = await client.QueryAsync(
     "AzureActivity | top 10 by TimeGenerated",
     new DateTimeRange(TimeSpan.FromDays(1)));
 
-LogsQueryResultTable table = response.Value.Tables.Single();
+LogsQueryResultTable table = response.Value.PrimaryTable;
 
 foreach (var column in table.Columns)
 {
