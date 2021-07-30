@@ -154,7 +154,6 @@ namespace Azure.Storage
                 // later to ensure the file doesn't change while we're
                 // downloading the remaining segments
                 ETag? etag = initialResponse.GetRawResponse().Headers.ETag;
-                TServiceSpecificArgs newConditions = _modifyConditions(conditions, etag.GetValueOrDefault());
 
                 if (async)
                 {
@@ -162,7 +161,7 @@ namespace Azure.Storage
                         destination,
                         initialLength,
                         totalLength,
-                        newConditions,
+                        conditions,
                         etag,
                         cancellationToken)
                         .ConfigureAwait(false);
@@ -173,7 +172,7 @@ namespace Azure.Storage
                         destination,
                         initialLength,
                         totalLength,
-                        newConditions,
+                        conditions,
                         etag,
                         cancellationToken);
                 }
