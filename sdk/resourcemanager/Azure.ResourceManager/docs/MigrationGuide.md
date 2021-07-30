@@ -103,7 +103,7 @@ string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{
 ```C#
 string vmName = "quickstartvm";
 AvailabilitySetData aSetData = new AvailabilitySetData(location);
-var aset = (await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", aSetData)).Value;
+AvailabilitySet aset = (await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(vmName + "_aSet", aSetData)).Value;
 string asetId = aset.Id;
 ```
 
@@ -156,7 +156,7 @@ VirtualNetworkData vnetData = new VirtualNetworkData()
         }
     }
 };
-var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData);
+VirtualNetwork vnet = (await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(vnetName, vnetData)).Value;
 ```
 
 The main difference here is that a virtual network object is no longer needed to create a virtual network. One similarity is that subnets are defined inside virtual networks, however, with the new SDK you can get a subnets container using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
@@ -212,7 +212,8 @@ var nicResponse = networkClient.NetworkInterfaces.Get(rgName, nicname);
 ```
 #### New
 ```C#
-NetworkInterface nic = new NetworkInterface()
+string nicname = vmName + "_nic";
+NetworkInterfaceData nicData = new NetworkInterfaceData()
 {
     Location = location,
     IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
@@ -227,9 +228,7 @@ NetworkInterface nic = new NetworkInterface()
         }
     }
 };
-nic = await networkInterfaceClient
-    .StartCreateOrUpdate(resourceGroupName, vmName + "_nic", nic)
-    .WaitForCompletionAsync();
+NetworkInterface nic = (await networkInterfaceContainer.CreateOrUpdateAsync(nicName, nicData)).Value;
 ```
 
 This step is similar to the old SDK, however, notice that the `StartCreateOrUpdate()` method returns the network interface that has been created. 
@@ -295,7 +294,7 @@ vmData.OsProfile.ComputerName = "computer-name";
 vmData.AvailabilitySet = asetId;
 vmData.NetworkProfile.NetworkInterfaces.Add(nic);
 
-var vm = (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, vmData)).Value;
+VirtualMachine vm = (await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(vmName, vmData)).Value;
 Console.WriteLine("VM ID: " + vm.Id);
 ```
 
