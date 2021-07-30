@@ -68,7 +68,7 @@ string rgName = "QuickStartRG";
 ResourceGroupData rgData = new ResourceGroupData(location);
 ResourceGroup resourceGroup = await rgContainer.CreateOrUpdateAsync(rgName, rgData);
 ```
-The main difference is that the prevoius libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionContainer` to manage the resources in a particular subscripations. In this example, a `resourceGroupContainer` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupContainer. With that `ResoueceGroup` you will be able to get the resource containers to manage all the resources that will be inside it, as it is shown in the next part of this guide.
+The main difference is that the previous libraries represent all operations as flat, while the new preview libraries respresents the hierarchy of resources. In that way, you can use a `subscriptionContainer` to manage the resources in a particular subscription. In this example, a `resourceGroupContainer` is used to manage the resources in a particular resource group. In the example above, a new resource group is created from a resourceGroupContainer. With that `ResourceGroup` you will be able to get the resource containers to manage all the resources that will be inside it, as it is shown in the next part of this guide.
 
 Another thing is that the new preview SDK provides some common classes to represent commonly-used constructs, like `Location`, and allow you to use them directly throughout the APIs, again, making it easier to discover how to properly configure resources.
 
@@ -137,8 +137,8 @@ VirtualNetwork subnetResponse = networkClient.Subnets.Get(rgName, vnetName, subn
 ```C#
 string vnetName = "MYVM" + "_vnet";
 string subnetName = "mySubnet";
-string[] adressPrefixes = { "10.0.0.0/16" };
-AddressSpace addressSpace = new AddressSpace(adressPrefixes);
+string[] addressPrefixes = { "10.0.0.0/16" };
+AddressSpace addressSpace = new AddressSpace(addressPrefixes);
 
 VirtualNetworkData vnetData = new VirtualNetworkData()
 {

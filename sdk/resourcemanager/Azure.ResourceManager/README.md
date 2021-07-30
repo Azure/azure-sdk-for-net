@@ -124,7 +124,7 @@ Subscription subscription = await armClient.GetSubscriptions().GetAsync(id.Subsc
 // Next we get the specific resource group this resource belongs to
 ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(id.ResourceGroupName);
 // Finally we get the resource itself
-// Note: for this last stept in this example, Azure.ResourceManager.Compute is needed
+// Note: for this last step in this example, Azure.ResourceManager.Compute is needed
 AvailabilitySet availabilitySet = await resourceGroup.GetAvailabilitySets().GetAsync(id.Name);
 ```
 However, this approach required a lot of code and 3 API calls to Azure. The same can be done with less code and without any API calls by using extension methods that we have provided on the client itself. These extension methods allow you to pass in a resource identifier and retrieve a scoped client. The object returned is a *[Resource]Operations* mentioned above, since it has not reached out to Azure to retrieve the data yet.
@@ -143,7 +143,7 @@ AvailabilitySet availabilitySet = await availabilitySetOperations.GetAsync();
 ```
 
 ### `GetIfExists()` and `CheckIfExists` convenience methods
-If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoque from any [Resource]Container class.
+If you are not sure if a resource you want to get exists, or you just want to check if it exists, you can use `GetIfExists()` or `CheckIfExists()` methods, which can be invoke from any [Resource]Container class.
 
 `GetIfExists()` and `GetIfExistsAsync()` are going to return a null object if the specified resource name or id does not exists. On the other hand, `CheckIfExists()` and `CheckIfExistsAsync()` is going to return a boolean, depending if the specified resource exists.
 
