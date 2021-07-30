@@ -10,6 +10,7 @@
     </Description>
     <PackageTags>azure;management;communication</PackageTags>
     <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
 
   <ItemGroup>
