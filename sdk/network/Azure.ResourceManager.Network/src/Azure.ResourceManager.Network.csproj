@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Nullable>annotations</Nullable>
     <IsMgmtLibrary>true</IsMgmtLibrary>
