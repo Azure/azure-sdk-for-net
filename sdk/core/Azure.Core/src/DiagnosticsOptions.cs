@@ -49,6 +49,18 @@ namespace Azure.Core
             LoggedQueryParameters = new List<string>();
         }
 
+        internal DiagnosticsOptions(DiagnosticsOptions diagnosticsOptions)
+        {
+            ApplicationId = diagnosticsOptions.ApplicationId;
+            IsLoggingEnabled = diagnosticsOptions.IsLoggingEnabled;
+            IsTelemetryEnabled = diagnosticsOptions.IsTelemetryEnabled;
+            LoggedHeaderNames = new List<string>(diagnosticsOptions.LoggedHeaderNames);
+            LoggedQueryParameters = new List<string>(diagnosticsOptions.LoggedQueryParameters);
+            LoggedContentSizeLimit = diagnosticsOptions.LoggedContentSizeLimit;
+            IsDistributedTracingEnabled = diagnosticsOptions.IsDistributedTracingEnabled;
+            IsLoggingContentEnabled = diagnosticsOptions.IsLoggingContentEnabled;
+        }
+
         /// <summary>
         /// Get or sets value indicating whether HTTP pipeline logging is enabled.
         /// </summary>

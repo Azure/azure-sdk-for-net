@@ -30,42 +30,25 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new instance of <see cref="ClientOptions"/>.
         /// </summary>
-        protected ClientOptions(): this(true)
+        protected ClientOptions(): this(Default)
         {
         }
 
-        internal ClientOptions(bool useDefaults)
+        internal ClientOptions(ClientOptions? clientOptions)
         {
-            if (useDefaults)
+            if (clientOptions != null)
             {
-                Retry = new RetryOptions
-                {
-                    MaxRetries = Default.Retry.MaxRetries,
-                    Delay = Default.Retry.Delay,
-                    MaxDelay = Default.Retry.MaxDelay,
-                    Mode = Default.Retry.Mode,
-                    NetworkTimeout = Default.Retry.NetworkTimeout
-                };
+                Retry = new RetryOptions(clientOptions.Retry);
 
-                Diagnostics = new DiagnosticsOptions()
-                {
-                    ApplicationId = Default.Diagnostics.ApplicationId,
-                    IsLoggingEnabled = Default.Diagnostics.IsLoggingEnabled,
-                    IsTelemetryEnabled = Default.Diagnostics.IsTelemetryEnabled,
-                    LoggedHeaderNames = new List<string>(Default.Diagnostics.LoggedHeaderNames),
-                    LoggedQueryParameters = new List<string>(Default.Diagnostics.LoggedQueryParameters),
-                    LoggedContentSizeLimit = Default.Diagnostics.LoggedContentSizeLimit,
-                    IsDistributedTracingEnabled = Default.Diagnostics.IsDistributedTracingEnabled,
-                    IsLoggingContentEnabled = Default.Diagnostics.IsLoggingContentEnabled
-                };
+                Diagnostics = new DiagnosticsOptions(clientOptions.Diagnostics);
 
-                _transport = Default.Transport;
-                PerCallPolicies = new List<HttpPipelinePolicy>(Default.PerCallPolicies);
-                PerRetryPolicies = new List<HttpPipelinePolicy>(Default.PerRetryPolicies);
+                _transport = clientOptions.Transport;
+                PerCallPolicies = new List<HttpPipelinePolicy>(clientOptions.PerCallPolicies);
+                PerRetryPolicies = new List<HttpPipelinePolicy>(clientOptions.PerRetryPolicies);
             }
             else
             {
-                // Intentionally laving this null. The only consumer of this branch is
+                // Intentionally leaving this null. The only consumer of this branch is
                 // DefaultAzureCredential that would re-assign the value
                 _transport = null!;
                 PerCallPolicies = new List<HttpPipelinePolicy>();

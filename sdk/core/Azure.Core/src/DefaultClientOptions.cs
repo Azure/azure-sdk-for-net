@@ -8,7 +8,7 @@ namespace Azure.Core
 {
     internal class DefaultClientOptions: ClientOptions
     {
-        public DefaultClientOptions(): base(false)
+        public DefaultClientOptions(): base(null)
         {
             Transport = GetDefaultTransport();
             Diagnostics.IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
