@@ -1,21 +1,9 @@
 ﻿$Resources = @(
-    #"BatchDeploymentTrackedResource",
-    #"BatchEndpointTrackedResource",
-    #"CodeContainerResource",
-    #"CodeVersionResource",
-    #"DataContainerResource",
-    #"DatastorePropertiesResource",
-    #"DataVersionResource",
-    "EnvironmentContainerResource",
-    "EnvironmentSpecificationVersionResource",
-    #"JobBaseResource",
-    #"LabelingJobResource",
-    #"ModelContainerResource",
-    #"ModelVersionResource",
-    #"OnlineDeploymentTrackedResource",
-    #"OnlineEndpointTrackedResource",
-    #"PrivateEndpointConnection",
-    "WorkspaceConnection"
+    "BatchDeploymentTrackedResource",
+    "CodeVersionResource",
+    "DataVersionResource",
+    "ModelVersionResource",
+    "OnlineDeploymentTrackedResource"
 )
 
 $templateFiles = Get-ChildItem "TestTemplate"
@@ -34,4 +22,17 @@ ForEach ($resource in $Resources)
 Completed Resources
     "ComputeResource",
     "Workspace"
+    "EnvironmentContainerResource",
+    "EnvironmentSpecificationVersionResource",
+    "WorkspaceConnection"
+
+    "BatchEndpointTrackedResource",
+    "CodeContainerResource",
+    "DataContainerResource",
+    "DatastorePropertiesResource",
+    "JobBaseResource",
+    "LabelingJobResource",
+    "ModelContainerResource",
+    "OnlineEndpointTrackedResource",
+    "PrivateEndpointConnection"
 #>

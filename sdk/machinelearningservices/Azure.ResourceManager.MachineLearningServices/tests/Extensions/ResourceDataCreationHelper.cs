@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
             throw new NotImplementedException();
         }
 
-        public CodeContainerResourceData GenerateCodeContainerResourceData()
+        public CodeContainer GenerateCodeContainerResourceData()
         {
             throw new NotImplementedException();
         }
 
-        public CodeVersionResourceData GenerateCodeVersionResourceData()
+        public CodeVersion GenerateCodeVersion()
         {
             throw new NotImplementedException();
         }
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
             };
         }
 
-        public DataContainerResourceData GenerateDataContainerResourceData()
+        public DataContainer GenerateDataContainerResourceData()
         {
             throw new NotImplementedException();
         }
 
-        public DatastorePropertiesResourceData GenerateDatastorePropertiesResourceData()
+        public DatastoreProperties GenerateDatastorePropertiesResourceData()
         {
             throw new NotImplementedException();
         }
 
-        public DataVersionResourceData GenerateDataVersionResourceData()
+        public DataVersion GenerateDataVersionResourceData()
         {
             throw new NotImplementedException();
         }
@@ -111,22 +111,22 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
             };
         }
 
-        public JobBaseResourceData GenerateJobBaseResourceData()
+        public JobBase GenerateJobBaseResourceData()
         {
             throw new NotImplementedException();
         }
 
-        public LabelingJobResourceData GenerateLabelingJobResourceData()
+        public LabelingJob GenerateLabelingJobResourceData()
         {
             throw new NotImplementedException();
         }
 
-        public ModelContainerResourceData GenerateModelContainerResourceData()
+        public ModelContainer GenerateModelContainerResourceData()
         {
             throw new NotImplementedException();
         }
 
-        public ModelVersionResourceData GenerateModelVersionResourceData()
+        public ModelVersion GenerateModelVersionResourceData()
         {
             throw new NotImplementedException();
         }

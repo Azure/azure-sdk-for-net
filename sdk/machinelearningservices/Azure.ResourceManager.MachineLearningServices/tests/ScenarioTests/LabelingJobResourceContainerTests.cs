@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -9,19 +9,17 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 {
-    public class TemplateContainerTests : MachineLearningServicesManagerTestBase
+    public class LabelingJobResourceContainerTests : MachineLearningServicesManagerTestBase
     {
-        private const string ResourceGroupNamePrefix = "test-TemplateContainer";
+        private const string ResourceGroupNamePrefix = "test-LabelingJobResourceContainer";
         private const string WorkspacePrefix = "test-workspace";
-        private const string ParentPrefix = "test-parent";
         private const string ResourceNamePrefix = "test-resource";
         private readonly Location _defaultLocation = Location.WestUS2;
         private string _resourceGroupName = ResourceGroupNamePrefix;
         private string _workspaceName = WorkspacePrefix;
         private string _resourceName = ResourceNamePrefix;
-        private string _parentPrefix = ParentPrefix;
 
-        public TemplateContainerTests(bool isAsync)
+        public LabelingJobResourceContainerTests(bool isAsync)
          : base(isAsync)
         {
         }
@@ -29,7 +27,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         [OneTimeSetUp]
         public async Task SetupResources()
         {
-            _parentPrefix = SessionRecording.GenerateAssetName(ParentPrefix);
             _resourceName = SessionRecording.GenerateAssetName(ResourceNamePrefix);
             _workspaceName = SessionRecording.GenerateAssetName(WorkspacePrefix);
             _resourceGroupName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
@@ -37,13 +34,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await GlobalClient.DefaultSubscription.GetResourceGroups()
                 .CreateOrUpdateAsync(_resourceGroupName, new ResourceGroupData(_defaultLocation));
 
-            Workspace ws = await rg.GetWorkspaces().CreateOrUpdateAsync(
+            _ = await rg.GetWorkspaces().CreateOrUpdateAsync(
                 _workspaceName,
                 DataHelper.GenerateWorkspaceData());
-
-            _ = await ws.GetEnvironmentContainerResources().CreateOrUpdateAsync(
-                _parentPrefix,
-                DataHelper.GenerateEnvironmentContainerResourceData());
             StopSessionRecording();
         }
 
@@ -53,13 +46,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
 
-            Assert.DoesNotThrowAsync(async () => _ = await parent.GetTemplates().CreateOrUpdateAsync(
+            Assert.DoesNotThrowAsync(async () => _ = await ws.GetLabelingJobResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData()));
+                DataHelper.GenerateLabelingJobResourceData()));
 
-            var count = (await parent.GetTemplates().GetAllAsync().ToEnumerableAsync()).Count;
+            var count = (await ws.GetLabelingJobResources().GetAllAsync().ToEnumerableAsync()).Count;
             Assert.AreEqual(count, 1);
         }
 
@@ -69,14 +61,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
 
-            Assert.DoesNotThrowAsync(async () => _ = await parent.GetTemplates().CreateOrUpdateAsync(
+            Assert.DoesNotThrowAsync(async () => _ = await ws.GetLabelingJobResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData()));
+                DataHelper.GenerateLabelingJobResourceData()));
 
-            Assert.DoesNotThrowAsync(async () => await parent.GetTemplates().GetAsync(_resourceName));
-            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await parent.GetTemplates().GetAsync("NonExistant"));
+            Assert.DoesNotThrowAsync(async () => await ws.GetLabelingJobResources().GetAsync(_resourceName));
+            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await ws.GetLabelingJobResources().GetAsync("NonExistant"));
         }
 
         [TestCase]
@@ -85,17 +76,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
 
-            Template resource = null;
-            Assert.DoesNotThrowAsync(async () => resource = await parent.GetTemplates().CreateOrUpdateAsync(
+            LabelingJobResource resource = null;
+            Assert.DoesNotThrowAsync(async () => resource = await ws.GetLabelingJobResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData()));
+                DataHelper.GenerateLabelingJobResourceData()));
 
             resource.Data.Properties.Description = "Updated";
-            Assert.DoesNotThrowAsync(async () => resource = await parent.GetTemplates().CreateOrUpdateAsync(
+            Assert.DoesNotThrowAsync(async () => resource = await ws.GetLabelingJobResources().CreateOrUpdateAsync(
                 _resourceName,
-                resource.Data));
+                resource.Data.Properties));
             Assert.AreEqual("Updated", resource.Data.Properties.Description);
         }
 
@@ -105,17 +95,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
 
-            Template resource = null;
-            Assert.DoesNotThrowAsync(async () => resource = await (await parent.GetTemplates().StartCreateOrUpdateAsync(
+            LabelingJobResource resource = null;
+            Assert.DoesNotThrowAsync(async () => resource = await (await ws.GetLabelingJobResources().StartCreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData())).WaitForCompletionAsync());
+                DataHelper.GenerateLabelingJobResourceData())).WaitForCompletionAsync());
 
             resource.Data.Properties.Description = "Updated";
-            Assert.DoesNotThrowAsync(async () => resource = await (await parent.GetTemplates().StartCreateOrUpdateAsync(
+            Assert.DoesNotThrowAsync(async () => resource = await (await ws.GetLabelingJobResources().StartCreateOrUpdateAsync(
                 _resourceName,
-                resource.Data)).WaitForCompletionAsync());
+                resource.Data.Properties)).WaitForCompletionAsync());
             Assert.AreEqual("Updated", resource.Data.Properties.Description);
         }
 
@@ -125,14 +114,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
 
-            Assert.DoesNotThrowAsync(async () => _ = await (await parent.GetTemplates().StartCreateOrUpdateAsync(
+            Assert.DoesNotThrowAsync(async () => _ = await (await ws.GetLabelingJobResources().StartCreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData())).WaitForCompletionAsync());
+                DataHelper.GenerateLabelingJobResourceData())).WaitForCompletionAsync());
 
-            Assert.IsTrue(await parent.GetTemplates().CheckIfExistsAsync(_resourceName));
-            Assert.IsFalse(await parent.GetTemplates().CheckIfExistsAsync(_resourceName + "xyz"));
+            Assert.IsTrue(await ws.GetLabelingJobResources().CheckIfExistsAsync(_resourceName));
+            Assert.IsFalse(await ws.GetLabelingJobResources().CheckIfExistsAsync(_resourceName + "xyz"));
         }
     }
 }

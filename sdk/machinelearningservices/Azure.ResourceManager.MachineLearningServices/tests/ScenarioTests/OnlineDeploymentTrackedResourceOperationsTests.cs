@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 {
-    public class TemplateOperationsTests : MachineLearningServicesManagerTestBase
+    public class OnlineDeploymentTrackedResourceOperationsTests : MachineLearningServicesManagerTestBase
     {
-        private const string ResourceGroupNamePrefix = "test-TemplateOperations";
+        private const string ResourceGroupNamePrefix = "test-OnlineDeploymentTrackedResourceOperations";
         private const string WorkspacePrefix = "test-workspace";
         private const string ParentPrefix = "test-parent";
         private const string ResourceNamePrefix = "test-resource";
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         private string _resourceGroupName = ResourceGroupNamePrefix;
         private string _parentPrefix = ParentPrefix;
 
-        public TemplateOperationsTests(bool isAsync)
+        public OnlineDeploymentTrackedResourceOperationsTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 _workspaceName,
                 DataHelper.GenerateWorkspaceData());
 
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().CreateOrUpdateAsync(
+            OnlineEndpointTrackedResource parent = await ws.GetOnlineEndpointTrackedResources().CreateOrUpdateAsync(
                 _parentPrefix,
-                DataHelper.GenerateEnvironmentContainerResourceData());
+                DataHelper.GenerateOnlineEndpointTrackedResourceData());
 
-            _ = await parent.GetTemplates().CreateOrUpdateAsync(
+            _ = await parent.GetOnlineDeploymentTrackedResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData());
+                DataHelper.GenerateOnlineDeploymentTrackedResourceData());
             StopSessionRecording();
         }
 
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
+            OnlineEndpointTrackedResource parent = await ws.GetOnlineEndpointTrackedResources().GetAsync(_parentPrefix);
 
             var deleteResourceName = Recording.GenerateAssetName(ResourceNamePrefix) + "_delete";
-            Template res = null;
-            Assert.DoesNotThrowAsync(async () => res = await parent.GetTemplates().CreateOrUpdateAsync(
+            OnlineDeploymentTrackedResource res = null;
+            Assert.DoesNotThrowAsync(async () => res = await parent.GetOnlineDeploymentTrackedResources().CreateOrUpdateAsync(
                 deleteResourceName,
-                DataHelper.GenerateTemplateData()));
+                DataHelper.GenerateOnlineDeploymentTrackedResourceData()));
             Assert.DoesNotThrowAsync(async () => _ = await res.DeleteAsync());
         }
 
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
+            OnlineEndpointTrackedResource parent = await ws.GetOnlineEndpointTrackedResources().GetAsync(_parentPrefix);
 
-            Template resource = await parent.GetTemplates().GetAsync(_resourceName);
-            Template resource1 = await resource.GetAsync();
+            OnlineDeploymentTrackedResource resource = await parent.GetOnlineDeploymentTrackedResources().GetAsync(_resourceName);
+            OnlineDeploymentTrackedResource resource1 = await resource.GetAsync();
             resource.AssertAreEqual(resource1);
         }
 
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
+            OnlineEndpointTrackedResource parent = await ws.GetOnlineEndpointTrackedResources().GetAsync(_parentPrefix);
 
-            Template resource = await parent.GetTemplates().GetAsync(_resourceName);
-            var update = new ScaleSettings(5);
-            Template updatedResource = await resource.UpdateAsync(update);
+            OnlineDeploymentTrackedResource resource = await parent.GetOnlineDeploymentTrackedResources().GetAsync(_resourceName);
+            var update = new PartialOnlineDeploymentPartialTrackedResource();
+            OnlineDeploymentTrackedResource updatedResource = await resource.UpdateAsync(update);
             Assert.AreEqual("Updated", updatedResource.Data.Properties.Description);
         }
     }

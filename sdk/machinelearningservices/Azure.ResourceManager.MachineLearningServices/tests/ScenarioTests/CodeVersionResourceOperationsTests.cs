@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 {
-    public class TemplateOperationsTests : MachineLearningServicesManagerTestBase
+    public class CodeVersionResourceOperationsTests : MachineLearningServicesManagerTestBase
     {
-        private const string ResourceGroupNamePrefix = "test-TemplateOperations";
+        private const string ResourceGroupNamePrefix = "test-CodeVersionResourceOperations";
         private const string WorkspacePrefix = "test-workspace";
         private const string ParentPrefix = "test-parent";
         private const string ResourceNamePrefix = "test-resource";
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         private string _resourceGroupName = ResourceGroupNamePrefix;
         private string _parentPrefix = ParentPrefix;
 
-        public TemplateOperationsTests(bool isAsync)
+        public CodeVersionResourceOperationsTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 _workspaceName,
                 DataHelper.GenerateWorkspaceData());
 
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().CreateOrUpdateAsync(
+            CodeContainerResource parent = await ws.GetCodeContainerResources().CreateOrUpdateAsync(
                 _parentPrefix,
-                DataHelper.GenerateEnvironmentContainerResourceData());
+                DataHelper.GenerateCodeContainerResourceData());
 
-            _ = await parent.GetTemplates().CreateOrUpdateAsync(
+            _ = await parent.GetCodeVersionResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData());
+                DataHelper.GenerateCodeVersion());
             StopSessionRecording();
         }
 
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
+            CodeContainerResource parent = await ws.GetCodeContainerResources().GetAsync(_parentPrefix);
 
             var deleteResourceName = Recording.GenerateAssetName(ResourceNamePrefix) + "_delete";
-            Template res = null;
-            Assert.DoesNotThrowAsync(async () => res = await parent.GetTemplates().CreateOrUpdateAsync(
+            CodeVersionResource res = null;
+            Assert.DoesNotThrowAsync(async () => res = await parent.GetCodeVersionResources().CreateOrUpdateAsync(
                 deleteResourceName,
-                DataHelper.GenerateTemplateData()));
+                DataHelper.GenerateCodeVersion()));
             Assert.DoesNotThrowAsync(async () => _ = await res.DeleteAsync());
         }
 
@@ -75,25 +75,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
+            CodeContainerResource parent = await ws.GetCodeContainerResources().GetAsync(_parentPrefix);
 
-            Template resource = await parent.GetTemplates().GetAsync(_resourceName);
-            Template resource1 = await resource.GetAsync();
+            CodeVersionResource resource = await parent.GetCodeVersionResources().GetAsync(_resourceName);
+            CodeVersionResource resource1 = await resource.GetAsync();
             resource.AssertAreEqual(resource1);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task Update()
-        {
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
-            Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
-
-            Template resource = await parent.GetTemplates().GetAsync(_resourceName);
-            var update = new ScaleSettings(5);
-            Template updatedResource = await resource.UpdateAsync(update);
-            Assert.AreEqual("Updated", updatedResource.Data.Properties.Description);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -11,19 +11,17 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
 {
-    public class TemplateOperationsTests : MachineLearningServicesManagerTestBase
+    public class DatastorePropertiesResourceOperationsTests : MachineLearningServicesManagerTestBase
     {
-        private const string ResourceGroupNamePrefix = "test-TemplateOperations";
+        private const string ResourceGroupNamePrefix = "test-DatastorePropertiesResourceOperations";
         private const string WorkspacePrefix = "test-workspace";
-        private const string ParentPrefix = "test-parent";
         private const string ResourceNamePrefix = "test-resource";
         private readonly Location _defaultLocation = Location.WestUS2;
         private string _resourceName = ResourceNamePrefix;
         private string _workspaceName = WorkspacePrefix;
         private string _resourceGroupName = ResourceGroupNamePrefix;
-        private string _parentPrefix = ParentPrefix;
 
-        public TemplateOperationsTests(bool isAsync)
+        public DatastorePropertiesResourceOperationsTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -31,7 +29,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         [OneTimeSetUp]
         public async Task SetupResources()
         {
-            _parentPrefix = SessionRecording.GenerateAssetName(ParentPrefix);
             _resourceName = SessionRecording.GenerateAssetName(ResourceNamePrefix);
             _resourceGroupName = SessionRecording.GenerateAssetName(ResourceGroupNamePrefix);
 
@@ -43,13 +40,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 _workspaceName,
                 DataHelper.GenerateWorkspaceData());
 
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().CreateOrUpdateAsync(
-                _parentPrefix,
-                DataHelper.GenerateEnvironmentContainerResourceData());
-
-            _ = await parent.GetTemplates().CreateOrUpdateAsync(
+            _ = await ws.GetDatastorePropertiesResources().CreateOrUpdateAsync(
                 _resourceName,
-                DataHelper.GenerateTemplateData());
+                DataHelper.GenerateDatastorePropertiesResourceData());
             StopSessionRecording();
         }
 
@@ -59,13 +52,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
 
             var deleteResourceName = Recording.GenerateAssetName(ResourceNamePrefix) + "_delete";
-            Template res = null;
-            Assert.DoesNotThrowAsync(async () => res = await parent.GetTemplates().CreateOrUpdateAsync(
+            DatastorePropertiesResource res = null;
+            Assert.DoesNotThrowAsync(async () => res = await ws.GetDatastorePropertiesResources().CreateOrUpdateAsync(
                 deleteResourceName,
-                DataHelper.GenerateTemplateData()));
+                DataHelper.GenerateDatastorePropertiesResourceData()));
             Assert.DoesNotThrowAsync(async () => _ = await res.DeleteAsync());
         }
 
@@ -75,25 +67,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
 
-            Template resource = await parent.GetTemplates().GetAsync(_resourceName);
-            Template resource1 = await resource.GetAsync();
+            DatastorePropertiesResource resource = await ws.GetDatastorePropertiesResources().GetAsync(_resourceName);
+            DatastorePropertiesResource resource1 = await resource.GetAsync();
             resource.AssertAreEqual(resource1);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task Update()
-        {
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
-            Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
-            EnvironmentContainerResource parent = await ws.GetEnvironmentContainerResources().GetAsync(_parentPrefix);
-
-            Template resource = await parent.GetTemplates().GetAsync(_resourceName);
-            var update = new ScaleSettings(5);
-            Template updatedResource = await resource.UpdateAsync(update);
-            Assert.AreEqual("Updated", updatedResource.Data.Properties.Description);
         }
     }
 }

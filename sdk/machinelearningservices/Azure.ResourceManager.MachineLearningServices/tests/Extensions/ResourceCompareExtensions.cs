@@ -49,5 +49,103 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
             Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
             //TODO: Add equal for Properties and Tags
         }
+
+        internal static void AssertAreEqual(this BatchEndpointTrackedResource ws, BatchEndpointTrackedResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this CodeContainerResource ws, CodeContainerResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this DataContainerResource ws, DataContainerResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this DatastorePropertiesResource ws, DatastorePropertiesResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this DataVersionResource ws, DataVersionResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this JobBaseResource ws, JobBaseResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this LabelingJobResource ws, LabelingJobResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this ModelContainerResource ws, ModelContainerResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this OnlineEndpointTrackedResource ws, OnlineEndpointTrackedResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this PrivateEndpointConnection ws, PrivateEndpointConnection ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this BatchDeploymentTrackedResource ws, BatchDeploymentTrackedResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this CodeVersionResource ws, CodeVersionResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this ModelVersionResource ws, ModelVersionResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        internal static void AssertAreEqual(this OnlineDeploymentTrackedResource ws, OnlineDeploymentTrackedResource ws2)
+        {
+            Assert.AreEqual(ws.Data.Id, ws2.Data.Id);
+            Assert.AreEqual(ws.Data.Name, ws2.Data.Name);
+            //TODO: Add equal for Properties and Tags
+        }
     }
 }
