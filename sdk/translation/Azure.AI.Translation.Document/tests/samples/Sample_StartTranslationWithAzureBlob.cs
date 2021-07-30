@@ -50,7 +50,6 @@ namespace Azure.AI.Translation.Document.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:StartTranslationWithAzureBlobAsync
             Uri storageEndpoint = new Uri(Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_ENDPOINT"));
             string storageAccountName = Environment.GetEnvironmentVariable("AZURE_STORAGE_ACCOUNT_NAME");
             string storageAccountKey = Environment.GetEnvironmentVariable("AZURE_STORAGE_SOURCE_KEY");
@@ -82,7 +81,7 @@ namespace Azure.AI.Translation.Document.Samples
 
             // Generate SAS tokens for source & target
             Uri srcSasUri = sourceContainerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Read, DateTime.UtcNow.AddMinutes(30));
-            Uri tgtSasUri = targetContainerClient.GenerateSasUri(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write | BlobContainerSasPermissions.Delete, DateTime.UtcNow.AddMinutes(30));
+            Uri tgtSasUri = targetContainerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write | BlobContainerSasPermissions.Delete, DateTime.UtcNow.AddMinutes(30));
 
             // Submit the translation operation and wait for it to finish
             var operationRequest = new DocumentTranslationInput(srcSasUri, tgtSasUri, "es");
@@ -108,8 +107,6 @@ namespace Azure.AI.Translation.Document.Samples
                     Console.WriteLine($"Document ID: {document.Id}, Error Code: {document.Error.ErrorCode}, Message: {document.Error.Message}");
                 }
             }
-
-            #endregion
         }
     }
 }

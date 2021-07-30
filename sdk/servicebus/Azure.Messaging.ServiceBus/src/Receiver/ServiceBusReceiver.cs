@@ -299,7 +299,7 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            Logger.ReceiveMessageComplete(Identifier, messages.Count);
+            Logger.ReceiveMessageComplete(Identifier, messages);
             scope.SetMessageData(messages);
 
             return messages;
