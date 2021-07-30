@@ -6,15 +6,15 @@ using System;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// An attribute class indicating the constructor to use for serialization.
+    /// An attribute class indicating the constructor to use for initialization.
     /// </summary>
     [AttributeUsage(AttributeTargets.Constructor)]
-    public class SerializationConstructorAttribute : Attribute
+    internal class InitializationConstructorAttribute : Attribute
     {
         /// <summary>
-        /// Instatiate a new SerializationConstructor attribute.
+        /// Instatiate a new InitializationConstructor attribute.
         /// </summary>
-        public SerializationConstructorAttribute()
+        public InitializationConstructorAttribute()
         {
         }
     }
