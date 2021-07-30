@@ -5799,67 +5799,32 @@ namespace Azure.Storage.Blobs.Specialized
             string operationName = null)
             => new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>(
                 GetPartitionedDownloaderBehaviors(this),
-                SanitizePartitionedDownloaderOptions(transferOptions),
+                transferOptions.ApplyPartitionedDownloaderDefaults(),
                 operationName);
 
         internal static PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>.Behaviors GetPartitionedDownloaderBehaviors(BlobBaseClient client)
         {
             return new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>.Behaviors
             {
-                SingleDownload = async (range, args, rangeGetContentHash, async, cancellationToken, etag)
-                    => await client.DownloadStreamingInternal(
+                SingleDownload = async (range, conditions, rangeGetContentHash, async, cancellationToken, etag)
+                    =>
+                {
+                    if (etag.HasValue)
+                    {
+                        conditions = conditions?.WithIfMatch(etag.Value) ?? new BlobRequestConditions { IfMatch = etag };
+                    }
+
+                    return await client.DownloadStreamingInternal(
                         range,
-                        args,
+                        conditions,
                         rangeGetContentHash,
                         $"{nameof(BlobBaseClient)}.{nameof(DownloadTo)}",
                         async,
-                        cancellationToken).ConfigureAwait(false),
-                ModifyConditions = (args, etag)
-                    => args?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag },
+                        cancellationToken).ConfigureAwait(false);
+                },
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
                         ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}")
             };
-        }
-
-        internal static StorageTransferOptions SanitizePartitionedDownloaderOptions(
-            StorageTransferOptions transferOptions)
-        {
-            StorageTransferOptions sanitizedOptions = new StorageTransferOptions();
-
-            // Set _maxWorkerCount
-            if (transferOptions.MaximumConcurrency.HasValue
-                && transferOptions.MaximumConcurrency > 0)
-            {
-                sanitizedOptions.MaximumConcurrency = transferOptions.MaximumConcurrency.Value;
-            }
-            else
-            {
-                sanitizedOptions.MaximumConcurrency = Constants.Blob.Block.DefaultConcurrentTransfersCount;
-            }
-
-            // Set _initialRangeSize
-            if (transferOptions.InitialTransferSize.HasValue
-                && transferOptions.InitialTransferSize.Value > 0)
-            {
-                sanitizedOptions.InitialTransferSize = transferOptions.InitialTransferSize.Value;
-            }
-            else
-            {
-                sanitizedOptions.InitialTransferSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
-            }
-
-            // Set _rangeSize
-            if (transferOptions.MaximumTransferSize.HasValue
-                && transferOptions.MaximumTransferSize.Value > 0)
-            {
-                sanitizedOptions.MaximumTransferSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
-            }
-            else
-            {
-                sanitizedOptions.MaximumTransferSize = Constants.DefaultBufferSize;
-            }
-
-            return sanitizedOptions;
         }
         #endregion
     }

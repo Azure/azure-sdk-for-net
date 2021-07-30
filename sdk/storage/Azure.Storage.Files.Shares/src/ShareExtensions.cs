@@ -908,5 +908,47 @@ namespace Azure.Storage.Files.Shares
 
             return lastModified;
         }
+
+        internal static StorageTransferOptions ApplyPartitionedDownloaderDefaults(
+            this StorageTransferOptions transferOptions)
+        {
+            // TODO: Set defaults for shares under Constants and change below references
+            StorageTransferOptions populatedOptions = new StorageTransferOptions();
+
+            // Set _maxWorkerCount
+            if (transferOptions.MaximumConcurrency.HasValue
+                && transferOptions.MaximumConcurrency > 0)
+            {
+                populatedOptions.MaximumConcurrency = transferOptions.MaximumConcurrency.Value;
+            }
+            else
+            {
+                populatedOptions.MaximumConcurrency = Constants.Blob.Block.DefaultConcurrentTransfersCount;
+            }
+
+            // Set _initialRangeSize
+            if (transferOptions.InitialTransferSize.HasValue
+                && transferOptions.InitialTransferSize.Value > 0)
+            {
+                populatedOptions.InitialTransferSize = transferOptions.InitialTransferSize.Value;
+            }
+            else
+            {
+                populatedOptions.InitialTransferSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
+            }
+
+            // Set _rangeSize
+            if (transferOptions.MaximumTransferSize.HasValue
+                && transferOptions.MaximumTransferSize.Value > 0)
+            {
+                populatedOptions.MaximumTransferSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
+            }
+            else
+            {
+                populatedOptions.MaximumTransferSize = Constants.DefaultBufferSize;
+            }
+
+            return populatedOptions;
+        }
     }
 }

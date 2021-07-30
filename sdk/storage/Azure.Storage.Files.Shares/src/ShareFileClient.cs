@@ -6132,20 +6132,20 @@ namespace Azure.Storage.Files.Shares
             string operationName = null)
             => new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>(
                 GetPartitionedDownloaderBehaviors(this),
-                SanitizePartitionedDownloaderOptions(transferOptions),
+                transferOptions.ApplyPartitionedDownloaderDefaults(),
                 operationName);
 
         internal static PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>.Behaviors GetPartitionedDownloaderBehaviors(ShareFileClient client)
         {
             return new PartitionedDownloader<ShareFileRequestConditions, ShareFileDownloadInfo>.Behaviors
             {
-                SingleDownload = async (range, args, rangeGetContentHash, async, cancellationToken, etag)
+                SingleDownload = async (range, conditions, rangeGetContentHash, async, cancellationToken, etag)
                     =>
                 {
                     Response<ShareFileDownloadInfo> response = await client.DownloadInternal(
                     range,
                     rangeGetContentHash,
-                    args,
+                    conditions,
                     async,
                     cancellationToken).ConfigureAwait(false);
 
@@ -6167,48 +6167,6 @@ namespace Azure.Storage.Files.Shares
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
                     ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(Shares)}.{nameof(ShareFileClient)}.{nameof(Storage.Files.Shares.ShareFileClient.DownloadTo)}")
             };
-        }
-
-        internal static StorageTransferOptions SanitizePartitionedDownloaderOptions(
-            StorageTransferOptions transferOptions)
-        {
-            // TODO: Set defaults for shares under Constants and change below references
-            StorageTransferOptions sanitizedOptions = new StorageTransferOptions();
-
-            // Set _maxWorkerCount
-            if (transferOptions.MaximumConcurrency.HasValue
-                && transferOptions.MaximumConcurrency > 0)
-            {
-                sanitizedOptions.MaximumConcurrency = transferOptions.MaximumConcurrency.Value;
-            }
-            else
-            {
-                sanitizedOptions.MaximumConcurrency = Constants.Blob.Block.DefaultConcurrentTransfersCount;
-            }
-
-            // Set _initialRangeSize
-            if (transferOptions.InitialTransferSize.HasValue
-                && transferOptions.InitialTransferSize.Value > 0)
-            {
-                sanitizedOptions.InitialTransferSize = transferOptions.InitialTransferSize.Value;
-            }
-            else
-            {
-                sanitizedOptions.InitialTransferSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
-            }
-
-            // Set _rangeSize
-            if (transferOptions.MaximumTransferSize.HasValue
-                && transferOptions.MaximumTransferSize.Value > 0)
-            {
-                sanitizedOptions.MaximumTransferSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
-            }
-            else
-            {
-                sanitizedOptions.MaximumTransferSize = Constants.DefaultBufferSize;
-            }
-
-            return sanitizedOptions;
         }
         #endregion
     }

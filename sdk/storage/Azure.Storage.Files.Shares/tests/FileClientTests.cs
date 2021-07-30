@@ -1965,10 +1965,11 @@ namespace Azure.Storage.Files.Shares.Tests
             await file.DownloadToAsync(resultStream);
         }
 
-        [RecordedTest]
-        [Ignore("Don't want to record 300 MB of data in the tests")]
+        [Test]
+        [LiveOnly]
         public async Task DownloadToAsync_LargeStream()
         {
+            // Don't want to record 300 MB of data in the tests
             var data = GetRandomBuffer(300 * Constants.MB);
 
             await using DisposingFile test = await GetTestFileAsync();

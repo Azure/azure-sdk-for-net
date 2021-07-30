@@ -21,28 +21,21 @@ namespace Azure.Storage
         // Injected behaviors for services to use partitioned downloads
         public delegate Task<Response<TCompleteDownloadReturn>> SingleDownloadInternal(
             HttpRange range,
-            TServiceSpecificArgs args,
+            TServiceSpecificArgs conditions,
             bool rangeGetContentHash,
             bool async,
             CancellationToken cancellationToken,
             ETag? etag = null);
-        public delegate TServiceSpecificArgs ModifyConditions(
-            TServiceSpecificArgs args,
-            ETag etag);
         public delegate DiagnosticScope CreateScope(string operationName);
 
         public struct Behaviors
         {
             public SingleDownloadInternal SingleDownload { get; set; }
-            public ModifyConditions ModifyConditions { get; set; }
             public CreateScope Scope { get; set; }
         }
-
-        public static readonly ModifyConditions ModifyConditionsNoOp = (args, etag) => args;
         #endregion
 
         private readonly SingleDownloadInternal _singleDownloadInternal;
-        private readonly ModifyConditions _modifyConditions;
         private readonly CreateScope _createScope;
 
         /// <summary>
@@ -71,9 +64,6 @@ namespace Azure.Storage
             StorageTransferOptions transferOptions,
             string operationName = null)
         {
-            // Modifying conditions to add Etag is only necessary for blobs,
-            // files can use a no-op
-            _modifyConditions = behaviors.ModifyConditions ?? ModifyConditionsNoOp;
             _singleDownloadInternal = behaviors.SingleDownload
                 ?? throw Errors.ArgumentNull(nameof(behaviors.SingleDownload));
             _createScope = behaviors.Scope
