@@ -769,7 +769,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <remarks>
             /// This operation can only run when the allocation state of the Pool is
             /// steady. When this operation runs, the allocation state changes from steady
-            /// to resizing.
+            /// to resizing. Each request may remove up to 100 nodes.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -794,7 +794,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <remarks>
             /// This operation can only run when the allocation state of the Pool is
             /// steady. When this operation runs, the allocation state changes from steady
-            /// to resizing.
+            /// to resizing. Each request may remove up to 100 nodes.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
