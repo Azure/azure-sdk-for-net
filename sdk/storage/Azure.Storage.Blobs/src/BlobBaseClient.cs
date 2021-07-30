@@ -5799,7 +5799,7 @@ namespace Azure.Storage.Blobs.Specialized
             string operationName = null)
             => new PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>(
                 GetPartitionedDownloaderBehaviors(this),
-                transferOptions,
+                SanitizePartitionedDownloaderOptions(transferOptions),
                 operationName);
 
         internal static PartitionedDownloader<BlobRequestConditions, BlobDownloadStreamingResult>.Behaviors GetPartitionedDownloaderBehaviors(BlobBaseClient client)
@@ -5819,6 +5819,36 @@ namespace Azure.Storage.Blobs.Specialized
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
                         ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}")
             };
+        }
+        internal static StorageTransferOptions SanitizePartitionedDownloaderOptions(
+            StorageTransferOptions transferOptions)
+        {
+            // Set _maxWorkerCount
+            if (!transferOptions.MaximumConcurrency.HasValue
+                || !(transferOptions.MaximumConcurrency > 0))
+            {
+                transferOptions.MaximumConcurrency = Constants.Blob.Block.DefaultConcurrentTransfersCount;
+            }
+
+            // Set _initialRangeSize
+            if (!transferOptions.InitialTransferSize.HasValue
+                || !(transferOptions.InitialTransferSize.Value > 0))
+            {
+                transferOptions.InitialTransferSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
+            }
+
+            // Set _rangeSize
+            if (transferOptions.MaximumTransferSize.HasValue
+                && transferOptions.MaximumTransferSize.Value > 0)
+            {
+                transferOptions.MaximumTransferSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
+            }
+            else
+            {
+                transferOptions.MaximumTransferSize = Constants.DefaultBufferSize;
+            }
+
+            return transferOptions;
         }
         #endregion
     }

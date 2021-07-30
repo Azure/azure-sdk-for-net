@@ -1921,7 +1921,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase(30 * Constants.KB)]
         [TestCase(50 * Constants.KB)]
         [TestCase(501 * Constants.KB)]
-        public async Task DownloadFileAsync_Parallel_SmallBlobs(long size) =>
+        public async Task DownloadFileAsync_Parallel_SmallFiles(long size) =>
              // Use a 1KB threshold so we get a lot of individual blocks
              await ParallelDownloadFileAndVerify(size, Constants.KB, new StorageTransferOptions { MaximumTransferLength = Constants.KB });
 
@@ -1943,7 +1943,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
-        public async Task DownloadFileAsync_Parallel_LargeBlobs(long size, int? maximumThreadCount)
+        public async Task DownloadFileAsync_Parallel_LargeFiles(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             if (Mode == RecordedTestMode.Live)
@@ -1990,7 +1990,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             await using DisposingFile test = await GetTestFileAsync();
 
-            // Upload a large blob
+            // Upload a large file
             ShareFileClient file = test.File;
             await file.CreateAsync(10 * Constants.KB);
             using (var stream = new MemoryStream(GetRandomBuffer(10 * Constants.KB)))
@@ -1998,12 +1998,12 @@ namespace Azure.Storage.Files.Shares.Tests
                 await file.UploadAsync(stream);
             }
 
-            // Check the error we get when a download fails because the blob
+            // Check the error we get when a download fails because the file
             // was replaced while we're downloading
             Assert.CatchAsync<ShareFileModifiedException>(
                 async () =>
                 {
-                    // Create a stream that replaces the blob as soon as it starts downloading
+                    // Create a stream that replaces the file as soon as it starts downloading
                     bool replaced = false;
                     await file.StagedDownloadAsync(
                         new FuncStream(

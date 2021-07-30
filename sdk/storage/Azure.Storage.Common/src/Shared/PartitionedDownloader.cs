@@ -25,7 +25,7 @@ namespace Azure.Storage
             bool rangeGetContentHash,
             bool async,
             CancellationToken cancellationToken,
-            ETag etag = default);
+            ETag? etag = null);
         public delegate TServiceSpecificArgs ModifyConditions(
             TServiceSpecificArgs args,
             ETag etag);
@@ -71,8 +71,6 @@ namespace Azure.Storage
             StorageTransferOptions transferOptions = default,
             string operationName = null)
         {
-            // TODO: Check on differences between defaults for blobs/files
-
             // Modifying conditions to add Etag is only necessary for blobs,
             // files can use a no-op
             _modifyConditions = behaviors.ModifyConditions ?? ModifyConditionsNoOp;
@@ -81,38 +79,10 @@ namespace Azure.Storage
             _createScope = behaviors.Scope
                 ?? throw Errors.ArgumentNull(nameof(behaviors.Scope));
 
-            // Set _maxWorkerCount
-            if (transferOptions.MaximumConcurrency.HasValue
-                && transferOptions.MaximumConcurrency > 0)
-            {
-                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
-            }
-            else
-            {
-                _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
-            }
-
-            // Set _rangeSize
-            if (transferOptions.MaximumTransferSize.HasValue
-                && transferOptions.MaximumTransferSize.Value > 0)
-            {
-                _rangeSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
-            }
-            else
-            {
-                _rangeSize = Constants.DefaultBufferSize;
-            }
-
-            // Set _initialRangeSize
-            if (transferOptions.InitialTransferSize.HasValue
-                && transferOptions.InitialTransferSize.Value > 0)
-            {
-                _initialRangeSize = transferOptions.InitialTransferSize.Value;
-            }
-            else
-            {
-                _initialRangeSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
-            }
+            // Set instance variables according to user-specified options
+             _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
+            _rangeSize = transferOptions.MaximumTransferSize.Value;
+            _initialRangeSize = transferOptions.InitialTransferSize.Value;
 
             _operationName = operationName;
         }
@@ -172,6 +142,8 @@ namespace Azure.Storage
                     ParseRangeTotalLength(value) :
                     0;
 
+                Console.WriteLine($"\n\n\nInitial Length: {initialLength}\nTotal Length: {totalLength}\n\n\n");
+
                 if (async)
                 {
                     await CopyToAsync(
@@ -193,8 +165,8 @@ namespace Azure.Storage
                 // Capture the etag from the first segment and use it
                 // later to ensure the file doesn't change while we're
                 // downloading the remaining segments
-                ETag etag = initialResponse.GetRawResponse().Headers.ETag.GetValueOrDefault();
-                TServiceSpecificArgs newConditions = _modifyConditions(conditions, etag);
+                ETag? etag = initialResponse.GetRawResponse().Headers.ETag;
+                TServiceSpecificArgs newConditions = _modifyConditions(conditions, etag.GetValueOrDefault());
 
                 if (async)
                 {
@@ -265,7 +237,7 @@ namespace Azure.Storage
             long initialLength,
             long totalLength,
             TServiceSpecificArgs conditions,
-            ETag etag,
+            ETag? etag,
             CancellationToken cancellationToken
             )
         {
@@ -334,7 +306,7 @@ namespace Azure.Storage
             long initialLength,
             long totalLength,
             TServiceSpecificArgs conditions,
-            ETag etag,
+            ETag? etag,
             CancellationToken cancellationToken
             )
         {
