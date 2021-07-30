@@ -116,8 +116,9 @@ function DeployStressPackage(
         exit 1
     }
 
+    Run helm dependency update $pkg.Directory
+
     if ($pushImages) {
-        Run helm dependency update $pkg.Directory
         if ($LASTEXITCODE) { return $LASTEXITCODE }
 
         $dockerFiles = Get-ChildItem "$($pkg.Directory)/Dockerfile*"
