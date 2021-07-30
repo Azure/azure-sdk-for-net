@@ -38,7 +38,14 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 else if (PropertyValueType == TimeSeriesPropertyType.DateTime)
                 {
-                    values.Add(new TimeSeriesValue((DateTimeOffset?)item.GetObject()));
+                    if (DateTimeOffset.TryParse(item.GetString(), out DateTimeOffset parsed))
+                    {
+                        values.Add(new TimeSeriesValue((DateTimeOffset?)parsed));
+                    }
+                    else
+                    {
+                        values.Add(new TimeSeriesValue((DateTimeOffset?)null));
+                    }
                 }
                 else if (PropertyValueType == TimeSeriesPropertyType.Double)
                 {
