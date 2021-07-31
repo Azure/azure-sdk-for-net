@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
         }
 
-        internal JobsCreateOrUpdateOperation(OperationsBase operationsBase, Response<JobBaseResourceData> response)
+        internal JobsCreateOrUpdateOperation(ResourceOperations operationsBase, Response<JobBaseResourceData> response)
         {
             _operation = new OperationOrResponseInternals<JobBaseResource>(Response.FromValue(new JobBaseResource(operationsBase, response.Value), response.GetRawResponse()));
         }

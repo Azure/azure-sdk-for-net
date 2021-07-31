@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the operations that can be performed over a specific CodeVersionResource. </summary>
-    public partial class CodeVersionResourceOperations : ResourceOperationsBase<CodeVersionResource>
+    public partial class CodeVersionResourceOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private CodeVersionsRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref="CodeVersionResourceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal CodeVersionResourceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal CodeVersionResourceOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new CodeVersionsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -43,14 +43,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<CodeVersionResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Get version. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<CodeVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceOperations.Get");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new CodeVersionResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -60,14 +63,17 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
-        public override Response<CodeVersionResource> Get(CancellationToken cancellationToken = default)
+        /// <summary> Get version. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CodeVersionResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("CodeVersionResourceOperations.Get");
             scope.Start();
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CodeVersionResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

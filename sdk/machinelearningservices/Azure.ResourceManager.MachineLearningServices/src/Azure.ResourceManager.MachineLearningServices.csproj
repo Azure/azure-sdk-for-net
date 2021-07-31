@@ -7,15 +7,9 @@
     </Description>
     <PackageId>Azure.ResourceManager.MachineLearningServices</PackageId>
     <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
 
   <PropertyGroup>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager" />
-  </ItemGroup>
 </Project>

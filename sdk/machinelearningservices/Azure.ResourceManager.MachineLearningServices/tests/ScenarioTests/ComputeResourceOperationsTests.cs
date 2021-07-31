@@ -60,7 +60,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             Assert.DoesNotThrowAsync(async () => res = await ws.GetComputeResources().CreateOrUpdateAsync(
                 deleteResourceName,
                 DataHelper.GenerateComputeResourceData()));
-            Assert.DoesNotThrowAsync(async () => _ = await res.DeleteAsync());
+
+            var deleteParam = new UnderlyingResourceAction("Delete");
+            Assert.DoesNotThrowAsync(async () => _ = await res.DeleteAsync(deleteParam));
         }
 
         [TestCase]

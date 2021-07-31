@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref = "DatastorePropertiesResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal DatastorePropertiesResource(OperationsBase options, DatastorePropertiesResourceData resource) : base(options, resource.Id)
+        internal DatastorePropertiesResource(ResourceOperations options, DatastorePropertiesResourceData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

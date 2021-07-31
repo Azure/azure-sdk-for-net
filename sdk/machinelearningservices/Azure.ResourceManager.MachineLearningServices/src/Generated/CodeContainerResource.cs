@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref = "CodeContainerResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal CodeContainerResource(OperationsBase options, CodeContainerResourceData resource) : base(options, resource.Id)
+        internal CodeContainerResource(ResourceOperations options, CodeContainerResourceData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

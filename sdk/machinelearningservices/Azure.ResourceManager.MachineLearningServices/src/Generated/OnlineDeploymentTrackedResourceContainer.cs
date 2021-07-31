@@ -20,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing collection of OnlineDeploymentTrackedResource and their operations over a OnlineEndpointTrackedResource. </summary>
-    public partial class OnlineDeploymentTrackedResourceContainer : ResourceContainerBase<OnlineDeploymentTrackedResource, OnlineDeploymentTrackedResourceData>
+    public partial class OnlineDeploymentTrackedResourceContainer : ResourceContainer
     {
         /// <summary> Initializes a new instance of the <see cref="OnlineDeploymentTrackedResourceContainer"/> class for mocking. </summary>
         protected OnlineDeploymentTrackedResourceContainer()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         /// <summary> Initializes a new instance of OnlineDeploymentTrackedResourceContainer class. </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        internal OnlineDeploymentTrackedResourceContainer(OperationsBase parent) : base(parent)
+        internal OnlineDeploymentTrackedResourceContainer(ResourceOperations parent) : base(parent)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
         }
@@ -179,6 +179,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
 
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OnlineDeploymentTrackedResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,6 +205,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                 }
 
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new OnlineDeploymentTrackedResource(Parent, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -215,9 +219,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual OnlineDeploymentTrackedResource TryGet(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<OnlineDeploymentTrackedResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -226,11 +230,10 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(deploymentName));
                 }
 
-                return Get(deploymentName, cancellationToken: cancellationToken).Value;
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
+                return response.Value == null
+                    ? Response.FromValue<OnlineDeploymentTrackedResource>(null, response.GetRawResponse())
+                    : Response.FromValue(new OnlineDeploymentTrackedResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -242,9 +245,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<OnlineDeploymentTrackedResource> TryGetAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<OnlineDeploymentTrackedResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.TryGet");
+            using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.GetIfExists");
             scope.Start();
             try
             {
@@ -253,11 +256,10 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(deploymentName));
                 }
 
-                return await GetAsync(deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-                return null;
+                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return response.Value == null
+                    ? Response.FromValue<OnlineDeploymentTrackedResource>(null, response.GetRawResponse())
+                    : Response.FromValue(new OnlineDeploymentTrackedResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public virtual bool CheckIfExists(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.CheckIfExists");
             scope.Start();
@@ -280,7 +282,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(deploymentName));
                 }
 
-                return TryGet(deploymentName, cancellationToken: cancellationToken) != null;
+                var response = GetIfExists(deploymentName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -292,7 +295,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        public async virtual Task<bool> CheckIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<bool>> CheckIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineDeploymentTrackedResourceContainer.CheckIfExists");
             scope.Start();
@@ -303,7 +306,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw new ArgumentNullException(nameof(deploymentName));
                 }
 
-                return await TryGetAsync(deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false) != null;
+                var response = await GetIfExistsAsync(deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

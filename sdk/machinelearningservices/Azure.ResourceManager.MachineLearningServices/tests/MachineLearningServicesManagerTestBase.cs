@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.MachineLearningServices.Tests.Extensions;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;

@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string id, string resourceGroupName, string workspaceName)
+        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string workspaceName, string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -170,17 +170,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes a Job (asynchronous). </summary>
-        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string id, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -189,8 +185,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreateDeleteRequest(id, resourceGroupName, workspaceName);
+            using var message = CreateDeleteRequest(resourceGroupName, workspaceName, id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -204,17 +204,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Deletes a Job (asynchronous). </summary>
-        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response Delete(string id, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public Response Delete(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -223,8 +219,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreateDeleteRequest(id, resourceGroupName, workspaceName);
+            using var message = CreateDeleteRequest(resourceGroupName, workspaceName, id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateGetRequest(string id, string resourceGroupName, string workspaceName)
+        internal HttpMessage CreateGetRequest(string resourceGroupName, string workspaceName, string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -259,17 +259,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Gets a Job by name/id. </summary>
-        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response<JobBaseResourceData>> GetAsync(string id, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public async Task<Response<JobBaseResourceData>> GetAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -278,8 +274,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreateGetRequest(id, resourceGroupName, workspaceName);
+            using var message = CreateGetRequest(resourceGroupName, workspaceName, id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -290,23 +290,21 @@ namespace Azure.ResourceManager.MachineLearningServices
                         value = JobBaseResourceData.DeserializeJobBaseResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((JobBaseResourceData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Gets a Job by name/id. </summary>
-        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response<JobBaseResourceData> Get(string id, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public Response<JobBaseResourceData> Get(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -315,8 +313,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreateGetRequest(id, resourceGroupName, workspaceName);
+            using var message = CreateGetRequest(resourceGroupName, workspaceName, id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -327,12 +329,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                         value = JobBaseResourceData.DeserializeJobBaseResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((JobBaseResourceData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string id, string resourceGroupName, string workspaceName, JobBase properties)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string workspaceName, string id, JobBase properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -359,18 +363,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Creates and executes a Job. </summary>
-        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="properties"/> is null. </exception>
-        public async Task<Response<JobBaseResourceData>> CreateOrUpdateAsync(string id, string resourceGroupName, string workspaceName, JobBase properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/>, or <paramref name="properties"/> is null. </exception>
+        public async Task<Response<JobBaseResourceData>> CreateOrUpdateAsync(string resourceGroupName, string workspaceName, string id, JobBase properties, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -379,12 +379,16 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             if (properties == null)
             {
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateCreateOrUpdateRequest(id, resourceGroupName, workspaceName, properties);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, workspaceName, id, properties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -402,18 +406,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Creates and executes a Job. </summary>
-        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="properties"/> is null. </exception>
-        public Response<JobBaseResourceData> CreateOrUpdate(string id, string resourceGroupName, string workspaceName, JobBase properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/>, or <paramref name="properties"/> is null. </exception>
+        public Response<JobBaseResourceData> CreateOrUpdate(string resourceGroupName, string workspaceName, string id, JobBase properties, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -422,12 +422,16 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             if (properties == null)
             {
                 throw new ArgumentNullException(nameof(properties));
             }
 
-            using var message = CreateCreateOrUpdateRequest(id, resourceGroupName, workspaceName, properties);
+            using var message = CreateCreateOrUpdateRequest(resourceGroupName, workspaceName, id, properties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -444,7 +448,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        internal HttpMessage CreateCancelRequest(string id, string resourceGroupName, string workspaceName)
+        internal HttpMessage CreateCancelRequest(string resourceGroupName, string workspaceName, string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -467,17 +471,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Cancels a Job. </summary>
-        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public async Task<Response> CancelAsync(string id, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public async Task<Response> CancelAsync(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -486,8 +486,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreateCancelRequest(id, resourceGroupName, workspaceName);
+            using var message = CreateCancelRequest(resourceGroupName, workspaceName, id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -499,17 +503,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Cancels a Job. </summary>
-        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
-        public Response Cancel(string id, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, or <paramref name="id"/> is null. </exception>
+        public Response Cancel(string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupName));
@@ -518,8 +518,12 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 throw new ArgumentNullException(nameof(workspaceName));
             }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-            using var message = CreateCancelRequest(id, resourceGroupName, workspaceName);
+            using var message = CreateCancelRequest(resourceGroupName, workspaceName, id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

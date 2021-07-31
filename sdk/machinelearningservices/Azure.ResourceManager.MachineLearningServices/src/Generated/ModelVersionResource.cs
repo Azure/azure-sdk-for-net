@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref = "ModelVersionResource"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal ModelVersionResource(OperationsBase options, ModelVersionResourceData resource) : base(options, resource.Id)
+        internal ModelVersionResource(ResourceOperations options, ModelVersionResourceData resource) : base(options, resource.Id)
         {
             Data = resource;
         }

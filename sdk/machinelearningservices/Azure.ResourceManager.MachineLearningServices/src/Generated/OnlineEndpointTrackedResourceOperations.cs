@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the operations that can be performed over a specific OnlineEndpointTrackedResource. </summary>
-    public partial class OnlineEndpointTrackedResourceOperations : ResourceOperationsBase<OnlineEndpointTrackedResource>
+    public partial class OnlineEndpointTrackedResourceOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private OnlineEndpointsRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref="OnlineEndpointTrackedResourceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal OnlineEndpointTrackedResourceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal OnlineEndpointTrackedResourceOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new OnlineEndpointsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -43,14 +43,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<OnlineEndpointTrackedResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Get Online Endpoint. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async virtual Task<Response<OnlineEndpointTrackedResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.Get");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new OnlineEndpointTrackedResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -60,14 +63,17 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        /// <inheritdoc />
-        public override Response<OnlineEndpointTrackedResource> Get(CancellationToken cancellationToken = default)
+        /// <summary> Get Online Endpoint. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<OnlineEndpointTrackedResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.Get");
             scope.Start();
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OnlineEndpointTrackedResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -509,15 +515,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous). </summary>
+        /// <param name="keyType"> Specification for which type of key to generate. Primary or Secondary. </param>
         /// <param name="keyValue"> The value the key is set to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> RegenerateKeysAsync(string keyValue = null, CancellationToken cancellationToken = default)
+        public async virtual Task<Response> RegenerateKeysAsync(KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.RegenerateKeys");
             scope.Start();
             try
             {
-                var operation = await StartRegenerateKeysAsync(keyValue, cancellationToken).ConfigureAwait(false);
+                var operation = await StartRegenerateKeysAsync(keyType, keyValue, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -528,15 +535,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous). </summary>
+        /// <param name="keyType"> Specification for which type of key to generate. Primary or Secondary. </param>
         /// <param name="keyValue"> The value the key is set to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RegenerateKeys(string keyValue = null, CancellationToken cancellationToken = default)
+        public virtual Response RegenerateKeys(KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.RegenerateKeys");
             scope.Start();
             try
             {
-                var operation = StartRegenerateKeys(keyValue, cancellationToken);
+                var operation = StartRegenerateKeys(keyType, keyValue, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -547,16 +555,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous). </summary>
+        /// <param name="keyType"> Specification for which type of key to generate. Primary or Secondary. </param>
         /// <param name="keyValue"> The value the key is set to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<OnlineEndpointsRegenerateKeysOperation> StartRegenerateKeysAsync(string keyValue = null, CancellationToken cancellationToken = default)
+        public async virtual Task<OnlineEndpointsRegenerateKeysOperation> StartRegenerateKeysAsync(KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartRegenerateKeys");
             scope.Start();
             try
             {
-                var response = await _restClient.RegenerateKeysAsync(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyValue, cancellationToken).ConfigureAwait(false);
-                return new OnlineEndpointsRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyValue).Request, response);
+                var response = await _restClient.RegenerateKeysAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue, cancellationToken).ConfigureAwait(false);
+                return new OnlineEndpointsRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response);
             }
             catch (Exception e)
             {
@@ -566,16 +575,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> Regenerate EndpointAuthKeys for an Endpoint using Key-based authentication (asynchronous). </summary>
+        /// <param name="keyType"> Specification for which type of key to generate. Primary or Secondary. </param>
         /// <param name="keyValue"> The value the key is set to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual OnlineEndpointsRegenerateKeysOperation StartRegenerateKeys(string keyValue = null, CancellationToken cancellationToken = default)
+        public virtual OnlineEndpointsRegenerateKeysOperation StartRegenerateKeys(KeyType keyType, string keyValue = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("OnlineEndpointTrackedResourceOperations.StartRegenerateKeys");
             scope.Start();
             try
             {
-                var response = _restClient.RegenerateKeys(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyValue, cancellationToken);
-                return new OnlineEndpointsRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyValue).Request, response);
+                var response = _restClient.RegenerateKeys(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue, cancellationToken);
+                return new OnlineEndpointsRegenerateKeysOperation(_clientDiagnostics, Pipeline, _restClient.CreateRegenerateKeysRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyValue).Request, response);
             }
             catch (Exception e)
             {

@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> A class representing the operations that can be performed over a specific LabelingJobResource. </summary>
-    public partial class LabelingJobResourceOperations : ResourceOperationsBase<LabelingJobResource>
+    public partial class LabelingJobResourceOperations : ResourceOperations
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private LabelingJobsRestOperations _restClient { get; }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of the <see cref="LabelingJobResourceOperations"/> class. </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected internal LabelingJobResourceOperations(OperationsBase options, ResourceIdentifier id) : base(options, id)
+        protected internal LabelingJobResourceOperations(ResourceOperations options, ResourceIdentifier id) : base(options, id)
         {
             _clientDiagnostics = new ClientDiagnostics(ClientOptions);
             _restClient = new LabelingJobsRestOperations(_clientDiagnostics, Pipeline, Id.SubscriptionId, BaseUri);
@@ -43,51 +43,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Gets the valid resource type for the operations. </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        /// <inheritdoc />
-        public async override Task<Response<LabelingJobResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.Get");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LabelingJobResource(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <inheritdoc />
-        public override Response<LabelingJobResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.Get");
-            scope.Start();
-            try
-            {
-                var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken);
-                return Response.FromValue(new LabelingJobResource(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets a labeling job by name/id. </summary>
         /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
         /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LabelingJobResource>> GetAsync(bool? includeJobInstructions, bool? includeLabelCategories, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<LabelingJobResource>> GetAsync(bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.Get");
             scope.Start();
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeJobInstructions, includeLabelCategories, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new LabelingJobResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,13 +69,15 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="includeJobInstructions"> Boolean value to indicate whether to include JobInstructions in response. </param>
         /// <param name="includeLabelCategories"> Boolean value to indicate Whether to include LabelCategories in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LabelingJobResource> Get(bool? includeJobInstructions, bool? includeLabelCategories, CancellationToken cancellationToken = default)
+        public virtual Response<LabelingJobResource> Get(bool? includeJobInstructions = null, bool? includeLabelCategories = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LabelingJobResourceOperations.Get");
             scope.Start();
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeJobInstructions, includeLabelCategories, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LabelingJobResource(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -177,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.DeleteAsync(Id.Parent.Name, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.DeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return new LabelingJobsDeleteOperation(response);
             }
             catch (Exception e)
@@ -195,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.Delete(Id.Parent.Name, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _restClient.Delete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return new LabelingJobsDeleteOperation(response);
             }
             catch (Exception e)
@@ -305,8 +275,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.ExportLabelsAsync(Id.Parent.Name, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                return new LabelingJobsExportLabelsOperation(_clientDiagnostics, Pipeline, _restClient.CreateExportLabelsRequest(Id.Parent.Name, Id.ResourceGroupName, Id.Name, body).Request, response);
+                var response = await _restClient.ExportLabelsAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                return new LabelingJobsExportLabelsOperation(_clientDiagnostics, Pipeline, _restClient.CreateExportLabelsRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
             }
             catch (Exception e)
             {
@@ -330,8 +300,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.ExportLabels(Id.Parent.Name, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                return new LabelingJobsExportLabelsOperation(_clientDiagnostics, Pipeline, _restClient.CreateExportLabelsRequest(Id.Parent.Name, Id.ResourceGroupName, Id.Name, body).Request, response);
+                var response = _restClient.ExportLabels(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
+                return new LabelingJobsExportLabelsOperation(_clientDiagnostics, Pipeline, _restClient.CreateExportLabelsRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response);
             }
             catch (Exception e)
             {
@@ -384,8 +354,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = await _restClient.ResumeAsync(Id.Parent.Name, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new LabelingJobsResumeOperation(_clientDiagnostics, Pipeline, _restClient.CreateResumeRequest(Id.Parent.Name, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = await _restClient.ResumeAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new LabelingJobsResumeOperation(_clientDiagnostics, Pipeline, _restClient.CreateResumeRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -402,8 +372,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             scope.Start();
             try
             {
-                var response = _restClient.Resume(Id.Parent.Name, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return new LabelingJobsResumeOperation(_clientDiagnostics, Pipeline, _restClient.CreateResumeRequest(Id.Parent.Name, Id.ResourceGroupName, Id.Name).Request, response);
+                var response = _restClient.Resume(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return new LabelingJobsResumeOperation(_clientDiagnostics, Pipeline, _restClient.CreateResumeRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
