@@ -9,6 +9,7 @@ using System.Linq;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 
 namespace Azure.Core.TestFramework
 {
@@ -153,6 +154,13 @@ namespace Azure.Core.TestFramework
         [TearDown]
         public virtual void StopTestRecording()
         {
+            if (TestEnvironment.GlobalIsRunningInCI)
+            {
+                var tempFileName = Path.GetTempFileName();
+                File.WriteAllText(tempFileName, TestExecutionContext.CurrentContext.CurrentResult.Output);
+                TestContext.AddTestAttachment(tempFileName, "Test Output");
+            }
+
             bool testPassed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
 
             if (ValidateClientInstrumentation && testPassed)
