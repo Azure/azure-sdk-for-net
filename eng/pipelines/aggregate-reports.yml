@@ -6,11 +6,6 @@ resources:
     branch: main
     tags: 
     - scheduled
-  repositories:
-    - repository: azure-sdk-build-tools
-      type: git
-      name: internal/azure-sdk-build-tools
-      ref: refs/heads/AddPoliCheckFilter
 
 trigger: none
 
@@ -153,26 +148,33 @@ stages:
             displayName: 'Publish Security Analysis Logs'
             condition: succeededOrFailed()
 
-  - stage: PoliCheck
-    displayName: PoliCheck Evaluation
+  - stage: GuardianTools
+    displayName: Guardian Tools
     dependsOn: []
     jobs:
-      - job: PoliCheckRunAndPublish
+      - job: GuardianTools
         timeoutInMinutes: 120
         steps:
           - checkout: self
-          - checkout: azure-sdk-build-tools
-            fetchDepth: 1
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
             displayName: 'Run PoliCheck'
             inputs:
               targetType: F
-              targetArgument: '$(Build.SourcesDirectory)/azure-sdk-for-net/sdk'
-              optionsRulesDBPath: '$(Build.SourcesDirectory)/azure-sdk-build-tools/tools/policheck-rules-db/dotnet.mdb'
+              targetArgument: '$(Build.SourcesDirectory)/sdk'
               result: PoliCheck.sarif
-              optionsPE: 1|2|3|4
-              optionsFC: 1
+              optionsFC: 0
               optionsXS: 1
+          - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
+            displayName: 'Guardian Break'
+            inputs:
+              GdnBreakAllTools: false
+              GdnBreakGdnToolPoliCheck: true
+              GdnBreakGdnToolPoliCheckSeverity: Warning
+              GdnBreakBaselineFiles: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnbaselines'
+              GdnBreakBaselines: policheck
+              GdnBreakSuppressionFiles: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnsuppress'
+              GdnBreakSuppressionSets: policheck
+            continueOnError: true
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
             displayName: 'Publish Security Analysis Logs'
             condition: succeededOrFailed()
