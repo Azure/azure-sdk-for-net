@@ -413,8 +413,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.Throws(expectedException, () => operation.GetDocumentStatus(invalidGuid));
         }
 
-        [LiveOnly]
-        [Test]
+        [RecordedTest]
         public async Task DocumentTranslationWithGlossary()
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
@@ -426,20 +425,17 @@ namespace Azure.AI.Translation.Document.Tests
             //changing the word First --> glossaryFirst and test --> glossaryTest
             string glossaryContent = "First, glossaryFirst\ntest, glossaryTest\n";
 
-            var containerClient = GetBlobContainerClient(sourceContainerName);
-
-            await UploadDocumentsAsync(containerClient, new List<TestDocument> {new TestDocument(glossaryName, glossaryContent)});
-            Uri glossarySasUrl = new Uri(String.Format("{0}{1}{2}{3}/{4}{5}", source.Scheme, Uri.SchemeDelimiter, source.Authority, source.AbsolutePath,glossaryName,source.Query));
+            var glossaryContainerSasUri = await CreateGlossaryContainerAsync(new List<TestDocument> {new TestDocument (glossaryName, glossaryContent)});
+            Uri glossarySasUri = new Uri(String.Format("{0}{1}{2}{3}/{4}{5}", glossaryContainerSasUri.Scheme, Uri.SchemeDelimiter, glossaryContainerSasUri.Authority, glossaryContainerSasUri.AbsolutePath,glossaryName,glossaryContainerSasUri.Query));
 
             //Perform Translation Process
             DocumentTranslationClient client = GetClient();
-
-            var input = new DocumentTranslationInput(source, target, "es", new TranslationGlossary(glossarySasUrl, "csv"));
+            var input = new DocumentTranslationInput(source, target, "es", new TranslationGlossary(glossarySasUri, "csv"));
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
             await operation.WaitForCompletionAsync();
 
             //stream translated text into string
-            containerClient = GetBlobContainerClient(targetContainerName);
+            var containerClient = GetBlobContainerClient(targetContainerName);
             var blobClient = containerClient.GetBlobClient(oneTestDocuments[0].Name);
             var translatedResultStream = await blobClient.OpenReadAsync();
             StreamReader streamReader = new StreamReader(translatedResultStream);
