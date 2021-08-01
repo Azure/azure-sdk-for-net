@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.IO;
+using Azure.Storage.Blobs;
+
 namespace Azure.AI.Translation.Document.Tests
 {
     public class TranslationOperationLiveTests : DocumentTranslationLiveTestBase
@@ -417,7 +419,11 @@ namespace Azure.AI.Translation.Document.Tests
         public async Task DocumentTranslationWithGlossary()
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
-            Uri target = await CreateTargetContainerAsync();
+            var targetUriAndClient = await CreateTargetContainerWithClientAsync();
+            Uri target = targetUriAndClient.Item1;
+
+            //We will need this client later for reading the output translated document
+            BlobContainerClient targetContainerClient = targetUriAndClient.Item2;
 
             //Constructing and uploading glossary on the fly
             string glossaryName = "validGlossary.csv";
@@ -435,8 +441,7 @@ namespace Azure.AI.Translation.Document.Tests
             await operation.WaitForCompletionAsync();
 
             //stream translated text into string
-            var containerClient = GetBlobContainerClient(targetContainerName);
-            var blobClient = containerClient.GetBlobClient(oneTestDocuments[0].Name);
+            var blobClient = targetContainerClient.GetBlobClient(oneTestDocuments[0].Name);
             var translatedResultStream = await blobClient.OpenReadAsync();
             StreamReader streamReader = new StreamReader(translatedResultStream);
             string translatedText = streamReader.ReadToEnd();

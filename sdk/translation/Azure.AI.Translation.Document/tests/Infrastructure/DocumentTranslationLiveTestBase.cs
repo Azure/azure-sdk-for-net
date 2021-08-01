@@ -17,8 +17,6 @@ namespace Azure.AI.Translation.Document.Tests
     {
         protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 30);
 
-        protected string targetContainerName;
-
         public DocumentTranslationLiveTestBase(bool isAsync, RecordedTestMode? mode = null)
             : base(isAsync, mode)
         {
@@ -83,8 +81,8 @@ namespace Azure.AI.Translation.Document.Tests
         public async Task<Uri> CreateTargetContainerAsync(List<TestDocument> documents = default)
         {
             Recording.DisableIdReuse();
-            targetContainerName = "target" + Recording.GenerateId();
-            var containerClient = GetBlobContainerClient(targetContainerName);
+            var containerName = "target" + Recording.GenerateId();
+            var containerClient = GetBlobContainerClient(containerName);
             await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
             if (documents != default)
@@ -94,6 +92,21 @@ namespace Azure.AI.Translation.Document.Tests
 
             var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
             return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write, expiresOn);
+        }
+        public async Task<Tuple<Uri, BlobContainerClient>> CreateTargetContainerWithClientAsync(List<TestDocument> documents = default)
+        {
+            Recording.DisableIdReuse();
+            var containerName = "target" + Recording.GenerateId();
+            var containerClient = GetBlobContainerClient(containerName);
+            await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
+
+            if (documents != default)
+            {
+                await UploadDocumentsAsync(containerClient, documents);
+            }
+
+            var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
+            return Tuple.Create(containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write, expiresOn),containerClient);
         }
 
         public async Task<Uri> CreateGlossaryContainerAsync(List<TestDocument> documents = default)
@@ -109,7 +122,7 @@ namespace Azure.AI.Translation.Document.Tests
             }
 
             var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
-            return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write, expiresOn);
+            return containerClient.GenerateSasUri(BlobContainerSasPermissions.Read  | BlobContainerSasPermissions.Write, expiresOn);
         }
         private async Task UploadDocumentsAsync(BlobContainerClient containerClient, List<TestDocument> documents)
         {
