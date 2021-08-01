@@ -93,7 +93,7 @@ namespace Azure.AI.Translation.Document.Tests
             }
 
             var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
-            return containerClient.GenerateSasUri(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write, expiresOn);
+            return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write, expiresOn);
         }
 
         public async Task<Uri> CreateGlossaryContainerAsync(List<TestDocument> documents = default)

@@ -233,7 +233,7 @@ There are several different Azure services that act as [event handlers](https://
 
 Note: if using Webhooks for event delivery of the *Event Grid schema*, Event Grid requires you to prove ownership of your Webhook endpoint before it starts delivering events to that endpoint. At the time of event subscription creation, Event Grid sends a subscription validation event to your endpoint, as seen below. Learn more about completing the handshake here: [Webhook event delivery](https://docs.microsoft.com/azure/event-grid/webhook-event-delivery). For the *CloudEvents schema*, the service validates the connection using the HTTP options method. Learn more here: [CloudEvents validation](https://github.com/cloudevents/spec/blob/v1.0/http-webhook.md#4-abuse-protection).
 
-Once events are delivered to the event handler, parse the JSON payload into list of events.
+Once events are delivered to the event handler, we can deserialize the JSON payload into a list of events.
 
 Using `EventGridEvent`:
 ```C# Snippet:EGEventParseJson
@@ -247,11 +247,8 @@ var bytes = await httpContent.ReadAsByteArrayAsync();
 // Parse the JSON payload into a list of events
 CloudEvent[] cloudEvents = CloudEvent.ParseMany(new BinaryData(bytes));
 ```
-From here, one can access the event data by deserializing to a specific type using `GetData<T>()`. Calling `GetData()` will either return the event data wrapped in `BinaryData`, which represents the serialized JSON event data as bytes.
-
-Using `GetData<T>()`:
-
-Below is an example calling `GetData<T>()` for CloudEvents. In order to deserialize to the correct type, the `EventType` property (`Type` for CloudEvents) helps distinguish between different events. Custom event data should be deserialized using the generic method `GetData<T>()`. There is also an overload for `GetData<T>()` that accepts a custom `ObjectSerializer` to deserialize the event data.
+#### Deserializing event data
+From here, one can access the event data by deserializing to a specific type by calling `ToObjectFromJson<T>()` on the `Data` property. In order to deserialize to the correct type, the `EventType` property (`Type` for CloudEvents) helps distinguish between different events. Custom event data should be deserialized using the generic method `ToObjectFromJson<T>()`. There is also an extension method `ToObject<T>()` that accepts a custom `ObjectSerializer` to deserialize the event data.
 
 ```C# Snippet:DeserializePayloadUsingGenericGetData
 foreach (CloudEvent cloudEvent in cloudEvents)
@@ -259,7 +256,7 @@ foreach (CloudEvent cloudEvent in cloudEvents)
     switch (cloudEvent.Type)
     {
         case "Contoso.Items.ItemReceived":
-            // By default, GetData uses JsonObjectSerializer to deserialize the payload
+            // By default, ToObjectFromJson<T> uses System.Text.Json to deserialize the payload
             ContosoItemReceivedEventData itemReceived = cloudEvent.Data.ToObjectFromJson<ContosoItemReceivedEventData>();
             Console.WriteLine(itemReceived.ItemSku);
             break;
@@ -269,7 +266,7 @@ foreach (CloudEvent cloudEvent in cloudEvents)
             Console.WriteLine(testPayload.Name);
             break;
         case SystemEventNames.StorageBlobDeleted:
-            // Example for deserializing system events using GetData<T>
+            // Example for deserializing system events using ToObjectFromJson<T>
             StorageBlobDeletedEventData blobDeleted = cloudEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
             Console.WriteLine(blobDeleted.BlobType);
             break;
@@ -281,7 +278,7 @@ Using `TryGetSystemEventData()`:
 
 If expecting mostly system events, it may be cleaner to switch on `TryGetSystemEventData()` and use pattern matching to act on the individual events. If an event is not a system event, the method will return false and the out parameter will be null.
 
-*As a caveat, if you are using a custom event type with an EventType value that later gets added as a system event by the service and SDK, the return value of `TryGetSystemEventData` would change from `false` to `true`. This could come up if you are pre-emptively creating your own custom events for events that are already being sent by the service, but have not yet been added to the SDK. In this case, it is better to use the generic `GetData<T>` method so that your code flow doesn't change automatically after upgrading (of course, you may still want to modify your code to consume the newly released system event model as opposed to your custom model).*
+*As a caveat, if you are using a custom event type with an EventType value that later gets added as a system event by the service and SDK, the return value of `TryGetSystemEventData` would change from `false` to `true`. This could come up if you are pre-emptively creating your own custom events for events that are already being sent by the service, but have not yet been added to the SDK. In this case, it is better to use the generic `ToObjectFromJson<T>` method on the `Data` property so that your code flow doesn't change automatically after upgrading (of course, you may still want to modify your code to consume the newly released system event model as opposed to your custom model).*
 
 ```C# Snippet:DeserializePayloadUsingAsSystemEventData
 foreach (EventGridEvent egEvent in egEvents)
@@ -329,8 +326,9 @@ foreach (EventGridEvent egEvent in egEvents)
 `SendEvents()` returns an HTTP response code from the service. A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
 
 ### Deserializing Event Data
-- If the event data is not valid JSON, a `JsonException` will be thrown during `Parse`.
-- An `InvalidOperationException` will be thrown during `GetData<T>()` if a custom serializer is passed into `GetData<T>()` with non-serialized event data (for example, if the event was created by the user and not created by parsing from JSON).
+- If the event data is not valid JSON, a `JsonException` will be thrown when calling `Parse` or `ParseMany`.
+- If the event schema does not correspond to the type being deserialized to (e.g. calling `CloudEvent.Parse` on an EventGridSchema event), an `ArgumentException` is thrown.
+- If `Parse` is called on data that contains multiple events, an `ArgumentException` is thrown. `ParseMany` should be used here instead.
 
 ### Setting up console logging
 You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig deeper into the requests you're making against the service.

@@ -6,11 +6,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
 {
-    public class TestResourceOperations : OperationsBase
+    public class TestResourceOperations : ResourceOperations
     {
         private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
 

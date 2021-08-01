@@ -108,52 +108,6 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task AsyncPageableSystemLinqAsyncToList()
-        {
-            // create a client
-            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
-
-            #region Snippet:SystemLinqAsyncToList
-            AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
-
-            // ToListAsync would convert asynchronous enumerable into a List<T>
-            List<SecretProperties> secretList = await allSecretProperties.ToListAsync();
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task AsyncPageableSystemLinqAsyncTake()
-        {
-            // create a client
-            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
-
-            #region Snippet:SystemLinqAsyncTake
-            AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
-
-            // Take would request enough pages to get 30 items
-            await foreach (var secretProperties in allSecretProperties.Take(30))
-            {
-                Console.WriteLine(secretProperties.Name);
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task AsyncPageableSystemLinqAsyncCount()
-        {
-            // create a client
-            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
-
-            #region Snippet:SystemLinqAsyncCount
-            // DANGER! DO NOT COPY: CountAsync as used here fetches all the secrets locally to count them.
-            int expensiveSecretCount = await client.GetPropertiesOfSecretsAsync().CountAsync();
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task AsyncPageableLoop()
         {
             // create a client
@@ -175,49 +129,6 @@ namespace Azure.Core.Samples
             finally
             {
                 await enumerator.DisposeAsync();
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task AsyncPageableAsPages()
-        {
-            // create a client
-            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
-
-            #region Snippet:AsyncPageableAsPages
-            // call a service method, which returns AsyncPageable<T>
-            AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
-
-            await foreach (Page<SecretProperties> page in allSecretProperties.AsPages())
-            {
-                // enumerate through page items
-                foreach (SecretProperties secretProperties in page.Values)
-                {
-                    Console.WriteLine(secretProperties.Name);
-                }
-
-                // get continuation token that can be used in AsPages call to resume enumeration
-                Console.WriteLine(page.ContinuationToken);
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public void Pageable()
-        {
-            // create a client
-            var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
-
-            #region Snippet:Pageable
-            // call a service method, which returns Pageable<T>
-            Pageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecrets();
-
-            foreach (SecretProperties secretProperties in allSecretProperties)
-            {
-                Console.WriteLine(secretProperties.Name);
             }
             #endregion
         }

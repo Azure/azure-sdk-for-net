@@ -75,14 +75,24 @@ namespace Microsoft.Azure.Management.AzureStackHCI
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IArcSettingsOperations.
         /// </summary>
-        public virtual IOperations Operations { get; private set; }
+        public virtual IArcSettingsOperations ArcSettings { get; private set; }
 
         /// <summary>
         /// Gets the IClustersOperations.
         /// </summary>
         public virtual IClustersOperations Clusters { get; private set; }
+
+        /// <summary>
+        /// Gets the IExtensionsOperations.
+        /// </summary>
+        public virtual IExtensionsOperations Extensions { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AzureStackHCIClient class.
@@ -325,10 +335,12 @@ namespace Microsoft.Azure.Management.AzureStackHCI
         /// </summary>
         private void Initialize()
         {
-            Operations = new Operations(this);
+            ArcSettings = new ArcSettingsOperations(this);
             Clusters = new ClustersOperations(this);
+            Extensions = new ExtensionsOperations(this);
+            Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-10-01";
+            ApiVersion = "2021-01-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

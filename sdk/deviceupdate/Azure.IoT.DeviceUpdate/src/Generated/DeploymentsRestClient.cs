@@ -31,17 +31,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="accountEndpoint"/> or <paramref name="instanceId"/> is null. </exception>
         public DeploymentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string accountEndpoint, string instanceId)
         {
-            if (accountEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(accountEndpoint));
-            }
-            if (instanceId == null)
-            {
-                throw new ArgumentNullException(nameof(instanceId));
-            }
-
-            this.accountEndpoint = accountEndpoint;
-            this.instanceId = instanceId;
+            this.accountEndpoint = accountEndpoint ?? throw new ArgumentNullException(nameof(accountEndpoint));
+            this.instanceId = instanceId ?? throw new ArgumentNullException(nameof(instanceId));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

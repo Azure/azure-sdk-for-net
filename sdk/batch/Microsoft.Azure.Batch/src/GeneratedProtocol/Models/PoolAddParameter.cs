@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// time.
         /// </summary>
         /// <remarks>
-        /// If false, at least one of targetDedicateNodes and
+        /// If false, at least one of targetDedicatedNodes and
         /// targetLowPriorityNodes must be specified. If true, the
         /// autoScaleFormula property is required and the Pool automatically
         /// resizes according to the formula. The default value is false.
