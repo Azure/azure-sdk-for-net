@@ -397,15 +397,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var response = _serviceClient.GetDocumentsStatusNextPage(
-                        nextLink,
-                        new Guid(Id),
-                        ids: filter?.Ids?.Select(id => new Guid(id)),
-                        statuses: filter?.Statuses?.Select(status => status.ToString()),
-                        createdDateTimeUtcStart: filter?.CreatedAfter,
-                        createdDateTimeUtcEnd: filter?.CreatedBefore,
-                        orderBy: filter?.OrderBy?.Select(order => order.ToString()),
-                        cancellationToken: cancellationToken);
+                    var response = _serviceClient.GetDocumentsStatusNextPage(nextLink, new Guid(Id), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -456,15 +448,7 @@ namespace Azure.AI.Translation.Document
 
                 try
                 {
-                    var response = await _serviceClient.GetDocumentsStatusNextPageAsync(
-                        nextLink,
-                        new Guid(Id),
-                        ids: filter?.Ids?.Select(id => new Guid(id)),
-                        statuses: filter?.Statuses?.Select(status => status.ToString()),
-                        createdDateTimeUtcStart: filter?.CreatedAfter,
-                        createdDateTimeUtcEnd: filter?.CreatedBefore,
-                        orderBy: filter?.OrderBy?.Select(order => order.ToString()),
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceClient.GetDocumentsStatusNextPageAsync(nextLink, new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
