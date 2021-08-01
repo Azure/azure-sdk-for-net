@@ -7,6 +7,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
