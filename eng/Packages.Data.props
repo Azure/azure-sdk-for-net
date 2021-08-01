@@ -12,7 +12,7 @@
   -->
   <ItemGroup Condition="'$(IsClientLibrary)' != 'true'">
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.4.11" />
-    <PackageReference Update="Microsoft.Azure.Batch" Version="11.0.0" />
+    <PackageReference Update="Microsoft.Azure.Batch" Version="14.0.0" />
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.23.2" />
     <PackageReference Update="Microsoft.Azure.Devices" Version="1.19.0" />
     <PackageReference Update="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
@@ -115,8 +115,8 @@
   </ItemGroup>
 
   <!-- Packages intended for Management libraries only -->
-  <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true'">
-    <PackageReference Update="Azure.ResourceManager" Version="1.0.0-alpha.20210723.3" />
+  <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true'">
+    <PackageReference Update="Azure.ResourceManager" Version="1.0.0-alpha.20210730.2" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
