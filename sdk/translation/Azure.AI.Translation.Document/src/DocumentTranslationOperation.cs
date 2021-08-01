@@ -362,9 +362,9 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status of all documents in the translation operation.
         /// </summary>
-        /// <param name="filter">options to use when filtering result <see cref="DocumentFilter"/>.</param>
+        /// <param name="filter">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        public virtual Pageable<DocumentStatus> GetAllDocumentStatuses(DocumentFilter filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DocumentStatus> GetAllDocumentStatuses(DocumentFilter filter = default, CancellationToken cancellationToken = default)
         {
             Page<DocumentStatus> FirstPageFunc(int? pageSizeHint)
             {
@@ -413,9 +413,9 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status of all documents in the translation operation.
         /// </summary>
-        /// <param name="filter">options to use when filtering result <see cref="DocumentFilter"/>.</param>
+        /// <param name="filter">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        public virtual AsyncPageable<DocumentStatus> GetAllDocumentStatusesAsync(DocumentFilter filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DocumentStatus> GetAllDocumentStatusesAsync(DocumentFilter filter = default, CancellationToken cancellationToken = default)
         {
             async Task<Page<DocumentStatus>> FirstPageFunc(int? pageSizeHint)
             {
@@ -513,7 +513,7 @@ namespace Azure.AI.Translation.Document
         {
             ValidateOperationStatus();
 
-            return GetAllDocumentStatusesAsync(null, cancellationToken);
+            return GetAllDocumentStatusesAsync(cancellationToken: cancellationToken);
         }
 
         /// <summary>

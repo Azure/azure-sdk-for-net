@@ -217,9 +217,9 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status results for all submitted translation operations.
         /// </summary>
-        /// <param name="filter">options to use when filtering result <see cref="TranslationFilter"/>.</param>
+        /// <param name="filter">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Pageable<TranslationStatus> GetAllTranslationStatuses(TranslationFilter filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TranslationStatus> GetAllTranslationStatuses(TranslationFilter filter = default, CancellationToken cancellationToken = default)
         {
             Page<TranslationStatus> FirstPageFunc(int? pageSizeHint)
             {
@@ -267,9 +267,9 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the status results for all submitted translation operations.
         /// </summary>
-        /// <param name="filter">options to use when filtering result <see cref="TranslationFilter"/>.</param>
+        /// <param name="filter">Options to use when filtering result.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual AsyncPageable<TranslationStatus> GetAllTranslationStatusesAsync(TranslationFilter filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TranslationStatus> GetAllTranslationStatusesAsync(TranslationFilter filter = default, CancellationToken cancellationToken = default)
         {
             async Task<Page<TranslationStatus>> FirstPageFunc(int? pageSizeHint)
             {
