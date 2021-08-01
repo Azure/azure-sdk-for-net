@@ -16,10 +16,10 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Initializes and instance of <see cref="DocumentFilter"/>.
         /// </summary>
-        /// <param name="createdAfter">Filter documents by <see cref="DocumentStatus.CreatedOn"/>. Get documents created AFTER a certain datetime.</param>
-        /// <param name="createdBefore">Filter documents by <see cref="DocumentStatus.CreatedOn"/>. Get documents created BEFORE a certain datetime.</param>
+        /// <param name="createdAfter">Filter documents by <see cref="DocumentStatus.CreatedOn"/>. Get documents created after a certain datetime.</param>
+        /// <param name="createdBefore">Filter documents by <see cref="DocumentStatus.CreatedOn"/>. Get documents created before a certain datetime.</param>
         /// <param name="ids">Filter results by <see cref="DocumentStatus.Id"/>. Get documents with certain IDs.</param>
-        /// <param name="orderBy">Defines sorting options for the result. <see cref="DocumentFilterOrder"/> for more info on which sorting options to use.</param>
+        /// <param name="orderBy">Defines sorting options for the result. See <see cref="DocumentFilterOrder"/> for more info on which sorting options to use.</param>
         /// <param name="statuses">Filter results by <see cref="DocumentStatus.Status"/>.</param>
         public DocumentFilter(
             DateTimeOffset createdAfter = default,
@@ -36,12 +36,12 @@ namespace Azure.AI.Translation.Document
         }
         /// <summary>
         /// Filter results by <see cref="DocumentStatus.CreatedOn"/>.
-        /// Get documents created AFTER a certain datetime.
+        /// Get documents created after a certain datetime.
         /// </summary>
         public DateTimeOffset CreatedAfter { get; set; }
         /// <summary>
         /// Filter results by <see cref="DocumentStatus.CreatedOn"/>.
-        /// Get documents created BEFORE a certain datetime.
+        /// Get documents created before a certain datetime.
         /// </summary>
         public DateTimeOffset CreatedBefore { get; set; }
         /// <summary>
@@ -51,12 +51,12 @@ namespace Azure.AI.Translation.Document
         public IList<string> Ids { get; }
         /// <summary>
         /// Defines sorting options for the result.
-        /// <see cref="DocumentFilterOrder"/> for more info on which sorting options to use.
+        /// See <see cref="DocumentFilterOrder"/> for more info on which sorting options to use.
         /// </summary>
         public IList<DocumentFilterOrder> OrderBy { get; }
         /// <summary>
         /// Filter results by <see cref="DocumentStatus.Status"/>.
-        /// <see cref="DocumentTranslationStatus"/> to know which statuses to use.
+        /// See <see cref="DocumentTranslationStatus"/> to know which statuses to use.
         /// </summary>
         public IList<DocumentTranslationStatus> Statuses { get; }
     }

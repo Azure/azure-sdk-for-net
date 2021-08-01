@@ -22,7 +22,7 @@ namespace Azure.AI.Translation.Document
         public bool Asc { get; set; }
         /// <summary>
         /// The <see cref="TranslationStatus"/> property to use in sorting.
-        /// <see cref="TranslationFilterProperty"/> for list of properties supported.
+        /// See <see cref="TranslationFilterProperty"/> for list of properties supported.
         /// </summary>
         public TranslationFilterProperty Property { get; set; }
 
@@ -38,7 +38,7 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// Converts enum property in <see cref="DocumentFilterProperty"/> to corresponding generated model property name <see cref="DocumentStatus"/>.
+        /// Converts enum property in <see cref="DocumentFilterProperty"/> to corresponding generated model property name in <see cref="DocumentStatus"/>.
         /// </summary>
         /// <returns></returns>
         private static string ConvertDocumentFilterEnumPropertyToModelAttribute(TranslationFilterProperty enumProperty)
@@ -51,17 +51,5 @@ namespace Azure.AI.Translation.Document
                     return string.Empty;
             }
         }
-    }
-
-    /// <summary>
-    /// An enum listing the supported properties that can be used in sorting
-    /// when listing all submitted translation operations.
-    /// </summary>
-    public enum TranslationFilterProperty
-    {
-        /// <summary>
-        /// sorting property corresponds to <see cref="TranslationStatus.CreatedOn"/>.
-        /// </summary>
-        CreatedOn = 0,
     }
 }
