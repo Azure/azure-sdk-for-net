@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -47,12 +48,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
 
-            Assert.DoesNotThrowAsync(async () => _ = await ws.GetEnvironmentContainerResources().CreateOrUpdateAsync(
-                _resourceName,
-                DataHelper.GenerateEnvironmentContainerResourceData()));
-
             var count = (await ws.GetEnvironmentContainerResources().GetAllAsync().ToEnumerableAsync()).Count;
-            Assert.AreEqual(count, 1);
+            Assert.Greater(count, 1);
         }
 
         [TestCase]
@@ -62,16 +59,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
 
-            Assert.DoesNotThrowAsync(async () => _ = await ws.GetEnvironmentContainerResources().CreateOrUpdateAsync(
-                _resourceName,
-                DataHelper.GenerateEnvironmentContainerResourceData()));
+            var envs = await ws.GetEnvironmentContainerResources().GetAllAsync().ToEnumerableAsync();
+            Assert.Greater(envs.Count, 1);
+            var firstEnvName = envs.First().Data.Name;
 
-            Assert.DoesNotThrowAsync(async () => await ws.GetEnvironmentContainerResources().GetAsync(_resourceName));
+            Assert.DoesNotThrowAsync(async () =>
+            {
+                var env = await ws.GetEnvironmentContainerResources().GetAsync(firstEnvName);
+                Assert.AreEqual(firstEnvName, env.Value.Data.Name);
+            });
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await ws.GetEnvironmentContainerResources().GetAsync("NonExistant"));
         }
 
-        [TestCase]
-        [RecordedTest]
+        // BUGBUG Environment does not support C, R, D even as swagger indicated so
+        //[TestCase]
+        //[RecordedTest]
         public async Task CreateOrUpdate()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
@@ -89,8 +91,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             Assert.AreEqual("Updated", resource.Data.Properties.Description);
         }
 
-        [TestCase]
-        [RecordedTest]
+        // BUGBUG Environment does not support C, R, D even as swagger indicated so
+        //[TestCase]
+        //[RecordedTest]
         public async Task StartCreateOrUpdate()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
@@ -115,12 +118,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
 
-            Assert.DoesNotThrowAsync(async () => _ = await (await ws.GetEnvironmentContainerResources().StartCreateOrUpdateAsync(
-                _resourceName,
-                DataHelper.GenerateEnvironmentContainerResourceData())).WaitForCompletionAsync());
+            var envs = await ws.GetEnvironmentContainerResources().GetAllAsync().ToEnumerableAsync();
+            Assert.Greater(envs.Count, 1);
+            var firstEnvName = envs.First().Data.Name;
 
-            Assert.IsTrue(await ws.GetEnvironmentContainerResources().CheckIfExistsAsync(_resourceName));
-            Assert.IsFalse(await ws.GetEnvironmentContainerResources().CheckIfExistsAsync(_resourceName + "xyz"));
+            Assert.IsTrue(await ws.GetEnvironmentContainerResources().CheckIfExistsAsync(firstEnvName));
+            Assert.IsFalse(await ws.GetEnvironmentContainerResources().CheckIfExistsAsync(firstEnvName + "xyz"));
         }
     }
 }

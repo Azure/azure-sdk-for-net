@@ -69,4 +69,8 @@ directive:
     where: $.definitions.AmlCompute.allOf[?(@.type=="object")].properties.properties.properties.allocationState
     transform: >
         $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.EnvironmentContainerResource.properties.systemData
+    transform: >
+        $["x-nullable"] = true;
 ```

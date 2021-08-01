@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.MachineLearningServices.Models;
@@ -40,14 +41,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 _workspaceName,
                 DataHelper.GenerateWorkspaceData());
 
-            _ = await ws.GetEnvironmentContainerResources().CreateOrUpdateAsync(
-                _resourceName,
-                DataHelper.GenerateEnvironmentContainerResourceData());
+            //_ = await ws.GetEnvironmentContainerResources().CreateOrUpdateAsync(
+            //    _resourceName,
+            //    DataHelper.GenerateEnvironmentContainerResourceData());
             StopSessionRecording();
         }
 
-        [TestCase]
-        [RecordedTest]
+        // BUGBUG Environment does not support C, R, D even as swagger indicated so
+        //[TestCase]
+        //[RecordedTest]
         public async Task Delete()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
@@ -68,7 +70,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
             Workspace ws = await rg.GetWorkspaces().GetAsync(_workspaceName);
 
-            EnvironmentContainerResource resource = await ws.GetEnvironmentContainerResources().GetAsync(_resourceName);
+            var envs = await ws.GetEnvironmentContainerResources().GetAllAsync().ToEnumerableAsync();
+            Assert.Greater(envs.Count, 1);
+            var firstEnvName = envs.First().Data.Name;
+
+            EnvironmentContainerResource resource = await ws.GetEnvironmentContainerResources().GetAsync(firstEnvName);
             EnvironmentContainerResource resource1 = await resource.GetAsync();
             resource.AssertAreEqual(resource1);
         }

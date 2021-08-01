@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
         private const string ResourceGroupNamePrefix = "test-EnvironmentSpecificationVersionResourceContainer";
         private const string WorkspacePrefix = "test-workspace";
         private const string EnvironmentPrefix = "test-env";
-        private const string ResourceNamePrefix = "test-resource";
+        private const string ResourceNamePrefix = "testenvversion";
         private readonly Location _defaultLocation = Location.WestUS2;
         private string _resourceGroupName = ResourceGroupNamePrefix;
         private string _workspaceName = WorkspacePrefix;
@@ -40,9 +41,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 _workspaceName,
                 DataHelper.GenerateWorkspaceData());
 
-            _ = await ws.GetEnvironmentContainerResources().CreateOrUpdateAsync(
-                _environmentName,
-                DataHelper.GenerateEnvironmentContainerResourceData());
+            var envs = await ws.GetEnvironmentContainerResources().GetAllAsync().ToEnumerableAsync();
+            Assert.Greater(envs.Count, 1);
+            _environmentName = envs.First().Data.Name;
+
             StopSessionRecording();
         }
 
@@ -59,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
                 DataHelper.GenerateEnvironmentSpecificationVersionResourceData()));
 
             var count = (await env.GetEnvironmentSpecificationVersionResources().GetAllAsync().ToEnumerableAsync()).Count;
-            Assert.AreEqual(count, 1);
+            Assert.Greater(count, 1);
         }
 
         [TestCase]

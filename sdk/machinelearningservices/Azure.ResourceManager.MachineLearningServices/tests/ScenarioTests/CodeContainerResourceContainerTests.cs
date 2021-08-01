@@ -70,8 +70,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await ws.GetCodeContainerResources().GetAsync("NonExistant"));
         }
 
-        [TestCase]
-        [RecordedTest]
+        // BUGBUG CRUD not supported
+        //[TestCase]
+        //[RecordedTest]
         public async Task CreateOrUpdate()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
@@ -89,8 +90,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             Assert.AreEqual("Updated", resource.Data.Properties.Description);
         }
 
-        [TestCase]
-        [RecordedTest]
+        // BUGBUG CRUD not supported
+        //[TestCase]
+        //[RecordedTest]
         public async Task StartCreateOrUpdate()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);

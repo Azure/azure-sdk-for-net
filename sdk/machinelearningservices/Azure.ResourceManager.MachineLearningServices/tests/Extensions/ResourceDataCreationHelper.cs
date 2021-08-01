@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
 
         public CodeContainer GenerateCodeContainerResourceData()
         {
-            throw new NotImplementedException();
+            return new CodeContainer()
+            {
+                // BUGBUG
+                //Description = "Test"
+            };
         }
 
         public CodeVersion GenerateCodeVersion()
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
         {
             return new EnvironmentContainer
             {
-                Description = "Test"
+                //Description = "Test"
             };
         }
 
@@ -103,11 +107,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
             return new EnvironmentSpecificationVersion
             {
                 Description = "Test",
-                Docker = new DockerSpecification()
-                {
-                    DockerSpecificationType = new DockerSpecificationType("FROM python:3.7-slim"),
-                    Platform = new DockerImagePlatform(OperatingSystemType.Linux)
-                }
+                Docker = new DockerBuild("FROM python:3.7-slim")
             };
         }
 
