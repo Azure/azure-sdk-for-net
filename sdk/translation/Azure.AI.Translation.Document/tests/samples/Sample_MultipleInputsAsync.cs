@@ -14,7 +14,6 @@ namespace Azure.AI.Translation.Document.Samples
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
-        [Ignore("Samples not working yet")]
         public async Task MultipleInputsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -23,16 +22,29 @@ namespace Azure.AI.Translation.Document.Samples
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:MultipleInputsAsync
-            Uri source1SasUriUri = new Uri("<source1 SAS URI>");
+#if SNIPPET
+            Uri source1SasUri = new Uri("<source1 SAS URI>");
             Uri source2SasUri = new Uri("<source2 SAS URI>");
             Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
             Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
             Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
             Uri frenchGlossarySasUri = new Uri("<french glossary SAS URI>");
+#else
+            DocumentTranslationSampleHelper.TestEnvironment = TestEnvironment;
+            Uri source1SasUri = await DocumentTranslationSampleHelper.CreateSourceContainerAsync(DocumentTranslationSampleHelper.oneTestDocuments);
+            Uri source2SasUri = await DocumentTranslationSampleHelper.CreateSourceContainerAsync(new List<TestDocument> { new TestDocument("Document2.txt", "Second english test document") });
+            Uri frenchTargetSasUri = await DocumentTranslationSampleHelper.CreateTargetContainerAsync();
+            Uri arabicTargetSasUri = await DocumentTranslationSampleHelper.CreateTargetContainerAsync();
+            Uri spanishTargetSasUri = await DocumentTranslationSampleHelper.CreateTargetContainerAsync();
+            var glossaryName = "glossary.tsv";
+            var glossaries = new List<TestDocument> { new TestDocument(glossaryName, "test\tglossarytest") };
+            Uri frenchGlossaryContainerSasUri = await DocumentTranslationSampleHelper.CreateGlossaryContainerAsync(glossaries);
+            Uri frenchGlossarySasUri = new Uri(String.Format("{0}{1}{2}{3}/{4}{5}", frenchGlossaryContainerSasUri.Scheme, Uri.SchemeDelimiter, frenchGlossaryContainerSasUri.Authority, frenchGlossaryContainerSasUri.AbsolutePath, glossaryName, frenchGlossaryContainerSasUri.Query));
+#endif
 
             var glossaryFormat = "TSV";
 
-            var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
+            var input1 = new DocumentTranslationInput(source1SasUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
             input1.AddTarget(spanishTargetSasUri, "es");
 
             var input2 = new DocumentTranslationInput(source2SasUri, arabicTargetSasUri, "ar");

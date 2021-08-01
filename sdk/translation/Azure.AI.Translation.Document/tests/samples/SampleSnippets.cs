@@ -43,15 +43,15 @@ namespace Azure.AI.Translation.Document.Samples
         }
 
         [Test]
-        [Ignore("Samples not working yet")]
         public void BadRequestSnippet()
         {
 #if SNIPPET
             string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
 #else
             string endpoint = TestEnvironment.Endpoint;
-#endif
             string apiKey = TestEnvironment.ApiKey;
+#endif
 
             var credentials = new AzureKeyCredential(apiKey);
             var client = new DocumentTranslationClient(new Uri(endpoint), credentials);
@@ -71,21 +71,33 @@ namespace Azure.AI.Translation.Document.Samples
         }
 
         [Test]
-        [Ignore("Samples not working yet")]
         public void DocumentTranslationInput()
         {
             #region Snippet:DocumentTranslationSingleInput
+#if SNIPPET
             Uri sourceSasUri = new Uri("<source SAS URI>");
             Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
-
+#else
+            DocumentTranslationSampleHelper.TestEnvironment = TestEnvironment;
+            Uri sourceSasUri = DocumentTranslationSampleHelper.CreateSourceContainer(DocumentTranslationSampleHelper.oneTestDocuments);
+            Uri frenchTargetSasUri = DocumentTranslationSampleHelper.CreateSourceContainer(DocumentTranslationSampleHelper.oneTestDocuments);
+#endif
             var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr");
             #endregion
 
             #region Snippet:DocumentTranslationMultipleInputs
+
+#if SNIPPET
             Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
             Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
             Uri source1SasUri = new Uri("<source1 SAS URI>");
             Uri source2SasUri = new Uri("<source2 SAS URI>");
+#else
+            Uri source1SasUri = DocumentTranslationSampleHelper.CreateSourceContainer(DocumentTranslationSampleHelper.oneTestDocuments);
+            Uri source2SasUri = DocumentTranslationSampleHelper.CreateSourceContainer(DocumentTranslationSampleHelper.oneTestDocuments);
+            Uri arabicTargetSasUri = DocumentTranslationSampleHelper.CreateTargetContainer();
+            Uri spanishTargetSasUri = DocumentTranslationSampleHelper.CreateTargetContainer();
+#endif
 
             var inputs = new List<DocumentTranslationInput>
             {
@@ -98,7 +110,7 @@ namespace Azure.AI.Translation.Document.Samples
                         new TranslationTarget(arabicTargetSasUri, "ar")
                     }),
             };
-            #endregion
+#endregion
         }
     }
 }

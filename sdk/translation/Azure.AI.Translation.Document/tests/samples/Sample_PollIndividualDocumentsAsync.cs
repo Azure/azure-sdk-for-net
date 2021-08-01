@@ -13,7 +13,6 @@ namespace Azure.AI.Translation.Document.Samples
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
-        [Ignore("Samples not working yet")]
         public async Task PollIndividualDocumentsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -22,8 +21,14 @@ namespace Azure.AI.Translation.Document.Samples
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:PollIndividualDocumentsAsync
+#if SNIPPET
             Uri sourceUri = new Uri("<source SAS URI>");
-            Uri targetUri = new Uri("<target SAS URI>");
+            Uri targetUri = new Uri("<target SAS URI>")
+#else
+            DocumentTranslationSampleHelper.TestEnvironment = TestEnvironment;
+            Uri sourceUri = await DocumentTranslationSampleHelper.CreateSourceContainerAsync(DocumentTranslationSampleHelper.oneTestDocuments);
+            Uri targetUri = await DocumentTranslationSampleHelper.CreateTargetContainerAsync();
+#endif
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 

@@ -13,7 +13,6 @@ namespace Azure.AI.Translation.Document.Samples
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
-        [Ignore("Samples not working yet")]
         public void StartTranslation()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -22,9 +21,14 @@ namespace Azure.AI.Translation.Document.Samples
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:StartTranslation
+#if SNIPPET
             Uri sourceUri = new Uri("<source SAS URI>");
-            Uri targetUri = new Uri("<target SAS URI>");
-
+            Uri targetUri = new Uri("<target SAS URI>")
+#else
+            DocumentTranslationSampleHelper.TestEnvironment = TestEnvironment;
+            Uri sourceUri = DocumentTranslationSampleHelper.CreateSourceContainer(DocumentTranslationSampleHelper.oneTestDocuments);
+            Uri targetUri = DocumentTranslationSampleHelper.CreateTargetContainer();
+#endif
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
             DocumentTranslationOperation operation = client.StartTranslation(input);
@@ -58,6 +62,16 @@ namespace Azure.AI.Translation.Document.Samples
                 }
             }
 
+#if !SNIPPET
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(1, operation.DocumentsTotal);
+            Assert.AreEqual(1, operation.DocumentsSucceeded);
+            Assert.AreEqual(0, operation.DocumentsFailed);
+            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsInProgress);
+            Assert.AreEqual(0, operation.DocumentsNotStarted);
+#endif
             foreach (DocumentStatus document in operation.GetValues())
             {
                 Console.WriteLine($"Document with Id: {document.Id}");
@@ -75,7 +89,7 @@ namespace Azure.AI.Translation.Document.Samples
                     Console.WriteLine($"  Message: {document.Error.Message}");
                 }
             }
-            #endregion
+#endregion
         }
     }
 }

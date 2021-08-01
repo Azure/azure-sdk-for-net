@@ -13,17 +13,20 @@ namespace Azure.AI.Translation.Document.Samples
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
-        [Ignore("Samples not working yet")]
         public void PollIndividualDocuments()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-
+#if SNIPPET
             Uri sourceUri = new Uri("<source SAS URI>");
             Uri targetUri = new Uri("<target SAS URI>");
-
+#else
+            DocumentTranslationSampleHelper.TestEnvironment = TestEnvironment;
+            Uri sourceUri = DocumentTranslationSampleHelper.CreateSourceContainer(DocumentTranslationSampleHelper.oneTestDocuments);
+            Uri targetUri = DocumentTranslationSampleHelper.CreateTargetContainer();
+#endif
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
             DocumentTranslationOperation operation = client.StartTranslation(input);
 
