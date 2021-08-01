@@ -16,10 +16,10 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Initializes and instance of <see cref="DocumentFilter"/>.
         /// </summary>
-        /// <param name="createdAfter">Filter documents by <see cref="DocumentStatus.CreatedOn"/>. Get documents created after a certain datetime.</param>
-        /// <param name="createdBefore">Filter documents by <see cref="DocumentStatus.CreatedOn"/>. Get documents created before a certain datetime.</param>
+        /// <param name="createdAfter">Filter documents by <see cref="DocumentStatus.CreatedOn"/>. Get documents created after a certain date in UTC format.</param>
+        /// <param name="createdBefore">Filter documents by <see cref="DocumentStatus.CreatedOn"/>. Get documents created before a certain date in UTC format.</param>
         /// <param name="ids">Filter results by <see cref="DocumentStatus.Id"/>. Get documents with certain IDs.</param>
-        /// <param name="orderBy">Defines sorting options for the result. See <see cref="DocumentFilterOrder"/> for more info on which sorting options to use.</param>
+        /// <param name="orderBy">Defines sorting options for the result. See <see cref="DocumentFilterOrder"/> for more information on which sorting options to use.</param>
         /// <param name="statuses">Filter results by <see cref="DocumentStatus.Status"/>.</param>
         public DocumentFilter(
             DateTimeOffset createdAfter = default,
@@ -36,22 +36,21 @@ namespace Azure.AI.Translation.Document
         }
         /// <summary>
         /// Filter results by <see cref="DocumentStatus.CreatedOn"/>.
-        /// Get documents created after a certain datetime.
+        /// Get documents created after a certain date in UTC format.
         /// </summary>
         public DateTimeOffset CreatedAfter { get; set; }
         /// <summary>
         /// Filter results by <see cref="DocumentStatus.CreatedOn"/>.
-        /// Get documents created before a certain datetime.
+        /// Get documents created before a certain date in UTC format.
         /// </summary>
         public DateTimeOffset CreatedBefore { get; set; }
         /// <summary>
         /// Filter results by <see cref="DocumentStatus.Id"/>.
-        /// Get documents with certain IDs.
         /// </summary>
         public IList<string> Ids { get; }
         /// <summary>
         /// Defines sorting options for the result.
-        /// See <see cref="DocumentFilterOrder"/> for more info on which sorting options to use.
+        /// See <see cref="DocumentFilterOrder"/> for more information on which sorting options to use.
         /// </summary>
         public IList<DocumentFilterOrder> OrderBy { get; }
         /// <summary>

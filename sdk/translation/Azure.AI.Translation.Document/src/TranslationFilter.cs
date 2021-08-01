@@ -15,10 +15,10 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Initializes and instance of <see cref="TranslationFilter"/>.
         /// </summary>
-        /// <param name="createdAfter">Filter translations by <see cref="TranslationStatus.CreatedOn"/>. Get translations created after a certain datetime.</param>
-        /// <param name="createdBefore">Filter translations by <see cref="TranslationStatus.CreatedOn"/>. Get translations created before a certain datetime.</param>
+        /// <param name="createdAfter">Filter translations by <see cref="TranslationStatus.CreatedOn"/>. Get translations created after a certain date in UTC format.</param>
+        /// <param name="createdBefore">Filter translations by <see cref="TranslationStatus.CreatedOn"/>. Get translations created before a certain date in UTC format.</param>
         /// <param name="ids">Filter results by <see cref="TranslationStatus.Id"/>. Get translations with certain IDs.</param>
-        /// <param name="orderBy">Defines sorting options for the result. See <see cref="TranslationFilterOrder"/> for more info on which sorting options to use.</param>
+        /// <param name="orderBy">Defines sorting options for the result. See <see cref="TranslationFilterOrder"/> for more information on which sorting options to use.</param>
         /// <param name="statuses">Filter results by <see cref="TranslationStatus.Status"/>.</param>
         public TranslationFilter(
             DateTimeOffset? createdAfter = null,
@@ -35,22 +35,21 @@ namespace Azure.AI.Translation.Document
         }
         /// <summary>
         /// Filter results by <see cref="TranslationStatus.CreatedOn"/>.
-        /// Get translations created after a certain datetime.
+        /// Get translations created after a certain date in UTC format.
         /// </summary>
         public DateTimeOffset? CreatedAfter { get; set; }
         /// <summary>
         /// Filter results by <see cref="TranslationStatus.CreatedOn"/>.
-        /// Get translations created before a certain datetime.
+        /// Get translations created before a certain date in UTC format.
         /// </summary>
         public DateTimeOffset? CreatedBefore { get; set; }
         /// <summary>
         /// Filter results by <see cref="TranslationStatus.Id"/>.
-        /// Get translations with certain IDs.
         /// </summary>
         public IList<string> Ids { get; }
         /// <summary>
         /// Defines sorting options for the result.
-        /// See <see cref="TranslationFilterOrder"/> for more info on which sorting options to use.
+        /// See <see cref="TranslationFilterOrder"/> for more information on which sorting options to use.
         /// </summary>
         public IList<TranslationFilterOrder> OrderBy { get; }
         /// <summary>
