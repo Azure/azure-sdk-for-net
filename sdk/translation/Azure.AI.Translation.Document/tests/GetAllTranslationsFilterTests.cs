@@ -153,7 +153,7 @@ namespace Azure.AI.Translation.Document.Tests
             var filteredTranslations = await client.GetAllTranslationStatusesAsync(filter: filter).ToEnumerableAsync();
 
             // assert
-            var timestamp = DateTimeOffset.UtcNow;
+            var timestamp = Recording.UtcNow;
             foreach (var result in filteredTranslations)
             {
                 Assert.IsTrue(result.CreatedOn <= timestamp);

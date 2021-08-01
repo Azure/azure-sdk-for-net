@@ -99,7 +99,7 @@ namespace Azure.AI.Translation.Document.Tests
             var filterResults = operation.GetAllDocumentStatuses(filter: filter);
 
             // assert
-            var timestamp = DateTimeOffset.UtcNow;
+            var timestamp = Recording.UtcNow;
             foreach (var result in filterResults)
             {
                 Assert.IsTrue(result.CreatedOn <= timestamp);
