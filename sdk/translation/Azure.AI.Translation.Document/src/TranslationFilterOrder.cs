@@ -32,24 +32,21 @@ namespace Azure.AI.Translation.Document
         /// <returns></returns>
         public override string ToString()
         {
-            var direction = Asc ? "Asc" : "Desc";
-            var property = ConvertDocumentFilterEnumPropertyToModelAttribute(Property);
-            return $"{property} {direction}";
-        }
-
-        /// <summary>
-        /// Converts enum property in <see cref="DocumentFilterProperty"/> to corresponding generated model property name in <see cref="DocumentStatus"/>.
-        /// </summary>
-        /// <returns></returns>
-        private static string ConvertDocumentFilterEnumPropertyToModelAttribute(TranslationFilterProperty enumProperty)
-        {
-            switch (enumProperty)
+            // convert enum property to corresponding <see cref="DocumentStatus"/> model attribute
+            var property = string.Empty;
+            switch (Property)
             {
                 case TranslationFilterProperty.CreatedOn:
-                    return "createdDateTimeUtc";
+                    property = "createdDateTimeUtc";
+                    break;
                 default:
-                    return string.Empty;
+                    break;
             }
+
+            // sorting direction
+            var direction = Asc ? "Asc" : "Desc";
+
+            return $"{property} {direction}";
         }
     }
 }
