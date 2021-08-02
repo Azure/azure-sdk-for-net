@@ -232,8 +232,8 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
         /// <param name='nodeTypeName'>
         /// The name of the node type.
         /// </param>
-        /// <param name='tags'>
-        /// Node type update parameters
+        /// <param name='parameters'>
+        /// The parameters to update the node type configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NodeType>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string nodeTypeName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NodeType>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a Service Fabric node type.
         /// </summary>

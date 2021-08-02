@@ -35,19 +35,22 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// <summary>
         /// Initializes a new instance of the NodeType class.
         /// </summary>
-        /// <param name="isPrimary">The node type on which system services will
-        /// run. Only one node type should be marked as primary. Primary node
-        /// type cannot be deleted or changed for existing clusters.</param>
-        /// <param name="vmInstanceCount">The number of nodes in the node
-        /// type.</param>
+        /// <param name="isPrimary">Indicates the Service Fabric system
+        /// services for the cluster will run on this node type. This setting
+        /// cannot be changed once the node type is created.</param>
+        /// <param name="vmInstanceCount">The number of nodes in the node type.
+        /// &lt;br /&gt;&lt;br /&gt;**Values:** &lt;br /&gt;-1 - Use when auto
+        /// scale rules are configured or sku.capacity is defined &lt;br /&gt;
+        /// 0 - Not supported &lt;br /&gt; &gt;0 - Use for manual
+        /// scale.</param>
         /// <param name="dataDiskSizeGB">Disk size for each vm in the node type
         /// in GBs.</param>
         /// <param name="id">Azure resource identifier.</param>
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
         /// <param name="tags">Azure resource tags.</param>
-        /// <param name="dataDiskType">Possible values include: 'Standard_LRS',
-        /// 'StandardSSD_LRS', 'Premium_LRS'</param>
+        /// <param name="dataDiskType">Managed data disk type. Possible values
+        /// include: 'Standard_LRS', 'StandardSSD_LRS', 'Premium_LRS'</param>
         /// <param name="placementProperties">The placement tags applied to
         /// nodes in the node type, which can be used to indicate where certain
         /// services (workload) should run.</param>
@@ -76,16 +79,27 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// 'latest'.</param>
         /// <param name="vmSecrets">virtual machine secretes.</param>
         /// <param name="vmExtensions">virtual machine extensions.</param>
+        /// <param name="vmManagedIdentity">Identities to assign to the virtual
+        /// machine scale set under the node type.</param>
         /// <param name="isStateless">Indicates if the node type can only host
         /// Stateless workloads.</param>
         /// <param name="multiplePlacementGroups">Indicates if scale set
         /// associated with the node type can be composed of multiple placement
         /// groups.</param>
-        /// <param name="provisioningState">The provisioning state of the
-        /// managed cluster resource. Possible values include: 'None',
-        /// 'Creating', 'Created', 'Updating', 'Succeeded', 'Failed',
-        /// 'Canceled', 'Deleting', 'Deleted', 'Other'</param>
-        public NodeType(bool isPrimary, int vmInstanceCount, int dataDiskSizeGB, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string dataDiskType = default(string), IDictionary<string, string> placementProperties = default(IDictionary<string, string>), IDictionary<string, string> capacities = default(IDictionary<string, string>), EndpointRangeDescription applicationPorts = default(EndpointRangeDescription), EndpointRangeDescription ephemeralPorts = default(EndpointRangeDescription), string vmSize = default(string), string vmImagePublisher = default(string), string vmImageOffer = default(string), string vmImageSku = default(string), string vmImageVersion = default(string), IList<VaultSecretGroup> vmSecrets = default(IList<VaultSecretGroup>), IList<VMSSExtension> vmExtensions = default(IList<VMSSExtension>), VmManagedIdentity vmManagedIdentity = default(VmManagedIdentity), bool? isStateless = default(bool?), bool? multiplePlacementGroups = default(bool?), string provisioningState = default(string))
+        /// <param name="frontendConfigurations">Indicates the node type uses
+        /// its own frontend configurations instead of the default one for the
+        /// cluster. This setting can only be specified for non-primary node
+        /// types and can not be added or removed after the node type is
+        /// created.</param>
+        /// <param name="networkSecurityRules">The Network Security Rules for
+        /// this node type. This setting can only be specified for node types
+        /// that are configured with frontend configurations.</param>
+        /// <param name="provisioningState">The provisioning state of the node
+        /// type resource. Possible values include: 'None', 'Creating',
+        /// 'Created', 'Updating', 'Succeeded', 'Failed', 'Canceled',
+        /// 'Deleting', 'Deleted', 'Other'</param>
+        /// <param name="sku">The node type sku.</param>
+        public NodeType(bool isPrimary, int vmInstanceCount, int dataDiskSizeGB, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), string dataDiskType = default(string), IDictionary<string, string> placementProperties = default(IDictionary<string, string>), IDictionary<string, string> capacities = default(IDictionary<string, string>), EndpointRangeDescription applicationPorts = default(EndpointRangeDescription), EndpointRangeDescription ephemeralPorts = default(EndpointRangeDescription), string vmSize = default(string), string vmImagePublisher = default(string), string vmImageOffer = default(string), string vmImageSku = default(string), string vmImageVersion = default(string), IList<VaultSecretGroup> vmSecrets = default(IList<VaultSecretGroup>), IList<VMSSExtension> vmExtensions = default(IList<VMSSExtension>), VmManagedIdentity vmManagedIdentity = default(VmManagedIdentity), bool? isStateless = default(bool?), bool? multiplePlacementGroups = default(bool?), IList<FrontendConfiguration> frontendConfigurations = default(IList<FrontendConfiguration>), IList<NetworkSecurityRule> networkSecurityRules = default(IList<NetworkSecurityRule>), string provisioningState = default(string), NodeTypeSku sku = default(NodeTypeSku))
             : base(id, name, type, tags, systemData)
         {
             IsPrimary = isPrimary;
@@ -106,7 +120,10 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
             VmManagedIdentity = vmManagedIdentity;
             IsStateless = isStateless;
             MultiplePlacementGroups = multiplePlacementGroups;
+            FrontendConfigurations = frontendConfigurations;
+            NetworkSecurityRules = networkSecurityRules;
             ProvisioningState = provisioningState;
+            Sku = sku;
             CustomInit();
         }
 
@@ -116,15 +133,19 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the node type on which system services will run. Only
-        /// one node type should be marked as primary. Primary node type cannot
-        /// be deleted or changed for existing clusters.
+        /// Gets or sets indicates the Service Fabric system services for the
+        /// cluster will run on this node type. This setting cannot be changed
+        /// once the node type is created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isPrimary")]
         public bool IsPrimary { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in the node type.
+        /// Gets or sets the number of nodes in the node type. &amp;lt;br
+        /// /&amp;gt;&amp;lt;br /&amp;gt;**Values:** &amp;lt;br /&amp;gt;-1 -
+        /// Use when auto scale rules are configured or sku.capacity is defined
+        /// &amp;lt;br /&amp;gt; 0 - Not supported &amp;lt;br /&amp;gt;
+        /// &amp;gt;0 - Use for manual scale.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmInstanceCount")]
         public int VmInstanceCount { get; set; }
@@ -136,8 +157,8 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         public int DataDiskSizeGB { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Standard_LRS',
-        /// 'StandardSSD_LRS', 'Premium_LRS'
+        /// Gets or sets managed data disk type. Possible values include:
+        /// 'Standard_LRS', 'StandardSSD_LRS', 'Premium_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataDiskType")]
         public string DataDiskType { get; set; }
@@ -229,6 +250,8 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         public IList<VMSSExtension> VmExtensions { get; set; }
 
         /// <summary>
+        /// Gets or sets identities to assign to the virtual machine scale set
+        /// under the node type.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vmManagedIdentity")]
         public VmManagedIdentity VmManagedIdentity { get; set; }
@@ -248,12 +271,35 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         public bool? MultiplePlacementGroups { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the managed cluster resource.
-        /// Possible values include: 'None', 'Creating', 'Created', 'Updating',
+        /// Gets or sets indicates the node type uses its own frontend
+        /// configurations instead of the default one for the cluster. This
+        /// setting can only be specified for non-primary node types and can
+        /// not be added or removed after the node type is created.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.frontendConfigurations")]
+        public IList<FrontendConfiguration> FrontendConfigurations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Network Security Rules for this node type. This
+        /// setting can only be specified for node types that are configured
+        /// with frontend configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkSecurityRules")]
+        public IList<NetworkSecurityRule> NetworkSecurityRules { get; set; }
+
+        /// <summary>
+        /// Gets the provisioning state of the node type resource. Possible
+        /// values include: 'None', 'Creating', 'Created', 'Updating',
         /// 'Succeeded', 'Failed', 'Canceled', 'Deleting', 'Deleted', 'Other'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the node type sku.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public NodeTypeSku Sku { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -267,9 +313,9 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "VmInstanceCount", 2147483647);
             }
-            if (VmInstanceCount < 1)
+            if (VmInstanceCount < -1)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "VmInstanceCount", 1);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "VmInstanceCount", -1);
             }
             if (ApplicationPorts != null)
             {
@@ -298,6 +344,20 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
                         element1.Validate();
                     }
                 }
+            }
+            if (NetworkSecurityRules != null)
+            {
+                foreach (var element2 in NetworkSecurityRules)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
+                    }
+                }
+            }
+            if (Sku != null)
+            {
+                Sku.Validate();
             }
         }
     }

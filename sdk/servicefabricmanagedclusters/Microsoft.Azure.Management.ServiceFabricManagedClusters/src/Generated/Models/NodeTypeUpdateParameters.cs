@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,9 +30,12 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// Initializes a new instance of the NodeTypeUpdateParameters class.
         /// </summary>
         /// <param name="tags">Node type update parameters</param>
-        public NodeTypeUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="sku">The node type sku.</param>
+        public NodeTypeUpdateParameters(object tags = default(object), NodeTypeSku sku = default(NodeTypeSku), string additionalProperties = default(string))
         {
             Tags = tags;
+            Sku = sku;
+            AdditionalProperties = additionalProperties;
             CustomInit();
         }
 
@@ -47,7 +48,31 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// Gets or sets node type update parameters
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        public object Tags { get; set; }
 
+        /// <summary>
+        /// Gets or sets the node type sku.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public NodeTypeSku Sku { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalProperties")]
+        public string AdditionalProperties { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
+        }
     }
 }

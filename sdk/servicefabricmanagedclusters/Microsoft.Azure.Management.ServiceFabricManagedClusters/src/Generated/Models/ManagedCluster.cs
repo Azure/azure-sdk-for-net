@@ -62,11 +62,11 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// <param name="loadBalancingRules">Load balancing rules that are
         /// applied to the public load balancer of the cluster.</param>
         /// <param name="allowRdpAccess">Setting this to true enables RDP
-        /// access to the VM. The default NSG rule opens RDP port to internet
+        /// access to the VM. The default NSG rule opens RDP port to Internet
         /// which can be overridden with custom Network Security Rules. The
         /// default value for this setting is false.</param>
         /// <param name="networkSecurityRules">Custom Network Security Rules
-        /// that are applied to the virtual network of the cluster.</param>
+        /// that are applied to the Virtual Network of the cluster.</param>
         /// <param name="clients">Client certificates that are allowed to
         /// manage the cluster.</param>
         /// <param name="azureActiveDirectory">The AAD authentication settings
@@ -100,8 +100,19 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// resiliency.</param>
         /// <param name="applicationTypeVersionsCleanupPolicy">The policy used
         /// to clean up unused versions.</param>
+        /// <param name="enableIpv6">Setting this to true creates IPv6 address
+        /// space for the default VNet used by the cluster. This setting cannot
+        /// be changed once the cluster is created. The default value for this
+        /// setting is false.</param>
+        /// <param name="subnetId">If specified, the node types for the cluster
+        /// are created in this subnet instead of the default VNet. The
+        /// **networkSecurityRules** specified for the cluster are also applied
+        /// to this subnet. This setting cannot be changed once the cluster is
+        /// created.</param>
+        /// <param name="ipTags">The list of IP tags associated with the
+        /// default public IP address of the cluster.</param>
         /// <param name="sku">The sku of the managed cluster</param>
-        public ManagedCluster(string location, string dnsName, string adminUserName, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SystemData systemData = default(SystemData), string fqdn = default(string), string ipv4Address = default(string), string clusterId = default(string), string clusterState = default(string), IList<string> clusterCertificateThumbprints = default(IList<string>), int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), string adminPassword = default(string), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), bool? allowRdpAccess = default(bool?), IList<NetworkSecurityRule> networkSecurityRules = default(IList<NetworkSecurityRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string provisioningState = default(string), string clusterCodeVersion = default(string), string clusterUpgradeMode = default(string), string clusterUpgradeCadence = default(string), IList<string> addonFeatures = default(IList<string>), bool? enableAutoOSUpgrade = default(bool?), bool? zonalResiliency = default(bool?), ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default(ApplicationTypeVersionsCleanupPolicy), Sku sku = default(Sku))
+        public ManagedCluster(string location, string dnsName, string adminUserName, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), SystemData systemData = default(SystemData), string fqdn = default(string), string ipv4Address = default(string), string clusterId = default(string), string clusterState = default(string), IList<string> clusterCertificateThumbprints = default(IList<string>), int? clientConnectionPort = default(int?), int? httpGatewayConnectionPort = default(int?), string adminPassword = default(string), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), bool? allowRdpAccess = default(bool?), IList<NetworkSecurityRule> networkSecurityRules = default(IList<NetworkSecurityRule>), IList<ClientCertificate> clients = default(IList<ClientCertificate>), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), string provisioningState = default(string), string clusterCodeVersion = default(string), string clusterUpgradeMode = default(string), string clusterUpgradeCadence = default(string), IList<string> addonFeatures = default(IList<string>), bool? enableAutoOSUpgrade = default(bool?), bool? zonalResiliency = default(bool?), ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default(ApplicationTypeVersionsCleanupPolicy), bool? enableIpv6 = default(bool?), string subnetId = default(string), IList<IPTag> ipTags = default(IList<IPTag>), Sku sku = default(Sku))
             : base(location, id, name, type, tags, etag, systemData)
         {
             DnsName = dnsName;
@@ -128,6 +139,9 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
             EnableAutoOSUpgrade = enableAutoOSUpgrade;
             ZonalResiliency = zonalResiliency;
             ApplicationTypeVersionsCleanupPolicy = applicationTypeVersionsCleanupPolicy;
+            EnableIpv6 = enableIpv6;
+            SubnetId = subnetId;
+            IpTags = ipTags;
             Sku = sku;
             CustomInit();
         }
@@ -211,7 +225,7 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
 
         /// <summary>
         /// Gets or sets setting this to true enables RDP access to the VM. The
-        /// default NSG rule opens RDP port to internet which can be overridden
+        /// default NSG rule opens RDP port to Internet which can be overridden
         /// with custom Network Security Rules. The default value for this
         /// setting is false.
         /// </summary>
@@ -220,7 +234,7 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
 
         /// <summary>
         /// Gets or sets custom Network Security Rules that are applied to the
-        /// virtual network of the cluster.
+        /// Virtual Network of the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkSecurityRules")]
         public IList<NetworkSecurityRule> NetworkSecurityRules { get; set; }
@@ -306,6 +320,32 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         public ApplicationTypeVersionsCleanupPolicy ApplicationTypeVersionsCleanupPolicy { get; set; }
 
         /// <summary>
+        /// Gets or sets setting this to true creates IPv6 address space for
+        /// the default VNet used by the cluster. This setting cannot be
+        /// changed once the cluster is created. The default value for this
+        /// setting is false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableIpv6")]
+        public bool? EnableIpv6 { get; set; }
+
+        /// <summary>
+        /// Gets or sets if specified, the node types for the cluster are
+        /// created in this subnet instead of the default VNet. The
+        /// **networkSecurityRules** specified for the cluster are also applied
+        /// to this subnet. This setting cannot be changed once the cluster is
+        /// created.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subnetId")]
+        public string SubnetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of IP tags associated with the default public
+        /// IP address of the cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ipTags")]
+        public IList<IPTag> IpTags { get; set; }
+
+        /// <summary>
         /// Gets or sets the sku of the managed cluster
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
@@ -371,6 +411,16 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
             if (ApplicationTypeVersionsCleanupPolicy != null)
             {
                 ApplicationTypeVersionsCleanupPolicy.Validate();
+            }
+            if (IpTags != null)
+            {
+                foreach (var element4 in IpTags)
+                {
+                    if (element4 != null)
+                    {
+                        element4.Validate();
+                    }
+                }
             }
             if (Sku != null)
             {

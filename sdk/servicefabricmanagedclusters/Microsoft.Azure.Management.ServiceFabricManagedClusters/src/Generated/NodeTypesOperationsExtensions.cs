@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -369,12 +367,12 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
             /// <param name='nodeTypeName'>
             /// The name of the node type.
             /// </param>
-            /// <param name='tags'>
-            /// Node type update parameters
+            /// <param name='parameters'>
+            /// The parameters to update the node type configuration.
             /// </param>
-            public static NodeType Update(this INodeTypesOperations operations, string resourceGroupName, string clusterName, string nodeTypeName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static NodeType Update(this INodeTypesOperations operations, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeUpdateParameters parameters)
             {
-                return operations.UpdateAsync(resourceGroupName, clusterName, nodeTypeName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, clusterName, nodeTypeName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -396,15 +394,15 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
             /// <param name='nodeTypeName'>
             /// The name of the node type.
             /// </param>
-            /// <param name='tags'>
-            /// Node type update parameters
+            /// <param name='parameters'>
+            /// The parameters to update the node type configuration.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NodeType> UpdateAsync(this INodeTypesOperations operations, string resourceGroupName, string clusterName, string nodeTypeName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NodeType> UpdateAsync(this INodeTypesOperations operations, string resourceGroupName, string clusterName, string nodeTypeName, NodeTypeUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, nodeTypeName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, nodeTypeName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

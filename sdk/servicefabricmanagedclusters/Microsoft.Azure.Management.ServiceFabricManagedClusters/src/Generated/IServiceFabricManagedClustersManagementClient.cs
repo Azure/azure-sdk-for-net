@@ -42,8 +42,8 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
 
         /// <summary>
         /// The version of the Service Fabric resource provider API. This is a
-        /// required parameter and it's value must be "2021-05-01" for this
-        /// specification.
+        /// required parameter and it's value must be "2021-07-01-preview" for
+        /// this specification.
         /// </summary>
         string ApiVersion { get; }
 
@@ -110,6 +110,11 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters
         /// Gets the INodeTypesOperations.
         /// </summary>
         INodeTypesOperations NodeTypes { get; }
+
+        /// <summary>
+        /// Gets the INodeTypeSkusOperations.
+        /// </summary>
+        INodeTypeSkusOperations NodeTypeSkus { get; }
 
     }
 }
