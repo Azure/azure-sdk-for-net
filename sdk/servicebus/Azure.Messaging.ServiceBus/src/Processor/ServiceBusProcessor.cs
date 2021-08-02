@@ -890,11 +890,7 @@ namespace Azure.Messaging.ServiceBus
                     ? Math.Min(_sessionIds.Length, maxConcurrentSessions)
                     : maxConcurrentSessions * maxConcurrentCallsPerSession;
 
-                // if processor isn't running there is nothing to reconcile
-                if (IsProcessing)
-                {
-                    ReconcileConcurrency(newConcurrency, maxConcurrentSessions);
-                }
+                ReconcileConcurrency(maxConcurrentSessions, maxConcurrentCallsPerSession);
 
                 _maxConcurrentSessions = maxConcurrentSessions;
                 _maxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
@@ -904,6 +900,12 @@ namespace Azure.Messaging.ServiceBus
 
         private void ReconcileConcurrency(int newConcurrency, int newMaxSessions = default)
         {
+            // if processor isn't running there is nothing to reconcile
+            if (!IsProcessing)
+            {
+                return;
+            }
+
             int diff = newConcurrency - _maxConcurrentCalls;
             // increasing concurrency
             if (diff > 0)
