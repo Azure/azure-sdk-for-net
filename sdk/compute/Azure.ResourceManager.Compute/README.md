@@ -150,9 +150,6 @@ bool exists = await resourceGroup.GetAvailabilitySets().CheckIfExistsAsync(avail
 if (exists)
 {
     Console.WriteLine($"Availability Set {availabilitySetName} exists.");
-
-    // We can get the resource group now that we are sure it exists.
-    AvailabilitySet availabilitySet = await resourceGroup.GetAvailabilitySets().GetAsync(availabilitySetName);
 }
 else
 {
@@ -172,9 +169,8 @@ ResourceGroupContainer rgContainer = subscription.GetResourceGroups();
 string rgName = "myRgName";
 ResourceGroup resourceGroup = await rgContainer.GetAsync(rgName);
 AvailabilitySetContainer availabilitySetContainer = resourceGroup.GetAvailabilitySets();
-// TODO -- code not sync yet
 string availabilitySetName = "myAvailabilitySet";
-AvailabilitySet availabilitySet = await availabilitySetContainer.TryGetAsync(availabilitySetName);
+AvailabilitySet availabilitySet = await availabilitySetContainer.GetIfExistsAsync(availabilitySetName);
 
 if (availabilitySet == null)
 {
