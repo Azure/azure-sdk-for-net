@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="id">Azure resource Id.</param>
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
+        /// <param name="properties">Azure resource properties.</param>
         public SubscriptionFeatureRegistration(string id = default(string), string name = default(string), string type = default(string), SubscriptionFeatureRegistrationProperties properties = default(SubscriptionFeatureRegistrationProperties))
             : base(id, name, type)
         {
