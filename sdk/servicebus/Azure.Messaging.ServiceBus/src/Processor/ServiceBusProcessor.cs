@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly SemaphoreSlim _messageHandlerSemaphore;
 
-        private readonly object _syncLock = new();
+        private readonly object _maxConcurrencySyncLock = new();
 
         /// <summary>
         /// The primitive for ensuring that the service is not overloaded with
@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
         private readonly ServiceBusSessionProcessor _sessionProcessor;
-        private volatile List<(Task, CancellationTokenSource, CancellationTokenSource)> _tasks;
+        private List<(Task, CancellationTokenSource, CancellationTokenSource)> _tasks = new();
         private readonly List<ReceiverManager> _orphanedReceiverManagers = new();
 
         /// <summary>
@@ -700,7 +700,6 @@ namespace Azure.Messaging.ServiceBus
         private async Task RunReceiveTaskAsync(
             CancellationToken cancellationToken)
         {
-            _tasks = new List<(Task, CancellationTokenSource, CancellationTokenSource)>();
             try
             {
                 while (!cancellationToken.IsCancellationRequested && !Connection.IsClosed)
@@ -718,7 +717,7 @@ namespace Azure.Messaging.ServiceBus
                         // other than TaskCanceledExceptions
                         var tcs = new CancellationTokenSource();
                         var linkedTcs = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, tcs.Token);
-                        lock (_syncLock)
+                        lock (_maxConcurrencySyncLock)
                         {
                             _tasks.Add(
                                 (
@@ -779,6 +778,7 @@ namespace Azure.Messaging.ServiceBus
                     tcs.Dispose();
                     linkedTcs.Dispose();
                 }
+                _tasks.Clear();
             }
         }
 
@@ -871,7 +871,7 @@ namespace Azure.Messaging.ServiceBus
         public void UpdateConcurrency(int maxConcurrentCalls)
         {
             Argument.AssertAtLeast(maxConcurrentCalls, 1, nameof(maxConcurrentCalls));
-            lock (_syncLock)
+            lock (_maxConcurrencySyncLock)
             {
                 ReconcileConcurrency(maxConcurrentCalls);
 
@@ -884,13 +884,17 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertAtLeast(maxConcurrentSessions, 1, nameof(maxConcurrentSessions));
             Argument.AssertAtLeast(maxConcurrentCallsPerSession, 1, nameof(maxConcurrentCallsPerSession));
 
-            lock (_syncLock)
+            lock (_maxConcurrencySyncLock)
             {
                 var newConcurrency = _sessionIds.Length > 0
                     ? Math.Min(_sessionIds.Length, maxConcurrentSessions)
                     : maxConcurrentSessions * maxConcurrentCallsPerSession;
 
-                ReconcileConcurrency(newConcurrency, maxConcurrentSessions);
+                // if processor isn't running there is nothing to reconcile
+                if (!IsProcessing)
+                {
+                    ReconcileConcurrency(newConcurrency, maxConcurrentSessions);
+                }
 
                 _maxConcurrentSessions = maxConcurrentSessions;
                 _maxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
@@ -927,8 +931,9 @@ namespace Azure.Messaging.ServiceBus
             // decreasing concurrency
             else if (diff < 0)
             {
+                int diffLimit = Math.Abs(diff);
                 // limit the number of new tasks that can spawn to newly specified concurrency
-                for (int i = 0; i < Math.Abs(diff); i++)
+                for (int i = 0; i < diffLimit; i++)
                 {
                     // use the async method to avoid blocking user callback thread
                     _ = _messageHandlerSemaphore.WaitAsync();
