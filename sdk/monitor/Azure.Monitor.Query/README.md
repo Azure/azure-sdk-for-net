@@ -225,7 +225,7 @@ foreach (var resourceGroup in response.Value)
 
 ### Query additional workspaces
 
-If you'd like to run the same query against multiple workspaces use the `LogsQueryOptions.AdditionalCollection`.
+To run the same query against multiple workspaces, use the `LogsQueryOptions.AdditionalWorkspaces` property:
 
 ```C# Snippet:QueryLogsWithAdditionalWorkspace
 string workspaceId = "<workspace_id>";
