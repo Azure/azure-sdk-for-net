@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
         private readonly ServiceBusSessionProcessor _sessionProcessor;
-        private List<(Task, CancellationTokenSource, CancellationTokenSource)> _tasks = new();
+        private readonly List<(Task, CancellationTokenSource, CancellationTokenSource)> _tasks = new();
         private readonly List<ReceiverManager> _orphanedReceiverManagers = new();
 
         /// <summary>
