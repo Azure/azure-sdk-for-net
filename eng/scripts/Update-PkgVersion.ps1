@@ -3,7 +3,7 @@
 Bumps up package versions after release
 
 .DESCRIPTION
-This script bumps up package versions following conventions defined at https://github.com/Azure/azure-sdk/blob/master/docs/policies/releases.md#incrementing-after-release-net
+This script bumps up package versions following conventions defined at https://github.com/Azure/azure-sdk/blob/main/docs/policies/releases.md#incrementing-after-release-net
 
 .PARAMETER RepoRoot
 The Root of the repo

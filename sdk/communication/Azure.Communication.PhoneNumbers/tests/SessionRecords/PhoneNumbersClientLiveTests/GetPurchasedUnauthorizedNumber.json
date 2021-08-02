@@ -6,15 +6,14 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Date": "Tue, 15 Jun 2021 17:50:32 GMT",
-        "traceparent": "00-f6d23d6aba334848a0f863e70c08d562-20168374baeccf4c-00",
+        "traceparent": "00-8e64fbe1700cea4e9de55f96290d826d-4f7cd71532293c4f-00",
         "User-Agent": [
-          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210615.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20210622.1",
+          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "e684739781afa353c022a391846e3380",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 15 Jun 2021 17:50:32 GMT",
+        "x-ms-date": "Tue, 22 Jun 2021 22:03:08 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -22,18 +21,18 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-03-07",
         "Content-Type": "application/json",
-        "Date": "Tue, 15 Jun 2021 17:50:33 GMT",
-        "MS-CV": "iwXeR/1NnUujYrnQcH/Ztg.0",
+        "Date": "Tue, 22 Jun 2021 22:03:08 GMT",
+        "MS-CV": "OjUUEsJUm0WTKMwnnNwsuA.0",
         "Request-Context": "appId=",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0aOjIYAAAAACFs/HtQwkySKnLF\u002BlYTLg/WVZSMzBFREdFMDQxMAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0HF7SYAAAAADmxa6oDisrQ5sCpDXDk8xxWVZSMzBFREdFMDMxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "367ms"
+        "X-Processing-Time": "368ms"
       },
       "ResponseBody": {
         "error": {
-          "code": "PhoneNumberNotFound",
-          "message": "The specified phone number Sanitized cannot be found.",
+          "code": "NotFound",
+          "message": "Input phoneNumber Sanitized cannot be found.",
           "target": "phonenumber"
         }
       }

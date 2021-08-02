@@ -1,6 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Nullable>annotations</Nullable>
+    <IsMgmtLibrary>true</IsMgmtLibrary>
     <Version>1.0.0-preview.3</Version>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>9.0</LangVersion>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
+    <RestoreAdditionalProjectSources>https://azuresdkartifacts.blob.core.windows.net/azure-sdk-tools/index.json</RestoreAdditionalProjectSources>
     <PackageId>Azure.ResourceManager.Network</PackageId>
     <Description>
       Azure management client SDK for Azure resource provider Microsoft.Network.
@@ -16,6 +27,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
+    <PackageReference Include="Azure.ResourceManager" VersionOverride="1.0.0-alpha.20210728.2" />
   </ItemGroup>
+
 </Project>

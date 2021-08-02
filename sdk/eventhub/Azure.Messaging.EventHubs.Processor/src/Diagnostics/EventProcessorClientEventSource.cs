@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
     /// </remarks>
     ///
     [EventSource(Name = EventSourceName)]
-    internal class EventProcessorClientEventSource : EventSource
+    internal class EventProcessorClientEventSource : AzureEventSource
     {
         /// <summary>The name to use for the event source.</summary>
         private const string EventSourceName = "Azure-Messaging-EventHubs-Processor-EventProcessorClient";
@@ -27,25 +27,14 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   use for logging.
         /// </summary>
         ///
-        public static EventProcessorClientEventSource Log { get; } = new EventProcessorClientEventSource(EventSourceName);
+        public static EventProcessorClientEventSource Log { get; } = new EventProcessorClientEventSource();
 
         /// <summary>
         ///   Prevents an instance of the <see cref="EventProcessorClientEventSource" /> class from being created
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
-        protected EventProcessorClientEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
-        {
-        }
-
-        /// <summary>
-        ///   Prevents an instance of the <see cref="EventProcessorClientEventSource" /> class from being created
-        ///   outside the scope of this library.  Exposed for testing purposes only.
-        /// </summary>
-        ///
-        /// <param name="eventSourceName">The name to assign the event source.</param>
-        ///
-        private EventProcessorClientEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        protected EventProcessorClientEventSource() : base(EventSourceName)
         {
         }
 

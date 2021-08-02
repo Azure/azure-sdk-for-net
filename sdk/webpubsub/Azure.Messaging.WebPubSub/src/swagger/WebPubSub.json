@@ -145,7 +145,7 @@
                     "webpubsub"
                 ],
                 "summary": "Close the client connection.",
-                "operationId": "WebPubSubService_CloseClientConnection",
+                "operationId": "WebPubSubService_CloseConnection",
                 "parameters": [
                     {
                         "in": "path",

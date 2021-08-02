@@ -22,15 +22,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of IPAddressAvailabilityResult. </summary>
         /// <param name="available"> Private IP address availability. </param>
         /// <param name="availableIPAddresses"> Contains other available private IP addresses if the asked for address is taken. </param>
-        internal IPAddressAvailabilityResult(bool? available, IReadOnlyList<string> availableIPAddresses)
+        /// <param name="isPlatformReserved"> Private IP address platform reserved. </param>
+        internal IPAddressAvailabilityResult(bool? available, IReadOnlyList<string> availableIPAddresses, bool? isPlatformReserved)
         {
             Available = available;
             AvailableIPAddresses = availableIPAddresses;
+            IsPlatformReserved = isPlatformReserved;
         }
 
         /// <summary> Private IP address availability. </summary>
         public bool? Available { get; }
         /// <summary> Contains other available private IP addresses if the asked for address is taken. </summary>
         public IReadOnlyList<string> AvailableIPAddresses { get; }
+        /// <summary> Private IP address platform reserved. </summary>
+        public bool? IsPlatformReserved { get; }
     }
 }

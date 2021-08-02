@@ -20,8 +20,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary> Initializes a new instance of EnrichmentStatusList. </summary>
-        /// <param name="nextLink"> . </param>
-        /// <param name="value"> . </param>
+        /// <param name="nextLink"></param>
+        /// <param name="value"></param>
         internal EnrichmentStatusList(string nextLink, IReadOnlyList<EnrichmentStatus> value)
         {
             NextLink = nextLink;

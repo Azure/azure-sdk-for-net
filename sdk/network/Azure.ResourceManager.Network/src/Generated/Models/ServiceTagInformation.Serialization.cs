@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<ServiceTagInformationPropertiesFormat> properties = default;
             Optional<string> name = default;
-            Optional<string> id = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ServiceTagInformation(properties.Value, name.Value, id.Value);
+            return new ServiceTagInformation(id, properties.Value, name.Value);
         }
     }
 }

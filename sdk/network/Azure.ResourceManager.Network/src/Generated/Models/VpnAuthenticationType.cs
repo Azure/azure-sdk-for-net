@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> VPN authentication types enabled for the VpnServerConfiguration. </summary>
+    /// <summary> VPN authentication types enabled for the virtual network gateway. </summary>
     public readonly partial struct VpnAuthenticationType : IEquatable<VpnAuthenticationType>
     {
         private readonly string _value;

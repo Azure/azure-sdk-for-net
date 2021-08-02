@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define a resource to query flow log and traffic analytics (optional) status. </summary>
-    public partial class FlowLogStatusParameters
+    internal partial class FlowLogStatusParameters
     {
         /// <summary> Initializes a new instance of FlowLogStatusParameters. </summary>
         /// <param name="targetResourceId"> The target resource where getting the flow log and traffic analytics (optional) status. </param>

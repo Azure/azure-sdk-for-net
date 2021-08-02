@@ -113,6 +113,9 @@ namespace Azure.Core.Pipeline
             request.Timeout = Timeout.Infinite;
             request.ReadWriteTimeout = Timeout.Infinite;
 
+            // Redirect is handled by the pipeline
+            request.AllowAutoRedirect = false;
+
             // Don't disable the default proxy when there is no environment proxy configured
             if (_environmentProxy != null)
             {

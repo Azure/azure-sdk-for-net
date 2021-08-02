@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
-    public class TopologyTests : NetworkTestsManagementClientBase
+    public class TopologyTests : NetworkServiceClientTestBase
     {
         public TopologyTests(bool isAsync) : base(isAsync)
         {
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         public async Task TopologyApiTest()
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName2 = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName1, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName1, new Resources.Models.ResourceGroup(location));
 
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
@@ -61,20 +61,21 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 adminPassword: Recording.GenerateAlphaNumericId("AzureSDKNetworkTest#")
                 );
 
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName2, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName2, new Resources.Models.ResourceGroup(location));
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create NetworkWatcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync(resourceGroupName2, networkWatcherName, properties);
+            //await networkWatcherContainer.CreateOrUpdateAsync(resourceGroupName2, networkWatcherName, properties);
 
             TopologyParameters tpProperties = new TopologyParameters() { TargetResourceGroupName = resourceGroupName1 };
 
             Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName1, virtualMachineName);
 
             //Get the current network topology of the resourceGroupName1
-            Response<Topology> getTopology = await NetworkManagementClient.NetworkWatchers.GetTopologyAsync("NetworkWatcherRG", "NetworkWatcher_westus2", tpProperties);
+            var networkWatcherContainer = GetNetworkWatcherContainer("NetworkWatcherRG");
+            Response<Topology> getTopology = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.GetTopologyAsync(tpProperties);
 
             //Getting infromation about VM from topology
             TopologyResource vmResource = getTopology.Value.Resources[0];

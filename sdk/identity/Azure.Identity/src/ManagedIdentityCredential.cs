@@ -16,7 +16,7 @@ namespace Azure.Identity
     /// <summary>
     /// Attempts authentication using a managed identity that has been assigned to the deployment environment. This authentication type works in Azure VMs,
     /// App Service and Azure Functions applications, as well as the Azure Cloud Shell. More information about configuring managed identities can be found here:
-    /// https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview
+    /// https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview
     /// </summary>
     public class ManagedIdentityCredential : TokenCredential
     {
@@ -37,7 +37,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="clientId">
         /// The client id to authenticate for a user assigned managed identity.  More information on user assigned managed identities can be found here:
-        /// https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview#how-a-user-assigned-managed-identity-works-with-an-azure-vm
+        /// https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview#how-a-user-assigned-managed-identity-works-with-an-azure-vm
         /// </param>
         /// <param name="options">Options to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)

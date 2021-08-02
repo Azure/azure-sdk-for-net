@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='actionGroupName'>
             /// The name of the action group.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='actionGroupName'>
             /// The name of the action group.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='actionGroupName'>
             /// The name of the action group.
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='actionGroupName'>
             /// The name of the action group.
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='actionGroupName'>
             /// The name of the action group.
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='actionGroupName'>
             /// The name of the action group.
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='actionGroupName'>
             /// The name of the action group.
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='actionGroupName'>
             /// The name of the action group.
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IEnumerable<ActionGroupResource> ListByResourceGroup(this IActionGroupsOperations operations, string resourceGroupName)
             {
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='actionGroupName'>
             /// The name of the action group.
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='actionGroupName'>
             /// The name of the action group.

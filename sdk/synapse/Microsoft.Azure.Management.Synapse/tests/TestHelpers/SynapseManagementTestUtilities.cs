@@ -215,6 +215,23 @@ namespace Microsoft.Azure.Management.Synapse.Tests
         }
 
         /// <summary>
+        /// Create sqlpool create parameters.
+        /// </summary>
+        /// <param name="commonData"></param>
+        /// <returns></returns>
+        public static SqlPoolV3 PrepareSqlPoolV3CreateParams(this CommonTestFixture commonData)
+        {
+            return new SqlPoolV3
+            {
+                Location = commonData.Location,
+                Sku = new SkuV3
+                {
+                    Name = commonData.PerformanceLevel
+                }
+            };
+        }
+
+        /// <summary>
         /// Create spark create parameters.
         /// </summary>
         /// <param name="commonData"></param>

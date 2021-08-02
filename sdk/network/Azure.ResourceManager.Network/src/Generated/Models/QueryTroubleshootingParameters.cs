@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the resource to query the troubleshooting result. </summary>
-    public partial class QueryTroubleshootingParameters
+    internal partial class QueryTroubleshootingParameters
     {
         /// <summary> Initializes a new instance of QueryTroubleshootingParameters. </summary>
         /// <param name="targetResourceId"> The target resource ID to query the troubleshooting result. </param>

@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of EntityLinkingTaskResult. </summary>
-        /// <param name="results"> . </param>
+        /// <param name="results"></param>
         internal EntityLinkingTaskResult(EntityLinkingResult results)
         {
             Results = results;

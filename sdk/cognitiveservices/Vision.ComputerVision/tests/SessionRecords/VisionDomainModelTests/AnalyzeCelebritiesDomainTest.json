@@ -4,7 +4,7 @@
       "RequestUri": "/vision/v3.2/models/celebrities/analyze?model-version=latest",
       "EncodedRequestUri": "L3Zpc2lvbi92My4yL21vZGVscy9jZWxlYnJpdGllcy9hbmFseXplP21vZGVsLXZlcnNpb249bGF0ZXN0",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/satya.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/satya.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""

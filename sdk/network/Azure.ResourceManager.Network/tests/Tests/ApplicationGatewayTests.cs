@@ -18,7 +18,7 @@ using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
-    public class ApplicationGatewayTests : NetworkTestsManagementClientBase
+    public class ApplicationGatewayTests : NetworkServiceClientTestBase
     {
         public ApplicationGatewayTests(bool isAsync) : base(isAsync)
         {
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         private static string GetChildAppGwResourceId(string subscriptionId,
                                                 string resourceGroupName,
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 };
         }
 
-        private ApplicationGateway CreateApplicationGateway(string location, Subnet subnet, string resourceGroupName, string appGwName, string subscriptionId)
+        private ApplicationGatewayData CreateApplicationGateway(string location, Subnet subnet, string resourceGroupName, string appGwName, string subscriptionId)
         {
             string gatewayIPConfigName = Recording.GenerateAssetName("azsmnet");
             string frontendIPConfigName = Recording.GenerateAssetName("azsmnet");
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string urlPathMapName = Recording.GenerateAssetName("azsmnet");
             string pathRuleName = Recording.GenerateAssetName("azsmnet");
 
-            ApplicationGateway appGw = new ApplicationGateway()
+            var appGw = new ApplicationGatewayData()
             {
                 Location = location,
                 Sku = new ApplicationGatewaySku()
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             return appGw;
         }
 
-        private void CompareApplicationGateway(ApplicationGateway gw1, ApplicationGateway gw2)
+        private void CompareApplicationGateway(ApplicationGatewayData gw1, ApplicationGatewayData gw2)
         {
             // compare count of child resources
             Assert.AreEqual(gw1.GatewayIPConfigurations.Count, gw2.GatewayIPConfigurations.Count);
@@ -517,66 +517,68 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = "West US";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string gwSubnetName = Recording.GenerateAssetName("azsmnet");
             string subnet2Name = Recording.GenerateAssetName("azsmnet");
             string appGwName = Recording.GenerateAssetName("azsmnet");
 
-            VirtualNetwork vnet = new VirtualNetwork()
+            var vnet = new VirtualNetworkData()
             {
                 Location = location,
                 AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
                 DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
                 Subnets = {
-                        new Subnet() { Name = gwSubnetName, AddressPrefix = "10.0.0.0/24" },
-                        new Subnet() { Name = subnet2Name, AddressPrefix = "10.0.1.0/24" }
+                        new SubnetData() { Name = gwSubnetName, AddressPrefix = "10.0.0.0/24" },
+                        new SubnetData() { Name = subnet2Name, AddressPrefix = "10.0.1.0/24" }
                     }
             };
 
-            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await NetworkManagementClient.VirtualNetworks.StartCreateOrUpdateAsync(resourceGroupName, vnetName, vnet);
-            await WaitForCompletionAsync(putVnetResponseOperation);
-            Response<VirtualNetwork> getVnetResponse = await NetworkManagementClient.VirtualNetworks.GetAsync(resourceGroupName, vnetName);
-            Response<Subnet> getSubnetResponse = await NetworkManagementClient.Subnets.GetAsync(resourceGroupName, vnetName, gwSubnetName);
-            Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Value.Id);
+            var virtualNetworkContainer = GetVirtualNetworkContainer(resourceGroupName);
+            VirtualNetworksCreateOrUpdateOperation putVnetResponseOperation = await virtualNetworkContainer.StartCreateOrUpdateAsync(vnetName, vnet);
+            await putVnetResponseOperation.WaitForCompletionAsync();;
+            Response<VirtualNetwork> getVnetResponse = await virtualNetworkContainer.GetAsync(vnetName);
+            Response<Subnet> getSubnetResponse = await getVnetResponse.Value.GetSubnets().GetAsync(gwSubnetName);
+            Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Value.Data.Id);
             Response<Subnet> gwSubnet = getSubnetResponse;
 
-            ApplicationGateway appGw = CreateApplicationGateway(location, gwSubnet, resourceGroupName, appGwName, TestEnvironment.SubscriptionId);
+            ApplicationGatewayData appGw = CreateApplicationGateway(location, gwSubnet, resourceGroupName, appGwName, TestEnvironment.SubscriptionId);
 
             // Put AppGw
-            Operation<ApplicationGateway> putAppGw = await NetworkManagementClient.ApplicationGateways.StartCreateOrUpdateAsync(resourceGroupName, appGwName, appGw);
-            Response<ApplicationGateway> putAppGwResponse = await WaitForCompletionAsync(putAppGw);
-            Assert.AreEqual("Succeeded", putAppGwResponse.Value.ProvisioningState.ToString());
+            var applicationGatewayContainer = GetApplicationGatewayContainer(resourceGroupName);
+            Operation<ApplicationGateway> putAppGw = await applicationGatewayContainer.StartCreateOrUpdateAsync(appGwName, appGw);
+            Response<ApplicationGateway> putAppGwResponse = await putAppGw.WaitForCompletionAsync();;
+            Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
 
             // Get AppGw
-            Response<ApplicationGateway> getGateway = await NetworkManagementClient.ApplicationGateways.GetAsync(resourceGroupName, appGwName);
-            Assert.AreEqual(appGwName, getGateway.Value.Name);
-            CompareApplicationGateway(appGw, getGateway);
+            Response<ApplicationGateway> getGateway = await applicationGatewayContainer.GetAsync(appGwName);
+            Assert.AreEqual(appGwName, getGateway.Value.Data.Name);
+            CompareApplicationGateway(appGw, getGateway.Value.Data);
 
             // Get available WAF rule sets (validate first result set/group)
-            Response<ApplicationGatewayAvailableWafRuleSetsResult> availableWAFRuleSets = await NetworkManagementClient.ApplicationGateways.ListAvailableWafRuleSetsAsync();
+            Response<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> availableWAFRuleSets = await ArmClient.DefaultSubscription.GetApplicationGatewayAvailableWafRuleSetsAsync();
             Assert.NotNull(availableWAFRuleSets);
-            Assert.IsNotEmpty(availableWAFRuleSets.Value.Value);
-            Assert.NotNull(availableWAFRuleSets.Value.Value[0].Name);
-            Assert.NotNull(availableWAFRuleSets.Value.Value[0].RuleSetType);
-            Assert.NotNull(availableWAFRuleSets.Value.Value[0].RuleSetVersion);
-            Assert.IsNotEmpty(availableWAFRuleSets.Value.Value[0].RuleGroups);
-            Assert.NotNull(availableWAFRuleSets.Value.Value[0].RuleGroups[0].RuleGroupName);
-            Assert.IsNotEmpty(availableWAFRuleSets.Value.Value[0].RuleGroups[0].Rules);
+            Assert.IsNotEmpty(availableWAFRuleSets.Value);
+            Assert.NotNull(availableWAFRuleSets.Value[0].Name);
+            Assert.NotNull(availableWAFRuleSets.Value[0].RuleSetType);
+            Assert.NotNull(availableWAFRuleSets.Value[0].RuleSetVersion);
+            Assert.IsNotEmpty(availableWAFRuleSets.Value[0].RuleGroups);
+            Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].RuleGroupName);
+            Assert.IsNotEmpty(availableWAFRuleSets.Value[0].RuleGroups[0].Rules);
             // Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].Rules[0].RuleId);
 
             // Get availalbe SSL options
-            Response<ApplicationGatewayAvailableSslOptions> sslOptions = await NetworkManagementClient.ApplicationGateways.ListAvailableSslOptionsAsync();
+            Response<ApplicationGatewayAvailableSslOptions> sslOptions = await ArmClient.DefaultSubscription.GetApplicationGatewayAvailableSslOptionAsync();
             Assert.NotNull(sslOptions.Value.DefaultPolicy);
             Assert.NotNull(sslOptions.Value.AvailableCipherSuites);
             Assert.NotNull(sslOptions.Value.AvailableCipherSuites[20]);
 
-            AsyncPageable<ApplicationGatewaySslPredefinedPolicy> policies = NetworkManagementClient.ApplicationGateways.ListAvailableSslPredefinedPoliciesAsync();
+            AsyncPageable<ApplicationGatewaySslPredefinedPolicy> policies = ArmClient.DefaultSubscription.GetApplicationGatewayAvailableSslPredefinedPoliciesAsync();
             IAsyncEnumerator<ApplicationGatewaySslPredefinedPolicy> enumerator = policies.GetAsyncEnumerator();
             Assert.True(enumerator.MoveNextAsync().Result);
             Assert.NotNull(enumerator.Current.Name);
 
-            Task<Response<ApplicationGatewaySslPredefinedPolicy>> policy = NetworkManagementClient.ApplicationGateways.GetSslPredefinedPolicyAsync(ApplicationGatewaySslPolicyName.AppGwSslPolicy20150501.ToString());
+            Task<Response<ApplicationGatewaySslPredefinedPolicy>> policy = ArmClient.DefaultSubscription.GetApplicationGatewayAvailableSslPredefinedPolicyAsync(ApplicationGatewaySslPolicyName.AppGwSslPolicy20150501.ToString());
             Assert.NotNull(policy.Result.Value.MinProtocolVersion);
             Assert.NotNull(policy.Result.Value.CipherSuites);
             Assert.NotNull(policy.Result.Value.CipherSuites[20]);
@@ -589,33 +591,32 @@ namespace Azure.ResourceManager.Network.Tests.Tests
                 nic1name,
                 resourceGroupName,
                 null,
-                getVnetResponse.Value.Subnets[1].Id,
+                getVnetResponse.Value.Data.Subnets[1].Id,
                 location,
-                "ipconfig",
-                NetworkManagementClient);
+                "ipconfig");
 
             Task<NetworkInterface> nic2 = CreateNetworkInterface(
                 nic2name,
                 resourceGroupName,
                 null,
-                getVnetResponse.Value.Subnets[1].Id,
+                getVnetResponse.Value.Data.Subnets[1].Id,
                 location,
-                "ipconfig",
-                NetworkManagementClient);
+                "ipconfig");
 
             // Add NIC to application gateway backend address pool.
-            nic1.Result.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.BackendAddressPools[1]);
-            nic2.Result.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.BackendAddressPools[1]);
+            nic1.Result.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
+            nic2.Result.Data.IpConfigurations[0].ApplicationGatewayBackendAddressPools.Add(getGateway.Value.Data.BackendAddressPools[1]);
             // Put Nics
-            NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation1 = await NetworkManagementClient.NetworkInterfaces.StartCreateOrUpdateAsync(resourceGroupName, nic1name, nic1.Result);
-            await WaitForCompletionAsync(createOrUpdateOperation1);
+            var networkInterfaceContainer = GetNetworkInterfaceContainer(resourceGroupName);
+            NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation1 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic1name, nic1.Result.Data);
+            await createOrUpdateOperation1.WaitForCompletionAsync();;
 
-            NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation2 = await NetworkManagementClient.NetworkInterfaces.StartCreateOrUpdateAsync(resourceGroupName, nic2name, nic2.Result);
-            await WaitForCompletionAsync(createOrUpdateOperation2);
+            NetworkInterfacesCreateOrUpdateOperation createOrUpdateOperation2 = await networkInterfaceContainer.StartCreateOrUpdateAsync(nic2name, nic2.Result.Data);
+            await createOrUpdateOperation2.WaitForCompletionAsync();;
 
             // Get AppGw backend health
-            Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await NetworkManagementClient.ApplicationGateways.StartBackendHealthAsync(resourceGroupName, appGwName, "true");
-            Response<ApplicationGatewayBackendHealth> backendHealth = await WaitForCompletionAsync(backendHealthOperation);
+            Operation<ApplicationGatewayBackendHealth> backendHealthOperation = await getGateway.Value.StartBackendHealthAsync("true");
+            Response<ApplicationGatewayBackendHealth> backendHealth = await backendHealthOperation.WaitForCompletionAsync();;
 
             Assert.AreEqual(2, backendHealth.Value.BackendAddressPools.Count);
             Assert.AreEqual(1, backendHealth.Value.BackendAddressPools[0].BackendHttpSettingsCollection.Count);
@@ -623,17 +624,17 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.True(backendHealth.Value.BackendAddressPools[1].BackendAddressPool.BackendIPConfigurations.Any());
 
             //Start AppGw
-            await NetworkManagementClient.ApplicationGateways.StartStartAsync(resourceGroupName, appGwName);
+            await getGateway.Value.StartStartAsync();
 
             // Get AppGw and make sure nics are added to backend
-            getGateway = await NetworkManagementClient.ApplicationGateways.GetAsync(resourceGroupName, appGwName);
-            Assert.AreEqual(2, getGateway.Value.BackendAddressPools[1].BackendIPConfigurations.Count);
+            getGateway = await applicationGatewayContainer.GetAsync(appGwName);
+            Assert.AreEqual(2, getGateway.Value.Data.BackendAddressPools[1].BackendIPConfigurations.Count);
 
             //Stop AppGw
-            await NetworkManagementClient.ApplicationGateways.StartStopAsync(resourceGroupName, appGwName);
+            await getGateway.Value.StartStopAsync();
 
             // Delete AppGw
-            await NetworkManagementClient.ApplicationGateways.StartDeleteAsync(resourceGroupName, appGwName);
+            await getGateway.Value.StartDeleteAsync();
         }
     }
 }

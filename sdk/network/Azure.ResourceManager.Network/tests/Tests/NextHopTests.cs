@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
-    public class NextHopTests : NetworkTestsManagementClientBase
+    public class NextHopTests : NetworkServiceClientTestBase
     {
         public NextHopTests(bool isAsync) : base(isAsync)
         {
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         public async Task NextHopApiTest()
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
@@ -63,10 +63,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             //Create Network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
+            //await networkWatcherContainer.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, properties);
 
-            string sourceIPAddress = NetworkManagementClient.NetworkInterfaces
-                                                            .GetAsync(resourceGroupName, networkInterfaceName).Result.Value.IpConfigurations
+            var networkInterfaceContainer = GetNetworkInterfaceContainer(resourceGroupName);
+            string sourceIPAddress = networkInterfaceContainer
+                                                            .GetAsync(networkInterfaceName).Result.Value.Data.IpConfigurations
                                                             .FirstOrDefault().PrivateIPAddress;
 
             Response<VirtualMachine> getVm = await ComputeManagementClient.VirtualMachines.GetAsync(resourceGroupName, virtualMachineName);
@@ -76,13 +77,15 @@ namespace Azure.ResourceManager.Network.Tests.Tests
 
             NextHopParameters nhProperties2 = new NextHopParameters(getVm.Value.Id, sourceIPAddress, "12.11.12.14");
 
-            NetworkWatchersGetNextHopOperation getNextHop1Operation = await NetworkManagementClient.NetworkWatchers.StartGetNextHopAsync("NetworkWatcherRG", "NetworkWatcher_westus2", nhProperties1);
-            Response<NextHopResult> getNextHop1 = await WaitForCompletionAsync(getNextHop1Operation);
+            var networkWatcherContainer = GetNetworkWatcherContainer(resourceGroupName);
+            var networkWatcherResponse = await networkWatcherContainer.GetAsync("NetworkWatcher_westus2");
+            NetworkWatchersGetNextHopOperation getNextHop1Operation = await networkWatcherResponse.Value.StartGetNextHopAsync(nhProperties1);
+            Response<NextHopResult> getNextHop1 = await getNextHop1Operation.WaitForCompletionAsync();;
 
-            NetworkWatchersGetNextHopOperation getNextHop2Operation = await NetworkManagementClient.NetworkWatchers.StartGetNextHopAsync("NetworkWatcherRG", "NetworkWatcher_westus2", nhProperties2);
-            Response<NextHopResult> getNextHop2 = await WaitForCompletionAsync(getNextHop2Operation);
+            NetworkWatchersGetNextHopOperation getNextHop2Operation = await networkWatcherResponse.Value.StartGetNextHopAsync(nhProperties2);
+            Response<NextHopResult> getNextHop2 = await getNextHop2Operation.WaitForCompletionAsync();;
 
-            Response<RouteTable> routeTable = await NetworkManagementClient.RouteTables.GetAsync(resourceGroupName, resourceGroupName + "RT");
+            Response<RouteTable> routeTable = await GetRouteTableContainer(resourceGroupName).GetAsync(resourceGroupName + "RT");
 
             //Validation
             Assert.AreEqual("10.0.1.2", getNextHop1.Value.NextHopIpAddress);

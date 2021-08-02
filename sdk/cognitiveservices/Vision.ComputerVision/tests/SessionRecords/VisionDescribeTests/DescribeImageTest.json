@@ -4,7 +4,7 @@
       "RequestUri": "/vision/v3.2/describe?maxCandidates=2&model-version=latest",
       "EncodedRequestUri": "L3Zpc2lvbi92My4yL2Rlc2NyaWJlP21heENhbmRpZGF0ZXM9MiZtb2RlbC12ZXJzaW9uPWxhdGVzdA==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/dog.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/dog.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""

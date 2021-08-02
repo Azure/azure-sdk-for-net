@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests.Tests
 {
-    public class CheckConnectivityTests : NetworkTestsManagementClientBase
+    public class CheckConnectivityTests : NetworkServiceClientTestBase
     {
         public CheckConnectivityTests(bool isAsync) : base(isAsync)
         {
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             }
         }
 
-        [TearDown]
-        public async Task CleanupResourceGroup()
-        {
-            await CleanupResourceGroupsAsync();
-        }
+        //[TearDown]
+        //public async Task CleanupResourceGroup()
+        //{
+        //    await CleanupResourceGroupsAsync();
+        //}
 
         [Test]
         public async Task CheckConnectivityVmToInternetTest()
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
 
             string location = "westus2";
-            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new ResourceGroup(location));
+            await ResourceGroupsOperations.CreateOrUpdateAsync(resourceGroupName, new Resources.Models.ResourceGroup(location));
             string virtualMachineName = Recording.GenerateAssetName("azsmnet");
             string networkInterfaceName = Recording.GenerateAssetName("azsmnet");
             string networkSecurityGroupName = virtualMachineName + "-nsg";
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             };
 
             VirtualMachineExtensionsCreateOrUpdateOperation createOrUpdateOperation = await ComputeManagementClient.VirtualMachineExtensions.StartCreateOrUpdateAsync(resourceGroupName, getVm.Value.Name, "NetworkWatcherAgent", parameters);
-            await WaitForCompletionAsync(createOrUpdateOperation);
+            await createOrUpdateOperation.WaitForCompletionAsync();;
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             //NetworkWatcher properties = new NetworkWatcher { Location = location };
-            //await NetworkManagementClient.NetworkWatchers.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
+            //await networkWatcherContainer.CreateOrUpdateAsync("NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             ConnectivityParameters connectivityParameters =
                 new ConnectivityParameters(new ConnectivitySource(getVm.Value.Id), new ConnectivityDestination { Address = "bing.com", Port = 80 });
 
-            Operation<ConnectivityInformation> connectivityCheckOperation = await NetworkManagementClient.NetworkWatchers.StartCheckConnectivityAsync("NetworkWatcherRG", "NetworkWatcher_westus2", connectivityParameters);
-            Response<ConnectivityInformation> connectivityCheck = await WaitForCompletionAsync(connectivityCheckOperation);
+            Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.StartCheckConnectivityAsync(connectivityParameters);
+            Response<ConnectivityInformation> connectivityCheck = await connectivityCheckOperation.WaitForCompletionAsync();;
 
             //Validation
             Assert.AreEqual("Reachable", connectivityCheck.Value.ConnectionStatus.ToString());

@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         }
 
         /// <summary> Initializes a new instance of SparkBatchJob. </summary>
-        /// <param name="livyInfo"> . </param>
+        /// <param name="livyInfo"></param>
         /// <param name="name"> The batch name. </param>
         /// <param name="workspaceName"> The workspace name. </param>
         /// <param name="sparkPoolName"> The Spark pool name. </param>

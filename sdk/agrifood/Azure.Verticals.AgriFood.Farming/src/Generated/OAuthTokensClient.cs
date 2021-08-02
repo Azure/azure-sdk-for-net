@@ -64,7 +64,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -116,7 +115,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -168,7 +166,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
         /// <param name="maxPageSize">
         /// Maximum number of items needed (inclusive).
-        /// 
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
@@ -237,25 +234,25 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the farmer. </term>
+        ///     <term>ID of the farmer.</term>
         ///   </item>
         ///   <item>
         ///     <term>oAuthProviderId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the OAuthProvider. </term>
+        ///     <term>ID of the OAuthProvider.</term>
         ///   </item>
         ///   <item>
         ///     <term>userRedirectLink</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Link to redirect the user to, at the end of the oauth flow. </term>
+        ///     <term>Link to redirect the user to, at the end of the oauth flow.</term>
         ///   </item>
         ///   <item>
         ///     <term>userRedirectState</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> State to provide back when redirecting the user, at the end of the oauth flow. </term>
+        ///     <term>State to provide back when redirecting the user, at the end of the oauth flow.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -312,25 +309,25 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     <term>farmerId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the farmer. </term>
+        ///     <term>ID of the farmer.</term>
         ///   </item>
         ///   <item>
         ///     <term>oAuthProviderId</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> ID of the OAuthProvider. </term>
+        ///     <term>ID of the OAuthProvider.</term>
         ///   </item>
         ///   <item>
         ///     <term>userRedirectLink</term>
         ///     <term>string</term>
         ///     <term>Yes</term>
-        ///     <term> Link to redirect the user to, at the end of the oauth flow. </term>
+        ///     <term>Link to redirect the user to, at the end of the oauth flow.</term>
         ///   </item>
         ///   <item>
         ///     <term>userRedirectState</term>
         ///     <term>string</term>
         ///     <term></term>
-        ///     <term> State to provide back when redirecting the user, at the end of the oauth flow. </term>
+        ///     <term>State to provide back when redirecting the user, at the end of the oauth flow.</term>
         ///   </item>
         /// </list>
         /// </remarks>
@@ -496,7 +493,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="oauthProviderId"> ID of the OAuthProvider. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateCascadeDeleteJobAsync(string jobId, string farmerId, string oauthProviderId, RequestOptions options = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(string jobId, string farmerId, string oauthProviderId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -515,14 +512,14 @@ namespace Azure.Verticals.AgriFood.Farming
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "OAuthTokensClient.CreateCascadeDeleteJob");
                         default:
                             throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "OAuthTokensClient.CreateCascadeDeleteJob");
                 }
             }
             catch (Exception e)
@@ -538,7 +535,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="oauthProviderId"> ID of the OAuthProvider. </param>
         /// <param name="options"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateCascadeDeleteJob(string jobId, string farmerId, string oauthProviderId, RequestOptions options = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(string jobId, string farmerId, string oauthProviderId, RequestOptions options = null)
 #pragma warning restore AZC0002
         {
             options ??= new RequestOptions();
@@ -557,14 +554,14 @@ namespace Azure.Verticals.AgriFood.Farming
                     switch (message.Response.Status)
                     {
                         case 202:
-                            return message.Response;
+                            return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "OAuthTokensClient.CreateCascadeDeleteJob");
                         default:
                             throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                     }
                 }
                 else
                 {
-                    return message.Response;
+                    return new LowLevelBinaryDataOperation(_clientDiagnostics, Pipeline, message.Request, message.Response, OperationFinalStateVia.Location, "OAuthTokensClient.CreateCascadeDeleteJob");
                 }
             }
             catch (Exception e)

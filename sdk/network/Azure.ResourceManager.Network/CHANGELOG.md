@@ -1,7 +1,8 @@
 # Release History
 
-## 1.0.0-preview.3 (Unreleased)
+## 1.0.0-preview.3 (2021-07-30)
 
+Initial track2 network SDK.
 
 ## 1.0.0-preview.2 (2020-09-23)
 

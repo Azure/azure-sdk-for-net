@@ -10,18 +10,13 @@
 
 namespace Microsoft.Azure.Management.Purview.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// A privately linkable resource.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class PrivateLinkResource : ProxyResource
+    public partial class PrivateLinkResource
     {
         /// <summary>
         /// Initializes a new instance of the PrivateLinkResource class.
@@ -34,21 +29,17 @@ namespace Microsoft.Azure.Management.Purview.Models
         /// <summary>
         /// Initializes a new instance of the PrivateLinkResource class.
         /// </summary>
-        /// <param name="id">Gets or sets the identifier.</param>
-        /// <param name="name">Gets or sets the name.</param>
-        /// <param name="type">Gets or sets the type.</param>
-        /// <param name="groupId">The private link resource group
-        /// identifier.</param>
-        /// <param name="requiredMembers">This translates to how many Private
-        /// IPs should be created for each privately linkable resource.</param>
-        /// <param name="requiredZoneNames">The required zone names for private
-        /// link resource.</param>
-        public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), string groupId = default(string), IList<string> requiredMembers = default(IList<string>), IList<string> requiredZoneNames = default(IList<string>))
-            : base(id, name, type)
+        /// <param name="id">The private link resource identifier.</param>
+        /// <param name="name">The private link resource name.</param>
+        /// <param name="properties">The private link resource
+        /// properties.</param>
+        /// <param name="type">The private link resource type.</param>
+        public PrivateLinkResource(string id = default(string), string name = default(string), PrivateLinkResourceProperties properties = default(PrivateLinkResourceProperties), string type = default(string))
         {
-            GroupId = groupId;
-            RequiredMembers = requiredMembers;
-            RequiredZoneNames = requiredZoneNames;
+            Id = id;
+            Name = name;
+            Properties = properties;
+            Type = type;
             CustomInit();
         }
 
@@ -58,23 +49,28 @@ namespace Microsoft.Azure.Management.Purview.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the private link resource group identifier.
+        /// Gets the private link resource identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.groupId")]
-        public string GroupId { get; private set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets this translates to how many Private IPs should be created for
-        /// each privately linkable resource.
+        /// Gets the private link resource name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.requiredMembers")]
-        public IList<string> RequiredMembers { get; private set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the required zone names for private link resource.
+        /// Gets the private link resource properties.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.requiredZoneNames")]
-        public IList<string> RequiredZoneNames { get; private set; }
+        [JsonProperty(PropertyName = "properties")]
+        public PrivateLinkResourceProperties Properties { get; private set; }
+
+        /// <summary>
+        /// Gets the private link resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
     }
 }

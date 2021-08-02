@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of P2S Vpn connection health request. </summary>
-    public partial class P2SVpnConnectionHealthRequest
+    internal partial class P2SVpnConnectionHealthRequest
     {
         /// <summary> Initializes a new instance of P2SVpnConnectionHealthRequest. </summary>
         public P2SVpnConnectionHealthRequest()

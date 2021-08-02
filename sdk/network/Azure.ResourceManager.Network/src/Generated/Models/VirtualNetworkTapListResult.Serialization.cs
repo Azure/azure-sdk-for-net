@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualNetworkTapListResult DeserializeVirtualNetworkTapListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualNetworkTap>> value = default;
+            Optional<IReadOnlyList<VirtualNetworkTapData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualNetworkTap> array = new List<VirtualNetworkTap>();
+                    List<VirtualNetworkTapData> array = new List<VirtualNetworkTapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkTap.DeserializeVirtualNetworkTap(item));
+                        array.Add(VirtualNetworkTapData.DeserializeVirtualNetworkTapData(item));
                     }
                     value = array;
                     continue;

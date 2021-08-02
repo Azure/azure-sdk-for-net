@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -126,14 +127,11 @@ namespace Azure.AI.Translation.Document.Tests
 
             DocumentTranslationClient client = GetClient();
 
-            var filter = new DocumentFilter
+            var source = new TranslationSource(sourceUri)
             {
                 Prefix = "File"
             };
-            var source = new TranslationSource(sourceUri)
-            {
-                Filter = filter
-            };
+
             var targets = new List<TranslationTarget> { new TranslationTarget(targetUri, "fr") };
             var input = new DocumentTranslationInput(source, targets);
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
@@ -163,14 +161,11 @@ namespace Azure.AI.Translation.Document.Tests
 
             DocumentTranslationClient client = GetClient();
 
-            var filter = new DocumentFilter
+            var source = new TranslationSource(sourceUri)
             {
                 Suffix = "1.txt"
             };
-            var source = new TranslationSource(sourceUri)
-            {
-                Filter = filter
-            };
+
             var targets = new List<TranslationTarget> { new TranslationTarget(targetUri, "fr") };
             var input = new DocumentTranslationInput(source, targets);
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
@@ -220,9 +215,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(documentsFromOperationList[0].TranslationProgressPercentage, documentsFromGetAllList[0].TranslationProgressPercentage);
             Assert.AreEqual(documentsFromOperationList[0].TranslatedTo, documentsFromGetAllList[0].TranslatedTo);
             Assert.AreEqual(documentsFromOperationList[0].CreatedOn, documentsFromGetAllList[0].CreatedOn);
-            // Ignore because of flaky behavior. Service issue has been created.
-            // https://github.com/Azure/azure-sdk-for-net/issues/20116
-            // Assert.AreEqual(documentsFromOperationList[0].LastModified, documentsFromGetAllList[0].LastModified);
+            Assert.AreEqual(documentsFromOperationList[0].LastModified, documentsFromGetAllList[0].LastModified);
         }
 
         [RecordedTest]
@@ -250,7 +243,6 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        [Ignore("Flaky test. Enable once service provides fix/information")]
         public async Task WrongSourceRightTarget()
         {
             Uri source = new("https://idont.ex.ist");
@@ -260,6 +252,7 @@ namespace Azure.AI.Translation.Document.Tests
 
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+            Thread.Sleep(2000);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
 
@@ -271,7 +264,6 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        [Ignore("Flaky test. Enable once service provides fix/information")]
         public async Task RightSourceWrongTarget()
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
@@ -281,10 +273,11 @@ namespace Azure.AI.Translation.Document.Tests
 
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+            Thread.Sleep(2000);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
 
-            Assert.AreEqual("InvalidDocumentAccessLevel", ex.ErrorCode);
+            Assert.AreEqual("InvalidTargetDocumentAccessLevel", ex.ErrorCode);
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsFalse(operation.HasValue);
@@ -388,6 +381,36 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, documentsList.Count);
             Assert.AreEqual(DocumentTranslationStatus.Failed, documentsList[0].Status);
             Assert.AreEqual(new DocumentTranslationErrorCode("TargetFileAlreadyExists"), documentsList[0].Error.ErrorCode);
+        }
+
+        [RecordedTest]
+        [TestCase("Foo Bar", typeof(ArgumentException))]
+        [TestCase("", typeof(ArgumentException))]
+        [TestCase(null, typeof(ArgumentNullException))]
+        public void DocumentTranslationOperationWithInvalidGuidTest(string invalidGuid, Type expectedException)
+        {
+            var client = GetClient();
+            Assert.Throws(expectedException, () => new DocumentTranslationOperation(invalidGuid, client));
+        }
+
+        [RecordedTest]
+        [TestCase("Foo Bar", typeof(ArgumentException))]
+        [TestCase("", typeof(ArgumentException))]
+        [TestCase(null, typeof(ArgumentNullException))]
+        public async Task GetDocumentStatusWithInvalidGuidTest(string invalidGuid, Type expectedException)
+        {
+            var sourceUri = await CreateSourceContainerAsync(oneTestDocuments);
+            var targetUri = await CreateTargetContainerAsync();
+            string translateTo = "fr";
+
+            var client = GetClient();
+
+            var input = new DocumentTranslationInput(sourceUri, targetUri, translateTo);
+            var operation = await client.StartTranslationAsync(input);
+
+            await operation.WaitForCompletionAsync();
+
+            Assert.Throws(expectedException, () => operation.GetDocumentStatus(invalidGuid));
         }
 
         private async Task PrintNotSucceededDocumentsAsync(DocumentTranslationOperation operation)
