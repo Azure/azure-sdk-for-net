@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         public async Task AvailablePrivateEndpointInResourceGroupTypeTest()
         {
             var resourceGroup = (await createResourceGroup()).Value;
-            var types = await ArmClient.DefaultSubscription.GetAvailablePrivateEndpointTypesByResourceGroupAsync(TestEnvironment.Location, resourceGroup.Data.Name).ToEnumerableAsync();
+            var types = await ArmClient.DefaultSubscription.GetAvailablePrivateEndpointTypesByResourceGroupAsync( resourceGroup.Data.Name, TestEnvironment.Location).ToEnumerableAsync();
             Assert.IsNotEmpty(types);
         }
     }

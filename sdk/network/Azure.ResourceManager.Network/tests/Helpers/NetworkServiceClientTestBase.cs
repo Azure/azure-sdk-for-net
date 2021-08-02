@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             Operation<PublicIPAddress> putPublicIpAddressOperation = await publicIPAddressContainer.StartCreateOrUpdateAsync(name, publicIp);
             Response<PublicIPAddress> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
-            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(resourceGroupName, name);
+            Response<PublicIPAddress> getPublicIpAddressResponse = await publicIPAddressContainer.GetAsync(name);
 
             return getPublicIpAddressResponse;
         }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                         //Subnet = new SubnetData() { Id = subnetId }
+                         Subnet = new SubnetData() { Id = subnetId }
                     }
                 }
             };
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             // Test NIC apis
             var networkInterfaceContainer = GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
             await networkInterfaceContainer.StartCreateOrUpdateAsync(name, nicParameters);
-            Response<NetworkInterface> getNicResponse = await networkInterfaceContainer.GetAsync(resourceGroupName, name);
+            Response<NetworkInterface> getNicResponse = await networkInterfaceContainer.GetAsync(name);
             Assert.AreEqual(getNicResponse.Value.Data.Name, name);
 
             // because its a single CA nic, primaryOnCA is always true

@@ -212,9 +212,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             await createOrUpdateOperation3.WaitForCompletionAsync();;
 
             // Get Nics
-            await networkInterfaceContainer.GetAsync(resourceGroupName, nic1name);
-            await networkInterfaceContainer.GetAsync(resourceGroupName, nic2name);
-            await networkInterfaceContainer.GetAsync(resourceGroupName, nic3name);
+            await networkInterfaceContainer.GetAsync(nic1name);
+            await networkInterfaceContainer.GetAsync(nic2name);
+            await networkInterfaceContainer.GetAsync(nic3name);
 
             // Get lb with expanded nics from nat rules
             getLoadBalancer = await loadBalancerContainer.GetAsync(lbName, "InboundNatRules/backendIPConfiguration");

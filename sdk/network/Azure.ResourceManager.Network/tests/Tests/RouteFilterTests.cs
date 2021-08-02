@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
         //    await CleanupResourceGroupsAsync();
         //}
 
-        private const string Filter_Commmunity = "12076:51004";
+        private const string Filter_Commmunity = "12076:51006";
 
         [Test]
         public async Task RouteFilterApiTest()
