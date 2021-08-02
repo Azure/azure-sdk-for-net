@@ -37,6 +37,161 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline;
         }
 
+        internal HttpMessage CreateGetAllRequest(string location)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/runCommands", false);
+            uri.AppendQuery("api-version", "2021-03-01", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> Lists all available run commands for a subscription in a location. </summary>
+        /// <param name="location"> The location upon which run commands is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public async Task<Response<RunCommandListResult>> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var message = CreateGetAllRequest(location);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RunCommandListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RunCommandListResult.DeserializeRunCommandListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Lists all available run commands for a subscription in a location. </summary>
+        /// <param name="location"> The location upon which run commands is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public Response<RunCommandListResult> GetAll(string location, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var message = CreateGetAllRequest(location);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RunCommandListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RunCommandListResult.DeserializeRunCommandListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetRequest(string location, string commandId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/runCommands/", false);
+            uri.AppendPath(commandId, true);
+            uri.AppendQuery("api-version", "2021-03-01", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> Gets specific run command for a subscription in a location. </summary>
+        /// <param name="location"> The location upon which run commands is queried. </param>
+        /// <param name="commandId"> The command id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="commandId"/> is null. </exception>
+        public async Task<Response<RunCommandDocument>> GetAsync(string location, string commandId, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (commandId == null)
+            {
+                throw new ArgumentNullException(nameof(commandId));
+            }
+
+            using var message = CreateGetRequest(location, commandId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RunCommandDocument value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RunCommandDocument.DeserializeRunCommandDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets specific run command for a subscription in a location. </summary>
+        /// <param name="location"> The location upon which run commands is queried. </param>
+        /// <param name="commandId"> The command id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="commandId"/> is null. </exception>
+        public Response<RunCommandDocument> Get(string location, string commandId, CancellationToken cancellationToken = default)
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (commandId == null)
+            {
+                throw new ArgumentNullException(nameof(commandId));
+            }
+
+            using var message = CreateGetRequest(location, commandId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RunCommandDocument value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RunCommandDocument.DeserializeRunCommandDocument(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandData runCommand)
         {
             var message = _pipeline.CreateMessage();
@@ -427,7 +582,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceGroupName, string vmName, string expand)
+        internal HttpMessage CreateGetByVirtualMachineRequest(string resourceGroupName, string vmName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -457,7 +612,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
-        public async Task<Response<VirtualMachineRunCommandsListResult>> GetAllAsync(string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineRunCommandsListResult>> GetByVirtualMachineAsync(string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -468,7 +623,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, vmName, expand);
+            using var message = CreateGetByVirtualMachineRequest(resourceGroupName, vmName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -490,7 +645,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
-        public Response<VirtualMachineRunCommandsListResult> GetAll(string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineRunCommandsListResult> GetByVirtualMachine(string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -501,7 +656,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateGetAllRequest(resourceGroupName, vmName, expand);
+            using var message = CreateGetByVirtualMachineRequest(resourceGroupName, vmName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -517,7 +672,84 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string resourceGroupName, string vmName, string expand)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string location)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            return message;
+        }
+
+        /// <summary> Lists all available run commands for a subscription in a location. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="location"> The location upon which run commands is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
+        public async Task<Response<RunCommandListResult>> GetAllNextPageAsync(string nextLink, string location, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var message = CreateGetAllNextPageRequest(nextLink, location);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RunCommandListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RunCommandListResult.DeserializeRunCommandListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Lists all available run commands for a subscription in a location. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="location"> The location upon which run commands is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="location"/> is null. </exception>
+        public Response<RunCommandListResult> GetAllNextPage(string nextLink, string location, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            using var message = CreateGetAllNextPageRequest(nextLink, location);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RunCommandListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RunCommandListResult.DeserializeRunCommandListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetByVirtualMachineNextPageRequest(string nextLink, string resourceGroupName, string vmName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -537,7 +769,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vmName"/> is null. </exception>
-        public async Task<Response<VirtualMachineRunCommandsListResult>> GetAllNextPageAsync(string nextLink, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineRunCommandsListResult>> GetByVirtualMachineNextPageAsync(string nextLink, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -552,7 +784,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, vmName, expand);
+            using var message = CreateGetByVirtualMachineNextPageRequest(nextLink, resourceGroupName, vmName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -575,7 +807,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceGroupName"/>, or <paramref name="vmName"/> is null. </exception>
-        public Response<VirtualMachineRunCommandsListResult> GetAllNextPage(string nextLink, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineRunCommandsListResult> GetByVirtualMachineNextPage(string nextLink, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -590,7 +822,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentNullException(nameof(vmName));
             }
 
-            using var message = CreateGetAllNextPageRequest(nextLink, resourceGroupName, vmName, expand);
+            using var message = CreateGetByVirtualMachineNextPageRequest(nextLink, resourceGroupName, vmName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
