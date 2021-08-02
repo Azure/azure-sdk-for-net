@@ -4,9 +4,8 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Key Bugs Fixed
+- Added `ClientOptions.Default` to configure defaults process-wide.
+- Added `HttpPipelinePosition.BeforeTransport` to be able to add policies at the end of the pipeline before the transport.
 
 ### Fixed
 
