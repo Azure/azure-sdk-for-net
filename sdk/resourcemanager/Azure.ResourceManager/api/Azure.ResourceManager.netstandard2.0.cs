@@ -94,14 +94,6 @@ namespace Azure.ResourceManager
         public virtual bool TryGetResourceGroupName(out string resourceGroupName) { throw null; }
         public virtual bool TryGetSubscriptionId(out string subscriptionId) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public static partial class ResourceIdentifierExtensions
-    {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.ResourceManager.ResourceIdentifier AppendChildResource(this Azure.ResourceManager.ResourceIdentifier identifier, string childResourceType, string childResourceName) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.ResourceManager.ResourceIdentifier AppendProviderResource(this Azure.ResourceManager.ResourceIdentifier identifier, string providerNamespace, string resourceType, string resourceName) { throw null; }
-    }
     public partial class ResourceNameFilter : Azure.ResourceManager.GenericResourceFilter, System.IEquatable<Azure.ResourceManager.ResourceNameFilter>, System.IEquatable<string>
     {
         public ResourceNameFilter() { }
@@ -168,32 +160,6 @@ namespace Azure.ResourceManager
 }
 namespace Azure.ResourceManager.Core
 {
-    [System.AttributeUsageAttribute(System.AttributeTargets.Constructor)]
-    public partial class InitializationConstructorAttribute : System.Attribute
-    {
-        public InitializationConstructorAttribute() { }
-    }
-    public static partial class OperationExtensions
-    {
-        public static Azure.Response WaitForCompletion(this Azure.Operation operation, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public static Azure.Response WaitForCompletion(this Azure.Operation operation, System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public static Azure.Response<T> WaitForCompletion<T>(this Azure.Operation<T> operation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<T> WaitForCompletion<T>(this Azure.Operation<T> operation, System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
-    public partial class PropertyReferenceTypeAttribute : System.Attribute
-    {
-        public PropertyReferenceTypeAttribute() { }
-        public PropertyReferenceTypeAttribute(System.Type[] skipTypes) { }
-        public System.Type[] SkipTypes { get { throw null; } }
-    }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
-    public partial class ReferenceTypeAttribute : System.Attribute
-    {
-        public ReferenceTypeAttribute() { }
-        public ReferenceTypeAttribute(System.Type genericType) { }
-        public System.Type GenericType { get { throw null; } }
-    }
     public abstract partial class ResourceContainer : Azure.ResourceManager.Core.ResourceOperations
     {
         protected ResourceContainer() { }
@@ -212,6 +178,18 @@ namespace Azure.ResourceManager.Core
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AsyncPageable<Azure.ResourceManager.Resources.GenericResourceExpanded> GetAtContextAsync(Azure.ResourceManager.Resources.SubscriptionOperations subscription, Azure.ResourceManager.ResourceFilterCollection resourceFilters = null, string expand = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class ResourceManagerExtensions
+    {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ResourceIdentifier AppendChildResource(this Azure.ResourceManager.ResourceIdentifier identifier, string childResourceType, string childResourceName) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ResourceIdentifier AppendProviderResource(this Azure.ResourceManager.ResourceIdentifier identifier, string providerNamespace, string resourceType, string resourceName) { throw null; }
+        public static string GetCorrelationId(this Azure.Response response) { throw null; }
+        public static Azure.Response WaitForCompletion(this Azure.Operation operation, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static Azure.Response WaitForCompletion(this Azure.Operation operation, System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static Azure.Response<T> WaitForCompletion<T>(this Azure.Operation<T> operation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<T> WaitForCompletion<T>(this Azure.Operation<T> operation, System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public abstract partial class ResourceOperations
     {
         protected ResourceOperations() { }
@@ -228,24 +206,11 @@ namespace Azure.ResourceManager.Core
         protected System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Location>> ListAvailableLocationsAsync(Azure.ResourceManager.ResourceType resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected virtual void ValidateResourceType(Azure.ResourceManager.ResourceIdentifier identifier) { }
     }
-    public static partial class ResponseExtensions
-    {
-        public static string GetCorrelationId(this Azure.Response response) { throw null; }
-    }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Constructor)]
-    public partial class SerializationConstructorAttribute : System.Attribute
-    {
-        public SerializationConstructorAttribute() { }
-    }
     public abstract partial class SingletonOperations : Azure.ResourceManager.Core.ResourceOperations
     {
         protected SingletonOperations() { }
         protected SingletonOperations(Azure.ResourceManager.Core.ResourceOperations parent) { }
         protected Azure.ResourceManager.Core.ResourceOperations Parent { get { throw null; } }
-    }
-    public static partial class UtilityExtensions
-    {
-        public static System.Collections.Generic.IDictionary<string, string> ReplaceWith(this System.Collections.Generic.IDictionary<string, string> dest, System.Collections.Generic.IDictionary<string, string> src) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Management
@@ -262,18 +227,18 @@ namespace Azure.ResourceManager.Management
         protected override Azure.ResourceManager.ResourceType ValidResourceType { get { throw null; } }
         public virtual Azure.Response<bool> CheckIfExists(string groupId, Azure.ResourceManager.Management.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.Management.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckIfExistsAsync(string groupId, Azure.ResourceManager.Management.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.Management.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Management.Models.CheckNameAvailabilityResult> CheckNameAvailability(Azure.ResourceManager.Management.Models.CheckNameAvailabilityRequest checkNameAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Management.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(Azure.ResourceManager.Management.Models.CheckNameAvailabilityRequest checkNameAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Management.ManagementGroup> CreateOrUpdate(string groupId, Azure.ResourceManager.Management.Models.CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Management.ManagementGroup>> CreateOrUpdateAsync(string groupId, Azure.ResourceManager.Management.Models.CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Management.Models.CheckNameAvailabilityResult> CheckNameAvailability(Azure.ResourceManager.Management.Models.CheckNameAvailabilityOptions checkNameAvailabilityOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Management.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(Azure.ResourceManager.Management.Models.CheckNameAvailabilityOptions checkNameAvailabilityOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Management.ManagementGroup> CreateOrUpdate(string groupId, Azure.ResourceManager.Management.Models.CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Management.ManagementGroup>> CreateOrUpdateAsync(string groupId, Azure.ResourceManager.Management.Models.CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Management.ManagementGroup> Get(string groupId, Azure.ResourceManager.Management.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.Management.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Management.ManagementGroupInfo> GetAll(string cacheControl = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Management.ManagementGroupInfo> GetAllAsync(string cacheControl = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Management.ManagementGroup>> GetAsync(string groupId, Azure.ResourceManager.Management.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.Management.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Management.ManagementGroup> GetIfExists(string groupId, Azure.ResourceManager.Management.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.Management.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Management.ManagementGroup>> GetIfExistsAsync(string groupId, Azure.ResourceManager.Management.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.Management.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Management.Models.ManagementGroupsCreateOrUpdateOperation StartCreateOrUpdate(string groupId, Azure.ResourceManager.Management.Models.CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Management.Models.ManagementGroupsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string groupId, Azure.ResourceManager.Management.Models.CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Management.Models.ManagementGroupsCreateOrUpdateOperation StartCreateOrUpdate(string groupId, Azure.ResourceManager.Management.Models.CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Management.Models.ManagementGroupsCreateOrUpdateOperation> StartCreateOrUpdateAsync(string groupId, Azure.ResourceManager.Management.Models.CreateManagementGroupOptions createManagementGroupOptions, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ManagementGroupData : Azure.ResourceManager.Resources.Models.Resource
     {
@@ -308,15 +273,15 @@ namespace Azure.ResourceManager.Management
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Management.Models.DescendantInfo> GetDescendantsAsync(string skiptoken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Management.Models.ManagementGroupsDeleteOperation StartDelete(string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Management.Models.ManagementGroupsDeleteOperation> StartDeleteAsync(string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Management.ManagementGroup> Update(Azure.ResourceManager.Management.Models.PatchManagementGroupRequest patchGroupRequest, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Management.ManagementGroup>> UpdateAsync(Azure.ResourceManager.Management.Models.PatchManagementGroupRequest patchGroupRequest, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Management.ManagementGroup> Update(Azure.ResourceManager.Management.Models.PatchManagementGroupOptions patchGroupOptions, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Management.ManagementGroup>> UpdateAsync(Azure.ResourceManager.Management.Models.PatchManagementGroupOptions patchGroupOptions, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Management.Models
 {
-    public partial class CheckNameAvailabilityRequest
+    public partial class CheckNameAvailabilityOptions
     {
-        public CheckNameAvailabilityRequest() { }
+        public CheckNameAvailabilityOptions() { }
         public string Name { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
     }
@@ -327,40 +292,24 @@ namespace Azure.ResourceManager.Management.Models
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.Management.Models.Reason? Reason { get { throw null; } }
     }
-    public partial class CreateManagementGroupChildInfo
-    {
-        internal CreateManagementGroupChildInfo() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Management.Models.CreateManagementGroupChildInfo> Children { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.Management.Models.ManagementGroupChildType? Type { get { throw null; } }
-    }
     public partial class CreateManagementGroupDetails
     {
         public CreateManagementGroupDetails() { }
-        public Azure.ResourceManager.Management.Models.CreateParentGroupInfo Parent { get { throw null; } set { } }
+        public Azure.ResourceManager.Management.Models.ManagementGroupParentCreateOptions Parent { get { throw null; } set { } }
         public string UpdatedBy { get { throw null; } }
         public System.DateTimeOffset? UpdatedTime { get { throw null; } }
         public int? Version { get { throw null; } }
     }
-    public partial class CreateManagementGroupRequest
+    public partial class CreateManagementGroupOptions
     {
-        public CreateManagementGroupRequest() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Management.Models.CreateManagementGroupChildInfo> Children { get { throw null; } }
+        public CreateManagementGroupOptions() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Management.Models.ManagementGroupChildOptions> Children { get { throw null; } }
         public Azure.ResourceManager.Management.Models.CreateManagementGroupDetails Details { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public string TenantId { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class CreateParentGroupInfo
-    {
-        public CreateParentGroupInfo() { }
-        public string DisplayName { get { throw null; } }
-        public string Id { get { throw null; } set { } }
-        public string Name { get { throw null; } }
     }
     public partial class DescendantInfo
     {
@@ -380,6 +329,15 @@ namespace Azure.ResourceManager.Management.Models
     {
         internal ManagementGroupChildInfo() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Management.Models.ManagementGroupChildInfo> Children { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.Management.Models.ManagementGroupChildType? Type { get { throw null; } }
+    }
+    public partial class ManagementGroupChildOptions
+    {
+        internal ManagementGroupChildOptions() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Management.Models.ManagementGroupChildOptions> Children { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
@@ -433,6 +391,13 @@ namespace Azure.ResourceManager.Management.Models
         public static bool operator !=(Azure.ResourceManager.Management.Models.ManagementGroupExpandType left, Azure.ResourceManager.Management.Models.ManagementGroupExpandType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ManagementGroupParentCreateOptions
+    {
+        public ManagementGroupParentCreateOptions() { }
+        public string DisplayName { get { throw null; } }
+        public string Id { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+    }
     public partial class ManagementGroupPathElement
     {
         internal ManagementGroupPathElement() { }
@@ -470,9 +435,9 @@ namespace Azure.ResourceManager.Management.Models
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    public partial class PatchManagementGroupRequest
+    public partial class PatchManagementGroupOptions
     {
-        public PatchManagementGroupRequest() { }
+        public PatchManagementGroupOptions() { }
         public string DisplayName { get { throw null; } set { } }
         public string ParentGroupId { get { throw null; } set { } }
     }
@@ -971,7 +936,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static readonly Azure.ResourceManager.Resources.Models.Location WestUS2;
         protected Location() { }
         public string CanonicalName { get { throw null; } }
-        public static ref readonly Azure.ResourceManager.Resources.Models.Location Default { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public string Name { get { throw null; } }
         public string RegionalDisplayName { get { throw null; } }
@@ -1131,12 +1095,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.RegionType left, Azure.ResourceManager.Resources.Models.RegionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [Azure.ResourceManager.Core.ReferenceTypeAttribute]
     public abstract partial class Resource
     {
-        [Azure.ResourceManager.Core.InitializationConstructorAttribute]
         protected Resource() { }
-        [Azure.ResourceManager.Core.SerializationConstructorAttribute]
         protected internal Resource(Azure.ResourceManager.ResourceIdentifier id, string name, Azure.ResourceManager.ResourceType type) { }
         public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } }
         public virtual string Name { get { throw null; } }
@@ -1198,10 +1159,8 @@ namespace Azure.ResourceManager.Resources.Models
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.ResourceManager.Resources.Models.ResourceGroupExportResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [Azure.ResourceManager.Core.PropertyReferenceTypeAttribute(new System.Type[]{ typeof(Azure.ResourceManager.Resources.Models.ResourceIdentityType)})]
     public partial class ResourceIdentity : System.IEquatable<Azure.ResourceManager.Resources.Models.ResourceIdentity>
     {
-        [Azure.ResourceManager.Core.InitializationConstructorAttribute]
         public ResourceIdentity() { }
         public ResourceIdentity(System.Collections.Generic.Dictionary<Azure.ResourceManager.ResourceIdentifier, Azure.ResourceManager.Resources.Models.UserAssignedIdentity> user, bool useSystemAssigned) { }
         public Azure.ResourceManager.Resources.Models.SystemAssignedIdentity SystemAssignedIdentity { get { throw null; } }
@@ -1333,12 +1292,9 @@ namespace Azure.ResourceManager.Resources.Models
         Off = 1,
         CurrentPeriodOff = 2,
     }
-    [Azure.ResourceManager.Core.ReferenceTypeAttribute]
     public partial class SubResource
     {
-        [Azure.ResourceManager.Core.InitializationConstructorAttribute]
         protected SubResource() { }
-        [Azure.ResourceManager.Core.SerializationConstructorAttribute]
         protected internal SubResource(string id) { }
         public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } }
     }
@@ -1420,13 +1376,10 @@ namespace Azure.ResourceManager.Resources.Models
         ProjectedBy = 1,
         ManagedBy = 2,
     }
-    [Azure.ResourceManager.Core.ReferenceTypeAttribute]
     public abstract partial class TrackedResource : Azure.ResourceManager.Resources.Models.Resource
     {
         protected TrackedResource() { }
-        [Azure.ResourceManager.Core.SerializationConstructorAttribute]
         protected internal TrackedResource(Azure.ResourceManager.ResourceIdentifier id, string name, Azure.ResourceManager.ResourceType type, Azure.ResourceManager.Resources.Models.Location location, System.Collections.Generic.IDictionary<string, string> tags) { }
-        [Azure.ResourceManager.Core.InitializationConstructorAttribute]
         protected TrackedResource(Azure.ResourceManager.Resources.Models.Location location) { }
         public virtual Azure.ResourceManager.Resources.Models.Location Location { get { throw null; } set { } }
         public virtual System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -1444,12 +1397,9 @@ namespace Azure.ResourceManager.Resources.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
     }
-    [Azure.ResourceManager.Core.ReferenceTypeAttribute]
     public partial class WritableSubResource
     {
-        [Azure.ResourceManager.Core.InitializationConstructorAttribute]
         public WritableSubResource() { }
-        [Azure.ResourceManager.Core.SerializationConstructorAttribute]
         protected internal WritableSubResource(string id) { }
         public virtual Azure.ResourceManager.ResourceIdentifier Id { get { throw null; } set { } }
     }

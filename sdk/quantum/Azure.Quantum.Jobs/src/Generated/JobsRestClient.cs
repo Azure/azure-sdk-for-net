@@ -35,24 +35,10 @@ namespace Azure.Quantum.Jobs
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="workspaceName"/> is null. </exception>
         public JobsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string resourceGroupName, string workspaceName, Uri endpoint = null)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            endpoint ??= new Uri("https://quantum.azure.com");
-
-            this.subscriptionId = subscriptionId;
-            this.resourceGroupName = resourceGroupName;
-            this.workspaceName = workspaceName;
-            this.endpoint = endpoint;
+            this.subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
+            this.resourceGroupName = resourceGroupName ?? throw new ArgumentNullException(nameof(resourceGroupName));
+            this.workspaceName = workspaceName ?? throw new ArgumentNullException(nameof(workspaceName));
+            this.endpoint = endpoint ?? new Uri("https://quantum.azure.com");
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

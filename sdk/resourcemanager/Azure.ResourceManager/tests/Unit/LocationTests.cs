@@ -236,14 +236,6 @@ namespace Azure.ResourceManager.Tests
         }
 
         [Test]
-        public void CanAccessDefaultLocation()
-        {
-            Assert.IsNotNull(Location.Default);
-            Location location = Location.Default;
-            Assert.IsTrue(location.Equals(Location.Default));
-        }
-
-        [Test]
         public void LessThanNull()
         {
             Location loc = Location.WestUS2;
