@@ -10,6 +10,7 @@
     <PackageReference Include="Azure.ResourceManager.Resources" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj" />
     <ProjectReference Include="..\src\Azure.ResourceManager.KeyVault.csproj" />
   </ItemGroup>
 </Project>

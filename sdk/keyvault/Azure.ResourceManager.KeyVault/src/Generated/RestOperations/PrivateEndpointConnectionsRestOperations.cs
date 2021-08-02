@@ -94,6 +94,7 @@ namespace Azure.ResourceManager.KeyVault
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
+                case 404:
                     return Response.FromValue((PrivateEndpointConnectionData)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -133,6 +134,7 @@ namespace Azure.ResourceManager.KeyVault
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
+                case 404:
                     return Response.FromValue((PrivateEndpointConnectionData)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
