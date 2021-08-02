@@ -47,16 +47,16 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Filter results by <see cref="DocumentStatus.Id"/>.
         /// </summary>
-        public IList<string> Ids { get; }
+        public IList<string> Ids { get; } = new List<string>();
         /// <summary>
         /// Defines sorting options for the result.
         /// See <see cref="DocumentFilterOrder"/> for more information on which sorting options to use.
         /// </summary>
-        public IList<DocumentFilterOrder> OrderBy { get; }
+        public IList<DocumentFilterOrder> OrderBy { get; } = new List<DocumentFilterOrder>();
         /// <summary>
         /// Filter results by <see cref="DocumentStatus.Status"/>.
         /// See <see cref="DocumentTranslationStatus"/> to know which statuses to use.
         /// </summary>
-        public IList<DocumentTranslationStatus> Statuses { get; }
+        public IList<DocumentTranslationStatus> Statuses { get; } = new List<DocumentTranslationStatus>();
     }
 }

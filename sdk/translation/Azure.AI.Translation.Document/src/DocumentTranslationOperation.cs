@@ -375,7 +375,7 @@ namespace Azure.AI.Translation.Document
                 {
                     var response = _serviceClient.GetDocumentsStatus(
                         new Guid(Id),
-                        ids: filter?.Ids?.Select(id => new Guid(id)),
+                        ids: filter?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")),
                         statuses: filter?.Statuses?.Select(status => status.ToString()),
                         createdDateTimeUtcStart: filter?.CreatedAfter,
                         createdDateTimeUtcEnd: filter?.CreatedBefore,
@@ -426,7 +426,7 @@ namespace Azure.AI.Translation.Document
                 {
                     var response = await _serviceClient.GetDocumentsStatusAsync(
                         new Guid(Id),
-                        ids: filter?.Ids?.Select(id => new Guid(id)),
+                        ids: filter?.Ids?.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")),
                         statuses: filter?.Statuses?.Select(status => status.ToString()),
                         createdDateTimeUtcStart: filter?.CreatedAfter,
                         createdDateTimeUtcEnd: filter?.CreatedBefore,
