@@ -13,15 +13,49 @@ namespace Azure.Core
     /// </summary>
     public abstract class ClientOptions
     {
-        private HttpPipelineTransport _transport = GetDefaultTransport();
+        private HttpPipelineTransport _transport;
+
+        /// <summary>
+        /// Gets the default set of <see cref="ClientOptions"/>. Changes to the <see cref="Default"/> options would be reflected
+        /// in new instances of <see cref="ClientOptions"/> type created after changes to <see cref="Default"/> were made.
+        /// </summary>
+        public static ClientOptions Default { get; private set; } = new DefaultClientOptions();
+
+        // For testing
+        internal static void ResetDefaultOptions()
+        {
+            Default = new DefaultClientOptions();
+        }
 
         /// <summary>
         /// Creates a new instance of <see cref="ClientOptions"/>.
         /// </summary>
-        protected ClientOptions()
+        protected ClientOptions(): this(Default)
         {
-            Retry = new RetryOptions();
-            Diagnostics = new DiagnosticsOptions();
+        }
+
+        internal ClientOptions(ClientOptions? clientOptions)
+        {
+            if (clientOptions != null)
+            {
+                Retry = new RetryOptions(clientOptions.Retry);
+
+                Diagnostics = new DiagnosticsOptions(clientOptions.Diagnostics);
+
+                _transport = clientOptions.Transport;
+                PerCallPolicies = new List<HttpPipelinePolicy>(clientOptions.PerCallPolicies);
+                PerRetryPolicies = new List<HttpPipelinePolicy>(clientOptions.PerRetryPolicies);
+            }
+            else
+            {
+                // Intentionally leaving this null. The only consumer of this branch is
+                // DefaultAzureCredential that would re-assign the value
+                _transport = null!;
+                PerCallPolicies = new List<HttpPipelinePolicy>();
+                PerRetryPolicies = new List<HttpPipelinePolicy>();
+                Diagnostics = new DiagnosticsOptions();
+                Retry = new RetryOptions();
+            }
         }
 
         /// <summary>
@@ -65,9 +99,9 @@ namespace Azure.Core
             }
         }
 
-        internal IList<HttpPipelinePolicy> PerCallPolicies { get; } = new List<HttpPipelinePolicy>();
+        internal IList<HttpPipelinePolicy> PerCallPolicies { get; }
 
-        internal IList<HttpPipelinePolicy> PerRetryPolicies { get; } = new List<HttpPipelinePolicy>();
+        internal IList<HttpPipelinePolicy> PerRetryPolicies { get; }
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -80,31 +114,5 @@ namespace Azure.Core
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string? ToString() => base.ToString();
-
-        private static HttpPipelineTransport GetDefaultTransport()
-        {
-#if NETFRAMEWORK
-            bool GetSwitchValue(string switchName, string envVariable)
-            {
-                if (!AppContext.TryGetSwitch(switchName, out bool ret))
-                {
-                    string? switchValue = Environment.GetEnvironmentVariable(envVariable);
-                    if (switchValue != null)
-                    {
-                        ret = string.Equals("true", switchValue, StringComparison.InvariantCultureIgnoreCase) ||
-                              switchValue.Equals("1", StringComparison.InvariantCultureIgnoreCase);
-                    }
-                }
-
-                return ret;
-            }
-
-            if (!GetSwitchValue("Azure.Core.Pipeline.DisableHttpWebRequestTransport", "AZURE_CORE_DISABLE_HTTPWEBREQUESTTRANSPORT"))
-            {
-                return HttpWebRequestTransport.Shared;
-            }
-#endif
-            return HttpClientTransport.Shared;
-        }
     }
 }

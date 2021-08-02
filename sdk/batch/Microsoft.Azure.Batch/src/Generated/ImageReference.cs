@@ -24,9 +24,16 @@ namespace Microsoft.Azure.Batch
     public partial class ImageReference : ITransportObjectProvider<Models.ImageReference>, IPropertyMetadata
     {
         #region Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageReference"/> class.
+        /// </summary>
+        public ImageReference()
+        {
+        }
 
         internal ImageReference(Models.ImageReference protocolObject)
         {
+            this.ExactVersion = protocolObject.ExactVersion;
             this.Offer = protocolObject.Offer;
             this.Publisher = protocolObject.Publisher;
             this.Sku = protocolObject.Sku;
@@ -37,6 +44,12 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region ImageReference
+
+        /// <summary>
+        /// Gets the specific version of the platform image or marketplace image used to create the node. This read-only 
+        /// field differs from 'version' only if the value specified for 'version' when the pool was created was 'latest'.
+        /// </summary>
+        public string ExactVersion { get; }
 
         /// <summary>
         /// Gets the offer type of the Azure Virtual Machines Marketplace Image.

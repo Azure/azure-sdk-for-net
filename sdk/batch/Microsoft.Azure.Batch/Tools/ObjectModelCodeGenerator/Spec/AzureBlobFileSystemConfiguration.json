@@ -79,6 +79,17 @@
         "HideSetter": true
       },
       "Value": null
+    },
+    {
+      "Key": {
+        "Type": "ComputeNodeIdentityReference",
+        "Name": "IdentityReference",
+        "SummaryComment": "The reference to the user assigned identity to use to access containerName",
+        "RemarksComment": "This property is mutually exclusive with both accountKey and sasKey; exactly one must be specified.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
     }
   ]
 }

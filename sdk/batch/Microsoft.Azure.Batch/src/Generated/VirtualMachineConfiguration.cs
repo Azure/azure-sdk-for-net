@@ -27,9 +27,12 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<ContainerConfiguration> ContainerConfigurationProperty;
             public readonly PropertyAccessor<IList<DataDisk>> DataDisksProperty;
             public readonly PropertyAccessor<DiskEncryptionConfiguration> DiskEncryptionConfigurationProperty;
+            public readonly PropertyAccessor<IList<VMExtension>> ExtensionsProperty;
             public readonly PropertyAccessor<ImageReference> ImageReferenceProperty;
             public readonly PropertyAccessor<string> LicenseTypeProperty;
             public readonly PropertyAccessor<string> NodeAgentSkuIdProperty;
+            public readonly PropertyAccessor<NodePlacementConfiguration> NodePlacementConfigurationProperty;
+            public readonly PropertyAccessor<OSDisk> OSDiskProperty;
             public readonly PropertyAccessor<WindowsConfiguration> WindowsConfigurationProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
@@ -37,9 +40,12 @@ namespace Microsoft.Azure.Batch
                 this.ContainerConfigurationProperty = this.CreatePropertyAccessor<ContainerConfiguration>(nameof(ContainerConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.DataDisksProperty = this.CreatePropertyAccessor<IList<DataDisk>>(nameof(DataDisks), BindingAccess.Read | BindingAccess.Write);
                 this.DiskEncryptionConfigurationProperty = this.CreatePropertyAccessor<DiskEncryptionConfiguration>(nameof(DiskEncryptionConfiguration), BindingAccess.Read | BindingAccess.Write);
+                this.ExtensionsProperty = this.CreatePropertyAccessor<IList<VMExtension>>(nameof(Extensions), BindingAccess.Read | BindingAccess.Write);
                 this.ImageReferenceProperty = this.CreatePropertyAccessor<ImageReference>(nameof(ImageReference), BindingAccess.Read | BindingAccess.Write);
                 this.LicenseTypeProperty = this.CreatePropertyAccessor<string>(nameof(LicenseType), BindingAccess.Read | BindingAccess.Write);
                 this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor<string>(nameof(NodeAgentSkuId), BindingAccess.Read | BindingAccess.Write);
+                this.NodePlacementConfigurationProperty = this.CreatePropertyAccessor<NodePlacementConfiguration>(nameof(NodePlacementConfiguration), BindingAccess.Read | BindingAccess.Write);
+                this.OSDiskProperty = this.CreatePropertyAccessor<OSDisk>(nameof(OSDisk), BindingAccess.Read | BindingAccess.Write);
                 this.WindowsConfigurationProperty = this.CreatePropertyAccessor<WindowsConfiguration>(nameof(WindowsConfiguration), BindingAccess.Read | BindingAccess.Write);
             }
 
@@ -57,6 +63,10 @@ namespace Microsoft.Azure.Batch
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.DiskEncryptionConfiguration, o => new DiskEncryptionConfiguration(o)),
                     nameof(DiskEncryptionConfiguration),
                     BindingAccess.Read | BindingAccess.Write);
+                this.ExtensionsProperty = this.CreatePropertyAccessor(
+                    VMExtension.ConvertFromProtocolCollection(protocolObject.Extensions),
+                    nameof(Extensions),
+                    BindingAccess.Read | BindingAccess.Write);
                 this.ImageReferenceProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ImageReference, o => new ImageReference(o)),
                     nameof(ImageReference),
@@ -68,6 +78,14 @@ namespace Microsoft.Azure.Batch
                 this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor(
                     protocolObject.NodeAgentSKUId,
                     nameof(NodeAgentSkuId),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.NodePlacementConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NodePlacementConfiguration, o => new NodePlacementConfiguration(o)),
+                    nameof(NodePlacementConfiguration),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.OSDiskProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.OsDisk, o => new OSDisk(o)),
+                    nameof(OSDisk),
                     BindingAccess.Read | BindingAccess.Write);
                 this.WindowsConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.WindowsConfiguration, o => new WindowsConfiguration(o)),
@@ -146,6 +164,21 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the virtual machine extension for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If specified, the extensions mentioned in this configuration will be installed on each node.
+        /// </remarks>
+        public IList<VMExtension> Extensions
+        {
+            get { return this.propertyContainer.ExtensionsProperty.Value; }
+            set
+            {
+                this.propertyContainer.ExtensionsProperty.Value = ConcurrentChangeTrackedModifiableList<VMExtension>.TransformEnumerableToConcurrentModifiableList(value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a reference to the Azure Virtual Machines Marketplace Image or the custom Virtual Machine Image 
         /// to use.
         /// </summary>
@@ -182,6 +215,27 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.NodeAgentSkuIdProperty.Value; }
             set { this.propertyContainer.NodeAgentSkuIdProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the node placement configuration for the pool.
+        /// </summary>
+        /// <remarks>
+        /// This configuration will specify rules on how nodes in the pool will be physically allocated.
+        /// </remarks>
+        public NodePlacementConfiguration NodePlacementConfiguration
+        {
+            get { return this.propertyContainer.NodePlacementConfigurationProperty.Value; }
+            set { this.propertyContainer.NodePlacementConfigurationProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets settings for the operating system disk of the Virtual Machine.
+        /// </summary>
+        public OSDisk OSDisk
+        {
+            get { return this.propertyContainer.OSDiskProperty.Value; }
+            set { this.propertyContainer.OSDiskProperty.Value = value; }
         }
 
         /// <summary>
@@ -223,9 +277,12 @@ namespace Microsoft.Azure.Batch
                 ContainerConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.ContainerConfiguration, (o) => o.GetTransportObject()),
                 DataDisks = UtilitiesInternal.ConvertToProtocolCollection(this.DataDisks),
                 DiskEncryptionConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.DiskEncryptionConfiguration, (o) => o.GetTransportObject()),
+                Extensions = UtilitiesInternal.ConvertToProtocolCollection(this.Extensions),
                 ImageReference = UtilitiesInternal.CreateObjectWithNullCheck(this.ImageReference, (o) => o.GetTransportObject()),
                 LicenseType = this.LicenseType,
                 NodeAgentSKUId = this.NodeAgentSkuId,
+                NodePlacementConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NodePlacementConfiguration, (o) => o.GetTransportObject()),
+                OsDisk = UtilitiesInternal.CreateObjectWithNullCheck(this.OSDisk, (o) => o.GetTransportObject()),
                 WindowsConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.WindowsConfiguration, (o) => o.GetTransportObject()),
             };
 
