@@ -4,7 +4,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Nullable>annotations</Nullable>
-    <IsMgmtLibrary>true</IsMgmtLibrary>
     <Version>1.0.0-preview.3</Version>
   </PropertyGroup>
 
@@ -19,6 +18,7 @@
     </Description>
     <PackageTags>azure;management;network</PackageTags>
     <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
 
   <PropertyGroup>

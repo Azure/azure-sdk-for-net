@@ -6,6 +6,7 @@ Namespaces for this example:
 ```C# Snippet:Hello_World_Namespaces
 using System;
 using Azure.Identity;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 ```
 

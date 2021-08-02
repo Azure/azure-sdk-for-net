@@ -289,6 +289,17 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "int?",
+            "Name": "MaxParallelTasks",
+            "SummaryComment": "The maximum number of tasks that can be executed in parallel for the job.",
+            "RemarksComment": "The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
         }
       ]
     }

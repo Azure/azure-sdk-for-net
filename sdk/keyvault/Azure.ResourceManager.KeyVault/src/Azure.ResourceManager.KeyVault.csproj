@@ -10,6 +10,7 @@
     <!-- TODO: Temp workaround. Should be fixed prio release  -->
     <NoWarn>$(NoWarn);AZC0008;</NoWarn>
     <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
+    <IsMgmtSubLibrary>false</IsMgmtSubLibrary>
   </PropertyGroup>
 
   <ItemGroup>
