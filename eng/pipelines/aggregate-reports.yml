@@ -6,6 +6,10 @@ resources:
     branch: main
     tags: 
     - scheduled
+  - pipeline: net-aggregate-reports
+    project: internal
+    source: net - aggregate-reports
+    branch: AddPoliCheck
 
 trigger: none
 
@@ -155,7 +159,9 @@ stages:
       - job: GuardianTools
         timeoutInMinutes: 120
         steps:
-          - checkout: self
+          - download: net-aggregate-reports
+            artifact: CodeAnalysisLogs
+            patterns: '*'
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
             displayName: 'Run PoliCheck'
             inputs:
@@ -170,7 +176,7 @@ stages:
               GdnBreakAllTools: false
               GdnBreakGdnToolPoliCheck: true
               GdnBreakGdnToolPoliCheckSeverity: Warning
-              GdnBreakBaselineFiles: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnbaselines'
+              GdnBreakBaselineFiles: '$(PIPELINE.WORKSPACE)/net-aggregate-reports/CodeAnalysisLogs/policheck.gdnbaselines  '
               GdnBreakBaselines: policheck
               GdnBreakSuppressionFiles: '$(Build.SourcesDirectory)\eng\guardian-tools\policheck.gdnsuppress'
               GdnBreakSuppressionSets: policheck
