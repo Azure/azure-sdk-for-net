@@ -48,6 +48,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Azure resource properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public SubscriptionFeatureRegistrationProperties Properties { get; set; }
