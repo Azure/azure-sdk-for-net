@@ -72,5 +72,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             Workspace updatedResource = await resource.UpdateAsync(update);
             Assert.AreEqual("Updated", updatedResource.Data.Description);
         }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetWorkspaceFeatures()
+        {
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);
+            Workspace resource = await rg.GetWorkspaces().GetAsync(_resourceName);
+            var features = await resource.GetWorkspaceFeaturesAsync().ToEnumerableAsync();
+            Assert.Greater(features.Count, 1);
+        }
     }
 }

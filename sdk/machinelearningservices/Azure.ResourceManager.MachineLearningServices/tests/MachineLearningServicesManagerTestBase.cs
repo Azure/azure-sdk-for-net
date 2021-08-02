@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests
 
         protected ResourceDataCreationHelper DataHelper => new ResourceDataCreationHelper(this);
 
+        protected Location DefaultLocation => Location.WestUS2;
+
         protected MachineLearningServicesManagerTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {

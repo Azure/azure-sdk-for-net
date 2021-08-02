@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.ScenarioTests
             StopSessionRecording();
         }
 
-        //BUGBUG
-        //[TestCase]
-        //[RecordedTest]
+        [TestCase]
+        [RecordedTest]
         public async Task Delete()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().GetAsync(_resourceGroupName);

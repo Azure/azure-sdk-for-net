@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.ResourceManager.MachineLearningServices.Models;
 using Azure.ResourceManager.Resources.Models;
 using ResourceIdentityType = Azure.ResourceManager.Resources.Models.ResourceIdentityType;
@@ -45,7 +46,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
 
         public BatchEndpointTrackedResourceData GenerateBatchEndpointTrackedResourceData()
         {
-            throw new NotImplementedException();
+            return new BatchEndpointTrackedResourceData(
+                Location.WestUS2,
+                new BatchEndpoint
+                {
+                    AuthMode = EndpointAuthMode.AADToken,
+                    Description = "Test",
+                });
         }
 
         public CodeContainer GenerateCodeContainerResourceData()
@@ -113,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Tests.Extensions
 
         public JobBase GenerateJobBaseResourceData()
         {
-            throw new NotImplementedException();
+            return new CommandJob("cd ~", new ComputeConfiguration());
         }
 
         public LabelingJob GenerateLabelingJobResourceData()

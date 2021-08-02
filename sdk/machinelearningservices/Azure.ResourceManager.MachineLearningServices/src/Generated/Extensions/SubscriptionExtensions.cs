@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
             ).ConfigureAwait(false);
         }
-
+        
         /// <summary> Update quota for each VM family in workspace. </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <param name="location"> The location for update quota is queried. </param>
