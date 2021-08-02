@@ -934,14 +934,13 @@ namespace Azure.Messaging.ServiceBus
                     _ = _messageHandlerSemaphore.WaitAsync();
                 }
 
-                int excessTasks = _tasks.Select(t => !t.Item1.IsCompleted).Count() - newConcurrency;
-                if (excessTasks > 0)
+                var activeTasks = _tasks.Where(t => !t.Item1.IsCompleted).ToList();
+                int excessTasks = activeTasks.Count - newConcurrency;
+
+                // cancel excess tasks
+                for (int i = 0; i < excessTasks; i++)
                 {
-                    // cancel excess tasks
-                    for (int i = 0; i < excessTasks; i++)
-                    {
-                        _tasks[i].Item2.Cancel();
-                    }
+                    activeTasks[i].Item2.Cancel();
                 }
 
                 if (IsSessionProcessor)
