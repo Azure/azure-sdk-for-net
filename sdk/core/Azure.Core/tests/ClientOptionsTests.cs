@@ -160,14 +160,21 @@ namespace Azure.Core.Tests
                 var policy = new PipelineSamples.StopwatchPolicy();
                 o.AddPolicy(policy, HttpPipelinePosition.PerCall);
                 return policy;
-            }, o => o.PerCallPolicies.LastOrDefault());
+            }, o => o.Policies?.LastOrDefault(p=>p.Position == HttpPipelinePosition.PerCall).Policy);
 
             yield return M(o =>
             {
                 var policy = new PipelineSamples.StopwatchPolicy();
                 o.AddPolicy(policy, HttpPipelinePosition.PerRetry);
                 return policy;
-            }, o => o.PerRetryPolicies.LastOrDefault());
+            }, o => o.Policies?.LastOrDefault(p=>p.Position == HttpPipelinePosition.PerRetry).Policy);
+
+            yield return M(o =>
+            {
+                var policy = new PipelineSamples.StopwatchPolicy();
+                o.AddPolicy(policy, HttpPipelinePosition.BeforeTransport);
+                return policy;
+            }, o => o.Policies?.LastOrDefault(p=>p.Position == HttpPipelinePosition.BeforeTransport).Policy);
 
             yield return M(o => o.Retry.Delay = TimeSpan.FromDays(5), o => o.Retry.Delay);
             yield return M(o => o.Retry.Mode = RetryMode.Fixed, o => o.Retry.Mode);
