@@ -98,8 +98,9 @@ namespace Azure.DigitalTwins.Core.QueryBuilder
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsQueryBuilderOverride" language="csharp">
         /// // SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
-        /// new DigitalTwinsQueryBuilder()
+        /// new DigitalTwinsQueryBuilderV1()
         /// .SelectCustom(&quot;TOP(3) Room, Temperature&quot;)
+        /// .From(DigitalTwinsCollection.DigitalTwins)
         /// .Build();
         /// </code>
         /// </example>

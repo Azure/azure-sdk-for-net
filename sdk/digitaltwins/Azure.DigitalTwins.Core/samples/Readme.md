@@ -289,7 +289,7 @@ In addition to passing strings as a query parameter, it is possible to pass in a
 // This code snippet demonstrates querying digital twin results using an AdtQueryBuilder, an object that allows for 
 // fluent-style query construction that makes it easier to write queries.
 AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilder = client.QueryAsync<BasicDigitalTwin>(
-    new DigitalTwinsQueryBuilder()
+    new DigitalTwinsQueryBuilderV1()
         .SelectAll()
         .From(DigitalTwinsCollection.DigitalTwins)
         .Build());
@@ -297,41 +297,45 @@ AsyncPageable<BasicDigitalTwin> asyncPageableResponseQueryBuilder = client.Query
 
 ### Build ADT Queries
 
-Build an [Azure DigitalTwins Query Store Language](https://docs.microsoft.com/azure/digital-twins/concepts-query-language) using an `DigitalTwinsQueryBuilder`. When using a `Where` clause, conditions are separated from the `Where` keyword (see `whereIsOfModel`)
+Build an [Azure DigitalTwins Query](https://docs.microsoft.com/azure/digital-twins/concepts-query-language) using a `DigitalTwinsQueryBuilder`. 
+
+
+#### **Query Builder V1**
+Use a `DigitalTwinsQueryBuilderV1` to construct DigitalTwins queryies via method chaining on the `DigitalTwinsQueryBuilderV1` object. When using a `Where` clause, conditions are separated from the `Where` keyword (see `whereIsOfModel`)
 
 ```C# Snippet:DigitalTwinsQueryBuilder
 // SELECT * FROM DIGITALTWINS
-DigitalTwinsQueryBuilder simplestQuery = new DigitalTwinsQueryBuilder().Select("*").From(DigitalTwinsCollection.DigitalTwins).Build();
+DigitalTwinsQueryBuilderV1 simplestQuery = new DigitalTwinsQueryBuilderV1().Select("*").From(DigitalTwinsCollection.DigitalTwins).Build();
 
 // SELECT * FROM DIGITALTWINS
 // Note that the this is the same as the previous query, just with the pre-built SelectAll() method that can be used
 // interchangeably with Select("*")
-DigitalTwinsQueryBuilder simplestQuerySelectAll = new DigitalTwinsQueryBuilder().SelectAll().From(DigitalTwinsCollection.DigitalTwins).Build();
+DigitalTwinsQueryBuilderV1 simplestQuerySelectAll = new DigitalTwinsQueryBuilderV1().SelectAll().From(DigitalTwinsCollection.DigitalTwins).Build();
 
 // SELECT TOP(3) FROM DIGITALTWINS
 // Note that if no property is specified, the SelectTopAll() method can be used instead of SelectTop()
-DigitalTwinsQueryBuilder queryWithSelectTop = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 queryWithSelectTop = new DigitalTwinsQueryBuilderV1()
     .SelectTopAll(3)
     .From(DigitalTwinsCollection.DigitalTwins)
     .Build();
 
 
 // SELECT TOP(3) Temperature, Humidity FROM DIGITALTWINS
-DigitalTwinsQueryBuilder queryWithSelectTopProperty = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 queryWithSelectTopProperty = new DigitalTwinsQueryBuilderV1()
     .SelectTop(3, "Temperature", "Humidity")
     .From(DigitalTwinsCollection.DigitalTwins)
     .Build();
 
 
 // SELECT COUNT() FROM RELATIONSHIPS
-DigitalTwinsQueryBuilder queryWithSelectRelationships = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 queryWithSelectRelationships = new DigitalTwinsQueryBuilderV1()
     .SelectCount()
     .From(DigitalTwinsCollection.Relationships)
     .Build();
 
 
 // SELECT * FROM DIGITALTWINS WHERE IS_OF_MODEL("dtmi:example:room;1")
-DigitalTwinsQueryBuilder queryWithIsOfModel = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 queryWithIsOfModel = new DigitalTwinsQueryBuilderV1()
     .Select("*")
     .From(DigitalTwinsCollection.DigitalTwins)
     .Where(q => q.IsOfModel("dtmi:example:room;1"))
@@ -342,17 +346,17 @@ Clauses can also be manually overridden with strings:
 
 ```C# Snippet:DigitalTwinsQueryBuilderOverride
 // SELECT TOP(3) Room, Temperature FROM DIGITALTWINS
-new DigitalTwinsQueryBuilder()
+new DigitalTwinsQueryBuilderV1()
 .SelectCustom("TOP(3) Room, Temperature")
 .From(DigitalTwinsCollection.DigitalTwins)
 .Build();
 ```
 
-For queries with multiple conditions, use logical operators or nested conditions.
+For queries with multiple conditions, use logical operators (the `And()`/`Or()` methods) or nested conditions via the `Precedence()` method, which uses lambda expressions to nest parts of a query in parenthesis.
 
 ```C# Snippet:DigitalTwinsQueryBuilder_ComplexConditions
 // SELECT * FROM DIGITALTWINS WHERE Temperature = 50 OR IS_OF_MODEL("dtmi..", exact) OR IS_NUMBER(Temperature)
-DigitalTwinsQueryBuilder logicalOps_MultipleOr = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 logicalOps_MultipleOr = new DigitalTwinsQueryBuilderV1()
     .SelectAll()
     .From(DigitalTwinsCollection.DigitalTwins)
     .Where(q => q
@@ -365,7 +369,7 @@ DigitalTwinsQueryBuilder logicalOps_MultipleOr = new DigitalTwinsQueryBuilder()
 
 // SELECT * FROM DIGITALTWINS WHERE (IS_NUMBER(Humidity) OR IS_DEFINED(Humidity)) 
 // OR (IS_OF_MODEL("dtmi:example:hvac;1") AND IS_NULL(Occupants))
-DigitalTwinsQueryBuilder logicalOpsNested = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 logicalOpsNested = new DigitalTwinsQueryBuilderV1()
     .SelectAll()
     .From(DigitalTwinsCollection.DigitalTwins)
     .Where(q => q
@@ -385,7 +389,7 @@ Using nested conditions is a workaround for subjective queries that could be int
 
 ```C# Snippet:DigitalTwinsQueryBuilder_SubjectiveConditionsWorkaround
 // SELECT * FROM DIGITALTWINS WHERE (Temperature = 50 OR IS_OF_MODEL("dtmi..", exact)) AND IS_NUMBER(Temperature)
-DigitalTwinsQueryBuilder subjectiveLogicalOps = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 subjectiveLogicalOps = new DigitalTwinsQueryBuilderV1()
     .SelectAll()
     .From(DigitalTwinsCollection.DigitalTwins)
     .Where(q => q
@@ -396,7 +400,7 @@ DigitalTwinsQueryBuilder subjectiveLogicalOps = new DigitalTwinsQueryBuilder()
         .IsOfType("Temperature", DigitalTwinsDataType.DigitalTwinsNumber))
     .Build();
 
-DigitalTwinsQueryBuilder objectiveLogicalOps = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 objectiveLogicalOps = new DigitalTwinsQueryBuilderV1()
     .SelectAll()
     .From(DigitalTwinsCollection.DigitalTwins)
     .Where(q => q
@@ -413,7 +417,7 @@ Use aliasing to form more complicated queries by renaming selectable properties 
 
 ```C# Snippet:DigitalTwinsQueryBuilder_Aliasing
 // SELECT Temperature AS Temp, Humidity AS HUM FROM DigitalTwins
-DigitalTwinsQueryBuilder selectAsSample = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 selectAsSample = new DigitalTwinsQueryBuilderV1()
     .SelectAs("Temperature", "Temp")
     .SelectAs("Humidity", "Hum")
     .From(DigitalTwinsCollection.DigitalTwins)
@@ -421,7 +425,7 @@ DigitalTwinsQueryBuilder selectAsSample = new DigitalTwinsQueryBuilder()
 
 
 // SELECT Temperature, Humidity AS Hum FROM DigitalTwins
-DigitalTwinsQueryBuilder selectAndSelectAs = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 selectAndSelectAs = new DigitalTwinsQueryBuilderV1()
     .Select("Temperature")
     .SelectAs("Humidity", "Hum")
     .From(DigitalTwinsCollection.DigitalTwins)
@@ -429,14 +433,14 @@ DigitalTwinsQueryBuilder selectAndSelectAs = new DigitalTwinsQueryBuilder()
 
 
 // SELECT T FROM DigitalTwins T
-DigitalTwinsQueryBuilder anotherSelectAsSample = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 anotherSelectAsSample = new DigitalTwinsQueryBuilderV1()
     .Select("T")
     .From(DigitalTwinsCollection.DigitalTwins, "T")
     .Build();
 
 
 // SELECT T.Temperature, T.Humdity FROM DigitalTwins T
-DigitalTwinsQueryBuilder collectionAliasing = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 collectionAliasing = new DigitalTwinsQueryBuilderV1()
     .Select("T.Temperature", "T.Humidity")
     .From(DigitalTwinsCollection.DigitalTwins)
     .Build();
@@ -444,7 +448,7 @@ DigitalTwinsQueryBuilder collectionAliasing = new DigitalTwinsQueryBuilder()
 
 // SELECT T.Temperature AS Temp, T.Humidity AS Hum FROM DigitalTwins T
 // WHERE T.Temerpature = 50 AND T.Humidity = 30
-DigitalTwinsQueryBuilder bothAliasingTypes = new DigitalTwinsQueryBuilder()
+DigitalTwinsQueryBuilderV1 bothAliasingTypes = new DigitalTwinsQueryBuilderV1()
     .SelectAs("T.Temperature", "Temp")
     .SelectAs("T.Humidity", "Hum")
     .From(DigitalTwinsCollection.DigitalTwins, "T")
@@ -458,12 +462,15 @@ DigitalTwinsQueryBuilder bothAliasingTypes = new DigitalTwinsQueryBuilder()
 Turn a `DigitalTwinsQueryBuilder` to a string by calling `GetQueryText()` after `Build()`:
 
 ```C# Snippet:DigitalTwinsQueryBuilderToString
-string basicQueryStringFormat = new DigitalTwinsQueryBuilder()
+string basicQueryStringFormat = new DigitalTwinsQueryBuilderV1()
     .SelectAll()
     .From(DigitalTwinsCollection.DigitalTwins)
     .Build()
     .GetQueryText();
 ```
+
+#### **Query Builder V2**
+Use the `DigitalTwinsQueryBuilderV2` object to construct queries. This version works similarly to `V1` with the addition of a generic type option that allows for the usage of LINQ expressions to intelligently construct queries.
 
 ### Delete digital twins
 
