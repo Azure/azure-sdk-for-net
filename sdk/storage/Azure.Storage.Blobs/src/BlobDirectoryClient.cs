@@ -65,6 +65,57 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
+        /// <summary>
+        /// The Storage account name corresponding to the blob directory client.
+        /// </summary>
+        private string _accountName;
+
+        /// <summary>
+        /// Gets the Storage account name corresponding to the blob directory client.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _accountName;
+            }
+        }
+
+        /// <summary>
+        /// The container name corresponding to the blob directory client.
+        /// </summary>
+        private string _containerName;
+
+        /// <summary>
+        /// Gets the container name corresponding to the blob directory client.
+        /// </summary>
+        public virtual string BlobContainerName
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _containerName;
+            }
+        }
+
+        /// <summary>
+        /// The name of the virtual blob directory.
+        /// </summary>
+        private string _name;
+
+        /// <summary>
+        /// Gets the name of the virtual blob directory.
+        /// </summary>
+        public virtual string Name
+        {
+            get
+            {
+                SetNameFieldsIfNull();
+                return _name;
+            }
+        }
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobDirectoryClient"/>
@@ -326,21 +377,142 @@ namespace Azure.Storage.Blobs.Specialized
         /// Create a new <see cref="BlobClient"/> object by appending
         /// <paramref name="blobName"/> to the end of <see cref="Uri"/>.  The
         /// new <see cref="BlobClient"/> uses the same request policy
-        /// pipeline as the <see cref="BlobContainerClient"/>.
+        /// pipeline as the <see cref="BlobDirectoryClient"/>.
         /// </summary>
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName)
         {
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+            {
+                BlobName = $"{Name}/{blobName}"
+            };
+
             return new BlobClient(
-                Uri.AppendToPath(blobName),
+                blobUriBuilder.ToUri(),
                 ClientConfiguration,
                 ClientSideEncryption);
         }
 
+        /// <summary>
+        /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobDirectoryClient"/>'s parent container.
+        /// The new <see cref="BlobContainerClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobDirectoryClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        public virtual BlobContainerClient GetParentBlobContainerClient()
+        {
+            return GetParentBlobContainerClientCore();
+        }
+
+        /// <summary>
+        /// Sets the various name fields if they are currently null.
+        /// </summary>
+        private void SetNameFieldsIfNull()
+        {
+            if (_name == null || _containerName == null || _accountName == null)
+            {
+                var builder = new BlobUriBuilder(Uri);
+                _name = builder.BlobName;
+                _containerName = builder.BlobContainerName;
+                _accountName = builder.AccountName;
+            }
+        }
+
+        #region GetBlobs
+        /// <summary>
+        /// The <see cref="GetBlobs"/> operation returns an async sequence
+        /// of blobs in this container.  Enumerating the blobs may make
+        /// multiple requests to the service while fetching all the values.
+        /// Blobs are ordered lexicographically by name.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
+        /// List Blobs</see>.
+        /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the blobs.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for filtering the blobs.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only blobs
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{T}"/> of <see cref="BlobItem"/>
+        /// describing the blobs in the container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<BlobItem> GetBlobs(
+            BlobTraits traits = BlobTraits.None,
+            BlobStates states = BlobStates.None,
+            string prefix = default,
+            CancellationToken cancellationToken = default)
+        {
+            prefix = prefix != null ? $"{Name}/{prefix}" : Name;
+
+            return GetParentBlobContainerClient()
+                .GetBlobs(traits, states, prefix, cancellationToken);
+        }
+
+        /// <summary>
+        /// The <see cref="GetBlobsAsync"/> operation returns an async
+        /// sequence of blobs in this container.  Enumerating the blobs may
+        /// make multiple requests to the service while fetching all the
+        /// values.  Blobs are ordered lexicographically by name.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
+        /// List Blobs</see>.
+        /// </summary>
+        /// <param name="traits">
+        /// Specifies trait options for shaping the blobs.
+        /// </param>
+        /// <param name="states">
+        /// Specifies state options for filtering the blobs.
+        /// </param>
+        /// <param name="prefix">
+        /// Specifies a string that filters the results to return only blobs
+        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the
+        /// blobs in the container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<BlobItem> GetBlobsAsync(
+            BlobTraits traits = BlobTraits.None,
+            BlobStates states = BlobStates.None,
+            string prefix = default,
+            CancellationToken cancellationToken = default)
+        {
+            prefix = prefix != null ? $"{Name}/{prefix}" : Name;
+
+            return GetParentBlobContainerClient()
+                .GetBlobsAsync(traits, states, prefix, cancellationToken);
+        }
+        #endregion GetBlobs
+
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(string, StorageTransferOptions, BlobDirectoryUploadOptions, CancellationToken)"/>
+        /// The <see cref="Upload(string, BlobDirectoryUploadOptions, CancellationToken)"/>
         /// operation overwrites the contents of the blob directory, creating a new blob
         /// if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
@@ -357,9 +529,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="localPath">
         /// A <see cref="Directory"/> containing the content to upload.
-        /// </param>
-        /// <param name="transferOptions">
-        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -381,21 +550,19 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual IEnumerable<Response<BlobContentInfo>> Upload(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             string localPath,
-            StorageTransferOptions transferOptions,
             BlobDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             return UploadInternal(
                 localPath,
                 null,
-                transferOptions,
                 options,
                 async: false,
                 cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, StorageTransferOptions, BlobDirectoryUploadOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(string, BlobDirectoryUploadOptions, CancellationToken)"/>
         /// operation overwrites the contents of the blob, creating a new block
         /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
@@ -410,9 +577,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="localPath">
         /// The path of the local directory to upload.
-        /// </param>
-        /// <param name="transferOptions">
-        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -435,14 +599,12 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<IEnumerable<Response<BlobContentInfo>>> UploadAsync(
 #pragma warning disable AZC0015 // Unexpected client method return type.
             string localPath,
-            StorageTransferOptions transferOptions,
             BlobDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             return await UploadInternal(
                 localPath,
                 null,
-                transferOptions,
                 options,
                 async: true,
                 cancellationToken)
@@ -450,7 +612,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="Upload(string, StorageTransferOptions, BlobDirectoryUploadOptions, CancellationToken)"/>
+        /// The <see cref="Upload(string, BlobDirectoryUploadOptions, CancellationToken)"/>
         /// operation overwrites the contents of the blob directory, creating a new blob
         /// if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
@@ -474,9 +636,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="remotePath">
         /// A string of the path to the remote virtual directory where files will be uploaded.
         /// </param>
-        /// <param name="transferOptions">
-        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
-        /// </param>
         /// <param name="options">
         /// Optional parameters.
         /// </param>
@@ -498,21 +657,19 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning restore AZC0015 // Unexpected client method return type.
             string localPath,
             string remotePath,
-            StorageTransferOptions transferOptions,
             BlobDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             return UploadInternal(
                 localPath,
                 remotePath,
-                transferOptions,
                 options,
                 async: false,
                 cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, StorageTransferOptions, BlobDirectoryUploadOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(string, BlobDirectoryUploadOptions, CancellationToken)"/>
         /// operation overwrites the contents of the blob, creating a new block
         /// blob if none exists.  Overwriting an existing block blob replaces
         /// any existing metadata on the blob.
@@ -530,9 +687,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="remotePath">
         /// A string of the path to the remote virtual directory where files will be uploaded.
-        /// </param>
-        /// <param name="transferOptions">
-        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -555,14 +709,12 @@ namespace Azure.Storage.Blobs.Specialized
 #pragma warning disable AZC0015 // Unexpected client method return type.
             string localPath,
             string remotePath,
-            StorageTransferOptions transferOptions,
             BlobDirectoryUploadOptions options,
             CancellationToken cancellationToken = default)
         {
             return await UploadInternal(
                 localPath,
                 remotePath,
-                transferOptions,
                 options,
                 async: true,
                 cancellationToken)
@@ -589,9 +741,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="remotePath">
         /// The remote path of the virtual directory to which to upload.
         /// </param>
-        /// <param name="transferOptions">
-        /// A <see cref="StorageTransferOptions"/> item containing settings for upload.
-        /// </param>
         /// <param name="options">
         /// Optional Parameters <see cref="BlobDirectoryUploadOptions"/>.
         /// </param>
@@ -614,7 +763,6 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<IEnumerable<Response<BlobContentInfo>>> UploadInternal(
             string localPath,
             string remotePath,
-            StorageTransferOptions transferOptions,
             BlobDirectoryUploadOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -633,20 +781,49 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
 
-                    Uri targetUri = Uri;
+                    string fullPath = Path.GetFullPath(localPath);
 
-                    if (remotePath != null)
-                        targetUri = targetUri.AppendToPath(remotePath);
+                    PathScannerFactory scannerFactory = new PathScannerFactory(fullPath);
+                    PathScanner scanner = scannerFactory.BuildPathScanner();
+                    IEnumerable<FileSystemInfo> fileList = scanner.Scan();
 
-                    BlobUploadScheduler scheduler = new BlobUploadScheduler(targetUri, ClientConfiguration, ClientSideEncryption);
+                    int concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
+                        options.TransferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
+                    TaskThrottler throttler = new TaskThrottler(concurrency);
 
-                    return await scheduler.StartTransfer(
-                        localPath,
-                        transferOptions,
-                        options,
-                        async,
-                        cancellationToken)
-                        .ConfigureAwait(false);
+                    List<Response<BlobContentInfo>> responses = new List<Response<BlobContentInfo>>();
+
+                    foreach (FileSystemInfo file in fileList)
+                    {
+                        if (file.GetType() == typeof(DirectoryInfo))
+                        {
+                            continue;
+                        }
+
+                        throttler.AddTask(async () =>
+                        {
+                            string blobName = remotePath != null ?
+                                $"{remotePath}/{file.FullName.Substring(fullPath.Length + 1)}" :
+                                file.FullName.Substring(fullPath.Length + 1);
+
+                            responses.Add(await GetBlobClient(blobName)
+                               .UploadAsync(
+                                   file.FullName,
+                                   cancellationToken)
+                               .ConfigureAwait(false));
+                        });
+                    }
+
+                    if (async)
+                    {
+                        await throttler.WaitAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        throttler.Wait();
+                    }
+
+                    return responses;
                 }
                 catch (Exception ex)
                 {
@@ -876,8 +1053,54 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
 
-                    BlobDownloadScheduler scheduler = new BlobDownloadScheduler(Uri, ClientConfiguration, ClientSideEncryption);
-                    return await scheduler.StartTransfer(targetPath, options, async, cancellationToken).ConfigureAwait(false);
+                    string fullPath = Path.GetFullPath(targetPath);
+
+                    BlobContainerClient containerClient = GetParentBlobContainerClient();
+
+                    Pageable<BlobItem> blobs = GetBlobs(cancellationToken: cancellationToken);
+
+                    BlobRequestConditions conditions = new BlobRequestConditions()
+                    {
+                        IfModifiedSince = options.DirectoryRequestConditions.IfModifiedSince ?? null,
+                        IfUnmodifiedSince = options.DirectoryRequestConditions.IfUnmodifiedSince ?? null,
+                    };
+
+                    int concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
+                        options.TransferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
+                    TaskThrottler throttler = new TaskThrottler(concurrency);
+
+                    List<Response> responses = new List<Response>();
+
+                    foreach (BlobItem blob in blobs)
+                    {
+                        BlobBaseClient client = containerClient.GetBlobBaseClient(blob.Name);
+                        string downloadPath = Path.Combine(fullPath, blob.Name.Substring(Name.Length + 1));
+
+                        throttler.AddTask(async () =>
+                        {
+                            Directory.CreateDirectory(Path.GetDirectoryName(downloadPath));
+                            using (Stream destination = File.Create(downloadPath))
+                            {
+                                responses.Add(await client.DownloadToAsync(
+                                    destination,
+                                    conditions,
+                                    options.TransferOptions,
+                                    cancellationToken)
+                                    .ConfigureAwait(false));
+                            }
+                        });
+                    }
+
+                    if (async)
+                    {
+                        await throttler.WaitAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        throttler.Wait();
+                    }
+
+                    return responses;
                 }
                 catch (Exception ex)
                 {
@@ -893,124 +1116,6 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion Download
-
-        #region GetBlobs
-        /// <summary>
-        /// The <see cref="GetBlobs"/> operation returns an async sequence
-        /// of blobs in this container.  Enumerating the blobs may make
-        /// multiple requests to the service while fetching all the values.
-        /// Blobs are ordered lexicographically by name.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
-        /// List Blobs</see>.
-        /// </summary>
-        /// <param name="traits">
-        /// Specifies trait options for shaping the blobs.
-        /// </param>
-        /// <param name="states">
-        /// Specifies state options for filtering the blobs.
-        /// </param>
-        /// <param name="prefix">
-        /// Specifies a string that filters the results to return only blobs
-        /// whose name begins with the specified <paramref name="prefix"/>.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// An <see cref="Pageable{T}"/> of <see cref="BlobItem"/>
-        /// describing the blobs in the container.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Pageable<BlobItem> GetBlobs(
-            BlobTraits traits = BlobTraits.None,
-            BlobStates states = BlobStates.None,
-            string prefix = default,
-            CancellationToken cancellationToken = default)
-        {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
-            {
-                // erase parameters unrelated to container
-                VersionId = null,
-                Snapshot = null,
-            };
-
-            string directoryName = blobUriBuilder.BlobName;
-            blobUriBuilder.BlobName = null;
-
-            BlobContainerClient containerClient = new BlobContainerClient(
-                blobUriBuilder.ToUri(),
-                ClientConfiguration,
-                ClientSideEncryption);
-
-            prefix = prefix != null ? $"{directoryName}/{prefix}" : directoryName;
-
-            return containerClient.GetBlobs(traits, states, prefix, cancellationToken);
-        }
-
-        /// <summary>
-        /// The <see cref="GetBlobsAsync"/> operation returns an async
-        /// sequence of blobs in this container.  Enumerating the blobs may
-        /// make multiple requests to the service while fetching all the
-        /// values.  Blobs are ordered lexicographically by name.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
-        /// List Blobs</see>.
-        /// </summary>
-        /// <param name="traits">
-        /// Specifies trait options for shaping the blobs.
-        /// </param>
-        /// <param name="states">
-        /// Specifies state options for filtering the blobs.
-        /// </param>
-        /// <param name="prefix">
-        /// Specifies a string that filters the results to return only blobs
-        /// whose name begins with the specified <paramref name="prefix"/>.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// An <see cref="AsyncPageable{T}"/> describing the
-        /// blobs in the container.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual AsyncPageable<BlobItem> GetBlobsAsync(
-            BlobTraits traits = BlobTraits.None,
-            BlobStates states = BlobStates.None,
-            string prefix = default,
-            CancellationToken cancellationToken = default)
-        {
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
-            {
-                // erase parameters unrelated to container
-                VersionId = null,
-                Snapshot = null,
-            };
-
-            string directoryName = blobUriBuilder.BlobName;
-            blobUriBuilder.BlobName = null;
-
-            BlobContainerClient containerClient = new BlobContainerClient(
-                blobUriBuilder.ToUri(),
-                ClientConfiguration,
-                ClientSideEncryption);
-
-            prefix = prefix != null ? $"{directoryName}/{prefix}" : directoryName;
-
-            return containerClient.GetBlobsAsync(traits, states, prefix, cancellationToken);
-        }
-        #endregion GetBlobs
 
         #region StartCopyFromUri
         /// <summary>
@@ -1336,8 +1441,65 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
 
-                    BlobCopyScheduler scheduler = new BlobCopyScheduler(Uri, ClientConfiguration, ClientSideEncryption);
-                    return await scheduler.StartTransfer(source, options, async, cancellationToken).ConfigureAwait(false);
+                    BlobDirectoryClient sourceDirectory = new BlobDirectoryClient(source, ClientConfiguration, ClientSideEncryption);
+
+                    Pageable<BlobItem> sourceBlobs = sourceDirectory.GetBlobs(cancellationToken: cancellationToken);
+
+                    BlobCopyFromUriOptions blobOptions = new BlobCopyFromUriOptions()
+                    {
+                        Tags = options.Tags,
+                        Metadata = options.Metadata,
+                        AccessTier = options.AccessTier,
+                        SourceConditions = new BlobRequestConditions()
+                        {
+                            IfModifiedSince = options.SourceConditions.IfModifiedSince ?? null,
+                            IfUnmodifiedSince = options.SourceConditions.IfUnmodifiedSince ?? null,
+                        },
+                        DestinationConditions = new BlobRequestConditions()
+                        {
+                            IfModifiedSince = options.DestinationConditions.IfModifiedSince ?? null,
+                            IfUnmodifiedSince = options.DestinationConditions.IfUnmodifiedSince ?? null,
+                        },
+                        RehydratePriority = options.RehydratePriority
+                    };
+
+                    int concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
+                        options.TransferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
+                    TaskThrottler throttler = new TaskThrottler(concurrency);
+
+                    List<Response<BlobCopyInfo>> responses = new List<Response<BlobCopyInfo>>();
+
+                    foreach (BlobItem sourceBlob in sourceBlobs)
+                    {
+                        BlobUriBuilder builder = new BlobUriBuilder(source)
+                        {
+                            BlobName = sourceBlob.Name
+                        };
+                        Uri sourceBlobUri = builder.ToUri();
+
+                        string destBlobName = sourceBlobUri.AbsoluteUri.Substring(source.AbsoluteUri.Length + 1);
+
+                        throttler.AddTask(async () =>
+                        {
+                            responses.Add(await GetBlobClient(destBlobName)
+                               .SyncCopyFromUriAsync(
+                                   sourceBlobUri,
+                                   blobOptions,
+                                   cancellationToken)
+                               .ConfigureAwait(false));
+                        });
+                    }
+
+                    if (async)
+                    {
+                        await throttler.WaitAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        throttler.Wait();
+                    }
+
+                    return responses;
                 }
                 catch (Exception ex)
                 {
@@ -1353,5 +1515,38 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion CopyFromUri
+
+        #region GetParentBlobContainerClientCore
+
+        private BlobContainerClient _parentBlobContainerClient;
+
+        /// <summary>
+        /// Create a new <see cref="BlobContainerClient"/> that pointing to this <see cref="BlobDirectoryClient"/>'s parent container.
+        /// The new <see cref="BlobContainerClient"/>
+        /// uses the same request policy pipeline as the
+        /// <see cref="BlobDirectoryClient"/>.
+        /// </summary>
+        /// <returns>A new <see cref="BlobContainerClient"/> instance.</returns>
+        protected internal virtual BlobContainerClient GetParentBlobContainerClientCore()
+        {
+            if (_parentBlobContainerClient == null)
+            {
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
+                {
+                    // erase parameters unrelated to container
+                    BlobName = null,
+                    VersionId = null,
+                    Snapshot = null,
+                };
+
+                _parentBlobContainerClient = new BlobContainerClient(
+                    blobUriBuilder.ToUri(),
+                    ClientConfiguration,
+                    ClientSideEncryption);
+            }
+
+            return _parentBlobContainerClient;
+        }
+        #endregion
     }
 }

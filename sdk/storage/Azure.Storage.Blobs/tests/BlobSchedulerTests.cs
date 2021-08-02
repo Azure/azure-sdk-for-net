@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Tests
     public class BlobSchedulerTests : BlobTestBase
     {
         public BlobSchedulerTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -89,7 +89,7 @@ namespace Azure.Storage.Blobs.Tests
             BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
 
             // Act
-            await client.UploadAsync(folder, remoteTargetDir, default, options);
+            await client.UploadAsync(folder, remoteTargetDir, options);
 
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
