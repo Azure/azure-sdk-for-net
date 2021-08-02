@@ -111,15 +111,15 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>The maximum number of concurrent calls to the message handler.</value>
-        public virtual int MaxConcurrentCalls => _maxConcurrentCalls;
+        public virtual int MaxConcurrentCalls => Volatile.Read(ref _maxConcurrentCalls);
 
-        private volatile int _maxConcurrentCalls;
+        private int _maxConcurrentCalls;
 
-        internal int MaxConcurrentSessions => _maxConcurrentSessions;
-        private volatile int _maxConcurrentSessions;
+        internal int MaxConcurrentSessions => Volatile.Read(ref _maxConcurrentSessions);
+        private int _maxConcurrentSessions;
 
-        internal int MaxConcurrentCallsPerSession => _maxConcurrentCallsPerSession;
-        private volatile int _maxConcurrentCallsPerSession;
+        internal int MaxConcurrentCallsPerSession => Volatile.Read(ref _maxConcurrentCallsPerSession);
+        private int _maxConcurrentCallsPerSession;
 
         internal TimeSpan? MaxReceiveWaitTime { get; }
 
@@ -173,7 +173,9 @@ namespace Azure.Messaging.ServiceBus
         private volatile bool _closed;
 
         private readonly string[] _sessionIds;
+
         private readonly EntityScopeFactory _scopeFactory;
+
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
         private readonly ServiceBusSessionProcessor _sessionProcessor;
@@ -271,8 +273,9 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicName">The topic to create a processor for.</param>
         /// <param name="subscriptionName">The subscription to create a processor for.</param>
         /// <param name="options">The set of options to use when configuring the processor.</param>
-        protected ServiceBusProcessor(ServiceBusClient client, string topicName, string subscriptionName, ServiceBusProcessorOptions options) :
-            this(client?.Connection, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), false,  options)
+        protected ServiceBusProcessor(ServiceBusClient client, string topicName, string subscriptionName,
+            ServiceBusProcessorOptions options) :
+            this(client?.Connection, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), false, options)
         {
         }
 
@@ -308,8 +311,10 @@ namespace Azure.Messaging.ServiceBus
         /// or Subscription.
         /// Implementation is mandatory.
         /// </summary>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
-        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
+            Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
+            Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessMessageEventArgs, Task> ProcessMessageAsync
         {
             add
@@ -322,6 +327,7 @@ namespace Azure.Messaging.ServiceBus
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
+
                 EnsureNotRunningAndInvoke(() => _processMessageAsync = value);
             }
 
@@ -344,8 +350,10 @@ namespace Azure.Messaging.ServiceBus
         /// The handler responsible for processing messages received from the Queue
         /// or Subscription. Implementation is mandatory.
         /// </summary>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
-        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
+            Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
+            Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         internal event Func<ProcessSessionMessageEventArgs, Task> ProcessSessionMessageAsync
         {
             add
@@ -356,6 +364,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
+
                 EnsureNotRunningAndInvoke(() => _processSessionMessageAsync = value);
             }
 
@@ -377,8 +386,10 @@ namespace Azure.Messaging.ServiceBus
         /// this processor is running.
         /// Implementation is mandatory.
         /// </summary>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
-        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
+            Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
+            Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
         {
             add
@@ -413,8 +424,10 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Optional handler that can be set to be notified when a new session is about to be processed.
         /// </summary>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
-        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
+            Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
+            Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         internal event Func<ProcessSessionEventArgs, Task> SessionInitializingAsync
         {
             add
@@ -425,6 +438,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
+
                 EnsureNotRunningAndInvoke(() => _sessionInitializingAsync = value);
             }
 
@@ -435,6 +449,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
+
                 EnsureNotRunningAndInvoke(() => _sessionInitializingAsync = default);
             }
         }
@@ -444,8 +459,10 @@ namespace Azure.Messaging.ServiceBus
         /// This means that the most recent <see cref="ServiceBusReceiver.ReceiveMessageAsync"/> call timed out so there are currently no messages
         /// available to be received for the session.
         /// </summary>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
-        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
+            Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.",
+            Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         internal event Func<ProcessSessionEventArgs, Task> SessionClosingAsync
         {
             add
@@ -456,6 +473,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
+
                 EnsureNotRunningAndInvoke(() => _sessionClosingAsync = value);
             }
 
@@ -466,6 +484,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
+
                 EnsureNotRunningAndInvoke(() => _sessionClosingAsync = default);
             }
         }
@@ -596,7 +615,6 @@ namespace Azure.Messaging.ServiceBus
                             sessionId,
                             MaxConcurrentAcceptSessionsSemaphore,
                             _scopeFactory,
-                            _maxConcurrentCallsPerSession,
                             KeepOpenOnReceiveTimeout));
                 }
             }
@@ -613,7 +631,8 @@ namespace Azure.Messaging.ServiceBus
         {
             if (_processErrorAsync == null)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessErrorAsync)));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
+                    Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessErrorAsync)));
             }
         }
 
@@ -623,12 +642,14 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (_processSessionMessageAsync == null)
                 {
-                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessageAsync)));
+                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
+                        Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessageAsync)));
                 }
             }
             else if (_processMessageAsync == null)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessageAsync)));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
+                    Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessageAsync)));
             }
         }
 
@@ -689,6 +710,7 @@ namespace Azure.Messaging.ServiceBus
                     _processingStartStopSemaphore.Release();
                 }
             }
+
             Logger.StopProcessingComplete(Identifier);
         }
 
@@ -704,14 +726,21 @@ namespace Azure.Messaging.ServiceBus
             {
                 while (!cancellationToken.IsCancellationRequested && !Connection.IsClosed)
                 {
-                    // create a new list of receiver managers as the underlying list can change while running
-                    foreach (ReceiverManager receiverManager in _receiverManagers.ToList())
+                    ReceiverManager[] receiverManagers = null;
+                    lock (_maxConcurrencySyncLock)
+                    {
+                        // create a new list of receiver managers as the underlying list can change while running
+                        receiverManagers = _receiverManagers.ToArray();
+                    }
+
+                    foreach (ReceiverManager receiverManager in receiverManagers)
                     {
                         // Do a quick synchronous check before we resort to async/await with the state-machine overhead.
                         if (!_messageHandlerSemaphore.Wait(0, CancellationToken.None))
                         {
                             await _messageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
                         }
+
                         // hold onto all the tasks that we are starting so that when cancellation is requested,
                         // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                         // other than TaskCanceledExceptions
@@ -746,13 +775,14 @@ namespace Azure.Messaging.ServiceBus
                     try
                     {
                         await OnProcessErrorAsync(
-                            new ProcessErrorEventArgs(
-                                new ObjectDisposedException(nameof(ServiceBusConnection), Resources.DisposedConnectionMessageProcessorMustStop),
-                                ServiceBusErrorSource.Receive,
-                                FullyQualifiedNamespace,
-                                EntityPath,
-                                cancellationToken))
-                        .ConfigureAwait(false);
+                                new ProcessErrorEventArgs(
+                                    new ObjectDisposedException(nameof(ServiceBusConnection),
+                                        Resources.DisposedConnectionMessageProcessorMustStop),
+                                    ServiceBusErrorSource.Receive,
+                                    FullyQualifiedNamespace,
+                                    EntityPath,
+                                    cancellationToken))
+                            .ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
@@ -778,7 +808,11 @@ namespace Azure.Messaging.ServiceBus
                     tcs.Dispose();
                     linkedTcs.Dispose();
                 }
-                _tasks.Clear();
+
+                lock (_maxConcurrencySyncLock)
+                {
+                    _tasks.Clear();
+                }
             }
         }
 
@@ -844,11 +878,12 @@ namespace Azure.Messaging.ServiceBus
             {
                 await StopProcessingAsync(cancellationToken).ConfigureAwait(false);
             }
+
             foreach (ReceiverManager receiverManager in _receiverManagers.Concat(_orphanedReceiverManagers))
             {
                 await receiverManager.CloseReceiverIfNeeded(
-                    cancellationToken,
-                    forceClose: true)
+                        cancellationToken,
+                        forceClose: true)
                     .ConfigureAwait(false);
             }
         }
@@ -910,24 +945,6 @@ namespace Azure.Messaging.ServiceBus
             // increasing concurrency
             if (diff > 0)
             {
-                if (IsSessionProcessor)
-                {
-                    var diffSessions = newMaxSessions - _maxConcurrentSessions;
-                    if (diffSessions > 0 && _sessionIds.Length == 0)
-                    {
-                        for (int i = 0; i < diffSessions; i++)
-                        {
-                            _receiverManagers.Add(
-                                new SessionReceiverManager(
-                                    _sessionProcessor,
-                                    null,
-                                    MaxConcurrentAcceptSessionsSemaphore,
-                                    _scopeFactory,
-                                    _maxConcurrentCallsPerSession,
-                                    KeepOpenOnReceiveTimeout));
-                        }
-                    }
-                }
                 _messageHandlerSemaphore.Release(diff);
             }
             // decreasing concurrency
@@ -949,20 +966,38 @@ namespace Azure.Messaging.ServiceBus
                 {
                     activeTasks[i].Item2.Cancel();
                 }
+            }
 
-                if (IsSessionProcessor)
+            if (IsSessionProcessor)
+            {
+                var diffSessions = newMaxSessions - _maxConcurrentSessions;
+                if (_sessionIds.Length != 0)
                 {
-                    var diffSessions = _maxConcurrentSessions - newMaxSessions;
-                    if (diffSessions > 0 && _sessionIds.Length == 0)
+                    return;
+                }
+                if (diffSessions > 0)
+                {
+                    for (int i = 0; i < diffSessions; i++)
                     {
-                        for (int i = 0; i < diffSessions; i++)
-                        {
-                            // These should generally be closed as part of the normal bookkeeping in SessionReceiverManager,
-                            // but we will track them so that they can be explicitly closed when stopping, just like we do with
-                            // _receiverManagers.
-                            _orphanedReceiverManagers.Add(_receiverManagers[0]);
-                            _receiverManagers.RemoveAt(0);
-                        }
+                        _receiverManagers.Add(
+                            new SessionReceiverManager(
+                                _sessionProcessor,
+                                null,
+                                MaxConcurrentAcceptSessionsSemaphore,
+                                _scopeFactory,
+                                KeepOpenOnReceiveTimeout));
+                    }
+                }
+                else
+                {
+                    int diffSessionsLimit = Math.Abs(diffSessions);
+                    for (int i = 0; i < diffSessionsLimit; i++)
+                    {
+                        // These should generally be closed as part of the normal bookkeeping in SessionReceiverManager,
+                        // but we will track them so that they can be explicitly closed when stopping, just like we do with
+                        // _receiverManagers.
+                        _orphanedReceiverManagers.Add(_receiverManagers[0]);
+                        _receiverManagers.RemoveAt(0);
                     }
                 }
             }
