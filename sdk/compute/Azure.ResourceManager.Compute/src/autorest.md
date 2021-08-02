@@ -71,6 +71,17 @@ operation-group-to-parent:
   SharedGalleryImageVersions: Microsoft.Compute/locations/sharedGalleries/images
 operation-group-is-extension: VirtualMachineRunCommands;VirtualMachineScaleSetVMRunCommands;VirtualMachineScaleSetVMExtensions;VirtualMachineExtensions
 directive:
+  ## first we need to unify all the paths by changing `virtualmachines` to `virtualMachines` so that every path could have consistent casing
+  - from: swagger-document
+    where: $.paths
+    transform: >
+      for (var key in $) {
+          const newKey = key.replace('virtualmachines', 'virtualMachines');
+          if (newKey !== key) {
+              $[newKey] = $[key]
+              delete $[key]
+          }
+      }
   - from: compute.json
     where: $.definitions.VirtualMachineImageProperties.properties.dataDiskImages
     transform: $.description="The list of data disk images information."
@@ -89,16 +100,6 @@ directive:
   - rename-model:
       from: RollingUpgradeStatusInfo
       to: VirtualMachineScaleSetRollingUpgrade
-  - from: swagger-document
-    where: $.paths
-    transform: >
-      for (var key in $) {
-          const newKey = key.replace('virtualmachines', 'virtualMachines');
-          if (newKey !== key) {
-              $[newKey] = $[key]
-              delete $[key]
-          }
-      }
   - from: swagger-document
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}'].put.operationId
     transform: return "PrivateEndpointConnections_CreateOrUpdate"
@@ -135,4 +136,16 @@ directive:
             "required": true,
             "type": "string"
         }
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/start'].post.operationId
+    transform: return 'VirtualMachines_PowerOn';
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/start'].post.operationId
+    transform: return 'VirtualMachineScaleSets_PowerOn';
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/start'].post.operationId
+    transform: return 'VirtualMachineScaleSetVMs_PowerOn';
+  - from: swagger-document
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/start'].post.operationId
+    transform: return 'CloudServices_PowerOn';
 ```

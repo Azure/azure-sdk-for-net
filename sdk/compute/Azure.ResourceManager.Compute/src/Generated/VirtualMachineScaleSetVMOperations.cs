@@ -928,13 +928,13 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Starts a virtual machine in a VM scale set. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> StartAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response> PowerOnAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMOperations.Start");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMOperations.PowerOn");
             scope.Start();
             try
             {
-                var operation = await StartStartAsync(cancellationToken).ConfigureAwait(false);
+                var operation = await StartPowerOnAsync(cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -946,13 +946,13 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Starts a virtual machine in a VM scale set. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Start(CancellationToken cancellationToken = default)
+        public virtual Response PowerOn(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMOperations.Start");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMOperations.PowerOn");
             scope.Start();
             try
             {
-                var operation = StartStart(cancellationToken);
+                var operation = StartPowerOn(cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -964,14 +964,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Starts a virtual machine in a VM scale set. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualMachineScaleSetVMsStartOperation> StartStartAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<VirtualMachineScaleSetVMsPowerOnOperation> StartPowerOnAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMOperations.StartStart");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMOperations.StartPowerOn");
             scope.Start();
             try
             {
-                var response = await _restClient.StartAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return new VirtualMachineScaleSetVMsStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = await _restClient.PowerOnAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return new VirtualMachineScaleSetVMsPowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
@@ -982,14 +982,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Starts a virtual machine in a VM scale set. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualMachineScaleSetVMsStartOperation StartStart(CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetVMsPowerOnOperation StartPowerOn(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMOperations.StartStart");
+            using var scope = _clientDiagnostics.CreateScope("VirtualMachineScaleSetVMOperations.StartPowerOn");
             scope.Start();
             try
             {
-                var response = _restClient.Start(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return new VirtualMachineScaleSetVMsStartOperation(_clientDiagnostics, Pipeline, _restClient.CreateStartRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
+                var response = _restClient.PowerOn(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return new VirtualMachineScaleSetVMsPowerOnOperation(_clientDiagnostics, Pipeline, _restClient.CreatePowerOnRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response);
             }
             catch (Exception e)
             {
