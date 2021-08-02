@@ -30,14 +30,8 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public EventRoutesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-10-31")
         {
-            endpoint ??= new Uri("https://digitaltwins-name.digitaltwins.azure.net");
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
+            this.endpoint = endpoint ?? new Uri("https://digitaltwins-name.digitaltwins.azure.net");
+            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
@@ -63,7 +57,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Retrieves all event routes.
         /// Status codes:
-        /// * 200 OK.
+        /// * 200 OK
         /// </summary>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +82,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Retrieves all event routes.
         /// Status codes:
-        /// * 200 OK.
+        /// * 200 OK
         /// </summary>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -374,7 +368,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Retrieves all event routes.
         /// Status codes:
-        /// * 200 OK.
+        /// * 200 OK
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>
@@ -406,7 +400,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Retrieves all event routes.
         /// Status codes:
-        /// * 200 OK.
+        /// * 200 OK
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="eventRoutesListOptions"> Parameter group. </param>

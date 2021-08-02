@@ -32,10 +32,24 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         /// Initializes a new instance of the CapabilityProperties class.
         /// </summary>
         /// <param name="zone">zone name</param>
-        public CapabilityProperties(string zone = default(string), IList<ServerEditionCapability> supportedFlexibleServerEditions = default(IList<ServerEditionCapability>))
+        /// <param name="geoBackupSupported">A value indicating whether a new
+        /// server in this region can have geo-backups to paired
+        /// region.</param>
+        /// <param name="zoneRedundantHaSupported">A value indicating whether a
+        /// new server in this region can support multi zone HA.</param>
+        /// <param name="zoneRedundantHaAndGeoBackupSupported">A value
+        /// indicating whether a new server in this region can have geo-backups
+        /// to paired region.</param>
+        /// <param name="status">The status</param>
+        public CapabilityProperties(string zone = default(string), bool? geoBackupSupported = default(bool?), bool? zoneRedundantHaSupported = default(bool?), bool? zoneRedundantHaAndGeoBackupSupported = default(bool?), IList<FlexibleServerEditionCapability> supportedFlexibleServerEditions = default(IList<FlexibleServerEditionCapability>), IList<HyperscaleNodeEditionCapability> supportedHyperscaleNodeEditions = default(IList<HyperscaleNodeEditionCapability>), string status = default(string))
         {
             Zone = zone;
+            GeoBackupSupported = geoBackupSupported;
+            ZoneRedundantHaSupported = zoneRedundantHaSupported;
+            ZoneRedundantHaAndGeoBackupSupported = zoneRedundantHaAndGeoBackupSupported;
             SupportedFlexibleServerEditions = supportedFlexibleServerEditions;
+            SupportedHyperscaleNodeEditions = supportedHyperscaleNodeEditions;
+            Status = status;
             CustomInit();
         }
 
@@ -51,9 +65,41 @@ namespace Microsoft.Azure.Management.PostgreSQL.FlexibleServers.Models
         public string Zone { get; private set; }
 
         /// <summary>
+        /// Gets a value indicating whether a new server in this region can
+        /// have geo-backups to paired region.
+        /// </summary>
+        [JsonProperty(PropertyName = "geoBackupSupported")]
+        public bool? GeoBackupSupported { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether a new server in this region can
+        /// support multi zone HA.
+        /// </summary>
+        [JsonProperty(PropertyName = "zoneRedundantHaSupported")]
+        public bool? ZoneRedundantHaSupported { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether a new server in this region can
+        /// have geo-backups to paired region.
+        /// </summary>
+        [JsonProperty(PropertyName = "zoneRedundantHaAndGeoBackupSupported")]
+        public bool? ZoneRedundantHaAndGeoBackupSupported { get; private set; }
+
+        /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "supportedFlexibleServerEditions")]
-        public IList<ServerEditionCapability> SupportedFlexibleServerEditions { get; private set; }
+        public IList<FlexibleServerEditionCapability> SupportedFlexibleServerEditions { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedHyperscaleNodeEditions")]
+        public IList<HyperscaleNodeEditionCapability> SupportedHyperscaleNodeEditions { get; private set; }
+
+        /// <summary>
+        /// Gets the status
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; private set; }
 
     }
 }

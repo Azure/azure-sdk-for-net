@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     internal partial class BlobFlatListSegment
     {
         /// <summary> Initializes a new instance of BlobFlatListSegment. </summary>
-        /// <param name="blobItems"> . </param>
+        /// <param name="blobItems"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobItems"/> is null. </exception>
         internal BlobFlatListSegment(IEnumerable<BlobItemInternal> blobItems)
         {
@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of BlobFlatListSegment. </summary>
-        /// <param name="blobItems"> . </param>
+        /// <param name="blobItems"></param>
         internal BlobFlatListSegment(IReadOnlyList<BlobItemInternal> blobItems)
         {
             BlobItems = blobItems;
