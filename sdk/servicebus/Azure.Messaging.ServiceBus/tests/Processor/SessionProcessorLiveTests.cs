@@ -1856,11 +1856,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.AreEqual(20, processor.MaxConcurrentSessions);
                         Assert.AreEqual(2, processor.MaxConcurrentCallsPerSession);
                     }
+
+                    if (ct == 50)
+                    {
+                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 40);
+                    }
                     if (ct == 90)
                     {
                         processor.UpdateConcurrency(1, 1);
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
                         Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
+                    }
+                    if (ct == 95)
+                    {
+                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
                     return Task.CompletedTask;
                 }
@@ -1907,11 +1916,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         Assert.AreEqual(5, processor.MaxConcurrentSessions);
                         Assert.AreEqual(20, processor.MaxConcurrentCallsPerSession);
                     }
-                    if (ct == 90)
+                    if (ct == 50)
                     {
+                        Assert.GreaterOrEqual(processor.InnerProcessor._tasks.Count, 100);
                         processor.UpdateConcurrency(1, 1);
                         Assert.AreEqual(1, processor.MaxConcurrentSessions);
                         Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
+                    }
+                    if (ct == 95)
+                    {
+                        Assert.LessOrEqual(processor.InnerProcessor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
                     }
                     return Task.CompletedTask;
                 }
