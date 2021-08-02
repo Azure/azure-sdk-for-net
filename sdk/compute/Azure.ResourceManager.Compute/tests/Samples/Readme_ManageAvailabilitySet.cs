@@ -100,9 +100,6 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             if (exists)
             {
                 Console.WriteLine($"Availability Set {availabilitySetName} exists.");
-
-                // We can get the resource group now that we are sure it exists.
-                AvailabilitySet availabilitySet = await resourceGroup.GetAvailabilitySets().GetAsync(availabilitySetName);
             }
             else
             {

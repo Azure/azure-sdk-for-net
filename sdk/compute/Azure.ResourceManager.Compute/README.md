@@ -134,6 +134,9 @@ await availabilitySet.DeleteAsync();
 ```
 
 ### Check if availability set exists
+
+If you just want to verify if the availability set exists, you can use the function `CheckIfExists`.
+
 ```C# Snippet:Managing_Availability_Set_CheckIfExistsForAvailabilitySet
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 Subscription subscription = armClient.DefaultSubscription;
@@ -157,7 +160,7 @@ else
 }
 ```
 
-Another way to do this is by using `GetIfExists()`:
+If you want to first check if the availability set exists, and if it does, you want to do something else on it, you should use the function `GetIfExists()`:
 
 ```C# Snippet:Managing_Availability_Set_GetIfExistsForAvailabilitySet
 // First, initialize the ArmClient and get the default subscription
@@ -214,8 +217,8 @@ For more detailed examples, take a look at [samples](https://github.com/Azure/az
 
 ### More sample code
 
-- [Managing Disks](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Azure.ResourceManager.Compute/samples/Sample1_ManagingDisks.md)
-- [Managing Virtual Machines](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Azure.ResourceManager.Compute/samples/Sample2_ManagingVirtualMachines.md)
+- [Managing Disks](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2-compute-2/sdk/compute/Azure.ResourceManager.Compute/samples/Sample1_ManagingDisks.md)
+- [Managing Virtual Machines](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2-compute-2/sdk/compute/Azure.ResourceManager.Compute/samples/Sample2_ManagingVirtualMachines.md)
 
 ### Additional Documentation
 
