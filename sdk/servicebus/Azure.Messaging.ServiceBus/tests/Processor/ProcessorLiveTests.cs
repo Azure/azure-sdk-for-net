@@ -883,7 +883,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
-                    MaxConcurrentCalls = 50
+                    MaxConcurrentCalls = 20
                 });
 
                 int receivedCount = 0;
@@ -907,8 +907,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     // increase concurrency
                     if (ct == 150)
                     {
+                        Assert.LessOrEqual(processor._tasks.Where(t => !t.Task.IsCompleted).Count(), 1);
                         processor.UpdateConcurrency(10);
                         Assert.AreEqual(10, processor.MaxConcurrentCalls);
+                    }
+                    if (ct == 175)
+                    {
+                        Assert.GreaterOrEqual(processor._tasks.Where(t => !t.Task.IsCompleted).Count(), 10);
                     }
 
                     return Task.CompletedTask;

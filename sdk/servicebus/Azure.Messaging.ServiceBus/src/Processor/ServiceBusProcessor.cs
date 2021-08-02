@@ -179,7 +179,7 @@ namespace Azure.Messaging.ServiceBus
         // deliberate usage of List instead of IList for faster enumeration and less allocations
         private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
         private readonly ServiceBusSessionProcessor _sessionProcessor;
-        private readonly List<(Task, CancellationTokenSource, CancellationTokenSource)> _tasks = new();
+        internal readonly List<(Task Task, CancellationTokenSource Tcs, CancellationTokenSource LinkedTcs)> _tasks = new();
         private readonly List<ReceiverManager> _orphanedReceiverManagers = new();
 
         /// <summary>
@@ -748,15 +748,23 @@ namespace Azure.Messaging.ServiceBus
                         var linkedTcs = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, tcs.Token);
                         lock (_maxConcurrencySyncLock)
                         {
+                            // if we already are at the task limit, release semaphore and exit early
+                            if (_tasks.Count(t => !t.Task.IsCompleted) >= _maxConcurrentCalls)
+                            {
+                                _messageHandlerSemaphore.Release();
+                                break;
+                            }
+
                             _tasks.Add(
-                                (
-                                    ReceiveAndProcessMessagesAsync(receiverManager, linkedTcs.Token),
-                                    tcs,
-                                    linkedTcs)
-                            );
+                                    (
+                                        ReceiveAndProcessMessagesAsync(receiverManager, linkedTcs.Token),
+                                        tcs,
+                                        linkedTcs)
+                                );
+
                             if (_tasks.Count > _maxConcurrentCalls)
                             {
-                                _tasks.RemoveAll(t => t.Item1.IsCompleted);
+                                _tasks.RemoveAll(t => t.Task.IsCompleted);
                             }
                         }
                     }
@@ -802,7 +810,7 @@ namespace Azure.Messaging.ServiceBus
             finally
             {
                 // await and clean up the _tasks collection
-                await Task.WhenAll(_tasks.Select(t => t.Item1)).ConfigureAwait(false);
+                await Task.WhenAll(_tasks.Select(t => t.Task)).ConfigureAwait(false);
                 foreach (var (_, tcs, linkedTcs) in _tasks)
                 {
                     tcs.Dispose();
@@ -925,7 +933,7 @@ namespace Azure.Messaging.ServiceBus
                     ? Math.Min(_sessionIds.Length, maxConcurrentSessions)
                     : maxConcurrentSessions * maxConcurrentCallsPerSession;
 
-                ReconcileConcurrency(maxConcurrentSessions, maxConcurrentCallsPerSession);
+                ReconcileConcurrency(newConcurrency, maxConcurrentSessions);
 
                 _maxConcurrentSessions = maxConcurrentSessions;
                 _maxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
@@ -958,13 +966,13 @@ namespace Azure.Messaging.ServiceBus
                     _ = _messageHandlerSemaphore.WaitAsync();
                 }
 
-                var activeTasks = _tasks.Where(t => !t.Item1.IsCompleted).ToList();
+                var activeTasks = _tasks.Where(t => !t.Task.IsCompleted).ToList();
                 int excessTasks = activeTasks.Count - newConcurrency;
 
                 // cancel excess tasks
                 for (int i = 0; i < excessTasks; i++)
                 {
-                    activeTasks[i].Item2.Cancel();
+                    activeTasks[i].Tcs.Cancel();
                 }
             }
 
