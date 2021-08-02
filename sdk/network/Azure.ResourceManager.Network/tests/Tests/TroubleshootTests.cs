@@ -110,10 +110,9 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             var networkWatcherContainer = GetNetworkWatcherContainer("NetworkWatcherRG");
             NetworkWatchersGetTroubleshootingOperation troubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingAsync(parameters);
             await troubleshootOperation.WaitForCompletionAsync();;
-            //QueryTroubleshootingParameters qParameters = new QueryTroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id);
 
             //Query last troubleshoot
-            NetworkWatchersGetTroubleshootingResultOperation queryTroubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingResultAsync();
+            NetworkWatchersGetTroubleshootingResultOperation queryTroubleshootOperation = await networkWatcherContainer.Get("NetworkWatcher_westus2").Value.StartGetTroubleshootingResultAsync(getVirtualNetworkGatewayResponse.Value.Id);
             await queryTroubleshootOperation.WaitForCompletionAsync();;
             //TODO: make verification once fixed for troubleshoot API deployed
         }

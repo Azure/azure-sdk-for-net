@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         public string DisplayName { get; }
 
-        /// <summary> 
-        /// The subscription tenant ID. 
+        /// <summary>
+        /// The subscription tenant ID.
         /// </summary>
         public string TenantId { get; }
 

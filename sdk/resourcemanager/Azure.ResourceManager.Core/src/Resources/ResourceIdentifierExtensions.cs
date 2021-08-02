@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="identifier"> The id to append to. </param>
         /// <param name="providerNamespace"> The provider namespace of the added resource. </param>
-        /// <param name="resourceType"> The simple type of the added resource, without slashes (/), 
+        /// <param name="resourceType"> The simple type of the added resource, without slashes (/),
         /// for example, 'virtualMachines'. </param>
         /// <param name="resourceName"> The name of the resource.</param>
         /// <returns> The combined resource id. </returns>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="identifier"> The id to append to. </param>
         /// <param name="providerNamespace"> The provider namespace of the added resource. </param>
-        /// <param name="resourceType"> The simple type of the added resource, without slashes (/), 
+        /// <param name="resourceType"> The simple type of the added resource, without slashes (/),
         /// for example, 'virtualMachines'. </param>
         /// <param name="resourceName"> The name of the resource.</param>
         /// <returns> The combined resource id. </returns>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="identifier"> The id to append to. </param>
         /// <param name="providerNamespace"> The provider namespace of the added resource. </param>
-        /// <param name="resourceType"> The simple type of the added resource, without slashes (/), 
+        /// <param name="resourceType"> The simple type of the added resource, without slashes (/),
         /// for example, 'virtualMachines'. </param>
         /// <param name="resourceName"> The name of the resource.</param>
         /// <returns> The combined resource id. </returns>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="identifier"> The id to append to. </param>
         /// <param name="providerNamespace"> The provider namespace of the added resource. </param>
-        /// <param name="resourceType"> The simple type of the added resource, without slashes (/), 
+        /// <param name="resourceType"> The simple type of the added resource, without slashes (/),
         /// for example, 'virtualMachines'. </param>
         /// <param name="resourceName"> The name of the resource.</param>
         /// <returns> The combined resource id. </returns>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Core
         /// Add a provider resource to an existing resource id.
         /// </summary>
         /// <param name="identifier"> The id to append to. </param>
-        /// <param name="childResourceType"> The simple type of the child resource, without slashes (/), 
+        /// <param name="childResourceType"> The simple type of the child resource, without slashes (/),
         /// for example, 'subnets'. </param>
         /// <param name="childResourceName"> The name of the resource. </param>
         /// <returns> The combined resource id. </returns>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Core
         /// Add a provider resource to an existing resource id.
         /// </summary>
         /// <param name="identifier"> The id to append to. </param>
-        /// <param name="childResourceType"> The simple type of the child resource, without slashes (/), 
+        /// <param name="childResourceType"> The simple type of the child resource, without slashes (/),
         /// for example, 'subnets'. </param>
         /// <param name="childResourceName"> The name of the resource. </param>
         /// <returns> The combined resource id. </returns>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Core
         /// Add a provider resource to an existing resource id.
         /// </summary>
         /// <param name="identifier"> The id to append to. </param>
-        /// <param name="childResourceType"> The simple type of the child resource, without slashes (/), 
+        /// <param name="childResourceType"> The simple type of the child resource, without slashes (/),
         /// for example, 'subnets'. </param>
         /// <param name="childResourceName"> The name of the resource. </param>
         /// <returns> The combined resource id. </returns>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Core
         /// Add a provider resource to an existing resource id.
         /// </summary>
         /// <param name="identifier"> The id to append to. </param>
-        /// <param name="childResourceType"> The simple type of the child resource, without slashes (/), 
+        /// <param name="childResourceType"> The simple type of the child resource, without slashes (/),
         /// for example, 'subnets'. </param>
         /// <param name="childResourceName"> The name of the resource. </param>
         /// <returns> The combined resource id. </returns>

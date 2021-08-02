@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Core
         /// Initializes an empty instance of <see cref="SubResource"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        public SubResource() 
+        public SubResource()
         {
         }
 
@@ -30,15 +30,14 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     [ReferenceType(typeof(ResourceIdentifier))]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Types differ by type argument only")]
-    public partial class SubResource<TIdentifier> : IEquatable<SubResource<TIdentifier>>, IEquatable<string>,
-        IComparable<SubResource<TIdentifier>>, IComparable<string> 
+    public partial class SubResource<TIdentifier>
         where TIdentifier : ResourceIdentifier
     {
         /// <summary>
         /// Initializes an empty instance of <see cref="SubResource{TIdentifier}"/> for mocking.
         /// </summary>
         [InitializationConstructor]
-        public SubResource() 
+        public SubResource()
         {
         }
 
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.Core
         [SerializationConstructor]
         protected internal SubResource(string id)
         {
-            Id = (TIdentifier)id; 
+            Id = (TIdentifier)id;
         }
 
         /// <summary>
@@ -55,35 +54,5 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <value></value>
         public virtual TIdentifier Id { get; }
-
-        /// <inheritdoc/>
-        public int CompareTo(string other)
-        {
-            return string.Compare(Id, other, StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        /// <inheritdoc/>
-        public int CompareTo(SubResource<TIdentifier> other)
-        {
-            if (other is null)
-                return 1;
-
-            if (ReferenceEquals(this, other))
-                return 0;
-
-            return Id.CompareTo(other.Id);
-        }
-
-        /// <inheritdoc/>
-        public bool Equals(SubResource<TIdentifier> other)
-        {
-            return Id.Equals(other?.Id);
-        }
-
-        /// <inheritdoc/>
-        public bool Equals(string other)
-        {
-            return Id.Equals(other);
-        }
     }
 }

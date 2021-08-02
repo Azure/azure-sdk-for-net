@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _restClient.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
                 return Response.FromValue(new VirtualNetworkGatewayConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -70,6 +72,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _restClient.Get(Id.ResourceGroupName, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualNetworkGatewayConnection(this, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -279,15 +283,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
+        /// <param name="value"> The virtual network connection shared key value. </param>
         /// <param name="id"> Resource ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ConnectionSharedKey>> SetSharedKeyAsync(string id = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public async virtual Task<Response<ConnectionSharedKey>> SetSharedKeyAsync(string value, string id = null, CancellationToken cancellationToken = default)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionOperations.SetSharedKey");
             scope.Start();
             try
             {
-                var operation = await StartSetSharedKeyAsync(id, cancellationToken).ConfigureAwait(false);
+                var operation = await StartSetSharedKeyAsync(value, id, cancellationToken).ConfigureAwait(false);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -298,15 +309,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
+        /// <param name="value"> The virtual network connection shared key value. </param>
         /// <param name="id"> Resource ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConnectionSharedKey> SetSharedKey(string id = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public virtual Response<ConnectionSharedKey> SetSharedKey(string value, string id = null, CancellationToken cancellationToken = default)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionOperations.SetSharedKey");
             scope.Start();
             try
             {
-                var operation = StartSetSharedKey(id, cancellationToken);
+                var operation = StartSetSharedKey(value, id, cancellationToken);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
@@ -317,16 +335,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
+        /// <param name="value"> The virtual network connection shared key value. </param>
         /// <param name="id"> Resource ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<VirtualNetworkGatewayConnectionsSetSharedKeyOperation> StartSetSharedKeyAsync(string id = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public async virtual Task<VirtualNetworkGatewayConnectionsSetSharedKeyOperation> StartSetSharedKeyAsync(string value, string id = null, CancellationToken cancellationToken = default)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionOperations.StartSetSharedKey");
             scope.Start();
             try
             {
-                var response = await _restClient.SetSharedKeyAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken).ConfigureAwait(false);
-                return new VirtualNetworkGatewayConnectionsSetSharedKeyOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetSharedKeyRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, id).Request, response);
+                var response = await _restClient.SetSharedKeyAsync(Id.ResourceGroupName, Id.Name, value, id, cancellationToken).ConfigureAwait(false);
+                return new VirtualNetworkGatewayConnectionsSetSharedKeyOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetSharedKeyRequest(Id.ResourceGroupName, Id.Name, value, id).Request, response);
             }
             catch (Exception e)
             {
@@ -336,16 +361,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider. </summary>
+        /// <param name="value"> The virtual network connection shared key value. </param>
         /// <param name="id"> Resource ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual VirtualNetworkGatewayConnectionsSetSharedKeyOperation StartSetSharedKey(string id = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public virtual VirtualNetworkGatewayConnectionsSetSharedKeyOperation StartSetSharedKey(string value, string id = null, CancellationToken cancellationToken = default)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             using var scope = _clientDiagnostics.CreateScope("VirtualNetworkGatewayConnectionOperations.StartSetSharedKey");
             scope.Start();
             try
             {
-                var response = _restClient.SetSharedKey(Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken);
-                return new VirtualNetworkGatewayConnectionsSetSharedKeyOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetSharedKeyRequest(Id.ResourceGroupName, Id.Parent.Name, Id.Name, id).Request, response);
+                var response = _restClient.SetSharedKey(Id.ResourceGroupName, Id.Name, value, id, cancellationToken);
+                return new VirtualNetworkGatewayConnectionsSetSharedKeyOperation(_clientDiagnostics, Pipeline, _restClient.CreateSetSharedKeyRequest(Id.ResourceGroupName, Id.Name, value, id).Request, response);
             }
             catch (Exception e)
             {

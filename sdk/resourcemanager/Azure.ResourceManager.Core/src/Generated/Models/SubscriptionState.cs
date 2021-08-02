@@ -3,8 +3,8 @@
 
 namespace Azure.ResourceManager.Core
 {
-    /// <summary> 
-    /// The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. 
+    /// <summary>
+    /// The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted.
     /// </summary>
     public enum SubscriptionState
     {

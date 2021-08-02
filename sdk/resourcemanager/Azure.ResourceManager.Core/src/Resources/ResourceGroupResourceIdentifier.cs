@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceGroupResourceIdentifier"/> class 
+        /// Initializes a new instance of the <see cref="ResourceGroupResourceIdentifier"/> class
         /// for a resource in a different namespace than its parent.
         /// </summary>
         /// <param name="target">he <see cref="ResourceGroupResourceIdentifier"/> of the target of this extension resource.</param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceGroupResourceIdentifier"/> class 
+        /// Initializes a new instance of the <see cref="ResourceGroupResourceIdentifier"/> class
         /// for a resource in the same namespace as its parent.
         /// </summary>
         /// <param name="target">he <see cref="ResourceGroupResourceIdentifier"/> of the target of this extension resource.</param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceGroupResourceIdentifier"/> class 
+        /// Initializes a new instance of the <see cref="ResourceGroupResourceIdentifier"/> class
         /// </summary>
         /// <param name="resourceId"> The string representation of a resource id. </param>
         public ResourceGroupResourceIdentifier(string resourceId)
@@ -88,10 +88,8 @@ namespace Azure.ResourceManager.Core
         {
             if (other is null)
                 return null;
-            ResourceGroupResourceIdentifier id = ResourceIdentifier.Create(other) as ResourceGroupResourceIdentifier;
-            if (id is null)
-                throw new ArgumentException("Not a valid resource group level resource", nameof(other));
-            return id;
+
+            return ResourceIdentifier.Create(other) as ResourceGroupResourceIdentifier;
         }
     }
 }

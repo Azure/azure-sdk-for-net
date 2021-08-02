@@ -23,31 +23,25 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// 
+        /// Compares one <see cref="ApiVersionsBase"/> with another instance.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than the right. </returns>
         public static bool operator <(ApiVersionsBase left, ApiVersionsBase right)
         {
-            if (ReferenceEquals(null, left))
-                return !ReferenceEquals(null, right);
-
-            return left.CompareTo(right) == -1;
+            return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
         }
 
         /// <summary>
-        /// 
+        /// Compares one <see cref="ApiVersionsBase"/> with another instance.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than the right. </returns>
         public static bool operator >(ApiVersionsBase left, ApiVersionsBase right)
         {
-            if (ReferenceEquals(null, left))
-                return false;
-
-            return left.CompareTo(right) == 1;
+            return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
         }
 
         /// <summary>
@@ -69,47 +63,37 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <returns> API version value. </returns>
         public virtual ResourceType ResourceType {get; }
-        
+
         /// <summary>
         /// Overrides == operator for comparing ApiVersionsBase object with string object.
         /// </summary>
-        /// <param name="first"> The ApiVersionsBase object to compare. </param>
-        /// <param name="second"> The API version value in string to compare. </param>
+        /// <param name="left"> The ApiVersionsBase object to compare. </param>
+        /// <param name="right"> The API version value in string to compare. </param>
         /// <returns> Comparison result in boolean. Equal returns true otherwise returns false. </returns>
-        public static bool operator ==(ApiVersionsBase first, string second)
+        public static bool operator ==(ApiVersionsBase left, string right)
         {
-            if (ReferenceEquals(null, first))
+            if (ReferenceEquals(null, left))
             {
-                return ReferenceEquals(null, second);
+                return ReferenceEquals(null, right);
             }
 
-            if (ReferenceEquals(null, second))
+            if (ReferenceEquals(null, right))
             {
                 return false;
             }
 
-            return first.Equals(second);
+            return left.Equals(right);
         }
 
         /// <summary>
         /// Overrides != operator for comparing ApiVersionsBase object with string object.
         /// </summary>
-        /// <param name="first"> The ApiVersionsBase object to compare. </param>
-        /// <param name="second"> The API version value in string to compare. </param>
+        /// <param name="left"> The ApiVersionsBase object to compare. </param>
+        /// <param name="right"> The API version value in string to compare. </param>
         /// <returns> Comparison result in boolean. Equal returns false otherwise returns true. </returns>
-        public static bool operator !=(ApiVersionsBase first, string second)
+        public static bool operator !=(ApiVersionsBase left, string right)
         {
-            if (ReferenceEquals(null, first))
-            {
-                return !ReferenceEquals(null, second);
-            }
-
-            if (ReferenceEquals(null, second))
-            {
-                return true;
-            }
-
-            return !first.Equals(second);
+            return !(left == right);
         }
 
         /// <summary>
@@ -204,6 +188,28 @@ namespace Azure.ResourceManager.Core
         public override int GetHashCode()
         {
             return _value.GetHashCode();
+        }
+
+        /// <summary>
+        /// Compares one <see cref="ApiVersionsBase"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than or equal to the right. </returns>
+        public static bool operator <=(ApiVersionsBase left, ApiVersionsBase right)
+        {
+            return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="ApiVersionsBase"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than or equal to the right. </returns>
+        public static bool operator >=(ApiVersionsBase left, ApiVersionsBase right)
+        {
+            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Core.Tests
 
         private static Sku GetSku()
         {
-            return new Sku("name", "tier", "family", "size", 10);
+            return new Sku("name", "tier", "family", "size", "model", 10);
         }
 
         private static GenericResourceData GetGenericResource()

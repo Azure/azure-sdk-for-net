@@ -27,7 +27,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager" VersionOverride="1.0.0-alpha.20210728.2" />
+    <PackageReference Include="Azure.ResourceManager" VersionOverride="1.0.0-alpha.20210730.2" />
   </ItemGroup>
 
 </Project>

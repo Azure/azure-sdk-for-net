@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected IEnumerable<LocationData> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            var pageableProvider = ResourcesClient.Providers.List(expand: "metadata", cancellationToken: cancellationToken);
-            var resourcePageableProvider = pageableProvider.FirstOrDefault(p => string.Equals(p.Namespace, resourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
+            var pageableProvider = ProviderContainer.List(expand: "metadata", cancellationToken: cancellationToken);
+            var resourcePageableProvider = pageableProvider.FirstOrDefault(p => string.Equals(p.Data.Namespace, resourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
-            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
+            var theResource = resourcePageableProvider.Data.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
             return theResource.Locations.Select(l => (LocationData)l);
@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         protected async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            var pageableProvider = ResourcesClient.Providers.ListAsync(expand: "metadata", cancellationToken: cancellationToken);
+            var pageableProvider = ProviderContainer.ListAsync(expand: "metadata", cancellationToken: cancellationToken);
             var resourcePageableProvider = await pageableProvider.FirstOrDefaultAsync(
-                p => string.Equals(p.Namespace, resourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase),
+                p => string.Equals(p.Data.Namespace, resourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase),
                 cancellationToken).ConfigureAwait(false);
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");
-            var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
+            var theResource = resourcePageableProvider.Data.ResourceTypes.FirstOrDefault(r => resourceType.Type.Equals(r.ResourceType));
             if (theResource is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Type}");
             return theResource.Locations.Select(l => (LocationData)l);

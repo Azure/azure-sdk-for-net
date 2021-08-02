@@ -83,11 +83,12 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase(false, "West US", "!#()@(#@")]
         [TestCase(false, "West US", "W3$t U$")]
         [TestCase(false, "West US", null)]
-        public void EqualsToObject(bool expected, string left, string right)
+        public void EqualsToLocation(bool expected, string left, string right)
         {
             LocationData loc1 = left;
             LocationData loc2 = right;
             Assert.AreEqual(expected, loc1.Equals(loc2));
+            Assert.AreEqual(expected, loc1.GetHashCode() == loc2?.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({loc1.GetHashCode()}, {loc2?.GetHashCode()})");
 
             if (expected)
             {
@@ -97,6 +98,24 @@ namespace Azure.ResourceManager.Core.Tests
             {
                 Assert.AreNotEqual(0, loc1.CompareTo(loc2));
             }
+        }
+
+        [Test]
+        public void EqualsToObject()
+        {
+            LocationData loc = LocationData.WestUS2;
+
+            object intLoc = 5;
+            Assert.IsFalse(loc.Equals(intLoc));
+
+            object nullLoc = null;
+            Assert.IsFalse(loc.Equals(nullLoc));
+
+            object sameLoc = loc;
+            Assert.IsTrue(loc.Equals(sameLoc));
+
+            object loc2 = LocationData.EastUS2;
+            Assert.IsFalse(loc.Equals(loc2));
         }
 
         [TestCase(true, "West Us", "West Us")]
@@ -222,5 +241,106 @@ namespace Azure.ResourceManager.Core.Tests
             LocationData location = LocationData.Default;
             Assert.IsTrue(location.Equals(LocationData.Default));
         }
+
+        [Test]
+        public void LessThanNull()
+        {
+            LocationData loc = LocationData.WestUS2;
+            Assert.IsTrue(null < loc);
+            Assert.IsFalse(loc < null);
+        }
+
+        [Test]
+        public void LessThanOrEqualNull()
+        {
+            LocationData loc = LocationData.WestUS2;
+            Assert.IsTrue(null <= loc);
+            Assert.IsFalse(loc <= null);
+        }
+
+        [Test]
+        public void GreaterThanNull()
+        {
+            LocationData loc = LocationData.WestUS2;
+            Assert.IsFalse(null > loc);
+            Assert.IsTrue(loc > null);
+        }
+
+        [Test]
+        public void GreaterThanOrEqualNull()
+        {
+            LocationData loc = LocationData.WestUS2;
+            Assert.IsFalse(null >= loc);
+            Assert.IsTrue(loc >= null);
+        }
+
+        [Test]
+        public void EqualOperatorNull()
+        {
+            LocationData loc = LocationData.WestUS2;
+            Assert.IsFalse(loc == null);
+            Assert.IsFalse(null == loc);
+        }
+
+        [TestCase(false, "WESTUS2", "EASTUS2")]
+        [TestCase(true, "EASTUS2", "WESTUS2")]
+        [TestCase(false, "WESTUS2", "WESTUS2")]
+        public void LessThanOperator(bool expected, string string1, string string2)
+        {
+            LocationData loc1 = string1;
+            LocationData loc2 = string2;
+            Assert.AreEqual(expected, loc1 < loc2);
+        }
+
+        [TestCase(false, "WESTUS2", "EASTUS2")]
+        [TestCase(true, "EASTUS2", "WESTUS2")]
+        [TestCase(true, "WESTUS2", "WESTUS2")]
+        public void LessThanOrEqualOperator(bool expected, string string1, string string2)
+        {
+            LocationData loc1 = string1;
+            LocationData loc2 = string2;
+            Assert.AreEqual(expected, loc1 <= loc2);
+        }
+
+        [TestCase(true, "WESTUS2", "EASTUS2")]
+        [TestCase(false, "EASTUS2", "WESTUS2")]
+        [TestCase(false, "WESTUS2", "WESTUS2")]
+        public void GreaterThanOperator(bool expected, string string1, string string2)
+        {
+            LocationData loc1 = string1;
+            LocationData loc2 = string2;
+            Assert.AreEqual(expected, loc1 > loc2);
+        }
+
+        [TestCase(true, "WESTUS2", "EASTUS2")]
+        [TestCase(false, "EASTUS2", "WESTUS2")]
+        [TestCase(true, "WESTUS2", "WESTUS2")]
+        public void GreaterThanOrEqualOperator(bool expected, string string1, string string2)
+        {
+            LocationData loc1 = string1;
+            LocationData loc2 = string2;
+            Assert.AreEqual(expected, loc1 >= loc2);
+        }
+
+        [TestCase(false, "WESTUS2", "EASTUS2")]
+        [TestCase(false, "EASTUS2", "WESTUS2")]
+        [TestCase(true, "WESTUS2", "WESTUS2")]
+        public void EqualOperator(bool expected, string string1, string string2)
+        {
+            LocationData loc1 = string1;
+            LocationData loc2 = string2;
+            Assert.AreEqual(expected, loc1 == loc2);
+        }
+
+        [TestCase(true, "WESTUS2", "EASTUS2")]
+        [TestCase(true, "EASTUS2", "WESTUS2")]
+        [TestCase(false, "WESTUS2", "WESTUS2")]
+        public void NotEqualOperator(bool expected, string string1, string string2)
+        {
+            LocationData loc1 = string1;
+            LocationData loc2 = string2;
+            Assert.AreEqual(expected, loc1 != loc2);
+        }
+
     }
 }

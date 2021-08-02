@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestDeserializerInvalidDefaultJson()
         {
             JsonElement invalid = default(JsonElement);
-            Assert.Throws<ArgumentException>(delegate { ResourceIdentity.Deserialize(invalid); });
+            Assert.Throws<ArgumentException>(delegate { ResourceIdentity.DeserializeResourceIdentity(invalid); });
         }
 
         public JsonProperty DeserializerHelper(string filename)
@@ -166,14 +166,14 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestDeserializerInvalidNullType()
         {
             var identityJsonProperty = DeserializerHelper("InvalidTypeIsNull.json");
-            Assert.Throws<InvalidOperationException>(delegate { ResourceIdentity.Deserialize(identityJsonProperty.Value); });
+            Assert.Throws<InvalidOperationException>(delegate { ResourceIdentity.DeserializeResourceIdentity(identityJsonProperty.Value); });
         }
 
         [TestCase]
         public void TestDeserializerValidSystemAndUserAssigned()
         {
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedValid.json");
-            ResourceIdentity back = ResourceIdentity.Deserialize(identityJsonProperty.Value);
+            ResourceIdentity back = ResourceIdentity.DeserializeResourceIdentity(identityJsonProperty.Value);
             Assert.IsTrue("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.SystemAssignedIdentity.PrincipalId.ToString()));
             Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.SystemAssignedIdentity.TenantId.ToString()));
             var user = back.UserAssignedIdentities;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestDeserializerInvalidType()
         {
             var identityJsonProperty = DeserializerHelper("InvalidType.json");
-            ResourceIdentity back = ResourceIdentity.Deserialize(identityJsonProperty.Value);
+            ResourceIdentity back = ResourceIdentity.DeserializeResourceIdentity(identityJsonProperty.Value);
             var user = back.UserAssignedIdentities;
             Assert.AreEqual("/subscriptions/d96407f5-db8f-4325-b582-84ad21310bd8/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
             Assert.AreEqual("9a2eaa6a-b49c-4a63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestDeserializerValidInnerExtraField()
         {
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedInnerExtraField.json");
-            ResourceIdentity back = ResourceIdentity.Deserialize(identityJsonProperty.Value);
+            ResourceIdentity back = ResourceIdentity.DeserializeResourceIdentity(identityJsonProperty.Value);
             Assert.IsTrue("22fddec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.SystemAssignedIdentity.PrincipalId.ToString()));
             Assert.IsTrue("72f988bf-86f1-41af-91ab-2d7cd011db47".Equals(back.SystemAssignedIdentity.TenantId.ToString()));
             var user = back.UserAssignedIdentities;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestDeserializerValidMiddleExtraField()
         {
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedMiddleExtraField.json");
-            ResourceIdentity back = ResourceIdentity.Deserialize(identityJsonProperty.Value);
+            ResourceIdentity back = ResourceIdentity.DeserializeResourceIdentity(identityJsonProperty.Value);
             Assert.IsTrue("22fddec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.SystemAssignedIdentity.PrincipalId.ToString()));
             Assert.IsTrue("72f988bf-86f1-41af-91ab-2d7cd011db47".Equals(back.SystemAssignedIdentity.TenantId.ToString()));
             var user = back.UserAssignedIdentities;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Core.Tests
             JsonDocument document = JsonDocument.Parse(json);
             JsonElement rootElement = document.RootElement;
             var identityJsonProperty = rootElement.EnumerateObject().ElementAt(1);
-            ResourceIdentity back = ResourceIdentity.Deserialize(identityJsonProperty.Value);
+            ResourceIdentity back = ResourceIdentity.DeserializeResourceIdentity(identityJsonProperty.Value);
             Assert.IsTrue("22fddec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.SystemAssignedIdentity.PrincipalId.ToString()));
             Assert.IsTrue("72f988bf-86f1-41af-91ab-2d7cd011db47".Equals(back.SystemAssignedIdentity.TenantId.ToString()));
             var user = back.UserAssignedIdentities;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestDeserializerValidSystemAndMultUser()
         {
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedValidMultIdentities.json");
-            ResourceIdentity back = ResourceIdentity.Deserialize(identityJsonProperty.Value);
+            ResourceIdentity back = ResourceIdentity.DeserializeResourceIdentity(identityJsonProperty.Value);
             Assert.IsTrue("22fddec1-8b9f-49dc-bd72-ddaf8f215570".Equals(back.SystemAssignedIdentity.PrincipalId.ToString()));
             Assert.IsTrue("72f988bf-86f1-41af-91ab-2d7cd011db40".Equals(back.SystemAssignedIdentity.TenantId.ToString()));
             var user = back.UserAssignedIdentities;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestDeserializerValidSystemAssigned()
         {
             var identityJsonProperty = DeserializerHelper("SystemAssigned.json");
-            ResourceIdentity back = ResourceIdentity.Deserialize(identityJsonProperty.Value);
+            ResourceIdentity back = ResourceIdentity.DeserializeResourceIdentity(identityJsonProperty.Value);
             Assert.IsTrue("22fddec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.SystemAssignedIdentity.PrincipalId.ToString()));
             Assert.IsTrue("72f988bf-86f1-41af-91ab-2d7cd011db47".Equals(back.SystemAssignedIdentity.TenantId.ToString()));
             Assert.IsTrue(back.UserAssignedIdentities.Count == 0);            
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestDeserializerValidUserAssigned()
         {
             var identityJsonProperty = DeserializerHelper("UserAssigned.json");
-            ResourceIdentity back = ResourceIdentity.Deserialize(identityJsonProperty.Value);
+            ResourceIdentity back = ResourceIdentity.DeserializeResourceIdentity(identityJsonProperty.Value);
             Assert.IsNull(back.SystemAssignedIdentity);
             var user = back.UserAssignedIdentities;
             Assert.AreEqual("/subscriptions/db1ab6f0-4769-4b2e-930e-01e2ef9c123c/resourceGroups/tester-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());

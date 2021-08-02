@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="other"> String to be assigned in the Name, CanonicalName or DisplayName form. </param>
         public static implicit operator LocationData(string other)
         {
-            if (other == null)
+            if (ReferenceEquals(other, null))
                 return null;
 
             var normalizedName = NormalizationUtility(other);
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="other"> Location object to be assigned. </param>
         public static implicit operator string(LocationData other)
         {
-            if (other == null)
+            if (ReferenceEquals(other, null))
             {
                 return null;
             }
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> True or false. </returns>
         public bool Equals(LocationData other)
         {
-            if (other == null)
+            if (ReferenceEquals(other, null))
                 return false;
 
             return Name == other.Name && CanonicalName == other.CanonicalName && DisplayName == other.DisplayName;
@@ -458,6 +458,102 @@ namespace Azure.ResourceManager.Core
         private static string GetDefaultNameFromDisplayName(string name)
         {
             return name.Replace(RegexWhitespace, string.Empty).ToLower(CultureInfo.InvariantCulture);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
+            if (obj is not LocationData other)
+                return false;
+
+            return Equals(other);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
+
+        /// <summary>
+        /// Compares this <see cref="LocationData"/> instance with another object and determines if they are equals.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if they are equal, otherwise false. </returns>
+        public static bool operator ==(LocationData left, LocationData right)
+        {
+            if (ReferenceEquals(left, null))
+            {
+                return ReferenceEquals(right, null);
+            }
+
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares this <see cref="LocationData"/> instance with another object and determines if they are equals.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if they are not equal, otherwise false. </returns>
+        public static bool operator !=(LocationData left, LocationData right)
+        {
+            return !(left == right);
+        }
+
+        /// <summary>
+        /// Compares one <see cref="LocationData"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than the right. </returns>
+        public static bool operator <(LocationData left, LocationData right)
+        {
+            return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="LocationData"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is less than or equal to the right. </returns>
+        public static bool operator <=(LocationData left, LocationData right)
+        {
+            return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="LocationData"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than the right. </returns>
+        public static bool operator >(LocationData left, LocationData right)
+        {
+            return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
+        }
+
+        /// <summary>
+        /// Compares one <see cref="LocationData"/> with another instance.
+        /// </summary>
+        /// <param name="left"> The object on the left side of the operator. </param>
+        /// <param name="right"> The object on the right side of the operator. </param>
+        /// <returns> True if the left object is greater than or equal to the right. </returns>
+        public static bool operator >=(LocationData left, LocationData right)
+        {
+            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
     }
 }

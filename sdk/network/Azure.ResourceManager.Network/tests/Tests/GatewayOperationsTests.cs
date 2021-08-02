@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             VirtualNetworkGatewaysGetLearnedRoutesOperation learnedRoutesOperation = await virtualNetworkGatewayContainer.Get(gw1Name).Value.StartGetLearnedRoutesAsync();
             Response<GatewayRouteListResult> learnedRoutes = await learnedRoutesOperation.WaitForCompletionAsync();;
             Assert.True(learnedRoutes.Value.Value.Count() > 0, "At least one route should be learned from gw2");
-            VirtualNetworkGatewaysGetAdvertisedRoutesOperation advertisedRoutesOperation = await virtualNetworkGatewayContainer.Get(gw1Name).Value.StartGetAdvertisedRoutesAsync();
+            VirtualNetworkGatewaysGetAdvertisedRoutesOperation advertisedRoutesOperation = await virtualNetworkGatewayContainer.Get(gw1Name).Value.StartGetAdvertisedRoutesAsync(gw2IpResponse.Value.Data.IpAddress);
             Response<GatewayRouteListResult> advertisedRoutes = await advertisedRoutesOperation.WaitForCompletionAsync();;
             Assert.True(learnedRoutes.Value.Value.Count() > 0, "At least one route should be advertised to gw2");
             VirtualNetworkGatewaysGetBgpPeerStatusOperation gw1PeersOperation = await virtualNetworkGatewayContainer.Get(gw1Name).Value.StartGetBgpPeerStatusAsync();

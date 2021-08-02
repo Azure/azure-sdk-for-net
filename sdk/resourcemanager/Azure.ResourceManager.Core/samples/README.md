@@ -11,7 +11,7 @@ description: Samples for the Azure.ResourceManager.Core client library
 
 # Azure.ResourceManager.Core Samples
 
-- [Hello World - Getting a subscription]<--(Sample1_HelloWorld.md)-->
-- [Hello World - Getting a subscription async]<--(Sample1_HelloWorldAsync.md)-->
-- [Managing Resource Groups]<--(Sample2_ManagingResourceGroups.md)-->
-- [Creating a virtual network]<--(Sample3_CreatingAVirtualNetwork.md)-->
+- [Hello World - Getting a subscription](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/samples/Sample1_HelloWorld.md)
+- [Hello World - Getting a subscription async](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/samples/Sample1_HelloWorldAsync.md)
+- [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/samples/Sample2_ManagingResourceGroups.md)
+- [Creating a virtual network](https://github.com/Azure/azure-sdk-for-net/blob/feature/mgmt-track2/sdk/resourcemanager/Azure.ResourceManager.Core/samples/Sample3_CreatingAVirtualNetwork.md)
