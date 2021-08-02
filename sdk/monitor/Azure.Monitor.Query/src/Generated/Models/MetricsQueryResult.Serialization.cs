@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query.Models
 {
     public partial class MetricsQueryResult
     {
-        internal static MetricsQueryResult DeserializeMetricQueryResult(JsonElement element)
+        internal static MetricsQueryResult DeserializeMetricsQueryResult(JsonElement element)
         {
             Optional<int> cost = default;
             string timespan = default;

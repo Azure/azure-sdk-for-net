@@ -114,9 +114,9 @@ namespace Azure.Monitor.Query.Models
     public partial class LogsQueryResult
     {
         internal LogsQueryResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultTable> AllTables { get { throw null; } }
         public Azure.Core.ResponseError Error { get { throw null; } }
-        public Azure.Monitor.Query.Models.LogsQueryResultTable PrimaryTable { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Models.LogsQueryResultTable> Tables { get { throw null; } }
+        public Azure.Monitor.Query.Models.LogsQueryResultTable Table { get { throw null; } }
         public System.BinaryData GetStatistics() { throw null; }
         public System.BinaryData GetVisualization() { throw null; }
     }

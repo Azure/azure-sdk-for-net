@@ -123,7 +123,7 @@ namespace Azure.Monitor.Query
                     {
                         MetricsQueryResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricsQueryResult.DeserializeMetricQueryResult(document.RootElement);
+                        value = MetricsQueryResult.DeserializeMetricsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -167,7 +167,7 @@ namespace Azure.Monitor.Query
                     {
                         MetricsQueryResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricsQueryResult.DeserializeMetricQueryResult(document.RootElement);
+                        value = MetricsQueryResult.DeserializeMetricsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
