@@ -832,6 +832,19 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
+        internal static ConcurrentAppendResult ToConcurrentAppendResult(this ResponseWithHeaders<PathConcurrentAppendHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new ConcurrentAppendResult
+            {
+                CommitedBlockCount = response.Headers.CommitedBlockCount.GetValueOrDefault()
+            };
+        }
+
         #region ValidateConditionsNotPresent
         internal static void ValidateConditionsNotPresent(
             this RequestConditions requestConditions,

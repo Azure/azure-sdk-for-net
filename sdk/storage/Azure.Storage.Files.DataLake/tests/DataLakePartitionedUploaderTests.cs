@@ -273,6 +273,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             clientMock.Setup(
                 c => c.CreateInternal(
                     IsAny<PathResourceType>(),
+                    IsAny<BlobType>(),
                     s_pathHttpHeaders,
                     default,
                     s_permissions,
