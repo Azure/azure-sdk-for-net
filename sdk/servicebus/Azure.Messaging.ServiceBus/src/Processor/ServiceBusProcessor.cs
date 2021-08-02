@@ -891,7 +891,7 @@ namespace Azure.Messaging.ServiceBus
                     : maxConcurrentSessions * maxConcurrentCallsPerSession;
 
                 // if processor isn't running there is nothing to reconcile
-                if (!IsProcessing)
+                if (IsProcessing)
                 {
                     ReconcileConcurrency(newConcurrency, maxConcurrentSessions);
                 }
